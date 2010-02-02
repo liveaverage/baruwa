@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block submenu %}
+<ul>
+  <li><a href="/lists/add/">Add to List</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+List management
+{% endblock title %}
+{% block heading %}
+Showing Whitelists and Blacklists
+{% endblock heading %}
+{% block content %}
+<table class="maillog">
+  <tbody>
+    <tr class="header">
+    <td class="first-t">Whitelist</td>
+    <td class="first-t">Blacklist</td>
+    </tr>
+    <tr>
+    <td class="tdholder">
+    <!-- whitelist -->
+    <table width="100%">
+    {% if whitelist %}
+    {% load messages_extras %}
+    <tr>
+    <td>To</td>
+    <td>From</td>
+    <td>Action</td>
+    </tr>
+    {% for listitems in whitelist %}
+    <tr>
+    <td>{{listitems.to_address|tds_email_list|escape}}</td>
+    <td>{{listitems.from_address|escape}}</td>
+    <td><a href="/lists/delete/1/{{listitems.id}}/">Delete</a></td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+    <td>None at the moment</td>
+    </tr>
+    {% endif %}
+    </table>
+    </td>
+    <td class="tdholder">
+    <!-- blacklist -->
+    <table width="100%">
+    {% if blacklist %}
+    {% load messages_extras %}
+    <tr>
+    <td>To</td>
+    <td>From</td>
+    <td>Action</td>
+    </tr>
+    {% for listitems in blacklist %}
+    <tr>
+    <td>{{listitems.to_address|tds_email_list|escape}}</td>
+    <td>{{listitems.from_address|escape}}</td>
+    <td><a href="/lists/delete/2/{{listitems.id}}/">Delete</a></td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+    <td>None at the moment</td>
+    </tr>
+    {% endif %}
+    </table>
+    </td>
+    </tr>
+  </tbody>
+</table>
+{% endblock content %}

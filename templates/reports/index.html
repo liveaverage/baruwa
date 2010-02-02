@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block submenu %}
+&nbsp;
+{% endblock submenu %}
+{% block title %}
+Reports
+{% endblock title %}
+{% block heading %}
+Reports
+{% endblock heading %}
+{% block content %}
+<table class="maillog">
+<tbody>
+<!--<tr>
+<td class="divider">Add Filter</td>
+</tr>
+<tr>
+<td class="divider">Saved Filter(s)</td>
+</tr>
+<tr>
+<td class="divider">Statistics</td>
+</tr>
+<tr>-->
+<td class="divider">Predefined Reports</td>
+</tr>
+<tr>
+<td>
+<ul>
+  <li><a href="">Message Listing</a></li>
+  <li><a href="/reports/1/">Top Senders by Quantity</a></li>
+  <li><a href="/reports/2/">Top Senders by Volume</a></li>
+  <li><a href="/reports/3/">Top Sender Domains by Quantity</a></li>
+  <li><a href="/reports/4/">Top Sender Domains by Volume</a></li>
+  <li><a href="/reports/5/">Top Recipients by Quantity</a></li>
+  <li><a href="/reports/6/">Top Recipients by Volume</a></li>
+  <li><a href="/reports/7/">Top Recipient Domains By Quantity</a></li>
+  <li><a href="/reports/8/">Top Recipient Domains By Volume</a></li>
+  <li><a href="/reports/9/">Spamassassin Score Distribution</a></li>
+  <li><a href="/reports/10/">Spamassassin Rule Hits</a></li>
+  <li><a href="/reports/11/">Top Viruses</a></li>
+  <li><a href="/reports/12/">Top Mail hosts</a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% if rules %}
+<table class="inner">
+<tr class="header">
+<th>Score</th>
+<th>Rule</th>
+<th>Description</th>
+</tr>
+{% for rule in rules %}
+{%if forloop.last %}
+<tr>
+<td class="last">{{rule.score}}</td>
+<td class="last">{{rule.rule}}</td>
+<td class="last">{{rule.rule_descp}}</td>
+</tr>
+{% else %}
+<tr>
+<td>{{rule.score}}</td>
+<td>{{rule.rule}}</td>
+<td>{{rule.rule_descp}}</td>
+</tr>
+{% endif %}
+{% endfor %}
+</table>
+{% endif %}

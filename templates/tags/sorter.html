@@ -1,0 +1,10 @@
+{%ifequal order_by field_name %}
+  {{field_text}}
+  {%ifequal direction "dsc"%}
+  <a href="/messages/{{quarantine}}/asc/{{field_name}}/">&uarr;</a>
+  {%else%}
+  <a href="/messages/{{quarantine}}/dsc/{{field_name}}/">&darr;</a>
+  {%endifequal%}
+{%else%}
+  <a href="/messages/{{quarantine}}/dsc/{{field_name}}/">{{field_text}}</a>
+{%endifequal%}

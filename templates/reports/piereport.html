@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block submenu %}
+&nbsp;
+{% endblock submenu %}
+{% block title %}
+Reports {{report_title}}
+{% endblock title %}
+{% block heading %}
+Reports - {{report_title}}
+{% endblock heading %}
+{% block content %}
+<table class="maillog">
+<tbody>
+<tr class="header">
+<td class="first-t">#</td>
+<td class="first-t">Address</td>
+<td class="first-t">Count</td>
+<td class="first-t">Volume</td>
+<td>&nbsp;</td>
+</tr>
+{% if top_items %}
+{% for item in top_items %}
+<tr>
+<td class="first-t">{{ forloop.counter }}.</td>
+<td class="first-t">
+<!--<div class="pie_{{forloop.counter}} pie"></div>-->
+<div id="pie_text">
+{% if item.from_address %}{{item.from_address}}{%endif%}
+{% if item.from_domain %}{{item.from_domain}}{%endif%}
+{% if item.to_address %}{{item.to_address}}{%endif%}
+{% if item.to_domain %}{{item.to_domain}}{%endif%}
+</div>
+</td>
+<td class="first-t">{{item.num_count}}</td>
+<td class="first-t">{{item.size|filesizeformat}}</td>
+{% if forloop.first %}<td width="450px;" class="align_center" rowspan="{{forloop.revcounter}}">
+{% if graph_type %}
+<img src="/static/graphs/graph{{graph_type}}.png" alt="graph{{graph_type"/>
+{% endif %}
+</td>
+{%endif%}
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+<td colspan="5" class="align_center">No records returned</td>
+</tr>
+{% endif %}
+</tbody>
+</table>
+{% endblock content %}

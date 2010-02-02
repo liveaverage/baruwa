@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block submenu %}
+<ul>
+  <li>Add to List</li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+Adding to list
+{% endblock title %}
+{% block heading %}
+Adding to Lists
+{% endblock heading %}
+{% block content %}
+<form method="post" action="/lists/add/">
+<div class="cb">&nbsp;</div>
+{% include "form_base.html" %}
+<div class="cb">&nbsp;</div>
+<div class="buttons">
+<input type="reset" value="Reset" />&nbsp;
+<input type="submit" value="Add" />
+</div>
+</form>
+{% endblock content %}

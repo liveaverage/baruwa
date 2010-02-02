@@ -1,0 +1,10 @@
+1NaAId-0001uk-3E
+django
+MySQLdb (py-mysql)
+GeoIP (py-geoip)
+cairoplot (from bzr)
+iPy (http://software.inl.fr/trac/wiki/IPy)
+
+from django.conf import settings
+MY_CUSTOM_SETTING = getattr(settings, 'MY_CUSTOM_SETTING', 'default value')
+
