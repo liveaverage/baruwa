@@ -8,3 +8,8 @@ iPy (http://software.inl.fr/trac/wiki/IPy)
 from django.conf import settings
 MY_CUSTOM_SETTING = getattr(settings, 'MY_CUSTOM_SETTING', 'default value')
 
+var refreshId = setInterval(function() {
+$(’#responsecontainer’).fadeOut(”slow”, function () {
+$(this).load(’response.php’).fadeIn(”slow”);
+});
+}, 10000);

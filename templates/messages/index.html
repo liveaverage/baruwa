@@ -64,7 +64,10 @@ Showing the 50 most recent messages (30 second refresh)
 {% if object_list %}
 	{% load messages_extras %}
 	{% for message in object_list %}
-	<tr{% if message.isspam and not message.ishighspam %} class="spam"{% endif %}{% if message.ishighspam %} class="highspam"{% endif %}{% if message.spamwhitelisted %} class="whitelisted"{% endif %}{% if message.spamblacklisted %} class="blacklisted"{% endif %}>
+	<tr{% if message.isspam and not message.ishighspam and not message.spamblacklisted %} class="spam"{% endif %}
+    {% if message.ishighspam and not message.spamblacklisted %} class="highspam"{% endif %}
+    {% if message.spamwhitelisted %} class="whitelisted"{% endif %}
+    {% if message.spamblacklisted %} class="blacklisted"{% endif %}>
 	<td class="first-t">[<a href="/messages/{{ message.id }}/">&nbsp;&nbsp;</a>]</td>
 	<td>{{ message.timestamp }}</td>
 	<td>{{ message.from_address|tds_trunc:30 }}</td>
@@ -72,8 +75,13 @@ Showing the 50 most recent messages (30 second refresh)
 	<td><div>{{ message.subject|wordwrap:38|linebreaksbr }}</div></td>
 	<td>{{ message.size|filesizeformat }}</td>
 	<td>{{ message.sascore }}</td>
-	<td>{% if message.isspam and not message.virusinfected and not message.nameinfected and not message.otherinfected %}Spam{% endif %}
-  {% if message.virusinfected or message.nameinfected or message.otherinfected %}Infected{% endif %}{% if not message.isspam and not message.virusinfected and not message.nameinfected and not message.otherinfected %}Clean{% endif %}</td>
+	<td>
+    {% if message.isspam and not message.virusinfected and not message.nameinfected and not message.otherinfected %}Spam{% endif %}
+    {% if message.spamblacklisted %}[BL]{%endif%}
+    {% if message.virusinfected or message.nameinfected or message.otherinfected %}Infected{% endif %}
+    {% if not message.isspam and not message.virusinfected and not message.nameinfected and not message.otherinfected %}Clean{% endif %}
+    {% if message.spamwhitelisted %}[WL]{%endif%}
+    </td>
 	</tr>
 	{% endfor %}
 {% endif %}

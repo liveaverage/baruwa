@@ -30,7 +30,7 @@
 		<td class="mailitem">From:</td>
 		<td class="maildetail">{{ message_details.from_address|tds_trunc:80 }}
     <span class="listings">
-    [{% if not message_details.spamwhitelisted %}<a href="{{message_details.get_absolute_url}}">Add to whitelist</a>{%else%}Add to whitelist{%endif%}]
+    [{% if not message_details.spamwhitelisted %}<a href="">Add to whitelist</a>{%else%}Add to whitelist{%endif%}]
     &nbsp;
     [{% if not message_details.spamblacklisted %}<a href="">Add to blacklist</a>{%else%}Add to blacklist{%endif%}]
     </span>
@@ -62,7 +62,7 @@
 		</tr>
 		<tr>
 		<td class="mailitem">Message Headers:</td>
-		<td class="maildetail">{{ message_details.headers|linebreaksbr }}</td>
+		<td class="maildetail">{{ message_details.headers|tds_wrap_headers|linebreaksbr }}</td>
 		</tr>
 		<tr>
 		<td class="mailitem">Size:</td>

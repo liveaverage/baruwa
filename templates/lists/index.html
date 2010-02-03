@@ -24,15 +24,19 @@ Showing Whitelists and Blacklists
     {% if whitelist %}
     {% load messages_extras %}
     <tr>
-    <td>To</td>
-    <td>From</td>
-    <td>Action</td>
+    <td class="first-t">To</td>
+    <td class="first-t">From</td>
+    <td class="first-t">Action</td>
     </tr>
     {% for listitems in whitelist %}
     <tr>
-    <td>{{listitems.to_address|tds_email_list|escape}}</td>
-    <td>{{listitems.from_address|escape}}</td>
-    <td><a href="/lists/delete/1/{{listitems.id}}/">Delete</a></td>
+    <td class="first-t">{{listitems.to_address|tds_email_list|escape}}</td>
+    <td class="first-t">{{listitems.from_address|escape}}</td>
+    {% ifnotequal listitems.from_address "127.0.0.1" %}
+    <td class="first-t"><a href="/lists/delete/1/{{listitems.id}}/">Delete</a></td>
+    {% else %}
+    <td class="first-t">=builtin=</td>
+    {% endifnotequal %}
     </tr>
     {% endfor %}
     {% else %}
@@ -48,15 +52,15 @@ Showing Whitelists and Blacklists
     {% if blacklist %}
     {% load messages_extras %}
     <tr>
-    <td>To</td>
-    <td>From</td>
-    <td>Action</td>
+    <td class="first-t">To</td>
+    <td class="first-t">From</td>
+    <td class="first-t">Action</td>
     </tr>
     {% for listitems in blacklist %}
     <tr>
-    <td>{{listitems.to_address|tds_email_list|escape}}</td>
-    <td>{{listitems.from_address|escape}}</td>
-    <td><a href="/lists/delete/2/{{listitems.id}}/">Delete</a></td>
+    <td class="first-t">{{listitems.to_address|tds_email_list|escape}}</td>
+    <td class="first-t">{{listitems.from_address|escape}}</td>
+    <td class="first-t"><a href="/lists/delete/2/{{listitems.id}}/">Delete</a></td>
     </tr>
     {% endfor %}
     {% else %}

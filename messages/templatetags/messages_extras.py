@@ -1,5 +1,6 @@
 # vim: ai ts=4 sts=4 et sw=4
 import re,GeoIP,socket
+from textwrap import wrap
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.html import conditional_escape
@@ -28,7 +29,7 @@ def tds_trunc(value,arg):
 @stringfilter
 def tds_email_list(value):
   if re.match("default",value):
-    value = "Any"
+    value = "Any address"
   return value
 
 @register.filter(name='tds_geoip')
@@ -88,7 +89,7 @@ def spam_report(value):
   if m:
     tmp = m.groups()[0].split(',')
     for rule in tmp:
-      rule = rule.lstrip()
+      rule = rule.strip()
       u = re.match(r'((\w+)(\s)(\d{1,2}\.\d{1,2}))',rule)
       if u:
         rule = u.groups()[1]
@@ -102,3 +103,14 @@ def spam_report(value):
         return_value.append(tdict)
         sa_rule_descp = ""
   return {'rules':return_value}
+
+@register.filter(name='tds_wrap_headers')
+@stringfilter
+def tds_wrap_headers(value):
+    headers = value.split('\n')
+    rstring = []
+    for header in headers:
+        if len(header) > 100:
+            header = '\n'.join(wrap(header,100))
+        rstring.append(header)
+    return ('\n'.join(rstring))

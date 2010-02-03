@@ -293,13 +293,27 @@ table.maillog td.maildetail {
   width:760px;
 }
 
+table.maillog tr.sascores td.sascores {
+    height: 15px !important;
+    line-height:5px;
+}
+
+table.maillog tr.sascores {
+    height: 15px !important;
+    line-height:5px;
+}
+
+table.maillog td.even {
+    background-color:#eee;
+}
+
 table.inner {
   width:100%;
 }
 
 table.inner td {
   height:10px !important;
-	border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
   line-height:12px;
   padding-left:10px;
 }

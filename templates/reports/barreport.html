@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block submenu %}
+&nbsp;
+{% endblock submenu %}
+{% block title %}
+Reports - {{report_title}}
+{% endblock title %}
+{% block heading %}
+Reports - {{report_title}}
+{% endblock heading %}
+{% block content %}
+<table class="maillog">
+<tbody>
+<tr>
+<td colspan="3" class="align_center"><img src="/static/graphs/graph{{graph_type}}.png" alt="graph{{graph_type}}"/></td>
+</tr>
+{% if top_items %}
+<tr class="header">
+<td class="first-t">#</td>
+<td class="first-t">Score</td>
+<td class="first-t">Count</td>
+</tr>
+{% for item in top_items %}
+<tr class="sascores">
+<td class="first-t sascores {% cycle '' 'even' %}">{{forloop.counter}}.</td>
+<td class="first-t sascores {% cycle '' 'even' %}">{{item.score}}</td>
+<td class="first-t sascores {% cycle '' 'even' %}">{{item.count}}</td>
+</tr>
+{% endfor %}
+{% endif %}
+</tbody>
+</table>
+{% endblock content %}

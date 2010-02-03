@@ -13,7 +13,26 @@ Adding to Lists
 {% block content %}
 <form method="post" action="/lists/add/">
 <div class="cb">&nbsp;</div>
-{% include "form_base.html" %}
+<div class="row">
+<label for="id_from_address">From address</label>:
+<span class="form"><input type="text" name="from_address" id="id_from_address" size="50" />&nbsp;{{ form.from_address.errors }}</span>
+</div>
+<div class="row">
+<label for="id_to_address">To address</label>:
+<span class="form"><input type="text" name="to_address" id="id_to_address" />&nbsp;&#64;
+<input type="text" name="to_domain" id="id_to_domain" size="24" />&nbsp;
+{{ form.to_address.errors }}
+{{ form.to_domain.errors }}
+</span>
+</div>
+<div class="row">
+<label for="id_list_type">List type</label>:
+<span class="form">
+<select name="list_type" id="id_list_type">
+<option value="1">Whitelist</option>
+<option value="2">Blacklist</option>
+</select>&nbsp;</span>
+</div>
 <div class="cb">&nbsp;</div>
 <div class="buttons">
 <input type="reset" value="Reset" />&nbsp;
