@@ -1,4 +1,39 @@
 {% extends 'base.html' %}
+{% block body_class%}{%if pie_data%} class="tundra"{%endif%}{%endblock body_class%}
+{% block headers %}{%if pie_data %}
+<link rel="stylesheet" type="text/css" href="/static/js/dijit/themes/tundra/tundra.css" />
+<script type="text/javascript">
+        var djConfig = { parseOnLoad:true, isDebug:true };
+</script>
+<script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+dojo.require("dojox.charting.Chart2D");
+dojo.require("dojox.charting.plot2d.Pie");
+dojo.require("dojox.charting.action2d.Highlight");
+dojo.require("dojox.charting.action2d.MoveSlice");
+dojo.require("dojox.charting.action2d.Tooltip");
+dojo.require("dojox.charting.themes.MiamiNice");
+//dojo.require("dojox.charting.widget.Legend");
+
+dojo.addOnLoad(function() {
+var dc = dojox.charting;
+var pie_graph = new dc.Chart2D("pie_graph");
+pie_graph.setTheme(dc.themes.MiamiNice).addPlot("default", {
+type: "Pie",
+font: "normal normal 8pt Tahoma",
+fontColor: "black",
+labelOffset: -30,
+radius: 80
+});
+pie_graph.addSeries("Series A", {{pie_data|safe}});
+var anim_a = new dc.action2d.MoveSlice(pie_graph, "default");
+var anim_b = new dc.action2d.Highlight(pie_graph, "default");
+var anim_c = new dc.action2d.Tooltip(pie_graph, "default");
+pie_graph.render();
+//var pie_legend = new dojox.charting.widget.Legend({chart: pie_graph},"pie_legend");
+});
+</script>{%endif%}
+{% endblock headers %}
 {% block submenu %}
 &nbsp;
 {% endblock submenu %}
@@ -20,23 +55,20 @@ Reports - {{report_title}}
 </tr>
 {% if top_items %}
 {% for item in top_items %}
-<tr>
-<td class="first-t">{{ forloop.counter }}.</td>
-<td class="first-t">
-<!--<div class="pie_{{forloop.counter}} pie"></div>-->
-<div id="pie_text">
+<tr class="sascores">
+<td class="first-t sascores">{{ forloop.counter }}.</td>
+<td class="sascores">
+<div class="pie_{{forloop.counter}} pie"></div>
+&nbsp;
 {% if item.from_address %}{{item.from_address}}{%endif%}
 {% if item.from_domain %}{{item.from_domain}}{%endif%}
 {% if item.to_address %}{{item.to_address}}{%endif%}
 {% if item.to_domain %}{{item.to_domain}}{%endif%}
-</div>
 </td>
-<td class="first-t">{{item.num_count}}</td>
-<td class="first-t">{{item.size|filesizeformat}}</td>
-{% if forloop.first %}<td width="450px;" class="align_center" rowspan="{{forloop.revcounter}}">
-{% if graph_type %}
-<img src="/static/graphs/graph{{graph_type}}.png" alt="graph{{graph_type}}"/>
-{% endif %}
+<td class="first-t sascores">{{item.num_count}}</td>
+<td class="first-t sascores">{{item.size|filesizeformat}}</td>
+{% if forloop.first %}<td class="piebox" rowspan="{{forloop.revcounter}}">
+<div id="pie_graph" style="width: 350px; height: 230px;"></div>
 </td>
 {%endif%}
 </tr>

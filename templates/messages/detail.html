@@ -1,7 +1,67 @@
 {% extends "base.html" %}
 {% block headers %}
-<script type="text/javascript" src="/static/js/jquery-1.4.min.js"></script>
-<script type="text/javascript" src="/static/js/local.js"></script>
+<script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+var formSubmission = function(e){
+    dojo.attr("submit_q_request","disabled",true);
+    dojo.byId("quarantine_errors").innerHTML = "";
+    dojo.create("img",{src:"/static/imgs/loader.gif",alt:"loading"},dojo.byId("ajax_status"))
+    dojo.byId("ajax_status").innerHTML += '&nbsp;Processing the request...';
+    var release  = 0;
+    var todelete = 0;
+    var salearn  = 0;
+    var use_alt  = 0;
+    e.preventDefault();
+    if(dojo.byId("id_release").checked){
+        release = 1;
+    }
+    if(dojo.byId("id_todelete").checked){
+        todelete = 1;
+    }
+    if(dojo.byId("id_salearn").checked){
+        salearn = 1;
+    }
+    if(dojo.byId("id_use_alt").checked){
+        use_alt = 1;
+    }
+    dojo.xhrPost({
+        url: '/messages/process_quarantine/',
+        handleAs: "json",
+        content: {
+             release:        release,
+             todelete:       todelete,
+             salearn:        salearn,
+             salearn_as:     dojo.byId("id_salearn_as").value,
+             use_alt:        use_alt,
+             altrecipients:  dojo.byId("id_altrecipients").value,
+             message_id:     dojo.byId("id_message_id").value
+        },
+        handle: function(data,args){
+            dojo.byId("ajax_status").innerHTML = "";
+            if(typeof data == "error"){
+                dojo.byId("quarantine_errors").innerHTML = args;
+                dojo.attr("submit_q_request","disabled",false);
+            }else{
+                dojo.byId("quarantine_errors").innerHTML = "";
+                dojo.byId("server_response").innerHTML = "";
+                if(data.success == "True"){
+                    dojo.byId("server_response").innerHTML = data.html;
+                    dojo.destroy("process_quarantine");
+                    dojo.destroy("ajax_status");
+                    dojo.destroy("quarantine_errors");
+                }else{
+                    dojo.byId("quarantine_errors").innerHTML = data.html;
+                    dojo.attr("submit_q_request","disabled",false);
+                }
+            }
+        }
+    });
+}
+dojo.addOnLoad(function(){
+    var process_form = dojo.byId("qform");
+    dojo.connect(process_form,"onsubmit","formSubmission"); 
+});
+</script>
 {% endblock headers %}
 {% block title %}Baruwa :: Showing message - {{ message_details.id }} {% endblock %}
 {% block heading %}Showing message - {{ message_details.id }} {% endblock %}
@@ -28,7 +88,7 @@
 		</tr>
 		<tr>
 		<td class="mailitem">From:</td>
-		<td class="maildetail">{{ message_details.from_address|tds_trunc:80 }}
+		<td class="maildetail">{{ message_details.from_address|tds_wrap:80|linebreaksbr }}
     <span class="listings">
     [{% if not message_details.spamwhitelisted %}<a href="">Add to whitelist</a>{%else%}Add to whitelist{%endif%}]
     &nbsp;
@@ -152,13 +212,13 @@
 		<tr>
 		<td colspan="2">
 		<!-- Nested quarantine table -->
-    <div id="ajax_status"></div>
+        <div id="ajax_status"></div>
 		<div id="server_response">
 		</div>
 		<div id="quarantine_errors">
 		</div>
-		<!--<form id="qform" action="/messages/process_quarantine/" method="post">-->
 		<div id="process_quarantine">
+		<form id="qform" action="/messages/process_quarantine/" method="post">
 		<table width="100%">
 		<tbody>
 		<tr>
@@ -190,18 +250,18 @@
 		</td>
 		</tr>
 		<tr>
-		<td colspan="4">
+		<td class="last" colspan="4">
 		{{ form.use_alt }}&nbsp;Alternative recipients:&nbsp;
 		<input type="text" id="id_altrecipients" name="altrecipients" size="70" />
 		</td>
-		<td>
+		<td class="last">
 		<input type="hidden" name="message_id" id="id_message_id" value="{{ message_details.id }}" />
 		<input type="submit" id="submit_q_request" value="Submit" />
 		</td>
 		</tr>
     </tbody>
     </table>
-    <!--</form>-->
+    </form>
     </div>
     <!-- End nested quarantine table -->
     </td>

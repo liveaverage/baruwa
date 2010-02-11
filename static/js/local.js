@@ -1,5 +1,7 @@
 
 function processQuarantine(){
+    $("#submit_q_request").attr('disabled', 'disabled');
+    $("#quarantine_errors").empty();
    var release  = 0;
    var todelete = 0;
    var salearn  = 0;
@@ -30,19 +32,20 @@ function processQuarantine(){
             $("#quarantine_errors").empty();
             $("#server_response").empty();
             if(response.success == "True"){
-                $("submit_q_request").attr('disabled','disabled');
                 $("#server_response").prepend(response.html).slideDown();
                 $("#process_quarantine").slideToggle();
             }else{
                 $("#quarantine_errors").append(response.html);
+                $("#submit_q_request").removeAttr('disabled');
             }
         }, "json");
+    return false;
 }
 
 function prepareDoc(){
-    $("#submit_q_request").click(processQuarantine);
+    $("#qform").submit(processQuarantine);
     $("#ajax_status").ajaxSend(function() {
-      $(this).append('<img src="/static/imgs/loader.gif" />&nbsp;Processing request...');
+      $(this).append('<img src="/static/imgs/loader.gif" />&nbsp;Processing the request...');
     });
     $("#ajax_status").ajaxStop(function() {
       $(this).empty();

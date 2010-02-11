@@ -13,7 +13,7 @@ class Blacklist(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('baruwa.lists.views.delete_from_list', (), {'list_kind':2,'item_it':self.id})
+        return ('lists.views.delete_from_list', (), {'list_kind':2,'item_it':self.id})
 
 class Whitelist(models.Model):
     id = models.IntegerField(primary_key=True)

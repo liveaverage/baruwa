@@ -1,15 +1,53 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 from django.shortcuts import render_to_response
-from baruwa.lists.models import Blacklist, Whitelist
-from baruwa.lists.forms import ListAddForm
+from django.views.generic.list_detail import object_list
+from lists.models import Blacklist, Whitelist
+from lists.forms import ListAddForm,FilterForm
 from django.http import HttpResponseRedirect, Http404
 
-def index(request):
-    blacklist = Blacklist.objects.all()
-    whitelist = Whitelist.objects.all()
+def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for='',query_type=3):
+    list_kind = int(list_kind)
+    query_type = int(query_type)
+    if query_type == 3:
+        query_type = None
+    ordering = order_by
+    if search_for == '':
+        do_filtering = False
+    else:
+        do_filtering = True
+    
+    if direction == 'dsc':
+        ordering = order_by
+        order_by = "-%s" % order_by
 
-    return render_to_response('lists/index.html', {'whitelist':whitelist, 'blacklist':blacklist})
+    if list_kind == 1:
+        listing = Whitelist.objects.all().order_by(order_by)
+    elif list_kind == 2:
+        listing = Blacklist.objects.all().order_by(order_by)
+
+    if request.method == 'POST':
+        filter_form = FilterForm(request.POST)
+        if filter_form.is_valid():
+            query_type = int(filter_form.cleaned_data['query_type'])
+            search_for = filter_form.cleaned_data['search_for']
+            if search_for != "" and not search_for is None:
+                do_filtering = True
+    if do_filtering:
+        if query_type == 1:
+            if ordering == 'to_address':
+                listing = listing.filter(to_address__icontains=search_for)
+            elif ordering == 'from_address':
+                listing = listing.filter(from_address__icontains=search_for)
+        else:
+            if ordering == 'to_address':
+                listing = listing.exclude(to_address__icontains=search_for)
+            elif ordering == 'from_address':
+                listing = listing.exclude(from_address__icontains=search_for)
+    app = "lists/%d" % list_kind
+    #return render_to_response('lists/index.html', {'list':listing,'list_kind':list_kind})
+    return object_list(request,template_name='lists/index.html',queryset=listing, paginate_by=20,page=page,
+        extra_context={'app':app,'list_kind':list_kind,'direction':direction,'order_by':ordering,'search_for':search_for,'query_type':query_type})
 
 def add_to_list(request):
     template = 'lists/add.html'

@@ -10,24 +10,25 @@ def relayed_via(headers):
     return_value = []
     ipaddr = ""
     for header in header_list:
-        m = re.match(r'^Received:',header)
+        m = re.match(r'(^Received:|X-Originating-IP:)',header)
         if m:
-            m = re.findall(r'(\s|\()\[(([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3}))\]',header)
+            #m = re.findall(r'(\w+|\s|\()\[(([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3}))\]',header)
+            m = re.findall(r'((?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3}))',header)
             if m:
-                m.reverse()
+                #m.reverse()
                 for l in m:
                     try:
-                        iptype = IP(l[1]).iptype()
+                        iptype = IP(l).iptype()
                     except:
                         # psuedo work around if IPy not installed
-                        if l[1] == '127.0.0.1':
+                        if l == '127.0.0.1':
                             iptype = 'LOOPBACK'
                         else:
                             iptype = 'unknown'
                     country_code = ""
                     country_name = ""
-                    if not iptype == "LOOPBACK" and l[1] != ipaddr:
-                        ipaddr = l[1]
+                    if not iptype == "LOOPBACK" and l != ipaddr:
+                        ipaddr = l
                         try:
                             hostname = socket.gethostbyaddr(ipaddr)[0]
                         except:

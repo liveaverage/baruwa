@@ -34,7 +34,7 @@ input[type=radio], input[type=checkbox], input[type=submit], input[type=reset], 
 	font-size: 1em;
 }
 
-input[type=text], input[type=checkbox] {
+input[type=text], input[type=checkbox], select {
   border:1px solid #ddd;
 }
 
@@ -179,11 +179,13 @@ div.buttons {
   background:#000000 none repeat scroll 0 0;
 }
 
-#pie_text {
+.pie_text {
   float:left;
   padding-left:5px;
   vertical-align:top;
 }
+
+
 
 #ajax_status {
   padding-left:40px;
@@ -219,7 +221,7 @@ table.maillog {
 }
 
 table.maillog tr {
-	height: 35px;
+	height: 32px;
 }
 
 table.maillog tr.header {
@@ -228,8 +230,12 @@ table.maillog tr.header {
 
 table.maillog td {
 	border-bottom: 1px solid #ddd;
-	height: 32px !important;
-  overflow:hidden;
+	height: 32px;
+    overflow:hidden;
+}
+
+table.maillog td.last {
+    border-bottom: 0px;
 }
 
 table.maillog td.pagination {
@@ -239,6 +245,11 @@ table.maillog td.pagination {
 table.maillog td.equal {
   width:480px;
   vertical-align:top;
+}
+
+table.maillog td.ordered_by {
+    /*background:#F0F0F0;*/
+    color:black;
 }
 
 table.maillog th {
@@ -268,6 +279,11 @@ table.maillog tr.blacklisted {
   background-color: black;
 }
 
+table.maillog tr.infested {
+    background-color:#B22222;
+    color:white;
+}
+
 table.maillog td.divider {
   background-color: #eee;
   font-weight:bold;
@@ -293,12 +309,18 @@ table.maillog td.maildetail {
   width:760px;
 }
 
-table.maillog tr.sascores td.sascores {
+table.maillog td.piebox {
+    text-align:center;
+    width:350px;
+	border-left: 1px solid #ddd;
+}
+
+table.maillog td.sascores, td.lists {
     height: 15px !important;
     line-height:5px;
 }
 
-table.maillog tr.sascores {
+table.maillog tr.sascores, tr.lists {
     height: 15px !important;
     line-height:5px;
 }
@@ -321,7 +343,7 @@ table.inner td {
 table.inner td.last {
   height:10px !important;
   line-height:12px;
-	border-bottom: 0px;
+  border-bottom: 0px;
   padding-left:10px;
 }
 
@@ -554,6 +576,16 @@ div.cb {
 #search form {
 	margin: 0;
 	padding: 0;
+}
+
+#paginator {
+    float:right;
+    padding-right:20px;
+}
+
+#filterbox {
+    float:left;
+    padding-left:20px;
 }
 
 .divider-header {

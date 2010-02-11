@@ -32,10 +32,10 @@ class QuarantineProcessForm(forms.Form):
     if not salearn and not release and not todelete:
       raise forms.ValidationError("Select atleast one action to perform")
     else:
-      if altrecipients in EMPTY_VALUES and use_alt:
+      if altrecipients in EMPTY_VALUES and use_alt and release:
         raise forms.ValidationError("Provide atleast one alternative recipient")
       else:
-        if use_alt:
+        if use_alt and release:
           emails = altrecipients.split(',')
           for email in emails:
             if not email_re.match(email.strip()):

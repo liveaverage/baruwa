@@ -50,7 +50,7 @@ class Maillog(models.Model):
     
     @models.permalink
     def get_absolute_url(self):
-	      return ('baruwa.messages.views.index', (), {'message_id':self.id})
+	      return ('messages.views.index', (), {'message_id':self.id})
 
 class SaRules(models.Model):
     rule = models.CharField(max_length=100, primary_key=True)

@@ -1,76 +1,77 @@
 {% extends "base.html" %}
 {% block submenu %}
 <ul>
+{% ifequal list_kind 1 %}
+  <li><a href="/lists/2/">Blacklist</a></li>
+{%else%}
+  <li><a href="/lists/1/">Whitelist</a></li>
+{%endifequal%}
   <li><a href="/lists/add/">Add to List</a></li>
 </ul>
 {% endblock submenu %}
 {% block title %}
-List management
+List management{%if is_paginated%} {% load pagination_heading %}{% pagination_heading %}{%endif%}
 {% endblock title %}
 {% block heading %}
-Showing Whitelists and Blacklists
+{% ifequal list_kind 1 %}Whitelist{%else%}Blacklist{%endifequal%}{%if is_paginated%} :: {% pagination_heading %}{%endif%}
 {% endblock heading %}
 {% block content %}
 <table class="maillog">
-  <tbody>
-    <tr class="header">
-    <td class="first-t">Whitelist</td>
-    <td class="first-t">Blacklist</td>
-    </tr>
-    <tr>
-    <td class="tdholder">
-    <!-- whitelist -->
-    <table width="100%">
-    {% if whitelist %}
-    {% load messages_extras %}
-    <tr>
-    <td class="first-t">To</td>
-    <td class="first-t">From</td>
-    <td class="first-t">Action</td>
-    </tr>
-    {% for listitems in whitelist %}
-    <tr>
-    <td class="first-t">{{listitems.to_address|tds_email_list|escape}}</td>
-    <td class="first-t">{{listitems.from_address|escape}}</td>
-    {% ifnotequal listitems.from_address "127.0.0.1" %}
-    <td class="first-t"><a href="/lists/delete/1/{{listitems.id}}/">Delete</a></td>
-    {% else %}
-    <td class="first-t">=builtin=</td>
-    {% endifnotequal %}
-    </tr>
-    {% endfor %}
-    {% else %}
-    <tr>
-    <td>None at the moment</td>
-    </tr>
-    {% endif %}
-    </table>
-    </td>
-    <td class="tdholder">
-    <!-- blacklist -->
-    <table width="100%">
-    {% if blacklist %}
-    {% load messages_extras %}
-    <tr>
-    <td class="first-t">To</td>
-    <td class="first-t">From</td>
-    <td class="first-t">Action</td>
-    </tr>
-    {% for listitems in blacklist %}
-    <tr>
-    <td class="first-t">{{listitems.to_address|tds_email_list|escape}}</td>
-    <td class="first-t">{{listitems.from_address|escape}}</td>
-    <td class="first-t"><a href="/lists/delete/2/{{listitems.id}}/">Delete</a></td>
-    </tr>
-    {% endfor %}
-    {% else %}
-    <tr>
-    <td>None at the moment</td>
-    </tr>
-    {% endif %}
-    </table>
-    </td>
-    </tr>
-  </tbody>
+    <tbody>
+        <tr class="header">
+            {% load sorter %}
+            <th class="first-t">
+            {% sorter "id" "#" %}
+            </th>
+            <th class="first-t">
+            {% sorter "to_address" "To" %}
+            </th>
+            <th class="first-t">
+            {% sorter "from_address" "From" %}
+            </th>
+            <th class="first-t">
+            Action
+            </th>
+        </tr>
+        {% if object_list %}
+        {% load messages_extras %}
+        {% for listitem in object_list %}
+        <tr class="lists">
+            <td class="lists first-t{%ifequal order_by "id"%} ordered_by{%endifequal%}">{{listitem.id}}</td>
+            <td class="lists first-t{%ifequal order_by "to_address"%} ordered_by{%endifequal%}">{{listitem.to_address|tds_email_list}}</td>
+            <td class="lists first-t{%ifequal order_by "from_address"%} ordered_by{%endifequal%}">{{listitem.from_address}}</td>
+            {% ifnotequal listitem.from_address "127.0.0.1" %}
+            <td class="lists first-t"><a href="/lists/delete/{{list_kind}}/{{listitem.id}}/">Delete</a></td>
+            {% else %}
+            <td class="lists first-t">=builtin=</td>
+            {% endifnotequal %}
+        </tr>
+        {% endfor %}
+        <tr class="header">
+        <td colspan="4" class="pagination">
+        {% ifnotequal order_by "id" %}
+        <div id="filterbox">
+        <form method="post" action="/{{app}}/{{direction}}/{{order_by}}/">
+        Filter {%ifequal order_by "to_address"%}To:{%endifequal%}{%ifequal order_by "from_address"%}From:{%endifequal%}
+        <select name="query_type">
+        <option value="1"{%ifequal query_type 1%} selected="selected"{%endifequal%}>containing</option>
+        <option value="2"{%ifequal query_type 2%} selected="selected"{%endifequal%}>excluding</option>
+        </select>
+        <input name="search_for" type="text" value="{{search_for}}" size="25" />
+        <input type="submit" value="GO" />
+        </form>
+        </div>
+        {%endifnotequal%}
+        <div id="paginator">
+        {% if is_paginated %}{% pagination_heading %}{% load paginator %}{% paginator 3 %}{% endif %}
+        </div>
+        </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td class="align_center" colspan="4">No items at the moment</td>
+        </tr>
+        {% endif %}
+    </tbody>
 </table>
 {% endblock content %}

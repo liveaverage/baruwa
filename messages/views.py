@@ -1,19 +1,16 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 from django.shortcuts import render_to_response,get_object_or_404
-from baruwa.messages.models import Maillog
-from baruwa.messages.forms import QuarantineProcessForm
+from messages.models import Maillog
+from messages.forms import QuarantineProcessForm
 from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.http import HttpResponse, Http404
 from django.forms.util import ErrorList as errorlist
 from django.views.generic.list_detail import object_list
-from baruwa.messages.process_mail import *
+from messages.process_mail import *
 
 def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='timestamp'):
-  # not required the url will never allow anything else
-  #sort_fields = ('timestamp','from_address','to_address','subject','size','sascore')
-  #if order_by in sort_fields:
   ordering = order_by
   if direction == 'dsc':
     ordering = order_by
@@ -21,16 +18,16 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
 
   if not list_all:
     message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
-    ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted')[:50]
+    ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected')[:50]
   else:
     if quarantine:
       message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
-      ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','quarantined').order_by(order_by).filter(quarantined__exact=1)
+      ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','quarantined','nameinfected').order_by(order_by).filter(quarantined__exact=1)
     else:
       message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
-      ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted').order_by(order_by)
+      ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected').order_by(order_by)
   return object_list(request, template_name='messages/index.html', queryset=message_list, paginate_by=50, page=page, 
-    extra_context={'quarantine': quarantine,'direction':direction,'order_by':ordering})
+    extra_context={'quarantine': quarantine,'direction':direction,'order_by':ordering,'app':'messages'})
 
 def detail(request, message_id):
   message_details = get_object_or_404(Maillog, id=message_id)

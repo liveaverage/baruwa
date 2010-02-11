@@ -11,7 +11,7 @@
 <td{% if forloop.last %} class="last"{%endif%}>{{host.hostname}}</td>
 <td{% if forloop.last %} class="last"{%endif%}>
 {% if host.country_code %}
-<img src="/static/imgs/flags/{{host.country_code}}.png" />
+<img src="/static/imgs/flags/{{host.country_code}}.png" alt="{{host.country_code}}" />
 {% endif %}
 &nbsp;{{host.country_name}}
 </td>

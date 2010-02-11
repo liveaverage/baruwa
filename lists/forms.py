@@ -46,3 +46,7 @@ class ListAddForm(forms.Form):
             del cleaned_data["to_domain"]
             del cleaned_data["to_address"]
         return cleaned_data
+
+class FilterForm(forms.Form):
+    query_type = forms.ChoiceField(choices=((1,'containing'),(2,'excluding')))
+    search_for = forms.CharField(required=False)

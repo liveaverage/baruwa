@@ -1,10 +1,10 @@
 {%ifequal order_by field_name %}
   {{field_text}}
   {%ifequal direction "dsc"%}
-  <a href="/messages/{{quarantine}}/asc/{{field_name}}/">&uarr;</a>
+  <a href="{%ifequal app "messages"%}/messages/{{quarantine}}{%else%}/{{app}}{%endifequal%}/asc/{{field_name}}/">&uarr;</a>
   {%else%}
-  <a href="/messages/{{quarantine}}/dsc/{{field_name}}/">&darr;</a>
+  <a href="{%ifequal app "messages"%}/messages/{{quarantine}}{%else%}/{{app}}{%endifequal%}/dsc/{{field_name}}/">&darr;</a>
   {%endifequal%}
 {%else%}
-  <a href="/messages/{{quarantine}}/dsc/{{field_name}}/">{{field_text}}</a>
+  <a href="{%ifequal app "messages"%}/messages/{{quarantine}}{%else%}/{{app}}{%endifequal%}/dsc/{{field_name}}/">{{field_text}}</a>
 {%endifequal%}

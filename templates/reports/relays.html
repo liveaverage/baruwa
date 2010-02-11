@@ -1,4 +1,39 @@
 {% extends 'base.html' %}
+{% block body_class%}{%if pie_data%} class="tundra"{%endif%}{%endblock body_class%}
+{% block headers %}{%if pie_data%}
+<link rel="stylesheet" type="text/css" href="/static/js/dijit/themes/tundra/tundra.css" />
+<script type="text/javascript">
+    var djConfig = { parseOnLoad:true, isDebug:true };
+</script>
+<script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+dojo.require("dojox.charting.Chart2D");
+dojo.require("dojox.charting.plot2d.Pie");
+dojo.require("dojox.charting.action2d.Highlight");
+dojo.require("dojox.charting.action2d.MoveSlice");
+dojo.require("dojox.charting.action2d.Tooltip");
+dojo.require("dojox.charting.themes.MiamiNice");
+//dojo.require("dojox.charting.widget.Legend");
+
+dojo.addOnLoad(function() {
+var dc = dojox.charting;
+var pie_graph = new dc.Chart2D("pie_graph");
+pie_graph.setTheme(dc.themes.MiamiNice).addPlot("default", {
+type: "Pie",
+font: "normal normal 8pt Tahoma",
+fontColor: "black",
+labelOffset: -30,
+radius: 80
+});
+pie_graph.addSeries("Series A", {{pie_data|safe}});
+var anim_a = new dc.action2d.MoveSlice(pie_graph, "default");
+var anim_b = new dc.action2d.Highlight(pie_graph, "default");
+var anim_c = new dc.action2d.Tooltip(pie_graph, "default");
+pie_graph.render();
+//var pie_legend = new dojox.charting.widget.Legend({chart: pie_graph},"pie_legend");
+});
+</script>{%endif%}
+{% endblock headers %}
 {% block submenu %}
 &nbsp;
 {% endblock submenu %}
@@ -13,8 +48,8 @@ Reports - {{report_title}}
 <tbody>
 <tr class="header">
 <td class="first-t">#</td>
-<td class="first-t">Hostname</td>
 <td class="first-t">IP address</td>
+<td class="first-t">Hostname</td>
 <td class="first-t">Country</td>
 <td class="first-t">Total/S/V</td>
 <td class="first-t">Volume</td>
@@ -23,29 +58,28 @@ Reports - {{report_title}}
 {% if top_items %}
 {% load messages_extras %}
 {% for item in top_items %}
-<tr>
-<td class="first-t">{{ forloop.counter }}.</td>
+<tr class="sascores">
+<td class="first-t sascores">{{ forloop.counter }}.</td>
 <td class="first-t">
-<!--<div class="pie_{{forloop.counter}} pie"></div>-->
-<div id="pie_text">
-{{item.clientip|tds_hostname}}
+<div class="pie_{{forloop.counter}} pie"></div>
+&nbsp;
+<div class="pie_text">
+{{item.clientip}}
 </div>
 </td>
-<td class="first-t">{{item.clientip}}</td>
-<td class="first-t">{{item.clientip|tds_geoip}}</td>
-<td class="first-t">{{item.num_count}}/{{item.spam_total}}/{{item.virus_total}}</td>
-<td class="first-t">{{item.size|filesizeformat}}</td>
-{% if forloop.first %}<td width="450px;" class="align_center" rowspan="{{forloop.revcounter}}">
-{% if graph_type %}
-<img src="/static/graphs/graph{{graph_type}}.png" alt="graph{{graph_type"/>
-{% endif %}
+<td class="first-t sascores">{{item.clientip|tds_hostname}}</td>
+<td class="first-t sascores">{{item.clientip|tds_geoip}}</td>
+<td class="first-t sascores">{{item.num_count}}/{{item.spam_total}}/{{item.virus_total}}</td>
+<td class="first-t sascores">{{item.size|filesizeformat}}</td>
+{% if forloop.first %}<td class="piebox" rowspan="{{forloop.revcounter}}">
+<div id="pie_graph" style="width: 350px; height: 230px;"></div>
 </td>
 {%endif%}
 </tr>
 {% endfor %}
 {% else %}
 <tr>
-<td colspan="5" class="align_center">No records returned</td>
+<td colspan="6" class="align_center">No records returned</td>
 </tr>
 {% endif %}
 </tbody>

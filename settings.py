@@ -17,7 +17,7 @@ DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysq
 DATABASE_NAME = 'mailscanner'             # Or path to database file if using sqlite3.
 DATABASE_USER = 'hotsexygirl'             # Not used with sqlite3.
 DATABASE_PASSWORD = 't0nyd4nz4$$$'         # Not used with sqlite3.
-DATABASE_HOST = 'spamcop03.sentechsa.net'             # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_HOST = 'spamcop01.sentechsa.net'             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 # Local time zone for this installation. Choices can be found here:
@@ -62,12 +62,13 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.gzip.GZipMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
-ROOT_URLCONF = 'baruwa.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -81,5 +82,9 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     #'django.contrib.sites',
-    'baruwa.messages',
+    'messages',
+    'lists',
+    'reports',
 )
+
+EMAIL_HOST = 'smtp01.sentechsa.net'

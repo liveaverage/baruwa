@@ -11,7 +11,7 @@ CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8')).replac
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^$', 'baruwa.messages.views.index'),
+    (r'^$', 'messages.views.index'),
     (r'^messages/', include('messages.urls')),
     (r'^lists/', include('lists.urls')),
     (r'^reports/', include('reports.urls')),

@@ -1,4 +1,26 @@
 {% extends 'base.html' %}
+{% block body_class%}{%if pie_data.scores and pie_data.count%} class="tundra"{%endif%}{%endblock body_class%}
+{% block headers %}{% if pie_data.scores and pie_data.count %}
+<link rel="stylesheet" type="text/css" href="/static/js/dijit/themes/tundra/tundra.css" />
+<script type="text/javascript">
+    var djConfig = { parseOnLoad:true, isDebug:true };
+</script>
+<script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+dojo.require("dojox.charting.Chart2D");
+dochart = function(){
+    var sagraph = new dojox.charting.Chart2D("sagraph");
+    sagraph.addPlot("default", {type: "ClusteredColumns",gap:1});
+    sagraph.addAxis("x"{% if pie_data.scores%},{labels: [{% for i in pie_data.scores%}{% if not forloop.last %}
+{value:{{forloop.counter}}, text:"{{i}}"},{% else %}{value:{{forloop.counter}}, text:"{{i}}"}{% endif %}{%endfor%}
+],majorTickStep:5}{%endif%});
+    sagraph.addAxis("y", {vertical: true});
+    sagraph.addSeries("SA scores", {{pie_data.count|safe}},{stroke: {color: "black"}, fill: "blue"});
+    sagraph.render();
+};
+dojo.addOnLoad(dochart);
+</script>{%endif%}
+{% endblock headers %}
 {% block submenu %}
 &nbsp;
 {% endblock submenu %}
@@ -12,17 +34,19 @@ Reports - {{report_title}}
 <table class="maillog">
 <tbody>
 <tr>
-<td colspan="3" class="align_center"><img src="/static/graphs/graph{{graph_type}}.png" alt="graph{{graph_type}}"/></td>
+<td colspan="3" class="align_center">
+<div id="sagraph" style="width: 950px; height: 250px;"></div>
+</td>
 </tr>
 {% if top_items %}
 <tr class="header">
-<td class="first-t">#</td>
+<td class="first-t">&nbsp;</td>
 <td class="first-t">Score</td>
 <td class="first-t">Count</td>
 </tr>
 {% for item in top_items %}
 <tr class="sascores">
-<td class="first-t sascores {% cycle '' 'even' %}">{{forloop.counter}}.</td>
+<td class="first-t sascores {% cycle '' 'even' %}">&nbsp;</td>
 <td class="first-t sascores {% cycle '' 'even' %}">{{item.score}}</td>
 <td class="first-t sascores {% cycle '' 'even' %}">{{item.count}}</td>
 </tr>

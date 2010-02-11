@@ -26,10 +26,21 @@ def paginator(context, adjacent_pages=2):
             if n > 0 and n <= context['pages']]
     page_obj = context['page_obj']
     paginator = context['paginator']
-    if context['quarantine']:
+    if context.has_key('quarantine'):
       quarantine = "quarantine"
     else:
       quarantine = "full"
+
+    if not context.has_key('direction'):
+        context['direction'] = None
+
+    if not context.has_key('order_by'):
+        context['order_by'] = None
+    if not context.has_key('search_for'):
+        context['search_for'] = None
+
+    if not context.has_key('query_type'):
+        context['query_type'] = None
 
     return {
         'page_obj': page_obj,
@@ -48,6 +59,9 @@ def paginator(context, adjacent_pages=2):
         'quarantine': quarantine,
         'order_by': context['order_by'],
         'direction': context['direction'],
+        'app': context['app'],
+        'search_for': context['search_for'],
+        'query_type': context['query_type'],
     }
 
 register.inclusion_tag('tags/paginator.html', takes_context=True)(paginator)

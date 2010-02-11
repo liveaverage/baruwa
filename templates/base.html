@@ -4,10 +4,10 @@
 <head>
 <title>Baruwa :: {% block title %}{% endblock title %}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="Stylesheet" type="text/css" href="/static/css/layout.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/layout.css" />
 {% block headers %}{% endblock headers %}
 </head>
-<body class="">
+<body{%block body_class%}{%endblock body_class%}>
 <div id="main-wrapper">
   <div id="header-wrapper">
     <div id="header">

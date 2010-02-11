@@ -13,7 +13,7 @@
 {% endblock submenu %}
 {% block title %}
 {% if is_paginated %} 
-Showing page {{ latest_message_list.number }} of {{ latest_message_list.paginator.num_pages }} pages.
+{% load pagination_heading %}{% pagination_heading %}
 {% else %}
 Showing the 50 most recent messages
 {% endif %}
@@ -67,7 +67,8 @@ Showing the 50 most recent messages (30 second refresh)
 	<tr{% if message.isspam and not message.ishighspam and not message.spamblacklisted %} class="spam"{% endif %}
     {% if message.ishighspam and not message.spamblacklisted %} class="highspam"{% endif %}
     {% if message.spamwhitelisted %} class="whitelisted"{% endif %}
-    {% if message.spamblacklisted %} class="blacklisted"{% endif %}>
+    {% if message.spamblacklisted %} class="blacklisted"{% endif %}
+    {% if message.nameinfected %} class="infested"{% endif %}>
 	<td class="first-t">[<a href="/messages/{{ message.id }}/">&nbsp;&nbsp;</a>]</td>
 	<td>{{ message.timestamp }}</td>
 	<td>{{ message.from_address|tds_trunc:30 }}</td>

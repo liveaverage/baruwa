@@ -5,7 +5,7 @@ from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
-from baruwa.messages.models import SaRules
+from messages.models import SaRules
 
 register = template.Library()
 
@@ -79,16 +79,14 @@ def tds_is_learned(value,autoescape=None):
   return mark_safe(r)
 tds_is_learned.needs_autoescape = True
 
-@register.inclusion_tag('tags/spamreport.html')
-def spam_report(value):
-  if not value:
-    return ""
-  return_value = []
-  sa_rule_descp = ""
-  m = re.search(r'\((.+?)\)',value)
-  if m:
-    tmp = m.groups()[0].split(',')
-    for rule in tmp:
+def tds_get_rules(rules):
+    if not rules:
+        return {}
+
+    return_value = []
+    sa_rule_descp = ""
+
+    for rule in rules:
       rule = rule.strip()
       u = re.match(r'((\w+)(\s)(\d{1,2}\.\d{1,2}))',rule)
       if u:
@@ -102,7 +100,28 @@ def spam_report(value):
         tdict = {'rule':rule,'score':u.groups()[3],'rule_descp':sa_rule_descp}
         return_value.append(tdict)
         sa_rule_descp = ""
-  return {'rules':return_value}
+    return return_value
+
+@register.inclusion_tag('tags/spamreport.html')
+def spam_report(value):
+    if not value:
+        return ""
+
+    m = re.search(r'\((.+?)\)',value)
+    if m:
+        rules = m.groups()[0].split(',')
+        return_value = tds_get_rules(rules)
+    else:
+        return_value = []
+    return {'rules':return_value}
+
+@register.filter(name='tds_wrap')
+@stringfilter
+def tds_wrap(value,length=100):
+    length = int(length)
+    if len(value) > length:
+        value = '\n'.join(wrap(value,length))
+    return value
 
 @register.filter(name='tds_wrap_headers')
 @stringfilter
@@ -111,6 +130,6 @@ def tds_wrap_headers(value):
     rstring = []
     for header in headers:
         if len(header) > 100:
-            header = '\n'.join(wrap(header,100))
+            header = tds_wrap(header,100) #'\n'.join(wrap(header,100))
         rstring.append(header)
     return ('\n'.join(rstring))
