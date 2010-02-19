@@ -27,9 +27,12 @@ def paginator(context, adjacent_pages=2):
     page_obj = context['page_obj']
     paginator = context['paginator']
     if context.has_key('quarantine'):
-      quarantine = "quarantine"
+        if int(context['quarantine']) == 1:
+            quarantine = "quarantine"
+        else:
+            quarantine = "full"
     else:
-      quarantine = "full"
+        quarantine = ''
 
     if not context.has_key('direction'):
         context['direction'] = None

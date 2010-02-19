@@ -29,16 +29,10 @@
       <div class="cb"></div>
     </div>
     <div class="cb">&nbsp;</div>
-    <div class="divider-header">
-      <div id="search">
-        <form method="get" action="">
-          <fieldset>
-            <span class="text-hl">Search:</span>
-            <input type="text" name="message_id"{% block messaged %}{% endblock messaged %}/>
-          </fieldset>
-        </form>
-      </div>
+    <div id="divider-header" class="divider-header">
       <h3>{% block heading %}{% endblock heading %}</h3>
+      <!--<div id="top-pagination">
+      </div>-->
     </div>
     <div class="cb">&nbsp;</div>
     <div id="content-layout">
@@ -52,5 +46,8 @@
 	Django Powered
 	</div><!-- footer -->
 </div><!-- footer-wrapper -->
+<div id="loading_message" class="loading_message" style="display: none;">
+<p><img src="/static/imgs/loader.gif" alt="loading"/>&nbsp;Loading.......</p>
+</div>
 </body>
 </html>

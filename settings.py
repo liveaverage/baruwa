@@ -66,6 +66,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -85,6 +86,8 @@ INSTALLED_APPS = (
     'messages',
     'lists',
     'reports',
+    'debug_toolbar',
 )
 
 EMAIL_HOST = 'smtp01.sentechsa.net'
+INTERNAL_IPS = ('127.0.0.1',)

@@ -1,10 +1,25 @@
 {% extends "base.html" %}
 {% block headers %}
+<link href="/static/css/dynamic.css" type="text/css" rel="stylesheet" />
+<link href="/static/css/demo_table.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" language="javascript" src="/static/js/jquery-1.4.min.js"></script>
+<script type="text/javascript" language="javascript" src="/static/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+var highscore = 12;
+var theTable;
+var rj;
+var ax_error = false;
+var old_order_by = 'timestamp';
+</script>
+<script type="text/javascript" language="javascript" src="/static/js/lib.js"></script>
 {% if not is_paginated %}
-<meta http-equiv="refresh" content="30">
+<!--<meta http-equiv="refresh" content="30">-->
+<script type="text/javascript" language="javascript" src="/static/js/recent_messages.js"></script>
+{% else %}
+<script type="text/javascript" language="javascript" src="/static/js/messages.js"></script>
+<script type="text/javascript" language="javascript" src="/static/js/jquery.address-1.1.min.js"></script>
 {% endif %}
 {% endblock headers %}
-
 {% block submenu %}
 <ul>
   <li><a href="/messages/full/">Full message list</a></li>
@@ -22,53 +37,53 @@ Showing the 50 most recent messages
 {% if is_paginated %}
 {% load pagination_heading %}{% pagination_heading %}
 {% else %}
-Showing the 50 most recent messages (30 second refresh)
+Showing the 50 most recent messages <small><span id="search-area">[refreshed every 60 sec's]</span></small>
 {% endif %}
 {% endblock heading %}
 {% block content %}
-<table class="maillog">
+<table class="maillog" id="recent">
+<thead>
 <tr class="header">
 {% if is_paginated %}
 {% load sorter %}
 	<th class="first-t">#</th>
-	<th>
   {% sorter "timestamp" "Date/Time" %}
-  </th>
-	<th>
   {% sorter "from_address" "From" %}
-  </th>
-	<th>
   {% sorter "to_address" "To" %}
-  </th>
-	<th>
   {% sorter "subject" "Subject" %}
-  </th>
-	<th>
   {% sorter "size" "Size" %}
-  </th>
-	<th>
   {% sorter "sascore" "Score" %}
-  </th>
-	<th>Status</th>
+  <th>Status</th>
 {% else %}
 	<th class="first-t">#</th>
-	<th>Date/Time</th>
-	<th>From</th>
-	<th>To</th>
-	<th>Subject</th>
-	<th>Size</th>
-	<th>Score</th>
-	<th>Status</th>
+	<th><a href="#">Date/Time</a></th>
+	<th><a href="#">From</a></th>
+	<th><a href="#">To</a></th>
+	<th><a href="#">Subject</a></th>
+	<th><a href="#">Size</a></th>
+	<th><a href="#">Score</a></th>
+	<th><a href="#">Status</a></th>
 {% endif %}
 </tr>
+</thead>
+{% if is_paginated %}
+<tfoot>
+  <tr class="header">
+  <td id="pagination" colspan="8" class="pagination">
+  {% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+  </td>
+  </tr>
+</tfoot>
+{% endif %}
+<tbody>
 {% if object_list %}
 	{% load messages_extras %}
 	{% for message in object_list %}
-	<tr{% if message.isspam and not message.ishighspam and not message.spamblacklisted %} class="spam"{% endif %}
+	<tr{% if message.isspam and not message.ishighspam and not message.spamblacklisted and not message.nameinfected and not message.otherinfected and not message.virusinfected %} class="spam"{% endif %}
     {% if message.ishighspam and not message.spamblacklisted %} class="highspam"{% endif %}
     {% if message.spamwhitelisted %} class="whitelisted"{% endif %}
     {% if message.spamblacklisted %} class="blacklisted"{% endif %}
-    {% if message.nameinfected %} class="infested"{% endif %}>
+    {% if message.nameinfected or message.virusinfected %} class="infested"{% endif %}>
 	<td class="first-t">[<a href="/messages/{{ message.id }}/">&nbsp;&nbsp;</a>]</td>
 	<td>{{ message.timestamp }}</td>
 	<td>{{ message.from_address|tds_trunc:30 }}</td>
@@ -77,21 +92,15 @@ Showing the 50 most recent messages (30 second refresh)
 	<td>{{ message.size|filesizeformat }}</td>
 	<td>{{ message.sascore }}</td>
 	<td>
-    {% if message.isspam and not message.virusinfected and not message.nameinfected and not message.otherinfected %}Spam{% endif %}
-    {% if message.spamblacklisted %}[BL]{%endif%}
+    {% if message.isspam and not message.spamblacklisted and not message.virusinfected and not message.nameinfected and not message.otherinfected %}Spam{% endif %}
+    {% if message.spamblacklisted %}BL{%endif%}
     {% if message.virusinfected or message.nameinfected or message.otherinfected %}Infected{% endif %}
-    {% if not message.isspam and not message.virusinfected and not message.nameinfected and not message.otherinfected %}Clean{% endif %}
-    {% if message.spamwhitelisted %}[WL]{%endif%}
+    {% if not message.isspam and not message.virusinfected and not message.nameinfected and not message.otherinfected and not message.spamwhitelisted %}Clean{% endif %}
+    {% if message.spamwhitelisted %}WL{%endif%}
     </td>
 	</tr>
 	{% endfor %}
 {% endif %}
-{% if is_paginated %}
-  <tr class="header">
-  <td colspan="8" class="pagination">
-  {% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
-  </td>
-  </tr>
-{% endif %}
+</tbody>
 </table>
 {% endblock content %}

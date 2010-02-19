@@ -27,12 +27,12 @@ def report(request,report_kind):
     report_kind = int(report_kind)
     template = "reports/piereport.html"
     if report_kind == 1:
-        data = Maillog.objects.values('from_address').filter(from_address__isnull=False).\
+        data = Maillog.objects.values('from_address').\
         exclude(from_address = '').annotate(num_count=Count('from_address'),size=Sum('size')).order_by('-num_count')[:10] 
         pie_data = pack_data(data,'from_address','num_count')
         report_title = "Top senders by quantity"
     elif report_kind == 2:
-        data = Maillog.objects.values('from_address').filter(from_address__isnull=False).\
+        data = Maillog.objects.values('from_address').\
         exclude(from_address = '').annotate(num_count=Count('from_address'),size=Sum('size')).order_by('-size')[:10] 
         pie_data = pack_data(data,'from_address','size')
         report_title = "Top senders by volume"

@@ -4,7 +4,13 @@ from django.shortcuts import render_to_response
 from django.views.generic.list_detail import object_list
 from lists.models import Blacklist, Whitelist
 from lists.forms import ListAddForm,FilterForm
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.core.paginator import Paginator
+from django.utils import simplejson
+
+def json_ready(element):
+    element['id'] = str(element['id'])
+    return element
 
 def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for='',query_type=3):
     list_kind = int(list_kind)
@@ -22,9 +28,9 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
         order_by = "-%s" % order_by
 
     if list_kind == 1:
-        listing = Whitelist.objects.all().order_by(order_by)
+        listing = Whitelist.objects.values('id','to_address','from_address').order_by(order_by)
     elif list_kind == 2:
-        listing = Blacklist.objects.all().order_by(order_by)
+        listing = Blacklist.objects.values('id','to_address','from_address').order_by(order_by)
 
     if request.method == 'POST':
         filter_form = FilterForm(request.POST)
@@ -45,9 +51,27 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
             elif ordering == 'from_address':
                 listing = listing.exclude(from_address__icontains=search_for)
     app = "lists/%d" % list_kind
-    #return render_to_response('lists/index.html', {'list':listing,'list_kind':list_kind})
-    return object_list(request,template_name='lists/index.html',queryset=listing, paginate_by=20,page=page,
-        extra_context={'app':app,'list_kind':list_kind,'direction':direction,'order_by':ordering,'search_for':search_for,'query_type':query_type})
+    if request.is_ajax():
+        p = Paginator(listing,20)
+        if page == 'last':
+            page = p.num_pages
+        po = p.page(page)
+        listing = po.object_list
+        listing = map(json_ready,listing)
+        page = int(page)
+        ap = 2
+        sp = max(page - ap, 1)
+        if sp <= 3: sp = 1
+        ep = page + ap + 1
+        pn = [n for n in range(sp,ep) if n > 0 and n <= p.num_pages]
+        pg = {'page':page,'pages':p.num_pages,'page_numbers':pn,'next':po.next_page_number(),'previous':po.previous_page_number(),
+        'has_next':po.has_next(),'has_previous':po.has_previous(),'show_first':1 not in pn,'show_last':p.num_pages not in pn,
+        'app':app,'list_kind':list_kind,'direction':direction,'order_by':ordering,'search_for':search_for,'query_type':query_type}
+        json = simplejson.dumps({'items':listing,'paginator':pg})
+        return HttpResponse(json, mimetype='application/javascript')
+    else:
+        return object_list(request,template_name='lists/index.html',queryset=listing, paginate_by=20,page=page,
+            extra_context={'app':app,'list_kind':list_kind,'direction':direction,'order_by':ordering,'search_for':search_for,'query_type':query_type})
 
 def add_to_list(request):
     template = 'lists/add.html'

@@ -4,7 +4,10 @@ register = template.Library()
 
 def sorter(context, field_name, field_text):
     if context.has_key('quarantine'):
-        quarantine = "quarantine"
+        if context['quarantine'] == "1" or context['quarantine'] == 1:
+            quarantine = "quarantine"
+        else:
+            quarantine = "full"
     else:
         if context['app'] == 'messages':
             quarantine = "full"

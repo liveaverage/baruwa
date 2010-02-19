@@ -79,6 +79,29 @@ h1 a {
   background:url(/static/imgs/loader.gif) no-repeat center; 
 }
 
+.loading_message {
+    width:100%;
+    background-attachment:scroll;
+    background-color:transparent;
+    background-image:url('/static/imgs/st.png');
+    background-position: 0 0;
+    background-repeat:repeat;
+    height:100%;
+    left:0;
+    position:fixed;
+    top:0;
+}
+
+.loading_message p {
+    left:50%;
+    margin-bottom:0;
+    margin-left:0;
+    margin-right:0;
+    margin-top: -1em;
+    position:absolute;
+    top:50%;
+}
+
 .align_center {
   text-align:center;
 }
@@ -199,6 +222,11 @@ div.buttons {
   color:red;
 }
 
+.ajax_error {
+    color:red;
+    text-decoration:blink;
+}
+
 p {
 	margin: 0;
 	padding: 0 0 10px 0;
@@ -222,6 +250,7 @@ table.maillog {
 
 table.maillog tr {
 	height: 32px;
+	border-bottom: 1px solid #ddd;
 }
 
 table.maillog tr.header {
@@ -229,13 +258,9 @@ table.maillog tr.header {
 }
 
 table.maillog td {
-	border-bottom: 1px solid #ddd;
+	/*border-bottom: 1px solid #ddd;*/
 	height: 32px;
     overflow:hidden;
-}
-
-table.maillog td.last {
-    border-bottom: 0px;
 }
 
 table.maillog td.pagination {
@@ -295,6 +320,10 @@ table.maillog td.first-t, th.first-t {
   padding: 10px;
 }
 
+#first-t {
+    padding: 10px;
+}
+
 table.maillog td.mailitem {
   background-color: #eee;
   font-weight:bold;
@@ -318,6 +347,12 @@ table.maillog td.piebox {
 table.maillog td.sascores, td.lists {
     height: 15px !important;
     line-height:5px;
+}
+
+table.maillog td.top-pagination {
+    text-align:right;
+    padding-right:10px;
+    line-height:3px;
 }
 
 table.maillog tr.sascores, tr.lists {
@@ -353,6 +388,19 @@ table.inner tr {
 
 table.inner th {
   padding-left:10px;
+}
+
+table.quarantine {
+    width:100%;
+    border-collapse:collapse;
+}
+
+table.quarantine tr {
+    border-bottom: 1px solid #ddd;
+}
+
+table.quarantine tr.last {
+    border-bottom: 0px;
 }
 
 .tdholder {
@@ -563,19 +611,32 @@ div.cb {
 }*/
 
 #content-layout {
-	border: 1px solid #ddd;
-	border-bottom: 0 !important;
 	width: 960px;
 	margin: 0 auto;
+	border: 1px solid #ddd;
+	border-bottom: 0 !important;
 }
 
-#search {
-	float: right;
+#recent_wrapper {
+/*	width: 960px;
+	margin: 0 auto;
+	border: 0px solid #eff;
+	border-bottom: 0 !important;*/
 }
 
-#search form {
-	margin: 0;
-	padding: 0;
+.ajax-table {
+	/*width: 959px;*/
+    float:left;
+	border: 1px solid #ddd;
+    margin:0 auto;
+	border-bottom: 0 !important;
+}
+
+.top-layer {
+}
+
+#search-area {
+	float: center;
 }
 
 #paginator {

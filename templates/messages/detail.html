@@ -58,8 +58,21 @@ var formSubmission = function(e){
     });
 }
 dojo.addOnLoad(function(){
+    dojo.byId("mail-headers").style.display = "none";
+    dojo.byId("header-toggle").innerHTML = "&darr;&nbsp;Show headers";
     var process_form = dojo.byId("qform");
     dojo.connect(process_form,"onsubmit","formSubmission"); 
+    dojo.connect(dojo.byId("header-toggle"),"onclick",function(e){
+        e.preventDefault();
+        em = dojo.byId("mail-headers");
+        if(em.style.display == "block"){
+            em.style.display = "none";
+            dojo.byId("header-toggle").innerHTML = "&darr;&nbsp;Show headers";
+        }else{
+            em.style.display = "block";
+            dojo.byId("header-toggle").innerHTML = "&uarr;&nbsp;Hide headers";
+        }
+    });
 });
 </script>
 {% endblock headers %}
@@ -122,7 +135,10 @@ dojo.addOnLoad(function(){
 		</tr>
 		<tr>
 		<td class="mailitem">Message Headers:</td>
-		<td class="maildetail">{{ message_details.headers|tds_wrap_headers|linebreaksbr }}</td>
+		<td class="maildetail">
+        <div id="mail-headers" style="display:block;">{{ message_details.headers|tds_wrap_headers|linebreaksbr }}</div>
+        <a href="#" id="header-toggle">&uarr;&nbsp;Hide headers</a>
+        </td>
 		</tr>
 		<tr>
 		<td class="mailitem">Size:</td>
@@ -219,7 +235,7 @@ dojo.addOnLoad(function(){
 		</div>
 		<div id="process_quarantine">
 		<form id="qform" action="/messages/process_quarantine/" method="post">
-		<table width="100%">
+		<table class="quarantine">
 		<tbody>
 		<tr>
 		<td>Release</td>
@@ -249,12 +265,12 @@ dojo.addOnLoad(function(){
 		<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}
 		</td>
 		</tr>
-		<tr>
-		<td class="last" colspan="4">
+		<tr class="last">
+		<td colspan="4">
 		{{ form.use_alt }}&nbsp;Alternative recipients:&nbsp;
 		<input type="text" id="id_altrecipients" name="altrecipients" size="70" />
 		</td>
-		<td class="last">
+		<td>
 		<input type="hidden" name="message_id" id="id_message_id" value="{{ message_details.id }}" />
 		<input type="submit" id="submit_q_request" value="Submit" />
 		</td>
