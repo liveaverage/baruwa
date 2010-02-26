@@ -9,6 +9,7 @@ from django.forms.util import ErrorList as errorlist
 from django.views.generic.list_detail import object_list
 from django.core.paginator import Paginator
 from messages.process_mail import *
+from reports.views import apply_filter
 
 def json_ready(element):
     element['timestamp'] = str(element['timestamp'])
@@ -16,6 +17,7 @@ def json_ready(element):
     return element 
 
 def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='timestamp'):
+    active_filters = []
     ordering = order_by
     if direction == 'dsc':
         ordering = order_by
@@ -31,6 +33,7 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
         else:
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
             ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected').order_by(order_by)
+        message_list = apply_filter(message_list,request,active_filters)
     if request.is_ajax():
         if not list_all:
             message_list = map(json_ready,message_list)
@@ -56,7 +59,7 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
         return HttpResponse(json, mimetype='application/javascript')
     else:
         return object_list(request, template_name='messages/index.html', queryset=message_list, paginate_by=50, page=page, 
-            extra_context={'quarantine': quarantine,'direction':direction,'order_by':ordering,'app':'messages'})
+            extra_context={'quarantine': quarantine,'direction':direction,'order_by':ordering,'app':'messages','active_filters':active_filters})
 
 def detail(request, message_id):
     message_details = get_object_or_404(Maillog, id=message_id)

@@ -1,3 +1,4 @@
+Showing page {{ page }} of {{ pages }} pages.
 {% if show_first %}
 <span><a href="{%ifequal app "messages"%}/messages/{{ quarantine }}{%else%}/{{app}}{%endifequal%}/1/{%if direction %}{{direction}}/{{order_by}}/{%endif%}{%if search_for%}{{search_for}}/{%endif%}{%if query_type%}{{query_type}}/{%endif%}">
 <img src="/static/imgs/first_pager.png" alt="First"/></a></span>

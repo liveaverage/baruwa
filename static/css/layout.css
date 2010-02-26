@@ -218,7 +218,7 @@ div.buttons {
   padding-left:10px;
 }
 
-#quarantine_errors {
+#quarantine_errors, .filter_errors {
   color:red;
 }
 
@@ -270,6 +270,11 @@ table.maillog td.pagination {
 table.maillog td.equal {
   width:480px;
   vertical-align:top;
+}
+
+table.maillog td.stats {
+    width:50%;
+    padding-left:10px;
 }
 
 table.maillog td.ordered_by {
@@ -344,7 +349,7 @@ table.maillog td.piebox {
 	border-left: 1px solid #ddd;
 }
 
-table.maillog td.sascores, td.lists {
+table.maillog td.sascores, td.lists, td.filters {
     height: 15px !important;
     line-height:5px;
 }
@@ -641,7 +646,15 @@ div.cb {
 
 #paginator {
     float:right;
-    padding-right:20px;
+    text-align:right;
+    padding-right:10px;
+    width:320px;
+}
+
+#ofhl {
+    float:left;
+    padding-left:10px;
+    width:615px;
 }
 
 #filterbox {

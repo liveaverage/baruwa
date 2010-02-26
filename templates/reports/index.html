@@ -1,4 +1,15 @@
 {% extends 'base.html' %}
+{% block headers %}
+<script type="text/javascript" language="javascript" src="/static/js/jquery-1.4.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var rj;
+var ax_error = false;
+//]]>
+</script>
+<script type="text/javascript" language="javascript" src="/static/js/jquery.address-1.1.min.js"></script>
+<script type="text/javascript" language="javascript" src="/static/js/reports.js"></script>
+{% endblock headers %}
 {% block submenu %}
 &nbsp;
 {% endblock submenu %}
@@ -11,21 +22,26 @@ Reports
 {% block content %}
 <table class="maillog">
 <tbody>
-<!--<tr>
-<td class="divider">Add Filter</td>
+<tr>
+<td class="divider" colspan="2">Statistics</td>
 </tr>
 <tr>
-<td class="divider">Saved Filter(s)</td>
+<td class="stats">Message count</td>
+<td class="stats">{{data.count}}</td>
 </tr>
 <tr>
-<td class="divider">Statistics</td>
-</tr>
--->
-<tr>
-<td class="divider">Predefined Reports</td>
+<td class="stats">Oldest message processed on</td>
+<td class="stats">{{data.oldest|date:"D d M Y @ G:i A"}}</td>
 </tr>
 <tr>
-<td>
+<td class="stats">Newest message processed on</td>
+<td class="stats">{{data.newest|date:"D d M Y @ G:i A"}}</td>
+</tr>
+<tr>
+<td class="divider" colspan="2">Reports</td>
+</tr>
+<tr>
+<td colspan="2">
 <ul>
   <li><a href="/reports/1/">Top Senders by Quantity</a></li>
   <li><a href="/reports/2/">Top Senders by Volume</a></li>
@@ -39,10 +55,46 @@ Reports
   <!--<li><a href="/reports/p/">Spamassassin Rule Hits</a></li>
   <li><a href="/reports/a/v/">Top Viruses</a></li>-->
   <li><a href="/reports/10/">Top Mail hosts</a></li>
-  <li><a href="/reports/11/">Message Listing</a></li>
+  <li><a href="/reports/11/">Message Totals</a></li>
+  <li><a href="/messages/full/">Message Listings</a></li>
 </ul>
 </td>
 </tr>
+<tr>
+<td class="divider" colspan="2">Add Filter</td>
+</tr>
+<tr style="display:{% if errors %}table-row{%else%}none{%endif%};">
+<td class="filter_errors first-t" colspan="2">{{errors}}</td>
+</tr>
+<tr>
+<td colspan="2">
+<form id="filter-form" method="post" action="/reports/">
+<table>
+<tr>
+<td class="first-t">{{form.filtered_field}}</td>
+<td class="first-t">{{form.filtered_by}}</td>
+<td class="first-t"><input type="text" id="id_filtered_value" name="filtered_value" size="100" /></td>
+<td class="first-t"><input type="submit" value="Add" /></td>
+</tr>
+</table>
+</form>
+</td>
+</tr>
+{% if active_filters %}
+<tr>
+<td class="divider" colspan="2">Active Filter(s)<a name="active_filters">&nbsp;</a></td>
+</tr>
+{% for f in active_filters %} 
+<tr>
+<td class="first-t filters" colspan="2">[ <a href="/reports/fd/{{forloop.counter0}}/">x</a> ] {{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</td>
+</tr>
+{% endfor %}
+{% endif %}
+{% if saved_filters %}
+<tr>
+<td class="divider" colspan="2">Saved Filter(s)</td>
+</tr>
+{% endif %}
 </tbody>
 </table>
 {% endblock content %}

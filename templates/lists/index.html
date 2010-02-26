@@ -2,8 +2,10 @@
 {% block headers %}
 <script type="text/javascript" language="javascript" src="/static/js/jquery-1.4.min.js"></script>
 <script type="text/javascript" charset="utf-8">
+//<![CDATA[
 var rj;
 var ax_error = false;
+//]]>
 </script>
 <script type="text/javascript" language="javascript" src="/static/js/jquery.address-1.1.min.js"></script>
 <script type="text/javascript" language="javascript" src="/static/js/lists.js"></script>
@@ -28,7 +30,7 @@ List management{%if is_paginated%} {% load pagination_heading %}{% pagination_he
 <table id="lists" class="maillog">
     <thead>
         <tr class="lists">
-        <td id="top-pagination" class="top-pagination" colspan="4">{% if is_paginated %}{% pagination_heading %}{% load paginator %}{% paginator 3 %}{% endif %}</td>
+        <td id="top-pagination" class="top-pagination" colspan="4">{% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}</td>
         </tr>
         <tr class="header">
             {% load sorter %}
@@ -43,10 +45,9 @@ List management{%if is_paginated%} {% load pagination_heading %}{% pagination_he
     <tfoot>
         <tr class="header">
         <td colspan="4" class="pagination">
-        {% ifnotequal order_by "id" %}
-        <div id="filterbox">
+        <div id="filterbox" style="display:{% ifnotequal order_by "id" %}block{%else%}none{%endifnotequal%};">
         <form method="post" action="/{{app}}/{{direction}}/{{order_by}}/">
-        Filter {%ifequal order_by "to_address"%}To:{%endifequal%}{%ifequal order_by "from_address"%}From:{%endifequal%}
+        Filter <span id="filterlabel">{%ifequal order_by "to_address"%}<b>To:</b>{%endifequal%}{%ifequal order_by "from_address"%}<b>From:</b>{%endifequal%}</span>
         <select name="query_type">
         <option value="1"{%ifequal query_type 1%} selected="selected"{%endifequal%}>containing</option>
         <option value="2"{%ifequal query_type 2%} selected="selected"{%endifequal%}>excluding</option>
@@ -55,9 +56,8 @@ List management{%if is_paginated%} {% load pagination_heading %}{% pagination_he
         <input type="submit" value="GO" />
         </form>
         </div>
-        {%endifnotequal%}
         <div id="paginator">
-        {% if is_paginated %}{% pagination_heading %}{% load paginator %}{% paginator 3 %}{% endif %}
+        {% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
         </div>
         </td>
         </tr>

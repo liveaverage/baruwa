@@ -122,7 +122,6 @@ function paginate(){
         tmp +='<span>......</span>';
         tmp +='<a href="'+li+'"><img src="/static/imgs/last_pager.png" alt="Last"/></a></span>';
    }
-    //return tmp;
     oi = $("#sorting_by").index();
     columns = "timestamp from_address to_address subject size sascore";
     linfo = "Date/Time From To Subject Size Score";
@@ -141,44 +140,11 @@ function paginate(){
             $('#recent th:eq('+tc+')').append(tmpl);
         }
     }
-    /*
-    switch(rj.order_by){
-        case "timestamp":
 
-            break;
-        case "from_address":
-            $('#recent th:eq(2)').text('From').attr('id','sorting_by');
-            tmpl = toplinkize(rj.direction,link_url,'from_address');
-            $('#recent th:eq(2)').append(tmpl);
-            break;
-        case "to_address":
-            $('#recent th:eq(3)').text('To').attr('id','sorting_by');
-            tmpl = toplinkize(rj.direction,link_url,'to_address');
-            $('#recent th:eq(3)').append(tmpl);
-            break;
-        case "subject":
-            $('#recent th:eq(4)').text('Subject').attr('id','sorting_by');
-            tmpl = toplinkize(rj.direction,link_url,'subject');
-            $('#recent th:eq(4)').append(tmpl);
-            break;
-        case "size":
-            $('#recent th:eq(5)').text('Size').attr('id','sorting_by');
-            tmpl = toplinkize(rj.direction,link_url,'size');
-            $('#recent th:eq(5)').append(tmpl);
-            break;
-        case "sascore":
-            $('#recent th:eq(6)').text('Score').attr('id','sorting_by');
-            tmpl = toplinkize(rj.direction,link_url,'sascore');
-            $('#recent th:eq(6)').append(tmpl);
-            break;
-    }*/
-
-    $('#divider-header h3').html('Showing page '+rj.page+' of '+rj.pages+' pages.');
+    $('#divider-header h3 span').html('Showing page '+rj.page+' of '+rj.pages+' pages.');
     $.address.title('Showing page '+rj.page+' of '+rj.pages+' pages.');
     $(this).html(tmp);
-    //$('#pagination a').bind('click',jsize_links);
-    $('#pagination a').bind('click',en_history);
-    //$('#recent th a').bind('click',jsize_links);
+    $('#paginator a').bind('click',en_history);
     $('#recent th a').bind('click',en_history);
     $('#sub-menu-links ul li a').bind('click',en_history);
     $('#loading_message').hide('fast');
@@ -186,26 +152,33 @@ function paginate(){
 }
 
 function jsize_page(){
-theTable = $('#recent').dataTable({
-//"aaSorting": [[ 1, "desc" ]],
-"bSort": false,
-//"sDom": '<"top-layer"lf><"ajax-table"rt><"bottom-layer"ip',
-"sDom": 'frt',
-"bPaginate": false,
-"asStripClasses": [],
-"fnRowCallback": format_rows,
-"aoColumns": [{"bSortable": false,"bSearchable": false},null,null,null,null,null,null,{"bSearchable": false}]
-});
+    $('#fhl').before($('<a/>').attr({href:'#',id:'filter-toggle'}).html('&darr;&nbsp;Show filters'));
+    $('#fhl').hide();
+    $('#filter-toggle').bind('click',function(e){
+        e.preventDefault();    
+        $('#fhl').toggle();
+        if($('#fhl').css('display') == 'inline'){
+            $(this).html('&uarr;&nbsp;Hide filters');
+        }else{
+            $(this).html('&darr;&nbsp;Show filters');
+        }
+    });
+    theTable = $('#recent').dataTable({
+        "bSort": false,
+        "sDom": 'frt',
+        "bPaginate": false,
+        "asStripClasses": [],
+        "fnRowCallback": format_rows,
+        "aoColumns": [{"bSortable": false,"bSearchable": false},null,null,null,null,null,null,{"bSearchable": false}]
+    });
 	
-$('#pagination a').bind('click',en_history);
-$('#recent th a').bind('click',en_history);
-$('#sub-menu-links ul li a').bind('click',en_history);
-//$('#pagination a').bind('click',jsize_links);
-//$('#recent th a').bind('click',jsize_links);
-$("#pagination").ajaxStop(paginate);
-$("#loading_message").ajaxError(function(){
-    $(this).hide('normal');
-});
-$.address.externalChange(handlextern);
+    $('#paginator a').bind('click',en_history);
+    $('#recent th a').bind('click',en_history);
+    $('#sub-menu-links ul li a').bind('click',en_history);
+    $("#paginator").ajaxStop(paginate);
+    $("#loading_message").ajaxError(function(){
+        $(this).hide('normal');
+    });
+    $.address.externalChange(handlextern);
 }
 $(document).ready(jsize_page);

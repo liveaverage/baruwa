@@ -1,14 +1,22 @@
 
 function build_table_from_json(){
-    $.getJSON('/messages/',json2html); 
-    clearInterval(auto_refresh);
-    setTimeout(build_table_from_json,60000);
+    if(! ax_in_progress){
+        $.getJSON('/messages/',json2html); 
+        $.address.value('?u=');
+        $.address.history($.address.baseURL());
+        if(auto_refresh){
+            clearInterval(auto_refresh);
+        }
+        setTimeout(build_table_from_json,60000);
+    }else{
+        alert('Blocking ajax request');
+    }
 }
 
 function do_table_sort(){
-	theTable = $('#recent').dataTable( {
+ax_in_progress = false;
+theTable = $('#recent').dataTable( {
 	"aaSorting": [[ 1, "desc" ]],
-	//"sDom": '<"top-layer"lf><"ajax-table"rt><"bottom-layer"ip',
 	"sDom": 'frt',
 	"bPaginate": false,
 	"asStripClasses": [],
@@ -19,8 +27,8 @@ function do_table_sort(){
 $("#search-area").ajaxSend(function() {
 	$(this).empty();
 	$(this).append($("<img/>").attr("src","/static/imgs/loader.gif")).append('&nbsp;Refreshing........');
-	//$(this).append('<img src="/static/imgs/loader.gif" alt="loading"/>&nbsp;Refreshing........');
 	ax_error = false;
+    ax_in_progress = true;
 });
 
 $("#search-area").ajaxStop(function() {
@@ -28,6 +36,7 @@ $("#search-area").ajaxStop(function() {
 		$(this).empty();
 		var lu = lastupdatetime();
 		$(this).append('[last refreshed at '+lu+']');
+        ax_in_progress = false;
 	}
 });
 
@@ -35,8 +44,24 @@ $("#search-area").ajaxError(function(){
 	$(this).empty();
 	$(this).append('<span class="ajax_error">Error connecting to server. check network!</span>');
 	ax_error = true;
+    ax_in_progress = false;
+    $.address.value('?u=');
+    $.address.history($.address.baseURL());
 });
 //$.ajaxSetup({timeout:2000});
+$('a').bind('click',function(event){
+    if(ax_in_progress){
+        event.preventDefault();
+        alert('Refreshing is in progress, please wait for it to complete');
+    }else{
+        if($(this).attr('href') != '#'){
+            ax_in_progress = true;
+        }
+        $.address.value('?u=');
+        $.address.history($.address.baseURL());
+    }
+});
+    $.address.externalChange(function(){ax_in_progress = false;});
 }
 
 var auto_refresh = setInterval(build_table_from_json, 60000);

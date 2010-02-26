@@ -11,7 +11,7 @@ function toplinkize(app,direction,field_name){
 function paginate(){
     tmp = 'Showing page '+rj.page+' of '+rj.pages+' pages. ';
     $('#pagination_info').html(tmp);
-    $.address.title(tmp);
+    $.address.title('Baruwa :: List management '+tmp);
     li = '';
 
     if(rj.show_first){
@@ -67,6 +67,16 @@ function lists_from_json(data){
             link = $("<a/>").attr('href','/lists/delete/'+rj.list_kind+'/'+n.id+'/').html('Delete');
             $('#lists tbody').append('<tr class="lists"><td class="lists first-t">'+n.id+'</td><td class="lists first-t">'+n.to_address+'</td><td class="lists first-t">'+n.from_address+'</td><td class="lists first-t"><a href="/lists/delete/'+rj.list_kind+'/'+n.id+'/">Delete</a></td></tr>');
         });
+        if(rj.order_by == 'id'){
+            $('#filterbox').hide('fast');
+        }else{
+            $('#filterbox').show('fast');
+            if(rj.order_by == 'to_address'){
+                $('#filterlabel').html('<b>To:</b>');
+            }else{
+                $('#filterlabel').html('<b>From:</b>');
+            }
+        }
     }
 }
 

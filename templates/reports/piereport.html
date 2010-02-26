@@ -7,15 +7,30 @@
 </script>
 <script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
 <script type="text/javascript">
+//<![CDATA[
 dojo.require("dojox.charting.Chart2D");
 dojo.require("dojox.charting.plot2d.Pie");
 dojo.require("dojox.charting.action2d.Highlight");
 dojo.require("dojox.charting.action2d.MoveSlice");
 dojo.require("dojox.charting.action2d.Tooltip");
 dojo.require("dojox.charting.themes.MiamiNice");
-//dojo.require("dojox.charting.widget.Legend");
 
 dojo.addOnLoad(function() {
+{% if active_filters %}
+dojo.byId("fhl").style.display = "none";
+dojo.create("a",{href:"#",innerHTML:"&darr;&nbsp;Show filters",id:"filter-toggle"},"fhl","before");
+dojo.connect(dojo.byId("filter-toggle"),"onclick",function(e){
+        e.preventDefault();
+        em = dojo.byId("fhl");
+        if(em.style.display == "block"){
+            em.style.display = "none";
+            dojo.byId("filter-toggle").innerHTML = "&darr;&nbsp;Show filters";
+        }else{
+            em.style.display = "block";
+            dojo.byId("filter-toggle").innerHTML = "&uarr;&nbsp;Hide filters";
+        }
+});
+{% endif %}
 var dc = dojox.charting;
 var pie_graph = new dc.Chart2D("pie_graph");
 pie_graph.setTheme(dc.themes.MiamiNice).addPlot("default", {
@@ -30,8 +45,8 @@ var anim_a = new dc.action2d.MoveSlice(pie_graph, "default");
 var anim_b = new dc.action2d.Highlight(pie_graph, "default");
 var anim_c = new dc.action2d.Tooltip(pie_graph, "default");
 pie_graph.render();
-//var pie_legend = new dojox.charting.widget.Legend({chart: pie_graph},"pie_legend");
 });
+//]]>
 </script>{%endif%}
 {% endblock headers %}
 {% block submenu %}
@@ -54,15 +69,16 @@ Reports - {{report_title}}
 <td>&nbsp;</td>
 </tr>
 {% if top_items %}
+{% load messages_extras %}
 {% for item in top_items %}
 <tr class="sascores">
 <td class="first-t sascores">{{ forloop.counter }}.</td>
 <td class="sascores">
 <div class="pie_{{forloop.counter}} pie"></div>
 &nbsp;
-{% if item.from_address %}{{item.from_address}}{%endif%}
+{% if item.from_address %}{{item.from_address|tds_nl_commas|linebreaksbr}}{%endif%}
 {% if item.from_domain %}{{item.from_domain}}{%endif%}
-{% if item.to_address %}{{item.to_address}}{%endif%}
+{% if item.to_address %}{{item.to_address|tds_nl_commas|linebreaksbr}}{%endif%}
 {% if item.to_domain %}{{item.to_domain}}{%endif%}
 </td>
 <td class="first-t sascores">{{item.num_count}}</td>
@@ -76,6 +92,16 @@ Reports - {{report_title}}
 {% else %}
 <tr>
 <td colspan="5" class="align_center">No records returned</td>
+</tr>
+{% endif %}
+{% if active_filters %}
+<tr>
+<td colspan="5" class="first-t"><b>Filters have been applied :</b><span id="fhl" style="display:inline;">
+{% for f in active_filters %}
+"<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
+{% endfor %}
+</span>
+</td>
 </tr>
 {% endif %}
 </tbody>

@@ -1,3 +1,10 @@
+function stripHTML(string) { 
+    if(string){
+        return string.replace(/<(.|\n)*?>/g, ''); 
+    }else{
+        return '';
+    }
+}
 
 function lastupdatetime(){
     var ct = new Date();
@@ -68,7 +75,7 @@ function json2html(data){
             if(n.spamblacklisted){
                 mstatus = 'BL';
             }
-            theTable.fnAddData(['<td id="first-t">[<a href="/messages/'+n.id+'/">&nbsp;&nbsp;</a>]</td>','<td>'+n.timestamp+'</td>','<td>'+from+'</td>','<td>'+to+'</td>','<td>'+n.subject+'</td>','<td>'+filesizeformat(n.size)+'</td>','<td>'+n.sascore+'</td>','<td>'+mstatus+'</td>']);
+            theTable.fnAddData(['<td id="first-t">[<a href="/messages/'+n.id+'/">&nbsp;&nbsp;</a>]</td>','<td>'+n.timestamp+'</td>','<td>'+from+'</td>','<td>'+to+'</td>','<td>'+stripHTML(n.subject)+'</td>','<td>'+filesizeformat(n.size)+'</td>','<td>'+n.sascore+'</td>','<td>'+mstatus+'</td>']);
 
         });
         //theTable.fnDraw();

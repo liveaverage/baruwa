@@ -2,6 +2,7 @@
 {% block headers %}
 <script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
 <script type="text/javascript">
+//<![CDATA[
 var formSubmission = function(e){
     dojo.attr("submit_q_request","disabled",true);
     dojo.byId("quarantine_errors").innerHTML = "";
@@ -59,7 +60,7 @@ var formSubmission = function(e){
 }
 dojo.addOnLoad(function(){
     dojo.byId("mail-headers").style.display = "none";
-    dojo.byId("header-toggle").innerHTML = "&darr;&nbsp;Show headers";
+    dojo.create("a",{href:"#",innerHTML:"&darr;&nbsp;Show headers",id:"header-toggle"},"mail-headers","after");
     var process_form = dojo.byId("qform");
     dojo.connect(process_form,"onsubmit","formSubmission"); 
     dojo.connect(dojo.byId("header-toggle"),"onclick",function(e){
@@ -74,6 +75,7 @@ dojo.addOnLoad(function(){
         }
     });
 });
+//]]>
 </script>
 {% endblock headers %}
 {% block title %}Baruwa :: Showing message - {{ message_details.id }} {% endblock %}
@@ -103,9 +105,9 @@ dojo.addOnLoad(function(){
 		<td class="mailitem">From:</td>
 		<td class="maildetail">{{ message_details.from_address|tds_wrap:80|linebreaksbr }}
     <span class="listings">
-    [{% if not message_details.spamwhitelisted %}<a href="">Add to whitelist</a>{%else%}Add to whitelist{%endif%}]
+    [{% if not message_details.spamwhitelisted %}<a href="">Whitelist</a>{%else%}Whitelist{%endif%}]
     &nbsp;
-    [{% if not message_details.spamblacklisted %}<a href="">Add to blacklist</a>{%else%}Add to blacklist{%endif%}]
+    [{% if not message_details.spamblacklisted %}<a href="">Blacklist</a>{%else%}Blacklist{%endif%}]
     </span>
     </td>
 		</tr>
@@ -137,7 +139,7 @@ dojo.addOnLoad(function(){
 		<td class="mailitem">Message Headers:</td>
 		<td class="maildetail">
         <div id="mail-headers" style="display:block;">{{ message_details.headers|tds_wrap_headers|linebreaksbr }}</div>
-        <a href="#" id="header-toggle">&uarr;&nbsp;Hide headers</a>
+        <!--<a href="#" id="header-toggle">&uarr;&nbsp;Hide headers</a>-->
         </td>
 		</tr>
 		<tr>
