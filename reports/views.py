@@ -3,13 +3,14 @@ from django.db.models import Count, Sum, Max, Min, Q
 from django.db import connection
 from django.utils import simplejson
 from messages.models import Maillog
+from reports.models import SavedFilters
 from reports.forms import FilterForm,FILTER_ITEMS,FILTER_BY
 from messages.templatetags.messages_extras import tds_get_rules
 from django.forms.util import ErrorList as errorlist
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.db import IntegrityError
 #import random
 #from collections import defaultdict
-
 
 def to_dict(tuple_list):
     d = {}
@@ -226,7 +227,11 @@ def apply_filter(model,request,active_filters):
 def index(request):
     errors = None
     data = Maillog.objects
+    filters = SavedFilters.objects.all()
     active_filters = [] 
+    saved_filters = []
+    loaded = 0
+    success = "True"
     if request.method == 'POST':
         if request.session.test_cookie_worked() or request.session.get('filter_by', False):
             try:
@@ -252,9 +257,13 @@ def index(request):
                     if not fitem in request.session['filter_by']:
                         request.session['filter_by'].append(fitem)
                         request.session.modified = True
+                    else:
+                        success = "False"
+                        errors = "The requested filter is already being used"
                 filter_list = request.session.get('filter_by')
                 data = d_query(data,filter_list,active_filters)
             else:
+                success = "False"
                 error_list = filter_form.errors.values()[0]
                 errors = errorlist(error_list).as_ul()
                 if request.session.get('filter_by', False):
@@ -271,16 +280,91 @@ def index(request):
         else:
             request.session.set_test_cookie()
     data = data.aggregate(count=Count('timestamp'),newest=Max('timestamp'),oldest=Min('timestamp'))
-    return render_to_response('reports/index.html',
-        #{'form':filter_form,'data':data,'errors':errors,'active_filters':request.session['filter_by']})
-        {'form':filter_form,'data':data,'errors':errors,'active_filters':active_filters})
+    if filters.count() > 0:
+        filter_items = to_dict(list(FILTER_ITEMS))
+        filter_by = to_dict(list(FILTER_BY))
+        if request.session.get('filter_by', False):
+            filter_list = request.session.get('filter_by')
+        else:
+            filter_list = []
+        for filter in filters:
+            if filter_list:
+                loaded = 0
+                for fitem in filter_list:
+                    if fitem['filter'] == filter.operator and fitem['value'] == filter.value and fitem['field'] == filter.col:
+                        loaded = 1
+                        break
+            saved_filters.append({'filter_id':filter.id,'filter_name':filter.name,'is_loaded':loaded})
+    if request.is_ajax():
+        if not data['newest'] is None and not data['oldest'] is None:
+            data['newest'] = data['newest'].strftime("%a %d %b %Y @ %H:%M %p")
+            data['oldest'] = data['oldest'].strftime("%a %d %b %Y @ %H:%M %p")
+        else:
+            data['newest'] = ''
+            data['oldest'] = ''
+        response = simplejson.dumps({'success':success,'data':data,'errors':errors,'active_filters':active_filters,'saved_filters':saved_filters})
+        return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+    else:
+        return render_to_response('reports/index.html',
+            {'form':filter_form,'data':data,'errors':errors,'active_filters':active_filters,'saved_filters':saved_filters})
 
-def del_filter(request,index):
+def rem_filter(request,index):
     if request.session.get('filter_by', False):
         li = request.session.get('filter_by')
         li.remove(li[int(index)])
         request.session.modified = True
     return HttpResponseRedirect('/reports/')
+
+def save_filter(request,index):
+    success = "True"
+    if request.session.get('filter_by', False):
+        filter_items = to_dict(list(FILTER_ITEMS))
+        filter_by = to_dict(list(FILTER_BY))
+
+        filters = request.session.get('filter_by')
+        filter = filters[int(index)]
+        f = SavedFilters()
+        name = filter_items[filter["field"]]+" "+filter_by[int(filter["filter"])]+" "+filter["value"]
+
+        f.name = name
+        f.col = filter["field"]
+        f.operator = filter["filter"]
+        f.value = filter["value"]
+        f.username = 'sentechadmin'
+        try:
+            f.save()
+        except IntegrityError:
+            pass
+    return HttpResponseRedirect('/reports/')
+
+def load_filter(request,index):
+    try:
+        filter = SavedFilters.objects.get(id=int(index))
+    except:
+        return HttpResponseRedirect('/reports/')
+    else:
+        if not request.session.get('filter_by', False):
+            request.session['filter_by'] = []
+            request.session['filter_by'].append({'field':filter.col,'filter':filter.operator,'value':filter.value})
+        else:
+            fitem = {'field':filter.col,'filter':filter.operator,'value':filter.value}
+            if not fitem in request.session['filter_by']:
+                request.session['filter_by'].append(fitem)
+                request.session.modified = True
+        return HttpResponseRedirect('/reports/')
+
+def del_filter(request,index):
+    success = "True"
+    try:
+        filter = SavedFilters.objects.get(id=int(index))
+    except:
+        return HttpResponseRedirect('/reports/')
+    else:
+        try:
+            filter.delete()
+        except:
+            pass    
+        return HttpResponseRedirect('/reports/')
 
 def pack_data(data,arg1,arg2):
     rv = []

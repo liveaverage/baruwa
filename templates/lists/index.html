@@ -21,10 +21,10 @@ var ax_error = false;
 </ul>
 {% endblock submenu %}
 {% block title %}
-List management{%if is_paginated%} {% load pagination_heading %}{% pagination_heading %}{%endif%}
+List management
 {% endblock title %}
 {% block heading %}
-{% ifequal list_kind 1 %}Whitelist{%else%}Blacklist{%endifequal%}{%if is_paginated%} :: <span id="pagination_info">{% pagination_heading %}</span>{%endif%}
+{% ifequal list_kind 1 %}Whitelist{%else%}Blacklist{%endifequal%}{%if is_paginated%}{% load pagination_heading %} :: <span id="pagination_info">{% pagination_heading %}</span>{%endif%}
 {% endblock heading %}
 {% block content %}
 <table id="lists" class="maillog">

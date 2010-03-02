@@ -81,7 +81,7 @@ function json2html(data){
         //theTable.fnDraw();
     }else{
         $("#search-area").empty();
-        $("#search-area").append('Error connecting to server. check network!');
+        $("#search-area").append('Empty response from server. check network!');
     }
 }
 

@@ -2,18 +2,19 @@
 function build_table_from_json(){
     if(! ax_in_progress){
         $.getJSON('/messages/',json2html); 
-        $.address.value('?u=');
-        $.address.history($.address.baseURL());
+        //$.address.value('?u=');
+        //$.address.history($.address.baseURL());
         if(auto_refresh){
             clearInterval(auto_refresh);
         }
         setTimeout(build_table_from_json,60000);
-    }else{
+    }/*else{
         alert('Blocking ajax request');
-    }
+    }*/
 }
 
 function do_table_sort(){
+//$.address.externalChange(function(){ax_in_progress = false; alert(ajax_in_progress);});
 ax_in_progress = false;
 theTable = $('#recent').dataTable( {
 	"aaSorting": [[ 1, "desc" ]],
@@ -45,23 +46,23 @@ $("#search-area").ajaxError(function(){
 	$(this).append('<span class="ajax_error">Error connecting to server. check network!</span>');
 	ax_error = true;
     ax_in_progress = false;
-    $.address.value('?u=');
-    $.address.history($.address.baseURL());
+    //$.address.value('?u=');
+    //$.address.history($.address.baseURL());
+    setTimeout(build_table_from_json,60000);
 });
-//$.ajaxSetup({timeout:2000});
+
 $('a').bind('click',function(event){
     if(ax_in_progress){
         event.preventDefault();
         alert('Refreshing is in progress, please wait for it to complete');
-    }else{
-        if($(this).attr('href') != '#'){
-            ax_in_progress = true;
-        }
-        $.address.value('?u=');
-        $.address.history($.address.baseURL());
-    }
+    }//else{
+     //   if($(this).attr('href') != '#'){
+     //       ax_in_progress = true;
+     //   }
+        //$.address.value('?u=');
+        //$.address.history($.address.baseURL());
+   // }
 });
-    $.address.externalChange(function(){ax_in_progress = false;});
 }
 
 var auto_refresh = setInterval(build_table_from_json, 60000);

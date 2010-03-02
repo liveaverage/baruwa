@@ -404,7 +404,7 @@ table.quarantine tr {
     border-bottom: 1px solid #ddd;
 }
 
-table.quarantine tr.last {
+table.quarantine,table.maillog tr.last {
     border-bottom: 0px;
 }
 

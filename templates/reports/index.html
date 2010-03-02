@@ -27,15 +27,15 @@ Reports
 </tr>
 <tr>
 <td class="stats">Message count</td>
-<td class="stats">{{data.count}}</td>
+<td class="stats" id="msgcount">{{data.count}}</td>
 </tr>
 <tr>
 <td class="stats">Oldest message processed on</td>
-<td class="stats">{{data.oldest|date:"D d M Y @ G:i A"}}</td>
+<td class="stats" id="oldestmsg">{{data.oldest|date:"D d M Y @ G:i A"}}</td>
 </tr>
 <tr>
 <td class="stats">Newest message processed on</td>
-<td class="stats">{{data.newest|date:"D d M Y @ G:i A"}}</td>
+<td class="stats" id="newestmsg">{{data.newest|date:"D d M Y @ G:i A"}}</td>
 </tr>
 <tr>
 <td class="divider" colspan="2">Reports</td>
@@ -63,7 +63,7 @@ Reports
 <tr>
 <td class="divider" colspan="2">Add Filter</td>
 </tr>
-<tr style="display:{% if errors %}table-row{%else%}none{%endif%};">
+<tr id="filter-form-errors" style="display:{% if errors %}table-row{%else%}none{%endif%};">
 <td class="filter_errors first-t" colspan="2">{{errors}}</td>
 </tr>
 <tr>
@@ -74,7 +74,7 @@ Reports
 <td class="first-t">{{form.filtered_field}}</td>
 <td class="first-t">{{form.filtered_by}}</td>
 <td class="first-t"><input type="text" id="id_filtered_value" name="filtered_value" size="100" /></td>
-<td class="first-t"><input type="submit" value="Add" /></td>
+<td class="first-t"><input id="filter_form_submit" type="submit" value="Add" /></td>
 </tr>
 </table>
 </form>
@@ -84,15 +84,49 @@ Reports
 <tr>
 <td class="divider" colspan="2">Active Filter(s)<a name="active_filters">&nbsp;</a></td>
 </tr>
-{% for f in active_filters %} 
 <tr>
-<td class="first-t filters" colspan="2">[ <a href="/reports/fd/{{forloop.counter0}}/">x</a> ] {{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</td>
+<td colspan="2">
+<table id="afilters" class="maillog">
+<tbody>
+{% for f in active_filters %} 
+<tr{% if forloop.last%} class="last"{%endif%}>
+<td class="first-t filters" colspan="2">
+[ <a href="/reports/fd/{{forloop.counter0}}/">x</a> ] 
+[ <a href="/reports/fs/{{forloop.counter0}}/">Save</a> ] 
+{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</td>
 </tr>
 {% endfor %}
+</tbody>
+</table>
+</td>
+</tr>
 {% endif %}
 {% if saved_filters %}
 <tr>
 <td class="divider" colspan="2">Saved Filter(s)</td>
+</tr>
+<tr>
+<td colspan="2">
+<table id="sfilters" class="maillog">
+<tbody>
+{% for sf in saved_filters %}
+<tr{% if forloop.last%} class="last"{%endif%}>
+<td class="first-t filters" colspan="2">
+[ <a href="/reports/sfd/{{sf.filter_id}}/">x</a> ] 
+{% if not sf.is_loaded %}
+[ <a href="/reports/sfl/{{sf.filter_id}}/">Load</a> ] 
+{% else %}
+[ Load ] 
+{% endif %}
+{{sf.filter_name}}</td>
+</tr>
+{% endfor %}
+<!--{{saved_filters}}
+<br/>
+{{sess}}-->
+</tbody>
+</table>
+</td>
 </tr>
 {% endif %}
 </tbody>

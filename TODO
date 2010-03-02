@@ -17,4 +17,4 @@ $(this).load(’response.php’).fadeIn(”slow”);
 
 obj_list = Article.objects.filter(blog_author__name='Bob')
 sql, cols = obj_list.query.as_sql()
-
+IntegrityError
