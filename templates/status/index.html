@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block headers %}
+{% endblock headers %}
+{% block submenu %}
+&nbsp;
+{% endblock submenu %}
+{% block title %}
+System Status
+{% endblock title %}
+{% block heading %}
+System Status
+{% endblock heading %}
+{% block content %}
+<table class="maillog">
+<tbody>
+<tr class="header">
+<td class="align_center">Service Status</td>
+<td class="align_center">Message Totals</td>
+</tr>
+<tr>
+<td class="equal sline">
+<table class="status">
+<tbody>
+<tr>
+<td>Scanners</td>
+<td><div class="pie_6 pie"></div>&nbsp;15 processes</td>
+</tr>
+<tr>
+<td>MTA</td>
+<td><div class="pie_6 pie"></div>&nbsp;5 processes</td>
+</tr>
+<tr>
+<td>Load</td>
+<td><div class="pie_6 pie"></div>&nbsp;0.2</td>
+</tr>
+<tr>
+<td>AV</td>
+<td><div class="pie_6 pie"></div>&nbsp;</td>
+</tr>
+<tr>
+<td>Uptime</td>
+<td><div class="pie_6 pie"></div>&nbsp;</td>
+</tr>
+<tr class="last">
+<td>System restart</td>
+<td><div class="pie_6 pie"></div>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td class="equal">
+<table class="status">
+<tbody>
+<tr>
+<td>Processed</td>
+<td></td>
+</tr>
+<tr>
+<td>Clean</td>
+<td></td>
+</tr>
+<tr>
+<td>High scoring spam</td>
+<td></td>
+</tr>
+<tr>
+<td>Low scoring spam</td>
+<td></td>
+</tr>
+<tr>
+<td>Virii</td>
+<td></td>
+</tr>
+<tr class="last">
+<td>Blocked files</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+{% endblock content %}

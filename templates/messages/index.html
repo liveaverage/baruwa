@@ -1,14 +1,9 @@
 {% extends "base.html" %}
 {% block headers %}
-<link href="/static/css/dynamic.css" type="text/css" rel="stylesheet" />
-<link href="/static/css/demo_table.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" language="javascript" src="/static/js/jquery-1.4.min.js"></script>
-<script type="text/javascript" language="javascript" src="/static/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" language="javascript" src="/static/js/jquery.address-1.1.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
-var highscore = 12;
-var theTable;
 var rj;
 var ax_error = false;
 var ax_in_progress = false;
@@ -57,13 +52,13 @@ Showing the 50 most recent messages <small><span id="search-area">[refreshed eve
   <th>Status</th>
 {% else %}
 	<th class="first-t">#</th>
-	<th><a href="#">Date/Time</a></th>
-	<th><a href="#">From</a></th>
-	<th><a href="#">To</a></th>
-	<th><a href="#">Subject</a></th>
-	<th><a href="#">Size</a></th>
-	<th><a href="#">Score</a></th>
-	<th><a href="#">Status</a></th>
+	<th>Date/Time</th>
+	<th>From</th>
+	<th>To</th>
+	<th>Subject</th>
+	<th>Size</th>
+	<th>Score</th>
+	<th>Status</th>
 {% endif %}
 </tr>
 </thead>

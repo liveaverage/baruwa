@@ -18,3 +18,5 @@ $(this).load(’response.php’).fadeIn(”slow”);
 obj_list = Article.objects.filter(blog_author__name='Bob')
 sql, cols = obj_list.query.as_sql()
 IntegrityError
+
+<a href='http://www.mozilla.com/?from=sfx&amp;uid=305283&amp;t=580'><img src='http://sfx-images.mozilla.org/firefox/3.6/80x15_square_blue.png' alt='Spread Firefox Affiliate Button' border='0' /></a>

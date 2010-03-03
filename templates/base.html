@@ -8,6 +8,7 @@
 {% block headers %}{% endblock headers %}
 </head>
 <body{%block body_class%}{%endblock body_class%}>
+<div id="in-progress" style="display:none;"></div>
 <div id="main-wrapper">
   <div id="header-wrapper">
     <div id="header">
@@ -17,7 +18,7 @@
   <div id="content-wrapper">
     <div id="tabs">
       <ul class="ui-tabs-nav">
-        <li><a href="/messages/"><span>Recent Messages</span></a></li>
+        <li><a href="/messages/"><span>Messages</span></a></li>
         <li><a href="/lists/"><span>Lists</span></a></li>
         <li><a href="/reports/"><span>Reports</span></a></li>
         <li><a href="/status/"><span>Status</span></a></li>
@@ -31,8 +32,6 @@
     <div class="cb">&nbsp;</div>
     <div id="divider-header" class="divider-header">
       <h3>{% block heading %}{% endblock heading %}</h3>
-      <!--<div id="top-pagination">
-      </div>-->
     </div>
     <div class="cb">&nbsp;</div>
     <div id="content-layout">
@@ -46,7 +45,7 @@
 	Django Powered
 	</div><!-- footer -->
 </div><!-- footer-wrapper -->
-<div id="loading_message" class="loading_message" style="display: none;">
+<div id="loading_message" class="loading_message" style="display:none;">
 <p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p>
 </div>
 </body>

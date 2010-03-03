@@ -43,13 +43,15 @@ function stringtonum(n){
 
 function json2html(data){
     if(data){
-        theTable.fnClearTable(0);
         rj = data.paginator;
         var to;
         var tmp;
+        rows = '';
         $.each(data.items,function(i,n){
             //build html rows
             to = '';
+            row = '';
+            c = '';
             tmp = n.to_address.split(',');
             for(itr = 0; itr < tmp.length; itr++){
                 to += tmp[itr]+'<br />';
@@ -62,55 +64,46 @@ function json2html(data){
             var mstatus = '';
             if(n.isspam && !(n.virusinfected) && !(n.nameinfected) && !(n.otherinfected)){
                 mstatus = 'Spam';
+                if(n.ishighspam){
+                    c =  'highspam';
+                }else{
+                    c =  'spam';
+                }
             }
             if(n.virusinfected || n.nameinfected || n.otherinfected){
                 mstatus = 'Infected';
+                c =  'infested';
             }
             if(!(n.isspam) && !(n.virusinfected) && !(n.nameinfected) && !(n.otherinfected)){
                 mstatus = 'Clean';
             }
             if(n.spamwhitelisted){
                 mstatus = 'WL';
+                c =  'whitelisted';
             }
             if(n.spamblacklisted){
                 mstatus = 'BL';
+                c =  'blacklisted';
             }
-            theTable.fnAddData(['<td id="first-t">[<a href="/messages/'+n.id+'/">&nbsp;&nbsp;</a>]</td>','<td>'+n.timestamp+'</td>','<td>'+from+'</td>','<td>'+to+'</td>','<td>'+stripHTML(n.subject)+'</td>','<td>'+filesizeformat(n.size)+'</td>','<td>'+n.sascore+'</td>','<td>'+mstatus+'</td>']);
-
+            row += '<td id="first-t">[<a href="/messages/'+n.id+'/">&nbsp;&nbsp;</a>]</td>';
+            row += '<td>'+n.timestamp+'</td><td>'+from+'</td><td>'+to+'</td>';
+            row += '<td>'+stripHTML(n.subject)+'</td><td>'+filesizeformat(n.size)+'</td>';
+            row += '<td>'+n.sascore+'</td><td>'+mstatus+'</td></tr>';
+            if(c != ''){
+                row = '<tr class="'+stripHTML(c)+'">'+row;
+            }else{
+                row = '<tr>'+row;
+            }
+            rows += row;
         });
-        //theTable.fnDraw();
+        $("#recent tbody").empty();
+        if(rows == ''){
+            rows = '<tr><td colspan="8" class="align_center">No records returned</td></tr>';
+        }
+        $("#recent tbody").append(rows);
     }else{
         $("#search-area").empty();
         $("#search-area").append('Empty response from server. check network!');
     }
 }
-
-function format_rows(nRow, aData, iDisplayIndex){
-	$('td:eq(0)',nRow).addClass('first-t'); 
-	var ts = $.trim(aData[7]);
-	var ss = $.trim(aData[6]);
-	ts = $(ts).text();
-	ss = $(ss).text();
-	if(ts == 'Spam'){
-		if(ss >= highscore){
-			$(nRow).addClass('highspam');
-		}else{
-			$(nRow).addClass('spam');
-		}
-	}
-	if(ts == 'WL'){
-		$(nRow).addClass('whitelisted');
-	}
-	if(ts == 'BL'){
-		$(nRow).addClass('blacklisted');
-	}
-	if(ts == 'Infected'){
-		$(nRow).addClass('infested');
-	}
-	if(ts == 'Clean' && ss == 'None'){
-		$('td:eq(7)',nRow).text('NS')
-	}
-	return nRow;
-}
-
 

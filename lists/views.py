@@ -118,6 +118,3 @@ def delete_from_list(request, list_kind, item_id):
             b.delete()
     return HttpResponseRedirect('/lists/')
 
-#fromdjango.shortcuts import get_objects_or_404
-#list_item = get_object_or_404(Whitelist, pk=item_id)
-#list_item.delete()

@@ -138,6 +138,11 @@ function paginate(){
             $('#recent th:eq('+tc+')').text(larray[i]).attr('id','sorting_by');
             tmpl = toplinkize(rj.direction,link_url,carray[i]);
             $('#recent th:eq('+tc+')').append(tmpl);
+        }else{
+            ur = '/messages/'+link_url+'/'+rj.direction+'/'+carray[i]+'/'; 
+            if($('#recent th:eq('+tc+') a').attr('href') != ur){
+                $('#recent th:eq('+tc+') a').attr('href',ur);
+            }
         }
     }
 
@@ -163,15 +168,6 @@ function jsize_page(){
             $(this).html('&darr;&nbsp;Show filters');
         }
     });
-    theTable = $('#recent').dataTable({
-        "bSort": false,
-        "sDom": 'frt',
-        "bPaginate": false,
-        "asStripClasses": [],
-        "fnRowCallback": format_rows,
-        "aoColumns": [{"bSortable": false,"bSearchable": false},null,null,null,null,null,null,{"bSearchable": false}]
-    });
-	
     $('#paginator a').bind('click',en_history);
     $('#recent th a').bind('click',en_history);
     $('#sub-menu-links ul li a').bind('click',en_history);

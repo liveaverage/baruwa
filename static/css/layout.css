@@ -343,6 +343,10 @@ table.maillog td.maildetail {
   width:760px;
 }
 
+table.maillog td.sline {
+    border-right: 1px solid #ddd;
+}
+
 table.maillog td.piebox {
     text-align:center;
     width:350px;
@@ -405,6 +409,31 @@ table.quarantine tr {
 }
 
 table.quarantine,table.maillog tr.last {
+    border-bottom: 0px;
+}
+
+table.status {
+    width:100%;
+    border-collapse:collapse;
+}
+
+table.status tr {
+	border-bottom: 1px solid #ddd;
+    height:20px !important;
+    line-height:5px;
+}
+
+table.status td {
+    padding-left:5px;
+    padding-right:5px;
+}
+
+table.status td {
+    height:20px !important;
+    line-height:5px;
+}
+
+table.status tr.last {
     border-bottom: 0px;
 }
 
@@ -506,6 +535,18 @@ div.cb {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
+}
+
+#in-progress {
+    /*position: absolute;
+    top: 0; left: 0;*/
+    z-index: 10;
+    background:#ffc;
+    padding:5px;
+    border:1px solid #CCCCCC;
+    text-align:center;
+    font-weight:bold;
+    width:100%;
 }
 
 #content-wrapper {
@@ -638,10 +679,6 @@ div.cb {
 }
 
 .top-layer {
-}
-
-#search-area {
-	float: center;
 }
 
 #paginator {

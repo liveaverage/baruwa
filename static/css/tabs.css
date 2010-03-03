@@ -93,10 +93,7 @@
 .ui-tabs-nav .ui-tabs-unselect a:hover, .ui-tabs-nav .ui-tabs-unselect a:focus, .ui-tabs-nav .ui-tabs-unselect a:active { /* @ Opera, we need to be explicit again here now... */
     cursor: pointer;
 }
-.ui-tabs-disabled {
-    opacity: .4;
-    filter: alpha(opacity=40);
-}
+
 .ui-tabs-panel {
     border: 1px solid #ddd;
     padding: 0;
