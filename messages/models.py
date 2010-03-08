@@ -56,6 +56,14 @@ class Maillog(models.Model):
     def get_preview_url(self):
         return('preview-message',(),{'message_id':self.id})
 
+    @models.permalink
+    def get_wl_url(self):
+        return('whitelist-sender',(),{'message_id':self.id})
+
+    @models.permalink
+    def get_bl_url(self):
+        return('blacklist-sender',(),{'message_id':self.id})
+
 class SaRules(models.Model):
     rule = models.CharField(max_length=100, primary_key=True)
     rule_desc = models.CharField(max_length=200)

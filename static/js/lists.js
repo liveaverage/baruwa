@@ -1,3 +1,24 @@
+function confirm_delete(event) {
+    re = /\/lists\/delete\/(\d+)\/(\d+)/
+    str = $(this).attr('href');
+    found = str.match(re);
+    if(found.length == 3){
+        event.preventDefault();
+        if(found[1] == 1){list = 'Whitelist';}else{list = 'Blacklist';}
+        alt = 'Delete '+$("tr#"+found[2]+" td:eq(2)").text()+' from '+list;
+        $dialog.html(alt);
+        $dialog.dialog('option','buttons', {
+            'Delete': function() {
+                window.location.href=str;
+                $(this).dialog('close');
+            },Cancel: function() {
+                $(this).dialog('close');
+            }
+        });
+        $dialog.dialog('open');
+    }
+}
+
 function toplinkize(app,direction,field_name){
     var tmp = '';
     if(direction == 'dsc'){
@@ -52,21 +73,35 @@ function paginate(){
     }
     
     $(this).html(tmp);
-    $('#top-pagination').html(tmp);
-    $('#top-pagination span a').bind('click',list_nav);
     $('#paginator span a').bind('click',list_nav); 
     $('th a').bind('click',list_nav);
-    window.scrollTo(0,0);
 }
 
 function lists_from_json(data){
     if(data){
         rj = data.paginator;
-        $('#lists tbody').empty(); 
+        tti = [];
+        count = 0;
         $.each(data.items,function(i,n){
-            link = $("<a/>").attr('href','/lists/delete/'+rj.list_kind+'/'+n.id+'/').html('Delete');
-            $('#lists tbody').append('<tr class="lists"><td class="lists first-t">'+n.id+'</td><td class="lists first-t">'+n.to_address+'</td><td class="lists first-t">'+n.from_address+'</td><td class="lists first-t"><a href="/lists/delete/'+rj.list_kind+'/'+n.id+'/">Delete</a></td></tr>');
+            if(n.from_address == 'default'){
+                from_address = 'Any address';
+            }else{
+                from_address = n.from_address;
+            }
+            if(n.to_address == 'default'){
+                to_address = 'Any address';
+            }else{
+                to_address = n.to_address;
+            }
+            tti[count++] = '<tr class="lists" id="'+n.id+'"><td class="lists first-t">'+n.id+'</td><td class="lists first-t">'+to_address+'</td>';
+            tti[count++] = '<td class="lists first-t">'+from_address+'</td><td class="lists first-t">';
+            tti[count++] = '<a href="/lists/delete/'+rj.list_kind+'/'+n.id+'/">Delete</a></td></tr>';
         });
+        if(tti.length){
+            $('#lists tbody').empty().append(tti.join(''));
+        }else{
+            $('#lists tbody').empty().append('<tr class="lists"><td colspan="4" class="lists first-t">No lists found</td></tr>');
+        }
         if(rj.order_by == 'id'){
             $('#filterbox').hide('fast');
         }else{
@@ -77,12 +112,14 @@ function lists_from_json(data){
                 $('#filterlabel').html('<b>From:</b>');
             }
         }
+        $('tbody a').bind('click',confirm_delete);
     }
 }
 
 function handlextern(){
     page = $.address.parameter("u");
     if(page){
+        window.scrollTo(0,0);
         page = $.trim(page);
         re = /^lists\-[1-2]\-[0-9]+\-dsc|asc\-id|to_address|from_address$/
         if(re.test(page)){
@@ -95,26 +132,40 @@ function handlextern(){
 }
 
 function list_nav(){
+    window.scrollTo(0,0);
     url = $(this).attr('href').replace(/\//g, '-').replace(/^-/, '').replace(/-$/,'');
     $.address.value('?u='+url);
     $.address.history($.address.baseURL() + url);
-    $('#top-pagination').empty();
-	$('#top-pagination').append($("<img/>").attr("src","/static/imgs/loader.gif")).append('&nbsp;Processing........');
+	$('#pagination_info').append($("<img/>").attr({src:"/static/imgs/loader.gif",id:'lists-spinner'})).append('&nbsp;<small>Processing........</small>');
     $.getJSON($(this).attr('href'),lists_from_json);
     return false;
 }
 
 function jsize_lists(){
     $('#paginator span a').bind('click',list_nav); 
-    $('#top-pagination span a').bind('click',list_nav); 
     $('th a').bind('click',list_nav);
     $('#paginator').ajaxStop(paginate);
-    $('#top-pagination').ajaxError(function(){
-	    $(this).empty();
-	    $(this).append('<span class="ajax_error">Error connecting to server. check network!</span>');
+    $('#pagination_info').ajaxError(function(){
+	    $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
     });
     $.address.externalChange(handlextern);
+    $dialog.html('This dialog will show every time!')
+        .dialog({
+            autoOpen: false,
+            resizable: false,
+            height:120,
+            width: 500,
+            modal: true,
+            title: 'Please confirm deletion ?',
+            closeOnEscape: false,
+            open: function(event, ui) {$(".ui-dialog-titlebar-close").hide(); /*$('body').css('overflow', 'hidden');*/},
+            //close: function(event, ui) {$('body').css('overflow', 'auto');},
+            draggable: false,
+
+        });
+    $('tbody a').bind('click',confirm_delete);
 }
 
+var $dialog = $('<div></div>');
 $(document).ready(jsize_lists);
 

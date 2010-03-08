@@ -218,7 +218,7 @@ div.buttons {
   padding-left:10px;
 }
 
-#quarantine_errors, .filter_errors {
+#quarantine_errors, .filter_errors, .nojs {
   color:red;
 }
 
@@ -243,8 +243,8 @@ th {
 }
 
 table.maillog {
-	width: 960px;
-  font-size:8pt;
+	width: 960px !important;
+    font-size:8pt;
 	border-collapse: collapse;
 }
 
@@ -546,7 +546,7 @@ div.cb {
     border:1px solid #CCCCCC;
     text-align:center;
     font-weight:bold;
-    width:100%;
+    width:99%;
 }
 
 #content-wrapper {
@@ -661,13 +661,6 @@ div.cb {
 	margin: 0 auto;
 	border: 1px solid #ddd;
 	border-bottom: 0 !important;
-}
-
-#recent_wrapper {
-/*	width: 960px;
-	margin: 0 auto;
-	border: 0px solid #eff;
-	border-bottom: 0 !important;*/
 }
 
 .ajax-table {

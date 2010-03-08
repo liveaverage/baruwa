@@ -65,6 +65,7 @@ def paginator(context, adjacent_pages=2):
         'app': context['app'],
         'search_for': context['search_for'],
         'query_type': context['query_type'],
+        'list_all': context['list_all'],
     }
 
 register.inclusion_tag('tags/paginator.html', takes_context=True)(paginator)

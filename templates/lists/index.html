@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block headers %}
+<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-custom.css" />
 <script type="text/javascript" language="javascript" src="/static/js/jquery-1.4.min.js"></script>
+<script type="text/javascript" language="javascript" src="/static/js/jquery-ui.js"></script>
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
 var rj;
@@ -29,9 +31,9 @@ List management
 {% block content %}
 <table id="lists" class="maillog">
     <thead>
-        <tr class="lists">
+        <!--<tr class="lists" style="display:{% if is_paginated %}table-row{%else%}none{%endif%};">
         <td id="top-pagination" class="top-pagination" colspan="4">{% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}</td>
-        </tr>
+        </tr>-->
         <tr class="header">
             {% load sorter %}
             {% sorter "id" "#" %}
@@ -66,7 +68,7 @@ List management
         {% if object_list %}
             {% load messages_extras %}
             {% for listitem in object_list %}
-            <tr class="lists">
+            <tr class="lists" id="{{listitem.id}}">
                 <td class="lists first-t{%ifequal order_by "id"%} ordered_by{%endifequal%}">{{listitem.id}}</td>
                 <td class="lists first-t{%ifequal order_by "to_address"%} ordered_by{%endifequal%}">{{listitem.to_address|tds_email_list}}</td>
                 <td class="lists first-t{%ifequal order_by "from_address"%} ordered_by{%endifequal%}">{{listitem.from_address}}</td>

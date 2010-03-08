@@ -1,7 +1,10 @@
 function prevent_interupt_refresh(event){
     if(ax_in_progress){
         event.preventDefault();
-        $("#in-progress").html("Refreshing is in progress, please wait for it to complete").show('fast');
+        if(!$("#in-progress").is(':visible')){
+            $("#in-progress").html("Content refresh in progress, please wait for it to complete").show('fast');
+            window.scroll(0,0);
+        }
     }
 }
 
@@ -17,18 +20,20 @@ function build_table_from_json(){
 }
 
 function do_table_sort(){
+    full_messages_listing = false;
+    $.ajaxSetup({
+        'beforeSend':function(xhr){xhr.setRequestHeader("X-Last-ID",last_id);}
+    });
     ax_in_progress = false;
     $("#search-area").ajaxSend(function(){
-	    $(this).empty();
-	    $(this).append($("<img/>").attr("src","/static/imgs/loader.gif")).append('&nbsp;Refreshing........');
+	    $(this).empty().append($("<img/>").attr("src","/static/imgs/loader.gif")).append('&nbsp;Refreshing........');
 	    ax_error = false;
         ax_in_progress = true;
     })
     .ajaxStop(function() {
 	    if(!ax_error){
-		    $(this).empty();
 		    var lu = lastupdatetime();
-		    $(this).append('[last refreshed at '+lu+']');
+		    $(this).empty().append('[last update at '+lu+']');
             ax_in_progress = false;
             if($("#in-progress").is(':visible')){
                 $("#in-progress").hide();
@@ -36,8 +41,7 @@ function do_table_sort(){
 	    }
     })
     .ajaxError(function(){
-	    $(this).empty();
-	    $(this).append('<span class="ajax_error">Error connecting to server. check network!</span>');
+	    $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
 	    ax_error = true;
         ax_in_progress = false;
         if($("#in-progress").is(':visible')){

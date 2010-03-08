@@ -71,7 +71,7 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
         return HttpResponse(json, mimetype='application/javascript')
     else:
         return object_list(request,template_name='lists/index.html',queryset=listing, paginate_by=20,page=page,
-            extra_context={'app':app,'list_kind':list_kind,'direction':direction,'order_by':ordering,'search_for':search_for,'query_type':query_type})
+            extra_context={'app':app,'list_kind':list_kind,'direction':direction,'order_by':ordering,'search_for':search_for,'query_type':query_type,'list_all':0})
 
 def add_to_list(request):
     template = 'lists/add.html'

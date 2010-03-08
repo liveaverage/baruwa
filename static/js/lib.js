@@ -1,3 +1,12 @@
+function wordwrap(str,width,brk,cut) {
+    brk = brk || '<br/>\n';
+    width = width || 75;
+    cut = cut || false;
+    if (!str) { return str; }
+    var regex = '.{1,' +width+ '}(\\s|$)' + (cut ? '|.{' +width+ '}|.+$' : '|\\S+?(\\s|$)');
+    return str.match( RegExp(regex, 'g') ).join( brk );
+}
+                             
 function stripHTML(string) { 
     if(string){
         return string.replace(/<(.|\n)*?>/g, ''); 
@@ -44,6 +53,9 @@ function stringtonum(n){
 function json2html(data){
     if(data){
         rj = data.paginator;
+        if(data.items.length){
+            last_id = data.items[0].id;
+        }
         var to;
         var tmp;
         rows = '';
@@ -60,6 +72,17 @@ function json2html(data){
                 var from = n.from_address.substring(0,29) + '...';
             }else{
                 var from = n.from_address;
+            }
+            s = stripHTML(n.subject);
+            if(s.length > 38){
+                re = /\s/g;
+                if(re.test(s)){
+                   subject = wordwrap(s,38); 
+                }else{
+                    subject = s.substring(0,37) + '...';
+                }
+            }else{
+                subject = s;
             }
             var mstatus = '';
             if(n.isspam && !(n.virusinfected) && !(n.nameinfected) && !(n.otherinfected)){
@@ -87,7 +110,7 @@ function json2html(data){
             }
             row += '<td id="first-t">[<a href="/messages/'+n.id+'/">&nbsp;&nbsp;</a>]</td>';
             row += '<td>'+n.timestamp+'</td><td>'+from+'</td><td>'+to+'</td>';
-            row += '<td>'+stripHTML(n.subject)+'</td><td>'+filesizeformat(n.size)+'</td>';
+            row += '<td>'+subject+'</td><td>'+filesizeformat(n.size)+'</td>';
             row += '<td>'+n.sascore+'</td><td>'+mstatus+'</td></tr>';
             if(c != ''){
                 row = '<tr class="'+stripHTML(c)+'">'+row;
@@ -96,14 +119,16 @@ function json2html(data){
             }
             rows += row;
         });
-        $("#recent tbody").empty();
         if(rows == ''){
-            rows = '<tr><td colspan="8" class="align_center">No records returned</td></tr>';
+            if(full_messages_listing){
+                rows = '<tr><td colspan="8" class="align_center">No records returned</td></tr>';
+                $("#recent tbody").empty().append(rows);
+            }
+        }else{
+            $("#recent tbody").empty().append(rows);
         }
-        $("#recent tbody").append(rows);
     }else{
-        $("#search-area").empty();
-        $("#search-area").append('Empty response from server. check network!');
+        $("#search-area").empty().append('Empty response from server. check network!');
     }
 }
 

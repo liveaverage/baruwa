@@ -12,7 +12,9 @@ function en_history(){
     url = $(this).attr('href').replace(/\//g, '-').replace(/^-/, '').replace(/-$/,'');
     $.address.value('?u='+url);
     $.address.history($.address.baseURL() + url);
-    $('#loading_message').show('first');
+    window.scrollTo(0,0);
+    $('#loading_message').append('<p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p>').show('fast');
+    $('body').css('overflow', 'hidden');
     $.getJSON($(this).attr('href'),json2html);
     return false;
 }
@@ -25,18 +27,13 @@ function handlextern(){
         if(re.test(page)){
             page = page.replace(/-/g,'/');
             url = '/'+ page + '/';
-            $('#loading_message').show('fast');
+            window.scrollTo(0,0);
+            $('#loading_message').append('<p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p>').show('fast');
+            $('body').css('overflow', 'hidden');
             $.getJSON(url,json2html);
             return false;
         }
    }
-}
-
-function jsize_links(event){
-    event.preventDefault();
-    $('#loading_message').show('normal');
-    var url = $(this).attr('href');
-    $.getJSON(url,json2html);
 }
 
 function paginate(){
@@ -145,18 +142,19 @@ function paginate(){
             }
         }
     }
-
-    $('#divider-header h3 span').html('Showing page '+rj.page+' of '+rj.pages+' pages.');
+    pf = $('#divider-header h3 small').html();
+    $('#divider-header h3').html('Showing page '+rj.page+' of '+rj.pages+' pages.'+' (<small>'+pf+'</small>)');
     $.address.title('Showing page '+rj.page+' of '+rj.pages+' pages.');
     $(this).html(tmp);
     $('#paginator a').bind('click',en_history);
     $('#recent th a').bind('click',en_history);
     $('#sub-menu-links ul li a').bind('click',en_history);
-    $('#loading_message').hide('fast');
-    window.scrollTo(0,0);
+    $('#loading_message').empty().hide('fast');
+    $('body').css('overflow', 'auto');
 }
 
 function jsize_page(){
+    full_messages_listing = true;
     $('#fhl').before($('<a/>').attr({href:'#',id:'filter-toggle'}).html('&darr;&nbsp;Show filters'));
     $('#fhl').hide();
     $('#filter-toggle').bind('click',function(e){
@@ -172,8 +170,9 @@ function jsize_page(){
     $('#recent th a').bind('click',en_history);
     $('#sub-menu-links ul li a').bind('click',en_history);
     $("#paginator").ajaxStop(paginate);
-    $("#loading_message").ajaxError(function(){
+    $("#loading_message").empty().ajaxError(function(){
         $(this).hide('normal');
+        $('body').css('overflow', 'auto');
     });
     $.address.externalChange(handlextern);
 }

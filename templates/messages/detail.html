@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block headers %}
-<script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
+<script type="text/javascript" src="/static/js/jquery-1.4.min.js"></script>
 <script type="text/javascript" src="/static/js/details.js"></script>
 {% endblock headers %}
 {% block title %}Baruwa :: Showing message - {{ message_details.id }} {% endblock %}
@@ -29,10 +29,10 @@
 		<tr>
 		<td class="mailitem">From:</td>
 		<td class="maildetail">{{ message_details.from_address|tds_wrap:80|linebreaksbr }}
-    <span class="listings">
-    [{% if not message_details.spamwhitelisted %}<a href="">Whitelist</a>{%else%}Whitelist{%endif%}]
+    <span id="listing" class="listings">
+    [{% if not message_details.spamwhitelisted %}<a id="whitelist" href="{%url whitelist-sender message_id=message_details.id%}">Whitelist</a>{%else%}Whitelist{%endif%}]
     &nbsp;
-    [{% if not message_details.spamblacklisted %}<a href="">Blacklist</a>{%else%}Blacklist{%endif%}]
+    [{% if not message_details.spamblacklisted %}<a id="blacklist" href="{%url blacklist-sender message_id=message_details.id%}">Blacklist</a>{%else%}Blacklist{%endif%}]
     </span>
     </td>
 		</tr>

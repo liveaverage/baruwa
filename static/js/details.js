@@ -1,72 +1,91 @@
-var formSubmission = function(e){
-    dojo.attr("submit_q_request","disabled",true);
-    dojo.byId("quarantine_errors").innerHTML = "";
-    dojo.create("img",{src:"/static/imgs/loader.gif",alt:"loading"},dojo.byId("ajax_status"))
-    dojo.byId("ajax_status").innerHTML += '&nbsp;Processing the request...';
+function handleListing(event){
+    event.preventDefault();
+    url = $(this).attr('href');
+    id = $(this).attr('id');
+    $("#"+id).before($("<img/>").attr({src:"/static/imgs/loader.gif",id:"img-loading"})).remove();
+    $.getJSON(url,function(data){
+        if(data.success == 'True'){
+            $("#in-progress").html(data.html).fadeIn(50).delay(15000).slideToggle('fast');
+            $("#img-loading").after(id).remove();
+            window.scroll(0,0);
+        }else{
+            $("#in-progress").html(data.html).fadeIn(50).delay(15000).slideToggle('fast');
+            $("#img-loading").after($('<a/>').attr({href:url,id:id}).html(id)).remove();
+            window.scroll(0,0);
+        }
+    });
+}
+
+function formSubmission(event){
+    $("#submit_q_request").attr('disabled', 'disabled');
+    $("#quarantine_errors").empty();
+    $("#ajax_status").html($("<img/>").attr("src","/static/imgs/loader.gif")).append('&nbsp;Refreshing........'); 
     var release  = 0;
     var todelete = 0;
     var salearn  = 0;
     var use_alt  = 0;
-    e.preventDefault();
-    if(dojo.byId("id_release").checked){
+
+    event.preventDefault();
+
+    if($("#id_release").is(":checked")){
         release = 1;
     }
-    if(dojo.byId("id_todelete").checked){
+    if($("#id_todelete").is(":checked")){
         todelete = 1;
     }
-    if(dojo.byId("id_salearn").checked){
+    if($("#id_salearn").is(":checked")){
         salearn = 1;
     }
-    if(dojo.byId("id_use_alt").checked){
-        use_alt = 1;
+    if($("#id_use_alt").is(":checked")){
+         use_alt = 1;
     }
-    dojo.xhrPost({
-        url: '/messages/process_quarantine/',
-        handleAs: "json",
-        content: {
-             release:        release,
-             todelete:       todelete,
-             salearn:        salearn,
-             salearn_as:     dojo.byId("id_salearn_as").value,
-             use_alt:        use_alt,
-             altrecipients:  dojo.byId("id_altrecipients").value,
-             message_id:     dojo.byId("id_message_id").value
-        },
-        handle: function(data,args){
-            dojo.byId("ajax_status").innerHTML = "";
-            if(typeof data == "error"){
-                dojo.byId("quarantine_errors").innerHTML = args;
-                dojo.attr("submit_q_request","disabled",false);
+    var quarantine_process_request = {
+        release:        release, 
+        todelete:       todelete,
+        salearn:        salearn,
+        salearn_as:     $("#id_salearn_as").val(),
+        use_alt:        use_alt,
+        altrecipients:  $("#id_altrecipients").val(),
+        message_id:     $("#id_message_id").val() 
+    };
+    $.post('/messages/process_quarantine/',quarantine_process_request,
+        function(response){
+            $("#ajax_status").empty();
+            $("#quarantine_errors").empty();
+            $("#server_response").empty();
+            if(response.success == 'True'){
+                $("#server_response").prepend(response.html).slideDown();
+                $("#process_quarantine").slideToggle();
             }else{
-                dojo.byId("quarantine_errors").innerHTML = "";
-                dojo.byId("server_response").innerHTML = "";
-                if(data.success == "True"){
-                    dojo.byId("server_response").innerHTML = data.html;
-                    dojo.destroy("process_quarantine");
-                    dojo.destroy("ajax_status");
-                    dojo.destroy("quarantine_errors");
-                }else{
-                    dojo.byId("quarantine_errors").innerHTML = data.html;
-                    dojo.attr("submit_q_request","disabled",false);
-                }
+                $("#quarantine_errors").append(response.html);
+                $("#submit_q_request").removeAttr('disabled');
             }
-        }
-    });
+        },"json");
 }
-dojo.addOnLoad(function(){
-    dojo.byId("mail-headers").style.display = "none";
-    dojo.create("a",{href:"#",innerHTML:"&darr;&nbsp;Show headers",id:"header-toggle"},"mail-headers","after");
-    var process_form = dojo.byId("qform");
-    dojo.connect(process_form,"onsubmit","formSubmission"); 
-    dojo.connect(dojo.byId("header-toggle"),"onclick",function(e){
-        e.preventDefault();
-        em = dojo.byId("mail-headers");
-        if(em.style.display == "block"){
-            em.style.display = "none";
-            dojo.byId("header-toggle").innerHTML = "&darr;&nbsp;Show headers";
+
+function prepareDoc(){
+    mh = $("#mail-headers");
+    mh.hide();
+    mh.after($("<a/>").attr({href:'#',id:'header-toggle',innerHTML:'&darr;&nbsp;Show headers'}));
+    $("#header-toggle").bind('click',function(event){
+        event.preventDefault();
+        if($("#mail-headers").css("display") == 'block'){
+            $("#mail-headers").css({display:'none'})
+            $(this).blur().html("&darr;&nbsp;Show headers");
+            window.scroll(0,50);
         }else{
-            em.style.display = "block";
-            dojo.byId("header-toggle").innerHTML = "&uarr;&nbsp;Hide headers";
+            $("#mail-headers").css({display:'block'})
+            $(this).blur().html("&uarr;&nbsp;Hide headers");
         }
     });
-});
+    $("#qform").submit(formSubmission);
+    if($("#whitelist").length){
+        $("#whitelist").bind('click',handleListing);
+    }
+    if($("#blacklist").length){
+        $("#blacklist").bind('click',handleListing);
+    }
+
+}
+
+$(document).ready(prepareDoc);

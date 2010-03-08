@@ -10,13 +10,14 @@ function build_elements(response){
                 row += ' [ <a href="/reports/fs/'+i+'/">Save</a> ] '+n.filter_field+' '+n.filter_by+' '+n.filter_value+'</td></tr>';
                 $("#afilters tbody").append(row);
             }else{
+                $('#loading_message').append('<p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p>').show('fast');
                 window.location.href=window.location.href;
             }
         }
         if(response.saved_filters){
-            $("#sfilters tbody").empty();
             var i = response.saved_filters.length;
             i--;
+            rows = '';
             $.each(response.saved_filters,function(itr,filter){
                 if(itr == i){
                     var row = '<tr class="last">';
@@ -30,8 +31,11 @@ function build_elements(response){
                     row += ' [ Load ] ';
                 }
                 row += filter.filter_name+'</td></tr>';
-                $("#sfilters tbody").append(row);
+                rows += row;
             });
+            if(rows != ''){
+                $("#sfilters tbody").empty().append(row);
+            }
         }
         $("#msgcount").html(response.data.count);
         $("#newestmsg").html(response.data.newest);

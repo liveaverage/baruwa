@@ -4,13 +4,15 @@
 <script type="text/javascript" language="javascript" src="/static/js/jquery.address-1.1.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
+var last_id = '';
+var full_messages_listing = false;
 var rj;
 var ax_error = false;
 var ax_in_progress = false;
 //]]>
 </script>
 <script type="text/javascript" language="javascript" src="/static/js/lib.js"></script>
-{% if not is_paginated %}
+{% if not list_all %}
 <script type="text/javascript" language="javascript" src="/static/js/recent_messages.js"></script>
 {% else %}
 <script type="text/javascript" language="javascript" src="/static/js/messages.js"></script>
@@ -23,24 +25,32 @@ var ax_in_progress = false;
 </ul>
 {% endblock submenu %}
 {% block title %}
-{% if is_paginated %} 
+{% if list_all %} 
 {% load pagination_heading %}{% pagination_heading %}
 {% else %}
 Showing the 50 most recent messages
 {% endif %}
 {% endblock title %}
 {% block heading %}
-{% if is_paginated %}
+{% if list_all %}
 {% load pagination_heading %}{% pagination_heading %}{%if active_filters %}(<small><a href="/reports/#active_filters">Filters</a> have been applied</small>){%endif%}
 {% else %}
-Showing the 50 most recent messages <small><span id="search-area">[refreshed every 60 sec's]</span></small>
+Showing the 50 most recent messages 
+<small>
+    <span id="search-area">
+    [updated every 60 sec's
+    <noscript> - 
+        <span class="nojs">Not updating enable javascript</span>
+    </noscript>]
+    </span>
+</small>
 {% endif %}
 {% endblock heading %}
 {% block content %}
 <table class="maillog" id="recent">
 <thead>
 <tr class="header">
-{% if is_paginated %}
+{% if list_all %}
 {% load sorter %}
 	<th class="first-t">#</th>
   {% sorter "timestamp" "Date/Time" %}
@@ -62,7 +72,7 @@ Showing the 50 most recent messages <small><span id="search-area">[refreshed eve
 {% endif %}
 </tr>
 </thead>
-{% if is_paginated %}
+{% if list_all %}
 <tfoot>
   <tr class="header">
   <td colspan="8">
@@ -96,7 +106,7 @@ Showing the 50 most recent messages <small><span id="search-area">[refreshed eve
 	<td>{{ message.timestamp }}</td>
 	<td>{{ message.from_address|tds_trunc:30 }}</td>
 	<td>{{ message.to_address|tds_nl_commas|linebreaksbr }}</td>
-	<td>{{ message.subject|striptags|wordwrap:38|linebreaksbr }}</td>
+	<td>{{ message.subject|striptags|tds_trunc:38 }}</td>
 	<td>{{ message.size|filesizeformat }}</td>
 	<td>{{ message.sascore }}</td>
 	<td>
@@ -108,6 +118,8 @@ Showing the 50 most recent messages <small><span id="search-area">[refreshed eve
     </td>
 	</tr>
 	{% endfor %}
+{% else %}
+    <tr><td colspan="8" class="align_center">No records returned</td></tr>
 {% endif %}
 </tbody>
 </table>

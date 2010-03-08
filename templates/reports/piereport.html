@@ -76,14 +76,15 @@ Reports - {{report_title}}
 <td class="sascores">
 <div class="pie_{{forloop.counter}} pie"></div>
 &nbsp;
-{% if item.from_address %}{{item.from_address|tds_nl_commas|linebreaksbr}}{%endif%}
+{% if item.from_address %}{{item.from_address|tds_trunc:42}}{%endif%}
 {% if item.from_domain %}{{item.from_domain}}{%endif%}
-{% if item.to_address %}{{item.to_address|tds_nl_commas|linebreaksbr}}{%endif%}
+{% if item.to_address %}{{item.to_address|tds_trunc:42}}{%endif%}
 {% if item.to_domain %}{{item.to_domain}}{%endif%}
 </td>
 <td class="first-t sascores">{{item.num_count}}</td>
 <td class="first-t sascores">{{item.size|filesizeformat}}</td>
 {% if forloop.first %}<td class="piebox" rowspan="{{forloop.revcounter}}">
+<noscript>Enable javascript to view graph</noscript>
 <div id="pie_graph" style="width: 350px; height: 230px;"></div>
 </td>
 {%endif%}

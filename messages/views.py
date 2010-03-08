@@ -4,12 +4,15 @@ from messages.models import Maillog
 from messages.forms import QuarantineProcessForm
 from django.template.loader import render_to_string
 from django.utils import simplejson
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse,Http404,HttpResponseRedirect
 from django.forms.util import ErrorList as errorlist
 from django.views.generic.list_detail import object_list
 from django.core.paginator import Paginator
+from django.core.urlresolvers import reverse
+#from django.contrib import messages
 from messages.process_mail import *
 from reports.views import apply_filter
+from lists.models import Blacklist,Whitelist
 
 def json_ready(element):
     element['timestamp'] = str(element['timestamp'])
@@ -36,7 +39,11 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
         message_list = apply_filter(message_list,request,active_filters)
     if request.is_ajax():
         if not list_all:
-            message_list = map(json_ready,message_list)
+            last_id = request.META.get('HTTP_X_LAST_ID', None)
+            if last_id != message_list[0]['id']:
+                message_list = map(json_ready,message_list)
+            else:
+                message_list = []
             pg = None
         else:
             p = Paginator(message_list,50)
@@ -59,7 +66,7 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
         return HttpResponse(json, mimetype='application/javascript')
     else:
         return object_list(request, template_name='messages/index.html', queryset=message_list, paginate_by=50, page=page, 
-            extra_context={'quarantine': quarantine,'direction':direction,'order_by':ordering,'app':'messages','active_filters':active_filters})
+            extra_context={'quarantine': quarantine,'direction':direction,'order_by':ordering,'app':'messages','active_filters':active_filters,'list_all':list_all})
 
 def detail(request, message_id):
     message_details = get_object_or_404(Maillog, id=message_id)
@@ -164,3 +171,65 @@ def preview(request, message_id):
         fp.close()
         message = parse_email(msg)
     return render_to_response('messages/preview.html', {'message':message,'message_id':message_object.id})
+
+def blacklist(request,message_id):
+    success = 'True'
+    try:
+        message = Maillog.objects.get(pk=message_id)
+    except Maillog.DoesNotExist:
+        html = 'Message with message id %s does not exist' % message_id
+        success = 'False'
+        pass
+    else:
+        try:
+            bl = Blacklist.objects.get(to_address__iexact=message.to_address,from_address__iexact=message.from_address)
+        except Blacklist.DoesNotExist:
+            bl = Blacklist(to_address=message.to_address,from_address=message.from_address)
+            try:
+                bl.save()
+            except:
+                html = 'An error occured while adding %s to blacklist' % message.from_address
+                success = 'False'
+                pass
+            else:
+                html = 'The sender %s has been blacklisted' % message.from_address
+        else:
+            html = 'The sender %s is already blacklisted' % message.from_address
+            success = 'False'
+    if request.is_ajax():
+        response = simplejson.dumps({'success':success,'html':html})
+        return HttpResponse(response,content_type='application/javascript; charset=utf-8')
+    else:
+        #messages.info(request,html)
+        return HttpResponseRedirect(reverse('message-detail', args=[message_id]))
+
+def whitelist(request,message_id):
+    success = 'True'
+    try:
+        message = Maillog.objects.get(pk=message_id)
+    except Maillog.DoesNotExist:
+        html = 'Message with message id %s does not exist' % message_id
+        success = 'False'
+        pass
+    else:
+        try:
+            bl = Whitelist.objects.get(to_address__iexact=message.to_address,from_address__iexact=message.from_address)
+        except Whitelist.DoesNotExist:
+            bl = Whitelist(to_address=message.to_address,from_address=message.from_address)
+            try:
+                bl.save()
+            except:
+                html = 'An error occured while adding %s to whitelist' % message.from_address
+                success = 'False'
+                pass
+            else:
+                html = 'The sender %s has been whitelisted' % message.from_address
+        else:
+            html = 'The sender %s is already whitelisted' % message.from_address
+            success = 'False'
+    if request.is_ajax():
+        response = simplejson.dumps({'success':success,'html':html})
+        return HttpResponse(response,content_type='application/javascript; charset=utf-8')
+    else:
+        #messages.info(request,html)
+        return HttpResponseRedirect(reverse('message-detail', args=[message_id]))

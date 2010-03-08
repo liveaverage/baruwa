@@ -476,9 +476,9 @@ def report(request,report_kind):
     elif report_kind == 11:
         data = []
         c = connection.cursor()
-        q = """select date, count(*) as mail_total,
+        q = """SELECT date, count(*) AS mail_total,
             SUM(CASE WHEN virusinfected>0 THEN 1 ELSE 0 END) AS virus_total,
-            SUM(CASE WHEN (virusinfected=0 OR virusinfected IS NULL) AND isspam>0 THEN 1 ELSE 0 END) as spam_total,
+            SUM(CASE WHEN (virusinfected=0 OR virusinfected IS NULL) AND isspam>0 THEN 1 ELSE 0 END) AS spam_total,
             SUM(CASE WHEN (virusinfected=0 OR virusinfected IS NULL) AND (isspam=0 OR isspam IS NULL) AND ismcp>0 THEN 1 ELSE 0 END) AS mcp_total,
             SUM(size) AS size_total FROM maillog"""
         if request.session.get('filter_by', False):
