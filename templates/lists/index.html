@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "list-base.html" %}
 {% block headers %}
 <link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-custom.css" />
 <script type="text/javascript" language="javascript" src="/static/js/jquery-1.4.min.js"></script>
@@ -15,11 +15,11 @@ var ax_error = false;
 {% block submenu %}
 <ul>
 {% ifequal list_kind 1 %}
-  <li><a href="/lists/2/">Blacklist</a></li>
+  <li><a id="list-link" href="/lists/2/">Blacklist</a></li>
 {%else%}
-  <li><a href="/lists/1/">Whitelist</a></li>
+  <li><a id="list-link" href="/lists/1/">Whitelist</a></li>
 {%endifequal%}
-  <li><a href="/lists/add/">Add to List</a></li>
+  <li><a id="list-add" href="/lists/add/">Add to List</a></li>
 </ul>
 {% endblock submenu %}
 {% block title %}
@@ -87,3 +87,35 @@ List management
     </tbody>
 </table>
 {% endblock content %}
+{% block add_item %}
+<form id="list-form" method="post" action="/lists/add/">
+<div id="ins-after" class="cb">&nbsp;</div>
+<div class="row">
+<label for="id_from_address">From address</label>:
+<span class="form"><input type="text" name="from_address" id="id_from_address" size="50" />&nbsp;{{ form.from_address.errors }}</span>
+</div>
+<div class="row">
+<label for="id_to_address">To address</label>:
+<span class="form"><input type="text" name="to_address" id="id_to_address" />&nbsp;&#64;
+<input type="text" name="to_domain" id="id_to_domain" size="24" />&nbsp;
+{{ form.to_address.errors }}
+{{ form.to_domain.errors }}
+</span>
+</div>
+<div class="row">
+<label for="id_list_type">List type</label>:
+<span class="form">
+<select name="list_type" id="id_list_type">
+<option value="1">Whitelist</option>
+<option value="2">Blacklist</option>
+</select>&nbsp;</span>
+</div>
+<div class="cb">&nbsp;</div>
+<div class="buttons">
+<input id="cancel-button" type="button" value="Cancel" />&nbsp;
+<input id="submit-button" type="submit" value="Add" />
+</div>
+<div class="cb">&nbsp;</div>
+</form>
+{% endblock add_item %}
+

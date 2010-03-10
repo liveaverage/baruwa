@@ -1,5 +1,4 @@
 # vim: ai ts=4 sts=4 et sw=4
-
 from django.shortcuts import render_to_response
 from django.views.generic.list_detail import object_list
 from lists.models import Blacklist, Whitelist
@@ -7,6 +6,9 @@ from lists.forms import ListAddForm,FilterForm
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.paginator import Paginator
 from django.utils import simplejson
+from django.db import IntegrityError
+from django.forms.util import ErrorList as errorlist
+import re
 
 def json_ready(element):
     element['id'] = str(element['id'])
@@ -75,6 +77,7 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
 
 def add_to_list(request):
     template = 'lists/add.html'
+    error_msg = ''
     if request.method == 'GET':
         add_form = ListAddForm() 
         add_dict = {'form':add_form}
@@ -90,31 +93,76 @@ def add_to_list(request):
                 to = clean_data['to_address']
             if int(clean_data['list_type']) == 1:
                 wl = Whitelist(to_address=to,from_address=clean_data['from_address'])
-                wl.save()
+                try:
+                    wl.save()
+                except IntegrityError:
+                    error_msg = 'The list item already exists'
             else:
                 bl = Blacklist(to_address=to,from_address=clean_data['from_address'])
-                bl.save()
-            return HttpResponseRedirect('/lists/')
+                try:
+                    bl.save()
+                except IntegrityError:
+                    error_msg = 'The list item already exists'
+            if request.is_ajax():
+                if error_msg == '':
+                    request.method = 'GET'
+                    #request.META['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
+                    return index(request,int(clean_data['list_type']),1,'dsc','id','',3)
+                else:
+                    json = simplejson.dumps({'items':[],'paginator':[],'error':error_msg})
+                    return HttpResponse(json,mimetype='application/javascript')
+            else:
+                return HttpResponseRedirect('/lists/')
         else:
+            if request.is_ajax():
+                error_list = form.errors.values()[0]
+                html = errorlist(error_list).as_ul()
+                response = simplejson.dumps({'error': html})
+                return HttpResponse(response,mimetype='application/javascript')
             add_dict = {'form':form}
     return render_to_response(template,add_dict)
 
 def delete_from_list(request, list_kind, item_id):
     item_id = int(item_id)
     list_kind = int(list_kind)
+    error_msg = ''
     if list_kind == 1:
         try:
             w = Whitelist.objects.get(pk=item_id)
         except Whitelist.DoesNotExist:
-            raise Http404()
+            if request.is_ajax():
+                error_msg = 'The list item does not exist'
+                pass
+            else:
+                raise Http404()
         else:
             w.delete()
     elif list_kind == 2:
         try:
             b = Blacklist.objects.get(pk=item_id)
         except Blacklist.DoesNotExist:
-            raise Http404()
+            if request.is_ajax():
+                error_msg = 'The list item does not exist'
+                pass
+            else:
+                raise Http404()
         else:
             b.delete()
-    return HttpResponseRedirect('/lists/')
+    if request.is_ajax():
+        if error_msg == '':
+            page = 1
+            direction = 'dsc'
+            order_by = 'id'
+            params = request.META.get('HTTP_X_LIST_PARAMS', None)
+            if params:
+                g = re.match(r"^lists\-([1-2])\-([0-9]+)\-(dsc|asc)\-(id|to_address|from_address)$",params)
+                if g:
+                    list_kind, page, direction, order_by = g.groups()
+            request.method = 'GET'
+            return index(request,list_kind,page,direction,order_by,'',3)
+        else:
+            json = simplejson.dumps({'items':[],'paginator':[],'error':error_msg})
+            return HttpResponse(json,mimetype='application/javascript')
+    else:
+        return HttpResponseRedirect('/lists/')
 

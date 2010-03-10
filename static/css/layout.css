@@ -656,11 +656,15 @@ div.cb {
   text-decoration: none;
 }*/
 
-#content-layout {
+#content-layout, #add-item {
 	width: 960px;
 	margin: 0 auto;
 	border: 1px solid #ddd;
 	border-bottom: 0 !important;
+}
+
+#add-item {
+    background:#ededed;
 }
 
 .ajax-table {

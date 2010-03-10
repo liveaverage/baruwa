@@ -1,22 +1,16 @@
-function confirm_delete(event) {
-    re = /\/lists\/delete\/(\d+)\/(\d+)/
-    str = $(this).attr('href');
-    found = str.match(re);
-    if(found.length == 3){
-        event.preventDefault();
-        if(found[1] == 1){list = 'Whitelist';}else{list = 'Blacklist';}
-        alt = 'Delete '+$("tr#"+found[2]+" td:eq(2)").text()+' from '+list;
-        $dialog.html(alt);
-        $dialog.dialog('option','buttons', {
-            'Delete': function() {
-                window.location.href=str;
-                $(this).dialog('close');
-            },Cancel: function() {
-                $(this).dialog('close');
-            }
-        });
-        $dialog.dialog('open');
+function ajax_start(){
+    $(this).append($("<img/>").attr({src:"/static/imgs/loader.gif",id:'lists-spinner'})).append('&nbsp;<small>Processing........</small>');
+}
+
+function ajax_stop(){
+    if($('#lists-spinner').length){
+        $('#lists-spinner').remove();
+        $('#pagination_info small').remove();
     }
+}
+
+function ajax_error(){
+    $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
 }
 
 function toplinkize(app,direction,field_name){
@@ -72,7 +66,7 @@ function paginate(){
         }
     }
     
-    $(this).html(tmp);
+    $('#paginator').html(tmp);
     $('#paginator span a').bind('click',list_nav); 
     $('th a').bind('click',list_nav);
 }
@@ -113,8 +107,128 @@ function lists_from_json(data){
             }
         }
         $('tbody a').bind('click',confirm_delete);
+        paginate();
     }
 }
+
+function fetchPage(link,list_type){
+    $.get(link,function(response){
+        lists_from_json(response);
+        if(list_type == '1'){
+            lt = 'Blacklist';
+            ll = '/lists/2/';
+            ct = 'Whitelist :: ';
+        }else{
+            lt = 'Whitelist';
+            ll = '/lists/1/';
+            ct = 'Blacklist :: ';
+        }
+        t = $('#pagination_info');
+        $('#divider-header h3').html(ct).append(t);
+        $('#pagination_info').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
+        $('#sub-menu-links ul li:first a').attr({id:'list-link',href:ll,innerHTML:lt});
+    },'json');
+}
+
+function getPage(event){
+    event.preventDefault();
+    re = /\/lists\/([1-2])/
+    link = $(this).attr('href');
+    f = link.match(re);
+    if(f){
+        fetchPage(link,f[1]);
+        url = link.replace(/\//g, '-').replace(/^-/, '').replace(/-$/,'');
+        $.address.value('?u='+url);
+        $.address.history($.address.baseURL() + url);
+    }
+}
+
+function confirm_delete(event) {
+    re = /\/lists\/delete\/(\d+)\/(\d+)/
+    str = $(this).attr('href');
+    found = str.match(re);
+    if(found.length == 3){
+        event.preventDefault();
+        if(found[1] == 1){list = 'Whitelist';}else{list = 'Blacklist';}
+        alt = 'Delete '+$("tr#"+found[2]+" td:eq(2)").text()+' from '+list;
+        $dialog.html(alt);
+        $dialog.dialog('option','buttons', {
+            'Delete': function() {
+                $(this).dialog('close');
+                p = $.address.parameter("u");
+                if(p){
+                    p = $.trim(p);
+                    re = /^lists\-([1-2])\-([0-9]+)\-(dsc|asc)\-(id|to_address|from_address)$/
+                    f = p.match(re);
+                    if(f){
+                        if(f.length > 1){
+                            $.ajaxSetup({
+                                'beforeSend':function(xhr){xhr.setRequestHeader("X-List-Params",p);}
+                            });
+                        }
+                    }
+                }
+                $.get(str,function(response){
+                    if(!response.error){
+                        lists_from_json(response);
+                    }else{
+                        window.scroll(0,0);
+                        $("#in-progress").html(response.error).fadeIn(50).delay(15000).slideToggle('fast');
+                    }
+                },'json');
+            },Cancel: function() {
+                $(this).dialog('close');
+            }
+        });
+        $dialog.dialog('open');
+    }
+}
+
+function handlePost(event){
+    $('#submit-button').attr('disabled','disabled');
+    $('#cancel-button').attr('disabled','disabled');
+    event.preventDefault();
+    var list_add_request = {
+        from_address: $('#id_from_address').val(),
+        to_address: $('#id_to_address').val(),
+        to_domain: $('#id_to_domain').val(),
+        list_type: $('#id_list_type').val()
+    };
+    $.post('/lists/add/',list_add_request,
+        function(response){
+            if(!response.error){
+                lists_from_json(response);
+                if(list_add_request['list_type'] == '1'){
+                    lt = 'Blacklist';
+                    ll = '/lists/2/';
+                    ct = 'Whitelist :: ';
+                }else{
+                    lt = 'Whitelist';
+                    ll = '/lists/1/';
+                    ct = 'Blacklist :: ';
+                }
+                t = $('#pagination_info');
+                $('#divider-header h3').html(ct).append(t);
+                $('#pagination_info').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
+                $('#sub-menu-links ul li:first a').attr({id:'list-link',href:ll,innerHTML:lt});
+                $('#lists tbody tr:eq(0)').addClass('whitelisted');
+                $("form")[ 0 ].reset();
+                $('#add-item').hide();
+                $('#add-sep').hide();
+                $('#list-add').html('Add to List').blur();
+                setTimeout(function(){$('#lists tbody tr:eq(0)').removeClass('whitelisted');},15000);
+            }else{
+                if($('#aj-form-warning').length > 0){
+                    $('#aj-form-warning').html(response.error);
+                }else{
+                    $('#ins-after').after('&nbsp;<span id="aj-form-warning" class="filter_errors">'+response.error+'</span>');
+                }
+            }
+        },"json");
+    $('#submit-button').removeAttr('disabled');
+    $('#cancel-button').removeAttr('disabled');
+}
+
 
 function handlextern(){
     page = $.address.parameter("u");
@@ -123,10 +237,25 @@ function handlextern(){
         page = $.trim(page);
         re = /^lists\-[1-2]\-[0-9]+\-dsc|asc\-id|to_address|from_address$/
         if(re.test(page)){
+            re = /^lists\-([1-2])\-[0-9]+\-dsc|asc\-id|to_address|from_address$/
+            f = page.match(re);
             page = page.replace(/-/g,'/');
             url = '/'+ page + '/';
-            $.getJSON(url,lists_from_json);
+            fetchPage(url,f[1]);
             return false;
+        }else{
+            page = $.trim(page);
+            re = /^lists\-([1-2])$/
+            f = page.match(re);
+            if(f){
+                page = page.replace(/-/g,'/');
+                url = '/'+ page + '/';
+                fetchPage(url,f[1]);
+                url = url.replace(/\//g, '-').replace(/^-/, '').replace(/-$/,'');
+                $.address.value('?u='+url);
+                $.address.history($.address.baseURL() + url);
+                return false;
+            }
         }
     }
 }
@@ -136,18 +265,14 @@ function list_nav(){
     url = $(this).attr('href').replace(/\//g, '-').replace(/^-/, '').replace(/-$/,'');
     $.address.value('?u='+url);
     $.address.history($.address.baseURL() + url);
-	$('#pagination_info').append($("<img/>").attr({src:"/static/imgs/loader.gif",id:'lists-spinner'})).append('&nbsp;<small>Processing........</small>');
     $.getJSON($(this).attr('href'),lists_from_json);
     return false;
 }
 
 function jsize_lists(){
+    $('#pagination_info').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
     $('#paginator span a').bind('click',list_nav); 
     $('th a').bind('click',list_nav);
-    $('#paginator').ajaxStop(paginate);
-    $('#pagination_info').ajaxError(function(){
-	    $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
-    });
     $.address.externalChange(handlextern);
     $dialog.html('This dialog will show every time!')
         .dialog({
@@ -158,12 +283,36 @@ function jsize_lists(){
             modal: true,
             title: 'Please confirm deletion ?',
             closeOnEscape: false,
-            open: function(event, ui) {$(".ui-dialog-titlebar-close").hide(); /*$('body').css('overflow', 'hidden');*/},
-            //close: function(event, ui) {$('body').css('overflow', 'auto');},
+            open: function(event, ui) {$(".ui-dialog-titlebar-close").hide();},
             draggable: false,
 
         });
     $('tbody a').bind('click',confirm_delete);
+    $('#list-add').bind('click',function(event){
+        event.preventDefault();
+        if($("#add-item").is(':visible')){
+            $('#add-item').hide();
+            $('#add-sep').hide();
+            $(this).html('Add to List').blur();
+            $("form")[0].reset();
+            if($('#aj-form-warning').length > 0){$('#aj-form-warning').remove();}
+        }else{
+            $('#add-item').show();
+            $('#add-sep').show();
+            $(this).html('Cancel add').blur();
+        }
+    });
+    $('#list-form').submit(handlePost);
+    $('#cancel-button').bind('click',function(){
+        if($("#add-item").is(':visible')){
+            $('#add-item').hide();
+            $('#add-sep').hide();
+            $('#list-add').html('Add to List').blur();
+            $("form")[0].reset();
+            if($('#aj-form-warning').length > 0){$('#aj-form-warning').remove();}
+        }
+    });
+    $('#list-link').bind('click',getPage);
 }
 
 var $dialog = $('<div></div>');
