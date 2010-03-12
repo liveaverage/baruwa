@@ -20,3 +20,13 @@ sql, cols = obj_list.query.as_sql()
 IntegrityError
 
 <a href='http://www.mozilla.com/?from=sfx&amp;uid=305283&amp;t=580'><img src='http://sfx-images.mozilla.org/firefox/3.6/80x15_square_blue.png' alt='Spread Firefox Affiliate Button' border='0' /></a>
+
+cp -r ../../release/dojo/dojo/resources/* /Users/andrew/Documents/devel/python/baruwa/static/js/dojo/resources/
+./build.sh profile=graphing action=clean,release copyTests=off localelist=en-gb optimize="shrinksafe" version=1.4.1 releaseName=dojo
+cp ../../release/dojo/dojo/dojo.js /Users/andrew/Documents/devel/python/baruwa/static/js/dojo/
+cp ../../release/dojo/dojo/pie.js /Users/andrew/Documents/devel/python/baruwa/static/js/dojo/
+cp ../../release/dojo/dojo/bar.js /Users/andrew/Documents/devel/python/baruwa/static/js/dojo/
+cp ../../release/dojo/dojo/listing.js /Users/andrew/Documents/devel/python/baruwa/static/js/dojo/
+cp -a ../../release/dojo/dijit/themes/tundra /Users/andrew/Documents/devel/python/baruwa/static/js/dijit/themes/
+cp ../../release/dojo/dojo/resources/blank.gif /Users/andrew/Documents/devel/python/baruwa/static/js/dojo/resources/
+

@@ -3,12 +3,12 @@
 {% block headers %}{% if pie_data.scores and pie_data.count %}
 <link rel="stylesheet" type="text/css" href="/static/js/dijit/themes/tundra/tundra.css" />
 <script type="text/javascript">
-    var djConfig = { parseOnLoad:true, isDebug:true };
+    var djConfig = { parseOnLoad:true, isDebug:false };
 </script>
 <script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
+<script type="text/javascript" src="/static/js/dojo/bar.js"></script>
 <script type="text/javascript">
 //<![CDATA[
-dojo.require("dojox.charting.Chart2D");
 dochart = function(){
 {% if active_filters %}
 dojo.byId("fhl").style.display = "none";
