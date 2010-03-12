@@ -23,11 +23,11 @@ dojo.create("a",{href:"#",innerHTML:"&darr;&nbsp;Show filters",id:"filter-toggle
 dojo.connect(dojo.byId("filter-toggle"),"onclick",function(e){
         e.preventDefault();
         em = dojo.byId("fhl");
-        if(em.style.display == "block"){
+        if(em.style.display == "inline"){
             em.style.display = "none";
             dojo.byId("filter-toggle").innerHTML = "&darr;&nbsp;Show filters";
         }else{
-            em.style.display = "block";
+            em.style.display = "inline";
             dojo.byId("filter-toggle").innerHTML = "&uarr;&nbsp;Hide filters";
         }
 });
@@ -84,7 +84,7 @@ Reports - {{report_title}}
 {{item.clientip}}
 </div>
 </td>
-<td class="first-t sascores">{{item.clientip|tds_hostname}}</td>
+<td class="first-t sascores">{{item.clientip|tds_hostname|tds_trunc:42}}</td>
 <td class="first-t sascores">{{item.clientip|tds_geoip}}</td>
 <td class="first-t sascores">{{item.num_count}}/{{item.spam_total}}/{{item.virus_total}}</td>
 <td class="first-t sascores">{{item.size|filesizeformat}}</td>

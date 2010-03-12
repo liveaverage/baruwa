@@ -1,8 +1,8 @@
 @import "tabs.css";
 
 html, body {
-  color: white;
-  height: 100%;
+    color: white;
+    height: 100%;
 }
 
 body {
@@ -15,10 +15,6 @@ body,input,select {
 	font: 75% "Lucida Grande", Verdana, Arial, sans-serif;
 	line-height: 16px;
 	color: #525252;
-}
-
-pre {
-  padding: 10px 10px 10px 10px;
 }
 
 form {
@@ -35,7 +31,7 @@ input[type=radio], input[type=checkbox], input[type=submit], input[type=reset], 
 }
 
 input[type=text], input[type=checkbox], select {
-  border:1px solid #ddd;
+    border:1px solid #ddd;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -75,8 +71,12 @@ h1 a {
 	color: #525252 !important;
 }
 
+ul.reports {
+    line-height:16px;
+}
+
 #ajax_loading { 
-  background:url(/static/imgs/loader.gif) no-repeat center; 
+    background:url(/static/imgs/loader.gif) no-repeat center; 
 }
 
 .loading_message {
@@ -103,16 +103,16 @@ h1 a {
 }
 
 .align_center {
-  text-align:center;
+    text-align:center;
 }
 
 .chart_area {
-  text-align:center;
-  background:#eee;
+    text-align:center;
+    background:#eee;
 }
 
 .toggleable {
-  display:none;
+    display:none;
 }
 
 div {
@@ -121,105 +121,105 @@ div {
 }
 
 div.row {
-  clear:both;
-  padding-top:5px;
+    clear:both;
+    padding-top:5px;
 }
 
 div.row label {
-  float:left;
-  font-weight:bold;
-  padding-left:20px;
-  width:200px;
-  text-align:left;
+    float:left;
+    font-weight:bold;
+    padding-left:20px;
+    width:200px;
+    text-align:left;
 }
 
 div.row span.form {
-  float:right;
-  width:730px;
-  text-align:left;
+    float:right;
+    width:730px;
+    text-align:left;
 }
 
 div.row span.form ul {
-  list-style-type:square;
-  margin:1px;
-  padding: 0 0 0 5px;
-  color:red;
+    list-style-type:square;
+    margin:1px;
+    padding: 0 0 0 5px;
+    color:red;
 }
 
 div.buttons {
-  text-align:center;
-  width:960px;
-  background:#eee;
+    text-align:center;
+    width:960px;
+    background:#eee;
 }
 
 .pie {
-  -moz-background-clip: border;
-  -moz-background-inline-policy: continuous;
-  -moz-background-origin:padding;
-  height: 0.8em;
-  width:0.8em;
-  float:left;
-  position:relative;
+    -moz-background-clip: border;
+    -moz-background-inline-policy: continuous;
+    -moz-background-origin:padding;
+    height: 0.8em;
+    width:0.8em;
+    float:left;
+    position:relative;
 }
 
 .pie_1 {
-  background:red none repeat scroll 0 0;
+    background:red none repeat scroll 0 0;
 }
 
 .pie_2 {
-  background:#ffa07a none repeat scroll 0 0;
+    background:#ffa07a none repeat scroll 0 0;
 }
 
 .pie_3 {
-  background:#deb887 none repeat scroll 0 0;
+    background:#deb887 none repeat scroll 0 0;
 }
 
 .pie_4 {
-  background:#d2691e none repeat scroll 0 0;
+    background:#d2691e none repeat scroll 0 0;
 }
 
 .pie_5 {
-  background:#008b8b none repeat scroll 0 0;
+    background:#008b8b none repeat scroll 0 0;
 }
 
 .pie_6 {
-  background:#006400 none repeat scroll 0 0;
+    background:#006400 none repeat scroll 0 0;
 }
 
 .pie_7 {
-  background:#ff8c00 none repeat scroll 0 0;
+    background:#ff8c00 none repeat scroll 0 0;
 }
 
 .pie_8 {
-  background:#ffd700 none repeat scroll 0 0;
+    background:#ffd700 none repeat scroll 0 0;
 }
 
 .pie_9 {
-  background:#f0e68c none repeat scroll 0 0;
+    background:#f0e68c none repeat scroll 0 0;
 }
 
 .pie_10 {
-  background:#000000 none repeat scroll 0 0;
+    background:#000000 none repeat scroll 0 0;
 }
 
 .pie_text {
-  float:left;
-  padding-left:5px;
-  vertical-align:top;
+    float:left;
+    padding-left:5px;
+    vertical-align:top;
 }
 
 
 
 #ajax_status {
-  padding-left:40px;
+    padding-left:40px;
 }
 
 #server_response, #quarantine_errors {
-  padding-left:10px;
+    padding-left:10px;
 }
 
 #quarantine_errors, .filter_errors, .nojs {
-  color:red;
+    color:red;
 }
 
 .ajax_error {
@@ -258,18 +258,17 @@ table.maillog tr.header {
 }
 
 table.maillog td {
-	/*border-bottom: 1px solid #ddd;*/
 	height: 32px;
     overflow:hidden;
 }
 
 table.maillog td.pagination {
-  text-align:center;
+    text-align:center;
 }
 
 table.maillog td.equal {
-  width:480px;
-  vertical-align:top;
+    width:480px;
+    vertical-align:top;
 }
 
 table.maillog td.stats {
@@ -278,7 +277,6 @@ table.maillog td.stats {
 }
 
 table.maillog td.ordered_by {
-    /*background:#F0F0F0;*/
     color:black;
 }
 
@@ -290,23 +288,23 @@ table.maillog th {
 }
 
 table.maillog tr.spam {
-  background-color: #FFDDDD;
-  color: black;
+    background-color: #FFDDDD;
+    color: black;
 }
 
 table.maillog tr.highspam {
-  background-color: #F5BBBB;
-  color: black;
+    background-color: #F5BBBB;
+    color: black;
 }
 
 table.maillog tr.whitelisted {
-  background-color: #DDFFDD;
-  color: black;
+    background-color: #DDFFDD;
+    color: black;
 }
 
 table.maillog tr.blacklisted {
-  color: white;
-  background-color: black;
+    color: white;
+    background-color: black;
 }
 
 table.maillog tr.infested {
@@ -315,32 +313,34 @@ table.maillog tr.infested {
 }
 
 table.maillog td.divider {
-  background-color: #eee;
-  font-weight:bold;
-  font-size:9pt;
-  text-align:center;
+    background-color: #eee;
+    font-weight:bold;
+    font-size:9pt;
+    text-align:center;
 }
 
 table.maillog td.first-t, th.first-t {
-  padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #first-t {
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 table.maillog td.mailitem {
-  background-color: #eee;
-  font-weight:bold;
-  font-size:9pt;
-  vertical-align:text-top;
-  width:200px;
-  padding-left:10px;
+    background-color: #eee;
+    font-weight:bold;
+    font-size:9pt;
+    vertical-align:text-top;
+    width:200px;
+    padding-left:10px;
 }
 
 table.maillog td.maildetail {
-  padding-left:10px;
-  width:760px;
+    padding-left:10px;
+    width:760px;
 }
 
 table.maillog td.sline {
@@ -353,9 +353,19 @@ table.maillog td.piebox {
 	border-left: 1px solid #ddd;
 }
 
+table.maillog tr.lists, td.lists {
+    height:28px;
+    line-height:10px;
+}
+
 table.maillog td.sascores, td.lists, td.filters {
-    height: 15px !important;
-    line-height:5px;
+    height: 23px !important;
+    line-height:8px;
+}
+
+table.maillog td.sascore_flex, td.filters_flex {
+    height: 23px;
+    line-height:8px;
 }
 
 table.maillog td.top-pagination {
@@ -364,9 +374,9 @@ table.maillog td.top-pagination {
     line-height:3px;
 }
 
-table.maillog tr.sascores, tr.lists {
-    height: 15px !important;
-    line-height:5px;
+table.maillog tr.sascores {
+    height: 23px !important;
+    line-height:8px;
 }
 
 table.maillog td.even {
@@ -374,29 +384,29 @@ table.maillog td.even {
 }
 
 table.inner {
-  width:100%;
+    width:100%;
 }
 
 table.inner td {
-  height:10px !important;
+    height:10px !important;
     border-bottom: 1px solid #ddd;
-  line-height:12px;
-  padding-left:10px;
+    line-height:12px;
+    padding-left:10px;
 }
 
 table.inner td.last {
-  height:10px !important;
-  line-height:12px;
-  border-bottom: 0px;
-  padding-left:10px;
+    height:10px !important;
+    line-height:12px;
+    border-bottom: 0px;
+    padding-left:10px;
 }
 
 table.inner tr {
-  height:10px;
+    height:10px;
 }
 
 table.inner th {
-  padding-left:10px;
+    padding-left:10px;
 }
 
 table.quarantine {
@@ -419,8 +429,8 @@ table.status {
 
 table.status tr {
 	border-bottom: 1px solid #ddd;
-    height:20px !important;
-    line-height:5px;
+    height:23px !important;
+    line-height:8px;
 }
 
 table.status td {
@@ -429,17 +439,12 @@ table.status td {
 }
 
 table.status td {
-    height:20px !important;
-    line-height:5px;
+    height:23px !important;
+    line-height:8px;
 }
 
 table.status tr.last {
     border-bottom: 0px;
-}
-
-.tdholder {
-  vertical-align:top;
-  width:480px;
 }
 
 div.cb {
@@ -451,84 +456,25 @@ div.cb {
 }
 
 #header-wrapper {
-	width: 960px;
+    width: 960px;
 	height: 60px;
 	margin: 0 auto 10px auto;
 	position: relative;
 }
 
-#header-wrapper #header-wrapper-logo {
-	float: left;
-	margin-top: 5px;
-	margin-left: 0;
+#header-wrapper #header {
+   width: 960px;
+   height: 66px;
+   margin: 0 auto;
+   position: relative;
 }
 
-#header-wrapper #header, #header-wrapper #header-loggedin {
-	width: 960px;
-	height: 66px;
-	margin: 0 auto;
-	position: relative;
-}
-
-#header-wrapper #header h1, #header-wrapper #header-loggedin h1 {
-	display: block;
-	margin: 0 0 0 40px;
-	padding-top: 16px;
-	font: 24px "Lucida Grande", "Trebuchet MS", Tahoma, Arial, sans-serif;
-	letter-spacing: -1px;
-}
-
-#header-wrapper .header-wrapper-slogan {
-	color: #969696;
-	padding-left: 85px;
-}
-
-#header-wrapper #header #header-nav {
-	position: absolute;
-	top: 15px;
-	right: 0;
-	width: 700px;
-	text-align: right;
-}
-
-#header-wrapper #header-loggedin #header-nav {
-	position: absolute;
-	top: 15px;
-	right: 52px;
-	border: 1px solid transparent;
-}
-
-#header-wrapper #header #header-nav a, #header-wrapper #header-loggedin #header-nav a {
-	font-size: 1.1em;
-	color: #525252;
-}
-
-#header-nav ul {
-	margin: -5px 0 0 0;
-	padding: 0;
-	list-style-type: none;
-}
-
-#header-nav > ul > li {
-	float: left;
-	margin-left: 5px;
-	position: relative;
-	padding: 5px 6px;
-}
-
-#header-nav ul li ul {
-	display: none;
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-	position: absolute;
-	top: 24px;
-	left: -1px;
-	background: #fff;
-	z-index: 200 !important;
-	border-left: 1px solid #ccc;
-	border-bottom: 1px solid #747474;
-	border-right: 1px solid #747474;
+#header-wrapper #header h1 {
+   display: block;
+   margin: 0 0 0 40px;
+   padding-top: 16px;
+   font: 24px "Lucida Grande", "Trebuchet MS", Tahoma, Arial, sans-serif;
+   letter-spacing: -1px;
 }
 
 #main-wrapper {
@@ -538,8 +484,6 @@ div.cb {
 }
 
 #in-progress {
-    /*position: absolute;
-    top: 0; left: 0;*/
     z-index: 10;
     background:#ffc;
     padding:5px;
@@ -563,30 +507,20 @@ div.cb {
 #content-wrapper h3 {
 	font: 1.3em "Lucida Grande", "Trebuchet MS", Tahoma, Arial, sans-serif;
 	letter-spacing: -1px;
+    width:800px;
+    float:left;
+}
+
+#my-spinner {
+    float:right;
+    width:100px;
+    padding-left:10px;
+    padding-right:10px;
 }
 
 #content-wrapper .container {
 	width: 960px;
 	margin: 0 auto;
-}
-
-#content-wrapper #twocols1, #content-wrapper #twocols2 {
-	width: 450px;
-	float: left;
-}
-
-#content-wrapper #twocols21 {
-	width: 200px;
-	float: right;
-	text-align: right;
-}
-
-#twocols21 ul {
-    list-style-type: none;
-}
-
-#content-wrapper #twocols1 {
-	margin-right: 60px;
 }
 
 .footer-placeholder {
@@ -597,7 +531,6 @@ div.cb {
 	clear: both;
 	width: 100%;
 	height: 71px;
-	background: #FFFFFF; 
 	margin: -71px 0 0 0;
 }
 
@@ -607,8 +540,8 @@ div.cb {
 	padding-top: 27px;
 	margin: 0 auto;
 	position: relative;
-  text-align: center;
-  font-size:10px;
+    text-align: center;
+    font-size:10px;
 }
 
 #footer-wrapper #footer a {
@@ -634,27 +567,22 @@ div.cb {
 }
 
 #sub-menu-links ul {
-  list-style:none;
-  list-style-type:square;
-  list-style-position:outside;
-  margin:0;
-  padding:0;
-  z-index:5 !important;
+    list-style:none;
+    list-style-type:square;
+    list-style-position:outside;
+    margin:0;
+    padding:0;
+    z-index:5 !important;
 }
 
 #sub-menu-links ul li{
-  float:left; 
-  margin-right:15px;
+    float:left; 
+    margin-right:15px;
 }
 
 #sub-menu-links li {
-  padding-right:10px;
+    padding-right:10px;
 }
-
-/*#sub-menu-links  a, a:link, a:active, a:visited {
-  color: #525252 !important;
-  text-decoration: none;
-}*/
 
 #content-layout, #add-item {
 	width: 960px;
@@ -665,30 +593,20 @@ div.cb {
 
 #add-item {
     background:#ededed;
-}
-
-.ajax-table {
-	/*width: 959px;*/
-    float:left;
-	border: 1px solid #ddd;
-    margin:0 auto;
-	border-bottom: 0 !important;
-}
-
-.top-layer {
+	border-bottom: 1px solid #ddd !important;
 }
 
 #paginator {
     float:right;
     text-align:right;
     padding-right:10px;
-    width:320px;
+    width:370px;
 }
 
 #ofhl {
     float:left;
     padding-left:10px;
-    width:615px;
+    width:565px;
 }
 
 #filterbox {
@@ -697,26 +615,26 @@ div.cb {
 }
 
 .divider-header {
-  margin:0 auto;
-  padding:0;
-  width:920px;
+    margin:0 auto;
+    padding:0;
+    width:920px;
 }
 
 span.positive {
-  background-color: red;
-  color: white;
-  font-weight: bold;
-  padding:2px 2px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    padding:2px 2px;
 }
 
 span.negative {
-  background-color: green;
-  color: white;
-  font-weight: bold;
-  padding:2px 2px;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    padding:2px 2px;
 }
 
 span.listings {
-  float:right;
-  padding-right:10px;
+    float:right;
+    padding-right:10px;
 }

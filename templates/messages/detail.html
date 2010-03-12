@@ -156,9 +156,12 @@
 		<!-- Nested quarantine table -->
         <div id="ajax_status"></div>
 		<div id="server_response">
+        {% if success %}The message has been processed{% endif %}
 		</div>
 		<div id="quarantine_errors">
+        {% if error_list %}{{error_list}}{%endif%}
 		</div>
+        {%if not success %}
 		<div id="process_quarantine">
 		<form id="qform" action="/messages/process_quarantine/" method="post">
 		<table class="quarantine">
@@ -195,6 +198,7 @@
 		<td colspan="4">
 		{{ form.use_alt }}&nbsp;Alternative recipients:&nbsp;
 		<input type="text" id="id_altrecipients" name="altrecipients" size="70" />
+        {{ form.use_alt.errors }}
 		</td>
 		<td>
 		<input type="hidden" name="message_id" id="id_message_id" value="{{ message_details.id }}" />
@@ -205,6 +209,7 @@
     </table>
     </form>
     </div>
+    {% endif %}
     <!-- End nested quarantine table -->
     </td>
     </tr>

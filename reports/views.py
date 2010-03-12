@@ -23,39 +23,181 @@ def r_query(filter_list,active_filters=None):
     filter_by = to_dict(list(FILTER_BY))
     sql = []
     vals = []
+    asql = []
+    avals = []
+    osql = []
+    ovals = []
+    nosql = []
+    novals = []
     for filter_item in filter_list:
         if filter_item['filter'] == '1':
             tmp = "%s = %%s" % filter_item['field']
-            sql.append(tmp)
-            vals.append(filter_item['value'])
+            if tmp in asql:
+                ix = asql.index(tmp)
+                tv = avals[ix]
+
+                osql.append(asql[ix])
+                ovals.append(tv)
+
+                asql.remove(tmp)
+                avals.remove(tv)
+
+                osql.append(tmp)
+                ovals.append(filter_item['value'])
+            else:
+                if tmp in osql:
+                    osql.append(tmp)
+                    ovals.append(filter_item['value'])
+                else:
+                    asql.append(tmp)
+                    avals.append(filter_item['value'])
         if filter_item['filter'] == '2':
             tmp = "%s != %%s" % filter_item['field']
-            sql.append(tmp)
-            vals.append(filter_item['value'])
+            if tmp in asql:
+                ix = asql.index(tmp)
+                tv = avals[ix]
+
+                nosql.append(asql[ix])
+                novals.append(tv)
+
+                asql.remove(tmp)
+                avals.remove(tv)
+
+                nosql.append(tmp)
+                novals.append(filter_item['value'])
+            else:
+                if tmp in nosql:
+                    nosql.append(tmp)
+                    novals.append(filter_item['value'])
+                else:
+                    asql.append(tmp)
+                    avals.append(filter_item['value'])
         if filter_item['filter'] == '3':
-            tmp = "%s > %%d" % filter_item['field']
-            sql.append(tmp)
-            vals.append(filter_item['value'])
+            tmp = "%s > %%s" % filter_item['field']
+            if tmp in asql:
+                ix = asql.index(tmp)
+                tv = avals[ix]
+
+                osql.append(asql[ix])
+                ovals.append(tv)
+
+                asql.remove(tmp)
+                avals.remove(tv)
+
+                osql.append(tmp)
+                ovals.append(filter_item['value'])
+            else:
+                if tmp in osql:
+                    osql.append(tmp)
+                    ovals.append(filter_item['value'])
+                else:
+                    asql.append(tmp)
+                    avals.append(filter_item['value'])
         if filter_item['filter'] == '4':
-            tmp = "%s < %%d" % filter_item['field']
-            sql.append(tmp)
-            vals.append(filter_item['value'])
+            tmp = "%s < %%s" % filter_item['field']
+            if tmp in asql:
+                ix = asql.index(tmp)
+                tv = avals[ix]
+
+                osql.append(asql[ix])
+                ovals.append(tv)
+
+                asql.remove(tmp)
+                avals.remove(tv)
+
+                osql.append(tmp)
+                ovals.append(filter_item['value'])
+            else:
+                if tmp in osql:
+                    osql.append(tmp)
+                    ovals.append(filter_item['value'])
+                else:
+                    asql.append(tmp)
+                    avals.append(filter_item['value'])
         if filter_item['filter'] == '5':
             tmp = "%s LIKE %%s" % filter_item['field']
-            sql.append(tmp)
-            vals.append('%'+filter_item['value']+'%')
+            if tmp in asql:
+                ix = asql.index(tmp)
+                tv = avals[ix]
+
+                osql.append(asql[ix])
+                ovals.append(tv)
+
+                asql.remove(tmp)
+                avals.remove(tv)
+
+                osql.append(tmp)
+                ovals.append(filter_item['value'])
+            else:
+                if tmp in osql:
+                    osql.append(tmp)
+                    ovals.append(filter_item['value'])
+                else:
+                    asql.append(tmp)
+                    avals.append('%'+filter_item['value']+'%')
         if filter_item['filter'] == '6':
             tmp = "%s NOT LIKE %%s" % filter_item['field']
-            sql.append(tmp)
-            vals.append('%'+filter_item['value']+'%')
+            if tmp in asql:
+                ix = asql.index(tmp)
+                tv = avals[ix]
+
+                nosql.append(asql[ix])
+                novals.append(tv)
+
+                asql.remove(tmp)
+                avals.remove(tv)
+
+                nosql.append(tmp)
+                novals.append(filter_item['value'])
+            else:
+                if tmp in nosql:
+                    nosql.append(tmp)
+                    novals.append(filter_item['value'])
+                else:
+                    asql.append(tmp)
+                    avals.append('%'+filter_item['value']+'%')
         if filter_item['filter'] == '7':
             tmp = "%s REGEXP %%s" % filter_item['field']
-            sql.append(tmp)
-            vals.append(filter_item['value'])
+            if tmp in asql:
+                ix = asql.index(tmp)
+                tv = avals[ix]
+
+                osql.append(asql[ix])
+                ovals.append(tv)
+
+                asql.remove(tmp)
+                avals.remove(tv)
+
+                osql.append(tmp)
+                ovals.append(filter_item['value'])
+            else:
+                if tmp in osql:
+                    osql.append(tmp)
+                    ovals.append(filter_item['value'])
+                else:
+                    asql.append(tmp)
+                    avals.append(filter_item['value'])
         if filter_item['filter'] == '8':
             tmp = "%s NOT REGEXP %%s" % filter_item['field']
-            sql.append(tmp)
-            vals.append(filter_item['value'])
+            if tmp in asql:
+                ix = asql.index(tmp)
+                tv = avals[ix]
+
+                nosql.append(asql[ix])
+                novals.append(tv)
+
+                asql.remove(tmp)
+                avals.remove(tv)
+
+                nosql.append(tmp)
+                novals.append(filter_item['value'])
+            else:
+                if tmp in nosql:
+                    nosql.append(tmp)
+                    novals.append(filter_item['value'])
+                else:
+                    asql.append(tmp)
+                    avals.append(filter_item['value'])
         if filter_item['filter'] == '9':
             tmp = "%s IS NULL" % filter_item['field']
             sql.append(tmp)
@@ -69,12 +211,51 @@ def r_query(filter_list,active_filters=None):
             tmp = "%s = 0" % filter_item['field']
             sql.append(tmp)
         if not active_filters is None:
-            active_filters.append({'filter_field':filter_items[filter_item['field']],'filter_by':filter_by[int(filter_item['filter'])],'filter_value':filter_item['value']})
-    return (' AND '.join(sql),vals)
+            active_filters.append({'filter_field':filter_items[filter_item['field']],
+                'filter_by':filter_by[int(filter_item['filter'])],'filter_value':filter_item['value']})
+    for item in sql:
+        asql.append(item)
+
+    andsql = ' AND '.join(asql)
+    orsql = ' OR '.join(osql)
+    nsql = ' AND '.join(nosql)
+    
+    for item in ovals:
+        avals.append(item)
+
+    for item in novals:
+        avals.append(item)
+
+    if andsql != '':
+        if orsql != '':
+            if nsql != '':
+                sq = andsql + ' AND ( '+orsql+' ) AND ( '+nsql+' )' 
+            else:
+                sq = andsql + ' AND ( '+orsql+' )'
+        else:
+            if nsql != '':
+                sq = andsql + ' AND ( '+nsql+' )'
+            else:
+                sq = andsql
+    else:
+        if orsql != '':
+            if nsql != '':
+                sq = '( '+orsql+' ) AND ( '+nsql+' )'
+            else:
+                sq = '( '+orsql+' )'
+        else:
+            if nsql != '':
+                sq = '( '+nsql+' )'
+            else:
+                sq = ' 1=1 '
+    #return (' AND '.join(sql),vals)
+    return (sq,avals)
 
 def d_query(model,filter_list,active_filters=None):
     kwargs = {}
+    lkwargs = {}
     nkwargs = {}
+    lnkwargs = {}
     nargs = []
     largs = []
     filter_items = to_dict(list(FILTER_ITEMS))
@@ -87,9 +268,14 @@ def d_query(model,filter_list,active_filters=None):
                 largs.append(Q(**kw))
                 kw = {str(tmp):str(kwargs[tmp])}
                 largs.append(Q(**kw))
+                lkwargs.update(kw)
                 del kwargs[tmp]
             else:
-                kwargs.update({str(tmp):str(filter_item['value'])})
+                kw = {str(tmp):str(filter_item['value'])}
+                if lkwargs.has_key(tmp):
+                    largs.append(Q(**kw))
+                else:
+                    kwargs.update(kw)
         if filter_item['filter'] == '2':
             tmp = "%s__exact" % filter_item['field']
             if nkwargs.has_key(tmp):
@@ -97,19 +283,29 @@ def d_query(model,filter_list,active_filters=None):
                 nargs.append(Q(**kw))
                 kw = {str(tmp):str(nkwargs[tmp])}
                 nargs.append(Q(**kw))
+                lnkwargs.update(kw)
                 del nkwargs[tmp]
             else:
-			    nkwargs.update({str(tmp):str(filter_item['value'])})
+                kw = {str(tmp):str(filter_item['value'])}
+                if lnkwargs.has_key(tmp):
+                    nargs.append(Q(**kw))
+                else:
+			        nkwargs.update(kw)
         if filter_item['filter'] == '3':
-            tmp = "%s__qt" % filter_item['field']
+            tmp = "%s__gt" % filter_item['field']
             if kwargs.has_key(tmp):
                 kw = {str(tmp):str(filter_item['value'])}
                 largs.append(Q(**kw))
                 kw = {str(tmp):str(kwargs[tmp])}
                 largs.append(Q(**kw))
+                lkwargs.update(kw)
                 del kwargs[tmp]
             else:
-                kwargs.update({str(tmp):str(filter_item['value'])})
+                kw = {str(tmp):str(filter_item['value'])}
+                if lkwargs.has_key(tmp):
+                    largs.append(Q(**kw))
+                else:
+                    kwargs.update(kw)
         if filter_item['filter'] == '4':
             tmp = "%s__lt" % filter_item['field']
             if kwargs.has_key(tmp):
@@ -117,9 +313,14 @@ def d_query(model,filter_list,active_filters=None):
                 largs.append(Q(**kw))
                 kw = {str(tmp):str(kwargs[tmp])}
                 largs.append(Q(**kw))
+                lkwargs.update(kw)
                 del kwargs[tmp]
             else:
-                kwargs.update({str(tmp):str(filter_item['value'])})
+                kw = {str(tmp):str(filter_item['value'])}
+                if lkwargs.has_key(tmp):
+                    largs.append(Q(**kw))
+                else:
+                    kwargs.update(kw)
         if filter_item['filter'] == '5':
             tmp = "%s__icontains" % filter_item['field']
             if kwargs.has_key(tmp):
@@ -127,9 +328,14 @@ def d_query(model,filter_list,active_filters=None):
                 largs.append(Q(**kw))
                 kw = {str(tmp):str(kwargs[tmp])}
                 largs.append(Q(**kw))
+                lkwargs.update(kw)
                 del kwargs[tmp]
             else:
-			    kwargs.update({str(tmp):str(filter_item['value'])})
+                kw = {str(tmp):str(filter_item['value'])}
+                if lkwargs.has_key(tmp):
+                    largs.append(Q(**kw))
+                else:
+			        kwargs.update(kw)
         if filter_item['filter'] == '6':
             tmp = "%s__icontains" % filter_item['field']
             if nkwargs.has_key(tmp):
@@ -137,9 +343,14 @@ def d_query(model,filter_list,active_filters=None):
                 nargs.append(Q(**kw))
                 kw = {str(tmp):str(nkwargs[tmp])}
                 nargs.append(Q(**kw))
+                lnkwargs.update(kw)
                 del nkwargs[tmp]
             else:
-			    nkwargs.update({str(tmp):str(filter_item['value'])})
+                kw = {str(tmp):str(filter_item['value'])}
+                if lnkwargs.has_key(tmp):
+                    nargs.append(Q(**kw))
+                else:
+			        nkwargs.update(kw)
         if filter_item['filter'] == '7':
             tmp = "%s__regex" % filter_item['field']
             if kwargs.has_key(tmp):
@@ -147,9 +358,14 @@ def d_query(model,filter_list,active_filters=None):
                 largs.append(Q(**kw))
                 kw = {str(tmp):str(kwargs[tmp])}
                 largs.append(Q(**kw))
+                lkwargs.update(kw)
                 del kwargs[tmp]
             else:
-			    kwargs.update({str(tmp):str(filter_item['value'])})
+                kw = {str(tmp):str(filter_item['value'])}
+                if lkwargs.has_key(tmp):
+                    largs.append(Q(**kw))
+                else:
+			        kwargs.update(kw)
         if filter_item['filter'] == '8':
             tmp = "%s__regex" % filter_item['field']
             if nkwargs.has_key(tmp):
@@ -157,9 +373,14 @@ def d_query(model,filter_list,active_filters=None):
                 nargs.append(Q(**kw))
                 kw = {str(tmp):str(nkwargs[tmp])}
                 nargs.append(Q(**kw))
+                lnkwargs.update(kw)
                 del nkwargs[tmp]
             else:
-			    nkwargs.update({str(tmp):str(filter_item['value'])})
+                kw = {str(tmp):str(filter_item['value'])}
+                if lnkwargs.has_key(tmp):
+                    nargs.append(Q(**kw))
+                else:
+			        nkwargs.update(kw)
         if filter_item['filter'] == '9':
             tmp = "%s__isnull" % filter_item['field']
             if kwargs.has_key(tmp):
@@ -167,9 +388,14 @@ def d_query(model,filter_list,active_filters=None):
                 largs.append(Q(**kw))
                 kw = {str(tmp):str(kwargs[tmp])}
                 largs.append(Q(**kw))
+                lkwargs.update(kw)
                 del kwargs[tmp]
             else:
-			    kwargs.update({str(tmp):str('True')})
+                kw = {str(tmp):str('True')}
+                if lkwargs.has_key(tmp):
+                    largs.append(Q(**kw))
+                else:
+			        kwargs.update(kw)
         if filter_item['filter'] == '10':
             tmp = "%s__isnull" % filter_item['field']
             if nkwargs.has_key(tmp):
@@ -177,9 +403,14 @@ def d_query(model,filter_list,active_filters=None):
                 nargs.append(Q(**kw))
                 kw = {str(tmp):str(nkwargs[tmp])}
                 nargs.append(Q(**kw))
+                lnkwargs.update(kw)
                 del nkwargs[tmp]
             else:
-			    nkwargs.update({str(tmp):str('True')})
+                kw = {str(tmp):str('True')}
+                if lnkwargs.has_key(tmp):
+                    nargs.append(Q(**kw))
+                else:
+			        nkwargs.update(kw)
         if filter_item['filter'] == '11':
             tmp = "%s__gt" % filter_item['field']
             if kwargs.has_key(tmp):
@@ -187,9 +418,14 @@ def d_query(model,filter_list,active_filters=None):
                 largs.append(Q(**kw))
                 kw = {str(tmp):str(kwargs[tmp])}
                 largs.append(Q(**kw))
+                lkwargs.update(kw)
                 del kwargs[tmp]
             else:
-			    kwargs.update({str(tmp):str('0')})
+                kw = {str(tmp):str('0')}
+                if lkwargs.has_key(tmp):
+                    largs.append(Q(**kw))
+                else:
+			        kwargs.update(kw)
         if filter_item['filter'] == '12':
             tmp = "%s__exact" % filter_item['field']
             if kwargs.has_key(tmp):
@@ -197,11 +433,17 @@ def d_query(model,filter_list,active_filters=None):
                 largs.append(Q(**kw))
                 kw = {str(tmp):str(kwargs[tmp])}
                 largs.append(Q(**kw))
+                lkwargs.update(kw)
                 del kwargs[tmp]
             else:
-			    kwargs.update({str(tmp):str('0')})
+                kw = {str(tmp):str('0')}
+                if lkwargs.has_key(tmp):
+                    largs.append(Q(**kw))
+                else:
+			        kwargs.update(kw)
         if not active_filters is None:
-			active_filters.append({'filter_field':filter_items[filter_item['field']],'filter_by':filter_by[int(filter_item['filter'])],'filter_value':filter_item['value']})
+			active_filters.append({'filter_field':filter_items[filter_item['field']],
+                'filter_by':filter_by[int(filter_item['filter'])],'filter_value':filter_item['value']})
     if kwargs:
         model = model.filter(**kwargs)
     if nkwargs:
@@ -243,17 +485,11 @@ def index(request):
                 cleaned_data = filter_form.cleaned_data
                 if not request.session.get('filter_by', False):
                     request.session['filter_by'] = []
-                    #id = random.randrange(4000,10000)
-                    #request.session['filter_ids'] = [id]
                     request.session['filter_by'].append({'field':cleaned_data['filtered_field'],
                         'filter':cleaned_data['filtered_by'],'value':cleaned_data['filtered_value']})
                 else:
-                    #id = random.randrange(4000,10000)
-                    #while (id in request.session['filter_ids']):
-                    #    id = random.randrange(4000,10000)
                     fitem = {'field':cleaned_data['filtered_field'],'filter':cleaned_data['filtered_by'],
                         'value':cleaned_data['filtered_value']}
-                    #request.session['filter_ids'].append(id)
                     if not fitem in request.session['filter_by']:
                         request.session['filter_by'].append(fitem)
                         request.session.modified = True
@@ -308,24 +544,26 @@ def index(request):
         return render_to_response('reports/index.html',
             {'form':filter_form,'data':data,'errors':errors,'active_filters':active_filters,'saved_filters':saved_filters})
 
-def rem_filter(request,index):
+def rem_filter(request,index_num):
     if request.session.get('filter_by', False):
         li = request.session.get('filter_by')
-        li.remove(li[int(index)])
+        li.remove(li[int(index_num)])
         request.session.modified = True
+        if request.is_ajax():
+            return index(request)
     return HttpResponseRedirect('/reports/')
 
-def save_filter(request,index):
+def save_filter(request,index_num):
     success = "True"
+    error_msg = ''
     if request.session.get('filter_by', False):
         filter_items = to_dict(list(FILTER_ITEMS))
         filter_by = to_dict(list(FILTER_BY))
 
         filters = request.session.get('filter_by')
-        filter = filters[int(index)]
+        filter = filters[int(index_num)]
         f = SavedFilters()
         name = filter_items[filter["field"]]+" "+filter_by[int(filter["filter"])]+" "+filter["value"]
-
         f.name = name
         f.col = filter["field"]
         f.operator = filter["filter"]
@@ -334,14 +572,26 @@ def save_filter(request,index):
         try:
             f.save()
         except IntegrityError:
+            error_msg = 'This filter already exists'
             pass
+        if request.is_ajax():
+            if error_msg == '':
+                return index(request)
+            else:
+                response = simplejson.dumps({'success':'False','data':[],'errors':error_msg,'active_filters':[],'saved_filters':[]})
+                return HttpResponse(response, content_type='application/javascript; charset=utf-8')
     return HttpResponseRedirect('/reports/')
 
-def load_filter(request,index):
+def load_filter(request,index_num):
     try:
-        filter = SavedFilters.objects.get(id=int(index))
+        filter = SavedFilters.objects.get(id=int(index_num))
     except:
-        return HttpResponseRedirect('/reports/')
+        if request.is_ajax():
+            error_msg = 'This filter you attempted to load does not exist'
+            response = simplejson.dumps({'success':'False','data':[],'errors':error_msg,'active_filters':[],'saved_filters':[]})
+            return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+        else:
+            return HttpResponseRedirect('/reports/')
     else:
         if not request.session.get('filter_by', False):
             request.session['filter_by'] = []
@@ -351,20 +601,35 @@ def load_filter(request,index):
             if not fitem in request.session['filter_by']:
                 request.session['filter_by'].append(fitem)
                 request.session.modified = True
-        return HttpResponseRedirect('/reports/')
+        if request.is_ajax():
+            return index(request)
+        else:
+            return HttpResponseRedirect('/reports/')
 
-def del_filter(request,index):
+def del_filter(request,index_num):
     success = "True"
     try:
-        filter = SavedFilters.objects.get(id=int(index))
+        filter = SavedFilters.objects.get(id=int(index_num))
     except:
-        return HttpResponseRedirect('/reports/')
+        if request.is_ajax():
+            error_msg = 'This filter you attempted to delete does not exist'
+            response = simplejson.dumps({'success':'False','data':[],'errors':error_msg,'active_filters':[],'saved_filters':[]})
+            return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+        else:
+            return HttpResponseRedirect('/reports/')
     else:
         try:
             filter.delete()
         except:
+            if request.is_ajax():
+                error_msg = 'Deletion of the filter failed, Try again'
+                response = simplejson.dumps({'success':'False','data':[],'errors':error_msg,'active_filters':[],'saved_filters':[]})
+                return HttpResponse(response, content_type='application/javascript; charset=utf-8')
             pass    
-        return HttpResponseRedirect('/reports/')
+        if request.is_ajax():
+            return index(request)
+        else:
+            return HttpResponseRedirect('/reports/')
 
 def pack_data(data,arg1,arg2):
     rv = []

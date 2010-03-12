@@ -7,7 +7,6 @@ var rj;
 var ax_error = false;
 //]]>
 </script>
-<script type="text/javascript" language="javascript" src="/static/js/jquery.address-1.1.min.js"></script>
 <script type="text/javascript" language="javascript" src="/static/js/reports.js"></script>
 {% endblock headers %}
 {% block submenu %}
@@ -42,7 +41,7 @@ Reports
 </tr>
 <tr>
 <td colspan="2">
-<ul>
+<ul class="reports">
   <li><a href="/reports/1/">Top Senders by Quantity</a></li>
   <li><a href="/reports/2/">Top Senders by Volume</a></li>
   <li><a href="/reports/3/">Top Sender Domains by Quantity</a></li>
@@ -80,7 +79,6 @@ Reports
 </form>
 </td>
 </tr>
-{% if active_filters %}
 <tr>
 <td class="divider" colspan="2">Active Filter(s)<a name="active_filters">&nbsp;</a></td>
 </tr>
@@ -95,13 +93,15 @@ Reports
 [ <a href="/reports/fs/{{forloop.counter0}}/">Save</a> ] 
 {{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</td>
 </tr>
+{% empty %}
+<tr class="last">
+<td class="first-t filters" colspan="2">No active filters at the moment</td>
+</tr>
 {% endfor %}
 </tbody>
 </table>
 </td>
 </tr>
-{% endif %}
-{% if saved_filters %}
 <tr>
 <td class="divider" colspan="2">Saved Filter(s)</td>
 </tr>
@@ -120,15 +120,15 @@ Reports
 {% endif %}
 {{sf.filter_name}}</td>
 </tr>
+{% empty %}
+<tr class="last">
+<td class="first-t filters" colspan="2">No saved filters at the moment</td>
+</tr>
 {% endfor %}
-<!--{{saved_filters}}
-<br/>
-{{sess}}-->
 </tbody>
 </table>
 </td>
 </tr>
-{% endif %}
 </tbody>
 </table>
 {% endblock content %}

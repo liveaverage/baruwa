@@ -26,7 +26,7 @@ function do_table_sort(){
     });
     ax_in_progress = false;
     $("#search-area").ajaxSend(function(){
-	    $(this).empty().append($("<img/>").attr("src","/static/imgs/loader.gif")).append('&nbsp;Refreshing........');
+	    $('#my-spinner').empty().append($("<img/>").attr("src","/static/imgs/loader-orig.gif")).append('&nbsp;Refreshing...');
 	    ax_error = false;
         ax_in_progress = true;
     })
@@ -34,6 +34,7 @@ function do_table_sort(){
 	    if(!ax_error){
 		    var lu = lastupdatetime();
 		    $(this).empty().append('[last update at '+lu+']');
+            $('#my-spinner').empty();
             ax_in_progress = false;
             if($("#in-progress").is(':visible')){
                 $("#in-progress").hide();
@@ -42,6 +43,7 @@ function do_table_sort(){
     })
     .ajaxError(function(){
 	    $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
+        $('#my-spinner').empty();
 	    ax_error = true;
         ax_in_progress = false;
         if($("#in-progress").is(':visible')){

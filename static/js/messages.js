@@ -143,7 +143,11 @@ function paginate(){
         }
     }
     pf = $('#divider-header h3 small').html();
-    $('#divider-header h3').html('Showing page '+rj.page+' of '+rj.pages+' pages.'+' (<small>'+pf+'</small>)');
+    if(pf){
+        $('#divider-header h3').html('Showing page '+rj.page+' of '+rj.pages+' pages.'+' (<small>'+pf+'</small>)');
+    }else{
+        $('#divider-header h3').html('Showing page '+rj.page+' of '+rj.pages+' pages.');
+    }
     $.address.title('Showing page '+rj.page+' of '+rj.pages+' pages.');
     $(this).html(tmp);
     $('#paginator a').bind('click',en_history);
@@ -161,9 +165,9 @@ function jsize_page(){
         e.preventDefault();    
         $('#fhl').toggle();
         if($('#fhl').css('display') == 'inline'){
-            $(this).html('&uarr;&nbsp;Hide filters');
+            $(this).html('&uarr;&nbsp;Hide filters').blur();
         }else{
-            $(this).html('&darr;&nbsp;Show filters');
+            $(this).html('&darr;&nbsp;Show filters').blur();
         }
     });
     $('#paginator a').bind('click',en_history);

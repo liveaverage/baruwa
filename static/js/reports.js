@@ -1,3 +1,75 @@
+
+function update_counters(data){
+    $("#msgcount").html(data.count);
+    $("#newestmsg").html(data.newest);
+    $("#oldestmsg").html(data.oldest);
+}
+
+function build_active_filters(active_filters){
+    var i = active_filters.length;
+    i--;
+    rows = [];
+    count = 0;
+    $.each(active_filters,function(itr,filter){
+        if(itr == i){
+            var row = '<tr class="last">';
+        }else{
+            var row = '<tr>';
+        }
+        row += '<td class="first-t filters" colspan="2">[ <a href="/reports/fd/'+itr+'/">x</a> ]';
+        row += ' [ <a href="/reports/fs/'+itr+'/">Save</a> ] '+filter.filter_field+' '+filter.filter_by+' '+filter.filter_value+'</td></tr>';
+        rows[count++] = row;
+    });
+    if(rows.length){
+        $("#afilters tbody").empty().append(rows.join(''));
+    }else{
+        $("#afilters tbody").empty().append('<tr class="last"><td class="first-t filters" colspan="2">No active filters at the moment</td></tr>');
+    }
+    $("#afilters tbody tr a").bind('click',ajaxify_active_filter_links);
+}
+
+function build_saved_filters(saved_filters){
+    var i = saved_filters.length;
+    i--;
+    rows = [];
+    count = 0;
+    $.each(saved_filters,function(itr,filter){
+        if(itr == i){
+            var row = '<tr class="last">';
+        }else{
+            var row = '<tr>';
+        }
+        row += '<td class="first-t filters" colspan="2">[ <a href="/reports/sfd/'+filter.filter_id+'/">x</a> ]';
+        if(!filter.is_loaded){
+            row += ' [ <a href="/reports/sfl/'+filter.filter_id+'/">Load</a> ] ';
+        }else{
+            row += ' [ Load ] ';
+        }
+        row += filter.filter_name+'</td></tr>';
+        rows[count++] = row;
+    });
+    if(rows.length){
+        $("#sfilters tbody").empty().append(rows.join(''));
+    }else{
+        $("#sfilters tbody").empty().append('<tr class="last"><td class="first-t filters" colspan="2">No saved filters at the moment</td></tr>');
+    }
+    $("#sfilters tbody tr a").bind('click',ajaxify_active_filter_links);
+}
+
+function build_page(response){
+    if(response.success == 'True'){
+        update_counters(response.data);
+        build_active_filters(response.active_filters);
+        build_saved_filters(response.saved_filters);
+    }else{
+        $("#filter-form-errors td").addClass('filter_errors');
+        $("#filter-form-errors td").html(response.errors);
+        $("#filter-form-errors").fadeIn(50).delay(15000).slideToggle('fast');
+        window.scroll(0,500);
+    }
+    $("#filter_form_submit").removeAttr('disabled').attr('value','Add');;
+}
+
 function build_elements(response){
     if(response.success == "True"){
         if(response.active_filters){
@@ -6,51 +78,50 @@ function build_elements(response){
             if(i > 0){
                 $("#afilters tbody tr:last").removeClass('last');
                 n = response.active_filters[i];
-                var row = '<tr class="last"><td class="first-t filters" colspan="2">[ <a href="/reports/fd/'+i+'/">x</a> ]';
+                var row = '<tr class="last whitelisted"><td class="first-t filters" colspan="2">[ <a href="/reports/fd/'+i+'/">x</a> ]';
                 row += ' [ <a href="/reports/fs/'+i+'/">Save</a> ] '+n.filter_field+' '+n.filter_by+' '+n.filter_value+'</td></tr>';
                 $("#afilters tbody").append(row);
+                setTimeout(function(){$('#afilters tbody tr:last').removeClass('whitelisted');},15000);
+                $("form")[0].reset();
             }else{
-                $('#loading_message').append('<p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p>').show('fast');
-                window.location.href=window.location.href;
+                n = response.active_filters[0];
+                if(n){
+                    var row = '<tr class="last"><td class="first-t filters" colspan="2">[ <a href="/reports/fd/'+i+'/">x</a> ]';
+                    row += ' [ <a href="/reports/fs/'+i+'/">Save</a> ] '+n.filter_field+' '+n.filter_by+' '+n.filter_value+'</td></tr>';
+                    $("#afilters tbody").empty().append(row);
+                }else{
+                    var row = '<tr class="last"><td class="first-t filters" colspan="2">No active filters at the moment</td></tr>';
+                    $("#afilters tbody").empty().append(row);
+                }
             }
+            $("#afilters tbody tr a").bind('click',ajaxify_active_filter_links);
         }
         if(response.saved_filters){
-            var i = response.saved_filters.length;
-            i--;
-            rows = '';
-            $.each(response.saved_filters,function(itr,filter){
-                if(itr == i){
-                    var row = '<tr class="last">';
-                }else{
-                    var row = '<tr>';
-                }
-                row += '<td class="first-t filters" colspan="2">[ <a href="/reports/sfd/'+filter.filter_id+'/">x</a> ]';
-                if(!filter.is_loaded){
-                    row += ' [ <a href="/reports/sfl/'+filter.filter_id+'/">Load</a> ] ';
-                }else{
-                    row += ' [ Load ] ';
-                }
-                row += filter.filter_name+'</td></tr>';
-                rows += row;
-            });
-            if(rows != ''){
-                $("#sfilters tbody").empty().append(row);
-            }
+            build_saved_filters(response.saved_filters);
         }
-        $("#msgcount").html(response.data.count);
-        $("#newestmsg").html(response.data.newest);
-        $("#oldestmsg").html(response.data.oldest);
+        update_counters(response.data);
         $("#filter-form-errors").hide();
     }else{
         $("#filter-form-errors td").addClass('filter_errors');
         $("#filter-form-errors td").html(response.errors);
-        $("#filter-form-errors").fadeIn(50).delay(30000).slideToggle('fast');
+        $("#filter-form-errors").fadeIn(50).delay(15000).slideToggle('fast');
     }
-    $("#filter_form_submit").removeAttr('disabled');
+    $("#filter_form_submit").removeAttr('disabled').attr('value','Add');
+}
+
+function ajaxify_active_filter_links(e){
+    e.preventDefault();
+    $("#filter_form_submit").attr({'disabled':'disabled','value':'Loading'});
+    window.scroll(0,0);
+    $.get($(this).attr('href'),build_page,'json');
 }
 
 function addFilter(){
-    $("#filter_form_submit").attr('disabled','disabled');
+    $("#filter_form_submit").attr({'disabled':'disabled','value':'Loading'});
+    $("#filter-form-errors td").empty();
+    $("#filter-form-errors td").removeClass('filter_errors');
+    $("#filter-form-errors td").html($("<img/>").attr("src","/static/imgs/loader-orig.gif")).append('&nbsp;Processing........')
+    $("#filter-form-errors").show();
     var add_filter_request = {
         filtered_field: $("#id_filtered_field").val(),
         filtered_by: $("#id_filtered_by").val(),
@@ -102,10 +173,10 @@ $('#id_filtered_field').bind('change',function(){
     }
 });
 $("#filter-form").submit(addFilter);
-$("#filter-form").ajaxSend(function(){
-    $("#filter-form-errors td").empty();
-    $("#filter-form-errors td").removeClass('filter_errors');
-    $("#filter-form-errors td").html($("<img/>").attr("src","/static/imgs/loader-orig.gif")).append('&nbsp;Processing........')
-    $("#filter-form-errors").show();
-});
+$("#my-spinner").ajaxStart(function(){$(this).empty().append($("<img/>").attr('src','/static/imgs/loader-orig.gif')).append('&nbsp;Processing...');})
+    .ajaxError(function(){$(this).empty().append($("<span/>").addClass('ajax_error')).append('&nbsp;Error occured');})
+    .ajaxStop(function(){$(this).empty();});
+$("#afilters tbody tr a").bind('click',ajaxify_active_filter_links);
+$("#sfilters tbody tr a").bind('click',ajaxify_active_filter_links);
+
 });

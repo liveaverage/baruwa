@@ -1,8 +1,9 @@
 function ajax_start(){
-    $(this).append($("<img/>").attr({src:"/static/imgs/loader.gif",id:'lists-spinner'})).append('&nbsp;<small>Processing........</small>');
+    $(this).append($("<img/>").attr('src','/static/imgs/loader-orig.gif')).append('&nbsp;Processing...');
 }
 
 function ajax_stop(){
+    $(this).empty();
     if($('#lists-spinner').length){
         $('#lists-spinner').remove();
         $('#pagination_info small').remove();
@@ -10,7 +11,8 @@ function ajax_stop(){
 }
 
 function ajax_error(){
-    $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
+    $(this).empty();
+    $('#pagination_info').empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
 }
 
 function toplinkize(app,direction,field_name){
@@ -63,6 +65,11 @@ function paginate(){
             $('#lists th:eq('+i+')').text(larray[i]).attr('id','sorting_by');
             tmpl = toplinkize(rj.app,rj.direction,carray[i]);
             $('#lists th:eq('+i+')').append(tmpl);
+        }else{
+            ur = '/'+rj.app+'/'+rj.direction+'/'+carray[i]+'/';
+            if($('#lists th:eq('+i+') a').attr('href') != ur){
+                $('#lists th:eq('+i+') a').attr('href',ur);
+            }
         }
     }
     
@@ -125,7 +132,7 @@ function fetchPage(link,list_type){
         }
         t = $('#pagination_info');
         $('#divider-header h3').html(ct).append(t);
-        $('#pagination_info').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
+        //$('#pagination_info').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
         $('#sub-menu-links ul li:first a').attr({id:'list-link',href:ll,innerHTML:lt});
     },'json');
 }
@@ -209,7 +216,7 @@ function handlePost(event){
                 }
                 t = $('#pagination_info');
                 $('#divider-header h3').html(ct).append(t);
-                $('#pagination_info').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
+                //$('#pagination_info').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
                 $('#sub-menu-links ul li:first a').attr({id:'list-link',href:ll,innerHTML:lt});
                 $('#lists tbody tr:eq(0)').addClass('whitelisted');
                 $("form")[ 0 ].reset();
@@ -270,7 +277,8 @@ function list_nav(){
 }
 
 function jsize_lists(){
-    $('#pagination_info').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
+    $('#my-spinner').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
+    $('#add-item').hide();
     $('#paginator span a').bind('click',list_nav); 
     $('th a').bind('click',list_nav);
     $.address.externalChange(handlextern);

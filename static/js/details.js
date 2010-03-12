@@ -2,15 +2,15 @@ function handleListing(event){
     event.preventDefault();
     url = $(this).attr('href');
     id = $(this).attr('id');
-    $("#"+id).before($("<img/>").attr({src:"/static/imgs/loader.gif",id:"img-loading"})).remove();
+    $("#"+id).before($("<span/>").attr({id:id,innerHTML:id})).remove();
     $.getJSON(url,function(data){
         if(data.success == 'True'){
             $("#in-progress").html(data.html).fadeIn(50).delay(15000).slideToggle('fast');
-            $("#img-loading").after(id).remove();
             window.scroll(0,0);
         }else{
             $("#in-progress").html(data.html).fadeIn(50).delay(15000).slideToggle('fast');
-            $("#img-loading").after($('<a/>').attr({href:url,id:id}).html(id)).remove();
+            $("#"+id).after($('<a/>').attr({href:url,id:id}).html(id)).remove();
+            $("#"+id).bind('click',handleListing);
             window.scroll(0,0);
         }
     });
@@ -19,7 +19,7 @@ function handleListing(event){
 function formSubmission(event){
     $("#submit_q_request").attr('disabled', 'disabled');
     $("#quarantine_errors").empty();
-    $("#ajax_status").html($("<img/>").attr("src","/static/imgs/loader.gif")).append('&nbsp;Refreshing........'); 
+    $("#ajax_status").html($("<img/>").attr("src","/static/imgs/loader.gif")).append('&nbsp;Processing........'); 
     var release  = 0;
     var todelete = 0;
     var salearn  = 0;

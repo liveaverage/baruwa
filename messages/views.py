@@ -68,14 +68,15 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
         return object_list(request, template_name='messages/index.html', queryset=message_list, paginate_by=50, page=page, 
             extra_context={'quarantine': quarantine,'direction':direction,'order_by':ordering,'app':'messages','active_filters':active_filters,'list_all':list_all})
 
-def detail(request, message_id):
+def detail(request,message_id,success=0,error_list=None):
     message_details = get_object_or_404(Maillog, id=message_id)
     quarantine_form = QuarantineProcessForm()
-    return render_to_response('messages/detail.html', {'message_details': message_details, 'form': quarantine_form})
+    return render_to_response('messages/detail.html', {'message_details': message_details, 'form': quarantine_form,'error_list':error_list,'succeeded':success})
 
 def process_quarantined_msg(request):
     html = {}
     learn_as = ""
+    error_list = None
     form = QuarantineProcessForm(request.POST)
     if form.is_valid():
         id = form.cleaned_data['message_id']
@@ -150,8 +151,18 @@ def process_quarantined_msg(request):
     else:
         error_list = form.errors.values()[0]
         html = errorlist(error_list).as_ul()
-        response = simplejson.dumps({'success':'False','html': html})
-    return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+        success = 'False'
+        response = simplejson.dumps({'success':success,'html': html})
+    if request.is_ajax():
+        return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+    else:
+        if success != 'False':
+            return detail(request,id,1)
+        else:
+            id = request.POST['message_id'] #form.cleaned_data['message_id']
+            if not error_list:
+                error_list = html
+            return detail(request,id,0,error_list)
 
 def preview(request, message_id):
     import email
