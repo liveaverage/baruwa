@@ -77,9 +77,9 @@ function json2html(data){
             if(s.length > 38){
                 re = /\s/g;
                 if(re.test(s)){
-                   subject = wordwrap(s,38); 
+                   subject = wordwrap(s,45); 
                 }else{
-                    subject = s.substring(0,37) + '...';
+                    subject = s.substring(0,44) + '...';
                 }
             }else{
                 subject = s;
