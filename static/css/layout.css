@@ -358,7 +358,7 @@ table.maillog tr.lists, td.lists {
     line-height:10px;
 }
 
-table.maillog td.sascores, td.lists, td.filters {
+table.maillog td.sascores, td.filters {
     height: 23px !important;
     line-height:8px;
 }
