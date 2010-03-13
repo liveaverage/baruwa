@@ -113,7 +113,7 @@
 }
 
 @media print {
-    .ui-tabs-nav, #sub-menu, #footer {
+    .ui-tabs-nav, #sub-menu, #footer, #listing {
         display: none;
     }
 }
