@@ -1,18 +1,48 @@
-function handleListing(event){
-    event.preventDefault();
-    url = $(this).attr('href');
-    id = $(this).attr('id');
+function do_spinner(){
+    $('#my-spinner')
+    .ajaxStart(function(){$(this).empty().append($("<img/>").attr("src","/static/imgs/loader-orig.gif")).append('&nbsp;Processing...');})
+    .ajaxStop(function(){$(this).empty();})
+    .ajaxError(function(){$(this).empty();});
+}
+function confirm_listing(event){
+    re = /\/messages\/(whitelist|blacklist)\/.+\//
+    str = $(this).attr('href');
+    aobj = $(this);
+    found = str.match(re);
+    if(found.length == 2){
+        event.preventDefault();
+        clearTimeout(ip);
+        alt = 'This will '+found[1]+' all emails with "From address" '+$('#from-addr').text()+'<br/><b>Do you wish to continue ?</b>';
+        $dialog.html(alt);
+        $dialog.dialog('option','buttons',{
+            'Yes':function(){
+                $(this).dialog('close');
+                handleListing(event,aobj);
+            },'No':function(){
+                $(this).dialog('close');
+            }
+        });
+        $dialog.dialog('open');
+    }
+}
+
+function handleListing(event,aobj){
+    url = aobj.attr('href');
+    id = aobj.attr('id');
     $("#"+id).before($("<span/>").attr({id:id,innerHTML:id})).remove();
     $.getJSON(url,function(data){
         if(data.success == 'True'){
-            $("#in-progress").html(data.html).fadeIn(50).delay(15000).slideToggle('fast');
+            $("#in-progress").html(data.html).append('<div id="dismiss"><a href="#">Dismiss</a></div>').fadeIn(0);
+            ip = setTimeout(function(){$('#in-progress').hide('fast');},15000);
             window.scroll(0,0);
         }else{
-            $("#in-progress").html(data.html).fadeIn(50).delay(15000).slideToggle('fast');
+            $("#in-progress").html(data.html).append('<div id="dismiss"><a href="#">Dismiss</a></div>').fadeIn(0);
+            ip = setTimeout(function(){$('#in-progress').hide('fast');},15000);
             $("#"+id).after($('<a/>').attr({href:url,id:id}).html(id)).remove();
-            $("#"+id).bind('click',handleListing);
+            $("#"+id).bind('click',confirm_listing);
             window.scroll(0,0);
         }
+        $('#dismiss a').click(function(){clearTimeout(ip);$('#in-progress').hide();});
     });
 }
 
@@ -64,6 +94,7 @@ function formSubmission(event){
 }
 
 function prepareDoc(){
+    do_spinner();
     mh = $("#mail-headers");
     mh.hide();
     mh.after($("<a/>").attr({href:'#',id:'header-toggle',innerHTML:'&darr;&nbsp;Show headers'}));
@@ -80,12 +111,25 @@ function prepareDoc(){
     });
     $("#qform").submit(formSubmission);
     if($("#whitelist").length){
-        $("#whitelist").bind('click',handleListing);
+        $('#whitelist').bind('click',confirm_listing);
     }
     if($("#blacklist").length){
-        $("#blacklist").bind('click',handleListing);
+        $('#blacklist').bind('click',confirm_listing);
     }
-
+    $dialog.html('An error occured !')
+        .dialog({
+            autoOpen: false,
+            resizable: false,
+            height:135,
+            width: 500,
+            modal: true,
+            title: 'Please confirm listing ?',
+            closeOnEscape: false,
+            open: function(event, ui) {$(".ui-dialog-titlebar-close").hide();},
+            draggable: false,
+        });
 }
 
+var ip;
+var $dialog = $('<div></div>');
 $(document).ready(prepareDoc);

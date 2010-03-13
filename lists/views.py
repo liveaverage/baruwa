@@ -92,17 +92,27 @@ def add_to_list(request):
             else:
                 to = clean_data['to_address']
             if int(clean_data['list_type']) == 1:
-                wl = Whitelist(to_address=to,from_address=clean_data['from_address'])
                 try:
-                    wl.save()
-                except IntegrityError:
-                    error_msg = 'The list item already exists'
+                    b = Blacklist.objects.get(to_address=to,from_address=clean_data['from_address'])
+                except Blacklist.DoesNotExist:
+                    wl = Whitelist(to_address=to,from_address=clean_data['from_address'])
+                    try:
+                        wl.save()
+                    except IntegrityError:
+                        error_msg = 'The list item already exists'
+                else:
+                    error_msg = '%s is blacklisted, please remove from blacklist before attempting to whitelist' % clean_data['from_address']
             else:
-                bl = Blacklist(to_address=to,from_address=clean_data['from_address'])
                 try:
-                    bl.save()
-                except IntegrityError:
-                    error_msg = 'The list item already exists'
+                    w = Whitelist(to_address=to,from_address=clean_data['from_address'])
+                except Whitelist.DoesNotExist:    
+                    bl = Blacklist(to_address=to,from_address=clean_data['from_address'])
+                    try:
+                        bl.save()
+                    except IntegrityError:
+                        error_msg = 'The list item already exists'
+                else:
+                    error_msg = '%s is whitelisted, please remove from whitelist before attempting to blacklist' % clean_data['from_address']
             if request.is_ajax():
                 if error_msg == '':
                     request.method = 'GET'

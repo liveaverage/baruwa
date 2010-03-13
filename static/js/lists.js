@@ -132,7 +132,6 @@ function fetchPage(link,list_type){
         }
         t = $('#pagination_info');
         $('#divider-header h3').html(ct).append(t);
-        //$('#pagination_info').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
         $('#sub-menu-links ul li:first a').attr({id:'list-link',href:ll,innerHTML:lt});
     },'json');
 }
@@ -216,7 +215,6 @@ function handlePost(event){
                 }
                 t = $('#pagination_info');
                 $('#divider-header h3').html(ct).append(t);
-                //$('#pagination_info').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
                 $('#sub-menu-links ul li:first a').attr({id:'list-link',href:ll,innerHTML:lt});
                 $('#lists tbody tr:eq(0)').addClass('whitelisted');
                 $("form")[ 0 ].reset();
@@ -282,7 +280,7 @@ function jsize_lists(){
     $('#paginator span a').bind('click',list_nav); 
     $('th a').bind('click',list_nav);
     $.address.externalChange(handlextern);
-    $dialog.html('This dialog will show every time!')
+    $dialog.html('An error occured !')
         .dialog({
             autoOpen: false,
             resizable: false,

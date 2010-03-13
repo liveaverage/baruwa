@@ -195,15 +195,21 @@ def blacklist(request,message_id):
         try:
             bl = Blacklist.objects.get(to_address__iexact=message.to_address,from_address__iexact=message.from_address)
         except Blacklist.DoesNotExist:
-            bl = Blacklist(to_address=message.to_address,from_address=message.from_address)
             try:
-                bl.save()
-            except:
-                html = 'An error occured while adding %s to blacklist' % message.from_address
-                success = 'False'
-                pass
+                w = Whitelist.objects.get(to_address__iexact=message.to_address,from_address__iexact=message.from_address)
+            except Whitelist.DoesNotExist:
+                bl = Blacklist(to_address=message.to_address,from_address=message.from_address)
+                try:
+                    bl.save()
+                except:
+                    html = 'An error occured while adding %s to blacklist' % message.from_address
+                    success = 'False'
+                    pass
+                else:
+                    html = 'The sender %s has been blacklisted' % message.from_address
             else:
-                html = 'The sender %s has been blacklisted' % message.from_address
+                html  = '%s is whitelisted, please remove from whitelist before attempting to blacklist' % message.from_address
+                success = 'False'
         else:
             html = 'The sender %s is already blacklisted' % message.from_address
             success = 'False'
@@ -211,7 +217,6 @@ def blacklist(request,message_id):
         response = simplejson.dumps({'success':success,'html':html})
         return HttpResponse(response,content_type='application/javascript; charset=utf-8')
     else:
-        #messages.info(request,html)
         return HttpResponseRedirect(reverse('message-detail', args=[message_id]))
 
 def whitelist(request,message_id):
@@ -226,15 +231,21 @@ def whitelist(request,message_id):
         try:
             bl = Whitelist.objects.get(to_address__iexact=message.to_address,from_address__iexact=message.from_address)
         except Whitelist.DoesNotExist:
-            bl = Whitelist(to_address=message.to_address,from_address=message.from_address)
             try:
-                bl.save()
-            except:
-                html = 'An error occured while adding %s to whitelist' % message.from_address
-                success = 'False'
-                pass
+                b = Blacklist.objects.get(to_address__iexact=message.to_address,from_address__iexact=message.from_address)
+            except Blacklist.DoesNotExist:
+                bl = Whitelist(to_address=message.to_address,from_address=message.from_address)
+                try:
+                    bl.save()
+                except:
+                    html = 'An error occured while adding %s to whitelist' % message.from_address
+                    success = 'False'
+                    pass
+                else:
+                    html = 'The sender %s has been whitelisted' % message.from_address
             else:
-                html = 'The sender %s has been whitelisted' % message.from_address
+                success = 'False'
+                html = '%s is blacklisted, please remove from blacklist before attempting to whitelist' % message.from_address
         else:
             html = 'The sender %s is already whitelisted' % message.from_address
             success = 'False'

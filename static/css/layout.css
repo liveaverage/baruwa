@@ -493,6 +493,11 @@ div.cb {
     width:99%;
 }
 
+#in-progress #dismiss {
+    float:right;
+    padding-right:15px;
+}
+
 #content-wrapper {
 	width: 960px;
 	margin: 0 auto;

@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block headers %}
+<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-custom.css" />
 <script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
 <script type="text/javascript" src="/static/js/details.js"></script>
 {% endblock headers %}
 {% block title %}Baruwa :: Showing message - {{ message_details.id }} {% endblock %}
@@ -28,7 +30,7 @@
 		</tr>
 		<tr>
 		<td class="mailitem">From:</td>
-		<td class="maildetail">{{ message_details.from_address|tds_wrap:80|linebreaksbr }}
+		<td class="maildetail"><span id="from-addr">{{ message_details.from_address|tds_wrap:80|linebreaksbr }}</span>
     <span id="listing" class="listings">
     [{% if not message_details.spamwhitelisted %}<a id="whitelist" href="{%url whitelist-sender message_id=message_details.id%}">Whitelist</a>{%else%}Whitelist{%endif%}]
     &nbsp;
