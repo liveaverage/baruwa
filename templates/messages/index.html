@@ -38,10 +38,7 @@ Showing the 50 most recent messages
 Showing the 50 most recent messages 
 <small>
     <span id="search-area">
-    [updated every 60 sec's
-    <noscript> - 
-        <span class="nojs">Not updating enable javascript</span>
-    </noscript>]
+    [updated every 60 sec's <span class="nojs">Not updating enable javascript</span>]
     </span>
 </small>
 {% endif %}
@@ -106,7 +103,7 @@ Showing the 50 most recent messages
 	<td>{{ message.timestamp }}</td>
 	<td>{{ message.from_address|tds_trunc:30 }}</td>
 	<td>{{ message.to_address|tds_nl_commas|linebreaksbr }}</td>
-	<td>{{ message.subject|striptags|tds_trunc:45 }}</td>
+	<td>{{ message.subject|striptags|escape|tds_trunc:45 }}</td>
 	<td>{{ message.size|filesizeformat }}</td>
 	<td>{{ message.sascore }}</td>
 	<td>

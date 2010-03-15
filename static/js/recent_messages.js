@@ -21,6 +21,7 @@ function build_table_from_json(){
 
 function do_table_sort(){
     full_messages_listing = false;
+    $('.nojs').remove();
     $.ajaxSetup({
         'beforeSend':function(xhr){xhr.setRequestHeader("X-Last-ID",last_id);}
     });

@@ -9,7 +9,6 @@ from django.forms.util import ErrorList as errorlist
 from django.views.generic.list_detail import object_list
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
-#from django.contrib import messages
 from messages.process_mail import *
 from reports.views import apply_filter
 from lists.models import Blacklist,Whitelist
@@ -253,5 +252,4 @@ def whitelist(request,message_id):
         response = simplejson.dumps({'success':success,'html':html})
         return HttpResponse(response,content_type='application/javascript; charset=utf-8')
     else:
-        #messages.info(request,html)
         return HttpResponseRedirect(reverse('message-detail', args=[message_id]))

@@ -94,7 +94,7 @@ function lists_from_json(data){
             }else{
                 to_address = n.to_address;
             }
-            tti[count++] = '<tr class="lists" id="'+n.id+'"><td class="lists first-t">'+n.id+'</td><td class="lists first-t">'+to_address+'</td>';
+            tti[count++] = '<tr class="lists" id="list-id-'+n.id+'"><td class="lists first-t">'+n.id+'</td><td class="lists first-t">'+to_address+'</td>';
             tti[count++] = '<td class="lists first-t">'+from_address+'</td><td class="lists first-t">';
             tti[count++] = '<a href="/lists/delete/'+rj.list_kind+'/'+n.id+'/">Delete</a></td></tr>';
         });
@@ -156,7 +156,7 @@ function confirm_delete(event) {
     if(found.length == 3){
         event.preventDefault();
         if(found[1] == 1){list = 'Whitelist';}else{list = 'Blacklist';}
-        alt = 'Delete '+$("tr#"+found[2]+" td:eq(2)").text()+' from '+list;
+        alt = 'Delete '+$("tr#list-id-"+found[2]+" td:eq(2)").text()+' from '+list;
         $dialog.html(alt);
         $dialog.dialog('option','buttons', {
             'Delete': function() {
