@@ -89,11 +89,22 @@
 		</tr>
 		<tr>
 		<td class="mailitem">Spam:</td>
-		<td class="maildetail">{% if message_details.isspam %}<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}</td>
+		<td class="maildetail">
+        {% if message_details.isspam %}
+        <span class="positive">Y</span>
+        {%if not message_details.ishighspam%} Action(s): {%tds_action 1 message_details.from_address message_details.to_address%}{%endif %}
+        {% else %}
+        <span class="negative">N</span>{% endif %}</td>
 		</tr>
 		<tr>
 		<td class="mailitem">High Scoring Spam:</td>
-		<td class="maildetail">{% if message_details.ishighspam %}<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}</td>
+		<td class="maildetail">
+        {% if message_details.ishighspam %}
+        <span class="positive">Y</span> Actions(s): {%tds_action 2 message_details.from_address message_details.to_address%}
+        {% else %}
+        <span class="negative">N</span>
+        {% endif %}
+        </td>
 		</tr>
 		<tr>
 		<td class="mailitem">SA Spam:</td>

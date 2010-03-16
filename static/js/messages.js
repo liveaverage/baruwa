@@ -14,7 +14,7 @@ function en_history(){
     $.address.history($.address.baseURL() + url);
     window.scrollTo(0,0);
     $('#loading_message').append('<p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p>').show('fast');
-    //$('body').css('overflow', 'hidden');
+    $.ajaxSetup({'cache':false});
     $.getJSON($(this).attr('href'),json2html);
     return false;
 }
@@ -29,7 +29,7 @@ function handlextern(){
             url = '/'+ page + '/';
             window.scrollTo(0,0);
             $('#loading_message').append('<p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p>').show('fast');
-            //$('body').css('overflow', 'hidden');
+            //$.ajaxSetup({'cache':false});
             $.getJSON(url,json2html);
             return false;
         }
@@ -154,7 +154,6 @@ function paginate(){
     $('#recent th a').bind('click',en_history);
     $('#sub-menu-links ul li a').bind('click',en_history);
     $('#loading_message').empty().hide('fast');
-    //$('body').css('overflow', 'auto');
 }
 
 function jsize_page(){
@@ -176,7 +175,6 @@ function jsize_page(){
     $("#paginator").ajaxStop(paginate);
     $("#loading_message").empty().ajaxError(function(){
         $(this).hide('normal');
-        //$('body').css('overflow', 'auto');
     });
     $.address.externalChange(handlextern);
 }

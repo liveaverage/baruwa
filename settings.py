@@ -92,3 +92,5 @@ INSTALLED_APPS = (
 
 EMAIL_HOST = 'smtp01.sentechsa.net'
 INTERNAL_IPS = ('127.0.0.1',)
+
+from baruwa_settings import *

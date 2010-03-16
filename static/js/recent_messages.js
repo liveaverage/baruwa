@@ -10,6 +10,9 @@ function prevent_interupt_refresh(event){
 
 function build_table_from_json(){
     if(! ax_in_progress){
+        if(last_ts != ''){
+            $.ajaxSetup({'beforeSend':function(xhr){xhr.setRequestHeader("X-Last-Timestamp",last_ts);}});
+        }
         $.getJSON('/messages/',json2html); 
         if(auto_refresh){
             clearInterval(auto_refresh);
@@ -22,9 +25,6 @@ function build_table_from_json(){
 function do_table_sort(){
     full_messages_listing = false;
     $('.nojs').remove();
-    $.ajaxSetup({
-        'beforeSend':function(xhr){xhr.setRequestHeader("X-Last-ID",last_id);}
-    });
     ax_in_progress = false;
     $("#search-area").ajaxSend(function(){
 	    $('#my-spinner').empty().append($("<img/>").attr("src","/static/imgs/loader-orig.gif")).append('&nbsp;Refreshing...');

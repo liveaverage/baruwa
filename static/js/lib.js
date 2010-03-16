@@ -54,11 +54,13 @@ function json2html(data){
     if(data){
         rj = data.paginator;
         if(data.items.length){
-            last_id = data.items[0].id;
+            last_ts = data.items[0].timestamp;
         }
         var to;
         var tmp;
         rows = '';
+        len = data.items.length;
+        len --;
         $.each(data.items,function(i,n){
             //build html rows
             to = '';
@@ -125,7 +127,18 @@ function json2html(data){
                 $("#recent tbody").empty().append(rows);
             }
         }else{
-            $("#recent tbody").empty().append(rows);
+            remove_rows = '';
+            if(full_messages_listing){
+                $("#recent tbody").empty().append(rows);
+            }else{
+                if(len == 49){
+                    $("#recent tbody").empty().append(rows);
+                }else{
+                    remove_rows = (48 - len);
+                    $("#recent tbody tr:gt("+remove_rows+")").remove();
+                    $("#recent tbody").prepend(rows);
+                }
+            }
         }
     }else{
         $("#search-area").empty().append('Empty response from server. check network!');

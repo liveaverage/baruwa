@@ -9,8 +9,6 @@ from messages.templatetags.messages_extras import tds_get_rules
 from django.forms.util import ErrorList as errorlist
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
-#import random
-#from collections import defaultdict
 
 def to_dict(tuple_list):
     d = {}

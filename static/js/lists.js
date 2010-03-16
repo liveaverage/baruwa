@@ -119,6 +119,7 @@ function lists_from_json(data){
 }
 
 function fetchPage(link,list_type){
+    $.ajaxSetup({'cache':false});
     $.get(link,function(response){
         lists_from_json(response);
         if(list_type == '1'){
@@ -169,7 +170,8 @@ function confirm_delete(event) {
                     if(f){
                         if(f.length > 1){
                             $.ajaxSetup({
-                                'beforeSend':function(xhr){xhr.setRequestHeader("X-List-Params",p);}
+                                'beforeSend':function(xhr){xhr.setRequestHeader("X-List-Params",p);},
+                                'cache':false
                             });
                         }
                     }
@@ -270,6 +272,7 @@ function list_nav(){
     url = $(this).attr('href').replace(/\//g, '-').replace(/^-/, '').replace(/-$/,'');
     $.address.value('?u='+url);
     $.address.history($.address.baseURL() + url);
+    $.ajaxSetup({'cache':false});
     $.getJSON($(this).attr('href'),lists_from_json);
     return false;
 }

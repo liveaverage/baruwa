@@ -1,11 +1,12 @@
 # vim: ai ts=4 sts=4 et sw=4
-import re,GeoIP,socket
+import os,re,GeoIP,socket
 from textwrap import wrap
 from django import template
 from django.template.defaultfilters import stringfilter,wordwrap,linebreaksbr
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from messages.models import SaRules
+from messages.process_mail import get_config_option,clean_regex
 
 register = template.Library()
 
@@ -143,3 +144,69 @@ def tds_wrap_headers(value):
             header = tds_wrap(header,100) #'\n'.join(wrap(header,100))
         rstring.append(header)
     return ('\n'.join(rstring))
+
+def read_rules(filename):
+    contents = []
+    if os.path.exists(filename):
+        f = open(filename)
+        for line in f:
+            if '#' in line:
+                line, comment = line.split('#',1)
+            contents.append(line)
+        f.close()
+    return contents
+
+@register.simple_tag
+def tds_action(value,from_address,to_address):
+    rv = ''
+    srules = []
+    if value == 1:
+        option = 'Spam Actions'
+    else:
+        option = 'High Scoring Spam Actions'
+    rv = get_config_option(option)
+    if re.match(r'^/.*[^/]$',rv):
+        rules = read_rules(rv)
+        for r in rules:
+            sec={}
+            m=re.match(r'^(\S+)\s+(\S+)(\s+(.*))?$',r)
+            if m:
+                (direction,rule,throwaway,value) = m.groups()
+                throwaway=None
+                m2 = re.match(r'^and\s+(\S+)\s+(\S+)(\s+(.+))?$',value)
+                if m2:
+                    (direction2,rule2,throwaway,value2) = m2.groups()
+                    throwaway=None
+                    sec = {'direction':direction2,'rule':clean_regex(rule2),'action':value2}
+                srules.append({'direction':direction,'rule':clean_regex(rule),'action':value,'secondary':sec})
+        for item in srules:
+            if item["secondary"]:
+                to_regex = ''
+                from_regex = ''
+                if re.match(r'from\:|fromorto\:',item["direction"],re.IGNORECASE):
+                    from_regex = item['rule']
+                if re.match(r'from\:|fromorto\:',item["secondary"]["direction"],re.IGNORECASE):
+                    from_regex = item['secondary']['rule']
+                if re.match(r'to\:|fromorto\:',item["direction"],re.IGNORECASE):
+                    to_regex = item['rule']
+                if re.match(r'to\:|fromorto\:',item["secondary"]["direction"],re.IGNORECASE):
+                    to_regex = item['secondary']['rule']
+                if to_regex == '' or from_regex == '':
+                    return 'blank regex ' + to_regex + ' manoamano '+from_regex
+                if re.match(to_regex,to_address,re.IGNORECASE) and re.match(from_regex,from_address,re.IGNORECASE):
+                    return item["secondary"]["action"]
+            else:
+                comb_regex = ''
+                to_regex = ''
+                if re.match(r'to\:',item["direction"],re.IGNORECASE):
+                    to_regex = item['rule']
+                    if re.match(to_regex,to_address,re.IGNORECASE):
+                        return item['action']
+                if re.match(r'from\:|fromorto\:',item["direction"],re.IGNORECASE):
+                    comb_regex = item['rule']
+                    if re.match(comb_regex,from_address,re.IGNORECASE) or re.match(comb_regex,to_address,re.IGNORECASE):
+                        return item["action"]
+        return 'I do not know how to read it'
+    else:
+        return rv
+    return rv

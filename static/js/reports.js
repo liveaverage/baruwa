@@ -113,6 +113,7 @@ function ajaxify_active_filter_links(e){
     e.preventDefault();
     $("#filter_form_submit").attr({'disabled':'disabled','value':'Loading'});
     window.scroll(0,0);
+    $.ajaxSetup({'cache':false});
     $.get($(this).attr('href'),build_page,'json');
 }
 

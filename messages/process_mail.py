@@ -1,4 +1,4 @@
-import email,smtplib,os
+import email,smtplib,os,re
 from subprocess import Popen, PIPE
 from email.Header import decode_header
 from django.conf import settings
@@ -100,3 +100,38 @@ def sa_learn(mail_path, learn_as):
     else:
         return {'success':False,'output':'','errormsg':'mail file could not be read'}
 
+def get_config_option(search_option):
+    #config = settings.MS_CONFIG
+    config = getattr(settings, 'MS_CONFIG', '/etc/MailScanner/MailScanner.conf')
+    COMMENT_CHAR = '#'
+    OPTION_CHAR =  '='
+    value = ''
+    if os.path.exists(config):
+        f = open(config)
+        for line in f:
+            if COMMENT_CHAR in line:
+                line, comment = line.split(COMMENT_CHAR, 1)
+            if OPTION_CHAR in line:
+                option, value = line.split(OPTION_CHAR, 1)
+                option = option.strip()
+                value = value.strip()
+                if search_option == option:
+                    break
+        f.close()
+    return value
+
+def clean_regex(rule):
+    if rule == 'default' or rule == '*':
+        rule = '*@*'
+    if not '@' in rule:
+        if re.match(r'^\*',rule):
+            rule = "*@%s" % rule
+        else:
+            rule = "*@%s" % rule
+    if re.match(r'^@',rule):
+        rule = "*%s" % rule
+    if re.match(r'@$',rule):
+        rule = "%s*" % rule
+    rule = re.sub(r'\*','.*',rule)
+    rule = "^%s\.?$" % rule
+    return rule

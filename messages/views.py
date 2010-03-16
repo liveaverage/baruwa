@@ -12,12 +12,15 @@ from django.core.urlresolvers import reverse
 from messages.process_mail import *
 from reports.views import apply_filter
 from lists.models import Blacklist,Whitelist
+from django.views.decorators.cache import never_cache
+import re
 
 def json_ready(element):
     element['timestamp'] = str(element['timestamp'])
     element['sascore'] = str(element['sascore'])
     return element 
 
+@never_cache
 def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='timestamp'):
     active_filters = []
     ordering = order_by
@@ -26,8 +29,17 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
         order_by = "-%s" % order_by
 
     if not list_all:
-        message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
-        ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected')[:50]
+        last_ts = request.META.get('HTTP_X_LAST_TIMESTAMP', None)
+        if not last_ts is None:
+            last_ts = last_ts.strip()
+            if not re.match(r'^(\d{4})\-(\d{2})\-(\d{2})(\s)(\d{2})\:(\d{2})\:(\d{2})$',last_ts):
+                last_ts = None
+        if not last_ts is None and request.is_ajax():
+            message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
+            ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected').filter(timestamp__gt=last_ts)[:50]
+        else:
+            message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
+            ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected')[:50]
     else:
         if quarantine:
              message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
@@ -38,11 +50,7 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
         message_list = apply_filter(message_list,request,active_filters)
     if request.is_ajax():
         if not list_all:
-            last_id = request.META.get('HTTP_X_LAST_ID', None)
-            if last_id != message_list[0]['id']:
-                message_list = map(json_ready,message_list)
-            else:
-                message_list = []
+            message_list = map(json_ready,message_list)
             pg = None
         else:
             p = Paginator(message_list,50)
@@ -67,6 +75,7 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
         return object_list(request, template_name='messages/index.html', queryset=message_list, paginate_by=50, page=page, 
             extra_context={'quarantine': quarantine,'direction':direction,'order_by':ordering,'app':'messages','active_filters':active_filters,'list_all':list_all})
 
+@never_cache
 def detail(request,message_id,success=0,error_list=None):
     message_details = get_object_or_404(Maillog, id=message_id)
     quarantine_form = QuarantineProcessForm()
@@ -86,7 +95,7 @@ def process_quarantined_msg(request):
             response = simplejson.dumps({'success':'False', 'html': html})
         else:
             success = "True"
-            qdir = "/Users/andrew/Downloads"
+            qdir = get_config_option('Quarantine Dir')
             date = "%s" % m.date
             date = date.replace('-', '')
             file_name = get_message_path(qdir,date,m.id)
@@ -96,8 +105,7 @@ def process_quarantined_msg(request):
                 if form.cleaned_data['use_alt']:
                     to_addr = form.cleaned_data['altrecipients']
                 else:
-                    #to_addr = m.to_address
-                    to_addr = "andrew@sentechsa.net"
+                    to_addr = m.to_address
                     to_addr = to_addr.split(',')
                 if not release_mail(file_name,to_addr,m.from_address):
                     fail=True
@@ -163,12 +171,12 @@ def process_quarantined_msg(request):
                 error_list = html
             return detail(request,id,0,error_list)
 
+@never_cache
 def preview(request, message_id):
     import email
     message = {}
     message_object = get_object_or_404(Maillog, id=message_id)
-    #qdir = "/var/spool/MailScanner/quarantine"
-    qdir = "/Users/andrew/Downloads"
+    qdir = get_config_option('Quarantine Dir')
     date = "%s" % message_object.date
     date = date.replace('-', '')
     file_name = get_message_path(qdir,date,message_id)
@@ -182,6 +190,7 @@ def preview(request, message_id):
         message = parse_email(msg)
     return render_to_response('messages/preview.html', {'message':message,'message_id':message_object.id})
 
+@never_cache
 def blacklist(request,message_id):
     success = 'True'
     try:
@@ -218,6 +227,7 @@ def blacklist(request,message_id):
     else:
         return HttpResponseRedirect(reverse('message-detail', args=[message_id]))
 
+@never_cache
 def whitelist(request,message_id):
     success = 'True'
     try:

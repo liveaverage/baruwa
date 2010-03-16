@@ -243,6 +243,7 @@ th {
 }
 
 table.maillog {
+    color: black;
 	width: 960px !important;
     font-size:8pt;
 	border-collapse: collapse;
