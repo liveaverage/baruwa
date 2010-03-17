@@ -9,6 +9,7 @@ from messages.templatetags.messages_extras import tds_get_rules
 from django.forms.util import ErrorList as errorlist
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
+from django.contrib.auth.decorators import login_required
 
 def to_dict(tuple_list):
     d = {}
@@ -458,12 +459,14 @@ def d_query(model,filter_list,active_filters=None):
         model = model.filter(q)
     return model
 
+@login_required
 def apply_filter(model,request,active_filters):
     if request.session.get('filter_by', False):
         filter_list = request.session.get('filter_by')
         model = d_query(model,filter_list,active_filters)
     return model
 
+@login_required
 def index(request):
     errors = None
     data = Maillog.objects
@@ -542,6 +545,7 @@ def index(request):
         return render_to_response('reports/index.html',
             {'form':filter_form,'data':data,'errors':errors,'active_filters':active_filters,'saved_filters':saved_filters})
 
+@login_required
 def rem_filter(request,index_num):
     if request.session.get('filter_by', False):
         li = request.session.get('filter_by')
@@ -551,6 +555,7 @@ def rem_filter(request,index_num):
             return index(request)
     return HttpResponseRedirect('/reports/')
 
+@login_required
 def save_filter(request,index_num):
     success = "True"
     error_msg = ''
@@ -580,6 +585,7 @@ def save_filter(request,index_num):
                 return HttpResponse(response, content_type='application/javascript; charset=utf-8')
     return HttpResponseRedirect('/reports/')
 
+@login_required
 def load_filter(request,index_num):
     try:
         filter = SavedFilters.objects.get(id=int(index_num))
@@ -604,6 +610,7 @@ def load_filter(request,index_num):
         else:
             return HttpResponseRedirect('/reports/')
 
+@login_required
 def del_filter(request,index_num):
     success = "True"
     try:
@@ -644,6 +651,7 @@ def pack_data(data,arg1,arg2):
         n += 1
     return simplejson.dumps(rv)
 
+@login_required
 def report(request,report_kind):
     report_kind = int(report_kind)
     template = "reports/piereport.html"

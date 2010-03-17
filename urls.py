@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     (r'^tools/', include('tools.urls')),
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
     { 'document_root' : os.path.join(CURRENT_PATH, 'static') }),
+    (r'^accounts/', include('django.contrib.auth.urls')),
     # Uncomment the next line to enable the admin:
     # (r'^admin/', include(admin.site.urls)),
 )

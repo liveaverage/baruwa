@@ -17,7 +17,7 @@ DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysq
 DATABASE_NAME = 'mailscanner'             # Or path to database file if using sqlite3.
 DATABASE_USER = 'hotsexygirl'             # Not used with sqlite3.
 DATABASE_PASSWORD = 't0nyd4nz4$$$'         # Not used with sqlite3.
-DATABASE_HOST = 'spamcop01.sentechsa.net'             # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_HOST = 'spamcop03.sentechsa.net'             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 # Local time zone for this installation. Choices can be found here:
@@ -80,14 +80,20 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    #'django.contrib.auth',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     #'django.contrib.sites',
     'messages',
     'lists',
     'reports',
+    'mwauth',
     'debug_toolbar',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'mwauth.mailwatchauth.MailwatchBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 EMAIL_HOST = 'smtp01.sentechsa.net'

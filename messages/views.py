@@ -13,6 +13,7 @@ from messages.process_mail import *
 from reports.views import apply_filter
 from lists.models import Blacklist,Whitelist
 from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
 import re
 
 def json_ready(element):
@@ -21,6 +22,7 @@ def json_ready(element):
     return element 
 
 @never_cache
+@login_required
 def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='timestamp'):
     active_filters = []
     ordering = order_by
@@ -76,11 +78,13 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
             extra_context={'quarantine': quarantine,'direction':direction,'order_by':ordering,'app':'messages','active_filters':active_filters,'list_all':list_all})
 
 @never_cache
+@login_required
 def detail(request,message_id,success=0,error_list=None):
     message_details = get_object_or_404(Maillog, id=message_id)
     quarantine_form = QuarantineProcessForm()
     return render_to_response('messages/detail.html', {'message_details': message_details, 'form': quarantine_form,'error_list':error_list,'succeeded':success})
 
+@login_required
 def process_quarantined_msg(request):
     html = {}
     learn_as = ""
@@ -172,6 +176,7 @@ def process_quarantined_msg(request):
             return detail(request,id,0,error_list)
 
 @never_cache
+@login_required
 def preview(request, message_id):
     import email
     message = {}
@@ -191,6 +196,7 @@ def preview(request, message_id):
     return render_to_response('messages/preview.html', {'message':message,'message_id':message_object.id})
 
 @never_cache
+@login_required
 def blacklist(request,message_id):
     success = 'True'
     try:
@@ -228,6 +234,7 @@ def blacklist(request,message_id):
         return HttpResponseRedirect(reverse('message-detail', args=[message_id]))
 
 @never_cache
+@login_required
 def whitelist(request,message_id):
     success = 'True'
     try:

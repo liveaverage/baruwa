@@ -1,7 +1,11 @@
 from django.shortcuts import render_to_response
 from django.db import connection
 from reports.views import r_query
+from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
 
+@never_cache
+@login_required
 def index(request):
     active_filters = []
     c = connection.cursor()

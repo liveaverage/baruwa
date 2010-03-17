@@ -9,6 +9,7 @@ from django.utils import simplejson
 from django.db import IntegrityError
 from django.forms.util import ErrorList as errorlist
 from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
 import re
 
 def json_ready(element):
@@ -16,6 +17,7 @@ def json_ready(element):
     return element
 
 @never_cache
+@login_required
 def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for='',query_type=3):
     list_kind = int(list_kind)
     query_type = int(query_type)
@@ -77,6 +79,7 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
         return object_list(request,template_name='lists/index.html',queryset=listing, paginate_by=20,page=page,
             extra_context={'app':app,'list_kind':list_kind,'direction':direction,'order_by':ordering,'search_for':search_for,'query_type':query_type,'list_all':0})
 
+@login_required
 def add_to_list(request):
     template = 'lists/add.html'
     error_msg = ''
@@ -135,6 +138,7 @@ def add_to_list(request):
     return render_to_response(template,add_dict)
 
 @never_cache
+@login_required
 def delete_from_list(request, list_kind, item_id):
     item_id = int(item_id)
     list_kind = int(list_kind)
