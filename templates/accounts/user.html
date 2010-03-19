@@ -1,0 +1,50 @@
+{% extends "enhanced-base.html" %}
+{% block headers %}
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+{% endblock headers %}
+{% block submenu %}
+<ul>
+  <li><a id="user-update" href="#">Update account</a></li>
+  <li><a id="filter-add" href="#">Add filter</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+Accounts viewing user
+{% endblock title %}
+{% block heading %}
+Accounts :: viewing user
+{% endblock heading %}
+{% block add_item %}
+<form method="post" action="/accounts/user/">
+{% include "accounts/form.html" %}
+    <div class="buttons">
+    <input id="cancel-button" type="button" value="Cancel" />&nbsp;
+    <input type="submit" value="Update" />
+    </div>
+    <div class="cb">&nbsp;</div>
+</form>
+{% endblock add_item %}
+{% block content %}
+<table class="maillog">
+    <thead>
+    <tr class="header">
+        <td class="first-t">Filter name</td>
+        <td class="first-t">Filter status</td>
+        <td class="first-t">Perform actions</td>
+    </tr>
+    </thead>
+    <tbody>
+        {% for item in filters %}
+        <tr>
+            <td class="first-t"></td>
+            <td class="first-t"></td>
+            <td class="first-t"></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3" class="align_center">No filters configured</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

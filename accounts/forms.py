@@ -1,6 +1,6 @@
 from django import forms
-from django.forms.fields import email_re
-from accounts.models import ACTIVE_CHOICES,TYPE_CHOICES
+from django.forms import ModelForm
+from accounts.models import ACTIVE_CHOICES,TYPE_CHOICES,Users,UserFilters
 
 YES_NO = (
     (0,'YES'),
@@ -17,3 +17,14 @@ class AccountAddForm(forms.Form):
     highspamscore = forms.CharField(initial=0)
     noscan = forms.ChoiceField(choices=YES_NO)
     quarantine_rcpt = forms.CharField()
+
+class UserForm(ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    quarantine_report = forms.BooleanField(required=False)
+    noscan = forms.ChoiceField(choices=YES_NO)
+    class Meta:
+        model = Users
+
+class UserFilterForm(ModelForm):
+    class Meta:
+        model = UserFilters

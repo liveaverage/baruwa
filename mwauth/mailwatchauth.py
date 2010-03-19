@@ -22,7 +22,7 @@ class MailwatchBackend:
                 user = User(username=username)
                 user.set_unusable_password()
                 user.is_staff = False
-                if Users.type == 'A':
+                if login.type == 'A':
                     user.is_superuser = True
                 else:
                     user.is_superuser = False

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 TYPE_CHOICES = (
     ('A','Administrator'),
     ('D','Domain admin'),
@@ -27,8 +28,8 @@ class Users(models.Model):
     fullname = models.CharField(max_length=50)
     type = models.CharField(max_length=1,choices=TYPE_CHOICES, default='U')
     quarantine_report = models.IntegerField(null=True, blank=True)
-    spamscore = models.IntegerField(null=True, blank=True)
-    highspamscore = models.IntegerField(null=True, blank=True)
+    spamscore = models.IntegerField(null=True, blank=True,default=0)
+    highspamscore = models.IntegerField(null=True, blank=True,default=0)
     noscan = models.IntegerField(null=True, blank=True)
     quarantine_rcpt = models.CharField(max_length=60, blank=True)
     class Meta:

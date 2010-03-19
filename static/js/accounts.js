@@ -8,6 +8,7 @@ $(document).ready(function(){
         if($("#add-item").is(':visible')){
             $('#add-item').hide();
             $('#add-sep').hide();
+            $('span .errors').empty();
             $(this).html('Create account').blur();
         }else{
             $('#add-item').show();
@@ -21,6 +22,7 @@ $(document).ready(function(){
             $('#add-sep').hide();
             $('#user-add').html('Create account').blur();
             $("form")[0].reset();
+            $('span.errors').empty();
         }
     });
 });

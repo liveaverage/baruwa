@@ -16,62 +16,7 @@ Accounts
 {% endblock heading %}
 {% block add_item %}
 <form method="post" action="/accounts/">
-    <div class="cb">&nbsp;</div>
-    <div class="row">
-        <label>Username</label>:
-        <span class="form">
-        {{form.username}}
-        </span>
-    </div>
-    <div class="row">
-        <label>Full Names</label>:
-        <span class="form">
-        {{form.fullname}}
-        </span>
-    </div>
-    <div class="row">
-        <label>Password</label>:
-        <span class="form">
-        {{form.password}}
-        </span>
-    </div>
-    <div class="row">
-        <label>Account type</label>:
-        <span class="form">
-        {{form.type}}
-        </span>
-    </div>
-    <div class="row">
-        <label>Quarantine report</label>:
-        <span class="form_short">
-        <span class="small"> Send Daily report ?</small>{{form.quarantine}}
-        </span>
-    </div>
-    <div class="row">
-        <label>Quarantine report recipient</label>:
-        <span class="form">
-        {{form.quarantine_rcpt}}
-        </span>
-    </div>
-    <div class="row">
-        <label>Enable spam scanning</label>:
-        <span class="form">
-        {{form.noscan}}
-        </span>
-    </div>
-    <div class="row">
-        <label>Spam score</label>:
-        <span class="form_short">
-        {{form.spamscore}}<span class="small"> 0 uses the system defaults</span>
-        </span>
-    </div>
-    <div class="row">
-        <label>High Spam score</label>:
-        <span class="form_short">
-        {{form.highspamscore}}<span class="small"> 0 uses the system defaults</span>
-        </span>
-    </div>
-    <div class="cb">&nbsp;</div>
+{% include "accounts/form.html" %}
     <div class="buttons">
     <input id="cancel-button" type="button" value="Cancel" />&nbsp;
     <input type="submit" value="Add" />
@@ -83,27 +28,35 @@ Accounts
 <table class="maillog">
 <thead>
     <tr class="header">
+    <th class="first-t usrlink">&nbsp;</th>
     <th class="first-t">Username</th>
     <th class="first-t">Full names</th>
-    <th class="first-t">Account Type</th>
+    <th class="first-t actype">Account Type</th>
 </tr>
 </thead>
 <tfoot>
     <tr class="header">
     <td colspan="2"></td>
-    <td></td>
+    <td class="paging" colspan="2">
+    {% load paginator %}{% paginator 3 %}
+    </td>
     </tr>
 </tfoot>
 <tbody>
     {% for item in object_list %}
+    {% if forloop.last %}
+    <tr class="last">
+    {% else %}
     <tr>
+    {% endif %}
+        <td class="first-t">[<a href="/accounts/user/{{item.username}}/">&nbsp;&nbsp;</a>]</td>
         <td class="first-t">{{item.username}}</td>
         <td class="first-t">{{item.fullname}}</td>
         <td class="first-t">{{item.get_type_display}}</td>
     </tr>
     {% empty %}
     <tr>
-        <td colspan="3" class="align_center">No user accounts configured</td>
+        <td colspan="4" class="align_center">No user accounts configured</td>
     </tr>
     {% endfor %}
 </tbody>

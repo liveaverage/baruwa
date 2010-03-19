@@ -30,7 +30,7 @@ input[type=radio], input[type=checkbox], input[type=submit], input[type=reset], 
 	font-size: 1em;
 }
 
-input[type=text], input[type=checkbox], select {
+input[type=text], input[type=password], input[type=checkbox], select {
     border:1px solid #ddd;
 }
 
@@ -271,6 +271,19 @@ table.maillog td {
 
 table.maillog td.pagination {
     text-align:center;
+}
+
+table.maillog td.paging {
+    text-align:right;
+    padding-right:10px;
+}
+
+table.maillog th.usrlink {
+    width:20px;
+}
+
+table.maillog th.actype {
+    width:250px;
 }
 
 table.maillog td.equal {
@@ -718,14 +731,26 @@ span.small {
     font-size:10px;
 }
 
-span.form input, select {
+div.row span.form input[type=text] {
     width:194px;
 }
 
-span.form_short input[type=text] {
+div.row span.form select {
+    width:194px;
+}
+
+div.row span.form input[type=password] {
+    width:194px;
+}
+
+span.form_short > input[type=text] {
     width:40px;
 }
 
-span.form_short input[type=checkbox] {
+span.form_short > input[type=checkbox] {
     padding:0;
+}
+
+span.errors {
+    color:red;
 }
