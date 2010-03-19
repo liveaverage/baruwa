@@ -3,8 +3,9 @@ from django.views.generic.list_detail import object_list
 from django.http import HttpResponseRedirect
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
-from accounts.models import Users
-from accounts.forms import UserForm
+from accounts.models import Users,UserFilters
+from accounts.forms import UserForm,StrippedUserForm
+from utilities.decorators import onlysuperusers
 try:
     import hashlib as md5
 except ImportError:
@@ -12,7 +13,9 @@ except ImportError:
 
 @never_cache
 @login_required
+@onlysuperusers
 def index(request,page=1,direction='dsc',order_by='username'):
+    error_msg = ''
     ordering = order_by
     if direction == 'dsc':
         ordering = order_by
@@ -24,12 +27,14 @@ def index(request,page=1,direction='dsc',order_by='username'):
         except:
             error_msg = 'Account creation failed'
         else:
-            m = md5.new(new_user.password)
-            hashv = m.hexdigest()
-            new_user.password = hashv
-            form = UserForm()
-            new_user.save()
-
+            if new_user.password != 'XXXXXXXXXX':
+                m = md5.new(new_user.password)
+                hashv = m.hexdigest()
+                new_user.password = hashv
+                form = UserForm()
+                new_user.save()
+            else:
+                error_msg = 'Please provide a password'
     else:
         form = UserForm()
     user_list = Users.objects.all()
@@ -40,15 +45,33 @@ def index(request,page=1,direction='dsc',order_by='username'):
 @login_required
 def user_account(request,user_name):
     user_object = get_object_or_404(Users,pk=user_name)
+    user_filters = UserFilters.objects.values('filter','active').filter(username__exact=user_name)
     if request.method == 'POST':
-        form = UserForm(request.POST,instance=user_object)
+        if request.user.is_superuser:
+            form = UserForm(request.POST,instance=user_object)
+        else:
+            form = StrippedUserForm(request.POST,instance=user_object)
         try:
-            form.save()
+            updated_user_object = form.save(commit=False)
         except:
             error_msg = 'The account could not be updated'
         else:
+            if updated_user_object.password != 'XXXXXXXXXX':
+                m = md5.new(updated_user_object.password)
+                hashv = m.hexdigest()
+                updated_user_object.password = hashv
+            else:
+                user_object = get_object_or_404(Users,pk=user_name)
+                updated_user_object.password = user_object.password
+            updated_user_object.save()
             user_object = get_object_or_404(Users,pk=user_name)
-            form = UserForm(instance=user_object)
+            if request.user.is_superuser:
+                form = UserForm(instance=user_object)
+            else:
+                form = StrippedUserForm(instance=user_object)
     else:
-        form = UserForm(instance=user_object)
-    return render_to_response('accounts/user.html',{'user':request.user,'form':form})
+        if request.user.is_superuser:
+            form = UserForm(instance=user_object)
+        else:
+            form = StrippedUserForm(instance=user_object)
+    return render_to_response('accounts/user.html',{'user':request.user,'form':form,'filters':user_filters})

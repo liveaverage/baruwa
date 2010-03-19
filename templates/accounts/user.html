@@ -1,6 +1,7 @@
 {% extends "enhanced-base.html" %}
 {% block headers %}
 <script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/user.js"></script>
 {% endblock headers %}
 {% block submenu %}
 <ul>
@@ -15,7 +16,7 @@ Accounts viewing user
 Accounts :: viewing user
 {% endblock heading %}
 {% block add_item %}
-<form method="post" action="/accounts/user/">
+<form method="post" action="/accounts/user/{{user.username}}/">
 {% include "accounts/form.html" %}
     <div class="buttons">
     <input id="cancel-button" type="button" value="Cancel" />&nbsp;
@@ -36,8 +37,8 @@ Accounts :: viewing user
     <tbody>
         {% for item in filters %}
         <tr>
-            <td class="first-t"></td>
-            <td class="first-t"></td>
+            <td class="first-t">{{item.filter}}</td>
+            <td class="first-t">{{item.active}}</td>
             <td class="first-t"></td>
         </tr>
         {% empty %}
