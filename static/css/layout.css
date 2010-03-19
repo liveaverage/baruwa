@@ -135,7 +135,13 @@ div.row label {
 
 div.row span.form {
     float:right;
-    width:730px;
+    width:630px;
+    text-align:left;
+}
+
+div.row span.form_short {
+    float:right;
+    width:630px;
     text-align:left;
 }
 
@@ -148,7 +154,7 @@ div.row span.form ul {
 
 div.buttons {
     text-align:center;
-    width:960px;
+    width:880px;
     background:#eee;
 }
 
@@ -283,7 +289,7 @@ table.maillog td.ordered_by {
 
 table.maillog th {
 	vertical-align: middle;
-	font-weight: normal !important;
+	font-weight: bold !important;
 	border-bottom: 1px solid #ddd;
 	height: 32px !important;
 }
@@ -476,6 +482,44 @@ div.cb {
    padding-top: 16px;
    font: 24px "Lucida Grande", "Trebuchet MS", Tahoma, Arial, sans-serif;
    letter-spacing: -1px;
+   width:430px;
+}
+
+#logo {
+    width:480px;
+    float:left;
+}
+
+#header_links {
+    float:right;
+    /*background:#eee;*/
+    width:440px;
+    padding-left:20px;
+}
+
+#header_links ul {
+    float:right;
+    padding-right:20px;
+    padding-left:0;
+    padding-bottom:0;
+    padding-top:0;
+    margin:0;
+    height:30px;
+}
+
+
+#header_links li {
+    float:left;
+    list-style-type:none;
+    margin-bottom:0;
+    padding-bottom:0;
+    padding-left:0;
+    padding-right:0;
+    padding-top:0;
+    margin-left:8px;
+    margin-right:8px;
+    margin-top:6px;
+    font-size:10px;
 }
 
 #main-wrapper {
@@ -590,7 +634,7 @@ div.cb {
     padding-right:10px;
 }
 
-#content-layout, #add-item {
+#content-layout {
 	width: 960px;
 	margin: 0 auto;
 	border: 1px solid #ddd;
@@ -598,8 +642,13 @@ div.cb {
 }
 
 #add-item {
+	width: 880px;
+	margin: 0 auto;
+	border: 1px solid #ddd;
+	border-bottom: 0 !important;
     background:#ededed;
 	border-bottom: 1px solid #ddd !important;
+    padding-left:80px;
 }
 
 #paginator {
@@ -643,4 +692,40 @@ span.negative {
 span.listings {
     float:right;
     padding-right:10px;
+}
+
+.box {
+    background-color:#EDEDED;
+    border-bottom-color:#E2E2E2;
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    float:left;
+    padding-bottom:20px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:20px;
+}
+
+.field {
+    width:194px;
+}
+
+.small_field {
+    width:60px;
+}
+
+span.small {
+    font-size:10px;
+}
+
+span.form input, select {
+    width:194px;
+}
+
+span.form_short input[type=text] {
+    width:40px;
+}
+
+span.form_short input[type=checkbox] {
+    padding:0;
 }

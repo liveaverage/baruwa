@@ -459,7 +459,6 @@ def d_query(model,filter_list,active_filters=None):
         model = model.filter(q)
     return model
 
-@login_required
 def apply_filter(model,request,active_filters):
     if request.session.get('filter_by', False):
         filter_list = request.session.get('filter_by')
@@ -543,7 +542,7 @@ def index(request):
         return HttpResponse(response, content_type='application/javascript; charset=utf-8')
     else:
         return render_to_response('reports/index.html',
-            {'form':filter_form,'data':data,'errors':errors,'active_filters':active_filters,'saved_filters':saved_filters})
+            {'form':filter_form,'data':data,'errors':errors,'active_filters':active_filters,'saved_filters':saved_filters,'user':request.user})
 
 @login_required
 def rem_filter(request,index_num):
@@ -780,4 +779,4 @@ def report(request,report_kind):
         c.close()
         report_title = "Total messages [ After SMTP ]"
         template = "reports/listing.html"
-    return render_to_response(template, {'pie_data':pie_data,'top_items':data,'report_title':report_title,'active_filters':active_filters})
+    return render_to_response(template, {'pie_data':pie_data,'top_items':data,'report_title':report_title,'active_filters':active_filters,'user':request.user})

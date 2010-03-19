@@ -32,4 +32,4 @@ def index(request):
         c.execute(q)
     row = c.fetchone()
     data = {'total':row[0],'clean':row[1],'virii':row[2],'infected':row[3],'otherinfected':row[4],'spam':row[5],'highspam':row[6]}
-    return render_to_response('status/index.html',{'data':data})
+    return render_to_response('status/index.html',{'data':data,'user':request.user})

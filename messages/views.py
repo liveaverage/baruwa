@@ -82,7 +82,7 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
 def detail(request,message_id,success=0,error_list=None):
     message_details = get_object_or_404(Maillog, id=message_id)
     quarantine_form = QuarantineProcessForm()
-    return render_to_response('messages/detail.html', {'message_details': message_details, 'form': quarantine_form,'error_list':error_list,'succeeded':success})
+    return render_to_response('messages/detail.html', {'message_details': message_details, 'form': quarantine_form,'error_list':error_list,'succeeded':success,'user':request.user})
 
 @login_required
 def process_quarantined_msg(request):

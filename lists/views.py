@@ -134,7 +134,7 @@ def add_to_list(request):
                 html = errorlist(error_list).as_ul()
                 response = simplejson.dumps({'error': html})
                 return HttpResponse(response,mimetype='application/javascript')
-            add_dict = {'form':form}
+            add_dict = {'form':form,'user':request.user}
     return render_to_response(template,add_dict)
 
 @never_cache
