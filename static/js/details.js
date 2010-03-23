@@ -89,6 +89,7 @@ function formSubmission(event){
             }else{
                 $("#quarantine_errors").append(response.html);
                 $("#submit_q_request").removeAttr('disabled');
+                setTimeout(function(){$("#quarantine_errors").empty();},15000);
             }
         },"json");
 }

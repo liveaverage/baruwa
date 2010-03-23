@@ -101,7 +101,7 @@ function lists_from_json(data){
         if(tti.length){
             $('#lists tbody').empty().append(tti.join(''));
         }else{
-            $('#lists tbody').empty().append('<tr class="lists"><td colspan="4" class="lists first-t">No lists found</td></tr>');
+            $('#lists tbody').empty().append('<tr class="lists"><td colspan="4" class="lists align_center">No items at the moment</td></tr>');
         }
         if(rj.order_by == 'id'){
             $('#filterbox').hide('fast');

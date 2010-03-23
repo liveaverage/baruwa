@@ -6,7 +6,9 @@
 {% block submenu %}
 <ul>
   <li><a id="user-update" href="#">Update account</a></li>
+{% if user.is_superuser %}
   <li><a id="filter-add" href="#">Add filter</a></li>
+{% endif %}
 </ul>
 {% endblock submenu %}
 {% block title %}
@@ -16,7 +18,11 @@ Accounts viewing user
 Accounts :: viewing user
 {% endblock heading %}
 {% block add_item %}
+{%if target_user %}
+<form method="post" action="/accounts/user/{{target_user}}/">
+{%else%}
 <form method="post" action="/accounts/user/{{user.username}}/">
+{%endif%}
 {% include "accounts/form.html" %}
     <div class="buttons">
     <input id="cancel-button" type="button" value="Cancel" />&nbsp;

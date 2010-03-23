@@ -10,7 +10,7 @@ from django.views.generic.list_detail import object_list
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from messages.process_mail import *
-from reports.views import apply_filter
+from reports.views import apply_filter,user_filter
 from lists.models import Blacklist,Whitelist
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
@@ -25,6 +25,7 @@ def json_ready(element):
 @login_required
 def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='timestamp'):
     active_filters = []
+    domains = request.session['user_filter']['domains']
     ordering = order_by
     if direction == 'dsc':
         ordering = order_by
@@ -38,17 +39,23 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
                 last_ts = None
         if not last_ts is None and request.is_ajax():
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
-            ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected').filter(timestamp__gt=last_ts)[:50]
+            ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected').filter(timestamp__gt=last_ts)
+            message_list = user_filter(request.user,message_list,domains)
+            message_list = message_list[:50]
         else:
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
-            ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected')[:50]
+            ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected')
+            message_list = user_filter(request.user,message_list,domains)
+            message_list = message_list[:50]
     else:
         if quarantine:
-             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
+            message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
             ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','quarantined','nameinfected').order_by(order_by).filter(quarantined__exact=1)
+            message_list = user_filter(request.user,message_list,domains)
         else:
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
             ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected').order_by(order_by)
+            message_list = user_filter(request.user,message_list,domains)
         message_list = apply_filter(message_list,request,active_filters)
     if request.is_ajax():
         if not list_all:

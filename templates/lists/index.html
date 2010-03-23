@@ -93,8 +93,16 @@ List management
 </div>
 <div class="row">
 <label for="id_to_address">To address</label>:
-<span class="form"><input type="text" name="to_address" id="id_to_address" />&nbsp;&#64;
-<input type="text" name="to_domain" id="id_to_domain" size="24" />&nbsp;
+<span class="form"><input type="text" name="to_address" id="id_to_address" {%if lu %}value="{{lu}}" disabled="disabled"{%endif%} />&nbsp;&#64;
+{% ifnotequal user_type "D" %}
+<input type="text" name="to_domain" id="id_to_domain" size="24"{% if ld %} value="{{ld}}" disabled="disabled"{%endif%} />&nbsp;
+{% else %}
+<select name="to_domain" id="id_to_domain">
+{% for domain in ld %}
+<option value="{{domain}}">{{domain}}</option>
+{% endfor %}
+</select>
+{% endifnotequal %}
 {{ form.to_address.errors }}
 {{ form.to_domain.errors }}
 </span>

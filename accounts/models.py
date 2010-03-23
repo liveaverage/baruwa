@@ -15,6 +15,7 @@ ACTIVE_CHOICES = (
 )
 
 class UserFilters(models.Model):
+    id = models.IntegerField(primary_key=True)
     username = models.CharField(max_length=60)
     filter = models.TextField()
     verify_key = models.CharField(max_length=96)

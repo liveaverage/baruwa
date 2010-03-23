@@ -1,6 +1,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 from django.shortcuts import render_to_response
 from django.views.generic.list_detail import object_list
+from django.db.models import Q
 from lists.models import Blacklist, Whitelist
 from lists.forms import ListAddForm,FilterForm
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -10,6 +11,7 @@ from django.db import IntegrityError
 from django.forms.util import ErrorList as errorlist
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
+from accounts.models import Users
 import re
 
 def json_ready(element):
@@ -20,6 +22,9 @@ def json_ready(element):
 @login_required
 def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for='',query_type=3):
     list_kind = int(list_kind)
+    load_domain = []
+    load_user = ''
+    user_type = 'A'
     query_type = int(query_type)
     if query_type == 3:
         query_type = None
@@ -37,6 +42,29 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
         listing = Whitelist.objects.values('id','to_address','from_address').order_by(order_by)
     elif list_kind == 2:
         listing = Blacklist.objects.values('id','to_address','from_address').order_by(order_by)
+
+    if not request.user.is_superuser:
+        login = Users.objects.get(pk=request.user.username)
+        if login.type == 'D':
+            user_type = 'D'
+            domains = request.session['user_filter']['domains']
+            if domains:
+                q = Q()
+                for domain in domains:
+                    load_domain.append(domain.filter)
+                    #to_add = "@%s" % domain.filter
+                    kw = {'to_address__iendswith':domain.filter}
+                    q = q | Q(**kw)
+                listing = listing.filter(q)
+            else:
+                listing = listing.filter(to_address__iendswith='example.net')
+        if login.type == 'U':
+            user_type = 'U'
+            listing = listing.filter(to_address__exact=request.user.username)
+            try:
+                load_user,load_domain = request.user.username.split('@')
+            except:
+                pass
 
     if request.method == 'POST':
         filter_form = FilterForm(request.POST)
@@ -77,7 +105,8 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
         return HttpResponse(json, mimetype='application/javascript')
     else:
         return object_list(request,template_name='lists/index.html',queryset=listing, paginate_by=20,page=page,
-            extra_context={'app':app,'list_kind':list_kind,'direction':direction,'order_by':ordering,'search_for':search_for,'query_type':query_type,'list_all':0})
+            extra_context={'app':app,'list_kind':list_kind,'direction':direction,'order_by':ordering,'search_for':search_for,'query_type':query_type,'list_all':0,
+            'lu':load_user,'ld':load_domain,'user_type':user_type})
 
 @login_required
 def add_to_list(request):
@@ -96,15 +125,29 @@ def add_to_list(request):
                 to = clean_data['to_domain']
             else:
                 to = clean_data['to_address']
+            if not request.user.is_superuser:
+                login = Users.objects.get(pk=request.user.username)
+                if login is not None:
+                    if login.type == 'D':
+                        domains = request.session['user_filter']['domains']
+                        d = [domain.filter for domain in domains]
+                        if clean_data['to_domain'] not in d:
+                            error_msg = 'You do not have authorization to add filters to the %s domain' % clean_data['to_domain']
+                    if login.type == 'U':
+                        if to != request.user.username:
+                            error_msg = 'You are only authorized to add filters to your email address %s' % request.user.username
+                else:
+                    error_msg = 'Invalid user session please login'
             if int(clean_data['list_type']) == 1:
                 try:
                     b = Blacklist.objects.get(to_address=to,from_address=clean_data['from_address'])
                 except Blacklist.DoesNotExist:
                     wl = Whitelist(to_address=to,from_address=clean_data['from_address'])
-                    try:
-                        wl.save()
-                    except IntegrityError:
-                        error_msg = 'The list item already exists'
+                    if error_msg == '':
+                        try:
+                            wl.save()
+                        except IntegrityError:
+                            error_msg = 'The list item already exists'
                 else:
                     error_msg = '%s is blacklisted, please remove from blacklist before attempting to whitelist' % clean_data['from_address']
             else:
@@ -112,10 +155,11 @@ def add_to_list(request):
                     w = Whitelist(to_address=to,from_address=clean_data['from_address'])
                 except Whitelist.DoesNotExist:    
                     bl = Blacklist(to_address=to,from_address=clean_data['from_address'])
-                    try:
-                        bl.save()
-                    except IntegrityError:
-                        error_msg = 'The list item already exists'
+                    if error_msg == '':
+                        try:
+                            bl.save()
+                        except IntegrityError:
+                            error_msg = 'The list item already exists'
                 else:
                     error_msg = '%s is whitelisted, please remove from whitelist before attempting to blacklist' % clean_data['from_address']
             if request.is_ajax():
