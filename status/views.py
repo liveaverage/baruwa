@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django.db import connection
-from reports.views import r_query
+from reports.views import r_query,raw_user_filter
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 
@@ -23,13 +23,17 @@ def index(request):
     AND (otherinfected=0 OR otherinfected IS NULL) THEN 1 ELSE 0 END) AS highspam,
     SUM(size) AS size FROM maillog WHERE date = CURRENT_DATE()
     """
-    if request.session.get('filter_by', False):
-        filter_list = request.session.get('filter_by')
-        s = r_query(filter_list,active_filters)
-        #c.execute(q + " AND " + s[0] )
+    #if request.session.get('filter_by', False):
+    #    filter_list = request.session.get('filter_by')
+    #    s = r_query(filter_list,active_filters)
+    if request.user.is_superuser:
         c.execute(q)
     else:
-        c.execute(q)
+        domains = request.session['user_filter']['domains']
+        sql = raw_user_filter(request.user,domains)
+        c.execute(q+" AND "+sql)
+    #else:
+    #    c.execute(q)
     row = c.fetchone()
     data = {'total':row[0],'clean':row[1],'virii':row[2],'infected':row[3],'otherinfected':row[4],'spam':row[5],'highspam':row[6]}
     return render_to_response('status/index.html',{'data':data,'user':request.user})
