@@ -30,5 +30,6 @@ cp -a ../../release/dojo/dijit/themes/tundra /Users/andrew/Documents/devel/pytho
 cp ../../release/dojo/dojo/resources/blank.gif /Users/andrew/Documents/devel/python/baruwa/static/js/dojo/resources/
 
 alter table saved_filters add column id int not null auto_increment primary key first;
+alter table user_filters add column id int not null auto_increment primary key first;
 grant alter on mailscanner.* to hotsexygirl;
 grant index on mailscanner.* to hotsexygirl;
