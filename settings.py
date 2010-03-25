@@ -1,7 +1,7 @@
 # Django settings for baruwa project.
 # vim: ai ts=4 sts=4 et sw=4
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 import os
