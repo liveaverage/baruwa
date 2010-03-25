@@ -44,22 +44,19 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
         listing = Blacklist.objects.values('id','to_address','from_address').order_by(order_by)
 
     if not request.user.is_superuser:
-        login = Users.objects.get(pk=request.user.username)
-        if login.type == 'D':
-            user_type = 'D'
+        user_type = request.session['user_filter']['user_type']
+        if user_type == 'D':
             domains = request.session['user_filter']['domains']
             if domains:
                 q = Q()
                 for domain in domains:
                     load_domain.append(domain.filter)
-                    #to_add = "@%s" % domain.filter
                     kw = {'to_address__iendswith':domain.filter}
                     q = q | Q(**kw)
                 listing = listing.filter(q)
             else:
                 listing = listing.filter(to_address__iendswith='example.net')
-        if login.type == 'U':
-            user_type = 'U'
+        if user_type == 'U':
             listing = listing.filter(to_address__exact=request.user.username)
             try:
                 load_user,load_domain = request.user.username.split('@')
@@ -126,18 +123,15 @@ def add_to_list(request):
             else:
                 to = clean_data['to_address']
             if not request.user.is_superuser:
-                login = Users.objects.get(pk=request.user.username)
-                if login is not None:
-                    if login.type == 'D':
-                        domains = request.session['user_filter']['domains']
-                        d = [domain.filter for domain in domains]
-                        if clean_data['to_domain'] not in d:
-                            error_msg = 'You do not have authorization to add filters to the %s domain' % clean_data['to_domain']
-                    if login.type == 'U':
-                        if to != request.user.username:
-                            error_msg = 'You are only authorized to add filters to your email address %s' % request.user.username
-                else:
-                    error_msg = 'Invalid user session please login'
+                user_type = request.session['user_filter']['user_type']
+                if user_type == 'D':
+                    domains = request.session['user_filter']['domains']
+                    d = [domain.filter for domain in domains]
+                    if clean_data['to_domain'] not in d:
+                        error_msg = 'You do not have authorization to add filters to the %s domain' % clean_data['to_domain']
+                if user_type == 'U':
+                    if to != request.user.username:
+                        error_msg = 'You are only authorized to add filters to your email address %s' % request.user.username
             if int(clean_data['list_type']) == 1:
                 try:
                     b = Blacklist.objects.get(to_address=to,from_address=clean_data['from_address'])
@@ -165,7 +159,6 @@ def add_to_list(request):
             if request.is_ajax():
                 if error_msg == '':
                     request.method = 'GET'
-                    #request.META['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
                     return index(request,int(clean_data['list_type']),1,'dsc','id','',3)
                 else:
                     json = simplejson.dumps({'items':[],'paginator':[],'error':error_msg})
@@ -197,7 +190,21 @@ def delete_from_list(request, list_kind, item_id):
             else:
                 raise Http404()
         else:
-            w.delete()
+            if not request.user.is_superuser:
+                user_type = request.session['user_filter']['user_type']
+                if user_type == 'D':
+                    domains = request.session['user_filter']['domains']
+                    d = [domain.filter for domain in domains]
+                    dom = w.to_address
+                    if '@' in dom:
+                        dom = dom.split('@')[1]
+                    if dom not in d:
+                        error_msg = 'The list item does not belong to you'
+                if user_type == 'U':
+                    if request.user.username != w.to_address:
+                        error_msg = 'The list item does not belong to you'
+            if error_msg == '':
+                w.delete()
     elif list_kind == 2:
         try:
             b = Blacklist.objects.get(pk=item_id)
@@ -208,7 +215,21 @@ def delete_from_list(request, list_kind, item_id):
             else:
                 raise Http404()
         else:
-            b.delete()
+            if not request.user.is_superuser:
+                user_type = request.session['user_filter']['user_type']
+                if user_type == 'D':
+                    domains = request.session['user_filter']['domains']
+                    d = [domain.filter for domain in domains]
+                    dom = b.to_address
+                    if '@' in dom:
+                        dom = dom.split('@')[1]
+                    if dom not in d:
+                        error_msg = 'The list item does not belong to you'
+                if user_type == 'U':
+                    if request.user.username != b.to_address:
+                        error_msg = 'The list item does not belong to you'
+            if error_msg == '':
+                b.delete()
     if request.is_ajax():
         if error_msg == '':
             page = 1

@@ -10,10 +10,11 @@ from django.views.generic.list_detail import object_list
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from messages.process_mail import *
-from reports.views import apply_filter,user_filter
+from reports.views import apply_filter,user_filter,object_user_filter
 from lists.models import Blacklist,Whitelist
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 import re
 
 def json_ready(element):
@@ -26,6 +27,7 @@ def json_ready(element):
 def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='timestamp'):
     active_filters = []
     domains = request.session['user_filter']['domains']
+    user_type = request.session['user_filter']['user_type']
     ordering = order_by
     if direction == 'dsc':
         ordering = order_by
@@ -40,22 +42,22 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
         if not last_ts is None and request.is_ajax():
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
             ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected').filter(timestamp__gt=last_ts)
-            message_list = user_filter(request.user,message_list,domains)
+            message_list = user_filter(request.user,message_list,domains,user_type)
             message_list = message_list[:50]
         else:
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
             ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected')
-            message_list = user_filter(request.user,message_list,domains)
+            message_list = user_filter(request.user,message_list,domains,user_type)
             message_list = message_list[:50]
     else:
         if quarantine:
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
             ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','quarantined','nameinfected').order_by(order_by).filter(quarantined__exact=1)
-            message_list = user_filter(request.user,message_list,domains)
+            message_list = user_filter(request.user,message_list,domains,user_type)
         else:
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
             ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected').order_by(order_by)
-            message_list = user_filter(request.user,message_list,domains)
+            message_list = user_filter(request.user,message_list,domains,user_type)
         message_list = apply_filter(message_list,request,active_filters)
     if request.is_ajax():
         if not list_all:
@@ -87,7 +89,19 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
 @never_cache
 @login_required
 def detail(request,message_id,success=0,error_list=None):
-    message_details = get_object_or_404(Maillog, id=message_id)
+    domains = []
+    if request.user.is_superuser:
+        message_details = get_object_or_404(Maillog, id=message_id)
+    else:
+        user_type = request.session['user_filter']['user_type']
+        if user_type == 'D':
+            domains = request.session['user_filter']['domains']
+        q = object_user_filter(request.user,user_type,domains)
+        q = Q(id__exact = message_id) & q
+        message_details = list(Maillog.objects.filter(q))
+        if not message_details:
+            raise Http404
+        message_details = message_details[0]
     quarantine_form = QuarantineProcessForm()
     return render_to_response('messages/detail.html', {'message_details': message_details, 'form': quarantine_form,'error_list':error_list,'succeeded':success,'user':request.user})
 
@@ -96,15 +110,21 @@ def process_quarantined_msg(request):
     html = {}
     learn_as = ""
     error_list = None
+    domains = []
     form = QuarantineProcessForm(request.POST)
     if form.is_valid():
         id = form.cleaned_data['message_id']
-        try:
-            m = Maillog.objects.get(pk=id)
-        except Maillog.DoesNotExist:
+        user_type = request.session['user_filter']['user_type']
+        if user_type == 'D':
+            domains = request.session['user_filter']['domains']
+        q = object_user_filter(request.user,user_type,domains)
+        q = Q(id__exact = id) & q
+        m = list(Maillog.objects.filter(q))
+        if not m:
             html = 'the message id does not exist'
             response = simplejson.dumps({'success':'False', 'html': html})
         else:
+            m = m[0]
             success = "True"
             qdir = get_config_option('Quarantine Dir')
             date = "%s" % m.date
@@ -160,6 +180,8 @@ def process_quarantined_msg(request):
                             pass
                         else:
                             fail=False
+                            m.quarantined = 0
+                            m.save()
                         template = "messages/delete.html"
                         html = render_to_string(template, {'id': m.id,'failure':fail})
             else:
@@ -187,7 +209,19 @@ def process_quarantined_msg(request):
 def preview(request, message_id):
     import email
     message = {}
-    message_object = get_object_or_404(Maillog, id=message_id)
+    domains = []
+    if request.user.is_superuser:
+        message_object = get_object_or_404(Maillog, id=message_id)
+    else:
+        user_type = request.session['user_filter']['user_type']
+        if user_type == 'D':
+            domains = request.session['user_filter']['domains']
+        q = object_user_filter(request.user,user_type,domains)
+        q = Q(id__exact = message_id) & q
+        message_object = list(Maillog.objects.filter(q))
+        if not message_object:
+            raise Http404
+        message_object = message_object[0]
     qdir = get_config_option('Quarantine Dir')
     date = "%s" % message_object.date
     date = date.replace('-', '')
@@ -200,19 +234,25 @@ def preview(request, message_id):
         msg = email.message_from_file(fp)
         fp.close()
         message = parse_email(msg)
-    return render_to_response('messages/preview.html', {'message':message,'message_id':message_object.id})
+    return render_to_response('messages/preview.html', {'message':message,'message_id':message_object.id,'user':request.user})
 
 @never_cache
 @login_required
 def blacklist(request,message_id):
     success = 'True'
-    try:
-        message = Maillog.objects.get(pk=message_id)
-    except Maillog.DoesNotExist:
+    domains = []
+    user_type = request.session['user_filter']['user_type']
+    if user_type == 'D':
+        domains = request.session['user_filter']['domains']
+    q = object_user_filter(request.user,user_type,domains)
+    q = Q(id__exact = message_id) & q
+    message = list(Maillog.objects.filter(q))
+    if not message:
         html = 'Message with message id %s does not exist' % message_id
         success = 'False'
         pass
     else:
+        message = message[0]
         try:
             bl = Blacklist.objects.get(to_address__iexact=message.to_address,from_address__iexact=message.from_address)
         except Blacklist.DoesNotExist:
@@ -244,13 +284,19 @@ def blacklist(request,message_id):
 @login_required
 def whitelist(request,message_id):
     success = 'True'
-    try:
-        message = Maillog.objects.get(pk=message_id)
-    except Maillog.DoesNotExist:
+    domains = []
+    user_type = request.session['user_filter']['user_type']
+    if user_type == 'D':
+        domains = request.session['user_filter']['domains']
+    q = object_user_filter(request.user,user_type,domains)
+    q = Q(id__exact = message_id) & q
+    message = list(Maillog.objects.filter(q))
+    if not message:
         html = 'Message with message id %s does not exist' % message_id
         success = 'False'
         pass
     else:
+        message = message[0]
         try:
             bl = Whitelist.objects.get(to_address__iexact=message.to_address,from_address__iexact=message.from_address)
         except Whitelist.DoesNotExist:
