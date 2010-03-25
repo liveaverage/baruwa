@@ -132,9 +132,10 @@ def add_to_list(request):
                 if user_type == 'U':
                     if to != request.user.username:
                         error_msg = 'You are only authorized to add filters to your email address %s' % request.user.username
+            kwargs = {'to_address':to,'from_address':from_address=clean_data['from_address']}
             if int(clean_data['list_type']) == 1:
                 try:
-                    b = Blacklist.objects.get(to_address=to,from_address=clean_data['from_address'])
+                    b = Blacklist.objects.get(**kwargs)
                 except Blacklist.DoesNotExist:
                     wl = Whitelist(to_address=to,from_address=clean_data['from_address'])
                     if error_msg == '':
@@ -146,7 +147,7 @@ def add_to_list(request):
                     error_msg = '%s is blacklisted, please remove from blacklist before attempting to whitelist' % clean_data['from_address']
             else:
                 try:
-                    w = Whitelist(to_address=to,from_address=clean_data['from_address'])
+                    w = Whitelist.objects.get(**kwargs)
                 except Whitelist.DoesNotExist:    
                     bl = Blacklist(to_address=to,from_address=clean_data['from_address'])
                     if error_msg == '':
