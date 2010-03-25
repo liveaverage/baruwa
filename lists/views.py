@@ -132,7 +132,7 @@ def add_to_list(request):
                 if user_type == 'U':
                     if to != request.user.username:
                         error_msg = 'You are only authorized to add filters to your email address %s' % request.user.username
-            kwargs = {'to_address':to,'from_address':from_address=clean_data['from_address']}
+            kwargs = {'to_address':to,'from_address':clean_data['from_address']}
             if int(clean_data['list_type']) == 1:
                 try:
                     b = Blacklist.objects.get(**kwargs)
