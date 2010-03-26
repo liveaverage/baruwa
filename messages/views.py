@@ -166,11 +166,11 @@ def process_quarantined_msg(request):
                         m.isfn = 0
                     status = sa_learn(file_name, learn_as)
                     template = "messages/salearn.html"
-                    if status.success == True:
-                        html = render_to_string(template, {'id': m.id,'msg':status.output,'success':status.success})
+                    if status['success'] == True:
+                        html = render_to_string(template, {'id': m.id,'msg':status['output'],'success':status['success']})
                         m.save()
                     else:
-                        html = render_to_string(template, {'id': m.id,'msg':status.errormsg,'success':status.success})
+                        html = render_to_string(template, {'id': m.id,'msg':status['errormsg'],'success':status['success']})
                 if form.cleaned_data['todelete']:
                     import os
                     if os.path.exists(file_name):

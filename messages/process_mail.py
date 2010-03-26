@@ -92,7 +92,8 @@ def release_mail(mail_path, to_addr, from_addr):
     return True
 
 def sa_learn(mail_path, learn_as):
-    SA_LEARN = '/usr/bin/sa-learn --%s --file %s' % (learn_as, mail_path)
+    learn = "--%s" % learn_as
+    SA_LEARN = ['/usr/bin/sa-learn',learn,mail_path]
     LEARN_OPTS = ('spam','ham','forget')
 
     if not learn_as in LEARN_OPTS:
