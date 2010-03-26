@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('status.views',
+urlpatterns = patterns('baruwa.status.views',
     (r'^$', 'index'),
 )

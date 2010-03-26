@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('reports.views',
+urlpatterns = patterns('baruwa.reports.views',
     (r'^$', 'index'),
     #(r'^(?P<report_type>(s|r))/(?P<report_field>(e|d))/(?P<report_order>(q|v))/$','report'),
     #(r'^(?P<report_type>(a))/(?P<report_field>(h|m|v))/$','report',{'report_order':None}),

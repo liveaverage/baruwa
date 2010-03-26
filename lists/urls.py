@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('lists.views',
+urlpatterns = patterns('baruwa.lists.views',
     (r'^$', 'index'),
     (r'^(?P<list_kind>([1-2]))/$', 'index'),
     (r'^(?P<list_kind>([1-2]))/(?P<page>([0-9]+|last))/$', 'index'),

@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('messages.views',
+urlpatterns = patterns('baruwa.messages.views',
     (r'^$', 'index'),
     (r'^full/$', 'index', {'list_all': 1}),
     (r'^full/(?P<direction>(dsc|asc))/(?P<order_by>(timestamp|from_address|to_address|subject|size|sascore))/$', 
