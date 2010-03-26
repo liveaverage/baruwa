@@ -2,8 +2,8 @@
 from django.shortcuts import render_to_response
 from django.views.generic.list_detail import object_list
 from django.db.models import Q
-from lists.models import Blacklist, Whitelist
-from lists.forms import ListAddForm,FilterForm
+from baruwa.lists.models import Blacklist, Whitelist
+from baruwa.lists.forms import ListAddForm,FilterForm
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.paginator import Paginator
 from django.utils import simplejson
@@ -11,7 +11,7 @@ from django.db import IntegrityError
 from django.forms.util import ErrorList as errorlist
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
-from accounts.models import Users
+from baruwa.accounts.models import Users
 import re
 
 def json_ready(element):

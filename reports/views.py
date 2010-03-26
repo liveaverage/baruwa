@@ -2,15 +2,15 @@ from django.shortcuts import render_to_response
 from django.db.models import Count, Sum, Max, Min, Q
 from django.db import connection
 from django.utils import simplejson
-from messages.models import Maillog
-from reports.models import SavedFilters
-from reports.forms import FilterForm,FILTER_ITEMS,FILTER_BY
-from messages.templatetags.messages_extras import tds_get_rules
+from baruwa.messages.models import Maillog
+from baruwa.reports.models import SavedFilters
+from baruwa.reports.forms import FilterForm,FILTER_ITEMS,FILTER_BY
+from baruwa.messages.templatetags.messages_extras import tds_get_rules
 from django.forms.util import ErrorList as errorlist
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
-from accounts.models import Users,UserFilters
+from baruwa.accounts.models import Users,UserFilters
 
 def to_dict(tuple_list):
     d = {}

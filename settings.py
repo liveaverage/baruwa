@@ -70,7 +70,7 @@ MIDDLEWARE_CLASSES = (
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'baruwa.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -84,15 +84,14 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     #'django.contrib.sites',
-    'messages',
-    'lists',
-    'reports',
-    'mwauth',
-    'debug_toolbar',
+    'baruwa.messages',
+    'baruwa.lists',
+    'baruwa.reports',
+    'baruwa.mwauth',
 )
 
 AUTHENTICATION_BACKENDS = (
-    'mwauth.mailwatchauth.MailwatchBackend',
+    'baruwa.mwauth.mailwatchauth.MailwatchBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from accounts.models import Users,UserFilters
+from baruwa.accounts.models import Users,UserFilters
 try:
     import hashlib as md5
 except ImportError:

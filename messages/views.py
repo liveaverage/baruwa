@@ -1,7 +1,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 from django.shortcuts import render_to_response,get_object_or_404
-from messages.models import Maillog
-from messages.forms import QuarantineProcessForm
+from baruwa.messages.models import Maillog
+from baruwa.messages.forms import QuarantineProcessForm
 from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.http import HttpResponse,Http404,HttpResponseRedirect
@@ -9,9 +9,9 @@ from django.forms.util import ErrorList as errorlist
 from django.views.generic.list_detail import object_list
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
-from messages.process_mail import *
-from reports.views import apply_filter,user_filter,object_user_filter
-from lists.models import Blacklist,Whitelist
+from baruwa.messages.process_mail import *
+from baruwa.reports.views import apply_filter,user_filter,object_user_filter
+from baruwa.lists.models import Blacklist,Whitelist
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q

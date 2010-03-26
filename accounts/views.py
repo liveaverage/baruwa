@@ -3,10 +3,10 @@ from django.views.generic.list_detail import object_list
 from django.http import HttpResponseRedirect,HttpResponseForbidden,HttpResponseBadRequest
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
-from accounts.models import Users,UserFilters
-from accounts.forms import UserForm,StrippedUserForm
-from reports.views import set_user_filter
-from utilities.decorators import onlysuperusers
+from baruwa.accounts.models import Users,UserFilters
+from baruwa.accounts.forms import UserForm,StrippedUserForm
+from baruwa.reports.views import set_user_filter
+from baruwa.utilities.decorators import onlysuperusers
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm

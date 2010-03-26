@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.util import ErrorList
 from django.forms import ModelForm
-from accounts.models import ACTIVE_CHOICES,TYPE_CHOICES,Users,UserFilters
+from baruwa.accounts.models import ACTIVE_CHOICES,TYPE_CHOICES,Users,UserFilters
 
 YES_NO = (
     (0,'YES'),

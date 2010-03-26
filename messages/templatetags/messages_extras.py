@@ -5,8 +5,8 @@ from django import template
 from django.template.defaultfilters import stringfilter,wordwrap,linebreaksbr
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
-from messages.models import SaRules
-from messages.process_mail import get_config_option,clean_regex
+from baruwa.messages.models import SaRules
+from baruwa.messages.process_mail import get_config_option,clean_regex
 
 register = template.Library()
 

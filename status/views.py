@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django.db import connection
-from reports.views import r_query,raw_user_filter
+from baruwa.reports.views import r_query,raw_user_filter
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 
