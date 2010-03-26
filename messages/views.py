@@ -133,14 +133,14 @@ def process_quarantined_msg(request):
             if not file_name is None:
                 if form.cleaned_data['release']:
                     fail=False
-                if form.cleaned_data['use_alt']:
-                    to_addr = form.cleaned_data['altrecipients']
-                else:
-                    to_addr = m.to_address
-                    to_addr = to_addr.split(',')
-                if not release_mail(file_name,to_addr,m.from_address):
-                    fail=True
-                    success = "False"
+                    if form.cleaned_data['use_alt']:
+                        to_addr = form.cleaned_data['altrecipients']
+                    else:
+                        to_addr = m.to_address
+                        to_addr = to_addr.split(',')
+                    if not release_mail(file_name,to_addr,m.from_address):
+                        fail=True
+                        success = "False"
                     template = "messages/released.html"
                     html = render_to_string(template, {'id': m.id,'addrs':to_addr,'failure':fail})
                 if form.cleaned_data['salearn']:
