@@ -1,3 +1,4 @@
+# vim: ai ts=4 sts=4 et sw=4
 from django.shortcuts import render_to_response,get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.http import HttpResponseRedirect,HttpResponseForbidden,HttpResponseBadRequest

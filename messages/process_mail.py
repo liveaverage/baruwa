@@ -1,3 +1,4 @@
+# vim: ai ts=4 sts=4 et sw=4
 import email,smtplib,os,re
 from subprocess import Popen, PIPE
 from email.Header import decode_header
@@ -34,12 +35,18 @@ def parse_email(msg):
         elif part.get_content_type() == "text/plain":
             if body is None:
                 body = ""
+            try:
                 body += unicode(part.get_payload(decode=True),part.get_content_charset(),'replace').encode('utf8','replace')
+            except:
+                pass
         elif part.get_content_type() == "text/html":
             has_html = True
             if html is None:
                 html = ""
+            try:
                 html += unicode(part.get_payload(decode=True),part.get_content_charset(),'replace').encode('utf8','replace')
+            except:
+                pass
     return {
         'subject' : get_header(msg.get('Subject')),
         'to' : get_header(msg.get('To')),
