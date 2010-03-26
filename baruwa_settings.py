@@ -1,4 +1,4 @@
 # Baruwa only setting
 #
 
-MS_CONFIG = '/Users/andrew/Downloads/MailScanner/MailScanner.conf'
+MS_CONFIG = '/etc/MailScanner/MailScanner.conf'
