@@ -1,7 +1,7 @@
 # Django settings for baruwa project.
 # vim: ai ts=4 sts=4 et sw=4
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 import os
@@ -88,6 +88,7 @@ INSTALLED_APPS = (
     'baruwa.lists',
     'baruwa.reports',
     'baruwa.mwauth',
+    #'debug_toolbar',
 )
 
 AUTHENTICATION_BACKENDS = (

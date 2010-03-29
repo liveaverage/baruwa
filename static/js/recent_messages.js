@@ -42,15 +42,19 @@ function do_table_sort(){
             }
 	    }
     })
-    .ajaxError(function(){
-	    $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
-        $('#my-spinner').empty();
-	    ax_error = true;
-        ax_in_progress = false;
-        if($("#in-progress").is(':visible')){
-            $("#in-progress").hide();
+    .ajaxError(function(event, request, settings){
+        if(request.status == 200){
+            location.href=settings.url;
+        }else{
+	        $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
+            $('#my-spinner').empty();
+	        ax_error = true;
+            ax_in_progress = false;
+            if($("#in-progress").is(':visible')){
+                $("#in-progress").hide();
+            }
+            setTimeout(build_table_from_json,60000);
         }
-        setTimeout(build_table_from_json,60000);
     });
     $('a').bind('click',prevent_interupt_refresh);
 }

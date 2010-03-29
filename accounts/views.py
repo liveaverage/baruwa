@@ -55,8 +55,8 @@ def user_account(request,user_name=None):
         if login:
             if login.type == 'D':
                 if login.username != user_name:
-                    domains = request.session['user_filter']['domains']
-                    d = [domain.filter for domain in domains]
+                    addresses = request.session['user_filter']['filter_addresses']
+                    d = [domain.filter for domain in addresses]
                     try:
                         ld = user_name.split('@')[1]
                     except:

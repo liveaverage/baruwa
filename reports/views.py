@@ -19,44 +19,52 @@ def to_dict(tuple_list):
     return d
 
 def set_user_filter(user,request):
-    domains = []
+    filter_addresses = []
     login = Users.objects.get(pk=user.username)
     if not user.is_superuser:
-        if login.type == 'D':
-            domains = UserFilters.objects.filter(username=user.username).exclude(active='N')
-    request.session['user_filter'] = {'user_type':login.type,'domains':domains}
+        #if login.type == 'D':
+        filter_addresses = UserFilters.objects.filter(username=user.username).exclude(active='N')
+    request.session['user_filter'] = {'user_type':login.type,'filter_addresses':filter_addresses}
 
-def raw_user_filter(user,user_type,domains):
+def raw_user_filter(user,user_type,addresses):
     dsql = []
+    esql = []
     if not user.is_superuser:
-        #login = Users.objects.get(pk=user.username)
         if user_type == 'D':
-            if domains:
-                for domain in domains:
+            if addresses:
+                for domain in addresses:
                     dsql.append('to_domain="'+domain.filter+'"')
                 sql = ' OR '.join(dsql)
         if user_type == 'U':
-            sql = 'to_address="%s"' % user.username
+            if addresses:
+                for email in addresses:
+                    esql.append('to_address="'+email.filter+'"')
+                esql.append('to_address="'+user.username+'"')
+                sql = ' OR '.join(esql)
+            else:
+                sql = 'to_address="%s"' % user.username
         return '(' + sql +')'
 
-def object_user_filter(user,user_type,domains):
+def object_user_filter(user,user_type,addresses):
     q = Q()
     if user_type == 'D':
-        for domain in domains:
+        for domain in addresses:
             kw = {'to_domain__exact':domain.filter}
             q = q | Q(**kw)
     if user_type == 'U':
         kw = {'to_address__exact':user.username}
         q = Q(**kw)
+        for email in addresses:
+            kw = {'to_address__exact':email.filter}
+            q = q | Q(**kw)
     return q
 
-def user_filter(user,model,domains,user_type):
+def user_filter(user,model,addresses,user_type):
     if not user.is_superuser:
-        #login = Users.objects.get(pk=user.username)
+        q = Q()
         if user_type == 'D':
-            q = Q()
-            if domains:
-                for domain in domains:
+            if addresses:
+                for domain in addresses:
                     kw = {'to_domain__exact':domain.filter}
                     q = q | Q(**kw)
                     #account for imbound scanning only
@@ -67,7 +75,15 @@ def user_filter(user,model,domains,user_type):
                 model = model.filter(to_domain='example.net')
         if user_type == 'U':
             #model = model.filter(Q(to_address__exact=user.username)|Q(from_address__exact=user.username))
-            model = model.filter(to_address__exact=user.username)
+            if addresses:
+                for email in addresses:
+                    kw = {'to_address__exact':email.filter}
+                    q = q | Q(**kw)
+                kw = {'to_address__exact':user.username}
+                q = q | Q(**kw)
+                model = model.filter(q)
+            else:
+                model = model.filter(to_address__exact=user.username)
     return model
 
 def r_query(filter_list,active_filters=None):
@@ -551,9 +567,9 @@ def index(request):
                         success = "False"
                         errors = "The requested filter is already being used"
                 filter_list = request.session.get('filter_by')
-                domains = request.session['user_filter']['domains']
+                addresses = request.session['user_filter']['filter_addresses']
                 user_type = request.session['user_filter']['user_type']
-                data = user_filter(request.user,data,domains,user_type)
+                data = user_filter(request.user,data,addresses,user_type)
                 data = d_query(data,filter_list,active_filters)
             else:
                 success = "False"
@@ -561,9 +577,9 @@ def index(request):
                 errors = errorlist(error_list).as_ul()
                 if request.session.get('filter_by', False):
                     filter_list = request.session.get('filter_by')
-                    domains = request.session['user_filter']['domains']
+                    addresses = request.session['user_filter']['filter_addresses']
                     user_type = request.session['user_filter']['user_type']
-                    data = user_filter(request.user,data,domains,user_type)
+                    data = user_filter(request.user,data,addresses,user_type)
                     data = d_query(data,filter_list,active_filters)
         else:
             filter_form = FilterForm()
@@ -572,16 +588,16 @@ def index(request):
         filter_form = FilterForm()
         if request.session.get('filter_by', False):
             filter_list = request.session.get('filter_by')
-            domains = request.session['user_filter']['domains']
+            addresses = request.session['user_filter']['filter_addresses']
             user_type = request.session['user_filter']['user_type']
-            data = user_filter(request.user,data,domains,user_type)
+            data = user_filter(request.user,data,addresses,user_type)
             data = d_query(data,filter_list,active_filters)
         else:
             request.session.set_test_cookie()
     if not filter_list:
-        domains = request.session['user_filter']['domains']
+        addresses = request.session['user_filter']['filter_addresses']
         user_type = request.session['user_filter']['user_type']
-        data = user_filter(request.user,data,domains,user_type)
+        data = user_filter(request.user,data,addresses,user_type)
     data = data.aggregate(count=Count('timestamp'),newest=Max('timestamp'),oldest=Min('timestamp'))
     if filters.count() > 0:
         filter_items = to_dict(list(FILTER_ITEMS))
@@ -722,12 +738,12 @@ def report(request,report_kind):
     report_kind = int(report_kind)
     template = "reports/piereport.html"
     active_filters = []
-    domains = request.session['user_filter']['domains']
+    addresses = request.session['user_filter']['filter_addresses']
     user_type = request.session['user_filter']['user_type']
     if report_kind == 1:
         data = Maillog.objects.values('from_address').\
         exclude(from_address = '').annotate(num_count=Count('from_address'),size=Sum('size')).order_by('-num_count')
-        data = user_filter(request.user,data,domains,user_type)
+        data = user_filter(request.user,data,addresses,user_type)
         data = apply_filter(data,request,active_filters)
         data = data[:10]
         pie_data = pack_data(data,'from_address','num_count')
@@ -735,7 +751,7 @@ def report(request,report_kind):
     elif report_kind == 2:
         data = Maillog.objects.values('from_address').\
         exclude(from_address = '').annotate(num_count=Count('from_address'),size=Sum('size')).order_by('-size')
-        data = user_filter(request.user,data,domains,user_type)
+        data = user_filter(request.user,data,addresses,user_type)
         data = apply_filter(data,request,active_filters)
         data = data[:10]
         pie_data = pack_data(data,'from_address','size')
@@ -743,7 +759,7 @@ def report(request,report_kind):
     elif report_kind == 3:
         data = Maillog.objects.values('from_domain').filter(from_domain__isnull=False).\
         exclude(from_domain = '').annotate(num_count=Count('from_domain'),size=Sum('size')).order_by('-num_count')
-        data = user_filter(request.user,data,domains,user_type)
+        data = user_filter(request.user,data,addresses,user_type)
         data = apply_filter(data,request,active_filters)
         data = data[:10]
         pie_data = pack_data(data,'from_domain','num_count')
@@ -751,7 +767,7 @@ def report(request,report_kind):
     elif report_kind == 4:
         data = Maillog.objects.values('from_domain').filter(from_domain__isnull=False).\
         exclude(from_domain = '').annotate(num_count=Count('from_domain'),size=Sum('size')).order_by('-size')
-        data = user_filter(request.user,data,domains,user_type)
+        data = user_filter(request.user,data,addresses,user_type)
         data = apply_filter(data,request,active_filters)
         data = data[:10]
         pie_data = pack_data(data,'from_domain','size')
@@ -759,7 +775,7 @@ def report(request,report_kind):
     elif report_kind == 5:
         data = Maillog.objects.values('to_address').\
         exclude(to_address = '').annotate(num_count=Count('to_address'),size=Sum('size')).order_by('-num_count')
-        data = user_filter(request.user,data,domains,user_type)
+        data = user_filter(request.user,data,addresses,user_type)
         data = apply_filter(data,request,active_filters)
         data = data[:10]
         pie_data = pack_data(data,'to_address','num_count')
@@ -767,7 +783,7 @@ def report(request,report_kind):
     elif report_kind == 6:
         data = Maillog.objects.values('to_address').\
         exclude(to_address = '').annotate(num_count=Count('to_address'),size=Sum('size')).order_by('-size')
-        data = user_filter(request.user,data,domains,user_type)
+        data = user_filter(request.user,data,addresses,user_type)
         data = apply_filter(data,request,active_filters)
         data = data[:10]
         pie_data = pack_data(data,'to_address','size')
@@ -775,7 +791,7 @@ def report(request,report_kind):
     elif report_kind == 7:
         data = Maillog.objects.values('to_domain').filter(to_domain__isnull=False).\
         exclude(to_domain = '').annotate(num_count=Count('to_domain'),size=Sum('size')).order_by('-num_count')
-        data = user_filter(request.user,data,domains,user_type)
+        data = user_filter(request.user,data,addresses,user_type)
         data = apply_filter(data,request,active_filters)
         data = data[:10]
         pie_data = pack_data(data,'to_domain','num_count')
@@ -783,7 +799,7 @@ def report(request,report_kind):
     elif report_kind == 8:
         data = Maillog.objects.values('to_domain').filter(to_domain__isnull=False).exclude(to_domain = '').annotate(num_count=Count('to_domain'),
             size=Sum('size')).order_by('-size') 
-        data = user_filter(request.user,data,domains,user_type)
+        data = user_filter(request.user,data,addresses,user_type)
         data = apply_filter(data,request,active_filters)
         data = data[:10]
         pie_data = pack_data(data,'to_domain','size')
@@ -801,14 +817,14 @@ def report(request,report_kind):
             if request.user.is_superuser:
                 c.execute(q + " WHERE " +  s[0] + " AND spamwhitelisted=0 GROUP BY score ORDER BY score",s[1]) 
             else:
-                sql = raw_user_filter(request.user,user_type,domains)
+                sql = raw_user_filter(request.user,user_type,addresses)
                 c.execute(q + " WHERE " + sql + " AND "+ s[0] +" AND spamwhitelisted=0 GROUP BY score ORDER BY score",s[1])
         else:
             if request.user.is_superuser:
                 q = "%s WHERE spamwhitelisted=0 GROUP BY score ORDER BY score" % q
                 c.execute(q)
             else:
-                sql = raw_user_filter(request.user,user_type,domains)
+                sql = raw_user_filter(request.user,user_type,addresses)
                 g = "WHERE "+sql+" AND spamwhitelisted=0 GROUP BY score ORDER BY score"
                 q = "%s %s" % (q,g)
                 c.execute(q)
@@ -826,7 +842,7 @@ def report(request,report_kind):
     elif report_kind == 10:
         data = Maillog.objects.values('clientip').filter(clientip__isnull=False).exclude(clientip = '').annotate(num_count=Count('clientip'),
             size=Sum('size'),virus_total=Sum('virusinfected'),spam_total=Sum('isspam')).order_by('-num_count')
-        data = user_filter(request.user,data,domains,user_type)
+        data = user_filter(request.user,data,addresses,user_type)
         data = apply_filter(data,request,active_filters)
         data = data[:10]
         pie_data = pack_data(data,'clientip','num_count')
@@ -847,14 +863,14 @@ def report(request,report_kind):
             if request.user.is_superuser:
                 c.execute(q + " WHERE " + s[0] + " GROUP BY date ORDER BY date DESC",s[1])
             else:
-                sql = raw_user_filter(request.user,user_type,domains)
+                sql = raw_user_filter(request.user,user_type,addresses)
                 c.execute(q + " WHERE " + sql +" AND "+ s[0] + " GROUP BY date ORDER BY date DESC",s[1])
         else:
             if request.user.is_superuser:
                 q = "%s GROUP BY date ORDER BY date DESC" % q
                 c.execute(q)
             else:
-                sql = raw_user_filter(request.user,user_type,domains)
+                sql = raw_user_filter(request.user,user_type,addresses)
                 q = "%s WHERE %s GROUP BY date ORDER BY date DESC" % (q,sql)
                 c.execute(q)
         rows = c.fetchall()

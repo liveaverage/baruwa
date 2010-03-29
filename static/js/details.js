@@ -2,7 +2,17 @@ function do_spinner(){
     $('#my-spinner')
     .ajaxStart(function(){$(this).empty().append($("<img/>").attr("src","/static/imgs/loader-orig.gif")).append('&nbsp;Processing...');})
     .ajaxStop(function(){$(this).empty();})
-    .ajaxError(function(){$(this).empty();});
+    .ajaxError(function(event, request, settings){
+        if(request.status == 200){
+            if(settings.url == '/messages/process_quarantine/'){
+                location.href='/messages/';
+            }else{
+                location.href=settings.url;
+            }
+        }else{
+            $(this).empty();
+        }
+    });
 }
 function confirm_listing(event){
     re = /\/messages\/(whitelist|blacklist)\/.+\//

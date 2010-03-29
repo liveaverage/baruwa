@@ -14,7 +14,7 @@ function en_history(){
     $.address.history($.address.baseURL() + url);
     window.scrollTo(0,0);
     $('#loading_message').append('<p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p>').show('fast');
-    $.ajaxSetup({'cache':false});
+    //$.ajaxSetup({'cache':false});
     $.getJSON($(this).attr('href'),json2html);
     return false;
 }
@@ -173,8 +173,12 @@ function jsize_page(){
     $('#recent th a').bind('click',en_history);
     $('#sub-menu-links ul li a').bind('click',en_history);
     $("#paginator").ajaxStop(paginate);
-    $("#loading_message").empty().ajaxError(function(){
-        $(this).hide('normal');
+    $("#loading_message").empty().ajaxError(function(event, request, settings){
+        if(request.status == 200){
+            location.href=settings.url;
+        }else{
+            $(this).hide('normal');
+        }
     });
     $.address.externalChange(handlextern);
 }

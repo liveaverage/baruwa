@@ -113,7 +113,7 @@ function ajaxify_active_filter_links(e){
     e.preventDefault();
     $("#filter_form_submit").attr({'disabled':'disabled','value':'Loading'});
     window.scroll(0,0);
-    $.ajaxSetup({'cache':false});
+    //$.ajaxSetup({'cache':false});
     $.get($(this).attr('href'),build_page,'json');
 }
 
@@ -175,8 +175,13 @@ $('#id_filtered_field').bind('change',function(){
 });
 $("#filter-form").submit(addFilter);
 $("#my-spinner").ajaxStart(function(){$(this).empty().append($("<img/>").attr('src','/static/imgs/loader-orig.gif')).append('&nbsp;Processing...');})
-    .ajaxError(function(){$(this).empty().append($("<span/>").addClass('ajax_error')).append('&nbsp;Error occured');})
-    .ajaxStop(function(){$(this).empty();});
+    .ajaxError(function(event, request, settings){
+        if(request.status == 200){
+            location.href=settings.url;
+        }else{
+            $(this).empty().append($("<span/>").addClass('ajax_error')).append('&nbsp;Error occured');
+        }
+    }).ajaxStop(function(){$(this).empty();});
 $("#afilters tbody tr a").bind('click',ajaxify_active_filter_links);
 $("#sfilters tbody tr a").bind('click',ajaxify_active_filter_links);
 

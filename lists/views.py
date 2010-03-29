@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.views.generic.list_detail import object_list
 from django.db.models import Q
 from baruwa.lists.models import Blacklist, Whitelist
-from baruwa.lists.forms import ListAddForm,FilterForm
+from baruwa.lists.forms import ListAddForm,FilterForm,UserListAddForm
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.paginator import Paginator
 from django.utils import simplejson
@@ -23,7 +23,8 @@ def json_ready(element):
 def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for='',query_type=3):
     list_kind = int(list_kind)
     load_domain = []
-    load_user = ''
+    load_email = []
+    #load_user = ''
     user_type = 'A'
     query_type = int(query_type)
     if query_type == 3:
@@ -44,12 +45,12 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
         listing = Blacklist.objects.values('id','to_address','from_address').order_by(order_by)
 
     if not request.user.is_superuser:
+        q = Q()
         user_type = request.session['user_filter']['user_type']
+        addresses = request.session['user_filter']['filter_addresses']
         if user_type == 'D':
-            domains = request.session['user_filter']['domains']
-            if domains:
-                q = Q()
-                for domain in domains:
+            if addresses:
+                for domain in addresses:
                     load_domain.append(domain.filter)
                     kw = {'to_address__iendswith':domain.filter}
                     q = q | Q(**kw)
@@ -57,11 +58,18 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
             else:
                 listing = listing.filter(to_address__iendswith='example.net')
         if user_type == 'U':
-            listing = listing.filter(to_address__exact=request.user.username)
-            try:
-                load_user,load_domain = request.user.username.split('@')
-            except:
-                pass
+            if addresses:
+                for email in addresses:
+                   load_email.append(email.filter)
+                   kw = {'to_address__exact':email.filter}
+                   q = q | Q(**kw)
+                load_email.append(request.user.username)
+                kw = {'to_address__exact':request.user.username}
+                q = q | Q(**kw)
+                listing = listing.filter(q)
+            else:
+                load_email.append(request.user.username)
+                listing = listing.filter(to_address__exact=request.user.username)
 
     if request.method == 'POST':
         filter_form = FilterForm(request.POST)
@@ -103,35 +111,63 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
     else:
         return object_list(request,template_name='lists/index.html',queryset=listing, paginate_by=20,page=page,
             extra_context={'app':app,'list_kind':list_kind,'direction':direction,'order_by':ordering,'search_for':search_for,'query_type':query_type,'list_all':0,
-            'lu':load_user,'ld':load_domain,'user_type':user_type})
+            'ld':load_domain,'user_type':user_type,'le':load_email})
 
 @login_required
 def add_to_list(request):
     template = 'lists/add.html'
+    load_domain = []
+    load_email = []
+    user_type = 'A'
     error_msg = ''
+    if not request.user.is_superuser:
+        user_type = request.session['user_filter']['user_type']
+        addresses = request.session['user_filter']['filter_addresses']
+        q = Q()
+        if user_type == 'D':
+            if addresses:
+                for domain in addresses:
+                    load_domain.append(domain.filter)
+        if user_type == 'U':
+            if addresses:
+                for email in addresses:
+                    load_email.append(email.filter)
+            else:
+                load_email.append(request.user.username)
+
     if request.method == 'GET':
-        add_form = ListAddForm() 
-        add_dict = {'form':add_form}
+        if user_type == 'U':
+            add_form = UserListAddForm(request.POST)
+        else:
+            add_form = ListAddForm() 
+        add_dict = {'form':add_form,'user':request.user,'ld':load_domain,'user_type':user_type,'le':load_email}
     elif request.method == 'POST':
-        form = ListAddForm(request.POST) 
+        user_type = request.session['user_filter']['user_type']
+        if user_type == 'U':
+            form = UserListAddForm(request.POST)
+        else:
+            form = ListAddForm(request.POST) 
         if form.is_valid():
             clean_data = form.cleaned_data
-            if clean_data['to_domain'] != '' and clean_data['to_address'] != 'default':
-                to = "%s@%s" % (clean_data['to_address'],clean_data['to_domain'])
-            elif clean_data['to_domain'] != '' and clean_data['to_address'] == 'default':
-                to = clean_data['to_domain']
+            if user_type != 'U':
+                if clean_data['to_domain'] != '' and clean_data['to_address'] != 'default':
+                    to = "%s@%s" % (clean_data['to_address'],clean_data['to_domain'])
+                elif clean_data['to_domain'] != '' and clean_data['to_address'] == 'default':
+                    to = clean_data['to_domain']
+                else:
+                    to = clean_data['to_address']
             else:
                 to = clean_data['to_address']
             if not request.user.is_superuser:
-                user_type = request.session['user_filter']['user_type']
+                addresses = request.session['user_filter']['filter_addresses']
+                a = [address.filter for address in addresses]
                 if user_type == 'D':
-                    domains = request.session['user_filter']['domains']
-                    d = [domain.filter for domain in domains]
-                    if clean_data['to_domain'] not in d:
+                    if clean_data['to_domain'] not in a:
                         error_msg = 'You do not have authorization to add filters to the %s domain' % clean_data['to_domain']
                 if user_type == 'U':
                     if to != request.user.username:
-                        error_msg = 'You are only authorized to add filters to your email address %s' % request.user.username
+                        if to not in a:
+                            error_msg = 'You are only authorized to add filters to your email address %s' % request.user.username
             kwargs = {'to_address':to,'from_address':clean_data['from_address']}
             if int(clean_data['list_type']) == 1:
                 try:
@@ -172,7 +208,7 @@ def add_to_list(request):
                 html = errorlist(error_list).as_ul()
                 response = simplejson.dumps({'error': html})
                 return HttpResponse(response,mimetype='application/javascript')
-            add_dict = {'form':form,'user':request.user}
+            add_dict = {'form':form,'user':request.user,'ld':load_domain,'user_type':user_type,'le':load_email}
     return render_to_response(template,add_dict)
 
 @never_cache
@@ -193,17 +229,18 @@ def delete_from_list(request, list_kind, item_id):
         else:
             if not request.user.is_superuser:
                 user_type = request.session['user_filter']['user_type']
+                addresses = request.session['user_filter']['filter_addresses']
+                a = [address.filter for address in addresses]
                 if user_type == 'D':
-                    domains = request.session['user_filter']['domains']
-                    d = [domain.filter for domain in domains]
                     dom = w.to_address
                     if '@' in dom:
                         dom = dom.split('@')[1]
-                    if dom not in d:
+                    if dom not in a:
                         error_msg = 'The list item does not belong to you'
                 if user_type == 'U':
                     if request.user.username != w.to_address:
-                        error_msg = 'The list item does not belong to you'
+                        if w.to_address not in a:
+                            error_msg = 'The list item does not belong to you'
             if error_msg == '':
                 w.delete()
     elif list_kind == 2:
@@ -218,17 +255,18 @@ def delete_from_list(request, list_kind, item_id):
         else:
             if not request.user.is_superuser:
                 user_type = request.session['user_filter']['user_type']
+                addresses = request.session['user_filter']['filter_addresses']
+                a = [address.filter.filter for address in addresses]
                 if user_type == 'D':
-                    domains = request.session['user_filter']['domains']
-                    d = [domain.filter for domain in domains]
                     dom = b.to_address
                     if '@' in dom:
                         dom = dom.split('@')[1]
-                    if dom not in d:
+                    if dom not in a:
                         error_msg = 'The list item does not belong to you'
                 if user_type == 'U':
                     if request.user.username != b.to_address:
-                        error_msg = 'The list item does not belong to you'
+                        if b.to_address not in a:
+                            error_msg = 'The list item does not belong to you'
             if error_msg == '':
                 b.delete()
     if request.is_ajax():

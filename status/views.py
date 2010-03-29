@@ -26,9 +26,9 @@ def index(request):
     if request.user.is_superuser:
         c.execute(q)
     else:
-        domains = request.session['user_filter']['domains']
+        addresses = request.session['user_filter']['filter_addresses']
         user_type = request.session['user_filter']['user_type']
-        sql = raw_user_filter(request.user,user_type,domains)
+        sql = raw_user_filter(request.user,user_type,addresses)
         c.execute(q+" AND "+sql)
     row = c.fetchone()
     data = {'total':row[0],'clean':row[1],'virii':row[2],'infected':row[3],'otherinfected':row[4],'spam':row[5],'highspam':row[6]}

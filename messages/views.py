@@ -26,7 +26,7 @@ def json_ready(element):
 @login_required
 def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='timestamp'):
     active_filters = []
-    domains = request.session['user_filter']['domains']
+    addresses = request.session['user_filter']['filter_addresses']
     user_type = request.session['user_filter']['user_type']
     ordering = order_by
     if direction == 'dsc':
@@ -42,22 +42,22 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
         if not last_ts is None and request.is_ajax():
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
             ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected').filter(timestamp__gt=last_ts)
-            message_list = user_filter(request.user,message_list,domains,user_type)
+            message_list = user_filter(request.user,message_list,addresses,user_type)
             message_list = message_list[:50]
         else:
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
             ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected')
-            message_list = user_filter(request.user,message_list,domains,user_type)
+            message_list = user_filter(request.user,message_list,addresses,user_type)
             message_list = message_list[:50]
     else:
         if quarantine:
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
             ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','quarantined','nameinfected').order_by(order_by).filter(quarantined__exact=1)
-            message_list = user_filter(request.user,message_list,domains,user_type)
+            message_list = user_filter(request.user,message_list,addresses,user_type)
         else:
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
             ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','nameinfected').order_by(order_by)
-            message_list = user_filter(request.user,message_list,domains,user_type)
+            message_list = user_filter(request.user,message_list,addresses,user_type)
         message_list = apply_filter(message_list,request,active_filters)
     if request.is_ajax():
         if not list_all:
@@ -89,14 +89,13 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
 @never_cache
 @login_required
 def detail(request,message_id,success=0,error_list=None):
-    domains = []
+    addresses = []
     if request.user.is_superuser:
         message_details = get_object_or_404(Maillog, id=message_id)
     else:
         user_type = request.session['user_filter']['user_type']
-        if user_type == 'D':
-            domains = request.session['user_filter']['domains']
-        q = object_user_filter(request.user,user_type,domains)
+        addresses = request.session['user_filter']['filter_addresses']
+        q = object_user_filter(request.user,user_type,addresses)
         q = Q(id__exact = message_id) & q
         message_details = list(Maillog.objects.filter(q))
         if not message_details:
@@ -110,14 +109,13 @@ def process_quarantined_msg(request):
     html = {}
     learn_as = ""
     error_list = None
-    domains = []
+    addresses = []
     form = QuarantineProcessForm(request.POST)
     if form.is_valid():
         id = form.cleaned_data['message_id']
         user_type = request.session['user_filter']['user_type']
-        if user_type == 'D':
-            domains = request.session['user_filter']['domains']
-        q = object_user_filter(request.user,user_type,domains)
+        addresses = request.session['user_filter']['filter_addresses']
+        q = object_user_filter(request.user,user_type,addresses)
         q = Q(id__exact = id) & q
         m = list(Maillog.objects.filter(q))
         if not m:
@@ -209,14 +207,13 @@ def process_quarantined_msg(request):
 def preview(request, message_id):
     import email
     message = {}
-    domains = []
+    addresses = []
     if request.user.is_superuser:
         message_object = get_object_or_404(Maillog, id=message_id)
     else:
         user_type = request.session['user_filter']['user_type']
-        if user_type == 'D':
-            domains = request.session['user_filter']['domains']
-        q = object_user_filter(request.user,user_type,domains)
+        addresses = request.session['user_filter']['filter_addresses']
+        q = object_user_filter(request.user,user_type,addresses)
         q = Q(id__exact = message_id) & q
         message_object = list(Maillog.objects.filter(q))
         if not message_object:
@@ -240,11 +237,10 @@ def preview(request, message_id):
 @login_required
 def blacklist(request,message_id):
     success = 'True'
-    domains = []
+    addresses = []
     user_type = request.session['user_filter']['user_type']
-    if user_type == 'D':
-        domains = request.session['user_filter']['domains']
-    q = object_user_filter(request.user,user_type,domains)
+    addresses = request.session['user_filter']['filter_addresses']
+    q = object_user_filter(request.user,user_type,addresses)
     q = Q(id__exact = message_id) & q
     message = list(Maillog.objects.filter(q))
     if not message:
@@ -284,11 +280,10 @@ def blacklist(request,message_id):
 @login_required
 def whitelist(request,message_id):
     success = 'True'
-    domains = []
+    addresses = []
     user_type = request.session['user_filter']['user_type']
-    if user_type == 'D':
-        domains = request.session['user_filter']['domains']
-    q = object_user_filter(request.user,user_type,domains)
+    addresses = request.session['user_filter']['filter_addresses']
+    q = object_user_filter(request.user,user_type,addresses)
     q = Q(id__exact = message_id) & q
     message = list(Maillog.objects.filter(q))
     if not message:

@@ -7,6 +7,11 @@ LIST_OPTIONS = (
   ('2', 'Blacklist'),
 )
 
+class UserListAddForm(forms.Form):
+    from_address = forms.EmailField()
+    to_address = forms.EmailField()
+    list_type = forms.ChoiceField(choices=LIST_OPTIONS)
+
 class ListAddForm(forms.Form):
     from_address = forms.EmailField()
     to_address = forms.CharField(required=False)
