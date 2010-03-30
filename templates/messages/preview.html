@@ -10,6 +10,7 @@
 {% block content %}
 <table class="maillog">
 {% if message %}
+{% load messages_extras %}
 <tbody>
 <tr>
 <td class="mailitem">From:</td>
@@ -42,9 +43,9 @@
 </tr>
 <tr>
 <td colspan="2">
-<pre>
-{{message.body|escape}}
-</pre>
+<div id="mailpreview">
+{{message.body|linebreaksbr|escape}}
+</div>
 </td>
 </tr>
 <tr>

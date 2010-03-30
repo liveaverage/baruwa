@@ -16,23 +16,3 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
-
-# vim: ai ts=4 sts=4 et sw=4
-
-from django.conf.urls.defaults import *
-
-import os
-CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8')).replace('\\', '/')
-
-urlpatterns = patterns('',
-    (r'^$', 'baruwa.messages.views.index'),
-    (r'^messages/', include('baruwa.messages.urls')),
-    (r'^lists/', include('baruwa.lists.urls')),
-    (r'^reports/', include('baruwa.reports.urls')),
-    (r'^status/', include('baruwa.status.urls')),
-    (r'^tools/', include('baruwa.tools.urls')),
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-    { 'document_root' : os.path.join(CURRENT_PATH, 'static') }),
-    (r'^accounts/', include('baruwa.accounts.urls')),
-    (r'^api/', include('baruwa.api.urls')),
-)

@@ -16,23 +16,26 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
+"""
+This file demonstrates two different styles of tests (one doctest and one
+unittest). These will both pass when you run "manage.py test".
 
-# vim: ai ts=4 sts=4 et sw=4
+Replace these with more appropriate tests for your application.
+"""
 
-from django.conf.urls.defaults import *
+from django.test import TestCase
 
-import os
-CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8')).replace('\\', '/')
+class SimpleTest(TestCase):
+    def test_basic_addition(self):
+        """
+        Tests that 1 + 1 always equals 2.
+        """
+        self.failUnlessEqual(1 + 1, 2)
 
-urlpatterns = patterns('',
-    (r'^$', 'baruwa.messages.views.index'),
-    (r'^messages/', include('baruwa.messages.urls')),
-    (r'^lists/', include('baruwa.lists.urls')),
-    (r'^reports/', include('baruwa.reports.urls')),
-    (r'^status/', include('baruwa.status.urls')),
-    (r'^tools/', include('baruwa.tools.urls')),
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-    { 'document_root' : os.path.join(CURRENT_PATH, 'static') }),
-    (r'^accounts/', include('baruwa.accounts.urls')),
-    (r'^api/', include('baruwa.api.urls')),
-)
+__test__ = {"doctest": """
+Another way to test that 1 + 1 is equal to 2.
+
+>>> 1 + 1 == 2
+True
+"""}
+

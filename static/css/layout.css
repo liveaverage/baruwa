@@ -682,6 +682,10 @@ div.cb {
     padding-left:20px;
 }
 
+#mailpreview {
+    padding:10px;
+}
+
 .divider-header {
     margin:0 auto;
     padding:0;

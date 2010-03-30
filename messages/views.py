@@ -40,9 +40,9 @@ def json_ready(element):
     element['sascore'] = str(element['sascore'])
     return element 
 
-@never_cache
+#@never_cache
 @login_required
-def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='timestamp'):
+def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='timestamp',api_request=None):
     active_filters = []
     addresses = request.session['user_filter']['filter_addresses']
     user_type = request.session['user_filter']['user_type']
@@ -101,8 +101,11 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
         json = simplejson.dumps({'items':message_list,'paginator':pg})
         return HttpResponse(json, mimetype='application/javascript')
     else:
-        return object_list(request, template_name='messages/index.html', queryset=message_list, paginate_by=50, page=page, 
+        if api_request is None:
+            return object_list(request, template_name='messages/index.html', queryset=message_list, paginate_by=50, page=page, 
             extra_context={'quarantine': quarantine,'direction':direction,'order_by':ordering,'app':'messages','active_filters':active_filters,'list_all':list_all})
+        else:
+            return message_list
 
 @never_cache
 @login_required
@@ -215,7 +218,7 @@ def process_quarantined_msg(request):
         if success != 'False':
             return detail(request,id,1)
         else:
-            id = request.POST['message_id'] #form.cleaned_data['message_id']
+            id = request.POST['message_id']
             if not error_list:
                 error_list = html
             return detail(request,id,0,error_list)
@@ -235,21 +238,46 @@ def preview(request, message_id):
         q = Q(id__exact = message_id) & q
         message_object = list(Maillog.objects.filter(q))
         if not message_object:
-            raise Http404
+            if request.is_ajax():
+                return HttpResponse({'message':message,'message_id':message_id,'user':request.user},content_type='application/javascript; charset=utf-8')
+            else:
+                raise Http404
         message_object = message_object[0]
-    qdir = get_config_option('Quarantine Dir')
-    date = "%s" % message_object.date
-    date = date.replace('-', '')
-    file_name = get_message_path(qdir,date,message_id)
-    if not file_name is None:
-        try:
-            fp = open(file_name)
-        except:
-            raise Http404
-        msg = email.message_from_file(fp)
-        fp.close()
-        message = parse_email(msg)
-    return render_to_response('messages/preview.html', {'message':message,'message_id':message_object.id,'user':request.user})
+    if host_is_local(message_object.hostname):
+        qdir = get_config_option('Quarantine Dir')
+        date = "%s" % message_object.date
+        date = date.replace('-', '')
+        file_name = get_message_path(qdir,date,message_id)
+        if not file_name is None:
+            try:
+                fp = open(file_name)
+            except:
+                fp.close()
+                if request.is_ajax():
+                    return HttpResponse({'message':message,'message_id':message_id,'user':request.user},content_type='application/javascript; charset=utf-8')
+                else:
+                    raise Http404
+            msg = email.message_from_file(fp)
+            fp.close()
+            message = parse_email(msg)
+        if request.is_ajax():
+            response = simplejson.dumps({'message':message,'message_id':message_object.id})
+            return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+        else:
+            return render_to_response('messages/preview.html', {'message':message,'message_id':message_object.id,'user':request.user})
+    else:
+        #remote request
+        remote_response = remote_preview(message_object.hostname,request.META['HTTP_COOKIE'],message_id)
+        if remote_response['success']:
+            data = remote_response['response']
+            items = simplejson.loads(data)
+            message = items['message']
+
+        if request.is_ajax():
+            response = simplejson.dumps({'message':message,'message_id':message_id})
+            return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+        else:
+            return render_to_response('messages/preview.html', {'message':message,'message_id':message_id,'user':request.user})
 
 @never_cache
 @login_required
@@ -336,3 +364,9 @@ def whitelist(request,message_id):
         return HttpResponse(response,content_type='application/javascript; charset=utf-8')
     else:
         return HttpResponseRedirect(reverse('message-detail', args=[message_id]))
+
+def remote_preview(host,cookie,message_id):
+    headers = {'Cookie':cookie,'X-Requested-With':'XMLHttpRequest'}
+    resource = reverse('preview-message',args=[message_id])
+    rv = rest_request(host,resource,'GET',headers)
+    return rv

@@ -17,7 +17,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # vim: ai ts=4 sts=4 et sw=4
-import email,smtplib,os,re
+import email,smtplib,os,re,socket,httplib
 from subprocess import Popen, PIPE
 from email.Header import decode_header
 from django.conf import settings
@@ -161,3 +161,33 @@ def clean_regex(rule):
     rule = re.sub(r'\*','.*',rule)
     rule = "^%s\.?$" % rule
     return rule
+
+def host_is_local(host):
+    h = socket.gethostbyname(host)
+    ip = socket.gethostbyname(socket.gethostname())
+    if h in [ip,'127.0.0.1']:
+        return True
+    else:
+        return False
+
+def rest_request(host,resource,method,headers,params=None):
+    data = ''
+
+    if not resource.startswith('/'):
+        resource = '/' + resource
+    if not resource.endswith('/'):
+        resource = resource + '/'
+
+    try:
+        c = httplib.HTTPConnection(host)
+        r = conn.request(method,resource,params,headers)
+        response = c.getresponse()
+        data = response.read()
+    except:
+        return {'success':False,'response':'an error occured'}
+    else:
+        c.close()
+    if response.status == 200:
+        return {'success':True,'response':data}
+    else:
+        return {'success':False,'response':data}

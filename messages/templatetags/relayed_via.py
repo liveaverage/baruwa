@@ -45,7 +45,7 @@ def relayed_via(headers):
                             iptype = 'unknown'
                     country_code = ""
                     country_name = ""
-                    if not iptype == "LOOPBACK" and l != ipaddr:
+                    if not iptype == "LOOPBACK" and l != ipaddr and l != '127.0.0.1':
                         ipaddr = l
                         try:
                             hostname = socket.gethostbyaddr(ipaddr)[0]
