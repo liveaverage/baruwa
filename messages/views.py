@@ -33,7 +33,7 @@ from baruwa.lists.models import Blacklist,Whitelist
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-import re
+import re,urllib
 
 def json_ready(element):
     element['timestamp'] = str(element['timestamp'])
@@ -144,6 +144,15 @@ def process_quarantined_msg(request):
             response = simplejson.dumps({'success':'False', 'html': html})
         else:
             m = m[0]
+            if not host_is_local(m.hostname):
+                params = urllib.urlencode(request.POST)
+                remote_response = remote_process(m.hostname,request.META['HTTP_COOKIE'],id,params)
+                if remote_response['success']:
+                    response = remote_response['response']
+                    return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+                else:
+                    response = simplejson.dumps({'success':'False','html':'Remote server failure'})
+                    return HttpResponse(response, content_type='application/javascript; charset=utf-8')
             success = "True"
             qdir = get_config_option('Quarantine Dir')
             date = "%s" % m.date
@@ -369,4 +378,10 @@ def remote_preview(host,cookie,message_id):
     headers = {'Cookie':cookie,'X-Requested-With':'XMLHttpRequest'}
     resource = reverse('preview-message',args=[message_id])
     rv = rest_request(host,resource,'GET',headers)
+    return rv
+
+def remote_process(host,cookie,message_id,params):
+    headers = {'Cookie':cookie,'X-Requested-With':'XMLHttpRequest'}
+    resource = reverse('process-quarantine')
+    rv = rest_request(host,resource,'POST',headers,params)
     return rv

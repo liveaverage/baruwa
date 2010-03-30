@@ -179,8 +179,9 @@ def rest_request(host,resource,method,headers,params=None):
         resource = resource + '/'
 
     try:
+        host = 'baruwa-alpha.sentechsa.net'
         c = httplib.HTTPConnection(host)
-        r = conn.request(method,resource,params,headers)
+        r = c.request(method,resource,params,headers)
         response = c.getresponse()
         data = response.read()
     except:

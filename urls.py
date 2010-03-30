@@ -34,5 +34,4 @@ urlpatterns = patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
     { 'document_root' : os.path.join(CURRENT_PATH, 'static') }),
     (r'^accounts/', include('baruwa.accounts.urls')),
-    (r'^api/', include('baruwa.api.urls')),
 )
