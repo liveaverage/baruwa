@@ -661,7 +661,7 @@ def save_filter(request,index_num):
         f.col = filter["field"]
         f.operator = filter["filter"]
         f.value = filter["value"]
-        f.username = 'sentechadmin'
+        f.username = request.user.username
         try:
             f.save()
         except IntegrityError:
