@@ -23,27 +23,39 @@ System Status
 <tbody>
 <tr>
 <td>Scanners</td>
-<td><div class="pie_6 pie"></div>&nbsp;15 processes</td>
+<td>
+{% if scanners %}
+<div class="pie_6 pie"></div>
+{%else%}
+<div class="pie_1 pie"></div>
+{%endif%}
+&nbsp;{{scanners}} processes</td>
 </tr>
 <tr>
 <td>MTA</td>
-<td><div class="pie_6 pie"></div>&nbsp;5 processes</td>
+<td>
+{% if mta %}
+<div class="pie_6 pie"></div>
+{%else%}
+<div class="pie_1 pie"></div>
+{%endif%}
+&nbsp;{{mta}} processes</td>
 </tr>
 <tr>
 <td>Load</td>
-<td><div class="pie_6 pie"></div>&nbsp;0.2</td>
+<td><div class="pie_6 pie"></div>&nbsp;{{load}}</td>
 </tr>
 <tr>
 <td>AV</td>
-<td><div class="pie_6 pie"></div>&nbsp;</td>
+<td>&nbsp;</td>
 </tr>
 <tr>
 <td>Uptime</td>
-<td><div class="pie_6 pie"></div>&nbsp;</td>
+<td>&nbsp;</td>
 </tr>
 <tr class="last">
 <td>System restart</td>
-<td><div class="pie_6 pie"></div>&nbsp;</td>
+<td>&nbsp;</td>
 </tr>
 </tbody>
 </table>
