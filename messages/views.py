@@ -40,9 +40,9 @@ def json_ready(element):
     element['sascore'] = str(element['sascore'])
     return element 
 
-#@never_cache
+@never_cache
 @login_required
-def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='timestamp',api_request=None):
+def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='timestamp'):
     active_filters = []
     addresses = request.session['user_filter']['filter_addresses']
     user_type = request.session['user_filter']['user_type']
@@ -101,11 +101,8 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
         json = simplejson.dumps({'items':message_list,'paginator':pg})
         return HttpResponse(json, mimetype='application/javascript')
     else:
-        if api_request is None:
-            return object_list(request, template_name='messages/index.html', queryset=message_list, paginate_by=50, page=page, 
+        return object_list(request, template_name='messages/index.html', queryset=message_list, paginate_by=50, page=page, 
             extra_context={'quarantine': quarantine,'direction':direction,'order_by':ordering,'app':'messages','active_filters':active_filters,'list_all':list_all})
-        else:
-            return message_list
 
 @never_cache
 @login_required

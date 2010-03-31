@@ -73,6 +73,7 @@ function paginate(){
             $('#lists th:eq('+i+')').text(larray[i]).attr('id','sorting_by');
             tmpl = toplinkize(rj.app,rj.direction,carray[i]);
             $('#lists th:eq('+i+')').append(tmpl);
+            $('#lists_filter_form').attr('action','/'+rj.app+'/'+rj.direction+'/'+carray[i]+'/');
         }else{
             ur = '/'+rj.app+'/'+rj.direction+'/'+carray[i]+'/';
             if($('#lists th:eq('+i+') a').attr('href') != ur){
@@ -156,6 +157,24 @@ function getPage(event){
         $.address.value('?u='+url);
         $.address.history($.address.baseURL() + url);
     }
+}
+
+function submitForm(event){
+    $('#id_lists_filter_submit').attr({'disabled':'disabled','value':'Loading'});
+    event.preventDefault();
+    filter_request = {
+        query_type: $("#id_query_type").val(),
+        search_for: $("#id_search_for").val()
+    };
+    link = $("#lists_filter_form").attr("action");
+    $.post(link,filter_request,
+        function(response){
+            lists_from_json(response);
+            url = link.replace(/\//g, '-').replace(/^-/, '').replace(/-$/,'');
+            $.address.value('?u='+url);
+            $.address.history($.address.baseURL() + url);
+        },"json");
+    $('#id_lists_filter_submit').removeAttr('disabled').attr('value','Add');
 }
 
 function confirm_delete(event) {
@@ -330,6 +349,7 @@ function jsize_lists(){
         }
     });
     $('#list-link').bind('click',getPage);
+    $('#lists_filter_form').submit(submitForm);
 }
 
 var $dialog = $('<div></div>');

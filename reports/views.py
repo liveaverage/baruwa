@@ -90,7 +90,7 @@ def user_filter(user,model,addresses,user_type):
                     #q = q | Q(**kw)
                 model = model.filter(q)
             else:
-                model = model.filter(to_domain='example.net')
+                model = model.filter(to_domain__exact=user.username)
         if user_type == 'U':
             #model = model.filter(Q(to_address__exact=user.username)|Q(from_address__exact=user.username))
             if addresses:
@@ -563,45 +563,37 @@ def index(request):
     loaded = 0
     success = "True"
     if request.method == 'POST':
-        if request.session.test_cookie_worked() or request.session.get('filter_by', False):
-            try:
-                request.session.delete_test_cookie()
-            except:
-                pass
-            filter_form = FilterForm(request.POST)
-            if filter_form.is_valid():
-                cleaned_data = filter_form.cleaned_data
-                if not request.session.get('filter_by', False):
-                    request.session['filter_by'] = []
-                    request.session['filter_by'].append({'field':cleaned_data['filtered_field'],
-                        'filter':cleaned_data['filtered_by'],'value':cleaned_data['filtered_value']})
+        filter_form = FilterForm(request.POST)
+        if filter_form.is_valid():
+            cleaned_data = filter_form.cleaned_data
+            if not request.session.get('filter_by', False):
+                request.session['filter_by'] = []
+                request.session['filter_by'].append({'field':cleaned_data['filtered_field'],
+                    'filter':cleaned_data['filtered_by'],'value':cleaned_data['filtered_value']})
+            else:
+                fitem = {'field':cleaned_data['filtered_field'],'filter':cleaned_data['filtered_by'],
+                    'value':cleaned_data['filtered_value']}
+                if not fitem in request.session['filter_by']:
+                    request.session['filter_by'].append(fitem)
+                    request.session.modified = True
                 else:
-                    fitem = {'field':cleaned_data['filtered_field'],'filter':cleaned_data['filtered_by'],
-                        'value':cleaned_data['filtered_value']}
-                    if not fitem in request.session['filter_by']:
-                        request.session['filter_by'].append(fitem)
-                        request.session.modified = True
-                    else:
-                        success = "False"
-                        errors = "The requested filter is already being used"
+                    success = "False"
+                    errors = "The requested filter is already being used"
+            filter_list = request.session.get('filter_by')
+            addresses = request.session['user_filter']['filter_addresses']
+            user_type = request.session['user_filter']['user_type']
+            data = user_filter(request.user,data,addresses,user_type)
+            data = d_query(data,filter_list,active_filters)
+        else:
+            success = "False"
+            error_list = filter_form.errors.values()[0]
+            errors = errorlist(error_list).as_ul()
+            if request.session.get('filter_by', False):
                 filter_list = request.session.get('filter_by')
                 addresses = request.session['user_filter']['filter_addresses']
                 user_type = request.session['user_filter']['user_type']
                 data = user_filter(request.user,data,addresses,user_type)
                 data = d_query(data,filter_list,active_filters)
-            else:
-                success = "False"
-                error_list = filter_form.errors.values()[0]
-                errors = errorlist(error_list).as_ul()
-                if request.session.get('filter_by', False):
-                    filter_list = request.session.get('filter_by')
-                    addresses = request.session['user_filter']['filter_addresses']
-                    user_type = request.session['user_filter']['user_type']
-                    data = user_filter(request.user,data,addresses,user_type)
-                    data = d_query(data,filter_list,active_filters)
-        else:
-            filter_form = FilterForm()
-            errors = 'Cookies are not enabled, please enable cookies'
     else:
         filter_form = FilterForm()
         if request.session.get('filter_by', False):
@@ -610,8 +602,6 @@ def index(request):
             user_type = request.session['user_filter']['user_type']
             data = user_filter(request.user,data,addresses,user_type)
             data = d_query(data,filter_list,active_filters)
-        else:
-            request.session.set_test_cookie()
     if not filter_list:
         addresses = request.session['user_filter']['filter_addresses']
         user_type = request.session['user_filter']['user_type']

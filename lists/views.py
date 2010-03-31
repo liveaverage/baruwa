@@ -42,7 +42,6 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
     list_kind = int(list_kind)
     load_domain = []
     load_email = []
-    #load_user = ''
     user_type = 'A'
     query_type = int(query_type)
     if query_type == 3:
@@ -245,6 +244,8 @@ def delete_from_list(request, list_kind, item_id):
             else:
                 raise Http404()
         else:
+            if w.from_address == '127.0.0.1' and w.to_address == 'default':
+                error_msg = 'This is a buildin item, it cannot be deleted'
             if not request.user.is_superuser:
                 user_type = request.session['user_filter']['user_type']
                 addresses = request.session['user_filter']['filter_addresses']

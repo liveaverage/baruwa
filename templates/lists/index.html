@@ -45,14 +45,14 @@ List management
         <tr class="header">
         <td colspan="4" class="pagination">
         <div id="filterbox" style="display:{% ifnotequal order_by "id" %}block{%else%}none{%endifnotequal%};">
-        <form method="post" action="/{{app}}/{{direction}}/{{order_by}}/">
+        <form id="lists_filter_form" method="post" action="/{{app}}/{{direction}}/{{order_by}}/">
         Filter <span id="filterlabel">{%ifequal order_by "to_address"%}<b>To:</b>{%endifequal%}{%ifequal order_by "from_address"%}<b>From:</b>{%endifequal%}</span>
-        <select name="query_type">
+        <select id="id_query_type" name="query_type">
         <option value="1"{%ifequal query_type 1%} selected="selected"{%endifequal%}>containing</option>
         <option value="2"{%ifequal query_type 2%} selected="selected"{%endifequal%}>excluding</option>
         </select>
-        <input name="search_for" type="text" value="{{search_for}}" size="25" />
-        <input type="submit" value="GO" />
+        <input id="id_search_for" name="search_for" type="text" value="{{search_for}}" size="25" />
+        <input id="id_lists_filter_submit" type="submit" value="GO" />
         </form>
         </div>
         <div id="paginator">

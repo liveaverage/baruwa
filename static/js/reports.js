@@ -149,28 +149,28 @@ $('#id_filtered_field').bind('change',function(){
         $.each(bool_values,function(i,n){
             $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
         });
-        $('#id_filtered_value').attr({'disabled':'disabled'});
+        $('#id_filtered_value').attr({'disabled':'disabled'}).val("");
     }
     if($.inArray($(this).val(),num_fields) != -1){
         $('#id_filtered_by').empty();
         $.each(num_values,function(i,n){
             $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
         });
-        $('#id_filtered_value').removeAttr("disabled");
+        $('#id_filtered_value').removeAttr("disabled").val("");
     }
     if($.inArray($(this).val(),text_fields) != -1){
         $('#id_filtered_by').empty();
         $.each(text_values,function(i,n){
             $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
         });
-        $('#id_filtered_value').removeAttr("disabled");
+        $('#id_filtered_value').removeAttr("disabled").val("");
     }
     if($.inArray($(this).val(),time_fields) != -1){
         $('#id_filtered_by').empty();
         $.each(time_values,function(i,n){
             $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
         });
-        $('#id_filtered_value').removeAttr("disabled");
+        $('#id_filtered_value').removeAttr("disabled").val("");
     }
 });
 $("#filter-form").submit(addFilter);
