@@ -174,7 +174,7 @@ function submitForm(event){
             $.address.value('?u='+url);
             $.address.history($.address.baseURL() + url);
         },"json");
-    $('#id_lists_filter_submit').removeAttr('disabled').attr('value','Add');
+    $('#id_lists_filter_submit').removeAttr('disabled').attr('value','Go');
 }
 
 function confirm_delete(event) {
