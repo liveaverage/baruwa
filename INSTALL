@@ -1,0 +1,46 @@
+=======
+INSTALL
+=======
+Thanks for downloading Baruwa.
+
+To install it make sure you have the following.
+    + Python >= 2.4
+    + Django >= 1.1.1
+    + MySQLdb >= 1.2.1p2
+    + GeoIP
+    + iPy
+    + Apache httpd & mod_wsgi | mod_python (mod_wsgi recommended) NOTE: (You can user any other server that can run django)
+    + A working mailwatch installation or you need install the database schema and MailScanner custom modules.
+
+Then run this command from the command prompt
+
+    python setup install
+
+You then have to configure your web server. Sample configuration files for apache with mod_wsgi are provided
+    + baruwa-mod_wsgi.conf (copy to your configurations directory usually /etc/httpd/conf.d on redhat clones)
+    + src/baruwa.wsgi (installed)
+
+
+Make changes to the database schema, run the following command.
+
+    # mysql < create.sql
+
+Configure the settings to match your Mysql server. Edit the settings.py file which will be installed
+in the "baruwa" directory inside your Python's site-packages directory, which is located whereever
+your Python installation lives. Some places to check are:
+    
+    /usr/lib/python2.4/site-packages (Unix, Python 2.4)
+    /usr/lib/python2.6/site-packages (Unix, Python 2.6)
+    /opt/local/lib/python2.4/site-packages (MacOSX, Ports Python 2.4)
+
+Thats it, you can now login with your existing mailwatch username & password
+
+==================
+DISTRIBUTED SETUPS
+==================
+Baruwa is capable of running in a distributed setup, It uses REST to process quarantined messages residing on other
+nodes, the only requirement is that the nodes share session infomation. If you are running your nodes from the same
+database backend or running multi master replication then this will work out of the box.
+
+The baruwa implementation differs from the mailwatch one in that it uses REST and the users credentials to process
+the message on the other node, mailwatch uses an XML-RPC system which does not use authentication.
