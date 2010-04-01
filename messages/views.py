@@ -36,6 +36,10 @@ from django.db.models import Q
 import re,urllib
 
 def json_ready(element):
+    """
+    Fixes the converting error in converting
+    DATETIME objects to JSON
+    """
     element['timestamp'] = str(element['timestamp'])
     element['sascore'] = str(element['sascore'])
     return element 
@@ -43,6 +47,17 @@ def json_ready(element):
 @never_cache
 @login_required
 def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='timestamp'):
+    """
+    Returns messages, recent, full and quarantined
+    It returns both XHTML and JSON formats depending
+    on how it is called.
+
+    When called with XMLRequest headers it returns
+    JSON.
+
+    The results are paginated for the full and 
+    quarantine views
+    """
     active_filters = []
     addresses = request.session['user_filter']['filter_addresses']
     user_type = request.session['user_filter']['user_type']
@@ -107,6 +122,9 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
 @never_cache
 @login_required
 def detail(request,message_id,success=0,error_list=None):
+    """
+    Displays details of a message
+    """
     addresses = []
     if request.user.is_superuser:
         message_details = get_object_or_404(Maillog, id=message_id)
@@ -124,6 +142,13 @@ def detail(request,message_id,success=0,error_list=None):
 
 @login_required
 def process_quarantined_msg(request):
+    """
+    Processes a quarantined message it can
+    - release
+    - spamassassin learn
+    - delete
+    Quarantined messages
+    """
     html = {}
     learn_as = ""
     error_list = None
@@ -232,6 +257,11 @@ def process_quarantined_msg(request):
 @never_cache
 @login_required
 def preview(request, message_id):
+    """
+    Returns a message preview of a 
+    quarantined message, depending on
+    the call it returns XHTML or JSON
+    """
     import email
     message = {}
     addresses = []
@@ -288,6 +318,9 @@ def preview(request, message_id):
 @never_cache
 @login_required
 def blacklist(request,message_id):
+    """
+    Blacklists the messages from address
+    """
     success = 'True'
     addresses = []
     user_type = request.session['user_filter']['user_type']
@@ -331,6 +364,9 @@ def blacklist(request,message_id):
 @never_cache
 @login_required
 def whitelist(request,message_id):
+    """
+    Whitelists the messages from address
+    """
     success = 'True'
     addresses = []
     user_type = request.session['user_filter']['user_type']
@@ -372,12 +408,20 @@ def whitelist(request,message_id):
         return HttpResponseRedirect(reverse('message-detail', args=[message_id]))
 
 def remote_preview(host,cookie,message_id):
+    """
+    Returns the message preview of a message on a
+    remote node using a RESTFUL request
+    """
     headers = {'Cookie':cookie,'X-Requested-With':'XMLHttpRequest'}
     resource = reverse('preview-message',args=[message_id])
     rv = rest_request(host,resource,'GET',headers)
     return rv
 
 def remote_process(host,cookie,message_id,params):
+    """
+    Processes a message quarantined on a remote
+    node
+    """
     headers = {'Cookie':cookie,'X-Requested-With':'XMLHttpRequest'}
     resource = reverse('process-quarantine')
     rv = rest_request(host,resource,'POST',headers,params)

@@ -23,6 +23,9 @@ from email.Header import decode_header
 from django.conf import settings
 
 def parse_attachment(part):
+    """
+    Parses an email part and returns attachment name
+    """
     attachment = ""
     content_disposition = part.get("Content-Disposition", None)
     if content_disposition:
@@ -36,11 +39,18 @@ def parse_attachment(part):
     return None
 
 def get_header(header_text, default="ascii"):
+    """
+    Returns the headers from text
+    """
     headers = decode_header(header_text)
     header_sections = [unicode(text, charset or default) for text, charset in headers]
     return u"".join(header_sections)
 
 def parse_email(msg):
+    """
+    Parses an email and returns a dict representing 
+    the message
+    """
     attachments = []
     body = None
     html = None
@@ -77,6 +87,10 @@ def parse_email(msg):
     }
 
 def get_message_path(qdir,date,message_id):
+    """
+    Returns the on disk path of a message
+    or None if path does not exist
+    """
     qdirs = ["spam","nonspam","mcp"]
     for message_kind in qdirs:
         file_path = "%s/%s/%s/%s" % (qdir,date,message_kind,message_id)
@@ -89,6 +103,9 @@ def get_message_path(qdir,date,message_id):
             return None
 
 def release_mail(mail_path, to_addr, from_addr):
+    """
+    Releases a message from the quarantine
+    """
     msg = ""
     host = settings.EMAIL_HOST
     if os.path.exists(mail_path):
@@ -110,6 +127,9 @@ def release_mail(mail_path, to_addr, from_addr):
     return True
 
 def sa_learn(mail_path, learn_as):
+    """
+    Spam assassin learn a message
+    """
     learn = "--%s" % learn_as
     SA_LEARN = ['/usr/bin/sa-learn',learn,mail_path]
     LEARN_OPTS = ('spam','ham','forget')
@@ -127,6 +147,10 @@ def sa_learn(mail_path, learn_as):
         return {'success':False,'output':'','errormsg':'mail file could not be read'}
 
 def get_config_option(search_option):
+    """
+    Return a MailScanner config setting from the
+    config file
+    """
     #config = settings.MS_CONFIG
     config = getattr(settings, 'MS_CONFIG', '/etc/MailScanner/MailScanner.conf')
     COMMENT_CHAR = '#'
@@ -147,6 +171,10 @@ def get_config_option(search_option):
     return value
 
 def clean_regex(rule):
+    """
+    Formats a regex for parsing MailScanner
+    configs
+    """
     if rule == 'default' or rule == '*':
         rule = '*@*'
     if not '@' in rule:
@@ -163,6 +191,9 @@ def clean_regex(rule):
     return rule
 
 def host_is_local(host):
+    """
+    Checks if host is local to host running the function
+    """
     h = socket.gethostbyname(host)
     ip = socket.gethostbyname(socket.gethostname())
     if h in [ip,'127.0.0.1']:
@@ -171,6 +202,9 @@ def host_is_local(host):
         return False
 
 def rest_request(host,resource,method,headers,params=None):
+    """
+    Performs a REST request
+    """
     data = ''
 
     if not resource.startswith('/'):

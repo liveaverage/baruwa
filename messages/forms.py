@@ -30,6 +30,11 @@ SALEARN_OPTIONS = (
 EMPTY_VALUES = (None, '')
 
 class QuarantineProcessForm(forms.Form):
+    """
+    Generates a quarantine process form,
+    it can be used to release, sa learn or
+    delete a quarantined message
+    """
     salearn = forms.BooleanField(required=False)
     salearn_as = forms.ChoiceField(choices=SALEARN_OPTIONS)
     release = forms.BooleanField(required=False)
@@ -37,8 +42,11 @@ class QuarantineProcessForm(forms.Form):
     use_alt = forms.BooleanField(required=False)
     altrecipients = forms.CharField(required=False)
     message_id = forms.CharField()
-
+    
     def clean(self):
+        """
+        Validates the quarantine form
+        """
         cleaned_data = self.cleaned_data
         use_alt = cleaned_data.get("use_alt")
         altrecipients = cleaned_data.get("altrecipients")

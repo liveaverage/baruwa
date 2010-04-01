@@ -28,6 +28,9 @@ YES_NO = (
 )
 
 class UserForm(ModelForm):
+    """
+    Generates a form to create user accounts, or update accounts (only full admin)
+    """
     password = forms.CharField(widget=forms.PasswordInput)
     quarantine_report = forms.BooleanField(required=False)
     noscan = forms.ChoiceField(choices=YES_NO)
@@ -35,6 +38,9 @@ class UserForm(ModelForm):
         model = Users
 
 class StrippedUserForm(ModelForm):
+    """
+    Generates a form update user accounts
+    """
     password = forms.CharField(widget=forms.PasswordInput)
     quarantine_report = forms.BooleanField(required=False)
     noscan = forms.ChoiceField(choices=YES_NO)
@@ -43,5 +49,8 @@ class StrippedUserForm(ModelForm):
         exclude = ('type','username')
 
 class UserFilterForm(ModelForm):
+    """
+    Generates a form to create user filters
+    """
     class Meta:
         model = UserFilters

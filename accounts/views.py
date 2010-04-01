@@ -39,6 +39,9 @@ except ImportError:
 @login_required
 @onlysuperusers
 def index(request,page=1,direction='dsc',order_by='username'):
+    """
+    Displays user accounts.
+    """
     error_msg = ''
     ordering = order_by
     if direction == 'dsc':
@@ -68,6 +71,9 @@ def index(request,page=1,direction='dsc',order_by='username'):
 @never_cache
 @login_required
 def user_account(request,user_name=None):
+    """
+    Displays user account info.
+    """
     if not request.user.is_superuser:
         login = Users.objects.get(pk=request.user.username)
         if login:
