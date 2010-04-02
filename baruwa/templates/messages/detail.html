@@ -112,7 +112,8 @@
 		</tr>
 		<tr>
 		<td class="mailitem">Listed in RBL:</td>
-		<td class="maildetail">{% if message_details.isrblspam %}<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}</td>
+		<td class="maildetail">{% if message_details.isrblspam %}
+        <span class="positive">Y</span>&nbsp;Listed in : {{message_details.spamreport|tds_rbl_name}}{% else %}<span class="negative">N</span>{% endif %}</td>
 		</tr>
 		<tr>
 		<td class="mailitem">Spam Whitelisted:</td>

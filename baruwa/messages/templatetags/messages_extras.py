@@ -108,6 +108,20 @@ def tds_is_learned(value,autoescape=None):
     return mark_safe(r)
 tds_is_learned.needs_autoescape = True
 
+@register.filter(name='tds_rbl_name')
+@stringfilter
+def tds_rbl_name(value,autoescape=None):
+    r = ''
+    m = re.search(r'^spam\,\s((?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}\.?)',value)
+    if m:
+        if autoescape:
+            esc = conditional_escape
+        else:
+            esc = lambda x: x
+        r = esc(m.group(1))
+    return mark_safe(r)
+tds_rbl_name.needs_autoescape = True
+
 def tds_get_rules(rules):
     if not rules:
         return {}

@@ -1,0 +1,14 @@
+Baruwa documentation manual
+===========================
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+   introduction.txt
+   requirements.txt
+   install.txt
+   migration.txt
+   users.txt
+

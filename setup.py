@@ -19,8 +19,6 @@
 from setuptools import setup, find_packages
 import sys, os, shutil
 
-#shutil.move('src/baruwa/baruwa-mod_wsgi.conf','baruwa-mod_wsgi.conf')
-#shutil.move('src/baruwa/create.sql','baruwa-create.sql')
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -34,8 +32,8 @@ setup(name='baruwa',
       author_email='andrew@topdog.za.net',
       url='http://www.topdog.za.net/baruwa',
       license='GPL',
-      packages=find_packages('src'),
-      package_dir = {'': 'src'},
+      packages=find_packages('.'),
+      package_dir = {'': '.'},
       include_package_data=True,
       zip_safe=False,
       install_requires=['setuptools',
