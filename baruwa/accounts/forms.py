@@ -20,11 +20,18 @@
 from django import forms
 from django.forms.util import ErrorList
 from django.forms import ModelForm
+from django.forms.fields import email_re
 from baruwa.accounts.models import ACTIVE_CHOICES,TYPE_CHOICES,Users,UserFilters
+import re
 
 YES_NO = (
     (0,'YES'),
     (1,'NO'),
+)
+
+Y_N = (
+    ('Y','Yes'),
+    ('N','No'),
 )
 
 class UserForm(ModelForm):
@@ -48,9 +55,30 @@ class StrippedUserForm(ModelForm):
         model = Users
         exclude = ('type','username')
 
-class UserFilterForm(ModelForm):
+class UserFilterForm(forms.Form):
     """
-    Generates a form to create user filters
+    Generates a form to create an email user filters
     """
-    class Meta:
-        model = UserFilters
+    username = forms.CharField(widget=forms.HiddenInput)
+    filter = forms.CharField()
+    active = forms.ChoiceField(choices=Y_N)
+
+    def clean_filter(self):
+        to = self.cleaned_data['filter']
+        if not email_re.match(to.strip()):
+            raise forms.ValidationError('%s is not a valid e-mail address.' % to)
+        return to
+
+class DomainUserFilterForm(UserFilterForm):
+    """
+    Generates a form to create a domain user filters
+    """
+    def clean_filter(self):
+        domain = self.cleaned_data['filter']
+        domain = domain.strip()
+       
+        if domain != "" and not domain is None:
+            r = re.compile(r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?$', re.IGNORECASE)
+            if not r.match(domain):
+                raise forms.ValidationError('provide a valid domain')
+        return domain

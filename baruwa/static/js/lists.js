@@ -321,7 +321,6 @@ function jsize_lists(){
             closeOnEscape: false,
             open: function(event, ui) {$(".ui-dialog-titlebar-close").hide();},
             draggable: false,
-
         });
     $('tbody a').bind('click',confirm_delete);
     $('#list-add').bind('click',function(event){

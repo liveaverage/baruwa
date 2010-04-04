@@ -145,3 +145,29 @@ function json2html(data){
     }
 }
 
+function confirm_delete(event){
+    link = $(this).attr('href');
+    link = $.trim(link);
+    //re = /([\w!#$%&'*+/=?`{|}~^-]+(?:\.[!#$%&'*+/=?`{|}~^-]+)*@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}|(?:[A-Z0-9-]+\.)+[A-Z]{2,6})$/
+    parts = link.split('/');
+    event.preventDefault();
+    $dialog.html('Delete filter item Y/N');
+    $dialog.dialog('option','buttons',{
+        'Delete': function(){
+            $(this).dialog('close');
+            id = parts[6].toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+            $.get(link,function(response){
+                if(response.success == 'True'){
+                    $('#'+id).empty().remove();
+                }else{
+                    window.scroll(0,0);
+                    $("#in-progress").html(response.html).fadeIn(50).delay(15000).slideToggle('fast');
+                }
+            },'json');
+        },Cancel: function(){
+            $(this).dialog('close');
+        }
+    });
+    $dialog.dialog('open');
+}
+
