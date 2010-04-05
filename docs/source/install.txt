@@ -28,16 +28,6 @@ Run the command from the mysql prompt::
     mysql> GRANT ALL ON baruwa.* TO baruwa@localhost IDENTIFIED BY '<password>';
     mysql> flush privileges;
 
-**Edit and install MailWatch.pm**
-
-Edit extras/MailWatch.pm and set the variables $db_user to 'baruwa' and
-$db_pass to the password you set above. Then move extras/MailWatch.pm
-to your MailScanner custom functions directory which may be in the following
-locations.
-
-    + /usr/lib/MailScanner/MailScanner/CustomFunctions 
-    + /opt/MailScanner/lib/MailScanner/MailScanner/CustomFunctions
-
 **Create an Admin user**
 
 Run the commands from the mysql prompt::
@@ -111,7 +101,21 @@ To the correct file name.
 
     TODO
 
-**Setup MailScanner**
+.. _setupmailscanner:
+
+Setup MailScanner
+=================
+
+**Edit and install MailWatch.pm**
+
+Edit extras/MailWatch.pm and set the variables $db_user to 'baruwa' and
+$db_pass to the password you set above. Then move extras/MailWatch.pm
+to your MailScanner custom functions directory which may be in the following
+locations.
+
+    + /usr/lib/MailScanner/MailScanner/CustomFunctions 
+    + /opt/MailScanner/lib/MailScanner/MailScanner/CustomFunctions
+
 
 Stop MailScanner::
 

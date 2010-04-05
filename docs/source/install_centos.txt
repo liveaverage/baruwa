@@ -39,6 +39,10 @@ Create the database user::
     mysql> GRANT ALL ON baruwa.* TO baruwa@localhost IDENTIFIED BY '<password>';
     mysql> flush privileges;
 
+Configure MailScanner
+=====================
+
+:ref:`Configure <setupmailscanner>` MailScanner if you have not already done so.
 
 Configure Baruwa
 ================
