@@ -6,6 +6,6 @@ include NOTICE
 include ChangeLog
 include BSD-LICENSE
 include MANIFEST.in
-include baruwa/baruwa.wsgi
-recursive-include baruwa/templates *
-recursive-include baruwa/static *
+include src/baruwa/baruwa.wsgi
+recursive-include src/baruwa/templates *
+recursive-include src/baruwa/static *
