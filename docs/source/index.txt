@@ -10,5 +10,6 @@ Contents:
    requirements.txt
    install.txt
    migration.txt
+   distributed_setup.txt
    users.txt
 
