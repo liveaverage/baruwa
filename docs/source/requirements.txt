@@ -12,6 +12,7 @@ Baruwa requirements
     + `iPy <http://software.inl.fr/trac/wiki/IPy>`_
     + Any Web server that can run Django (`Apache <http://httpd.apache.org/>`_/`mod_wsgi <http://code.google.com/p/modwsgi/>`_ recommended)
     + `MySQL <http://www.mysql.com>`_
+    + `Sphinx <http://sphinx.pocoo.org/>`_ (Optional - to build documentation)
 
 MailScanner requirements
 ========================

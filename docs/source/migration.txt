@@ -96,6 +96,6 @@ Distribution / OS migration
 ===========================
 
     + :ref:`migrationcentos`.
-    + Fedora
+    + :ref:`migrationfedora`.
     + Debian
 

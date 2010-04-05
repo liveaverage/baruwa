@@ -32,9 +32,11 @@ Run the command from the mysql prompt::
 
 Edit extras/MailWatch.pm and set the variables $db_user to 'baruwa' and
 $db_pass to the password you set above. Then move extras/MailWatch.pm
-to your MailScanner custom functions directory which is 
-/usr/lib/MailScanner/MailScanner/CustomFunctions or 
-/opt/MailScanner/lib/MailScanner/MailScanner/CustomFunctions
+to your MailScanner custom functions directory which may be in the following
+locations.
+
+    + /usr/lib/MailScanner/MailScanner/CustomFunctions 
+    + /opt/MailScanner/lib/MailScanner/MailScanner/CustomFunctions
 
 **Create an Admin user**
 
@@ -42,7 +44,8 @@ Run the commands from the mysql prompt::
 
     # mysql baruwa -u baruwa -p
     Enter password: ******
-    mysql> INSERT INTO users (username,password,type) VALUES ('<username>',md5('<password>'),'<name>','A');
+    mysql> INSERT INTO users (username,password,type) 
+    mysql> VALUES ('<username>',md5('<password>'),'<name>','A');
 
 **Install Baruwa**
 
@@ -158,6 +161,6 @@ Distribution / OS installation
 ==============================
 
     + :ref:`installcentos`.
-    + Fedora
+    + :ref:`installfedora`.
     + Debian
 
