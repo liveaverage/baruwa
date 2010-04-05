@@ -19,7 +19,8 @@ Update the database::
 
 Set the privileges for the new tables::
 
-    mysql> GRANT ALL ON <mailwatch_database>.* TO <mailwatch_user>@localhost IDENTIFIED BY '<mailwatch_password>';
+    mysql> GRANT ALL ON <mailwatch_database>.* TO 
+    mysql> <mailwatch_user>@localhost IDENTIFIED BY '<mailwatch_password>';
     mysql> flush privileges;
 
 Configure Baruwa

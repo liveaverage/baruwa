@@ -17,7 +17,8 @@ and untar it::
 
 **Set the privileges for new tables**::
 
-    mysql> GRANT ALL ON <mailwatch_database>.* TO <mailwatch_user>@localhost IDENTIFIED BY '<mailwatch_password>';
+    mysql> GRANT ALL ON <mailwatch_database>.* TO 
+    mysql> <mailwatch_user>@localhost IDENTIFIED BY '<mailwatch_password>';
     mysql> flush privileges;
 
 **Install Baruwa**

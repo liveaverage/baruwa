@@ -141,9 +141,10 @@ To actually quarantine and later process messages with in baruwa, set
 
 Edit extras/SQLBlackWhiteList.pm and set the variables $db_user to 'baruwa' and
 $db_pass to the password you set above. The move extras/SQLBlackWhiteList.pm to
-your MailScanner custom functions directory which is
-/usr/lib/MailScanner/MailScanner/CustomFunctions or
-/opt/MailScanner/lib/MailScanner/MailScanner/CustomFunctions
+your MailScanner custom functions directory which may be one of the following.
+
+    + /usr/lib/MailScanner/MailScanner/CustomFunctions
+    + /opt/MailScanner/lib/MailScanner/MailScanner/CustomFunctions
 
 Next edit the MailScanner config file /etc/MailScanner/MailScanner.conf, and
 set the following options::
