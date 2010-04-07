@@ -28,21 +28,21 @@
 {% if add_filter %}
 Accounts add filter
 {% else %}
-Accounts viewing user {%if target_user %}{{target_user}}{% else %}{{user.username}}{% endif %}
+Accounts viewing user {%if target_user %}{{target_user}}{% else %}{{ user.username }}{% endif %}
 {% endif %}
 {% endblock title %}
 {% block heading %}
 {% if add_filter %}
 Accounts :: Add filter
 {% else %}
-Accounts :: viewing user {%if target_user %}{{target_user}}{% else %}{{user.username}}{% endif %}
+Accounts :: viewing user {%if target_user %}{{target_user}}{% else %}{{ user.username }}{% endif %}
 {% endif %}
 {% endblock heading %}
 {% block add_item %}
 {% if add_filter %}
 <form id="filter_form" method="post" action="{% url process-filter target_user %}">
-<input type="hidden" name="username" id="id_username" value="{{target_user}}" />
-{{form.verify_key}}
+<input type="hidden" name="username" id="id_username" value="{{ target_user }}" />
+{{ form.verify_key }}
 <div class="cb">&nbsp;</div>
 <div class="row">
     <label>Filter</label>:
@@ -59,9 +59,9 @@ Accounts :: viewing user {%if target_user %}{{target_user}}{% else %}{{user.user
 <div class="cb">&nbsp;</div>
 {% else %}
 {%if target_user %}
-<form method="post" action="/accounts/user/{{target_user}}/">
+<form method="post" action="/accounts/user/{{ target_user }}/">
 {%else%}
-<form method="post" action="/accounts/user/{{user.username}}/">
+<form method="post" action="/accounts/user/{{ user.username }}/">
 {%endif%}
 {% include "accounts/form.html" %}
 {% endif %}
@@ -88,9 +88,9 @@ Accounts :: viewing user {%if target_user %}{{target_user}}{% else %}{{user.user
     </thead>
     <tbody>
         {% for item in filters %}
-        <tr id="{{item.filter|slugify}}">
-            <td class="first-t">{{item.filter}}</td>
-            <td class="first-t">{{item.active}}</td>
+        <tr id="{{ item.filter|slugify }}">
+            <td class="first-t">{{ item.filter }}</td>
+            <td class="first-t">{{ item.active }}</td>
             <td class="first-t">{% if user.is_superuser %}<a href="{% url delete-filter target_user item.filter %}">Delete</a>{%else%}Delete{%endif%}</td>
         </tr>
         {% empty %}

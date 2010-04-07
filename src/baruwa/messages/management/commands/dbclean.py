@@ -16,16 +16,15 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
-from django.db import models
 
-class SavedFilters(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.TextField(unique=True)
-    col = models.TextField(unique=True)
-    operator = models.TextField(unique=True)
-    value = models.TextField(unique=True)
-    username = models.TextField(unique=True)
+from django.core.management.base import NoArgsCommand
 
-    class Meta:
-        db_table = u'saved_filters'
+class Command(NoArgsCommand):
+    help = "Deletes records older than 60 days from the maillog table"
 
+    def handle_noargs(self, **options):
+        import datetime
+        from baruwa.messages.models import Maillog
+        interval = datetime.timedelta(days=60)
+        last_date = datetime.datetime.now() - interval
+        Maillog.objects.filter(timestamp__lt=last_date).delete()

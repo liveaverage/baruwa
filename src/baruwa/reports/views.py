@@ -78,30 +78,30 @@ def object_user_filter(user,user_type,addresses):
     return q
 
 def user_filter(user,model,addresses,user_type):
-    if not user.is_superuser:
-        q = Q()
-        if user_type == 'D':
-            if addresses:
-                for domain in addresses:
-                    kw = {'to_domain__exact':domain.filter}
-                    q = q | Q(**kw)
-                    #account for imbound scanning only
-                    #kw = {'from_domain__exact':domain.filter}
-                    #q = q | Q(**kw)
-                model = model.filter(q)
-            else:
-                model = model.filter(to_domain__exact=user.username)
-        if user_type == 'U':
-            #model = model.filter(Q(to_address__exact=user.username)|Q(from_address__exact=user.username))
-            if addresses:
-                for email in addresses:
-                    kw = {'to_address__exact':email.filter}
-                    q = q | Q(**kw)
-                kw = {'to_address__exact':user.username}
+    #if not user.is_superuser:
+    q = Q()
+    if user_type == 'D':
+        if addresses:
+            for domain in addresses:
+                kw = {'to_domain__exact':domain.filter}
                 q = q | Q(**kw)
-                model = model.filter(q)
-            else:
-                model = model.filter(to_address__exact=user.username)
+                #account for imbound scanning only
+                #kw = {'from_domain__exact':domain.filter}
+                #q = q | Q(**kw)
+            model = model.filter(q)
+        else:
+            model = model.filter(to_domain__exact=user.username)
+    if user_type == 'U':
+        #model = model.filter(Q(to_address__exact=user.username)|Q(from_address__exact=user.username))
+        if addresses:
+            for email in addresses:
+                kw = {'to_address__exact':email.filter}
+                q = q | Q(**kw)
+            kw = {'to_address__exact':user.username}
+            q = q | Q(**kw)
+            model = model.filter(q)
+        else:
+            model = model.filter(to_address__exact=user.username)
     return model
 
 def r_query(filter_list,active_filters=None):

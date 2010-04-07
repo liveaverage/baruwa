@@ -128,7 +128,7 @@ def release_mail(mail_path, to_addr, from_addr):
 
 def sa_learn(mail_path, learn_as):
     """
-    Spam assassin learn a message
+    Spam assassin learns a message
     """
     learn = "--%s" % learn_as
     SA_LEARN = ['/usr/bin/sa-learn',learn,mail_path]
@@ -148,10 +148,9 @@ def sa_learn(mail_path, learn_as):
 
 def get_config_option(search_option):
     """
-    Return a MailScanner config setting from the
+    Returns a MailScanner config setting from the
     config file
     """
-    #config = settings.MS_CONFIG
     config = getattr(settings, 'MS_CONFIG', '/etc/MailScanner/MailScanner.conf')
     COMMENT_CHAR = '#'
     OPTION_CHAR =  '='
@@ -203,7 +202,8 @@ def host_is_local(host):
 
 def rest_request(host,resource,method,headers,params=None):
     """
-    Performs a REST request
+    Performs a REST request and returns a JSON representation
+    of the result.
     """
     data = ''
 

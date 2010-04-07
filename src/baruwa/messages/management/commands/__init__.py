@@ -16,16 +16,3 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
-from django.db import models
-
-class SavedFilters(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.TextField(unique=True)
-    col = models.TextField(unique=True)
-    operator = models.TextField(unique=True)
-    value = models.TextField(unique=True)
-    username = models.TextField(unique=True)
-
-    class Meta:
-        db_table = u'saved_filters'
-

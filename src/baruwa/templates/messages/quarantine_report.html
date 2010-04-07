@@ -1,0 +1,66 @@
+<html>
+<body leftmagin="0" maginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor='#FFFFFF' >
+<STYLE>
+ a { color:#FF6600; color:#FF6600; color:#FF6600; }
+</STYLE>
+<table width="100%" cellpadding="10" cellspacing="0" bgcolor='#FFFFFF'>
+    <tr>
+    <td valign="center" align="center">
+    <table width="550" cellpadding="0" cellspacing="0">
+        <tr>
+            <td style="background-color:#FFFFFF;border-top:0px solid #333333;">
+            <h1 style="color:#525252; padding-left:10px; padding-top:5px; padding-bottom:5px; padding-right:10px;">Baruwa</h1>
+            </td>
+        </tr>
+    </table>
+    <table width="550" cellpadding="10" cellspacing="0" bgcolor="#FFFFFF" style="border-bottom:1px solid #DDDDDD;border-top:1px solid #DDDDDD;border-left:1px solid #DDDDDD;border-right:1px solid #DDDDDD;">
+        <tr>
+            <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                From
+            </td>
+            <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                To
+            </td>
+            <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                Subject
+            </td>
+            <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                Reason
+            </td>
+            <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                View
+            </td>
+        </tr>
+        {% load messages_extras %}
+        {% for item in items %}
+        <tr bgcolor="{% cycle '#FFFFFF' '#EEEEEE' %}">
+            <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                {{ item.from_address|tds_wrap:50 }}
+            </td>
+            <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                {{ item.to_address|tds_wrap:50 }}
+            </td>
+            <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                {{ item.subject|striptags|escape|tds_trunc:45 }}
+            </td>
+            <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+            {% if item.isspam and not item.spamblacklisted and not item.virusinfected and not item.nameinfected and not item.otherinfected %}Spam{% endif %}{% if item.spamblacklisted %}Blacklisted{%endif%}{% if item.virusinfected or item.nameinfected or item.otherinfected %}Infected{% endif %}
+            </td>
+            <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                <a style="text-decoration:none;" href="{% if host_url %}{{ host_url }}{% endif %}{% url message-detail item.id %}">View</a>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="5" style="background-color:#FFFFCC;border-top:10px;" valign="center">
+                <span style="font-size:10px;color:#996600;line-height:10%;font-family:verdana;">
+                    &copy; 2010 Powered by <a style="text-decoration:none;" href="http://www.topdog.za.net/baruwa">Baruwa</a>
+                </span>
+            </td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+</body>
+</html>

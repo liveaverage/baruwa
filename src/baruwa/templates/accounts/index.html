@@ -50,9 +50,9 @@ Accounts
     <tr>
     {% endif %}
         <td class="first-t">[<a href="/accounts/user/{{item.username}}/">&nbsp;&nbsp;</a>]</td>
-        <td class="first-t">{{item.username}}</td>
-        <td class="first-t">{{item.fullname}}</td>
-        <td class="first-t">{{item.get_type_display}}</td>
+        <td class="first-t">{{ item.username }}</td>
+        <td class="first-t">{{ item.fullname }}</td>
+        <td class="first-t">{{ item.get_type_display }}</td>
     </tr>
     {% empty %}
     <tr>

@@ -58,6 +58,7 @@ class Maillog(models.Model):
     time = models.TextField(blank=True) # This field type is a guess.
     headers = models.TextField(blank=True)
     quarantined = models.IntegerField(null=True, blank=True)
+
     class Meta:
         db_table = 'maillog'
         get_latest_by = "timestamp"
@@ -85,5 +86,6 @@ class Maillog(models.Model):
 class SaRules(models.Model):
     rule = models.CharField(max_length=100, primary_key=True)
     rule_desc = models.CharField(max_length=200)
+
     class Meta:
         db_table = u'sa_rules'

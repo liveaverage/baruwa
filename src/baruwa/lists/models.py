@@ -24,6 +24,7 @@ class Blacklist(models.Model):
     to_address = models.TextField(unique=True, blank=True)
     to_domain = models.TextField(blank=True)
     from_address = models.TextField(unique=True, blank=True)
+
     class Meta:
         db_table = u'blacklist'
         get_latest_by = "id"
@@ -38,6 +39,7 @@ class Whitelist(models.Model):
     to_address = models.TextField(unique=True, blank=True)
     to_domain = models.TextField(blank=True)
     from_address = models.TextField(unique=True, blank=True)
+
     class Meta:
         db_table = u'whitelist'
         get_latest_by = "id"

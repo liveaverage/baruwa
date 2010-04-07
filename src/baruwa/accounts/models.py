@@ -39,6 +39,7 @@ class UserFilters(models.Model):
     filter = models.TextField()
     verify_key = models.CharField(max_length=96,blank=True)
     active = models.CharField(max_length=1,choices=ACTIVE_CHOICES,default='N')
+
     class Meta:
         db_table = u'user_filters'
 
@@ -52,5 +53,6 @@ class Users(models.Model):
     highspamscore = models.IntegerField(null=True, blank=True,default=0)
     noscan = models.IntegerField(null=True, blank=True)
     quarantine_rcpt = models.CharField(max_length=60, blank=True)
+
     class Meta:
         db_table = u'users'
