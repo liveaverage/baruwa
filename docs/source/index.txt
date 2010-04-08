@@ -15,5 +15,6 @@ Contents:
     migration_centos.txt
     migration_fedora.txt
     distributed_setup.txt
+    batteries_included.txt
     users.txt
 

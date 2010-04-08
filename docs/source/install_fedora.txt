@@ -30,7 +30,7 @@ Configure MailScanner
 Configure Baruwa
 ================
 
-Edit /usr/lib/python2.4/site-packages/baruwa/settings.py and 
+Edit /usr/lib/python2.6/site-packages/baruwa/settings.py and 
 set the mysql database details::
 
     DATABASE_ENGINE = 'mysql'           

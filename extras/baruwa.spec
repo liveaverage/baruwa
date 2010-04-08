@@ -31,7 +31,7 @@ charts.
 %{__python} setup.py build
 cd docs
 %{__make} html
-
+%{__sed} -i ':/usr/lib/python2.4/site-packages/:%{python_sitelib}/:' extras/baruwa-mod_wsgi.conf
 
 %install
 rm -rf $RPM_BUILD_ROOT

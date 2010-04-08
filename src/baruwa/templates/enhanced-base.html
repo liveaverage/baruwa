@@ -5,6 +5,8 @@
 <title>Baruwa :: {% block title %}{% endblock title %}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="/static/css/layout.css" />
+<link rel="icon" href="/static/imgs/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/static/imgs/favicon.ico" type="image/x-icon" /> 
 {% block headers %}{% endblock headers %}
 </head>
 <body{%block body_class%}{%endblock body_class%}>
@@ -24,9 +26,6 @@
         <li><a href="{% url logout %}">Logout</a></li>
         </ul>
      </div>
-        <!--<ul id="header_links">
-            <li>logout</li>
-        </ul>-->
     </div><!-- header -->
   </div><!-- header-wrapper -->
   <div id="content-wrapper">

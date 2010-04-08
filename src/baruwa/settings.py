@@ -87,12 +87,12 @@ INSTALLED_APPS = (
     'baruwa.messages',
     'baruwa.lists',
     'baruwa.reports',
-    'baruwa.mwauth',
+    'baruwa.auth',
     #'debug_toolbar',
 )
 
 AUTHENTICATION_BACKENDS = (
-    'baruwa.mwauth.mailwatchauth.MailwatchBackend',
+    'baruwa.auth.backends.MailwatchBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
