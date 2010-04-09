@@ -113,7 +113,7 @@ def user_account(request,user_name=None,add_filter=False):
         except:
             error_msg = 'The account could not be updated'
         else:
-            if updated_user_object.password != 'XXXXXXXXXX':
+            if updated_user_object.password != 'XXXXXXXXXX' and user_object.password != '':
                 m = md5.new(updated_user_object.password)
                 hashv = m.hexdigest()
                 updated_user_object.password = hashv
@@ -134,12 +134,17 @@ def user_account(request,user_name=None,add_filter=False):
                 form = UserForm(instance=user_object)
             else:
                 form = StrippedUserForm(instance=user_object)
+    if user_object.password == '':
+        extern_user = True
+    else:
+        extern_user = False
     return render_to_response('accounts/user.html',{'user':request.user,'form':form,
-        'filters':user_filters,'target_user':user_name,'add_filter':add_filter})
+        'filters':user_filters,'target_user':user_name,'add_filter':add_filter,'auth_type':extern_user})
 
 # modified from django source
 def login(request,redirect_field_name=REDIRECT_FIELD_NAME):
     "Displays the login form and handles the login action."
+    from django.conf import settings
     redirect_to = request.REQUEST.get(redirect_field_name, '')
     if request.method == "POST":
         form = AuthenticationForm(data=request.POST)
@@ -150,7 +155,7 @@ def login(request,redirect_field_name=REDIRECT_FIELD_NAME):
             login(request, form.get_user())
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
-                set_user_filter(form.get_user(),request)
+            set_user_filter(form.get_user(),request)
             return HttpResponseRedirect(redirect_to)
     else:
         form = AuthenticationForm(request)

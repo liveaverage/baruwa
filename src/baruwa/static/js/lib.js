@@ -159,6 +159,9 @@ function confirm_delete(event){
             $.get(link,function(response){
                 if(response.success == 'True'){
                     $('#'+id).empty().remove();
+                    if(!$('.maillog > tbody >tr').length){
+                        $('tbody').append('<tr id="placeholder"><td colspan="3" class="align_center">No filters configured</td></tr>');
+                    }
                 }else{
                     window.scroll(0,0);
                     $("#in-progress").html(response.html).fadeIn(50).delay(15000).slideToggle('fast');

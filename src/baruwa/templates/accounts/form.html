@@ -13,12 +13,16 @@
         {{form.fullname}}
         </span><span class="errors">{{ form.fullname.errors }}</span>
     </div>
+    {% if not auth_type %}
     <div class="row">
         <label>Password</label>:
         <span class="form">
         <input type="password" name="password" value="XXXXXXXXXX" />
         </span><span class="errors">{{ form.password.errors }}</span>
     </div>
+    {% else %}
+    <input type="hidden" name="password" value="XXXXXXXXXX" />
+    {% endif %}
     {% if user.is_superuser %}
     <div class="row">
         <label>Account type</label>:

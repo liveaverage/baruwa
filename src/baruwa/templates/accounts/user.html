@@ -94,12 +94,8 @@ Accounts :: viewing user {%if target_user %}{{target_user}}{% else %}{{ user.use
             <td class="first-t">{% if user.is_superuser %}<a href="{% url delete-filter target_user item.filter %}">Delete</a>{%else%}Delete{%endif%}</td>
         </tr>
         {% empty %}
-        <tr>
-            {% if user.is_superuser %}
-            <td colspan="3" class="align_center">No filters required for Admin accounts</td>
-            {% else %}
+        <tr id="placeholder">
             <td colspan="3" class="align_center">No filters configured</td>
-            {% endif %}
         </tr>
         {% endfor %}
     </tbody>

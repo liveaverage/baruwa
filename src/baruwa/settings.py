@@ -83,7 +83,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    #'django.contrib.sites',
+    'django.contrib.sites',
     'baruwa.messages',
     'baruwa.lists',
     'baruwa.reports',
@@ -93,6 +93,7 @@ INSTALLED_APPS = (
 
 AUTHENTICATION_BACKENDS = (
     'baruwa.auth.backends.MailwatchBackend',
+    'baruwa.auth.backends.MailBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 

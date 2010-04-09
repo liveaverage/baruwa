@@ -12,6 +12,7 @@ function handlePost(event){
             if(response.success == 'True'){
                 url = '/accounts/user/delete/filter/'+response.data[2]+'/'+response.data[0]+'/';
                 id = response.data[0].toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+                $('#placeholder').remove();
                 $('tbody').append('<tr id="'+id+'"><td class="first-t">'+response.data[0]+'</td><td class="first-t">'+response.data[1]+'</td><td class="first-t"><a href="'+url+'">Delete</a></td></tr>');
                 window.scroll(0,0);
                 $("#in-progress").html(response.html).fadeIn(50).delay(15000).slideToggle('fast');

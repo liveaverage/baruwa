@@ -1,3 +1,6 @@
+2010.04.09
+* Added support for POP3, IMAP, SMTP authentication
+
 2010.04.07
 * Cleaned up Code
 * Added new settings for quarantine management
