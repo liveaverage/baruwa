@@ -9,10 +9,9 @@ USE baruwa;
 -- Table structure for table `audit_log`
 --
 
-DROP TABLE IF EXISTS `audit_log`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `audit_log` (
+CREATE TABLE IF NOT EXISTS `audit_log` (
   `timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `user` varchar(20) NOT NULL default '',
   `ip_address` varchar(15) NOT NULL default '',
@@ -24,10 +23,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `auth_group`
 --
 
-DROP TABLE IF EXISTS `auth_group`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `auth_group` (
+CREATE TABLE IF NOT EXISTS `auth_group` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(80) NOT NULL,
   PRIMARY KEY  (`id`),
@@ -39,10 +37,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `auth_group_permissions`
 --
 
-DROP TABLE IF EXISTS `auth_group_permissions`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `auth_group_permissions` (
+CREATE TABLE IF NOT EXISTS `auth_group_permissions` (
   `id` int(11) NOT NULL auto_increment,
   `group_id` int(11) NOT NULL,
   `permission_id` int(11) NOT NULL,
@@ -56,10 +53,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `auth_message`
 --
 
-DROP TABLE IF EXISTS `auth_message`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `auth_message` (
+CREATE TABLE IF NOT EXISTS `auth_message` (
   `id` int(11) NOT NULL auto_increment,
   `user_id` int(11) NOT NULL,
   `message` longtext NOT NULL,
@@ -72,10 +68,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `auth_permission`
 --
 
-DROP TABLE IF EXISTS `auth_permission`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `auth_permission` (
+CREATE TABLE IF NOT EXISTS `auth_permission` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(50) NOT NULL,
   `content_type_id` int(11) NOT NULL,
@@ -89,10 +84,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `auth_user`
 --
 
-DROP TABLE IF EXISTS `auth_user`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `auth_user` (
+CREATE TABLE IF NOT EXISTS `auth_user` (
   `id` int(11) NOT NULL auto_increment,
   `username` varchar(30) NOT NULL,
   `first_name` varchar(30) NOT NULL,
@@ -113,10 +107,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `auth_user_groups`
 --
 
-DROP TABLE IF EXISTS `auth_user_groups`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `auth_user_groups` (
+CREATE TABLE IF NOT EXISTS `auth_user_groups` (
   `id` int(11) NOT NULL auto_increment,
   `user_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
@@ -130,10 +123,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `auth_user_user_permissions`
 --
 
-DROP TABLE IF EXISTS `auth_user_user_permissions`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `auth_user_user_permissions` (
+CREATE TABLE IF NOT EXISTS `auth_user_user_permissions` (
   `id` int(11) NOT NULL auto_increment,
   `user_id` int(11) NOT NULL,
   `permission_id` int(11) NOT NULL,
@@ -147,10 +139,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `blacklist`
 --
 
-DROP TABLE IF EXISTS `blacklist`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `blacklist` (
+CREATE TABLE IF NOT EXISTS `blacklist` (
   `id` int(11) NOT NULL auto_increment,
   `to_address` text,
   `to_domain` text,
@@ -164,10 +155,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `django_content_type`
 --
 
-DROP TABLE IF EXISTS `django_content_type`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `django_content_type` (
+CREATE TABLE IF NOT EXISTS `django_content_type` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(100) NOT NULL,
   `app_label` varchar(100) NOT NULL,
@@ -181,10 +171,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `django_session`
 --
 
-DROP TABLE IF EXISTS `django_session`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `django_session` (
+CREATE TABLE IF NOT EXISTS `django_session` (
   `session_key` varchar(40) NOT NULL,
   `session_data` longtext NOT NULL,
   `expire_date` datetime NOT NULL,
@@ -196,10 +185,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `maillog`
 --
 
-DROP TABLE IF EXISTS `maillog`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `maillog` (
+CREATE TABLE IF NOT EXISTS `maillog` (
   `timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `id` mediumtext,
   `size` bigint(20) default '0',
@@ -249,13 +237,65 @@ CREATE TABLE `maillog` (
 SET character_set_client = @saved_cs_client;
 
 --
+-- Table structure for table archibe
+--
+
+CREATE TABLE IF NOT EXISTS `archive` (
+  `timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `id` mediumtext,
+  `size` bigint(20) default '0',
+  `from_address` mediumtext,
+  `from_domain` mediumtext,
+  `to_address` mediumtext,
+  `to_domain` mediumtext,
+  `subject` mediumtext,
+  `clientip` mediumtext,
+  `archive` mediumtext,
+  `isspam` tinyint(1) default '0',
+  `ishighspam` tinyint(1) default '0',
+  `issaspam` tinyint(1) default '0',
+  `isrblspam` tinyint(1) default '0',
+  `isfp` tinyint(1) default '0',
+  `isfn` tinyint(1) default '0',
+  `spamwhitelisted` tinyint(1) default '0',
+  `spamblacklisted` tinyint(1) default '0',
+  `sascore` decimal(7,2) default '0.00',
+  `spamreport` mediumtext,
+  `virusinfected` tinyint(1) default '0',
+  `nameinfected` tinyint(1) default '0',
+  `otherinfected` tinyint(1) default '0',
+  `report` mediumtext,
+  `ismcp` tinyint(1) default '0',
+  `ishighmcp` tinyint(1) default '0',
+  `issamcp` tinyint(1) default '0',
+  `mcpwhitelisted` tinyint(1) default '0',
+  `mcpblacklisted` tinyint(1) default '0',
+  `mcpsascore` decimal(7,2) default '0.00',
+  `mcpreport` mediumtext,
+  `hostname` mediumtext,
+  `date` date default NULL,
+  `time` time default NULL,
+  `headers` mediumtext,
+  `quarantined` tinyint(1) default '0',
+  KEY `archive_datetime_idx` (`date`,`time`),
+  KEY `archive_id_idx` (`id`(20)),
+  KEY `archive_clientip_idx` (`clientip`(20)),
+  KEY `archive_from_idx` (`from_address`(200)),
+  KEY `archive_to_idx` (`to_address`(200)),
+  KEY `archive_host` (`hostname`(30)),
+  KEY `from_domain_idx` (`from_domain`(50)),
+  KEY `to_domain_idx` (`to_domain`(50)),
+  KEY `archive_quarantined` (`quarantined`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `mcp_rules`
 --
 
-DROP TABLE IF EXISTS `mcp_rules`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `mcp_rules` (
+CREATE TABLE IF NOT EXISTS `mcp_rules` (
   `rule` char(100) NOT NULL default '',
   `rule_desc` char(200) NOT NULL default '',
   PRIMARY KEY  (`rule`)
@@ -266,10 +306,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `sa_rules`
 --
 
-DROP TABLE IF EXISTS `sa_rules`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `sa_rules` (
+CREATE TABLE IF NOT EXISTS `sa_rules` (
   `rule` varchar(100) NOT NULL default '',
   `rule_desc` varchar(200) NOT NULL default '',
   PRIMARY KEY  (`rule`)
@@ -280,10 +319,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `saved_filters`
 --
 
-DROP TABLE IF EXISTS `saved_filters`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `saved_filters` (
+CREATE TABLE IF NOT EXISTS `saved_filters` (
   `id` int(11) NOT NULL auto_increment,
   `name` text NOT NULL,
   `col` text NOT NULL,
@@ -299,10 +337,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `spamscores`
 --
 
-DROP TABLE IF EXISTS `spamscores`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `spamscores` (
+CREATE TABLE IF NOT EXISTS `spamscores` (
   `user` varchar(40) NOT NULL default '',
   `lowspamscore` decimal(10,0) NOT NULL default '0',
   `highspamscore` decimal(10,0) NOT NULL default '0',
@@ -314,10 +351,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `user_filters`
 --
 
-DROP TABLE IF EXISTS `user_filters`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `user_filters` (
+CREATE TABLE IF NOT EXISTS `user_filters` (
   `id` int(11) NOT NULL auto_increment,
   `username` varchar(60) NOT NULL default '',
   `filter` text,
@@ -332,10 +368,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(60) NOT NULL default '',
   `password` varchar(32) default NULL,
   `fullname` varchar(50) NOT NULL default '',
@@ -353,10 +388,9 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `whitelist`
 --
 
-DROP TABLE IF EXISTS `whitelist`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-CREATE TABLE `whitelist` (
+CREATE TABLE IF NOT EXISTS `whitelist` (
   `id` int(11) NOT NULL auto_increment,
   `to_address` text,
   `to_domain` text,

@@ -1,6 +1,7 @@
 #
 # Baruwa
 # Copyright (C) 2010  Andrew Colin Kissa
+# Copyright (C) 2003  Steve Freegard (smf@f2s.com)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,8 +24,15 @@ class Command(NoArgsCommand):
     help = "Deletes records older than 60 days from the maillog table"
 
     def handle_noargs(self, **options):
-        import datetime
-        from baruwa.messages.models import Maillog
-        interval = datetime.timedelta(days=60)
-        last_date = datetime.datetime.now() - interval
-        Maillog.objects.filter(timestamp__lt=last_date).delete()
+        from django.db import connection
+        #import datetime
+        #from baruwa.messages.models import Maillog
+        #interval = datetime.timedelta(days=60)
+        #last_date = datetime.datetime.now() - interval
+        #Maillog.objects.filter(timestamp__lt=last_date).delete()
+
+        c = connection.cursor()
+        c.execute('INSERT LOW_PRIORITY INTO archive SELECT * FROM maillog WHERE timestamp < DATE_SUB(CURDATE(), INTERVAL 60 DAY)')
+        c.execute('DELETE LOW_PRIORITY FROM maillog WHERE timestamp < DATE_SUB(CURDATE(), INTERVAL 60 DAY)')
+        c.execute('OPTIMIZE TABLE maillog')
+        c.execute('OPTIMIZE TABLE archive')
