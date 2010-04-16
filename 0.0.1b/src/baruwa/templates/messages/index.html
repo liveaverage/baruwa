@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block headers %}
+<script type="text/javascript" language="javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="/static/js/jquery.address.js"></script>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var last_ts = '';
+var full_messages_listing = false;
+var rj;
+var ax_error = false;
+var ax_in_progress = false;
+//]]>
+</script>
+<script type="text/javascript" language="javascript" src="/static/js/lib.js"></script>
+{% if not list_all %}
+<script type="text/javascript" language="javascript" src="/static/js/recent_messages.js"></script>
+{% else %}
+<script type="text/javascript" language="javascript" src="/static/js/messages.js"></script>
+{% endif %}
+{% endblock headers %}
+{% block submenu %}
+<ul>
+  <li><a href="/messages/full/">Full message list</a></li>
+  <li><a href="/messages/quarantine/">Quarantine</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+{% if list_all %} 
+{% load pagination_heading %}{% pagination_heading %}
+{% else %}
+Showing the 50 most recent messages
+{% endif %}
+{% endblock title %}
+{% block heading %}
+{% if list_all %}
+{% load pagination_heading %}{% pagination_heading %}{%if active_filters %}(<small><a href="/reports/#active_filters">Filters</a> have been applied</small>){%endif%}
+{% else %}
+Showing the 50 most recent messages 
+<small>
+    <span id="search-area">
+    [updated every 60 sec's <span class="nojs">Not updating enable javascript</span>]
+    </span>
+</small>
+{% endif %}
+{% endblock heading %}
+{% block content %}
+<table class="maillog" id="recent">
+<thead>
+<tr class="header">
+{% if list_all %}
+{% load sorter %}
+	<th class="first-t">#</th>
+  {% sorter "timestamp" "Date/Time" %}
+  {% sorter "from_address" "From" %}
+  {% sorter "to_address" "To" %}
+  {% sorter "subject" "Subject" %}
+  {% sorter "size" "Size" %}
+  {% sorter "sascore" "Score" %}
+  <th>Status</th>
+{% else %}
+	<th class="first-t">#</th>
+	<th>Date/Time</th>
+	<th>From</th>
+	<th>To</th>
+	<th>Subject</th>
+	<th>Size</th>
+	<th>Score</th>
+	<th>Status</th>
+{% endif %}
+</tr>
+</thead>
+{% if list_all %}
+<tfoot>
+  <tr class="header">
+  <td colspan="8">
+  <div id="ofhl">
+  {% if active_filters %}
+    <b>Filters have been applied :</b>
+    <span id="fhl" style="display:inline;">
+    {% for f in active_filters %}
+    "<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
+    {% endfor %}
+    </span>
+  {% endif %}
+  </div>
+  <div id="paginator">
+  {% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+  </div>
+  </td>
+  </tr>
+</tfoot>
+{% endif %}
+<tbody>
+{% if object_list %}
+	{% load messages_extras %}
+	{% for message in object_list %}
+	<tr{% if message.isspam and not message.ishighspam and not message.spamblacklisted and not message.nameinfected and not message.otherinfected and not message.virusinfected %} class="spam"{% endif %}
+    {% if message.ishighspam and not message.spamblacklisted %} class="highspam"{% endif %}
+    {% if message.spamwhitelisted %} class="whitelisted"{% endif %}
+    {% if message.spamblacklisted %} class="blacklisted"{% endif %}
+    {% if message.nameinfected or message.virusinfected %} class="infested"{% endif %}>
+	<td class="first-t">[<a href="/messages/{{ message.id }}/">&nbsp;&nbsp;</a>]</td>
+	<td>{{ message.timestamp }}</td>
+	<td>{{ message.from_address|tds_trunc:30 }}</td>
+	<td>{{ message.to_address|tds_nl_commas|linebreaksbr }}</td>
+	<td>{{ message.subject|striptags|escape|tds_trunc:45 }}</td>
+	<td>{{ message.size|filesizeformat }}</td>
+	<td>{{ message.sascore }}</td>
+	<td>
+    {% if message.isspam and not message.spamblacklisted and not message.virusinfected and not message.nameinfected and not message.otherinfected %}Spam{% endif %}
+    {% if message.spamblacklisted %}BL{%endif%}
+    {% if message.virusinfected or message.nameinfected or message.otherinfected %}Infected{% endif %}
+    {% if not message.isspam and not message.virusinfected and not message.nameinfected and not message.otherinfected and not message.spamwhitelisted %}Clean{% endif %}
+    {% if message.spamwhitelisted %}WL{%endif%}
+    </td>
+	</tr>
+	{% endfor %}
+{% else %}
+    <tr><td colspan="8" class="align_center">No records returned</td></tr>
+{% endif %}
+</tbody>
+</table>
+{% endblock content %}

@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Baruwa :: {% block title %}{% endblock title %}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/static/css/layout.css" />
+{% block headers %}{% endblock headers %}
+</head>
+<body{%block body_class%}{%endblock body_class%}>
+<div id="in-progress" style="display:none;"></div>
+<div id="main-wrapper">
+  <div id="header-wrapper">
+    <div id="header">
+     <div id="logo">
+     <h1>Baruwa</h1>
+     </div>
+     <div id="header_links">
+        <ul>
+        <li>Signed in as <a href="{% url accounts %}user/{{user.username}}/">{{user.username}}</a></li>
+        {% if user.is_superuser %}
+        <li><a href="{% url accounts %}">Accounts</a></li>
+        {% endif %}
+        <li><a href="{% url logout %}">Logout</a></li>
+        </ul>
+     </div>
+        <!--<ul id="header_links">
+            <li>logout</li>
+        </ul>-->
+    </div><!-- header -->
+  </div><!-- header-wrapper -->
+  <div id="content-wrapper">
+    <div id="tabs">
+      <ul class="ui-tabs-nav">
+        <li><a href="/messages/"><span>Messages</span></a></li>
+        <li><a href="/lists/"><span>Lists</span></a></li>
+        <li><a href="/reports/"><span>Reports</span></a></li>
+        <li><a href="/status/"><span>Status</span></a></li>
+      </ul>
+    </div><!-- tabs -->
+    <div id="sub-menu">
+      <div id="sub-menu-links">{% block submenu %}{%endblock submenu %}</div>
+      <div class="cb"></div>
+    </div>
+    <div class="cb">&nbsp;</div>
+    <div id="divider-header" class="divider-header">
+      <h3>{% block heading %}{% endblock heading %}</h3>
+      <span id="my-spinner"></span>
+    </div>
+    <div class="cb">&nbsp;</div>
+    <div id="content-layout">
+    {% block content %}{%endblock content %}
+    </div>
+  </div><!-- content-wrapper -->
+  <div class="cb footer-placeholder"></div>
+</div><!-- main-wrapper -->
+<div id="footer-wrapper">
+	<div id="footer">
+	<a href="http://www.topdog.za.net/baruwa">Baruwa</a> &copy; Andrew Colin Kissa
+	</div><!-- footer -->
+</div><!-- footer-wrapper -->
+<div id="loading_message" class="loading_message" style="display:none;">
+</div>
+</body>
+</html>

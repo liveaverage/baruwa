@@ -1,0 +1,107 @@
+{% extends "enhanced-base.html" %}
+{% block headers %}
+<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-custom.css" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script type="text/javascript" language="javascript" src="/static/js/lib.js"></script>
+{% if not add_filter %}
+<script type="text/javascript" src="/static/js/user.js"></script>
+{% else %}
+<script type="text/javascript" src="/static/js/filters.js"></script>
+{% endif %}
+{% endblock headers %}
+{% block submenu %}
+{% if not add_filter %}
+<ul>
+  <li><a id="user-update" href="#">Update account</a></li>
+{% if user.is_superuser %}
+{% ifnotequal user.username target_user %}
+  <li><a id="filter-add" href="{% url add-filter target_user %}">Add filter</a></li>
+{% endifnotequal %}
+{% endif %}
+</ul>
+{% else %}
+&nbsp;
+{% endif %}
+{% endblock submenu %}
+{% block title %}
+{% if add_filter %}
+Accounts add filter
+{% else %}
+Accounts viewing user {%if target_user %}{{target_user}}{% else %}{{user.username}}{% endif %}
+{% endif %}
+{% endblock title %}
+{% block heading %}
+{% if add_filter %}
+Accounts :: Add filter
+{% else %}
+Accounts :: viewing user {%if target_user %}{{target_user}}{% else %}{{user.username}}{% endif %}
+{% endif %}
+{% endblock heading %}
+{% block add_item %}
+{% if add_filter %}
+<form id="filter_form" method="post" action="{% url process-filter target_user %}">
+<input type="hidden" name="username" id="id_username" value="{{target_user}}" />
+{{form.verify_key}}
+<div class="cb">&nbsp;</div>
+<div class="row">
+    <label>Filter</label>:
+    <span class="form">
+    {{form.filter}}
+    </span><span class="errors">{{ form.filter.errors }}</span>
+</div>
+<div class="row">
+    <label>Active</label>:
+    <span class="form">
+    {{form.active}}
+    </span><span class="errors">{{ form.active.errors }}</span>
+</div>
+<div class="cb">&nbsp;</div>
+{% else %}
+{%if target_user %}
+<form method="post" action="/accounts/user/{{target_user}}/">
+{%else%}
+<form method="post" action="/accounts/user/{{user.username}}/">
+{%endif%}
+{% include "accounts/form.html" %}
+{% endif %}
+    <div class="buttons">
+{% if not add_filter %}
+    <input id="cancel-button" type="button" value="Cancel" />&nbsp;
+    <input id="submit-button" type="submit" value="Update" />
+{% else %}
+    <input id="cancel-button" type="reset" value="Reset" />
+    <input id="submit-button" type="submit" value="Add" />
+{% endif %}
+    </div>
+    <div class="cb">&nbsp;</div>
+</form>
+{% endblock add_item %}
+{% block content %}
+<table class="maillog">
+    <thead>
+    <tr class="header">
+        <td class="first-t">Filter name</td>
+        <td class="first-t">Filter status</td>
+        <td class="first-t">Perform actions</td>
+    </tr>
+    </thead>
+    <tbody>
+        {% for item in filters %}
+        <tr id="{{item.filter|slugify}}">
+            <td class="first-t">{{item.filter}}</td>
+            <td class="first-t">{{item.active}}</td>
+            <td class="first-t">{% if user.is_superuser %}<a href="{% url delete-filter target_user item.filter %}">Delete</a>{%else%}Delete{%endif%}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            {% if user.is_superuser %}
+            <td colspan="3" class="align_center">No filters required for Admin accounts</td>
+            {% else %}
+            <td colspan="3" class="align_center">No filters configured</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

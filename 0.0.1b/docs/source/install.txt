@@ -1,0 +1,171 @@
+.. _install:
+
+============
+Installation
+============
+
+Source installation
+===================
+
+Download the `Baruwa <http://www.topdog.za.net/baruwa#downloads>`_ source
+and untar it::
+
+    # tar xzvf baruwa-<version>.tar.gz
+    # cd baruwa-<version>
+
+Make sure you have the required packages installed as well as a working
+MailScanner instalation then proceed. The following commands should be 
+run as a privileged user.
+
+**Create the database**::
+
+    # mysql -p < extras/baruwa-create.sql
+
+**Create a Mysql user for baruwa**
+
+Run the command from the mysql prompt::
+
+    mysql> GRANT ALL ON baruwa.* TO baruwa@localhost IDENTIFIED BY '<password>';
+    mysql> flush privileges;
+
+**Create an Admin user**
+
+Run the commands from the mysql prompt::
+
+    # mysql baruwa -u baruwa -p
+    Enter password: ******
+    mysql> INSERT INTO users (username,password,type) 
+    mysql> VALUES ('<username>',md5('<password>'),'<name>','A');
+
+**Install Baruwa**
+
+Run::
+
+    # python setup.py install
+
+**Configure the Baruwa settings**
+
+Edit the settings.py file which will be installed in the "baruwa" 
+directory inside your Python's site-packages directory, which is 
+located where ever your Python installation lives. Some places 
+to check are:
+
+    + /usr/lib/python2.4/site-packages (Unix, Python 2.4)
+    + /usr/lib/python2.6/site-packages (Unix, Python 2.6)
+    + /opt/local/lib/python2.4/site-packages (MacOSX, Ports Python 2.4)
+
+Set the following options::
+
+    DATABASE_NAME = 'baruwa'
+    DATABASE_USER = 'baruwa'
+    DATABASE_PASSWORD = '<password>'
+    DATABASE_HOST = 'localhost'
+
+If your MailScanner config file is not located in the standard 
+location (/etc/MailScanner/MailScanner.conf) then edit the
+baruwa_settings.py file which is in the same directory as the
+settings.py file and set::
+
+    MS_CONFIG = '/etc/MailScanner/MailScanner.conf'
+
+To the correct file name.
+
+**Setup Web server**
+
+    **Apache/Mod_WSGI**
+
+    Use the sample configuration provided (extras/baruwa-mod_wsgi.conf) 
+    as a template. Copy to your apache configuration directory usually
+    /etc/httpd/conf.d
+
+    Make sure that your apache is configured for name based virtual
+    hosting such that you can run other sites on the same box if you
+    wish to.
+
+    Edit /etc/httpd/conf.d/baruwa-mod_wsgi.conf and set ServerName to
+    the hostname you will use to access baruwa
+
+    Restart apache for the configuration to take effect.::
+
+        # /etc/init.d/httpd reload
+
+    **Apache/Mod_python**
+
+    TODO
+
+    **Lighttpd**
+
+    TODO
+
+    **Nginx**
+
+    TODO
+
+.. _setupmailscanner:
+
+Setup MailScanner
+=================
+
+**Edit and install MailWatch.pm**
+
+Edit extras/MailWatch.pm and set the variables $db_user to 'baruwa' and
+$db_pass to the password you set above. Then move extras/MailWatch.pm
+to your MailScanner custom functions directory which may be in the following
+locations.
+
+    + /usr/lib/MailScanner/MailScanner/CustomFunctions 
+    + /opt/MailScanner/lib/MailScanner/MailScanner/CustomFunctions
+
+
+Stop MailScanner::
+
+    # /etc/init.d/MailScanner stop
+
+Next edit the MailScanner config file /etc/MailScanner/MailScanner.conf,
+you need to make sure that the following options are set::
+
+    Quarantine User = exim (Or what ever your "Run As User" is set to)
+    Quarantine Group = apache (or your webserver user if not apache)
+    Quarantine Permissions = 0660
+    Quarantine Whole Message = yes
+    Quarantine Whole Message As Queue Files = no
+    Detailed Spam Report = yes
+    Include Scores In SpamAssassin Report = yes
+    Always Looked Up Last = &MailWatchLogging
+
+To actually quarantine and later process messages with in baruwa, set
+'store' as one of your keywords for the "Spam Actions" and
+"High Scoring Spam Actions" MailScanner options
+
+**Integrate SQL Blacklist/Whitelist**
+
+Edit extras/SQLBlackWhiteList.pm and set the variables $db_user to 'baruwa' and
+$db_pass to the password you set above. The move extras/SQLBlackWhiteList.pm to
+your MailScanner custom functions directory which may be one of the following.
+
+    + /usr/lib/MailScanner/MailScanner/CustomFunctions
+    + /opt/MailScanner/lib/MailScanner/MailScanner/CustomFunctions
+
+Next edit the MailScanner config file /etc/MailScanner/MailScanner.conf, and
+set the following options::
+
+    Is Definitely Not Spam = &SQLWhitelist
+    Is Definitely Spam = &SQLBlacklist
+
+Start up MailScanner::
+
+    # /etc/init.d/MailScanner start
+
+**Enjoy Baruwa**
+
+Point your browser to http://hostname_used login with admin user and password
+and start working. You can now use the interface to add users and process 
+messages, etc etc.
+
+Distribution / OS installation
+==============================
+
+    + :ref:`installcentos`.
+    + :ref:`installfedora`.
+    + Debian
+

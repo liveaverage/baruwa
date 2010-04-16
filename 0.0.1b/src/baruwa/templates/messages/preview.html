@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Baruwa :: Previewing message - {{ message_id }} {% endblock %}
+{% block heading %}Previewing message - {{ message_id }} {% endblock %}
+{% block submenu %}
+<ul>
+  <li><a href="/messages/{{message_id}}/#q">Release message</a></li>
+  <li><a href="/messages/{{message_id}}/">Return to message</a></li>
+</ul>
+{% endblock submenu %}
+{% block content %}
+<table class="maillog">
+{% if message %}
+{% load messages_extras %}
+<tbody>
+<tr>
+<td class="mailitem">From:</td>
+<td class="maildetail">{{message.from|escape}}</td>
+</tr>
+<tr>
+<td class="mailitem">To:</td>
+<td class="maildetail">{{message.to|escape}}</td>
+</tr>
+<tr>
+<td class="mailitem">Subject:</td>
+<td class="maildetail">{{message.subject|escape}}</td>
+</tr>
+<tr>
+<td class="mailitem">Date:</td>
+<td class="maildetail">{{message.date|escape}}</td>
+</tr>
+{% if message.attachments %}
+<tr>
+<td class="mailitem">Attachments:</td>
+<td class="maildetail">
+{% for name in message.attachments %}
+<a href="">{{name}}</a>&nbsp;
+{%endfor%}
+</td>
+</tr>
+{% endif %}
+<tr>
+<td colspan="2" class="divider">Message content</td>
+</tr>
+<tr>
+<td colspan="2">
+<div id="mailpreview">
+{{message.body|linebreaksbr|escape}}
+</div>
+</td>
+</tr>
+<tr>
+<td colspan="2" class="first-t">
+{% if message.has_html %}
+<small>:: Displaying text version of the HTML message due to security settings</small>
+{%else%}
+&nbsp;
+{%endif%}
+</td>
+</tr>
+</tbody>
+{% else %}
+<tbody>
+<tr>
+<td class="first-t">Message could not be previewed</td>
+</tr>
+</tbody>
+{% endif %}
+</table>
+{% endblock content %}

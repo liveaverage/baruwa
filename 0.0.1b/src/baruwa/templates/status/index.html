@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block headers %}
+{% endblock headers %}
+{% block submenu %}
+&nbsp;
+{% endblock submenu %}
+{% block title %}
+System Status
+{% endblock title %}
+{% block heading %}
+System Status
+{% endblock heading %}
+{% block content %}
+<table class="maillog">
+<tbody>
+<tr class="header">
+<td class="align_center">Service Status</td>
+<td class="align_center">Message Totals</td>
+</tr>
+<tr>
+<td class="equal sline">
+<table class="status">
+<tbody>
+<tr>
+<td>Scanners</td>
+<td>
+{% if scanners %}
+<div class="pie_6 pie"></div>
+{%else%}
+<div class="pie_1 pie"></div>
+{%endif%}
+&nbsp;{{scanners}} processes</td>
+</tr>
+<tr>
+<td>MTA</td>
+<td>
+{% if mta %}
+<div class="pie_6 pie"></div>
+{%else%}
+<div class="pie_1 pie"></div>
+{%endif%}
+&nbsp;{{mta}} processes</td>
+</tr>
+<tr>
+<td>Load</td>
+<td><div class="pie_6 pie"></div>&nbsp;{{load}}</td>
+</tr>
+<tr>
+<td>AV</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>Uptime</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="last">
+<td>System restart</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td class="equal">
+<table class="status">
+<tbody>
+<tr>
+<td>Processed</td>
+<td>{{data.total}}</td>
+</tr>
+<tr>
+<td>Clean</td>
+<td>{{data.clean}}</td>
+</tr>
+<tr>
+<td>High scoring spam</td>
+<td>{{data.highspam}}</td>
+</tr>
+<tr>
+<td>Low scoring spam</td>
+<td>{{data.spam}}</td>
+</tr>
+<tr>
+<td>Virii</td>
+<td>{{data.virii}}</td>
+</tr>
+<tr class="last">
+<td>Blocked files</td>
+<td>{{data.otherinfected}}</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+{% endblock content %}

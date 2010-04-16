@@ -1,0 +1,54 @@
+.. _migrationfedora:
+
+===================
+Migration on Fedora
+===================
+
+Baruwa rpm install
+==================
+
+Download the rpm from `topdog-software.com <http://www.topdog-software.com/oss/baruwa/>`_,
+
+Now proceed and install the rpm::
+
+    # yum --nogpgcheck localinstall baruwa-<version>.noarch.rpm
+
+Update the database::
+
+    # mysql -p <mailwatch_database> < /usr/share/doc/baruwa-$(rpm --qf %{VERSION} -q baruwa)/baruwa-update.sql
+
+Set the privileges for the new tables::
+
+    mysql> GRANT ALL ON <mailwatch_database>.* TO 
+    mysql> <mailwatch_user>@localhost IDENTIFIED BY '<mailwatch_password>';
+    mysql> flush privileges;
+
+Configure Baruwa
+================
+
+Edit /usr/lib/python2.4/site-packages/baruwa/settings.py and 
+set the mysql database details::
+
+    DATABASE_ENGINE = 'mysql'           
+    DATABASE_NAME = '<mailwatch_database>'             
+    DATABASE_USER = '<mailwatch_user>'             
+    DATABASE_PASSWORD = '<mailwatch_password>'         
+    DATABASE_HOST = 'localhost'            
+
+If your MailScanner config file is not located in the standard 
+location (/etc/MailScanner/MailScanner.conf) then edit the
+baruwa_settings.py file which is in the same directory as the
+settings.py file and set::
+
+    MS_CONFIG = '/etc/MailScanner/MailScanner.conf'
+
+**Setup Web server**
+
+Edit your apache configurations to enable virtual hosting if
+not enabled already. Then set the correct hostname in 
+/etc/httpd/conf.d/baruwa.conf::
+
+    # change to your hostname
+    ServerName baruwa-alpha.local
+
+Restart apache and point your browser to the hostname url.

@@ -1,0 +1,28 @@
+==================
+User Documentation
+==================
+
+Interface primer
+================
+
+TODO
+
+Whitelists/Blacklists
+=====================
+
+TODO
+
+User accounts
+=============
+
+TODO
+
+Reports
+=======
+
+TODO
+
+Quarantine
+==========
+
+TODO

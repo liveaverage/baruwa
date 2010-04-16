@@ -1,0 +1,64 @@
+{% extends "enhanced-base.html" %}
+{% block headers %}
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/accounts.js"></script>
+{% endblock headers %}
+{% block submenu %}
+<ul>
+  <li><a id="user-add" href="#">Create account</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+Accounts 
+{% endblock title %}
+{% block heading %}
+Accounts
+{% endblock heading %}
+{% block add_item %}
+<form method="post" action="/accounts/">
+{% include "accounts/form.html" %}
+    <div class="buttons">
+    <input id="cancel-button" type="button" value="Cancel" />&nbsp;
+    <input type="submit" value="Add" />
+    </div>
+    <div class="cb">&nbsp;</div>
+</form>
+{% endblock add_item %}
+{% block content %}
+<table class="maillog">
+<thead>
+    <tr class="header">
+    <th class="first-t usrlink">&nbsp;</th>
+    <th class="first-t">Username</th>
+    <th class="first-t">Full names</th>
+    <th class="first-t actype">Account Type</th>
+</tr>
+</thead>
+<tfoot>
+    <tr class="header">
+    <td colspan="2"></td>
+    <td class="paging" colspan="2">
+    {% load paginator %}{% paginator 3 %}
+    </td>
+    </tr>
+</tfoot>
+<tbody>
+    {% for item in object_list %}
+    {% if forloop.last %}
+    <tr class="last">
+    {% else %}
+    <tr>
+    {% endif %}
+        <td class="first-t">[<a href="/accounts/user/{{item.username}}/">&nbsp;&nbsp;</a>]</td>
+        <td class="first-t">{{item.username}}</td>
+        <td class="first-t">{{item.fullname}}</td>
+        <td class="first-t">{{item.get_type_display}}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4" class="align_center">No user accounts configured</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock content %}

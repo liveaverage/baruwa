@@ -1,0 +1,13 @@
+{%ifequal order_by field_name %}
+  <th id="sorting_by"{%ifnotequal app "messages"%} class="first-t"{%endifnotequal%}>{{field_text}}
+  {%ifequal direction "dsc"%}
+  <a href="{%ifequal app "messages"%}/messages/{{quarantine}}{%else%}/{{app}}{%endifequal%}/asc/{{field_name}}/">&darr;</a>
+  {%else%}
+  <a href="{%ifequal app "messages"%}/messages/{{quarantine}}{%else%}/{{app}}{%endifequal%}/dsc/{{field_name}}/">&uarr;</a>
+  {%endifequal%}
+  </th>
+{%else%}
+  <th{%ifnotequal app "messages"%} class="first-t"{%endifnotequal%}>
+  <a href="{%ifequal app "messages"%}/messages/{{quarantine}}{%else%}/{{app}}{%endifequal%}/dsc/{{field_name}}/">{{field_text}}</a>
+  </th>
+{%endifequal%}

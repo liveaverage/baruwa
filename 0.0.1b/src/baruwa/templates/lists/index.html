@@ -1,0 +1,90 @@
+{% extends "enhanced-base.html" %}
+{% block headers %}
+<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-custom.css" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var rj;
+var ax_error = false;
+//]]>
+</script>
+<script type="text/javascript" language="javascript" src="/static/js/jquery.address.js"></script>
+<script type="text/javascript" language="javascript" src="/static/js/lists.js"></script>
+{% endblock headers %}
+{% block submenu %}
+<ul>
+{% ifequal list_kind 1 %}
+  <li><a id="list-link" href="/lists/2/">Blacklist</a></li>
+{%else%}
+  <li><a id="list-link" href="/lists/1/">Whitelist</a></li>
+{%endifequal%}
+  <li><a id="list-add" href="#">Add to List</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+List management
+{% endblock title %}
+{% block heading %}
+{% ifequal list_kind 1 %}Whitelist{%else%}Blacklist{%endifequal%}{%if is_paginated%}{% load pagination_heading %} :: <span id="pagination_info">{% pagination_heading %}</span>{%endif%}
+{% endblock heading %}
+{% block content %}
+<table id="lists" class="maillog">
+    <thead>
+        <tr class="header">
+            {% load sorter %}
+            {% sorter "id" "#" %}
+            {% sorter "to_address" "To" %}
+            {% sorter "from_address" "From" %}
+            <th class="first-t">
+            Action
+            </th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr class="header">
+        <td colspan="4" class="pagination">
+        <div id="filterbox" style="display:{% ifnotequal order_by "id" %}block{%else%}none{%endifnotequal%};">
+        <form id="lists_filter_form" method="post" action="/{{app}}/{{direction}}/{{order_by}}/">
+        Filter <span id="filterlabel">{%ifequal order_by "to_address"%}<b>To:</b>{%endifequal%}{%ifequal order_by "from_address"%}<b>From:</b>{%endifequal%}</span>
+        <select id="id_query_type" name="query_type">
+        <option value="1"{%ifequal query_type 1%} selected="selected"{%endifequal%}>containing</option>
+        <option value="2"{%ifequal query_type 2%} selected="selected"{%endifequal%}>excluding</option>
+        </select>
+        <input id="id_search_for" name="search_for" type="text" value="{{search_for}}" size="25" />
+        <input id="id_lists_filter_submit" type="submit" value="GO" />
+        </form>
+        </div>
+        <div id="paginator">
+        {% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+        </div>
+        </td>
+        </tr>
+    </tfoot>
+    <tbody>
+        {% if object_list %}
+            {% load messages_extras %}
+            {% for listitem in object_list %}
+            <tr class="lists" id="list-id-{{listitem.id}}">
+                <td class="lists first-t{%ifequal order_by "id"%} ordered_by{%endifequal%}">{{listitem.id}}</td>
+                <td class="lists first-t{%ifequal order_by "to_address"%} ordered_by{%endifequal%}">{{listitem.to_address|tds_email_list}}</td>
+                <td class="lists first-t{%ifequal order_by "from_address"%} ordered_by{%endifequal%}">{{listitem.from_address}}</td>
+                {% ifnotequal listitem.from_address "127.0.0.1" %}
+                <td class="lists first-t"><a href="/lists/delete/{{list_kind}}/{{listitem.id}}/">Delete</a></td>
+                {% else %}
+                <td class="lists first-t">=builtin=</td>
+                {% endifnotequal %}
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td class="align_center" colspan="4">No items at the moment</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock content %}
+{% block add_item %}
+{% include "lists/add.form.html" %}
+{% endblock add_item %}
+

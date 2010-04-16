@@ -1,0 +1,23 @@
+{% if hosts %}
+<table class="inner">
+<tr class="header">
+<th>IP address</th>
+<th>Hostname</th>
+<th>Country</th>
+</tr>
+{% for host in hosts %}
+<tr>
+<td{% if forloop.last %} class="last"{%endif%}>{{host.ip_address}}</td>
+<td{% if forloop.last %} class="last"{%endif%}>{{host.hostname}}</td>
+<td{% if forloop.last %} class="last"{%endif%}>
+{% if host.country_code %}
+<img src="/static/imgs/flags/{{host.country_code}}.png" alt="{{host.country_code}}" />
+{% endif %}
+&nbsp;{{host.country_name}}
+</td>
+</tr>
+{% endfor %}
+</table>
+{% else %}
+&nbsp;&nbsp;&nbsp;-- direct connection --
+{% endif %}
