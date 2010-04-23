@@ -30,7 +30,6 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from baruwa.accounts.models import Users, UserFilters
-from baruwa.reports.graphs import drawPie, drawBarGraph
 
 def to_dict(tuple_list):
     d = {}
