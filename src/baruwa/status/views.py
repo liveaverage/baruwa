@@ -91,17 +91,17 @@ def bayes_info(request):
             elif m.group(5) == 'nham':
                 bayes_info['ham'] = m.group(3)
             elif m.group(5) == 'ntokens':
-                bayes_info['tokens'] = group(3)
+                bayes_info['tokens'] = m.group(3)
             elif m.group(5) == 'oldest atime':
-                bayes_info['otoken'] = group(3)
+                bayes_info['otoken'] = m.group(3)
             elif m.group(5) == 'newest atime':
-                bayes_info['ntoken'] = group(3)
+                bayes_info['ntoken'] = m.group(3)
             elif m.group(5) == 'last journal sync atime':
-                bayes_info['ljournal'] = group(3)
+                bayes_info['ljournal'] = m.group(3)
             elif m.group(5) == 'last expiry atime':
-                bayes_info['expiry'] = group(3)
+                bayes_info['expiry'] = m.group(3)
             elif m.group(5) == 'last expire reduction count':
-                bayes_info['rcount'] = group(3)
+                bayes_info['rcount'] = m.group(3)
 
     return render_to_response('status/bayes.html',{'data':bayes_info},context_instance=RequestContext(request))
 
