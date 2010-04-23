@@ -73,10 +73,9 @@ def mail_auth(protocol,username,password,server,port=None):
                     dump = conn.user(username)
                     conn.pass_(password)
                 conn.quit()
+                return True
             except:
                 return False
-            else:
-                return True
         elif protocol == 'imap':
             import imaplib
             try:
@@ -88,10 +87,9 @@ def mail_auth(protocol,username,password,server,port=None):
                     conn = imaplib.IMAP4(server,port)
                 dump = conn.login(username,password)
                 dump = conn.logout()
+                return True
             except:
                 return False
-            else:
-                return True
         elif protocol == 'smtp':
             import smtplib
             try:
@@ -107,10 +105,9 @@ def mail_auth(protocol,username,password,server,port=None):
                     conn.ehlo()
                 conn.login(username,password)
                 conn.quit()
+                return True
             except:
                 return False
-            else:
-                return True
         else:
             return False
 

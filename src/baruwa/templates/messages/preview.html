@@ -3,8 +3,8 @@
 {% block heading %}Previewing message - {{ message_id }} {% endblock %}
 {% block submenu %}
 <ul>
-  <li><a href="/messages/{{message_id}}/#q">Release message</a></li>
-  <li><a href="/messages/{{message_id}}/">Return to message</a></li>
+  <li><a href="{% url message-detail message_id %}#q">Release message</a></li>
+  <li><a href="{% url message-detail message_id %}">Return to message</a></li>
 </ul>
 {% endblock submenu %}
 {% block content %}

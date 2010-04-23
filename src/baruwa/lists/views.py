@@ -30,6 +30,7 @@ from django.forms.util import ErrorList as errorlist
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from baruwa.accounts.models import Users
+from django.template import RequestContext
 import re
 
 def json_ready(element):
@@ -157,7 +158,7 @@ def add_to_list(request):
             add_form = UserListAddForm(request.POST)
         else:
             add_form = ListAddForm() 
-        add_dict = {'form':add_form,'user':request.user,'ld':load_domain,'user_type':user_type,'le':load_email}
+        add_dict = {'form':add_form,'ld':load_domain,'user_type':user_type,'le':load_email}
     elif request.method == 'POST':
         user_type = request.session['user_filter']['user_type']
         if user_type == 'U':
@@ -189,6 +190,7 @@ def add_to_list(request):
             if int(clean_data['list_type']) == 1:
                 try:
                     b = Blacklist.objects.get(**kwargs)
+                    error_msg = '%s is blacklisted, please remove from blacklist before attempting to whitelist' % clean_data['from_address']
                 except Blacklist.DoesNotExist:
                     wl = Whitelist(to_address=to,from_address=clean_data['from_address'])
                     if error_msg == '':
@@ -196,11 +198,10 @@ def add_to_list(request):
                             wl.save()
                         except IntegrityError:
                             error_msg = 'The list item already exists'
-                else:
-                    error_msg = '%s is blacklisted, please remove from blacklist before attempting to whitelist' % clean_data['from_address']
             else:
                 try:
                     w = Whitelist.objects.get(**kwargs)
+                    error_msg = '%s is whitelisted, please remove from whitelist before attempting to blacklist' % clean_data['from_address']
                 except Whitelist.DoesNotExist:    
                     bl = Blacklist(to_address=to,from_address=clean_data['from_address'])
                     if error_msg == '':
@@ -208,8 +209,6 @@ def add_to_list(request):
                             bl.save()
                         except IntegrityError:
                             error_msg = 'The list item already exists'
-                else:
-                    error_msg = '%s is whitelisted, please remove from whitelist before attempting to blacklist' % clean_data['from_address']
             if request.is_ajax():
                 if error_msg == '':
                     request.method = 'GET'
@@ -225,8 +224,8 @@ def add_to_list(request):
                 html = errorlist(error_list).as_ul()
                 response = simplejson.dumps({'error': html})
                 return HttpResponse(response,mimetype='application/javascript')
-            add_dict = {'form':form,'user':request.user,'ld':load_domain,'user_type':user_type,'le':load_email}
-    return render_to_response(template,add_dict)
+            add_dict = {'form':form,'ld':load_domain,'user_type':user_type,'le':load_email}
+    return render_to_response(template,add_dict,context_instance=RequestContext(request))
 
 @never_cache
 @login_required
@@ -237,13 +236,6 @@ def delete_from_list(request, list_kind, item_id):
     if list_kind == 1:
         try:
             w = Whitelist.objects.get(pk=item_id)
-        except Whitelist.DoesNotExist:
-            if request.is_ajax():
-                error_msg = 'The list item does not exist'
-                pass
-            else:
-                raise Http404()
-        else:
             if w.from_address == '127.0.0.1' and w.to_address == 'default':
                 error_msg = 'This is a buildin item, it cannot be deleted'
             if not request.user.is_superuser:
@@ -262,16 +254,15 @@ def delete_from_list(request, list_kind, item_id):
                             error_msg = 'The list item does not belong to you'
             if error_msg == '':
                 w.delete()
-    elif list_kind == 2:
-        try:
-            b = Blacklist.objects.get(pk=item_id)
-        except Blacklist.DoesNotExist:
+        except Whitelist.DoesNotExist:
             if request.is_ajax():
                 error_msg = 'The list item does not exist'
                 pass
             else:
                 raise Http404()
-        else:
+    elif list_kind == 2:
+        try:
+            b = Blacklist.objects.get(pk=item_id)
             if not request.user.is_superuser:
                 user_type = request.session['user_filter']['user_type']
                 addresses = request.session['user_filter']['filter_addresses']
@@ -288,6 +279,12 @@ def delete_from_list(request, list_kind, item_id):
                             error_msg = 'The list item does not belong to you'
             if error_msg == '':
                 b.delete()
+        except Blacklist.DoesNotExist:
+            if request.is_ajax():
+                error_msg = 'The list item does not exist'
+                pass
+            else:
+                raise Http404()
     if request.is_ajax():
         if error_msg == '':
             page = 1

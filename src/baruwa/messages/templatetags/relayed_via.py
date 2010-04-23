@@ -33,7 +33,7 @@ def relayed_via(headers):
             #m = re.findall(r'(\w+|\s|\()\[(([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3}))\]',header)
             m = re.findall(r'((?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3}))',header)
             if m:
-                #m.reverse()
+                m.reverse()
                 for l in m:
                     try:
                         iptype = IP(l).iptype()

@@ -20,8 +20,8 @@ var ax_in_progress = false;
 {% endblock headers %}
 {% block submenu %}
 <ul>
-  <li><a href="/messages/full/">Full message list</a></li>
-  <li><a href="/messages/quarantine/">Quarantine</a></li>
+  <li><a href="{% url full-msg-index %}">Full message list</a></li>
+  <li><a href="{% url quarantine-index %}">Quarantine</a></li>
 </ul>
 {% endblock submenu %}
 {% block title %}
@@ -99,7 +99,7 @@ Showing the 50 most recent messages
     {% if message.spamwhitelisted %} class="whitelisted"{% endif %}
     {% if message.spamblacklisted %} class="blacklisted"{% endif %}
     {% if message.nameinfected or message.virusinfected %} class="infested"{% endif %}>
-	<td class="first-t">[<a href="/messages/{{ message.id }}/">&nbsp;&nbsp;</a>]</td>
+	<td class="first-t">[<a href="{% url message-detail message.id %}">&nbsp;&nbsp;</a>]</td>
 	<td>{{ message.timestamp }}</td>
 	<td>{{ message.from_address|tds_trunc:30 }}</td>
 	<td>{{ message.to_address|tds_nl_commas|linebreaksbr }}</td>

@@ -28,7 +28,9 @@ from django.forms.util import ErrorList as errorlist
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
-from baruwa.accounts.models import Users,UserFilters
+from django.template import RequestContext
+from baruwa.accounts.models import Users, UserFilters
+from baruwa.reports.graphs import drawPie, drawBarGraph
 
 def to_dict(tuple_list):
     d = {}
@@ -633,7 +635,7 @@ def index(request):
         return HttpResponse(response, content_type='application/javascript; charset=utf-8')
     else:
         return render_to_response('reports/index.html',
-            {'form':filter_form,'data':data,'errors':errors,'active_filters':active_filters,'saved_filters':saved_filters,'user':request.user})
+            {'form':filter_form,'data':data,'errors':errors,'active_filters':active_filters,'saved_filters':saved_filters},context_instance=RequestContext(request))
 
 @login_required
 def rem_filter(request,index_num):
@@ -679,14 +681,6 @@ def save_filter(request,index_num):
 def load_filter(request,index_num):
     try:
         filter = SavedFilters.objects.get(id=int(index_num))
-    except:
-        if request.is_ajax():
-            error_msg = 'This filter you attempted to load does not exist'
-            response = simplejson.dumps({'success':'False','data':[],'errors':error_msg,'active_filters':[],'saved_filters':[]})
-            return HttpResponse(response, content_type='application/javascript; charset=utf-8')
-        else:
-            return HttpResponseRedirect('/reports/')
-    else:
         if not request.session.get('filter_by', False):
             request.session['filter_by'] = []
             request.session['filter_by'].append({'field':filter.col,'filter':filter.operator,'value':filter.value})
@@ -697,6 +691,13 @@ def load_filter(request,index_num):
                 request.session.modified = True
         if request.is_ajax():
             return index(request)
+        else:
+            return HttpResponseRedirect('/reports/')
+    except:
+        if request.is_ajax():
+            error_msg = 'This filter you attempted to load does not exist'
+            response = simplejson.dumps({'success':'False','data':[],'errors':error_msg,'active_filters':[],'saved_filters':[]})
+            return HttpResponse(response, content_type='application/javascript; charset=utf-8')
         else:
             return HttpResponseRedirect('/reports/')
 
@@ -740,6 +741,12 @@ def pack_data(data,arg1,arg2):
         rv.append(pie_data)
         n += 1
     return simplejson.dumps(rv)
+
+def gen_data_list(data,arg1):
+    rv = []
+    for item in data:
+        rv.append(item[arg1])
+    return rv
 
 @login_required
 def report(request,report_kind):
@@ -902,4 +909,5 @@ def report(request,report_kind):
         c.close()
         report_title = "Total messages [ After SMTP ]"
         template = "reports/listing.html"
-    return render_to_response(template, {'pie_data':pie_data,'top_items':data,'report_title':report_title,'active_filters':active_filters,'user':request.user})
+    return render_to_response(template, 
+        {'pie_data':pie_data,'top_items':data,'report_title':report_title,'report_kind':report_kind,'active_filters':active_filters},context_instance=RequestContext(request))

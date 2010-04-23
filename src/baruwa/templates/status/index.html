@@ -2,7 +2,10 @@
 {% block headers %}
 {% endblock headers %}
 {% block submenu %}
-&nbsp;
+<ul>
+    <li><a href="{% url bayes-info %}">Bayes information</a></li>
+    <li><a href="{% url sa-lint %}">Spamassassin lint</a></li>
+</ul>
 {% endblock submenu %}
 {% block title %}
 System Status

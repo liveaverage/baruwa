@@ -21,17 +21,17 @@ from django import forms
 from django.forms.util import ErrorList
 from django.forms import ModelForm
 from django.forms.fields import email_re
-from baruwa.accounts.models import ACTIVE_CHOICES,TYPE_CHOICES,Users,UserFilters
+from baruwa.accounts.models import ACTIVE_CHOICES, TYPE_CHOICES, Users, UserFilters
 import re
 
 YES_NO = (
-    (0,'YES'),
-    (1,'NO'),
+    (0, 'YES'),
+    (1, 'NO'),
 )
 
 Y_N = (
-    ('Y','Yes'),
-    ('N','No'),
+    ('Y', 'Yes'),
+    ('N', 'No'),
 )
 
 class UserForm(ModelForm):

@@ -34,3 +34,10 @@ Database maintenance
 
 Deletes records older than 60 days from the maillog table of the database
 
+Spamassassin rule description updates
+=====================================
+::
+
+    manage.py update_sarules
+
+Updates the Spamassassin rule descriptions in the database.

@@ -29,3 +29,10 @@ class SavedFilters(models.Model):
     class Meta:
         db_table = u'saved_filters'
 
+class SaRules(models.Model):
+    rule = models.CharField(max_length=100, primary_key=True)
+    rule_desc = models.CharField(max_length=200)
+
+    class Meta:
+        db_table = u'sa_rules'
+

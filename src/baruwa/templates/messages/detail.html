@@ -32,9 +32,9 @@
 		<td class="mailitem">From:</td>
 		<td class="maildetail"><span id="from-addr">{{ message_details.from_address|tds_wrap:80|linebreaksbr }}</span>
     <span id="listing" class="listings">
-    [{% if not message_details.spamwhitelisted %}<a id="whitelist" href="{%url whitelist-sender message_id=message_details.id%}">Whitelist</a>{%else%}Whitelist{%endif%}]
+    [{% if not message_details.spamwhitelisted %}<a id="whitelist" href="{% url whitelist-sender message_id=message_details.id %}">Whitelist</a>{% else %}Whitelist{% endif %}]
     &nbsp;
-    [{% if not message_details.spamblacklisted %}<a id="blacklist" href="{%url blacklist-sender message_id=message_details.id%}">Blacklist</a>{%else%}Blacklist{%endif%}]
+    [{% if not message_details.spamblacklisted %}<a id="blacklist" href="{% url blacklist-sender message_id=message_details.id %}">Blacklist</a>{% else %}Blacklist{% endif %}]
     </span>
     </td>
 		</tr>
@@ -177,7 +177,7 @@
 		</div>
         {%if not success %}
 		<div id="process_quarantine">
-		<form id="qform" action="/messages/process_quarantine/" method="post">
+		<form id="qform" action="{% url process-quarantine %}" method="post">
 		<table class="quarantine">
 		<tbody>
 		<tr>

@@ -28,7 +28,8 @@ Features
     + Multi user profiles
     + User profile aware white/blacklist management
     + REST API
-    + Easy plug-in authentication to external authentication systems (LDAP,SQL,etc)
+    + Easy plug-in authentication to external authentication systems (Mailwatch, POP3, IMAP and SMTP supported out of the box)
+    + Tools for housekeeping tasks (quarantine management, rule updates, quarantine notofcations, etc)
     + Works both with and without Javascript enabled (some features will have degraded performance)
 
 Screenshots

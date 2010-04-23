@@ -114,14 +114,10 @@ def release_mail(mail_path, to_addr, from_addr):
             msg = msg + line
         try:
             server = smtplib.SMTP(host)
-        except:
-            return False
-        try:
             server.sendmail(from_addr, to_addr, msg)
-        except:
             server.quit()
+        except:
             return False
-        server.quit()
     else:
         return False
     return True
@@ -217,10 +213,10 @@ def rest_request(host,resource,method,headers,params=None):
         r = c.request(method,resource,params,headers)
         response = c.getresponse()
         data = response.read()
+        c.close()
     except:
         return {'success':False,'response':'an error occured'}
-    else:
-        c.close()
+
     if response.status == 200:
         return {'success':True,'response':data}
     else:

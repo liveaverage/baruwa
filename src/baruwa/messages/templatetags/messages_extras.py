@@ -136,10 +136,9 @@ def tds_get_rules(rules):
         rule = u.groups()[1]
         try:
           d = SaRules.objects.get(rule__exact=rule)
+          sa_rule_descp = d.rule_desc
         except:
           pass
-        else:
-          sa_rule_descp = d.rule_desc
         tdict = {'rule':rule,'score':u.groups()[3],'rule_descp':sa_rule_descp}
         return_value.append(tdict)
         sa_rule_descp = ""

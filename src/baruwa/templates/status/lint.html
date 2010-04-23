@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block headers %}
+{% endblock headers %}
+{% block submenu %}
+<ul>
+    <li><a href="{% url bayes-info %}">Bayes information</a></li>
+    <li>Spamassassin lint</li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+Spamassassin Lint
+{% endblock title %}
+{% block heading %}
+Spamassassin Lint
+{% endblock heading %}
+{% block content %}
+<table class="maillog">
+<tbody>
+<tr>
+<td class="divider">Spamassassin Lint</td>
+</tr>
+{% for item in data %}
+<tr>
+<td class="first-t {% cycle '' 'even' %}">{{ item }}</td>
+</tr>
+{% empty %}
+<tr>
+<td class="align_center">Lint failed please verify if spamassassin is installed</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock content %}

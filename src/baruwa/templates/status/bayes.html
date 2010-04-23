@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block headers %}
+{% endblock headers %}
+{% block submenu %}
+<ul>
+    <li>Bayes information</li>
+    <li><a href="{% url sa-lint %}">Spamassassin lint</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+Bayes information
+{% endblock title %}
+{% block heading %}
+Bayes information
+{% endblock heading %}
+{% block content %}
+<table class="maillog">
+<tbody>
+<tr>
+<td class="divider" colspan="2">Bayes Database Information</td>
+</tr>
+{% if data %}
+<tr>
+<td class="stats">Bayes Version</td>
+<td class="stats">{{ data.version }}</td>
+</tr>
+<tr>
+<td class="stats">Number of Spam messages</td>
+<td class="stats">{{ data.spam }}</td>
+</tr>
+<tr>
+<td class="stats">Number of Ham messages</td>
+<td class="stats">{{ data.ham }}</td>
+</tr>
+<tr>
+<td class="stats">Number of Tokens</td>
+<td class="stats">{{ data.tokens }}</td>
+</tr>
+<tr>
+<td class="stats">Newest Token</td>
+<td class="stats">{{ data.ntoken }}</td>
+</tr>
+<tr>
+<td class="stats">Oldest Token</td>
+<td class="stats">{{ data.otoken }}</td>
+</tr>
+<tr>
+<td class="stats">Last Journal Sync</td>
+<td class="stats">{{ data.ljournal }}</td>
+</tr>
+<tr>
+<td class="stats">Last Expiry</td>
+<td class="stats">{{ data.expiry }}</td>
+</tr>
+<tr>
+<td class="stats">Last Expiry Reduction Count</td>
+<td class="stats">{{ data.rcount }}</td>
+</tr>
+{% else %}
+<tr>
+<td colspan="2" class="align_center">Info could not be collected</td>
+</tr>
+{% endif %}
+</tbody>
+</table>
+{% endblock content %}

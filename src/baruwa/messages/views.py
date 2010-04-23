@@ -33,6 +33,7 @@ from baruwa.lists.models import Blacklist,Whitelist
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.template import RequestContext
 import re,urllib
 
 def json_ready(element):
@@ -138,7 +139,7 @@ def detail(request,message_id,success=0,error_list=None):
             raise Http404
         message_details = message_details[0]
     quarantine_form = QuarantineProcessForm()
-    return render_to_response('messages/detail.html', {'message_details': message_details, 'form': quarantine_form,'error_list':error_list,'succeeded':success,'user':request.user})
+    return render_to_response('messages/detail.html', {'message_details': message_details, 'form': quarantine_form,'error_list':error_list,'succeeded':success},context_instance=RequestContext(request))
 
 @login_required
 def process_quarantined_msg(request):
@@ -173,7 +174,7 @@ def process_quarantined_msg(request):
                     response = remote_response['response']
                     return HttpResponse(response, content_type='application/javascript; charset=utf-8')
                 else:
-                    response = simplejson.dumps({'success':'False','html':'Remote server failure'})
+                    response = simplejson.dumps({'success':'False','html':remote_response['response']})
                     return HttpResponse(response, content_type='application/javascript; charset=utf-8')
             success = "True"
             qdir = get_config_option('Quarantine Dir')
@@ -226,12 +227,12 @@ def process_quarantined_msg(request):
                     if os.path.exists(file_name):
                         try:
                             os.remove(file_name)
-                        except:
-                            pass
-                        else:
                             fail=False
                             m.quarantined = 0
                             m.save()
+                        except:
+                            pass
+
                         template = "messages/delete.html"
                         html = render_to_string(template, {'id': m.id,'failure':fail})
             else:
@@ -275,7 +276,7 @@ def preview(request, message_id):
         message_object = list(Maillog.objects.filter(q))
         if not message_object:
             if request.is_ajax():
-                return HttpResponse({'message':message,'message_id':message_id,'user':request.user},content_type='application/javascript; charset=utf-8')
+                return HttpResponse({'message':message,'message_id':message_id},context_instance=RequestContext(request),content_type='application/javascript; charset=utf-8')
             else:
                 raise Http404
         message_object = message_object[0]
@@ -288,9 +289,8 @@ def preview(request, message_id):
             try:
                 fp = open(file_name)
             except:
-                fp.close()
                 if request.is_ajax():
-                    return HttpResponse({'message':message,'message_id':message_id,'user':request.user},content_type='application/javascript; charset=utf-8')
+                    return HttpResponse({'message':message,'message_id':message_id},context_instance=RequestContext(request),content_type='application/javascript; charset=utf-8')
                 else:
                     raise Http404
             msg = email.message_from_file(fp)
@@ -300,7 +300,7 @@ def preview(request, message_id):
             response = simplejson.dumps({'message':message,'message_id':message_object.id})
             return HttpResponse(response, content_type='application/javascript; charset=utf-8')
         else:
-            return render_to_response('messages/preview.html', {'message':message,'message_id':message_object.id,'user':request.user})
+            return render_to_response('messages/preview.html', {'message':message,'message_id':message_object.id},context_instance=RequestContext(request))
     else:
         #remote request
         remote_response = remote_preview(message_object.hostname,request.META['HTTP_COOKIE'],message_id)
@@ -313,7 +313,7 @@ def preview(request, message_id):
             response = simplejson.dumps({'message':message,'message_id':message_id})
             return HttpResponse(response, content_type='application/javascript; charset=utf-8')
         else:
-            return render_to_response('messages/preview.html', {'message':message,'message_id':message_id,'user':request.user})
+            return render_to_response('messages/preview.html', {'message':message,'message_id':message_id},context_instance=RequestContext(request))
 
 @never_cache
 @login_required
@@ -336,25 +336,22 @@ def blacklist(request,message_id):
         message = message[0]
         try:
             bl = Blacklist.objects.get(to_address__iexact=message.to_address,from_address__iexact=message.from_address)
+            html = 'The sender %s is already blacklisted' % message.from_address
+            success = 'False'
         except Blacklist.DoesNotExist:
             try:
                 w = Whitelist.objects.get(to_address__iexact=message.to_address,from_address__iexact=message.from_address)
+                html  = '%s is whitelisted, please remove from whitelist before attempting to blacklist' % message.from_address
+                success = 'False'
             except Whitelist.DoesNotExist:
                 bl = Blacklist(to_address=message.to_address,from_address=message.from_address)
                 try:
                     bl.save()
+                    html = 'The sender %s has been blacklisted' % message.from_address
                 except:
                     html = 'An error occured while adding %s to blacklist' % message.from_address
                     success = 'False'
                     pass
-                else:
-                    html = 'The sender %s has been blacklisted' % message.from_address
-            else:
-                html  = '%s is whitelisted, please remove from whitelist before attempting to blacklist' % message.from_address
-                success = 'False'
-        else:
-            html = 'The sender %s is already blacklisted' % message.from_address
-            success = 'False'
     if request.is_ajax():
         response = simplejson.dumps({'success':success,'html':html})
         return HttpResponse(response,content_type='application/javascript; charset=utf-8')
@@ -382,25 +379,23 @@ def whitelist(request,message_id):
         message = message[0]
         try:
             bl = Whitelist.objects.get(to_address__iexact=message.to_address,from_address__iexact=message.from_address)
+            html = 'The sender %s is already whitelisted' % message.from_address
+            success = 'False'
         except Whitelist.DoesNotExist:
             try:
                 b = Blacklist.objects.get(to_address__iexact=message.to_address,from_address__iexact=message.from_address)
+                success = 'False'
+                html = '%s is blacklisted, please remove from blacklist before attempting to whitelist' % message.from_address
             except Blacklist.DoesNotExist:
                 bl = Whitelist(to_address=message.to_address,from_address=message.from_address)
                 try:
                     bl.save()
+                    html = 'The sender %s has been whitelisted' % message.from_address
                 except:
                     html = 'An error occured while adding %s to whitelist' % message.from_address
                     success = 'False'
                     pass
-                else:
-                    html = 'The sender %s has been whitelisted' % message.from_address
-            else:
-                success = 'False'
-                html = '%s is blacklisted, please remove from blacklist before attempting to whitelist' % message.from_address
-        else:
-            html = 'The sender %s is already whitelisted' % message.from_address
-            success = 'False'
+
     if request.is_ajax():
         response = simplejson.dumps({'success':success,'html':html})
         return HttpResponse(response,content_type='application/javascript; charset=utf-8')

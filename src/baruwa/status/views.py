@@ -22,7 +22,9 @@ from baruwa.reports.views import r_query,raw_user_filter
 from baruwa.messages.process_mail import get_config_option
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
-import os,subprocess
+from django.template import RequestContext
+from django.conf import settings
+import os, subprocess, re
 
 @never_cache
 @login_required
@@ -53,18 +55,66 @@ def index(request):
     row = c.fetchone()
     v1, v2, v3 = os.getloadavg()
     load = "%.2f %.2f %.2f" % (v1,v2,v3)
-    p1 = subprocess.Popen('ps ax',shell=True,stdout=subprocess.PIPE)
-    p2 = subprocess.Popen('grep -i Mailscanner',shell=True,stdin=p1.stdout,stdout=subprocess.PIPE)
-    p3 = subprocess.Popen('grep -v grep',shell=True,stdin=p2.stdout,stdout=subprocess.PIPE)
-    p4 = subprocess.Popen('wc -l',shell=True,stdin=p3.stdout,stdout=subprocess.PIPE)
+    p1 = subprocess.Popen('ps ax',shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p2 = subprocess.Popen('grep -i Mailscanner', shell=True, stdin=p1.stdout,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p3 = subprocess.Popen('grep -v grep',shell=True, stdin=p2.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p4 = subprocess.Popen('wc -l',shell=True, stdin=p3.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     scanners = p4.stdout.read()
     scanners = int(scanners.strip())
     ms = get_config_option('MTA')
-    p1 = subprocess.Popen('ps ax',shell=True,stdout=subprocess.PIPE)
-    p2 = subprocess.Popen('grep -i '+ms,shell=True,stdin=p1.stdout,stdout=subprocess.PIPE)
-    p3 = subprocess.Popen('grep -v grep',shell=True,stdin=p2.stdout,stdout=subprocess.PIPE)
-    p4 = subprocess.Popen('wc -l',shell=True,stdin=p3.stdout,stdout=subprocess.PIPE)
+    p1 = subprocess.Popen('ps ax',shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p2 = subprocess.Popen('grep -i '+ms,shell=True, stdin=p1.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p3 = subprocess.Popen('grep -v grep',shell=True, stdin=p2.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p4 = subprocess.Popen('wc -l',shell=True, stdin=p3.stdout, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     mta = p4.stdout.read()
     mta = int(mta.strip())
     data = {'total':row[0],'clean':row[1],'virii':row[2],'infected':row[3],'otherinfected':row[4],'spam':row[5],'highspam':row[6]}
-    return render_to_response('status/index.html',{'data':data,'load':load,'scanners':scanners,'mta':mta,'user':request.user})
+    return render_to_response('status/index.html',{'data':data,'load':load,'scanners':scanners,'mta':mta},context_instance=RequestContext(request))
+
+def bayes_info(request):
+    "Displays bayes database information"
+
+    bayes_info = {}
+    regex = re.compile(r'(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+non-token data: (.+)')
+    SA_PREFS = getattr(settings, 'SA_PREFS','/etc/MailScanner/spam.assassin.prefs.conf')
+
+    p1 = subprocess.Popen('sa-learn -p '+SA_PREFS+' --dump magic',shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    while True:
+        line = p1.stdout.readline()
+        if not line: break
+        m = regex.match(line)
+        if m:
+            if m.group(5) == 'bayes db version':
+                bayes_info['version'] = m.group(3)
+            elif m.group(5) == 'nspam':
+                bayes_info['spam'] = m.group(3)
+            elif m.group(5) == 'nham':
+                bayes_info['ham'] = m.group(3)
+            elif m.group(5) == 'ntokens':
+                bayes_info['tokens'] = group(3)
+            elif m.group(5) == 'oldest atime':
+                bayes_info['otoken'] = group(3)
+            elif m.group(5) == 'newest atime':
+                bayes_info['ntoken'] = group(3)
+            elif m.group(5) == 'last journal sync atime':
+                bayes_info['ljournal'] = group(3)
+            elif m.group(5) == 'last expiry atime':
+                bayes_info['expiry'] = group(3)
+            elif m.group(5) == 'last expire reduction count':
+                bayes_info['rcount'] = group(3)
+
+    return render_to_response('status/bayes.html',{'data':bayes_info},context_instance=RequestContext(request))
+
+def sa_lint(request):
+    "Displays Spamassassin lint response"
+
+    lint = []
+    SA_PREFS = getattr(settings, 'SA_PREFS','/etc/MailScanner/spam.assassin.prefs.conf')
+
+    p1 = subprocess.Popen('spamassassin -x -D -p '+SA_PREFS+' --lint',shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    while True:
+        line = p1.stderr.readline()
+        if not line: break
+        lint.append(line)
+
+    return render_to_response('status/lint.html',{'data':lint},context_instance=RequestContext(request))

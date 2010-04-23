@@ -19,14 +19,14 @@
 # vim: ai ts=4 sts=4 et sw=4
 from django.shortcuts import render_to_response,get_object_or_404
 from django.views.generic.list_detail import object_list
-from django.http import HttpResponseRedirect,HttpResponseForbidden,HttpResponseBadRequest,HttpResponse
+from django.http import HttpResponseRedirect, HttpResponseForbidden, HttpResponseBadRequest, HttpResponse
 from django.forms.util import ErrorList as errorlist
 from django.views.decorators.cache import never_cache
 from django.core.urlresolvers import reverse
 from django.utils import simplejson
 from django.contrib.auth.decorators import login_required
 from baruwa.accounts.models import Users,UserFilters
-from baruwa.accounts.forms import UserForm,StrippedUserForm,UserFilterForm,DomainUserFilterForm
+from baruwa.accounts.forms import UserForm, StrippedUserForm, UserFilterForm, DomainUserFilterForm
 from baruwa.reports.views import set_user_filter
 from baruwa.utilities.decorators import onlysuperusers
 from django.template import RequestContext
@@ -54,9 +54,6 @@ def index(request,page=1,direction='dsc',order_by='username'):
         form = UserForm(request.POST)
         try:
             new_user = form.save(commit=False)
-        except:
-            error_msg = 'Account creation failed'
-        else:
             if new_user.password != 'XXXXXXXXXX':
                 m = md5.new(new_user.password)
                 hashv = m.hexdigest()
@@ -65,6 +62,8 @@ def index(request,page=1,direction='dsc',order_by='username'):
                 new_user.save()
             else:
                 error_msg = 'Please provide a password'
+        except:
+            error_msg = 'Account creation failed'
     else:
         form = UserForm()
     user_list = Users.objects.all()
@@ -110,9 +109,6 @@ def user_account(request,user_name=None,add_filter=False):
             form = StrippedUserForm(request.POST,instance=user_object)
         try:
             updated_user_object = form.save(commit=False)
-        except:
-            error_msg = 'The account could not be updated'
-        else:
             if updated_user_object.password != 'XXXXXXXXXX' and user_object.password != '':
                 m = md5.new(updated_user_object.password)
                 hashv = m.hexdigest()
@@ -126,6 +122,8 @@ def user_account(request,user_name=None,add_filter=False):
                 form = UserForm(instance=user_object)
             else:
                 form = StrippedUserForm(instance=user_object)
+        except:
+            error_msg = 'The account could not be updated'
     else:
         if request.user.is_superuser and add_filter:
             form = UserFilterForm()
@@ -138,8 +136,8 @@ def user_account(request,user_name=None,add_filter=False):
         extern_user = True
     else:
         extern_user = False
-    return render_to_response('accounts/user.html',{'user':request.user,'form':form,
-        'filters':user_filters,'target_user':user_name,'add_filter':add_filter,'auth_type':extern_user})
+    return render_to_response('accounts/user.html',{'form':form,
+        'filters':user_filters,'target_user':user_name,'add_filter':add_filter,'auth_type':extern_user},context_instance=RequestContext(request))
 
 # modified from django source
 def login(request,redirect_field_name=REDIRECT_FIELD_NAME):
