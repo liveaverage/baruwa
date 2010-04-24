@@ -47,7 +47,7 @@ def return_attachment(msg, id):
                         name,value =  param.split("=")
                         name = name.lower().strip()
                         if name == "filename":
-                            attachment.name = value.strip('"')
+                            attachment.name = value
                         elif name == "create-date":
                             attachment.create_date =  value
                         elif name == "modification-date":
