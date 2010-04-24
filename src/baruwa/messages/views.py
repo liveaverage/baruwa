@@ -257,7 +257,7 @@ def process_quarantined_msg(request):
 
 @never_cache
 @login_required
-def preview(request, message_id):
+def preview(request, message_id, is_attach=False, attachment_id=0):
     """
     Returns a message preview of a 
     quarantined message, depending on
@@ -290,12 +290,36 @@ def preview(request, message_id):
                 fp = open(file_name)
             except:
                 if request.is_ajax():
-                    return HttpResponse({'message':message,'message_id':message_id},context_instance=RequestContext(request),content_type='application/javascript; charset=utf-8')
+                    return HttpResponse({'message':message,'message_id':message_id}, 
+                        context_instance=RequestContext(request), content_type='application/javascript; charset=utf-8')
                 else:
                     raise Http404
             msg = email.message_from_file(fp)
             fp.close()
-            message = parse_email(msg)
+            if is_attach:
+                message = return_attachment(msg, attachment_id)
+                if message:
+                    import base64
+                    attachment_data = message.getvalue()
+                    ct = message.content_type
+                    if request.is_ajax():
+                        json = simplejson.dumps({'success':True, 'attachment':base64.encodestring(attachment_data), 'mimetype':ct, 'name':message.name})
+                        message.close()
+                        response = HttpResponse(json, content_type='application/javascript; charset=utf-8')
+                    else:
+                        response = HttpResponse(attachment_data, mimetype=ct)
+                        response['Content-Disposition'] = 'attachment; filename=%s' % message.name
+                        message.close()
+                    return response
+                else:
+                    if request.is_ajax():
+                        json = simplejson.dumps({'success':False, 'attachment':'', 'mimetype':''})
+                        response = HttpResponse(json, content_type='application/javascript; charset=utf-8')
+                    else:
+                        response = HttpResponse('The attachment could not be downloaded')
+                    return response
+            else:
+                message = parse_email(msg)
         if request.is_ajax():
             response = simplejson.dumps({'message':message,'message_id':message_object.id})
             return HttpResponse(response, content_type='application/javascript; charset=utf-8')
@@ -303,17 +327,31 @@ def preview(request, message_id):
             return render_to_response('messages/preview.html', {'message':message,'message_id':message_object.id},context_instance=RequestContext(request))
     else:
         #remote request
-        remote_response = remote_preview(message_object.hostname,request.META['HTTP_COOKIE'],message_id)
-        if remote_response['success']:
-            data = remote_response['response']
-            items = simplejson.loads(data)
-            message = items['message']
-
-        if request.is_ajax():
-            response = simplejson.dumps({'message':message,'message_id':message_id})
-            return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+        if is_attach:
+            remote_response = remote_attachment_download(message_object.hostname, request.META['HTTP_COOKIE'], message_id, attachment_id)
+            if remote_response['success']:
+                import base64
+                data = remote_response['response']
+                attach = simplejson.loads(data)
+                if attach['success']:
+                    attachment_data = base64.decodestring(attach['attachment'])
+                    ct = attach['mimetype']
+                    response = HttpResponse(attachment_data, mimetype=ct)
+                    response['Content-Disposition'] = 'attachment; filename=%s' % attach['name']
+                    return response
+            return HttpResponse('Downloading of attachment failed')
         else:
-            return render_to_response('messages/preview.html', {'message':message,'message_id':message_id},context_instance=RequestContext(request))
+            remote_response = remote_preview(message_object.hostname, request.META['HTTP_COOKIE'], message_id)
+            if remote_response['success']:
+                data = remote_response['response']
+                items = simplejson.loads(data)
+                message = items['message']
+
+            if request.is_ajax():
+                response = simplejson.dumps({'message':message, 'message_id':message_id})
+                return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+            else:
+                return render_to_response('messages/preview.html', {'message':message, 'message_id':message_id}, context_instance=RequestContext(request))
 
 @never_cache
 @login_required
@@ -412,12 +450,21 @@ def remote_preview(host,cookie,message_id):
     rv = rest_request(host,resource,'GET',headers)
     return rv
 
-def remote_process(host,cookie,message_id,params):
+def remote_process(host, cookie, message_id, params):
     """
     Processes a message quarantined on a remote
     node
     """
     headers = {'Cookie':cookie,'X-Requested-With':'XMLHttpRequest'}
     resource = reverse('process-quarantine')
-    rv = rest_request(host,resource,'POST',headers,params)
+    rv = rest_request(host, resource, 'POST', headers, params)
+    return rv
+
+def remote_attachment_download(host, cookie, message_id, attachment_id):
+    """
+    Returns a email attachment from a remote node using a RESTFUL request
+    """
+    headers = {'Cookie':cookie,'X-Requested-With':'XMLHttpRequest'}
+    resource = reverse('download-attachment',args=[message_id,attachment_id])
+    rv = rest_request(host, resource, 'GET', headers)
     return rv

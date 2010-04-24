@@ -22,6 +22,43 @@ from subprocess import Popen, PIPE
 from email.Header import decode_header
 from django.conf import settings
 
+def return_attachment(msg, id):
+    "Returns an attachment from a mime file"
+
+    from StringIO import StringIO
+
+    n = 1
+    id = int(id)
+    for message_part in msg.walk():
+        content_disposition  = message_part.get("Content-Disposition", None)
+        if content_disposition:
+            dispositions  = content_disposition.strip().split(";")
+            if bool(content_disposition  and dispositions[0].lower()  == "attachment"):
+                if id == n:
+                    file_data  = message_part.get_payload(decode=True)
+                    attachment  = StringIO(file_data)
+                    attachment.content_type =  message_part.get_content_type()
+                    attachment.size = len(file_data)
+                    attachment.create_date =  None
+                    attachment.name = None
+                    attachment.mod_date =  None
+                    attachment.read_date =  None
+                    for param in dispositions[1:]:
+                        name,value =  param.split("=")
+                        name = name.lower().strip()
+                        if name == "filename":
+                            attachment.name = value.strip('"')
+                        elif name == "create-date":
+                            attachment.create_date =  value
+                        elif name == "modification-date":
+                            attachment.mod_date =  value
+                        elif name == "read-date":
+                            attachment.read_date =  value
+                    return attachment
+                    break
+                n = n + 1
+    return None
+
 def parse_attachment(part):
     """
     Parses an email part and returns attachment name
@@ -33,7 +70,7 @@ def parse_attachment(part):
         if bool(content_disposition and dispositions[0].lower() == "attachment"):
             for param in dispositions[1:]:
                 name,value = param.split("=")
-                if name.lstrip() == "filename":
+                if name.lower().strip() == "filename":
                     attachment = value
             return attachment
     return None
@@ -209,6 +246,7 @@ def rest_request(host,resource,method,headers,params=None):
         resource = resource + '/'
 
     try:
+        host = 'baruwa-alpha.sentechsa.net'
         c = httplib.HTTPConnection(host)
         r = c.request(method,resource,params,headers)
         response = c.getresponse()
