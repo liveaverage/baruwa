@@ -33,7 +33,7 @@
 <td class="mailitem">Attachments:</td>
 <td class="maildetail">
 {% for name in message.attachments %}
-<a href="">{{name}}</a>&nbsp;
+<a href="{% url download-attachment message_id=message_id, attachment_id=forloop.counter %}">{{name}}</a>&nbsp;
 {%endfor%}
 </td>
 </tr>
