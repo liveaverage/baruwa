@@ -79,7 +79,7 @@ Reports - {{report_title}}
 <td class="first-t sascores">{{item.size|filesizeformat}}</td>
 {% if forloop.first %}<td class="piebox" rowspan="{{forloop.revcounter}}">
 <div id="pie_graph" style="width: 350px; height: 230px;">
-<noscript></noscript>
+<noscript><img src="{% url render-graph report_kind %}" /></noscript>
 </div>
 </td>
 {%endif%}

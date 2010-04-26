@@ -81,8 +81,9 @@ Reports - {{report_title}}
 <td class="first-t sascores">{{item.num_count}}/{{item.spam_total}}/{{item.virus_total}}</td>
 <td class="first-t sascores">{{item.size|filesizeformat}}</td>
 {% if forloop.first %}<td class="piebox" rowspan="{{forloop.revcounter}}">
-<noscript>Enable javascript to view graph</noscript>
-<div id="pie_graph" style="width: 350px; height: 230px;"></div>
+<div id="pie_graph" style="width: 350px; height: 230px;">
+<noscript><img src="{% url render-graph report_kind %}" /></noscript>
+</div>
 </td>
 {%endif%}
 </tr>

@@ -52,8 +52,9 @@ Reports - {{report_title}}
 <tbody>
 <tr>
 <td colspan="3" class="align_center">
-<noscript>Enable javascript to view graph</noscript>
-<div id="sagraph" style="width: 950px; height: 250px;"></div>
+<div id="sagraph" style="width: 950px; height: 250px;">
+<noscript><img src="{% url render-graph report_kind %}" /></noscript>
+</div>
 </td>
 </tr>
 {% if top_items %}
