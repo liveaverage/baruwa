@@ -16,10 +16,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
+# vim: ai ts=4 sts=4 et sw=4
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('baruwa.reports.views',
-    (r'^$', 'index'),
+    (r'^$', 'index', {}, 'reports-index'),
     #(r'^(?P<report_type>(s|r))/(?P<report_field>(e|d))/(?P<report_order>(q|v))/$','report'),
     #(r'^(?P<report_type>(a))/(?P<report_field>(h|m|v))/$','report',{'report_order':None}),
     #(r'^(?P<report_type>(p))/$','report',{'report_field':None,'report_order':None}),

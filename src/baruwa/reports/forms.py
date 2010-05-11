@@ -19,8 +19,8 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 from django import forms
-from django.forms.fields import email_re
-#from reports.views import d_query
+from django.forms.fields import email_re, ipv4_re
+from baruwa.accounts.forms import domain_re
 
 FILTER_ITEMS = (
     ('id','Message ID'),
@@ -83,6 +83,9 @@ NUM_FILTER = [1,2,3,4]
 TEXT_FILTER = [1,2,5,6,7,89,10]
 TIME_FILTER = [1,2,3,4]
 
+def isNumeric(value):
+    return str(value).replace(".", "").replace("-", "").isdigit()
+
 def to_dict(tuple_list):
     d = {}
     for i in tuple_list:
@@ -116,6 +119,8 @@ class FilterForm(forms.Form):
                 raise forms.ValidationError(e)
             if submited_value in EMPTY_VALUES:
                 raise forms.ValidationError("Please supply a value to query")
+            if not isNumeric(submited_value):
+                raise forms.ValidationError("The value has to be numeric")
         if submited_field in TEXT_FIELDS:
             if not submited_by in TEXT_FILTER:
                 filter_items = to_dict(list(FILTER_ITEMS))
@@ -123,6 +128,15 @@ class FilterForm(forms.Form):
                 raise forms.ValidationError(e)
             if submited_value in EMPTY_VALUES:
                 raise forms.ValidationError("Please supply a value to query")
+            if (submited_field == 'from_address') or (submited_field == 'to_address'):
+                if not email_re.match(submited_value.strip()):
+                    raise forms.ValidationError('%s is not a valid e-mail address.' % submited_value)
+            if (submited_field == 'from_domain') or (submited_field == 'to_domain'):
+                if not domain_re.match(submited_value.strip()):
+                    raise forms.ValidationError('Please provide a valid domain name')
+            if submited_field == 'clientip':
+                if not ipv4_re.match(submited_value.strip()):
+                    raise forms.ValidationError('Please provide a valid ipv4 address')
         if submited_field in TIME_FIELDS:
             if not submited_by in TIME_FILTER:
                 filter_items = to_dict(list(FILTER_ITEMS))
@@ -130,5 +144,17 @@ class FilterForm(forms.Form):
                 raise forms.ValidationError(e)
             if submited_value in EMPTY_VALUES:
                 raise forms.ValidationError("Please supply a value to query")
+            if submited_field == 'date':
+                import datetime, time
+                try:
+                    datetime.date(*time.strptime(submited_value, '%Y-%m-%d')[:3])
+                except ValueError:
+                    raise forms.ValidationError('Please provide a valid date in YYYY-MM-DD format')
+            if submited_field == 'time':
+                import datetime, time
+                try:
+                    datetime.time(*time.strptime(submited_value, '%H:%M')[3:6])
+                except ValueError:
+                    raise forms.ValidationError('Please provide valid time in HH:MM format')
 
         return cleaned_data

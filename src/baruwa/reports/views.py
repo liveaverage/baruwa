@@ -16,19 +16,21 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
+# vim: ai ts=4 sts=4 et sw=4
 from django.shortcuts import render_to_response
 from django.db.models import Count, Sum, Max, Min, Q
 from django.db import connection
 from django.utils import simplejson
-from baruwa.messages.models import Maillog
-from baruwa.reports.models import SavedFilters
-from baruwa.reports.forms import FilterForm,FILTER_ITEMS,FILTER_BY
-from baruwa.messages.templatetags.messages_extras import tds_get_rules
+from django.core.urlresolvers import reverse
 from django.forms.util import ErrorList as errorlist
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from baruwa.messages.models import Maillog
+from baruwa.reports.models import SavedFilters
+from baruwa.reports.forms import FilterForm,FILTER_ITEMS,FILTER_BY
+from baruwa.messages.templatetags.messages_extras import tds_get_rules
 from baruwa.accounts.models import Users, UserFilters
 from baruwa.reports.graphs import drawSVGPie, drawBarGraph, drawPieGraph
 
@@ -43,7 +45,7 @@ def to_dict(tuple_list):
 
 def set_user_filter(user,request):
     filter_addresses = []
-    login = Users.objects.get(pk=user.username)
+    login = Users.objects.get(username=user.username)
     if not user.is_superuser:
         #if login.type == 'D':
         filter_addresses = UserFilters.objects.filter(username=user.username).exclude(active='N')
@@ -663,7 +665,7 @@ def index(request):
         else:
             success = "False"
             error_list = filter_form.errors.values()[0]
-            errors = errorlist(error_list).as_ul()
+            errors = error_list[0] #errorlist(error_list).as_ul()
             if request.session.get('filter_by', False):
                 filter_list = request.session.get('filter_by')
                 addresses = request.session['user_filter']['filter_addresses']
@@ -719,7 +721,7 @@ def rem_filter(request,index_num):
         request.session.modified = True
         if request.is_ajax():
             return index(request)
-    return HttpResponseRedirect('/reports/')
+    return HttpResponseRedirect(reverse('reports-index'))
 
 @login_required
 def save_filter(request,index_num):
@@ -749,7 +751,7 @@ def save_filter(request,index_num):
             else:
                 response = simplejson.dumps({'success':'False','data':[],'errors':error_msg,'active_filters':[],'saved_filters':[]})
                 return HttpResponse(response, content_type='application/javascript; charset=utf-8')
-    return HttpResponseRedirect('/reports/')
+    return HttpResponseRedirect(reverse('reports-index'))
 
 @login_required
 def load_filter(request,index_num):
@@ -766,14 +768,14 @@ def load_filter(request,index_num):
         if request.is_ajax():
             return index(request)
         else:
-            return HttpResponseRedirect('/reports/')
+            return HttpResponseRedirect(reverse('reports-index'))
     except:
         if request.is_ajax():
             error_msg = 'This filter you attempted to load does not exist'
             response = simplejson.dumps({'success':'False','data':[],'errors':error_msg,'active_filters':[],'saved_filters':[]})
             return HttpResponse(response, content_type='application/javascript; charset=utf-8')
         else:
-            return HttpResponseRedirect('/reports/')
+            return HttpResponseRedirect(reverse('reports-index'))
 
 @login_required
 def del_filter(request,index_num):
@@ -786,7 +788,7 @@ def del_filter(request,index_num):
             response = simplejson.dumps({'success':'False','data':[],'errors':error_msg,'active_filters':[],'saved_filters':[]})
             return HttpResponse(response, content_type='application/javascript; charset=utf-8')
         else:
-            return HttpResponseRedirect('/reports/')
+            return HttpResponseRedirect(reverse('reports-index'))
     else:
         try:
             filter.delete()
@@ -799,7 +801,7 @@ def del_filter(request,index_num):
         if request.is_ajax():
             return index(request)
         else:
-            return HttpResponseRedirect('/reports/')
+            return HttpResponseRedirect(reverse('reports-index'))
 
 
 @login_required
