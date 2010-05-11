@@ -10,10 +10,7 @@ spam learning,whitelisting and blacklisting addresses etc. Baruwa has implemente
 features (AJAX) where deemed fit, graphing is also implemented on the client side using SVG.
 
 It also provides reporting functionality with an easy to use query builder, results can be 
-displayed as message lists or graphed as colorful and pretty graphs. The goal of the initial 
-version will be to address the various quarks that exist in mailwatch at the moment. Baruwa 
-will initially be a drop in replacement for mailwatch, future releases will however break 
-compatibility with mailwatch. This enables easing of end users in to the new interface.
+displayed as message lists or graphed as colorful and pretty graphs.
 
 Baruwa is written in Python using the Django Framework and MySQL for storage, it is released 
 under the GPLv2
