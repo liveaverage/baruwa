@@ -1,9 +1,9 @@
 function toplinkize(direction,link_url,field_name){
     var tmp = '';
     if(direction == 'dsc'){
-        tmp = ' <a href="/messages/'+link_url+'/asc/'+field_name+'/">&darr;</a>';
+        tmp = ' <a href="/messages/'+link_url+'/asc/'+field_name+'/">&uarr;</a>';
     }else{
-        tmp = ' <a href="/messages/'+link_url+'/dsc/'+field_name+'/">&uarr;</a>';
+        tmp = ' <a href="/messages/'+link_url+'/dsc/'+field_name+'/">&darr;</a>';
     }
     return tmp;
 }
@@ -13,8 +13,7 @@ function en_history(){
     $.address.value('?u='+url);
     $.address.history($.address.baseURL() + url);
     window.scrollTo(0,0);
-    $('#loading_message').append('<p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p>').show('fast');
-    //$.ajaxSetup({'cache':false});
+    $('#Footer_container').after('<div id="loading_message"><p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p></div>');
     $.getJSON($(this).attr('href'),json2html);
     return false;
 }
@@ -28,8 +27,7 @@ function handlextern(){
             page = page.replace(/-/g,'/');
             url = '/'+ page + '/';
             window.scrollTo(0,0);
-            $('#loading_message').append('<p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p>').show('fast');
-            //$.ajaxSetup({'cache':false});
+            $('#Footer_container').after('<div id="loading_message"><p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p></div>');
             $.getJSON(url,json2html);
             return false;
         }
@@ -119,41 +117,32 @@ function paginate(){
         tmp +='<span>......</span>';
         tmp +='<a href="'+li+'"><img src="/static/imgs/last_pager.png" alt="Last"/></a></span>';
    }
-    oi = $("#sorting_by").index();
     columns = "timestamp from_address to_address subject size sascore";
-    linfo = "Date/Time From To Subject Size Score";
+    linfo = "Date_Time From To Subject Size Score";
     carray = columns.split(" ");
     larray = linfo.split(" ");
-    if(oi > 0){
-        oi--;
-    }
-    $("#sorting_by").html('<a href="/messages/'+link_url+'/'+rj.direction+'/'+carray[oi]+'/">'+larray[oi]+'</a>').removeAttr('id');
     for(i=0; i< carray.length;i++){
-        tc = i;
-        tc++;
-        if(rj.order_by == carray[i]){
-            $('#recent th:eq('+tc+')').text(larray[i]).attr('id','sorting_by');
+        if(larray[i] == 'Date_Time'){h = 'Date/Time';}else{h = larray[i];}
+        if(carray[i] == rj.order_by){
             tmpl = toplinkize(rj.direction,link_url,carray[i]);
-            $('#recent th:eq('+tc+')').append(tmpl);
+            $('.'+larray[i]+'_heading').empty().html(h).append(tmpl);
         }else{
-            ur = '/messages/'+link_url+'/'+rj.direction+'/'+carray[i]+'/'; 
-            if($('#recent th:eq('+tc+') a').attr('href') != ur){
-                $('#recent th:eq('+tc+') a').attr('href',ur);
-            }
+            ur = '<a href="/messages/'+link_url+'/'+rj.direction+'/'+carray[i]+'/">'+h+'</a>';
+            $('.'+larray[i]+'_heading').empty().html(ur);
         }
     }
-    pf = $('#divider-header h3 small').html();
+    pf = $('#heading small').html();
     if(pf){
-        $('#divider-header h3').html('Showing page '+rj.page+' of '+rj.pages+' pages.'+' (<small>'+pf+'</small>)');
+        $('#heading').html('Showing page '+rj.page+' of '+rj.pages+' pages.'+' (<small>'+pf+'</small>)');
     }else{
-        $('#divider-header h3').html('Showing page '+rj.page+' of '+rj.pages+' pages.');
+        $('#heading').html('Showing page '+rj.page+' of '+rj.pages+' pages.');
     }
     $.address.title('Showing page '+rj.page+' of '+rj.pages+' pages.');
     $(this).html(tmp);
     $('#paginator a').bind('click',en_history);
-    $('#recent th a').bind('click',en_history);
+    $('.Grid_heading div a').bind('click',en_history);
     $('#sub-menu-links ul li a').bind('click',en_history);
-    $('#loading_message').empty().hide('fast');
+    $('#loading_message').remove();
 }
 
 function jsize_page(){
@@ -170,14 +159,13 @@ function jsize_page(){
         }
     });
     $('#paginator a').bind('click',en_history);
-    $('#recent th a').bind('click',en_history);
+    $('.Grid_heading div a').bind('click',en_history);
     $('#sub-menu-links ul li a').bind('click',en_history);
-    $("#paginator").ajaxStop(paginate);
-    $("#loading_message").empty().ajaxError(function(event, request, settings){
+    $("#paginator").ajaxStop(paginate).ajaxError(function(event, request, settings){
         if(request.status == 200){
             location.href=settings.url;
         }else{
-            $(this).hide('normal');
+            $('#loading_message').remove();
         }
     });
     $.address.externalChange(handlextern);

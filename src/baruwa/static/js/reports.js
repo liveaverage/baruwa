@@ -11,21 +11,26 @@ function build_active_filters(active_filters){
     rows = [];
     count = 0;
     $.each(active_filters,function(itr,filter){
-        if(itr == i){
-            var row = '<tr class="last">';
-        }else{
-            var row = '<tr>';
-        }
-        row += '<td class="first-t filters" colspan="2">[ <a href="/reports/fd/'+itr+'/">x</a> ]';
-        row += ' [ <a href="/reports/fs/'+itr+'/">Save</a> ] '+filter.filter_field+' '+filter.filter_by+' '+filter.filter_value+'</td></tr>';
-        rows[count++] = row;
+        rows[count++] = '<div class="LightBlue_div">';
+        rows[count++] = '<div class="Active_filters">';
+        rows[count++] = '<div class="Filter_remove">';
+        rows[count++] = '<a href="/reports/fd/'+itr+'/"><img src="/static/imgs/action_remove.png" alt="x" title="Remove" /></a>';
+        rows[count++] = '</div>';
+        rows[count++] = '<div class="Filter_save">';
+        rows[count++] = '<a href="/reports/fs/'+itr+'/"><img src="/static/imgs/save.png" alt="Save" title="Save" /></a>';
+        rows[count++] = '</div>';
+        rows[count++] = '<div class="Filter_detail">';
+        rows[count++] = filter.filter_field+' '+filter.filter_by+' '+filter.filter_value;
+        rows[count++] = '</div>';
+        rows[count++] = '</div>';
+        rows[count++] = '</div>';
     });
     if(rows.length){
-        $("#afilters tbody").empty().append(rows.join(''));
+        $("#afilters").empty().append(rows.join(''));
     }else{
-        $("#afilters tbody").empty().append('<tr class="last"><td class="first-t filters" colspan="2">No active filters at the moment</td></tr>');
+        $("#afilters").empty().append('<div class="LightBlue_div"><div class="spanrow">No active filters at the moment</div></div>');
     }
-    $("#afilters tbody tr a").bind('click',ajaxify_active_filter_links);
+    $("#afilters div a").bind('click',ajaxify_active_filter_links);
 }
 
 function build_saved_filters(saved_filters){
@@ -34,26 +39,30 @@ function build_saved_filters(saved_filters){
     rows = [];
     count = 0;
     $.each(saved_filters,function(itr,filter){
-        if(itr == i){
-            var row = '<tr class="last">';
-        }else{
-            var row = '<tr>';
-        }
-        row += '<td class="first-t filters" colspan="2">[ <a href="/reports/sfd/'+filter.filter_id+'/">x</a> ]';
+        rows[count++] = '<div class="LightBlue_div">';
+        rows[count++] = '<div class="Active_filters">';
+        rows[count++] = '<div class="Filter_remove">';
+        rows[count++] = '<a href="/reports/sfd/'+filter.filter_id+'/"><img src="/static/imgs/action_delete.png" alt="x" title="Delete" /></a>';
+        rows[count++] = '</div>';
+        rows[count++] = '<div class="Filter_save">';
         if(!filter.is_loaded){
-            row += ' [ <a href="/reports/sfl/'+filter.filter_id+'/">Load</a> ] ';
+            rows[count++] = '<a href="/reports/sfl/'+filter.filter_id+'/"><img src="/static/imgs/action_add.png" alt="Load" title="Load" /></a>';
         }else{
-            row += ' [ Load ] ';
+            rows[count++] = '<img src="/static/imgs/action_add.png" alt="Load" />';
         }
-        row += filter.filter_name+'</td></tr>';
-        rows[count++] = row;
+        rows[count++] = '</div>';
+        rows[count++] = '<div class="Filter_detail">';
+        rows[count++] = filter.filter_name;
+        rows[count++] = '</div>';
+        rows[count++] = '</div>';
+        rows[count++] = '</div>';
     });
     if(rows.length){
-        $("#sfilters tbody").empty().append(rows.join(''));
+        $("#sfilters").empty().append(rows.join(''));
     }else{
-        $("#sfilters tbody").empty().append('<tr class="last"><td class="first-t filters" colspan="2">No saved filters at the moment</td></tr>');
+        $("#sfilters").empty().append('<div class="LightBlue_div"><div class="spanrow">No saved filters at the moment</div></div>');
     }
-    $("#sfilters tbody tr a").bind('click',ajaxify_active_filter_links);
+    $("#sfilters div a").bind('click',ajaxify_active_filter_links);
 }
 
 function build_page(response){
@@ -62,67 +71,91 @@ function build_page(response){
         build_active_filters(response.active_filters);
         build_saved_filters(response.saved_filters);
     }else{
-        $("#filter-form-errors td").addClass('filter_errors');
-        $("#filter-form-errors td").html(response.errors);
-        $("#filter-form-errors").fadeIn(50).delay(15000).slideToggle('fast');
-        window.scroll(0,500);
+        if($('#filter-error').length){clearTimeout(timeout);$('#filter-error').remove();}
+        $('#aheading').after('<div id="filter-error">'+response.errors+'</div>');
+        $('#filter-error').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+        timeout = setTimeout(function() {$('#filter-error').remove();}, 15050);
+        $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(timeout);$('#filter-error').empty().remove();});
     }
     $("#filter_form_submit").removeAttr('disabled').attr('value','Add');;
 }
 
 function build_elements(response){
     if(response.success == "True"){
+        if($('#filter-error').length){clearTimeout(timeout);$('#filter-error').remove();}
         if(response.active_filters){
             var i = response.active_filters.length;
             i--;
             if(i > 0){
-                $("#afilters tbody tr:last").removeClass('last');
                 n = response.active_filters[i];
-                var row = '<tr class="last whitelisted"><td class="first-t filters" colspan="2">[ <a href="/reports/fd/'+i+'/">x</a> ]';
-                row += ' [ <a href="/reports/fs/'+i+'/">Save</a> ] '+n.filter_field+' '+n.filter_by+' '+n.filter_value+'</td></tr>';
-                $("#afilters tbody").append(row);
-                setTimeout(function(){$('#afilters tbody tr:last').removeClass('whitelisted');},15000);
-                $("form")[0].reset();
+                count = 0;
+                row = [];
+                row[count++] = '<div class="whitelisted_div">';
+                row[count++] = '<div class="Active_filters">';
+                row[count++] = '<div class="Filter_remove">';
+                row[count++] = '<a href="/reports/fd/'+i+'/"><img src="/static/imgs/action_remove.png" alt="x" title="Remove" /></a>';
+                row[count++] = '</div>';
+                row[count++] = '<div class="Filter_save">';
+                row[count++] = '<a href="/reports/fs/'+i+'/"><img src="/static/imgs/save.png" alt="Save" title="Save" /></a>';
+                row[count++] = '</div>';
+                row[count++] = '<div class="Filter_detail">';
+                row[count++] = n.filter_field+' '+n.filter_by+' '+n.filter_value;
+                row[count++] = '</div>';
+                row[count++] = '</div>';
+                row[count++] = '</div>';
+                $("#afilters").append(row.join(''));
+                setTimeout(function(){$('div.whitelisted_div').removeClass('whitelisted_div').addClass('LightBlue_div');},15000);
+                $('form').clearForm();
             }else{
                 n = response.active_filters[0];
                 if(n){
-                    var row = '<tr class="last"><td class="first-t filters" colspan="2">[ <a href="/reports/fd/'+i+'/">x</a> ]';
-                    row += ' [ <a href="/reports/fs/'+i+'/">Save</a> ] '+n.filter_field+' '+n.filter_by+' '+n.filter_value+'</td></tr>';
-                    $("#afilters tbody").empty().append(row);
+                    count = 0;
+                    row = [];
+                    row[count++] = '<div class="whitelisted_div">';
+                    row[count++] = '<div class="Active_filters">';
+                    row[count++] = '<div class="Filter_remove">';
+                    row[count++] = '<a href="/reports/fd/'+i+'/"><img src="/static/imgs/action_remove.png" alt="x" title="Remove" /></a>';
+                    row[count++] = '</div>';
+                    row[count++] = '<div class="Filter_save">';
+                    row[count++] = '<a href="/reports/fs/'+i+'/"><img src="/static/imgs/save.png" alt="Save" title="Save" /></a>';
+                    row[count++] = '</div>';
+                    row[count++] = '<div class="Filter_detail">';
+                    row[count++] = n.filter_field+' '+n.filter_by+' '+n.filter_value;
+                    row[count++] = '</div>';
+                    row[count++] = '</div>';
+                    row[count++] = '</div>';
+                    $("#afilters").empty().append(row.join(''));
                 }else{
-                    var row = '<tr class="last"><td class="first-t filters" colspan="2">No active filters at the moment</td></tr>';
-                    $("#afilters tbody").empty().append(row);
+                    row = '<div class="LightBlue_div"><div class="spanrow">No saved filters at the moment</div></div>';
+                    $("#afilters").empty().append(row);
                 }
             }
-            $("#afilters tbody tr a").bind('click',ajaxify_active_filter_links);
+            $("#afilters div a").bind('click',ajaxify_active_filter_links);
         }
         if(response.saved_filters){
             build_saved_filters(response.saved_filters);
         }
         update_counters(response.data);
-        $("#filter-form-errors").hide();
     }else{
-        $("#filter-form-errors td").addClass('filter_errors');
-        $("#filter-form-errors td").html(response.errors);
-        $("#filter-form-errors").fadeIn(50).delay(15000).slideToggle('fast');
+        if($('#filter-error').length){clearTimeout(timeout);$('#filter-error').remove();}
+        $('#aheading').after('<div id="filter-error">'+response.errors+'</div>');
+        $('#filter-error').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+        timeout = setTimeout(function() {$('#filter-error').remove();}, 15050);
+        $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(timeout);$('#filter-error').empty().remove();});
     }
     $("#filter_form_submit").removeAttr('disabled').attr('value','Add');
+    $("#filter-ajax").remove();
 }
 
 function ajaxify_active_filter_links(e){
     e.preventDefault();
     $("#filter_form_submit").attr({'disabled':'disabled','value':'Loading'});
-    window.scroll(0,0);
-    //$.ajaxSetup({'cache':false});
     $.get($(this).attr('href'),build_page,'json');
 }
 
 function addFilter(){
     $("#filter_form_submit").attr({'disabled':'disabled','value':'Loading'});
-    $("#filter-form-errors td").empty();
-    $("#filter-form-errors td").removeClass('filter_errors');
-    $("#filter-form-errors td").html($("<img/>").attr("src","/static/imgs/loader-orig.gif")).append('&nbsp;Processing........')
-    $("#filter-form-errors").show();
+    $('#afform').after('<div id="filter-ajax">Processing request.............</div>');
     var add_filter_request = {
         filtered_field: $("#id_filtered_field").val(),
         filtered_by: $("#id_filtered_by").val(),
@@ -171,6 +204,12 @@ $('#id_filtered_field').bind('change',function(){
             $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
         });
         $('#id_filtered_value').removeAttr("disabled").val("");
+        if($(this).val() == 'date'){
+            $('#id_filtered_value').val('YYYY-MM-DD');
+        }
+        if($(this).val() == 'time'){
+            $('#id_filtered_value').val('HH:MM');
+        }
     }
 });
 $("#filter-form").submit(addFilter);
@@ -182,7 +221,7 @@ $("#my-spinner").ajaxStart(function(){$(this).empty().append($("<img/>").attr('s
             $(this).empty().append($("<span/>").addClass('ajax_error')).append('&nbsp;Error occured');
         }
     }).ajaxStop(function(){$(this).empty();});
-$("#afilters tbody tr a").bind('click',ajaxify_active_filter_links);
-$("#sfilters tbody tr a").bind('click',ajaxify_active_filter_links);
+$("#afilters div a").bind('click',ajaxify_active_filter_links);
+$("#sfilters div a").bind('click',ajaxify_active_filter_links);
 
 });

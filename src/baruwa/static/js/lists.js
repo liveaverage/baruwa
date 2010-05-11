@@ -1,13 +1,14 @@
 function ajax_start(){
     $(this).append($("<img/>").attr('src','/static/imgs/loader-orig.gif')).append('&nbsp;Processing...');
+    $('div.ui-dialog-titlebar').append($("<img/>").attr('src','/static/imgs/loader.gif'));
 }
 
 function ajax_stop(){
     $(this).empty();
     if($('#lists-spinner').length){
         $('#lists-spinner').remove();
-        $('#pagination_info small').remove();
     }
+    $('div.ui-dialog-titlebar img').remove();
 }
 
 function ajax_error(event, request, settings){
@@ -18,24 +19,29 @@ function ajax_error(event, request, settings){
             location.href=settings.url;
         }
     }else{
-        $(this).empty();
-        $('#pagination_info').empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
+        $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
     }
+    $('div.ui-dialog-titlebar img').remove();
 }
 
 function toplinkize(app,direction,field_name){
     var tmp = '';
     if(direction == 'dsc'){
-        tmp = ' <a href="/'+app+'/asc/'+field_name+'/">&darr;</a>';
+        tmp = ' <a href="/'+app+'/asc/'+field_name+'/">&uarr;</a>';
     }else{
-        tmp = ' <a href="/'+app+'/dsc/'+field_name+'/">&uarr;</a>';
+        tmp = ' <a href="/'+app+'/dsc/'+field_name+'/">&darr;</a>';
     }
     return tmp;
 }
 
-function paginate(){
+function paginate(list_type){
+    if(list_type == '1'){
+        lt = 'Whitelist :: ';
+    }else{
+        lt = 'Blacklist :: ';
+    }
     tmp = 'Showing page '+rj.page+' of '+rj.pages+' pages. ';
-    $('#pagination_info').html(tmp);
+    $('#heading').empty().append(lt+tmp);
     $.address.title('Baruwa :: List management '+tmp);
     li = '';
 
@@ -61,30 +67,24 @@ function paginate(){
         tmp +='<span>......</span>';
         tmp +='<a href="/'+rj.app+'/last/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/last_pager.png" alt="Last"/></a></span>';
     }
-
-    oi = $('#sorting_by').index();
     columns = "id to_address from_address";
-    linfo = "# To From"
+    linfo = "hash To From"
     carray = columns.split(" ");
     larray = linfo.split(" ");
-    $("#sorting_by").html('<a href="/'+rj.app+'/'+rj.direction+'/'+carray[oi]+'/">'+larray[oi]+'</a>').removeAttr('id');
     for(i=0; i< carray.length;i++){
+        if(larray[i] == 'hash'){h = '#';}else{h = larray[i];}
         if(rj.order_by == carray[i]){
-            $('#lists th:eq('+i+')').text(larray[i]).attr('id','sorting_by');
             tmpl = toplinkize(rj.app,rj.direction,carray[i]);
-            $('#lists th:eq('+i+')').append(tmpl);
+            $('.Lists_grid_'+larray[i]).empty().html(h).append(tmpl);
             $('#lists_filter_form').attr('action','/'+rj.app+'/'+rj.direction+'/'+carray[i]+'/');
         }else{
-            ur = '/'+rj.app+'/'+rj.direction+'/'+carray[i]+'/';
-            if($('#lists th:eq('+i+') a').attr('href') != ur){
-                $('#lists th:eq('+i+') a').attr('href',ur);
-            }
+            ur = '<a href="/'+rj.app+'/'+rj.direction+'/'+carray[i]+'/">'+h+'</a>';
+            $('.Lists_grid_'+larray[i]).empty().html(ur);
         }
     }
-    
     $('#paginator').html(tmp);
     $('#paginator span a').bind('click',list_nav); 
-    $('th a').bind('click',list_nav);
+    $('div.Grid_heading div a').bind('click',list_nav);
 }
 
 function lists_from_json(data){
@@ -92,7 +92,10 @@ function lists_from_json(data){
         rj = data.paginator;
         tti = [];
         count = 0;
+        css = 'DarkGray';
+        list_type = '1';
         $.each(data.items,function(i,n){
+            list_type = rj.list_kind;
             if(n.from_address == 'default'){
                 from_address = 'Any address';
             }else{
@@ -103,14 +106,32 @@ function lists_from_json(data){
             }else{
                 to_address = n.to_address;
             }
-            tti[count++] = '<tr class="lists" id="list-id-'+n.id+'"><td class="lists first-t">'+n.id+'</td><td class="lists first-t">'+to_address+'</td>';
-            tti[count++] = '<td class="lists first-t">'+from_address+'</td><td class="lists first-t">';
-            tti[count++] = '<a href="/lists/delete/'+rj.list_kind+'/'+n.id+'/">Delete</a></td></tr>';
+            link = '<a href="/lists/delete/'+rj.list_kind+'/'+n.id+'/"><img src="/static/imgs/action_delete.png" title="Delete" alt="Delete" /></a>';
+            if(n.from_address == '127.0.0.1'){
+                if(n.to_address == 'default'){
+                    link = '=builtin=';
+                }
+            }
+
+            if(css == 'LightBlue'){
+                css = 'DarkGray';
+            }else{
+                css = 'LightBlue';
+            }
+
+            tti[count++] = '<div class="'+css+'_div">';
+            tti[count++] = '<div class="Lists_'+css+'_hash">'+n.id+'</div>';
+            tti[count++] = '<div class="Lists_'+css+'_to">'+to_address+'</div>';
+            tti[count++] = '<div id="list-id-'+n.id+'" class="Lists_'+css+'_from">'+from_address+'</div>';
+            tti[count++] = '<div class="Lists_'+css+'_action">'+link+'</div>';
+            tti[count++] = '</div>';
         });
         if(tti.length){
-            $('#lists tbody').empty().append(tti.join(''));
+            $("div.Grid_heading").siblings('div').remove();
+            $("div.Grid_heading").after(tti.join(''));
         }else{
-            $('#lists tbody').empty().append('<tr class="lists"><td colspan="4" class="lists align_center">No items at the moment</td></tr>');
+            $("div.Grid_heading").siblings('div').remove();
+            $("div.Grid_heading").after('<div class="LightBlue_div">No items at the moment</div>');
         }
         if(rj.order_by == 'id'){
             $('#filterbox').hide('fast');
@@ -122,13 +143,12 @@ function lists_from_json(data){
                 $('#filterlabel').html('<b>From:</b>');
             }
         }
-        $('tbody a').bind('click',confirm_delete);
-        paginate();
+        $('div.Grid_heading ~ div a').bind('click',confirm_delete);
+        paginate(list_type);
     }
 }
 
 function fetchPage(link,list_type){
-    //$.ajaxSetup({'cache':false});
     $.get(link,function(response){
         lists_from_json(response);
         if(list_type == '1'){
@@ -140,8 +160,7 @@ function fetchPage(link,list_type){
             ll = '/lists/1/';
             ct = 'Blacklist :: ';
         }
-        t = $('#pagination_info');
-        $('#divider-header h3').html(ct).append(t);
+        $('#heading').empty().html(ct);
         $('#sub-menu-links ul li:first a').attr({id:'list-link',href:ll,innerHTML:lt});
     },'json');
 }
@@ -181,10 +200,10 @@ function confirm_delete(event) {
     re = /\/lists\/delete\/(\d+)\/(\d+)/
     str = $(this).attr('href');
     found = str.match(re);
+    event.preventDefault();
     if(found.length == 3){
-        event.preventDefault();
         if(found[1] == 1){list = 'Whitelist';}else{list = 'Blacklist';}
-        alt = 'Delete '+$("tr#list-id-"+found[2]+" td:eq(2)").text()+' from '+list;
+        alt = 'Delete '+$("div#list-id-"+found[2]+"").text()+' from '+list;
         $dialog.html(alt);
         $dialog.dialog('option','buttons', {
             'Delete': function() {
@@ -198,18 +217,24 @@ function confirm_delete(event) {
                         if(f.length > 1){
                             $.ajaxSetup({
                                 'beforeSend':function(xhr){xhr.setRequestHeader("X-List-Params",p);}
-                                //'cache':false
                             });
                         }
                     }
                 }
                 $.get(str,function(response){
+                    window.scroll(0,0);
+                    if($('#in-progress').length){clearTimeout(ip);$('#in-progress').empty().remove();}
                     if(!response.error){
                         lists_from_json(response);
+                        $('.Grid_content').before('<div id="in-progress">List item deleted</div>');
+                        $('#in-progress').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+                        ip = setTimeout(function() {$('#in-progress').remove();}, 15050);
                     }else{
-                        window.scroll(0,0);
-                        $("#in-progress").html(response.error).fadeIn(50).delay(15000).slideToggle('fast');
+                        $('.Grid_content').before('<div id="in-progress">'+response.html+'</div>');
+                        $('#in-progress').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+                        ip = setTimeout(function() {$('#in-progress').remove();}, 15050);
                     }
+                    $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(ip);$('#in-progress').empty().remove();});
                 },'json');
             },Cancel: function() {
                 $(this).dialog('close');
@@ -222,6 +247,7 @@ function confirm_delete(event) {
 function handlePost(event){
     $('#submit-button').attr('disabled','disabled');
     $('#cancel-button').attr('disabled','disabled');
+    $('input').removeClass('ui-state-error');
     event.preventDefault();
     var list_add_request = {
         from_address: $('#id_from_address').val(),
@@ -242,25 +268,27 @@ function handlePost(event){
                     ll = '/lists/1/';
                     ct = 'Blacklist :: ';
                 }
-                t = $('#pagination_info');
-                $('#divider-header h3').html(ct).append(t);
+                $('#heading').html(ct);
                 $('#sub-menu-links ul li:first a').attr({id:'list-link',href:ll,innerHTML:lt});
-                $('#lists tbody tr:eq(0)').addClass('whitelisted');
-                $("form")[ 0 ].reset();
-                $('#add-item').hide();
-                $('#add-sep').hide();
+                $('div.Grid_heading ~ div:eq(0)').addClass('whitelisted_div');
+                $('form').clearForm();
                 $('#list-add').html('Add to List').blur();
-                setTimeout(function(){$('#lists tbody tr:eq(0)').removeClass('whitelisted');},15000);
+                $('#add-item').dialog('close');
+                setTimeout(function(){
+                    $('div.Grid_heading ~ div:eq(0)').removeClass('whitelisted_div');
+                    $('div.Grid_heading ~ div:eq(0)').addClass('LightBlue_div');
+                },15000);
             }else{
-                if($('#aj-form-warning').length > 0){
-                    $('#aj-form-warning').html(response.error);
-                }else{
-                    $('#ins-after').after('&nbsp;<span id="aj-form-warning" class="filter_errors">'+response.error+'</span>');
-                }
+                $('#id_'+response.form_field).addClass('ui-state-error');
+                if($('#ajax-error-msg').length){clearTimeout(timeout);$('#ajax-error-msg').empty().remove();}
+                $('#list-form').before('<div id="ajax-error-msg" class="ui-state-highlight">'+response.error+'</div>');
+                timeout = setTimeout(function() {
+                    $('#ajax-error-msg').empty().remove();
+                }, 3900);
             }
+            $('#submit-button').removeAttr('disabled');
+            $('#cancel-button').removeAttr('disabled');
         },"json");
-    $('#submit-button').removeAttr('disabled');
-    $('#cancel-button').removeAttr('disabled');
 }
 
 
@@ -308,7 +336,7 @@ function jsize_lists(){
     $('#my-spinner').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
     $('#add-item').hide();
     $('#paginator span a').bind('click',list_nav); 
-    $('th a').bind('click',list_nav);
+    //$('th a').bind('click',list_nav);
     $.address.externalChange(handlextern);
     $dialog.html('An error occured !')
         .dialog({
@@ -322,33 +350,35 @@ function jsize_lists(){
             open: function(event, ui) {$(".ui-dialog-titlebar-close").hide();},
             draggable: false,
         });
-    $('tbody a').bind('click',confirm_delete);
+    $('div.Grid_heading ~ div a').bind('click',confirm_delete);
+    $('div.Grid_heading div a').bind('click',list_nav);
     $('#list-add').bind('click',function(event){
         event.preventDefault();
-        if($("#add-item").is(':visible')){
-            $('#add-item').hide();
-            $('#add-sep').hide();
-            $(this).html('Add to List').blur();
-            $("form")[0].reset();
-            if($('#aj-form-warning').length > 0){$('#aj-form-warning').remove();}
-        }else{
-            $('#add-item').show();
-            $('#add-sep').show();
-            $(this).html('Cancel add').blur();
-        }
+        $('#add-item').dialog('open');
+        $('input').removeClass('ui-state-error');
+        $(this).html('Add to List').blur();
+        $('form').clearForm();
     });
     $('#list-form').submit(handlePost);
     $('#cancel-button').bind('click',function(){
-        if($("#add-item").is(':visible')){
-            $('#add-item').hide();
-            $('#add-sep').hide();
-            $('#list-add').html('Add to List').blur();
-            $("form")[0].reset();
-            if($('#aj-form-warning').length > 0){$('#aj-form-warning').remove();}
-        }
+        $('#list-add').html('Add to List').blur();
+        $('form').clearForm();
+        if($('#aj-form-warning').length > 0){$('#aj-form-warning').remove();}
+        $('#add-item').dialog('close');
+        $('input').removeClass('ui-state-error');
     });
     $('#list-link').bind('click',getPage);
     $('#lists_filter_form').submit(submitForm);
+    $("#add-item").dialog({
+        autoOpen: false,
+        height: 220,
+        width: 450,
+        modal: true,
+        title: 'List an address',
+        closeOnEscape: false,
+        open: function(event, ui) {$(".ui-dialog-titlebar-close").hide();},
+    });
+
 }
 
 var $dialog = $('<div></div>');

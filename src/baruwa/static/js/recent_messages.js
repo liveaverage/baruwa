@@ -1,8 +1,9 @@
 function prevent_interupt_refresh(event){
     if(ax_in_progress){
         event.preventDefault();
-        if(!$("#in-progress").is(':visible')){
-            $("#in-progress").html("Content refresh in progress, please wait for it to complete").show('fast');
+        if(!$("#in-progress").length){
+            $('.Grid_content').before('<div id="in-progress">Content refresh in progress, please wait for it to complete</div>');
+            setTimeout(function() {$('#in-progress').remove();}, 15050);
             window.scroll(0,0);
         }
     }
@@ -26,15 +27,15 @@ function do_table_sort(){
     full_messages_listing = false;
     $('.nojs').remove();
     ax_in_progress = false;
-    $("#search-area").ajaxSend(function(){
-	    $('#my-spinner').empty().append($("<img/>").attr("src","/static/imgs/loader-orig.gif")).append('&nbsp;Refreshing...');
+    $("#my-spinner").ajaxSend(function(){
+	    $(this).empty().append($("<img/>").attr("src","/static/imgs/loader-orig.gif")).append('&nbsp;Refreshing...');
 	    ax_error = false;
         ax_in_progress = true;
     })
     .ajaxStop(function() {
 	    if(!ax_error){
 		    var lu = lastupdatetime();
-		    $(this).empty().append('[last update at '+lu+']');
+		    $("#heading small").empty().append('[last update at '+lu+']');
             $('#my-spinner').empty();
             ax_in_progress = false;
             if($("#in-progress").is(':visible')){
@@ -47,7 +48,6 @@ function do_table_sort(){
             location.href=settings.url;
         }else{
 	        $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
-            $('#my-spinner').empty();
 	        ax_error = true;
             ax_in_progress = false;
             if($("#in-progress").is(':visible')){

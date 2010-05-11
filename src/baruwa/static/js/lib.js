@@ -58,14 +58,14 @@ function json2html(data){
         }
         var to;
         var tmp;
-        rows = '';
+        rows = [];
         len = data.items.length;
         len --;
+        count = 0;
         $.each(data.items,function(i,n){
             //build html rows
             to = '';
-            row = '';
-            c = '';
+            c = 'LightBlue';
             tmp = n.to_address.split(',');
             for(itr = 0; itr < tmp.length; itr++){
                 to += tmp[itr]+'<br />';
@@ -97,7 +97,7 @@ function json2html(data){
             }
             if(n.virusinfected || n.nameinfected || n.otherinfected){
                 mstatus = 'Infected';
-                c =  'infested';
+                c =  'infected';
             }
             if(!(n.isspam) && !(n.virusinfected) && !(n.nameinfected) && !(n.otherinfected)){
                 mstatus = 'Clean';
@@ -110,38 +110,39 @@ function json2html(data){
                 mstatus = 'BL';
                 c =  'blacklisted';
             }
-            row += '<td id="first-t">[<a href="/messages/'+n.id+'/">&nbsp;&nbsp;</a>]</td>';
-            row += '<td>'+n.timestamp+'</td><td>'+from+'</td><td>'+to+'</td>';
-            row += '<td>'+subject+'</td><td>'+filesizeformat(n.size)+'</td>';
-            row += '<td>'+n.sascore+'</td><td>'+mstatus+'</td></tr>';
-            if(c != ''){
-                row = '<tr class="'+stripHTML(c)+'">'+row;
-            }else{
-                row = '<tr>'+row;
-            }
-            rows += row;
+            rows[count++] = '<div class="'+stripHTML(c)+'_div">';
+            rows[count++] = '<div class="'+stripHTML(c)+'_Date_Time"><a href="/messages/'+n.id+'/">'+n.timestamp+'</a></div>';
+            rows[count++] = '<div class="'+stripHTML(c)+'_From_heading"><a href="/messages/'+n.id+'/">'+from+'</a></div>';
+            rows[count++] = '<div class="'+stripHTML(c)+'_To_heading"><a href="/messages/'+n.id+'/">'+to+'</a></div>';
+            rows[count++] = '<div class="'+stripHTML(c)+'_Subject_heading"><a href="/messages/'+n.id+'/">'+subject+'</a></div>';
+            rows[count++] = '<div class="'+stripHTML(c)+'_Size_heading"><a href="/messages/'+n.id+'/">'+filesizeformat(n.size)+'</a></div>';
+            rows[count++] = '<div class="'+stripHTML(c)+'_Score_heading"><a href="/messages/'+n.id+'/">'+n.sascore+'</a></div>';
+            rows[count++] = '<div class="'+stripHTML(c)+'_Status_heading"><a href="/messages/'+n.id+'/">'+mstatus+'</a></div>';
+            rows[count++] = '</div>';
         });
-        if(rows == ''){
+        if(!rows.length){
             if(full_messages_listing){
-                rows = '<tr><td colspan="8" class="align_center">No records returned</td></tr>';
-                $("#recent tbody").empty().append(rows);
+                rows = '<div class="spanrow">No records returned</div>';
+                $("div.Grid_heading").siblings('div').remove();
+                $("div.Grid_heading").after(rows);
             }
         }else{
-            remove_rows = '';
             if(full_messages_listing){
-                $("#recent tbody").empty().append(rows);
+                $("div.Grid_heading").siblings('div').remove();
+                $("div.Grid_heading").after(rows.join(''));
             }else{
                 if(len == 49){
-                    $("#recent tbody").empty().append(rows);
+                    $("div.Grid_heading").siblings('div').remove();
+                    $("div.Grid_heading").after(rows.join(''));
                 }else{
                     remove_rows = (48 - len);
-                    $("#recent tbody tr:gt("+remove_rows+")").remove();
-                    $("#recent tbody").prepend(rows);
+                    $("div.Grid_heading ~ div:gt("+remove_rows+")").remove();
+                    $("div.Grid_heading").after(rows.join(''));
                 }
             }
         }
     }else{
-        $("#search-area").empty().append('Empty response from server. check network!');
+        $("#my-spinner").empty().append('Empty response from server. check network!');
     }
 }
 
@@ -155,16 +156,18 @@ function confirm_delete(event){
     $dialog.dialog('option','buttons',{
         'Delete': function(){
             $(this).dialog('close');
-            id = parts[6].toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+            id = parts[6];
             $.get(link,function(response){
                 if(response.success == 'True'){
-                    $('#'+id).empty().remove();
-                    if(!$('.maillog > tbody >tr').length){
-                        $('tbody').append('<tr id="placeholder"><td colspan="3" class="align_center">No filters configured</td></tr>');
+                    $('#fid_'+id).empty().remove();
+                    if(!$('div.Grid_heading ~ div').length){
+                        $('div.Grid_heading').after('<div class="spanrow">No filters configured</div>');
                     }
                 }else{
                     window.scroll(0,0);
-                    $("#in-progress").html(response.html).fadeIn(50).delay(15000).slideToggle('fast');
+                    if($('#in-progress').length){$('#in-progress').empty().remove();}
+                    $('.Grid_content').before('<div id="in-progress">'+response.html+'</div>');
+                    setTimeout(function() {$('#in-progress').remove();}, 15050);
                 }
             },'json');
         },Cancel: function(){
