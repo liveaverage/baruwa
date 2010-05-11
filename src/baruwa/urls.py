@@ -25,7 +25,7 @@ import os
 CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8')).replace('\\', '/')
 
 urlpatterns = patterns('',
-    (r'^$', 'baruwa.messages.views.index'),
+    (r'^$', 'baruwa.messages.views.index', {}, 'index-page'),
     (r'^messages/', include('baruwa.messages.urls')),
     (r'^lists/', include('baruwa.lists.urls')),
     (r'^reports/', include('baruwa.reports.urls')),

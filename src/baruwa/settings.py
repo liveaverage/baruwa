@@ -89,6 +89,8 @@ INSTALLED_APPS = (
     'baruwa.lists',
     'baruwa.reports',
     'baruwa.auth',
+    'baruwa.accounts',
+    'baruwa.status',
     #'debug_toolbar',
 )
 
