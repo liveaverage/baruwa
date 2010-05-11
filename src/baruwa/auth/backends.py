@@ -16,6 +16,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
+# vim: ai ts=4 sts=4 et sw=4
 from django.contrib.auth.models import User
 from baruwa.accounts.models import Users,UserFilters
 try:
@@ -27,7 +28,7 @@ class MailwatchBackend:
     "Authenticates users using the mailwatch database"
 
     def authenticate(self, username=None, password=None):
-        m = md5.new(password)
+        m = md5.md5(password)
         hashv = m.hexdigest()
         try:
             login = Users.objects.get(username__exact=username,password__exact=hashv)
