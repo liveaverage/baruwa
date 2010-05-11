@@ -16,10 +16,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
+# vim: ai ts=4 sts=4 et sw=4
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('baruwa.status.views',
-    (r'^$', 'index'),
+    (r'^$', 'index', {}, 'status-index'),
     (r'^bayes/$','bayes_info',{},'bayes-info'),
     (r'^lint/$','sa_lint',{},'sa-lint'),
 )
