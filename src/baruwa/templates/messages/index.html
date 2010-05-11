@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block headers %}
 <script type="text/javascript" language="javascript" src="/static/js/jquery.js"></script>
+{% if list_all %}
 <script type="text/javascript" language="javascript" src="/static/js/jquery.address.js"></script>
+{% endif %}
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
 var last_ts = '';
@@ -24,100 +26,79 @@ var ax_in_progress = false;
   <li><a href="{% url quarantine-index %}">Quarantine</a></li>
 </ul>
 {% endblock submenu %}
-{% block title %}
-{% if list_all %} 
-{% load pagination_heading %}{% pagination_heading %}
-{% else %}
-Showing the 50 most recent messages
-{% endif %}
-{% endblock title %}
-{% block heading %}
-{% if list_all %}
-{% load pagination_heading %}{% pagination_heading %}{%if active_filters %}(<small><a href="/reports/#active_filters">Filters</a> have been applied</small>){%endif%}
-{% else %}
+{% block title %}{% if list_all %} {% load pagination_heading %}{% pagination_heading %}{% else %}Showing the 50 most recent messages{% endif %}{% endblock title %}
+{% block heading %}{% if list_all %}{% load pagination_heading %}{% pagination_heading %}{%if active_filters %}(<small><a href="/reports/#active_filters">Filters</a> have been applied</small>){%endif%}{% else %}
 Showing the 50 most recent messages 
 <small>
-    <span id="search-area">
-    [updated every 60 sec's <span class="nojs">Not updating enable javascript</span>]
-    </span>
-</small>
-{% endif %}
-{% endblock heading %}
+    [updated every 60 sec's]
+</small>{% endif %}{% endblock heading %}
 {% block content %}
-<table class="maillog" id="recent">
-<thead>
-<tr class="header">
-{% if list_all %}
-{% load sorter %}
-	<th class="first-t">#</th>
-  {% sorter "timestamp" "Date/Time" %}
-  {% sorter "from_address" "From" %}
-  {% sorter "to_address" "To" %}
-  {% sorter "subject" "Subject" %}
-  {% sorter "size" "Size" %}
-  {% sorter "sascore" "Score" %}
-  <th>Status</th>
-{% else %}
-	<th class="first-t">#</th>
-	<th>Date/Time</th>
-	<th>From</th>
-	<th>To</th>
-	<th>Subject</th>
-	<th>Size</th>
-	<th>Score</th>
-	<th>Status</th>
-{% endif %}
-</tr>
-</thead>
-{% if list_all %}
-<tfoot>
-  <tr class="header">
-  <td colspan="8">
-  <div id="ofhl">
-  {% if active_filters %}
-    <b>Filters have been applied :</b>
-    <span id="fhl" style="display:inline;">
-    {% for f in active_filters %}
-    "<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
-    {% endfor %}
-    </span>
-  {% endif %}
-  </div>
-  <div id="paginator">
-  {% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
-  </div>
-  </td>
-  </tr>
-</tfoot>
-{% endif %}
-<tbody>
-{% if object_list %}
-	{% load messages_extras %}
-	{% for message in object_list %}
-	<tr{% if message.isspam and not message.ishighspam and not message.spamblacklisted and not message.nameinfected and not message.otherinfected and not message.virusinfected %} class="spam"{% endif %}
-    {% if message.ishighspam and not message.spamblacklisted %} class="highspam"{% endif %}
-    {% if message.spamwhitelisted %} class="whitelisted"{% endif %}
-    {% if message.spamblacklisted %} class="blacklisted"{% endif %}
-    {% if message.nameinfected or message.virusinfected %} class="infested"{% endif %}>
-	<td class="first-t">[<a href="{% url message-detail message.id %}">&nbsp;&nbsp;</a>]</td>
-	<td>{{ message.timestamp }}</td>
-	<td>{{ message.from_address|tds_trunc:30 }}</td>
-	<td>{{ message.to_address|tds_nl_commas|linebreaksbr }}</td>
-	<td>{{ message.subject|striptags|escape|tds_trunc:45 }}</td>
-	<td>{{ message.size|filesizeformat }}</td>
-	<td>{{ message.sascore }}</td>
-	<td>
-    {% if message.isspam and not message.spamblacklisted and not message.virusinfected and not message.nameinfected and not message.otherinfected %}Spam{% endif %}
-    {% if message.spamblacklisted %}BL{%endif%}
-    {% if message.virusinfected or message.nameinfected or message.otherinfected %}Infected{% endif %}
-    {% if not message.isspam and not message.virusinfected and not message.nameinfected and not message.otherinfected and not message.spamwhitelisted %}Clean{% endif %}
-    {% if message.spamwhitelisted %}WL{%endif%}
-    </td>
-	</tr>
-	{% endfor %}
-{% else %}
-    <tr><td colspan="8" class="align_center">No records returned</td></tr>
-{% endif %}
-</tbody>
-</table>
+                        <div class="Grid_heading"> <!--Heading Start Here-->
+                            {% if list_all %}
+                            {% load sorter %}
+                            <div class="Date_Time_heading">{% sorter "timestamp" "Date/Time" %}</div>
+                            <div class="From_heading">{% sorter "from_address" "From" %}</div>
+                            <div class="To_heading">{% sorter "to_address" "To" %}</div>
+                            <div class="Subject_heading">{% sorter "subject" "Subject" %}</div>
+                            <div class="Size_heading">{% sorter "size" "Size" %}</div>
+                            <div class="Score_heading">{% sorter "sascore" "Score" %}</div>
+                            {% else %}
+                            <div class="Date_Time_heading">Date/Time</div>
+                            <div class="From_heading">From</div>
+                            <div class="To_heading">To</div>
+                            <div class="Subject_heading">Subject</div>
+                            <div class="Size_heading">Size</div>
+                            <div class="Score_heading">Score</div>
+                            {% endif %}
+                            <div class="Status_heading">Status</div>
+                        </div>	<!--Heading End Here-->
+                    {% if object_list %}  
+                    {% load messages_extras %}
+                    {% for message in object_list %}
+                      <div class="{{ message|tds_msg_class }}_div">
+                            <div class="{{ message|tds_msg_class }}_Date_Time">
+                            <a href="{% url message-detail message.id %}">{{ message.timestamp }}</a>
+                            </div>
+                            <div class="{{ message|tds_msg_class }}_From_heading">
+                            <a href="{% url message-detail message.id %}">{{ message.from_address|tds_trunc:30 }}</a>
+                            </div>
+                   		    <div class="{{ message|tds_msg_class }}_To_heading">
+                            <a href="{% url message-detail message.id %}">{{ message.to_address|tds_nl_commas|linebreaksbr }}</a>
+                            </div>
+                            <div class="{{ message|tds_msg_class }}_Subject_heading">
+                            <a href="{% url message-detail message.id %}">{{ message.subject|striptags|escape|tds_trunc:45 }}</a>
+                            </div>
+                            <div class="{{ message|tds_msg_class }}_Size_heading">
+                            <a href="{% url message-detail message.id %}">{{ message.size|filesizeformat }}</a>
+                            </div>
+                            <div class="{{ message|tds_msg_class }}_Score_heading">
+                            <a href="{% url message-detail message.id %}">{{ message.sascore }}</a>
+                            </div>
+                            <div class="{{ message|tds_msg_class }}_Status_heading">
+                            <a href="{% url message-detail message.id %}">{{ message|tds_msg_status }}</a>
+                            </div>                        
+                      </div>
+                      {% endfor %}
+                      {% else %}
+                      <div class="spanrow">No records returned</div>
+                      {% endif %}
 {% endblock content %}
+{% block paging %}
+                      {% if list_all %}
+                      <div class="content_footer">
+                        <div id="filters">
+                        {% if active_filters %}
+                        <b>Filters have been applied :</b>
+                        <span id="fhl" style="display:inline;">
+                        {% for f in active_filters %}
+                        "<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                        </span>
+                        {% endif %}
+                        </div>
+                        <div id="paginator">
+                        {% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+                        </div>
+                      </div>
+                      {% endif %}
+{% endblock paging %}

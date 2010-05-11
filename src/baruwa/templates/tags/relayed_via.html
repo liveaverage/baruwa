@@ -1,23 +1,23 @@
 {% if hosts %}
-<table class="inner">
-<tr class="header">
-<th>IP address</th>
-<th>Hostname</th>
-<th>Country</th>
-</tr>
+<div>
+    <div class="relayed_heading">
+        <div class="relayed_col">IP address</div>
+        <div class="relayed_col">Hostname</div>
+        <div class="relayed_col">Country</div>
+    </div>
 {% for host in hosts %}
-<tr>
-<td{% if forloop.last %} class="last"{%endif%}>{{host.ip_address}}</td>
-<td{% if forloop.last %} class="last"{%endif%}>{{host.hostname}}</td>
-<td{% if forloop.last %} class="last"{%endif%}>
-{% if host.country_code %}
-<img src="/static/imgs/flags/{{host.country_code}}.png" alt="{{host.country_code}}" />
-{% endif %}
-&nbsp;{{host.country_name}}
-</td>
-</tr>
+    <div class="relayed_div">
+        <div class="relayed_col">{{host.ip_address}}</div>
+        <div class="relayed_col">{{host.hostname}}</div>
+        <div class="relayed_col">
+            {% if host.country_code %}
+            <img src="/static/imgs/flags/{{host.country_code}}.png" alt="{{host.country_code}}" />
+            {% endif %}
+            &nbsp;{{host.country_name}}
+        </div>
+    </div>
 {% endfor %}
-</table>
+</div>
 {% else %}
 &nbsp;&nbsp;&nbsp;-- direct connection --
 {% endif %}

@@ -2,10 +2,12 @@
 {% block headers %}
 {% endblock headers %}
 {% block submenu %}
+{% if user.is_superuser %}
 <ul>
     <li><a href="{% url bayes-info %}">Bayes information</a></li>
     <li>Spamassassin lint</li>
 </ul>
+{% endif %}
 {% endblock submenu %}
 {% block title %}
 Spamassassin Lint
@@ -14,20 +16,16 @@ Spamassassin Lint
 Spamassassin Lint
 {% endblock heading %}
 {% block content %}
-<table class="maillog">
-<tbody>
-<tr>
-<td class="divider">Spamassassin Lint</td>
-</tr>
+<div class="Grid_heading">
+    <div class="SA_heading">Spamassassin Lint</div>
+</div>
 {% for item in data %}
-<tr>
-<td class="first-t {% cycle '' 'even' %}">{{ item }}</td>
-</tr>
+<div class="{% cycle 'LightBlue' 'DarkGray' %}_div">
+    <div class="SA_row">{{ item }}</div>
+</div>
 {% empty %}
-<tr>
-<td class="align_center">Lint failed please verify if spamassassin is installed</td>
-</tr>
+<div class="spanrow">
+Lint failed please verify if spamassassin is installed
+</div>
 {% endfor %}
-</tbody>
-</table>
 {% endblock content %}

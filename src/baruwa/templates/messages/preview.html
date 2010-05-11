@@ -3,67 +3,57 @@
 {% block heading %}Previewing message - {{ message_id }} {% endblock %}
 {% block submenu %}
 <ul>
-  <li><a href="{% url message-detail message_id %}#q">Release message</a></li>
+  <li><a href="{% url message-detail message_id %}#qheading">Release message</a></li>
   <li><a href="{% url message-detail message_id %}">Return to message</a></li>
 </ul>
 {% endblock submenu %}
 {% block content %}
-<table class="maillog">
 {% if message %}
 {% load messages_extras %}
-<tbody>
-<tr>
-<td class="mailitem">From:</td>
-<td class="maildetail">{{message.from|escape}}</td>
-</tr>
-<tr>
-<td class="mailitem">To:</td>
-<td class="maildetail">{{message.to|escape}}</td>
-</tr>
-<tr>
-<td class="mailitem">Subject:</td>
-<td class="maildetail">{{message.subject|escape}}</td>
-</tr>
-<tr>
-<td class="mailitem">Date:</td>
-<td class="maildetail">{{message.date|escape}}</td>
-</tr>
-{% if message.attachments %}
-<tr>
-<td class="mailitem">Attachments:</td>
-<td class="maildetail">
-{% for name in message.attachments %}
-<a href="{% url download-attachment message_id=message_id, attachment_id=forloop.counter %}">{{name}}</a>&nbsp;
-{%endfor%}
-</td>
-</tr>
-{% endif %}
-<tr>
-<td colspan="2" class="divider">Message content</td>
-</tr>
-<tr>
-<td colspan="2">
-<div id="mailpreview">
-{{message.body|linebreaksbr|escape}}
-</div>
-</td>
-</tr>
-<tr>
-<td colspan="2" class="first-t">
-{% if message.has_html %}
-<small>:: Displaying text version of the HTML message due to security settings</small>
-{%else%}
-&nbsp;
-{%endif%}
-</td>
-</tr>
-</tbody>
+    <div class="LightBlue_div">
+        <div class="mailitem">From:</div>
+        <div class="maildetail">{{message.from|escape}}</div>
+    </div>
+    <div class="LightBlue_div">
+        <div class="mailitem">To:</div>
+        <div class="maildetail">{{message.to|escape}}</div>
+    </div>
+    <div class="LightBlue_div">
+        <div class="mailitem">Subject:</div>
+        <div class="maildetail">{{message.subject|escape}}</div>
+    </div>
+    <div class="LightBlue_div">
+        <div class="mailitem">Date:</div>
+        <div class="maildetail">{{message.date|escape}}</div>
+    </div>
+    {% if message.attachments %}
+    <div class="LightBlue_div">
+        <div class="mailitem">Attachments:</div>
+        <div class="maildetail">
+            {% for name in message.attachments %}
+            <a href="{% url download-attachment message_id=message_id, attachment_id=forloop.counter %}">{{name}}</a>&nbsp;
+            {%endfor%}
+        </div>
+    </div>
+    {% endif %}
+    <div class="header_div">
+        <div class="Reports_heading">Message content</div>
+    </div>
+    <div class="lightblue_div">
+        <div id="mailpreview">
+            {{message.body|linebreaksbr|escape}}
+        </div>
+    </div>
+    <div class="LightBlue_div">
+        <div class="spanrow">
+            {% if message.has_html %}
+            <small>:: Displaying text version of the HTML message due to security settings</small>
+            {%endif%}
+        </div>
+    </div>
 {% else %}
-<tbody>
-<tr>
-<td class="first-t">Message could not be previewed</td>
-</tr>
-</tbody>
+    <div class="LightBlue_div">
+        <div class="spanrow">Message could not be previewed</div>
+    </div>
 {% endif %}
-</table>
 {% endblock content %}
