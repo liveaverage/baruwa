@@ -18,22 +18,22 @@
 #
 # vim: ai ts=4 sts=4 et sw=4
 from django.shortcuts import render_to_response,get_object_or_404
-from baruwa.messages.models import Maillog
-from baruwa.messages.forms import QuarantineProcessForm
 from django.template.loader import render_to_string
 from django.utils import simplejson
-from django.http import HttpResponse,Http404,HttpResponseRedirect
+from django.http import HttpResponse,Http404, HttpResponseRedirect
 from django.forms.util import ErrorList as errorlist
 from django.views.generic.list_detail import object_list
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
-from baruwa.messages.process_mail import *
-from baruwa.reports.views import apply_filter,user_filter,object_user_filter
-from baruwa.lists.models import Blacklist,Whitelist
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.template import RequestContext
+from baruwa.messages.models import Maillog
+from baruwa.messages.forms import QuarantineProcessForm
+from baruwa.messages.process_mail import *
+from baruwa.reports.views import apply_filter, user_filter, object_user_filter
+from baruwa.lists.models import Blacklist, Whitelist
 import re,urllib
 
 def json_ready(element):
@@ -85,8 +85,8 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc',order_by='t
             message_list = message_list[:50]
     else:
         if quarantine:
-            message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
-            ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','quarantined','nameinfected').order_by(order_by).filter(quarantined__exact=1)
+            message_list = Maillog.quarantine.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
+            ,'virusinfected','otherinfected','spamwhitelisted','spamblacklisted','quarantined','nameinfected').order_by(order_by)
             message_list = user_filter(request.user,message_list,addresses,user_type)
         else:
             message_list = Maillog.objects.values('id','timestamp','from_address','to_address','subject','size','sascore','ishighspam','isspam'
@@ -188,7 +188,7 @@ def process_quarantined_msg(request):
                         to_addr = form.cleaned_data['altrecipients']
                     else:
                         to_addr = m.to_address
-                        to_addr = to_addr.split(',')
+                    to_addr = to_addr.split(',')
                     if not release_mail(file_name,to_addr,m.from_address):
                         fail=True
                         success = "False"
@@ -241,7 +241,7 @@ def process_quarantined_msg(request):
         response = simplejson.dumps({'success':success, 'html': html})
     else:
         error_list = form.errors.values()[0]
-        html = errorlist(error_list).as_ul()
+        html = error_list[0] #errorlist(error_list).as_ul()
         success = 'False'
         response = simplejson.dumps({'success':success,'html': html})
     if request.is_ajax():
@@ -253,6 +253,8 @@ def process_quarantined_msg(request):
             id = request.POST['message_id']
             if not error_list:
                 error_list = html
+            else:
+                error_list = error_list[0]
             return detail(request,id,0,error_list)
 
 @never_cache

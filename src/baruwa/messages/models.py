@@ -20,6 +20,10 @@
 
 from django.db import models
 
+class QuarantinedMessageManager(models.Manager):
+    def get_query_set(self):
+        return super(QuarantinedMessageManager, self).get_query_set().filter(quarantined__exact=1)
+
 # Create your models here.
 class Maillog(models.Model):
     timestamp = models.DateTimeField()
@@ -67,21 +71,8 @@ class Maillog(models.Model):
     def __unicode__(self):
 	      return self.id
 
-    @models.permalink 
-    def get_absolute_url(self):
-        return('message-detail',(),{'message_id':self.id})
-    
-    @models.permalink
-    def get_preview_url(self):
-        return('preview-message',(),{'message_id':self.id})
-
-    @models.permalink
-    def get_wl_url(self):
-        return('whitelist-sender',(),{'message_id':self.id})
-
-    @models.permalink
-    def get_bl_url(self):
-        return('blacklist-sender',(),{'message_id':self.id})
+    objects = models.Manager()
+    quarantine = QuarantinedMessageManager()
 
 class SaRules(models.Model):
     rule = models.CharField(max_length=100, primary_key=True)

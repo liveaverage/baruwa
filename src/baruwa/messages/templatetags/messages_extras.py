@@ -28,6 +28,35 @@ from baruwa.messages.process_mail import get_config_option,clean_regex
 
 register = template.Library()
 
+@register.filter(name='tds_msg_class')
+def tds_msg_class(message):
+    value = 'LightBlue'
+    if message['isspam'] and not message['ishighspam'] and not message['spamblacklisted'] and not message['nameinfected'] and not message['otherinfected'] and not message['virusinfected']:
+        value='spam'
+    if message['ishighspam'] and (not message['spamblacklisted']):
+        value='highspam'
+    if message['spamwhitelisted']:
+        value='whitelisted'
+    if message['spamblacklisted']:
+        value='blacklisted'
+    if message['nameinfected'] or message['virusinfected']:
+        value='infected'
+    return mark_safe(value)
+
+@register.filter(name='tds_msg_status')
+def tds_msg_status(message):
+    if message['isspam'] and (not message['spamblacklisted']) and (not message['virusinfected']) and (not message['nameinfected']) and (not message['otherinfected']):
+        value = 'Spam'
+    if message['spamblacklisted']:
+        value = 'BL'
+    if message['virusinfected'] or message['nameinfected'] or message['otherinfected']:
+        value = 'Infected'
+    if (not message['isspam']) and (not message['virusinfected']) and (not message['nameinfected']) and (not message['otherinfected']) and (not message['spamwhitelisted']):
+        value = 'Clean'
+    if message['spamwhitelisted']:
+        value = 'WL'
+    return value
+
 @register.filter(name='tds_nl_commas')
 @stringfilter
 def tds_nl_commas(value):
