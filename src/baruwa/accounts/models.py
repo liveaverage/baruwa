@@ -44,7 +44,8 @@ class UserFilters(models.Model):
         db_table = u'user_filters'
 
 class Users(models.Model):
-    username = models.CharField(max_length=60, primary_key=True)
+    id = models.IntegerField(primary_key=True)
+    username = models.CharField(max_length=60, unique=True)
     password = models.CharField(max_length=32)
     fullname = models.CharField(max_length=50)
     type = models.CharField(max_length=1, choices=TYPE_CHOICES, default='U')

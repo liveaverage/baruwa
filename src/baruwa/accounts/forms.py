@@ -34,26 +34,54 @@ Y_N = (
     ('N', 'No'),
 )
 
+domain_re = re.compile(r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?$', re.IGNORECASE)
+
 class UserForm(ModelForm):
     """
-    Generates a form to create user accounts, or update accounts (only full admin)
+    Generates a form to create user accounts (only full admin)
     """
     password = forms.CharField(widget=forms.PasswordInput)
     quarantine_report = forms.BooleanField(required=False)
     noscan = forms.ChoiceField(choices=YES_NO)
     class Meta:
         model = Users
+        exclude = ('id')
+
+    def clean_password(self):
+        passwd = self.cleaned_data['password']
+        if passwd == 'XXXXXXXXXX':
+            raise forms.ValidationError('provide a valid password')
+        return passwd
+
+class UserUpdateForm(ModelForm):
+    """
+    Update user accounts admin only
+    """
+    #id = forms.CharField(widget=forms.HiddenInput)
+    password = forms.CharField(widget=forms.PasswordInput)
+    quarantine_report = forms.BooleanField(required=False)
+    noscan = forms.ChoiceField(choices=YES_NO)
+    class Meta:
+        model = Users
+        exclude = ('id')
 
 class StrippedUserForm(ModelForm):
     """
     Generates a form update user accounts
     """
+    #id = forms.CharField(widget=forms.HiddenInput)
     password = forms.CharField(widget=forms.PasswordInput)
     quarantine_report = forms.BooleanField(required=False)
     noscan = forms.ChoiceField(choices=YES_NO)
     class Meta:
         model = Users
-        exclude = ('type','username')
+        exclude = ('id', 'type', 'username')
+
+    #def clean_password(self):
+    #    passwd = self.cleaned_data['password']
+    #    if passwd == 'XXXXXXXXXX':
+    #        raise forms.ValidationError('provide a valid password')
+    #    return passwd
 
 class UserFilterForm(forms.Form):
     """
@@ -78,7 +106,6 @@ class DomainUserFilterForm(UserFilterForm):
         domain = domain.strip()
        
         if domain != "" and not domain is None:
-            r = re.compile(r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?$', re.IGNORECASE)
-            if not r.match(domain):
+            if not domain_re.match(domain):
                 raise forms.ValidationError('provide a valid domain')
         return domain

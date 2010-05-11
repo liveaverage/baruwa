@@ -26,7 +26,7 @@ from django.core.urlresolvers import reverse
 from django.utils import simplejson
 from django.contrib.auth.decorators import login_required
 from baruwa.accounts.models import Users,UserFilters
-from baruwa.accounts.forms import UserForm, StrippedUserForm, UserFilterForm, DomainUserFilterForm
+from baruwa.accounts.forms import UserForm, UserUpdateForm, StrippedUserForm, UserFilterForm, DomainUserFilterForm
 from baruwa.reports.views import set_user_filter
 from baruwa.utilities.decorators import onlysuperusers
 from django.template import RequestContext
@@ -43,7 +43,7 @@ except ImportError:
 @onlysuperusers
 def index(request,page=1,direction='dsc',order_by='username'):
     """
-    Displays user accounts.
+    Displays user accounts and creates user accounts.
     """
     error_msg = ''
     ordering = order_by
@@ -54,16 +54,25 @@ def index(request,page=1,direction='dsc',order_by='username'):
         form = UserForm(request.POST)
         try:
             new_user = form.save(commit=False)
-            if new_user.password != 'XXXXXXXXXX':
-                m = md5.new(new_user.password)
-                hashv = m.hexdigest()
-                new_user.password = hashv
-                form = UserForm()
-                new_user.save()
-            else:
-                error_msg = 'Please provide a password'
+            m = md5.new(new_user.password)
+            hashv = m.hexdigest()
+            new_user.password = hashv
+            form = UserForm()
+            new_user.save()
         except:
             error_msg = 'Account creation failed'
+        if request.is_ajax():
+            if error_msg == '':
+                response = simplejson.dumps({'error':'','form_field':''})
+            else:
+                if form.errors.values():
+                    error_list = form.errors.values()[0]
+                    html = dict([(k, [unicode(e) for e in v]) for k,v in form.errors.items()])
+                else:
+                    error_list = [error_msg]
+                    html = {'none':['none']}
+                response = simplejson.dumps({'error': unicode(error_list[0]),'form_field':html.keys()[0]})
+            return HttpResponse(response,mimetype='application/javascript')
     else:
         form = UserForm()
     user_list = Users.objects.all()
@@ -72,39 +81,50 @@ def index(request,page=1,direction='dsc',order_by='username'):
 
 @never_cache
 @login_required
-def user_account(request,user_name=None,add_filter=False):
+def user_account(request, user_id=None, add_filter=False):
     """
     Displays user account info.
     """
     if not request.user.is_superuser and add_filter:
         return HttpResponseRedirect(reverse('user-profile',args=[request.user.username]))
 
+    if user_id is None:
+        user = Users.objects.get(username=request.user.username)
+        user_id = user.id
+    else:
+        user_id = int(user_id)
+    try:
+        vu = Users.objects.get(pk=user_id)
+    except:
+        response = HttpResponseBadRequest('Error occured')
+        return response
+
     if not request.user.is_superuser:
-        login = Users.objects.get(pk=request.user.username)
+        login = Users.objects.get(username=request.user.username)
         if login:
             if login.type == 'D':
-                if login.username != user_name:
+                if login.id != user_id:
                     addresses = request.session['user_filter']['filter_addresses']
                     d = [domain.filter for domain in addresses]
                     try:
-                        ld = user_name.split('@')[1]
+                        ld = vu.username.split('@')[1]
                     except:
                         ld = 'example.net'
                     if ld not in d:
                         response = HttpResponseForbidden('Hahaha - play nice, dont try access profiles in domains you do not manage')
                         return response
             if login.type == 'U':
-                if login.username != user_name:
+                if login.username != vu.username:
                     response = HttpResponseForbidden('Hahaha - play nice, dont try access other users profiles')
                     return response
         else:
             response = HttpResponseBadRequest('Error occured why processing your session info')
             return response
-    user_object = Users.objects.get(pk=user_name) #get_object_or_404(Users,pk=user_name)
-    user_filters = UserFilters.objects.values('filter','active').filter(username__exact=user_name)
+    user_object = Users.objects.get(pk=user_id) #get_object_or_404(Users,pk=user_name)
+    user_filters = UserFilters.objects.filter(username__exact=vu.username)
     if request.method == 'POST':
         if request.user.is_superuser:
-            form = UserForm(request.POST,instance=user_object)
+            form = UserUpdateForm(request.POST,instance=user_object)
         else:
             form = StrippedUserForm(request.POST,instance=user_object)
         try:
@@ -114,22 +134,35 @@ def user_account(request,user_name=None,add_filter=False):
                 hashv = m.hexdigest()
                 updated_user_object.password = hashv
             else:
-                user_object = get_object_or_404(Users,pk=user_name)
+                user_object = get_object_or_404(Users,pk=user_id)
                 updated_user_object.password = user_object.password
             updated_user_object.save()
-            user_object = get_object_or_404(Users,pk=user_name)
+            user_object = get_object_or_404(Users,pk=user_id)
             if request.user.is_superuser:
-                form = UserForm(instance=user_object)
+                form = UserUpdateForm(instance=user_object)
             else:
                 form = StrippedUserForm(instance=user_object)
         except:
             error_msg = 'The account could not be updated'
+            if request.is_ajax():
+                if form.errors.values():
+                    error_list = form.errors.values()[0]
+                    html = dict([(k, [unicode(e) for e in v]) for k,v in form.errors.items()])
+                else:
+                    error_list = [error_msg]
+                    html = {'none':['none']}
+                response = simplejson.dumps({'error':unicode(error_list[0]), 'form_field':html.keys()[0]})
+                return HttpResponse(response,mimetype='application/javascript')
+        else:
+            if request.is_ajax():
+                response = simplejson.dumps({'error':'', 'form_field':''})
+                return HttpResponse(response,mimetype='application/javascript')
     else:
         if request.user.is_superuser and add_filter:
             form = UserFilterForm()
         else:
             if request.user.is_superuser:
-                form = UserForm(instance=user_object)
+                form = UserUpdateForm(instance=user_object)
             else:
                 form = StrippedUserForm(instance=user_object)
     if user_object.password == '':
@@ -137,7 +170,8 @@ def user_account(request,user_name=None,add_filter=False):
     else:
         extern_user = False
     return render_to_response('accounts/user.html',{'form':form,
-        'filters':user_filters,'target_user':user_name,'add_filter':add_filter,'auth_type':extern_user},context_instance=RequestContext(request))
+        'filters':user_filters,'target_user':user_id,'add_filter':add_filter,
+        'auth_type':extern_user,'user_name':vu.username},context_instance=RequestContext(request))
 
 # modified from django source
 def login(request,redirect_field_name=REDIRECT_FIELD_NAME):
@@ -163,57 +197,50 @@ def login(request,redirect_field_name=REDIRECT_FIELD_NAME):
         redirect_field_name: redirect_to,
     }, context_instance=RequestContext(request))
 
-def add_filter(request,user_name):
+@never_cache
+@onlysuperusers
+@login_required
+def add_filter(request, user_id):
     "Adds a filter to a user account"
     if request.user.is_superuser:
         if request.method == "POST":
-            user_object = Users.objects.get(pk=user_name)
+            user_object = Users.objects.get(pk=user_id)
             if user_object.type == 'D':
                 form = DomainUserFilterForm(request.POST)
             elif user_object.type == 'U':
                 form = UserFilterForm(request.POST)
             if form.is_valid():
-                u = UserFilters(username=form.cleaned_data['username'],filter=form.cleaned_data['filter'],active=form.cleaned_data['active'])
+                u = UserFilters(username=user_object.username, filter=form.cleaned_data['filter'], active=form.cleaned_data['active'])
                 u.save()
+                u = UserFilters.objects.get(username=user_object.username, filter=form.cleaned_data['filter'], active=form.cleaned_data['active'])
                 if request.is_ajax():
                     response = simplejson.dumps({'success':'True','html':'Filter has been created',
-                        'data':[form.cleaned_data['filter'],form.cleaned_data['active'],form.cleaned_data['username']]})
+                        'data':[form.cleaned_data['filter'], form.cleaned_data['active'], form.cleaned_data['username'], u.id]})
                     return HttpResponse(response, content_type='application/javascript; charset=utf-8')
-                else:
-                    return HttpResponseRedirect(reverse('user-profile',args=[user_name]))
+                return HttpResponseRedirect(reverse('user-profile',args=[user_id]))
             else:
                 if request.is_ajax():
-                    error_list = form.errors.values()[0][0]
-                    #html = errorlist(error_list).as_ul()
-                    html = "Error occured : %s" % error_list
-                    response = simplejson.dumps({'success':'False','html':html,'data':[]})
+                    error_list = form.errors.values()[0]
+                    html = dict([(k, [unicode(e) for e in v]) for k,v in form.errors.items()])
+                    response = simplejson.dumps({'success':'False', 'html':unicode(error_list[0]), 'data':[], 'form_field':html.keys()[0]})
                     return HttpResponse(response, content_type='application/javascript; charset=utf-8')
-                else:
-                    return HttpResponseRedirect(reverse('add-filter',args=[user_name]))
-        else:
-            return HttpResponseRedirect(reverse('add-filter',args=[user_name]))
-    else:
-        return HttpResponseRedirect(reverse('user-profile',args=[user_name]))
+                return HttpResponseRedirect(reverse('add-filter',args=[user_id]))
+        return HttpResponseRedirect(reverse('add-filter',args=[user_id]))
 
-def delete_filter(request,user_name,filter):
+@never_cache
+@onlysuperusers
+@login_required
+def delete_filter(request, user_id, filter):
     "Deletes a filter"
-    if request.user.is_superuser:
-        error_msg = ''
-        try:
-            filter = UserFilters.objects.get(username=user_name,filter=filter)
-        except:
-            pass
-        try:
-            filter.delete()
-        except:
-            error_msg = 'Deletion of filter failed'
+    try:
+        filter = UserFilters.objects.get(id=filter)
+        filter.delete()
+    except:
         if request.is_ajax():
-            if error_msg == '':
-                response = simplejson.dumps({'success':'True','html':'Filter has been deleted'})
-            else:
-                response = simplejson.dumps({'success':'False','html':'Deletion of the filter failed'})
+            response = simplejson.dumps({'success':'False','html':'Deletion of the filter failed'})
             return HttpResponse(response, content_type='application/javascript; charset=utf-8')
-        else:
-            return HttpResponseRedirect(reverse('user-profile',args=[user_name]))
     else:
-        return HttpResponseRedirect(reverse('user-profile',args=[request.user.username]))
+        if request.is_ajax():
+            response = simplejson.dumps({'success':'True','html':'Filter has been deleted'})
+            return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+    return HttpResponseRedirect(reverse('user-profile',args=[user_id]))
