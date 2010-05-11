@@ -4,9 +4,9 @@ CREATE TABLE IF NOT EXISTS `archive` (
   `timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `id` mediumtext,
   `size` bigint(20) default '0',
-  `from_address` mediumtext,
+  `from_ADDress` mediumtext,
   `from_domain` mediumtext,
-  `to_address` mediumtext,
+  `to_ADDress` mediumtext,
   `to_domain` mediumtext,
   `subject` mediumtext,
   `clientip` mediumtext,
@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS `archive` (
   KEY `archive_datetime_idx` (`date`,`time`),
   KEY `archive_id_idx` (`id`(20)),
   KEY `archive_clientip_idx` (`clientip`(20)),
-  KEY `archive_from_idx` (`from_address`(200)),
-  KEY `archive_to_idx` (`to_address`(200)),
+  KEY `archive_from_idx` (`from_ADDress`(200)),
+  KEY `archive_to_idx` (`to_ADDress`(200)),
   KEY `archive_host` (`hostname`(30)),
   KEY `from_domain_idx` (`from_domain`(50)),
   KEY `to_domain_idx` (`to_domain`(50)),
@@ -129,5 +129,9 @@ CREATE TABLE IF NOT EXISTS `django_session` (
 
 ALTER TABLE saved_filters ADD column id integer NOT NULL auto_increment PRIMARY KEY first;
 ALTER TABLE user_filters ADD column id integer NOT NULL auto_increment PRIMARY KEY first;
+
+ALTER TABLE users DROP PRIMARY KEY;
+ALTER TABLE users ADD UNIQUE (username);
+ALTER TABLE users ADD column id integer NOT NULL auto_increment PRIMARY KEY first;
 
 COMMIT;

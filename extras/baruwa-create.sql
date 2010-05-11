@@ -371,6 +371,7 @@ SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL auto_increment,
   `username` varchar(60) NOT NULL default '',
   `password` varchar(32) default NULL,
   `fullname` varchar(50) NOT NULL default '',
@@ -380,7 +381,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `highspamscore` tinyint(4) default '0',
   `noscan` tinyint(1) default '0',
   `quarantine_rcpt` varchar(60) default NULL,
-  PRIMARY KEY  (`username`)
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
