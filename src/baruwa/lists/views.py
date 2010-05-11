@@ -20,17 +20,18 @@
 from django.shortcuts import render_to_response
 from django.views.generic.list_detail import object_list
 from django.db.models import Q
-from baruwa.lists.models import Blacklist, Whitelist
-from baruwa.lists.forms import ListAddForm,FilterForm,UserListAddForm
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.paginator import Paginator
+from django.core.urlresolvers import reverse
 from django.utils import simplejson
 from django.db import IntegrityError
 from django.forms.util import ErrorList as errorlist
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
-from baruwa.accounts.models import Users
 from django.template import RequestContext
+from baruwa.lists.models import Blacklist, Whitelist
+from baruwa.lists.forms import ListAddForm,FilterForm,UserListAddForm
+from baruwa.accounts.models import Users
 import re
 
 def json_ready(element):
@@ -217,12 +218,12 @@ def add_to_list(request):
                     json = simplejson.dumps({'items':[],'paginator':[],'error':error_msg})
                     return HttpResponse(json,mimetype='application/javascript')
             else:
-                return HttpResponseRedirect('/lists/')
+                return HttpResponseRedirect(reverse('lists-index'))
         else:
             if request.is_ajax():
                 error_list = form.errors.values()[0]
-                html = errorlist(error_list).as_ul()
-                response = simplejson.dumps({'error': html})
+                html = dict([(k, [unicode(e) for e in v]) for k,v in form.errors.items()]) #form.errors
+                response = simplejson.dumps({'error': unicode(error_list[0]),'form_field':html.keys()[0]})
                 return HttpResponse(response,mimetype='application/javascript')
             add_dict = {'form':form,'ld':load_domain,'user_type':user_type,'le':load_email}
     return render_to_response(template,add_dict,context_instance=RequestContext(request))
@@ -301,5 +302,5 @@ def delete_from_list(request, list_kind, item_id):
             json = simplejson.dumps({'items':[],'paginator':[],'error':error_msg})
             return HttpResponse(json,mimetype='application/javascript')
     else:
-        return HttpResponseRedirect('/lists/')
+        return HttpResponseRedirect(reverse('lists-index'))
 
