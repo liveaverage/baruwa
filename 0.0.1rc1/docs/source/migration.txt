@@ -1,0 +1,102 @@
+======================
+Migrate from Mailwatch
+======================
+
+Migration using source
+======================
+
+Download the `Baruwa <http://www.topdog.za.net/baruwa#downloads>`_ source
+and untar it::
+
+    # tar xzvf baruwa-<version>.tar.gz
+    # cd baruwa-<version>
+
+**Update your mailwatch database**::
+
+    # mysql -p <mailwatch_database> < extras/baruwa-update.sql
+
+**Set the privileges for new tables**::
+
+    mysql> GRANT ALL ON <mailwatch_database>.* TO 
+    mysql> <mailwatch_user>@localhost IDENTIFIED BY '<mailwatch_password>';
+    mysql> flush privileges;
+
+**Install Baruwa**
+
+Run::
+
+    # python setup.py install
+
+**Configure the Baruwa settings**
+
+Edit the settings.py file which will be installed in the "baruwa" 
+directory inside your Python's site-packages directory, which is 
+located where ever your Python installation lives. Some places 
+to check are:
+
+    + /usr/lib/python2.4/site-packages (Unix, Python 2.4)
+    + /usr/lib/python2.6/site-packages (Unix, Python 2.6)
+    + /opt/local/lib/python2.4/site-packages (MacOSX, Ports Python 2.4)
+
+Set the following options::
+
+    DATABASE_NAME = '<mailwatch_database>'
+    DATABASE_USER = '<mailwatch_user>'
+    DATABASE_PASSWORD = '<mailwatch_password>'
+    DATABASE_HOST = 'localhost'
+
+If your MailScanner config file is not located in the standard 
+location (/etc/MailScanner/MailScanner.conf) then edit the
+baruwa_settings.py file which is in the same directory as the
+settings.py file and set::
+
+    MS_CONFIG = '/etc/MailScanner/MailScanner.conf'
+
+**Setup Web server**
+
+    **Apache/Mod_WSGI**
+
+    Use the sample configuration provided (extras/baruwa-mod_wsgi.conf) 
+    as a template. Copy to your apache configuration directory usually
+    /etc/httpd/conf.d
+
+    Make sure that your apache is configured for name based virtual
+    hosting such that you can run other sites on the same box if you
+    wish to.
+
+    Edit /etc/httpd/conf.d/baruwa-mod_wsgi.conf and set ServerName to
+    the hostname you will use to access Baruwa
+
+    Restart apache for the configuration to take effect.::
+
+        # /etc/init.d/httpd reload
+
+    **Apache/Mod_python**
+
+    TODO
+
+    **Lighttpd**
+
+    TODO
+
+    **Nginx**
+
+    TODO
+
+**Recreate your White/Black lists**
+The Baruwa and Mailwatch lists formats are not compartible so just redo your
+lists in the easy to use baruwa interface.
+
+**Enjoy Baruwa**
+
+Point your browser to http://hostname_used login with admin user and password
+and start working. You can now use the interface to add users and process 
+messages, etc etc.
+
+Distribution / OS migration
+===========================
+
+    + :ref:`migrationcentos`.
+    + :ref:`migrationfedora`.
+    + Debian
+

@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block headers %}
+<script type="text/javascript" language="javascript" src="/static/js/jquery.js"></script>
+{% if list_all %}
+<script type="text/javascript" language="javascript" src="/static/js/jquery.address.js"></script>
+{% endif %}
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var last_ts = '';
+var full_messages_listing = false;
+var rj;
+var ax_error = false;
+var ax_in_progress = false;
+//]]>
+</script>
+<script type="text/javascript" language="javascript" src="/static/js/lib.js"></script>
+{% if not list_all %}
+<script type="text/javascript" language="javascript" src="/static/js/recent_messages.js"></script>
+{% else %}
+<script type="text/javascript" language="javascript" src="/static/js/messages.js"></script>
+{% endif %}
+{% endblock headers %}
+{% block submenu %}
+<ul>
+  <li><a href="{% url full-msg-index %}">Full message list</a></li>
+  <li><a href="{% url quarantine-index %}">Quarantine</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}{% if list_all %} {% load pagination_heading %}{% pagination_heading %}{% else %}Showing the 50 most recent messages{% endif %}{% endblock title %}
+{% block heading %}{% if list_all %}{% load pagination_heading %}{% pagination_heading %}{%if active_filters %}(<small><a href="/reports/#active_filters">Filters</a> have been applied</small>){%endif%}{% else %}
+Showing the 50 most recent messages 
+<small>
+    [updated every 60 sec's]
+</small>{% endif %}{% endblock heading %}
+{% block content %}
+                        <div class="Grid_heading"> <!--Heading Start Here-->
+                            {% if list_all %}
+                            {% load sorter %}
+                            <div class="Date_Time_heading">{% sorter "timestamp" "Date/Time" %}</div>
+                            <div class="From_heading">{% sorter "from_address" "From" %}</div>
+                            <div class="To_heading">{% sorter "to_address" "To" %}</div>
+                            <div class="Subject_heading">{% sorter "subject" "Subject" %}</div>
+                            <div class="Size_heading">{% sorter "size" "Size" %}</div>
+                            <div class="Score_heading">{% sorter "sascore" "Score" %}</div>
+                            {% else %}
+                            <div class="Date_Time_heading">Date/Time</div>
+                            <div class="From_heading">From</div>
+                            <div class="To_heading">To</div>
+                            <div class="Subject_heading">Subject</div>
+                            <div class="Size_heading">Size</div>
+                            <div class="Score_heading">Score</div>
+                            {% endif %}
+                            <div class="Status_heading">Status</div>
+                        </div>	<!--Heading End Here-->
+                    {% if object_list %}  
+                    {% load messages_extras %}
+                    {% for message in object_list %}
+                      <div class="{{ message|tds_msg_class }}_div">
+                            <div class="{{ message|tds_msg_class }}_Date_Time">
+                            <a href="{% url message-detail message.id %}">{{ message.timestamp }}</a>
+                            </div>
+                            <div class="{{ message|tds_msg_class }}_From_heading">
+                            <a href="{% url message-detail message.id %}">{{ message.from_address|tds_trunc:30 }}</a>
+                            </div>
+                   		    <div class="{{ message|tds_msg_class }}_To_heading">
+                            <a href="{% url message-detail message.id %}">{{ message.to_address|tds_nl_commas|linebreaksbr }}</a>
+                            </div>
+                            <div class="{{ message|tds_msg_class }}_Subject_heading">
+                            <a href="{% url message-detail message.id %}">{{ message.subject|striptags|escape|tds_trunc:45 }}</a>
+                            </div>
+                            <div class="{{ message|tds_msg_class }}_Size_heading">
+                            <a href="{% url message-detail message.id %}">{{ message.size|filesizeformat }}</a>
+                            </div>
+                            <div class="{{ message|tds_msg_class }}_Score_heading">
+                            <a href="{% url message-detail message.id %}">{{ message.sascore }}</a>
+                            </div>
+                            <div class="{{ message|tds_msg_class }}_Status_heading">
+                            <a href="{% url message-detail message.id %}">{{ message|tds_msg_status }}</a>
+                            </div>                        
+                      </div>
+                      {% endfor %}
+                      {% else %}
+                      <div class="spanrow">No records returned</div>
+                      {% endif %}
+{% endblock content %}
+{% block paging %}
+                      {% if list_all %}
+                      <div class="content_footer">
+                        <div id="filters">
+                        {% if active_filters %}
+                        <b>Filters have been applied :</b>
+                        <span id="fhl" style="display:inline;">
+                        {% for f in active_filters %}
+                        "<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                        </span>
+                        {% endif %}
+                        </div>
+                        <div id="paginator">
+                        {% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+                        </div>
+                      </div>
+                      {% endif %}
+{% endblock paging %}

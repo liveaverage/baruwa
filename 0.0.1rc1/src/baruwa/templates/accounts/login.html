@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Baruwa :: Login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/static/css/login.css" />
+<link rel="icon" href="/static/imgs/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/static/imgs/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+<div id="login-wrapper">
+<div id="box">
+    <div id="login_head">
+        <h1 id="logo">
+        <img src="/static/imgs/css/logo.jpg" alt="Baruwa" />
+        </h1>
+    </div>
+    <div id="login_part">
+    {% if form.errors %}
+    <p class="error">Your username and password didn't match. Please try again.</p>
+    {% endif %}
+    <form action="{% url baruwa.accounts.views.login %}" method="post">
+        <input type="hidden" name="next" value="{{ next }}" />
+        <label>Username</label>
+        <input type="text" name="username" class="field" id="id_username" maxlength="30" />
+        <label>Password</label>
+        <input type="password" name="password" class="field" id="id_password" />
+        <input type="submit" class="button" id="login" value="Login" />
+    </form>
+    </div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{% if rules %}
+    <div class="spamreport_heading">
+        <div class="spamreport_score">Score</div>
+        <div class="spamreport_col">Rule</div>
+        <div class="spamreport_descp">Description</div>
+    </div>
+    {% for rule in rules %}
+        <div class="spamreport_div">
+            <div class="spamreport_score">{{rule.score}}</div>
+            <div class="spamreport_col">{{rule.rule}}</div>
+            <div class="spamreport_descp">{{rule.rule_descp}}</div>
+        </div>
+    {% endfor %}
+{% endif %}

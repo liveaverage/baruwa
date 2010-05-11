@@ -1,0 +1,23 @@
+2010.05.11
+* Rewrote the whole template layouts
+* Improved the code
+
+2010.04.09
+* Added support for POP3, IMAP, SMTP authentication
+
+2010.04.07
+* Cleaned up Code
+* Added new settings for quarantine management
+* Added management commands for quarantine management
+* Added management command for maillog db table pruning
+
+2010.04.04
+
+* Added documentation
+* Added filter management
+* Cleanup bugs
+* beta release
+
+2010.03.31
+
+* alpha release

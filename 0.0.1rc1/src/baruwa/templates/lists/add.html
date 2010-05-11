@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block submenu %}
+<ul>
+  <li>Add to List</li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+Adding to list
+{% endblock title %}
+{% block heading %}
+Adding to Lists
+{% endblock heading %}
+{% block content %}
+{% include "lists/add.form.html" %}
+{% endblock content %}
