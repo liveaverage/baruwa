@@ -76,10 +76,10 @@ body {
     -moz-border-radius-topleft:2px;
     -moz-border-radius-topright:2px;
     background-attachment:scroll;
-    background-color:#000000;
+    background-color:#F5F5F5;
     background-position:-240px -73px;
     background-repeat:repeat;
-    color:#FFFFFF;
+    color:#000000;
     float:left;
     font-style:normal;
     font-weight:normal;
@@ -89,8 +89,9 @@ body {
 }
 
 #logo {
-    color:#FFFFFF;
+    color:#000000;
     float:left;
+    text-align:center;
     font-size:20px;
     font-style:normal;
     font-weight:normal;
