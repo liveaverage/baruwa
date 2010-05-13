@@ -26,5 +26,4 @@ urlpatterns = patterns('baruwa.reports.views',
     (r'^fs/(?P<index_num>(\d+))/$', 'save_filter'),
     (r'^sfd/(?P<index_num>(\d+))/$', 'del_filter'),
     (r'^sfl/(?P<index_num>(\d+))/$', 'load_filter'),
-    (r'^pie/$','pie'),
 )
