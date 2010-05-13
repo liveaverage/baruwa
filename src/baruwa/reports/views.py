@@ -32,7 +32,6 @@ from baruwa.reports.models import SavedFilters
 from baruwa.reports.forms import FilterForm,FILTER_ITEMS,FILTER_BY
 from baruwa.messages.templatetags.messages_extras import tds_get_rules
 from baruwa.accounts.models import Users, UserFilters
-from baruwa.reports.graphs import drawSVGPie, drawBarGraph, drawPieGraph
 
 
 pie_colors = ['#FF0000','#ffa07a','#deb887','#d2691e','#008b8b','#006400','#ff8c00','#ffd700','#f0e68c','#000000']
@@ -572,16 +571,6 @@ def pack_json_data(data, arg1, arg2):
         n += 1
     return simplejson.dumps(rv)
 
-def pack_reportlib_data(data, arg1, arg2):
-    d, l = [], []
-    for item in data:
-        d.append(item[arg2])
-    t = sum(d)
-    for i in d:
-        p = "%.1f%%" % ((1.0 * i/t) * 100)
-        l.append(p)
-    return d, l
-
 def run_query(query_field, exclude_kwargs, order_by, request, addresses, user_type, active_filters):
     data = Maillog.objects.values(query_field).\
     exclude(**exclude_kwargs).annotate(num_count=Count(query_field),size=Sum('size')).order_by(order_by)
@@ -805,7 +794,7 @@ def del_filter(request,index_num):
 
 
 @login_required
-def report(request,report_kind, render_graph=False):
+def report(request,report_kind):
     report_kind = int(report_kind)
     template = "reports/piereport.html"
     active_filters = []
@@ -813,76 +802,36 @@ def report(request,report_kind, render_graph=False):
     user_type = request.session['user_filter']['user_type']
     if report_kind == 1:
         data = run_query('from_address', {'from_address__exact':""}, '-num_count', request, addresses, user_type, active_filters)
-        if render_graph:
-            d, l = pack_reportlib_data(data, 'from_address', 'num_count')
-            png = drawPieGraph((d, l), (350,230))
-            response = HttpResponse(png,mimetype='image/png')
-        else:
-            pie_data = pack_json_data(data,'from_address','num_count')
-            report_title = "Top senders by quantity"
+        pie_data = pack_json_data(data,'from_address','num_count')
+        report_title = "Top senders by quantity"
     elif report_kind == 2:
         data = run_query('from_address', {'from_address__exact':""}, '-size', request, addresses, user_type, active_filters)
-        if render_graph:
-            d, l = pack_reportlib_data(data, 'from_address', 'size')
-            png = drawPieGraph((d, l), (350,230))
-            response = HttpResponse(png,mimetype='image/png')
-        else:
-            pie_data = pack_json_data(data,'from_address','size')
-            report_title = "Top senders by volume"
+        pie_data = pack_json_data(data,'from_address','size')
+        report_title = "Top senders by volume"
     elif report_kind == 3:
         data = run_query('from_domain', {'from_domain__exact':""}, '-num_count', request, addresses, user_type, active_filters)
-        if render_graph:
-            d, l = pack_reportlib_data(data, 'from_domain', 'num_count')
-            png = drawPieGraph((d, l), (350,230))
-            response = HttpResponse(png,mimetype='image/png')
-        else:
-            pie_data = pack_json_data(data,'from_domain','num_count')
-            report_title = "Top sender domains by quantity"
+        pie_data = pack_json_data(data,'from_domain','num_count')
+        report_title = "Top sender domains by quantity"
     elif report_kind == 4:
         data = run_query('from_domain', {'from_domain__exact':""}, '-size', request, addresses, user_type, active_filters)
-        if render_graph:
-            d, l = pack_reportlib_data(data, 'from_domain', 'size')
-            png = drawPieGraph((d, l), (350,230))
-            response = HttpResponse(png,mimetype='image/png')
-        else:
-            pie_data = pack_json_data(data,'from_domain','size')
-            report_title = "Top sender domains by volume"
+        pie_data = pack_json_data(data,'from_domain','size')
+        report_title = "Top sender domains by volume"
     elif report_kind == 5:
         data = run_query('to_address', {'to_address__exact':""}, '-num_count', request, addresses, user_type, active_filters)
-        if render_graph:
-            d, l = pack_reportlib_data(data, 'to_address', 'num_count')
-            png = drawPieGraph((d, l), (350,230))
-            response = HttpResponse(png,mimetype='image/png')
-        else:
-            pie_data = pack_json_data(data,'to_address','num_count')
-            report_title = "Top recipients by quantity"
+        pie_data = pack_json_data(data,'to_address','num_count')
+        report_title = "Top recipients by quantity"
     elif report_kind == 6:
         data = run_query('to_address', {'to_address__exact':""}, '-size', request, addresses, user_type, active_filters)
-        if render_graph:
-            d, l = pack_reportlib_data(data, 'to_address', 'size')
-            png = drawPieGraph((d, l), (350,230))
-            response = HttpResponse(png,mimetype='image/png')
-        else:
-            pie_data = pack_json_data(data,'to_address','size')
-            report_title = "Top recipients by volume"
+        pie_data = pack_json_data(data,'to_address','size')
+        report_title = "Top recipients by volume"
     elif report_kind == 7:
         data = run_query('to_domain', {'to_domain__exact':"", 'to_domain__isnull':False}, '-num_count', request, addresses, user_type, active_filters)
-        if render_graph:
-            d, l = pack_reportlib_data(data, 'to_domain', 'num_count')
-            png = drawPieGraph((d, l), (350,230))
-            response = HttpResponse(png,mimetype='image/png')
-        else:
-            pie_data = pack_json_data(data,'to_domain','num_count')
-            report_title = "Top recipient domains by quantity"
+        pie_data = pack_json_data(data,'to_domain','num_count')
+        report_title = "Top recipient domains by quantity"
     elif report_kind == 8:
         data = run_query('to_domain', {'to_domain__exact':"", 'to_domain__isnull':False}, '-size', request, addresses, user_type, active_filters)
-        if render_graph:
-            d, l = pack_reportlib_data(data, 'to_domain', 'size')
-            png = drawPieGraph((d, l), (350,230))
-            response = HttpResponse(png,mimetype='image/png')
-        else:
-            pie_data = pack_json_data(data,'to_domain','size')
-            report_title = "Top recipient domains by volume"
+        pie_data = pack_json_data(data,'to_domain','size')
+        report_title = "Top recipient domains by volume"
     elif report_kind == 9:
         c = connection.cursor()
         user_type = request.session['user_filter']['user_type']
@@ -907,22 +856,13 @@ def report(request,report_kind, render_graph=False):
         rows = c.fetchall()
         c.close()
         counts, scores, data = format_sa_data(rows)
-        if render_graph:
-            png = drawBarGraph([counts], (950, 250), True)
-            response = HttpResponse(png,mimetype='image/png')
-        else:
-            pie_data = {'scores':scores,'count':simplejson.dumps(counts)}
-            template = "reports/barreport.html"
-            report_title = "Spam Score distribution"
+        pie_data = {'scores':scores,'count':simplejson.dumps(counts)}
+        template = "reports/barreport.html"
+        report_title = "Spam Score distribution"
     elif report_kind == 10:
         data = run_hosts_query(request, user_type, addresses, active_filters)
-        if render_graph:
-            d, l = pack_reportlib_data(data, 'clientip', 'num_count')
-            png = drawPieGraph((d, l), (350,230))
-            response = HttpResponse(png,mimetype='image/png')
-        else:
-            pie_data = pack_json_data(data,'clientip','num_count')
-            report_title = "Top mail hosts by quantity"
+        pie_data = pack_json_data(data,'clientip','num_count')
+        report_title = "Top mail hosts by quantity"
         template = "reports/relays.html"
     elif report_kind == 11:
         c = connection.cursor()
@@ -951,21 +891,8 @@ def report(request,report_kind, render_graph=False):
         rows = c.fetchall()
         c.close()
         mail_total, spam_total, virus_total, dates, data = format_totals_data(rows)
-        if render_graph:
-            png = drawBarGraph([mail_total, spam_total, virus_total], (950, 250))
-            response = HttpResponse(png,mimetype='image/png')
-        else:
-            pie_data = {'dates':dates,'mail':simplejson.dumps(mail_total),'spam':simplejson.dumps(spam_total),'virii':simplejson.dumps(virus_total)}
-            report_title = "Total messages [ After SMTP ]"
-            template = "reports/listing.html"
-    if render_graph:
-        return response
+        pie_data = {'dates':dates,'mail':simplejson.dumps(mail_total),'spam':simplejson.dumps(spam_total),'virii':simplejson.dumps(virus_total)}
+        report_title = "Total messages [ After SMTP ]"
+        template = "reports/listing.html"
     return render_to_response(template, {'pie_data':pie_data,'top_items':data,'report_title':report_title,
         'report_kind':report_kind,'active_filters':active_filters}, context_instance=RequestContext(request))
-
-
-def pie(request):
-
-    data = [{"y": 2332, "color": "red", "stroke": "black", "tooltip": "root@cic1.sentech.co.za"}, {"y": 920, "color": "#ffa07a", "stroke": "black", "tooltip": "showtimes@sterkinekor.com"}, {"y": 487, "color": "#deb887", "stroke": "black", "tooltip": "root@smtp.sentechsa.com"}, {"y": 330, "color": "#d2691e", "stroke": "black", "tooltip": "notification+mw~i~uii@facebookmail.com"}, {"y": 299, "color": "#008b8b", "stroke": "black", "tooltip": "oracle@cic1.sentech.co.za"}, {"y": 280, "color": "#006400", "stroke": "black", "tooltip": "root@spamcop03.sentechsa.net"}, {"y": 279, "color": "#ff8c00", "stroke": "black", "tooltip": "dineok@sentech.co.za"}, {"y": 272, "color": "#ffd700", "stroke": "black", "tooltip": "newsletter@123greetings.info"}, {"y": 252, "color": "#f0e68c", "stroke": "black", "tooltip": "sscnm@telkom.co.za"}, {"y": 240, "color": "#000000", "stroke": "black", "tooltip": "root@info2.mailgate.net"}]
-    graph = drawSVGPie(data,(350,230))
-    return HttpResponse(graph,mimetype='image/svg+xml')
