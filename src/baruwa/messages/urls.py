@@ -39,6 +39,7 @@ urlpatterns = patterns('baruwa.messages.views',
     (r'^whitelist/(?P<message_id>([A-Za-z0-9]){6}-([A-Za-z0-9]){6}-([A-Za-z0-9]){2}|.+)/$', 'whitelist',{},'whitelist-sender'),
     (r'^blacklist/(?P<message_id>([A-Za-z0-9]){6}-([A-Za-z0-9]){6}-([A-Za-z0-9]){2}|.+)/$', 'blacklist',{},'blacklist-sender'),
     (r'^process_quarantine/$', 'process_quarantined_msg',{},'process-quarantine'),
+    (r'^search/$', 'search', {}, 'message-search'),
     # some message-id's could be problematic here only supporting exim and wildcarding others
     (r'^(?P<message_id>(([A-Za-z0-9]){6}-([A-Za-z0-9]){6}-([A-Za-z0-9]){2})|.+)/$', 'detail',{},'message-detail'),
 )

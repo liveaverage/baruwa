@@ -619,7 +619,7 @@ img{
 #Main_Content .Grid_content .LightBlue_div .LightBlue_hash{
 	width:42px;
 	margin:0px;
-	padding:5px 0 0 0;
+	padding:7px 0 7px 0;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -635,7 +635,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 20px;
+	padding:7px 0 7px 20px;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .LightBlue_From_heading{
@@ -645,7 +645,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 10px 5px 0px;
+	padding:7px 10px 7px 0px;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .LightBlue_To_heading{
@@ -656,7 +656,7 @@ img{
 	font-weight:normal;
 	float:left;
 	margin:0px;
-	padding:5px 5px 5px 0px;
+	padding:7px 5px 7px 0px;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .LightBlue_Subject_heading{
@@ -666,7 +666,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0;
+	padding:7px 5px 7px 0;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .LightBlue_Size_heading{
@@ -676,7 +676,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .LightBlue_Score_heading{
@@ -686,7 +686,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .LightBlue_Status_heading{
@@ -696,13 +696,13 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Lists_LightBlue_hash{
 	width:102px;
 	margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -713,7 +713,7 @@ img{
 #Main_Content .Grid_content .LightBlue_div .Lists_LightBlue_to{
 	width:385px;
 	margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -723,7 +723,7 @@ img{
 #Main_Content .Grid_content .LightBlue_div .Lists_LightBlue_from{
 	width:384px;
 	margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -733,7 +733,7 @@ img{
 #Main_Content .Grid_content .LightBlue_div .Lists_LightBlue_action{
 	width:105px;
 	margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -743,7 +743,7 @@ img{
 #Main_Content .Grid_content .LightBlue_div .Users_LightBlue_hash{
 	width:102px;
 	margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -757,7 +757,7 @@ img{
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Users_LightBlue_fullname{
@@ -766,7 +766,7 @@ img{
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Users_LightBlue_account{
@@ -775,7 +775,7 @@ img{
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Bayes_title{
@@ -785,7 +785,7 @@ img{
     font-weight:bold;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Bayes_value, #Main_Content .Grid_content .LightBlue_div .Reports_cols,
@@ -795,7 +795,7 @@ img{
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Bayes_value, #Main_Content .Grid_content .LightBlue_div .Reports_cols .title,
@@ -820,7 +820,7 @@ img{
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 10px;
+	padding:7px 0 7px 10px;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Reports_col{
@@ -830,7 +830,7 @@ img{
 	font-size:12px;
 	float:left;margin:0px;
     text-align:center;
-	padding:5px 0 5px 10px;
+	padding:7px 0 7px 10px;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Release_col{
@@ -841,7 +841,7 @@ img{
     font-weight:bold;
 	float:left;margin:0px;
     text-align:center;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Alt_col{
@@ -852,7 +852,7 @@ img{
     font-weight:bold;
 	float:left;margin:0px;
     text-align:center;
-	padding:5px 0 5px 10px;
+	padding:7px 0 7px 10px;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Filter_remove, #Main_Content .Grid_content .whitelisted_div .Filter_remove{
@@ -862,7 +862,7 @@ img{
 	font-size:12px;
 	float:left;margin:0px;
     text-align:center;
-	padding:5px 0 5px 0px;
+	padding:7px 0 7px 0px;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Filter_save, #Main_Content .Grid_content .whitelisted_div .Filter_save{
@@ -872,7 +872,7 @@ img{
 	font-size:12px;
 	float:left;margin:0px;
     text-align:center;
-	padding:5px 0 5px 0px;
+	padding:7px 0 7px 0px;
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Filter_detail, #Main_Content .Grid_content .whitelisted_div .Filter_detail{
@@ -881,7 +881,7 @@ img{
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 20px;
+	padding:7px 0 7px 20px;
 	}
 
 
@@ -920,7 +920,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 20px;
+	padding:7px 0 7px 20px;
 	}
 
 #Main_Content .Grid_content .LightGray_div .LightGray_From_heading{
@@ -930,7 +930,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 10px 5px 0px;
+	padding:7px 10px 7px 0px;
 	}
 
 #Main_Content .Grid_content .LightGray_div .LightGray_To_heading{
@@ -940,7 +940,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0px;
+	padding:7px 5px 7px 0px;
 	}
 
 #Main_Content .Grid_content .LightGray_div .LightGray_Subject_heading{
@@ -950,7 +950,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0;
+	padding:7px 5px 7px 0;
 	}
 
 #Main_Content .Grid_content .LightGray_div .LightGray_Size_heading{
@@ -960,7 +960,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .LightGray_div .LightGray_Score_heading{
@@ -970,7 +970,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .LightGray_div .LightGray_Status_heading{
@@ -980,7 +980,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 /*=========================
@@ -1018,7 +1018,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 20px;
+	padding:7px 0 7px 20px;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .DarkGray_From_heading{
@@ -1028,7 +1028,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 10px 5px 0px;
+	padding:7px 10px 7px 0px;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .DarkGray_To_heading{
@@ -1038,7 +1038,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0px;
+	padding:7px 5px 7px 0px;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .DarkGray_Subject_heading{
@@ -1048,7 +1048,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0;
+	padding:7px 5px 7px 0;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .DarkGray_Size_heading{
@@ -1058,7 +1058,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .DarkGray_Score_heading{
@@ -1068,7 +1068,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .DarkGray_Status_heading{
@@ -1078,13 +1078,13 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .Users_DarkGray_hash{
 	width:102px;
 	margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -1098,7 +1098,7 @@ img{
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .Users_DarkGray_fullname{
@@ -1107,7 +1107,7 @@ img{
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .Users_DarkGray_account{
@@ -1116,13 +1116,13 @@ img{
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .Lists_DarkGray_hash{
 	width:102px;
 	margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -1133,7 +1133,7 @@ img{
 #Main_Content .Grid_content .DarkGray_div .Lists_DarkGray_to{
 	width:385px;
 	margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -1143,7 +1143,7 @@ img{
 #Main_Content .Grid_content .DarkGray_div .Lists_DarkGray_from{
 	width:384px;
 	margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -1153,7 +1153,7 @@ img{
 #Main_Content .Grid_content .DarkGray_div .Lists_DarkGray_action{
 	width:105px;
 	margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -1167,7 +1167,7 @@ img{
     font-weight:bold;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .Bayes_value{
@@ -1176,7 +1176,7 @@ img{
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .SA_row{
@@ -1185,7 +1185,7 @@ img{
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 0 5px 20px;
+	padding:7px 0 7px 20px;
 	}
 
 /*=========================
@@ -1224,7 +1224,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 20px;
+	padding:7px 0 7px 20px;
 	}
 
 #Main_Content .Grid_content .spam_div .spam_From_heading{
@@ -1234,7 +1234,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 10px 5px 0px;
+	padding:7px 10px 7px 0px;
 	}
 
 #Main_Content .Grid_content .spam_div .spam_To_heading{
@@ -1244,7 +1244,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0px;
+	padding:7px 5px 7px 0px;
 	}
 
 #Main_Content .Grid_content .spam_div .spam_Subject_heading{
@@ -1254,7 +1254,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0;
+	padding:7px 5px 7px 0;
 	}
 
 #Main_Content .Grid_content .spam_div .spam_Size_heading{
@@ -1264,7 +1264,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .spam_div .spam_Score_heading{
@@ -1274,7 +1274,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .spam_div .spam_Status_heading{
@@ -1284,7 +1284,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 /*=========================
@@ -1323,7 +1323,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 20px;
+	padding:7px 0 7px 20px;
 	}
 
 #Main_Content .Grid_content .highspam_div .highspam_From_heading{
@@ -1333,7 +1333,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 10px 5px 0px;
+	padding:7px 10px 7px 0px;
 	}
 
 #Main_Content .Grid_content .highspam_div .highspam_To_heading{
@@ -1343,7 +1343,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0px;
+	padding:7px 5px 7px 0px;
 	}
 
 #Main_Content .Grid_content .highspam_div .highspam_Subject_heading{
@@ -1353,7 +1353,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0;
+	padding:7px 5px 7px 0;
 	}
 
 #Main_Content .Grid_content .highspam_div .highspam_Size_heading{
@@ -1363,7 +1363,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .highspam_div .highspam_Score_heading{
@@ -1373,7 +1373,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .highspam_div .highspam_Status_heading{
@@ -1383,7 +1383,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0px 5px 0;
+	padding:7px 0px 7px 0;
 	}
 
 /*=========================
@@ -1422,7 +1422,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 20px;
+	padding:7px 0 7px 20px;
 	}
 
 #Main_Content .Grid_content .infected_div .infected_From_heading{
@@ -1432,7 +1432,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 10px 5px 0px;
+	padding:7px 10px 7px 0px;
 	}
 
 #Main_Content .Grid_content .infected_div .infected_To_heading{
@@ -1442,7 +1442,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0px;
+	padding:7px 5px 7px 0px;
 	}
 
 #Main_Content .Grid_content .infected_div .infected_Subject_heading{
@@ -1452,7 +1452,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0;
+	padding:7px 5px 7px 0;
 	}
 
 #Main_Content .Grid_content .infected_div .infected_Size_heading{
@@ -1462,7 +1462,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .infected_div .infected_Score_heading{
@@ -1472,7 +1472,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .infected_div .infected_Status_heading{
@@ -1482,7 +1482,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0px 5px 0;
+	padding:7px 0px 7px 0;
 	}
 
 /*=========================
@@ -1519,7 +1519,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 20px;
+	padding:7px 0 7px 20px;
 	}
 
 #Main_Content .Grid_content .Green_div .Green_From_heading{
@@ -1529,7 +1529,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 10px 5px 0px;
+	padding:7px 10px 7px 0px;
 	}
 
 #Main_Content .Grid_content .Green_div .Green_To_heading{
@@ -1539,7 +1539,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0px;
+	padding:7px 5px 7px 0px;
 	}
 
 #Main_Content .Grid_content .Green_div .Green_Subject_heading{
@@ -1549,7 +1549,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0;
+	padding:7px 5px 7px 0;
 	}
 
 #Main_Content .Grid_content .Green_div .Green_Size_heading{
@@ -1559,7 +1559,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .Green_div .Green_Score_heading{
@@ -1569,7 +1569,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .Green_div .Green_Status_heading{
@@ -1579,7 +1579,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0px 5px 0;
+	padding:7px 0px 7px 0;
 	}
 
 /*=========================
@@ -1618,7 +1618,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 20px;
+	padding:7px 0 7px 20px;
 	}
 
 #Main_Content .Grid_content .blacklisted_div .blacklisted_From_heading{
@@ -1628,7 +1628,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 10px 5px 0px;
+	padding:7px 10px 7px 0px;
 	}
 
 #Main_Content .Grid_content .blacklisted_div .blacklisted_To_heading{
@@ -1638,7 +1638,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0px;
+	padding:7px 5px 7px 0px;
 	}
 
 #Main_Content .Grid_content .blacklisted_div .blacklisted_Subject_heading{
@@ -1648,7 +1648,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0;
+	padding:7px 5px 7px 0;
 	}
 
 #Main_Content .Grid_content .blacklisted_div .blacklisted_Size_heading{
@@ -1658,7 +1658,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .blacklisted_div .blacklisted_Score_heading{
@@ -1668,7 +1668,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .blacklisted_div .blacklisted_Status_heading{
@@ -1678,7 +1678,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0px 5px 0;
+	padding:7px 0px 7px 0;
 	}
 
 /*=========================
@@ -1716,7 +1716,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 20px;
+	padding:7px 0 7px 20px;
 	}
 
 #Main_Content .Grid_content .whitelisted_div .whitelisted_From_heading{
@@ -1726,7 +1726,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 10px 5px 0px;
+	padding:7px 10px 7px 0px;
 	}
 
 #Main_Content .Grid_content .whitelisted_div .whitelisted_To_heading{
@@ -1736,7 +1736,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0px;
+	padding:7px 5px 7px 0px;
 	}
 
 #Main_Content .Grid_content .whitelisted_div .whitelisted_Subject_heading{
@@ -1746,7 +1746,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 5px 5px 0;
+	padding:7px 5px 7px 0;
 	}
 
 #Main_Content .Grid_content .whitelisted_div .whitelisted_Size_heading{
@@ -1756,7 +1756,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .whitelisted_div .whitelisted_Score_heading{
@@ -1766,7 +1766,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0 5px 0;
+	padding:7px 0 7px 0;
 	}
 
 #Main_Content .Grid_content .whitelisted_div .whitelisted_Status_heading{
@@ -1776,7 +1776,7 @@ img{
 	font-size:12px;
 	font-weight:normal;
 	float:left;margin:0px;
-	padding:5px 0px 5px 0;
+	padding:7px 0px 7px 0;
 	}
 
 /*=========================
@@ -1819,7 +1819,7 @@ img{
     width:100%;
 	float:left;
     font-weight:bold;
-    padding: 3px 5px 3px 5px;
+    padding: 3px 7px 3px 7px;
     }
 
 #Main_Content .Grid_content .relayed_div, #Main_Content .Grid_content .spamreport_div{
@@ -1850,7 +1850,7 @@ img{
 	font-size:12px;
     font-weight:bold;
 	float:left;margin:0px;
-	padding:5px 0 5px 20px;
+	padding:7px 0 7px 20px;
     }
 
 #Main_Content .Grid_content .maildetail{
@@ -1859,7 +1859,7 @@ img{
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:5px 10px 5px 20px;
+	padding:7px 10px 7px 20px;
     }
 
 #Footer_container{

@@ -470,3 +470,8 @@ def remote_attachment_download(host, cookie, message_id, attachment_id):
     resource = reverse('download-attachment',args=[message_id,attachment_id])
     rv = rest_request(host, resource, 'GET', headers)
     return rv
+
+def search(request):
+    if (request.method == 'POST') and request.REQUEST['message_id']:
+        return HttpResponseRedirect(reverse('message-detail', args=[request.REQUEST['message_id']]))
+    return HttpResponseRedirect(reverse('main-index'))
