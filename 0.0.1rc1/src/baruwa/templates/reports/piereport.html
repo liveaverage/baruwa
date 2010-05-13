@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block body_class%}{%if pie_data%} class="tundra"{%endif%}{%endblock body_class%}
+{% block headers %}{%if pie_data %}
+<link rel="stylesheet" type="text/css" href="/static/js/dijit/themes/tundra/tundra.css" />
+<script type="text/javascript">
+        var djConfig = { parseOnLoad:true, isDebug:false };
+</script>
+<script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
+<script type="text/javascript" src="/static/js/dojo/pie.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+dojo.addOnLoad(function() {
+{% if active_filters %}
+dojo.byId("fhl").style.display = "none";
+dojo.create("a",{href:"#",innerHTML:"&darr;&nbsp;Show filters",id:"filter-toggle"},"fhl","before");
+dojo.connect(dojo.byId("filter-toggle"),"onclick",function(e){
+        e.preventDefault();
+        em = dojo.byId("fhl");
+        if(em.style.display == "inline"){
+            em.style.display = "none";
+            dojo.byId("filter-toggle").innerHTML = "&darr;&nbsp;Show filters";
+        }else{
+            em.style.display = "inline";
+            dojo.byId("filter-toggle").innerHTML = "&uarr;&nbsp;Hide filters";
+        }
+});
+{% endif %}
+var dc = dojox.charting;
+var pie_graph = new dc.Chart2D("pie_graph");
+pie_graph.setTheme(dc.themes.MiamiNice).addPlot("default", {
+type: "Pie",
+font: "normal normal 8pt Tahoma",
+fontColor: "black",
+labelOffset: -30,
+radius: 80
+});
+pie_graph.addSeries("Series A", {{pie_data|safe}});
+var anim_a = new dc.action2d.MoveSlice(pie_graph, "default");
+var anim_b = new dc.action2d.Highlight(pie_graph, "default");
+var anim_c = new dc.action2d.Tooltip(pie_graph, "default");
+pie_graph.render();
+});
+//]]>
+</script>{%endif%}
+{% endblock headers %}
+{% block submenu %}
+&nbsp;
+{% endblock submenu %}
+{% block title %}
+Reports {{report_title}}
+{% endblock title %}
+{% block heading %}
+Reports - {{report_title}}
+{% endblock heading %}
+{% block content %}
+<table class="maillog">
+<tbody>
+<tr class="header">
+<td class="first-t">#</td>
+<td class="first-t">Address</td>
+<td class="first-t">Count</td>
+<td class="first-t">Volume</td>
+<td>&nbsp;</td>
+</tr>
+{% if top_items %}
+{% load messages_extras %}
+{% for item in top_items %}
+<tr class="sascores">
+<td class="first-t sascores">{{ forloop.counter }}.</td>
+<td class="sascores">
+<div class="pie_{{forloop.counter}} pie"></div>
+&nbsp;
+{% if item.from_address %}{{item.from_address|tds_trunc:42}}{%endif%}
+{% if item.from_domain %}{{item.from_domain}}{%endif%}
+{% if item.to_address %}{{item.to_address|tds_trunc:42}}{%endif%}
+{% if item.to_domain %}{{item.to_domain}}{%endif%}
+</td>
+<td class="first-t sascores">{{item.num_count}}</td>
+<td class="first-t sascores">{{item.size|filesizeformat}}</td>
+{% if forloop.first %}<td class="piebox" rowspan="{{forloop.revcounter}}">
+<div id="pie_graph" style="width: 350px; height: 230px;">
+<noscript>Enable Javascript to view graphs</noscript>
+</div>
+</td>
+{%endif%}
+</tr>
+{% endfor %}
+{% else %}
+<tr>
+<td colspan="5" class="align_center">No records returned</td>
+</tr>
+{% endif %}
+{% if active_filters %}
+<tr>
+<td colspan="5" class="first-t"><b>Filters have been applied :</b><span id="fhl" style="display:inline;">
+{% for f in active_filters %}
+"<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
+{% endfor %}
+</span>
+</td>
+</tr>
+{% endif %}
+</tbody>
+</table>
+{% endblock content %}

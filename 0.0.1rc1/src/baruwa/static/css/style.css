@@ -1,0 +1,1946 @@
+html{
+    height:100%;
+}
+
+body{
+	margin:0px;
+    height:100%;
+	padding:0px;
+	background:url(/static/imgs/css/bg.gif) repeat-x top left #f2f2f2;
+	}
+
+img{
+	border:0 none;
+	}
+
+.clearer{
+	clear:both;
+	}
+
+#header{
+	width:996px;
+	height:103px;
+	margin:0 auto;
+	padding:0px;
+	}
+
+#header .logo{
+	width:105px;
+	height:63px;
+	float:left;
+	padding:20px 0 0 0;
+	}
+
+#header .search{
+	width:880px;
+	float:left;
+	text-align:left;
+	padding:0 0 0 0px;
+	}
+
+#header .search .Link{
+	width:600px;
+	margin:0px;
+	padding:0px 0 0 60px;
+	float:right;
+	text-align:right;
+	}
+
+#header .search .Link ul{
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	text-align:right;
+	margin-top:15px;
+	}
+
+#header .search .Link ul li{
+	margin:0px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#3b3b3b;
+	font-size:12px;
+	text-decoration:none;
+	display:inline;
+	border-right:1px solid #3b3b3b;
+	white-space:nowrap;
+	padding:0px 5px;
+	}
+
+#header .search .Link ul li.none{
+	border-right:0 none;
+	}
+
+#header .search .Link ul li a{
+	text-decoration:none;
+	color:#3b3b3b;
+	}
+
+#header .search .Link ul li a:hover{
+	text-decoration:underline;
+	}
+
+#header .search .search_box{
+	width:232px;
+	float:right;
+	margin:0px;
+	padding:20px 0 0 10px;
+	}
+
+#header .search .search_box .text_box{
+	width:137px;
+	height:28px;
+	float:left;
+	background:url(/static/imgs/css/text_box.gif) no-repeat;
+	margin:0px;
+	padding:5px 0 0 8px;
+	}
+
+#header .search .search_box .text_box input{
+	border:0 none;
+	background:transparent none;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#3b3b3b;
+	font-size:12px;
+	}
+
+#header .search .search_box .search_btn{
+	width:72px;
+	height:27px;
+	float:left;
+	padding:0 0 0 5px;
+	}
+
+
+
+/*==========================
+	MAINNAV END HERE
+===========================*/
+
+.Box_Mainnav{
+	width:996px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:37px 0 0 0px;
+	}
+	
+.Box_Mainnav .Mainnav a.topnav{ /*aero button CSS*/
+	background: transparent url('/static/imgs/css/tab_left.gif') no-repeat top left;
+	display: inline-block;
+	float: left;
+	font: bold 14px Arial, Helvetica, sans-serif; /* Change 13px as desired */
+	line-height: 23px; /* This value + 8px should equal height of button background (default is 31px) */
+	height: 32px; /* Height of button background height */
+	padding-left: 20px; /* Width of left menu image */
+	text-decoration: none;
+	margin-right: 2px; /*spacing between buttons*/
+	cursor:pointer;
+
+	}
+
+.Box_Mainnav .Mainnav a.topnav:link, .Mainnav a.topnav:visited, .Mainnav a:active{
+	color: #013f5c; /*button text color*/
+	}
+
+.Box_Mainnav .Mainnav a.topnav span{
+	background: transparent url('/static/imgs/css/tab_right.gif') no-repeat top right;
+	display: inline-block;
+	padding: 4px 20px 6px 0; /*Set 10px here to match value of 'padding-left' value above*/
+	padding: 4px 20px 6px 0; /*Set 10px here to match value of 'padding-left' value above*/
+	_padding: 3px 20px 6px 0; /*Set 10px here to match value of 'padding-left' value above*/
+	height:22px;
+	cursor:pointer;
+	color:#fff;
+	}
+
+.Box_Mainnav .Mainnav a.topnav:hover{ /* Hover state CSS */
+	background: transparent url('/static/imgs/css/tab_left.gif') no-repeat bottom left;
+	opacity: 1;
+	-moz-opacity: 0.99;
+	}
+
+.Box_Mainnav .Mainnav a.topnav:hover span{ /*topnav button CSS*/
+	background: transparent url('/static/imgs/css/tab_right.gif') no-repeat bottom right;
+	color:#013f5c;
+	}
+	
+.Box_Mainnav .Mainnav a.selectednav{ /* Select state CSS */
+	background: transparent url('/static/imgs/css/tab_left.gif') no-repeat bottom left;
+	opacity: 1;
+	-moz-opacity: 0.99;
+	}
+
+.Box_Mainnav .Mainnav a.selectednav span{ /*Select button CSS*/
+	background: transparent url('/static/imgs/css/tab_right.gif') no-repeat bottom right;
+	color:#013f5c;
+	}
+	
+/*==========================
+	MAINNAV END HERE
+===========================*/
+
+
+/*==========================
+	Sub Nav Start Here
+==========================*/
+
+.Sub_Nav{
+	width:996px;
+	height:28px;
+	margin:0 auto;
+	padding:0px;
+	}
+
+.Sub_Nav ul{
+	margin:0px;
+	padding:10px 0 0 0;
+	list-style:none;
+	}
+
+.Sub_Nav ul li{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	color:#005aab;
+	font-weight:bold;
+	background:url(/static/imgs/css/arrow.gif) no-repeat left;
+	display:inline;
+	padding:0px 0 0 10px;
+	margin:0 0 0 5px;
+	}
+
+.Sub_Nav ul li a{
+	text-decoration:none;
+	color:#005aab;
+	}
+
+.Sub_Nav ul li a:hover{
+	text-decoration:underline;
+	color:#013f5c;
+	}
+
+/*==========================
+	Sub Nav Start End
+==========================*/
+
+#Main_Content{
+	width:996px;
+    min-height:60%;
+	margin:0 auto;
+	padding:0px;
+	background:#fff;
+	overflow:hidden;
+	}
+
+#Main_Content .Curb{
+	width:996px;
+	float:left;
+	margin:0px;
+	padding:0px;
+	}
+
+#Main_Content .highspam_div:hover, .spam_div:hover, .LightBlue_div:hover, .relayed_div:hover, .spamreport_div:hover, .whitelisted_div:hover, .DarkGray_div:hover { 
+    background: #eed !important;
+    }
+
+#Main_Content .blacklisted_div:hover {
+    background: #000 !important;
+    }
+
+#Main_Content .infected_div:hover {
+    background: #000 !important;
+    }
+
+#Main_Content .heading{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	border-bottom:dashed 1px #227495;
+	height:50px;
+	/height:30px;
+	width:976px;
+	margin:0 auto;
+	}
+
+#Main_Content .heading span{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	float:left;
+	padding:5px 0 0 0;
+	}
+
+#Main_Content .heading #heading {
+	color:#227495;
+}
+
+#Main_Content .heading #my-spinner{
+	float:right;
+  	}
+
+#Main_Content .heading #my-spinner img{
+    vertical-align:middle;
+}
+
+#Main_Content .Grid_content{
+	width:976px;
+	margin:0 auto;
+	padding:0px;
+	}
+
+#Main_Content .Grid_content .spanrow {
+	width:976px;
+	background:#e9f8ff;
+    padding:5px 0 5px 0;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	text-align:center;
+    }
+
+#Main_Content .Grid_content .Grid_heading{
+	background:url(/static/imgs/css/top_heading_bg.gif) no-repeat;
+	margin:10px 0 0 0;
+	padding:0px;
+	width:976px;
+	height:39px;
+	float:leftl
+	}
+
+#Main_Content .Grid_content .Grid_heading .Grid_hash{
+	width:42px;
+	margin:0px;
+	padding:15px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;
+	text-align:center;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Date_Time_heading{
+	width:124px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 20px;
+	}
+
+#Main_Content .Grid_content .Grid_heading .From_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 10px 5px 0px;
+	}
+
+#Main_Content .Grid_content .Grid_heading .To_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 5px 5px 0px;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Subject_heading{
+	width:263px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 0;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Size_heading{
+	width:72px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 0;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Score_heading{
+	width:52px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 0;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Status_heading{
+	width:45px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 0;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Lists_grid_hash{
+	width:102px;
+	margin:0px;
+	padding:15px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;
+	text-align:center;
+}
+
+#Main_Content .Grid_content .Grid_heading .Lists_grid_To{
+	width:385px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 0;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Lists_grid_From{
+	width:384px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 0;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Lists_grid_Action{
+	width:105px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 0;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Users_grid_hash{
+	width:102px;
+	margin:0px;
+	padding:15px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;
+	text-align:center;
+}
+
+#Main_Content .Grid_content .Grid_heading .Users_grid_username{
+	width:300px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 0;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Users_grid_fullname{
+	width:380px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 0;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Users_grid_account{
+	width:194px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 0;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Filters_grid_name{
+	width:350px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 25px;
+	}
+
+#Main_Content .Grid_content .Grid_heading .Filters_grid_status{
+    width:325px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#005aab;
+    font-size:12px;
+    font-weight:bold;
+    float:left;margin:0px;
+    padding:15px 0 0 0;
+    }
+
+#Main_Content .Grid_content .Grid_heading .Filters_grid_actions{
+    width:275px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#005aab;
+    font-size:12px;
+    font-weight:bold;
+    float:left;margin:0px;
+    padding:15px 0 0 0;
+    }
+
+#Main_Content .Grid_content .Grid_heading .Bayes_heading{
+    width:975px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#005aab;
+    font-size:12px;
+    font-weight:bold;
+    text-align:center;
+    float:left;margin:0px;
+    padding:15px 0 0 0;
+    }
+
+#Main_Content .Grid_content .Grid_heading .SA_heading, #Main_Content .Grid_content .Grid_heading .Reports_heading{
+    width:975px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#005aab;
+    font-size:12px;
+    font-weight:bold;
+    text-align:center;
+    float:left;margin:0px;
+    padding:15px 0 0 0;
+    }
+
+#Main_Content .Grid_content .Grid_heading .Status_service{
+    width:488px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#005aab;
+    font-size:12px;
+    font-weight:bold;
+    text-align:center;
+    float:left;margin:0px;
+    padding:15px 0 0 0;
+    }
+
+#Main_Content .Grid_content .Grid_heading .Status_message{
+    width:488px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#005aab;
+    font-size:12px;
+    font-weight:bold;
+    text-align:center;
+    float:left;margin:0px;
+    padding:15px 0 0 0;
+    }
+
+#Main_Content .LightBlue_div a, .DarkGray_div a, .spam_div a, .highspam_div a, .blacklisted_div a, .whitelisted_div a, .infected_div a {
+    display: block;
+}
+
+#Main_Content .Grid_content div.listings a{
+ 	color:#2B547D;
+  	text-decoration:none;
+	}
+
+#Main_Content .Grid_content div a{
+ 	color:#000;
+  	text-decoration:none;
+	}
+
+#Main_Content .Grid_content .blacklisted_div a{
+ 	color:#fff;
+  	text-decoration:none;
+	}
+
+#Main_Content .Grid_content .infected_div a{
+ 	color:#fff;
+  	text-decoration:none;
+	}
+
+#Main_Content .Grid_content .Filters_row_name{
+	width:350px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:5px 0 5px 25px;
+	}
+
+#Main_Content .Grid_content .Filters_row_status{
+    width:325px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#000;
+    font-size:12px;
+    float:left;margin:0px;
+    padding:5px 0 5px 0;
+    }
+
+#Main_Content .Grid_content .Filters_row_actions{
+    width:275px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#000;
+    font-size:12px;
+    float:left;margin:0px;
+    padding:5px 0 5px 0;
+    }
+
+/*=========================
+	LIGHT BLUE DIV START
+==========================*/
+
+#Main_Content .Grid_content .lightblue_div{
+	background:#e9f8ff;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+	padding:0px;
+	}
+
+#Main_Content .Grid_content .LightBlue_div{
+	background:#e9f8ff;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+	padding:0px;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .LightBlue_hash{
+	width:42px;
+	margin:0px;
+	padding:7px 0 7px 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;
+	text-align:center;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .LightBlue_Date_Time{
+	width:124px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 20px;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .LightBlue_From_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 10px 7px 0px;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .LightBlue_To_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;
+	margin:0px;
+	padding:7px 5px 7px 0px;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .LightBlue_Subject_heading{
+	width:263px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .LightBlue_Size_heading{
+	width:72px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .LightBlue_Score_heading{
+	width:52px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .LightBlue_Status_heading{
+	width:45px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Lists_LightBlue_hash{
+	width:102px;
+	margin:0px;
+	padding:7px 0 7px 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;
+	text-align:center;
+}
+
+#Main_Content .Grid_content .LightBlue_div .Lists_LightBlue_to{
+	width:385px;
+	margin:0px;
+	padding:7px 0 7px 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;
+}
+
+#Main_Content .Grid_content .LightBlue_div .Lists_LightBlue_from{
+	width:384px;
+	margin:0px;
+	padding:7px 0 7px 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;
+}
+
+#Main_Content .Grid_content .LightBlue_div .Lists_LightBlue_action{
+	width:105px;
+	margin:0px;
+	padding:7px 0 7px 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;
+}
+
+#Main_Content .Grid_content .LightBlue_div .Users_LightBlue_hash{
+	width:102px;
+	margin:0px;
+	padding:7px 0 7px 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;
+	text-align:center;
+}
+
+#Main_Content .Grid_content .LightBlue_div .Users_LightBlue_username{
+	width:300px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Users_LightBlue_fullname{
+	width:380px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Users_LightBlue_account{
+	width:194px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Bayes_title{
+	width:478px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+    font-weight:bold;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 10px;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Bayes_value{
+	width:478px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 10px;
+	}
+
+#Main_Content .Grid_content .lightblue_div .Reports_cols{
+	width:488px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .lightblue_div .Reports_cols .title{
+    width:478px;
+    padding:0 0 0 10px;
+}
+
+#Main_Content .Grid_content .LightBlue_div .Reports_cols{
+	width:488px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Reports_cols .title{
+    width:478px;
+    padding:0 0 0 10px;
+}
+
+#Main_Content .Grid_content .LightBlue_div .SA_row, #Main_Content .Grid_content .LightBlue_div .Active_filters,
+#Main_Content .Grid_content .whitelisted_div .Active_filters{
+	width:955px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:2px 0 2px 20px;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Status_col{
+	width:234px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 10px;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Reports_col{
+	width:234px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+    text-align:center;
+	padding:7px 0 7px 10px;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Release_col{
+	width:100px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+    font-weight:bold;
+	float:left;margin:0px;
+    text-align:center;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Alt_col{
+	width:400px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+    font-weight:bold;
+	float:left;margin:0px;
+    text-align:center;
+	padding:7px 0 7px 10px;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Filter_remove, #Main_Content .Grid_content .whitelisted_div .Filter_remove{
+	width:30px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+    text-align:center;
+	padding:7px 0 7px 0px;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Filter_save, #Main_Content .Grid_content .whitelisted_div .Filter_save{
+	width:30px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+    text-align:center;
+	padding:7px 0 7px 0px;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Filter_detail, #Main_Content .Grid_content .whitelisted_div .Filter_detail{
+	width:875px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 20px;
+	}
+
+
+/*=========================
+	LIGHT BLUE DIV END
+==========================*/
+
+
+/*=========================
+	LIGHT GRAY DIV START
+==========================*/
+
+#Main_Content .Grid_content .LightGray_div{
+	background:#f2f7fa;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+	}
+
+#Main_Content .Grid_content .LightGray_div .LightGray_hash{
+	width:42px;
+	margin:0px;
+	padding:12px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;
+	text-align:center;
+	}
+
+#Main_Content .Grid_content .LightGray_div .LightGray_Date_Time{
+	width:124px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 20px;
+	}
+
+#Main_Content .Grid_content .LightGray_div .LightGray_From_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 10px 7px 0px;
+	}
+
+#Main_Content .Grid_content .LightGray_div .LightGray_To_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0px;
+	}
+
+#Main_Content .Grid_content .LightGray_div .LightGray_Subject_heading{
+	width:263px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0;
+	}
+
+#Main_Content .Grid_content .LightGray_div .LightGray_Size_heading{
+	width:72px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .LightGray_div .LightGray_Score_heading{
+	width:52px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .LightGray_div .LightGray_Status_heading{
+	width:45px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+/*=========================
+	LIGHT GRAY DIV END
+==========================*/
+
+
+/*=========================
+	DARK GRAY DIV START
+==========================*/
+
+#Main_Content .Grid_content .DarkGray_div{
+	background:#dedede;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .DarkGray_hash{
+	width:42px;
+	margin:0px;
+	padding:12px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;
+	text-align:center;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .DarkGray_Date_Time{
+	width:124px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 20px;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .DarkGray_From_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 10px 7px 0px;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .DarkGray_To_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0px;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .DarkGray_Subject_heading{
+	width:263px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .DarkGray_Size_heading{
+	width:72px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .DarkGray_Score_heading{
+	width:52px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .DarkGray_Status_heading{
+	width:45px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .Users_DarkGray_hash{
+	width:102px;
+	margin:0px;
+	padding:7px 0 7px 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;
+	text-align:center;
+}
+
+#Main_Content .Grid_content .DarkGray_div .Users_DarkGray_username{
+	width:300px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .Users_DarkGray_fullname{
+	width:380px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .Users_DarkGray_account{
+	width:194px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .Lists_DarkGray_hash{
+	width:102px;
+	margin:0px;
+	padding:7px 0 7px 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;
+	text-align:center;
+}
+
+#Main_Content .Grid_content .DarkGray_div .Lists_DarkGray_to{
+	width:385px;
+	margin:0px;
+	padding:7px 0 7px 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;
+}
+
+#Main_Content .Grid_content .DarkGray_div .Lists_DarkGray_from{
+	width:384px;
+	margin:0px;
+	padding:7px 0 7px 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;
+}
+
+#Main_Content .Grid_content .DarkGray_div .Lists_DarkGray_action{
+	width:105px;
+	margin:0px;
+	padding:7px 0 7px 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;
+}
+
+#Main_Content .Grid_content .DarkGray_div .Bayes_title{
+	width:478px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+    font-weight:bold;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 10px;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .Bayes_value{
+	width:478px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 10px;
+	}
+
+#Main_Content .Grid_content .DarkGray_div .SA_row{
+	width:955px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 20px;
+	}
+
+/*=========================
+	DARK GRAY DIV END
+==========================*/
+
+
+
+/*=========================
+	PINK DIV START
+==========================*/
+
+#Main_Content .Grid_content .spam_div{
+	background:#ffd8d8;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+	}
+
+#Main_Content .Grid_content .spam_div .spam_hash{
+	width:42px;
+	margin:0px;
+	padding:12px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;
+	text-align:center;
+	}
+
+#Main_Content .Grid_content .spam_div .spam_Date_Time{
+	width:124px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 20px;
+	}
+
+#Main_Content .Grid_content .spam_div .spam_From_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 10px 7px 0px;
+	}
+
+#Main_Content .Grid_content .spam_div .spam_To_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0px;
+	}
+
+#Main_Content .Grid_content .spam_div .spam_Subject_heading{
+	width:263px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0;
+	}
+
+#Main_Content .Grid_content .spam_div .spam_Size_heading{
+	width:72px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .spam_div .spam_Score_heading{
+	width:52px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .spam_div .spam_Status_heading{
+	width:45px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+/*=========================
+	PINK DIV END
+==========================*/
+
+
+
+/*=========================
+	DARK PINK DIV START
+==========================*/
+
+#Main_Content .Grid_content .highspam_div{
+	background:#ff7070;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+	}
+
+#Main_Content .Grid_content .highspam_div .highspam_hash{
+	width:42px;
+	margin:0px;
+	padding:12px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;
+	text-align:center;
+	}
+
+#Main_Content .Grid_content .highspam_div .highspam_Date_Time{
+	width:124px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 20px;
+	}
+
+#Main_Content .Grid_content .highspam_div .highspam_From_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 10px 7px 0px;
+	}
+
+#Main_Content .Grid_content .highspam_div .highspam_To_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0px;
+	}
+
+#Main_Content .Grid_content .highspam_div .highspam_Subject_heading{
+	width:263px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0;
+	}
+
+#Main_Content .Grid_content .highspam_div .highspam_Size_heading{
+	width:72px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .highspam_div .highspam_Score_heading{
+	width:52px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .highspam_div .highspam_Status_heading{
+	width:45px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0px 7px 0;
+	}
+
+/*=========================
+	DARK PINK DIV END
+==========================*/
+
+
+
+/*=========================
+	RED DIV START
+==========================*/
+
+#Main_Content .Grid_content .infected_div{
+	background:#ff0000;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+	}
+
+#Main_Content .Grid_content .infected_div .infected_hash{
+	width:42px;
+	margin:0px;
+	padding:12px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;
+	text-align:center;
+	}
+
+#Main_Content .Grid_content .infected_div .infected_Date_Time{
+	width:124px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 20px;
+	}
+
+#Main_Content .Grid_content .infected_div .infected_From_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 10px 7px 0px;
+	}
+
+#Main_Content .Grid_content .infected_div .infected_To_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0px;
+	}
+
+#Main_Content .Grid_content .infected_div .infected_Subject_heading{
+	width:263px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0;
+	}
+
+#Main_Content .Grid_content .infected_div .infected_Size_heading{
+	width:72px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .infected_div .infected_Score_heading{
+	width:52px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .infected_div .infected_Status_heading{
+	width:45px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0px 7px 0;
+	}
+
+/*=========================
+	RED DIV END
+==========================*/
+
+/*=========================
+	Green DIV START
+==========================*/
+
+#Main_Content .Grid_content .Green_div{
+	background:#78ad70;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+	}
+
+#Main_Content .Grid_content .Green_div .Green_hash{
+	width:42px;
+	margin:0px;
+	padding:12px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;
+	text-align:center;
+	}
+
+#Main_Content .Grid_content .Green_div .Green_Date_Time{
+	width:124px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 20px;
+	}
+
+#Main_Content .Grid_content .Green_div .Green_From_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 10px 7px 0px;
+	}
+
+#Main_Content .Grid_content .Green_div .Green_To_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0px;
+	}
+
+#Main_Content .Grid_content .Green_div .Green_Subject_heading{
+	width:263px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0;
+	}
+
+#Main_Content .Grid_content .Green_div .Green_Size_heading{
+	width:72px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .Green_div .Green_Score_heading{
+	width:52px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .Green_div .Green_Status_heading{
+	width:45px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0px 7px 0;
+	}
+
+/*=========================
+	Green DIV END
+==========================*/
+
+
+
+/*=========================
+	Black START
+==========================*/
+
+#Main_Content .Grid_content .blacklisted_div{
+	background:#717171;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+	}
+
+#Main_Content .Grid_content .blacklisted_div .blacklisted_hash{
+	width:42px;
+	margin:0px;
+	padding:12px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;
+	text-align:center;
+	}
+
+#Main_Content .Grid_content .blacklisted_div .blacklisted_Date_Time{
+	width:124px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 20px;
+	}
+
+#Main_Content .Grid_content .blacklisted_div .blacklisted_From_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 10px 7px 0px;
+	}
+
+#Main_Content .Grid_content .blacklisted_div .blacklisted_To_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0px;
+	}
+
+#Main_Content .Grid_content .blacklisted_div .blacklisted_Subject_heading{
+	width:263px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0;
+	}
+
+#Main_Content .Grid_content .blacklisted_div .blacklisted_Size_heading{
+	width:72px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .blacklisted_div .blacklisted_Score_heading{
+	width:52px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .blacklisted_div .blacklisted_Status_heading{
+	width:45px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0px 7px 0;
+	}
+
+/*=========================
+	Black DIV END
+==========================*/
+
+
+/*=========================
+	White START
+==========================*/
+
+#Main_Content .Grid_content .whitelisted_div{
+	background:#DDFFDD;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+	}
+
+#Main_Content .Grid_content .whitelisted_div .whitelisted_hash{
+	width:42px;
+	margin:0px;
+	padding:12px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;
+	text-align:center;
+	}
+
+#Main_Content .Grid_content .whitelisted_div .whitelisted_Date_Time{
+	width:124px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 20px;
+	}
+
+#Main_Content .Grid_content .whitelisted_div .whitelisted_From_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 10px 7px 0px;
+	}
+
+#Main_Content .Grid_content .whitelisted_div .whitelisted_To_heading{
+	width:190px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0px;
+	}
+
+#Main_Content .Grid_content .whitelisted_div .whitelisted_Subject_heading{
+	width:263px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 5px 7px 0;
+	}
+
+#Main_Content .Grid_content .whitelisted_div .whitelisted_Size_heading{
+	width:72px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .whitelisted_div .whitelisted_Score_heading{
+	width:52px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .whitelisted_div .whitelisted_Status_heading{
+	width:45px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0px 7px 0;
+	}
+
+/*=========================
+	White DIV END
+==========================*/
+
+/*=========================
+ * Header DIV START
+==========================*/
+#Main_Content .Grid_content .header_div {
+    background:#D6E4F0;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+}
+
+#Main_Content .Grid_content .header_div .Reports_heading {
+    width:975px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#005aab;
+    font-size:12px;
+    font-weight:bold;
+    text-align:center;
+    float:left;margin:0px;
+    padding:7px 0 7px 0;
+}
+
+/*=========================
+ * Header DIV END
+==========================*/
+#Main_Content .Grid_content .White_div{
+	background:#FFF;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+	}
+
+#Main_Content .Grid_content .relayed_heading, #Main_Content .Grid_content .spamreport_heading{
+    background:#D6E4F0;
+    width:100%;
+	float:left;
+    font-weight:bold;
+    padding: 3px 7px 3px 7px;
+    }
+
+#Main_Content .Grid_content .relayed_div, #Main_Content .Grid_content .spamreport_div{
+    width:100%;
+	float:left;
+    padding: 3px 5px 3px 5px;
+    }
+
+#Main_Content .Grid_content .spamreport_score{
+    width:100px;
+	float:left;
+}
+
+#Main_Content .Grid_content .spamreport_descp{
+    width:332px;
+	float:left;
+}
+
+#Main_Content .Grid_content .relayed_col, .spamreport_col{
+    width:232px;
+	float:left;
+}
+
+#Main_Content .Grid_content .mailitem{
+	width:200px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+    font-weight:bold;
+	float:left;margin:0px;
+	padding:7px 0 7px 20px;
+    }
+
+#Main_Content .Grid_content .maildetail{
+	width:726px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 10px 7px 20px;
+    }
+
+#Footer_container{
+	background:#f2f2f2;
+	width:996px;
+	margin:0 auto;
+	padding:0px;
+	}
+
+#Footer_container .Copy_right{
+	width:196px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#717171;
+	float:left;
+	padding:35px 0 52px 10px;
+	}
+
+#Footer_container .Links_footer{
+	float:left;
+	width:706px;
+	margin:0px;
+	padding:35px 0 52px 10px;
+	text-align:right;
+	}
+
+#Footer_container .Links_footer ul{
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+
+#Footer_container .Links_footer ul li{
+	font-family:Arial, Helvetica, sans-serif;
+	color:#717171;
+	font-size:11px;
+	margin:0px;
+	padding:0px 7px 0 7px;
+	display:inline;
+	white-space:nowrap;
+	border-right:1px solid #717171;
+	}
+
+#Footer_container .Links_footer ul li.none{
+	border-right:0 none;
+	}
+
+#Footer_container .Links_footer ul li a{
+	text-decoration:none;
+	color:#717171;
+	}
+
+#Footer_container .Links_footer ul li a:hover{
+	text-decoration:underline;
+	}
+
+#Footer_container .Gray_logo{
+	width:58px;
+	height:44px;
+	margin:0px;
+	padding:20px 0 0px 0px;
+	float:left;
+	}

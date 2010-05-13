@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block body_class%}{%if pie_data.scores and pie_data.count%} class="tundra"{%endif%}{%endblock body_class%}
+{% block headers %}{% if pie_data.scores and pie_data.count %}
+<link rel="stylesheet" type="text/css" href="/static/js/dijit/themes/tundra/tundra.css" />
+<script type="text/javascript">
+    var djConfig = { parseOnLoad:true, isDebug:false };
+</script>
+<script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
+<script type="text/javascript" src="/static/js/dojo/bar.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+dochart = function(){
+{% if active_filters %}
+dojo.byId("fhl").style.display = "none";
+dojo.create("a",{href:"#",innerHTML:"&darr;&nbsp;Show filters",id:"filter-toggle"},"fhl","before");
+dojo.connect(dojo.byId("filter-toggle"),"onclick",function(e){
+        e.preventDefault();
+        em = dojo.byId("fhl");
+        if(em.style.display == "block"){
+            em.style.display = "none";
+            dojo.byId("filter-toggle").innerHTML = "&darr;&nbsp;Show filters";
+        }else{
+            em.style.display = "block";
+            dojo.byId("filter-toggle").innerHTML = "&uarr;&nbsp;Hide filters";
+        }
+});
+{% endif %}
+    var sagraph = new dojox.charting.Chart2D("sagraph");
+    sagraph.addPlot("default", {type: "ClusteredColumns",gap:1});
+    sagraph.addAxis("x"{% if pie_data.scores%},{labels: [{% for i in pie_data.scores%}{% if not forloop.last %}
+{value:{{forloop.counter}}, text:"{{i}}"},{% else %}{value:{{forloop.counter}}, text:"{{i}}"}{% endif %}{%endfor%}
+],majorTickStep:10}{%endif%});
+    sagraph.addAxis("y", {vertical: true});
+    sagraph.addSeries("SA scores", {{pie_data.count|safe}},{stroke: {color: "black"}, fill: "blue"});
+    sagraph.render();
+};
+dojo.addOnLoad(dochart);
+//]]>
+</script>{%endif%}
+{% endblock headers %}
+{% block submenu %}
+&nbsp;
+{% endblock submenu %}
+{% block title %}
+Reports - {{report_title}}
+{% endblock title %}
+{% block heading %}
+Reports - {{report_title}}
+{% endblock heading %}
+{% block content %}
+<table class="maillog">
+<tbody>
+<tr>
+<td colspan="3" class="align_center">
+<div id="sagraph" style="width: 950px; height: 250px;">
+<noscript>Enable javascript to view graphs</noscript>
+</div>
+</td>
+</tr>
+{% if top_items %}
+<tr class="header">
+<td class="first-t">&nbsp;</td>
+<td class="first-t">Score</td>
+<td class="first-t">Count</td>
+</tr>
+{% for item in top_items %}
+<tr class="sascores">
+<td class="first-t sascores {% cycle '' 'even' %}">&nbsp;</td>
+<td class="first-t sascores {% cycle '' 'even' %}">{{item.score}}</td>
+<td class="first-t sascores {% cycle '' 'even' %}">{{item.count}}</td>
+</tr>
+{% endfor %}
+{% endif %}
+{% if active_filters %}
+<tr>
+<td colspan="3" class="first-t"><b>Filters have been applied :</b><span id="fhl" style="display:inline;">
+{% for f in active_filters %}
+"<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
+{% endfor %}
+</span>
+</td>
+</tr>
+{% endif %}
+</tbody>
+</table>
+{% endblock content %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block headers %}
+{% endblock headers %}
+{% block submenu %}
+{% if user.is_superuser %}
+<ul>
+    <li><a href="{% url bayes-info %}">Bayes information</a></li>
+    <li>Spamassassin lint</li>
+</ul>
+{% endif %}
+{% endblock submenu %}
+{% block title %}
+Spamassassin Lint
+{% endblock title %}
+{% block heading %}
+Spamassassin Lint
+{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="SA_heading">Spamassassin Lint</div>
+</div>
+{% for item in data %}
+<div class="{% cycle 'LightBlue' 'DarkGray' %}_div">
+    <div class="SA_row">{{ item }}</div>
+</div>
+{% empty %}
+<div class="spanrow">
+Lint failed please verify if spamassassin is installed
+</div>
+{% endfor %}
+{% endblock content %}

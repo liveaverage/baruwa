@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+{% block headers %}
+<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-custom.css" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/js/details.js"></script>
+{% endblock headers %}
+{% block title %}Baruwa :: Showing message - {{ message_details.id }} {% endblock %}
+{% block heading %}Showing message - {{ message_details.id }} {% endblock %}
+{% block messaged %} value="{{ message_details.id }}" {%endblock %}
+{% block submenu %}
+<ul>
+{% if message_details.quarantined %}
+  <li><a href="{%url preview-message message_id=message_details.id%}">Preview message</a></li>
+  <li><a href="#qheading">Release message</a></li>
+{% else %}
+  <li><a href="{% url full-msg-index %}">Full message list</a></li>
+  <li><a href="{% url quarantine-index %}">Quarantine</a></li>
+{% endif %}
+</ul>
+{% endblock submenu %}
+{% block content %}
+{% if message_details %}
+{% load messages_extras %}
+{% load relayed_via %}
+<div class="Grid_heading">
+    <div class="Reports_heading">Message Details</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Message ID:</div>
+    <div class="maildetail">{{ message_details.id }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">From:</div>
+    <div class="maildetail">
+        {{ message_details.from_address|tds_wrap:80|linebreaksbr }}
+        <div id="listing" class="listings">
+            <div class="whitelist">
+                {% if not message_details.spamwhitelisted %}<a id="whitelist" href="{% url whitelist-sender message_id=message_details.id %}">Whitelist</a>{% else %}Whitelist{% endif %}
+            </div>
+            <div class="blacklist">
+                {% if not message_details.spamblacklisted %}<a id="blacklist" href="{% url blacklist-sender message_id=message_details.id %}">Blacklist</a>{% else %}Blacklist{% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">To:</div>
+    <div class="maildetail">{{ message_details.to_address|tds_nl_commas|linebreaksbr }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Subject</div>
+    <div class="maildetail">{{ message_details.subject }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Received on:</div>
+    <div class="maildetail">{{ message_details.timestamp }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Received by:</div>
+    <div class="maildetail">{{ message_details.hostname }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Received from:</div>
+    <div class="maildetail">{{ message_details.clientip }}</div>
+</div>
+<div class="lightblue_div">
+    <div class="mailitem">Recieved via:</div>
+    <div class="maildetail">{% relayed_via message_details.headers %}</div>
+</div>
+<div class="lightblue_div">
+    <div class="mailitem">Message Headers:</div>
+    <div class="maildetail"><div id="mail-headers" style="display:block;">{{ message_details.headers|tds_wrap_headers|linebreaksbr }}</div></div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Size:</div>
+    <div class="maildetail">{{ message_details.size|filesizeformat }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Virus infected:</div>
+    <div class="maildetail">
+        {% if message_details.virusinfected %}<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Blocked File:</div>
+    <div class="maildetail">
+        {% if message_details.nameinfected %}<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Other infection:</div>
+    <div class="maildetail">
+        {% if message_details.otherinfected %}<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}
+    </div>
+</div>
+<div class="header_div">
+    <div class="Reports_heading">Spamassassin information</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Spam:</div>
+    <div class="maildetail">
+        {% if message_details.isspam %}
+        <span class="positive">Y</span>
+        {%if not message_details.ishighspam%} Action(s): {%tds_action 1 message_details.from_address message_details.to_address%}{%endif %}
+        {% else %}
+        <span class="negative">N</span>
+        {% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">High Scoring Spam:</div>
+    <div class="maildetail">
+        {% if message_details.ishighspam %}
+        <span class="positive">Y</span> Actions(s): {%tds_action 2 message_details.from_address message_details.to_address%}
+        {% else %}
+        <span class="negative">N</span>
+        {% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Spamassassin Spam:</div>
+    <div class="maildetail">
+        {% if message_details.issaspam %}
+        <span class="positive">Y</span>
+        {% else %}
+        <span class="negative">N</span>
+        {% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Listed in RBL:</div>
+    <div class="maildetail">
+        {% if message_details.isrblspam %}
+        <span class="positive">Y</span>&nbsp;Listed in : {{message_details.spamreport|tds_rbl_name}}
+        {% else %}
+        <span class="negative">N</span>
+        {% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Spam Whitelisted:</div>
+    <div class="maildetail">
+        {% if message_details.spamwhitelisted %}
+        <span class="positive">Y</span>
+        {% else %}
+        <span class="negative">N</span>
+        {% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Spam Blacklisted:</div>
+    <div class="maildetail">
+        {% if message_details.spamblacklisted %}
+        <span class="positive">Y</span>
+        {% else %}
+        <span class="negative">N</span>
+        {% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Spamassassin Auto learned:</div>
+    <div class="maildetail">
+        {{message_details.spamreport|tds_is_learned}}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Spamassassin Score:</div>
+    <div class="maildetail">
+        {{ message_details.sascore }}
+    </div>
+</div>
+{% if message_details.spamreport %}
+<div class="lightblue_div">
+    <div class="mailitem">Spamassassin Report:</div>
+    <div class="maildetail">
+        {% spam_report message_details.spamreport %}
+    </div>
+</div>
+{% endif %}
+<div class="header_div">
+    <div class="Reports_heading">Message Content Protection (MCP)</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">MCP:</div>
+    <div class="maildetail">
+        {% if message_details.ismcp %}<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">High Scoring MCP:</div>
+    <div class="maildetail">
+        {% if message_details.ishighmcp %}<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">Spamassassin MCP:</div>
+    <div class="maildetail">
+        {% if message_details.issamcp %}<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">MCP Whitelisted:</div>
+    <div class="maildetail">
+        {% if message_details.mcpwhitelisted %}<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">MCP Blacklisted:</div>
+    <div class="maildetail">
+        {% if message_details.mcpblacklisted %}<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}
+    </div>
+</div>
+    {% if message_details.quarantined %}
+    <div id="qheading" class="header_div">
+        <div class="Reports_heading">Quarantine</div>
+    </div>
+    <div class="LightBlue_div">
+        <div class="Release_col">Release</div>
+        <div class="Release_col">Delete</div>
+        <div class="Release_col">SA Learn</div>
+        <div class="Release_col">Alt recipients</div>
+    </div>
+    <div class="LightBlue_div">
+        <form id="qform" action="{% url process-quarantine %}" method="post">
+        <div class="Release_col">
+            {% if not message_details.virusinfected and not message_details.namedinfected and not message_details.otherinfected %}{{ form.release }}{%endif%}
+        </div>
+        <div class="Release_col">
+            {% if not message_details.virusinfected and not message_details.namedinfected and not message_details.otherinfected %}{{ form.todelete }}{%endif%}
+        </div>
+        <div class="Release_col">
+            {% if not message_details.virusinfected and not message_details.namedinfected and not message_details.otherinfected %}
+            {{ form.salearn }}&nbsp;
+            {{ form.salearn_as }}
+            {% endif %}
+        </div>
+        <div class="Release_col">
+            {{ form.use_alt }}
+        </div>
+        <div class="Alt_col">
+            <input type="text" id="id_altrecipients" name="altrecipients" size="55" />
+            <input type="hidden" name="message_id" id="id_message_id" value="{{ message_details.id }}" />
+        </div>
+        <div class="Release_col">
+            <input type="submit" id="submit_q_request" value="Submit" />
+        </div>
+        </form>
+    </div>
+    {% endif %}
+{% else %}
+<div class="LightBlue_div">
+    <div class="spanrow">The message details for the requested message id could not be retrieved</div>
+</div>
+{% endif %}
+{% endblock content %}
