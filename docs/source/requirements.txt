@@ -13,7 +13,6 @@ Baruwa requirements
     + Any Web server that can run Django (`Apache <http://httpd.apache.org/>`_/`mod_wsgi <http://code.google.com/p/modwsgi/>`_ recommended)
     + `MySQL <http://www.mysql.com>`_
     + `Sphinx <http://sphinx.pocoo.org/>`_ (Optional - to build documentation)
-    + `Reportlib <http://www.reportlab.com/software/opensource/>`_ (optional for generating PDF's and graphs (when javascript is disabled))
 
 MailScanner requirements
 ========================

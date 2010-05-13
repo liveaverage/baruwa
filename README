@@ -28,7 +28,7 @@ Features
     + User profile aware white/blacklist management
     + REST API
     + Easy plug-in authentication to external authentication systems (Mailwatch, POP3, IMAP and SMTP supported out of the box)
-    + Tools for housekeeping tasks (quarantine management, rule updates, quarantine notofcations, etc)
+    + Tools for housekeeping tasks (quarantine management, rule updates, quarantine notifications, etc)
     + Works both with and without Javascript enabled (some features will have degraded performance)
 
 ===========
@@ -47,7 +47,6 @@ Requirements
     + iPy
     + Any Web server that can run Django (Apache/mod_wsgi recommended)
     + MySQL
-    + Reportlib (optional for generating PDF's and graphs (when javascript is disabled))
 
 ============
 Installation

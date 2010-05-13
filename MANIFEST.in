@@ -4,6 +4,7 @@ include INSTALL
 include LICENSE
 include NOTICE
 include ChangeLog
+include UPGRADE
 include BSD-LICENSE
 include MANIFEST.in
 include src/baruwa/baruwa.wsgi
