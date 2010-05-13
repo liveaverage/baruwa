@@ -1,0 +1,38 @@
+{% extends "!layout.html" %}
+{% block extrahead %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="_static/style.css" />
+<link rel="icon" href="_static/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="_static/favicon.ico" type="image/x-icon" /> 
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-261565-4']);
+_gaq.push(['_trackPageview']);
+</script>
+{% endblock %}
+{% block rootrellink %}
+    <li><a href="http://www.topdog.za.net/baruwa">Baruwa</a> &raquo;</li>
+    {{ super() }}
+{% endblock %}
+{% block footer %}
+{{ super() }}
+<div class="footer">
+<ul class="social">
+    <li><img src="_static/flickr_16.png" />&nbsp;<a href="http://www.flickr.com/photos/baruwa">Flickr</a></li>
+    <li><img src="_static/twitter_16.png" />&nbsp;<a href="http://twitter.com/baruwaproject">Twitter</a></li>
+    <li><a href="http://identi.ca/baruwa">Identi</a></li>
+    <li><img src="_static/google_16.png" />&nbsp;<a href="http://analytics.google.com/">Google analytics</a></li>
+    <li>&nbsp;<a href='http://www.mozilla.com/?from=sfx&amp;uid=305283&amp;t=580'><img src='http://sfx-images.mozilla.org/firefox/3.6/80x15_square_blue.png' alt='Spread Firefox Affiliate Button' border='0' /></a></li>
+</ul>
+<script type="text/javascript">
+(function() {
+var ga = document.createElement('script');
+ga.src = ('https:' == document.location.protocol ?
+'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+ga.setAttribute('async', 'true');
+document.documentElement.firstChild.appendChild(ga);
+})();
+</script>
+</div>
+{% endblock %}
+

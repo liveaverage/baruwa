@@ -1,0 +1,75 @@
+.. _installcentos:
+
+=====================
+Baruwa on Centos/RHEL
+=====================
+
+Install EPEL
+============
+
+The EPEL repo provides packages which are in Fedora but no yet
+included in RHEL/CENTOS. Django is shipped by the EPEL repo.
+Instructions on installing it can be found on `EPEL <http://fedoraproject.org/wiki/EPEL/FAQ#howtouse>`_
+
+Baruwa rpm install
+==================
+
+Download the rpm from `topdog-software.com <http://www.topdog-software.com/oss/baruwa/>`_,
+Due to the fact that the shipped MySQLdb module shipped on 
+Centos/RHEL is too old, do not install python-mysql install 
+MySQLdb from source instead. 
+
+Instructions on installing MySQLdb from source can be found 
+`mydjangoblog.com <http://mydjangoblog.com/2008/04/24/deploying-and-tuning-django/>`_
+
+Now proceed and install the dependencies::
+
+    # yum install python-IPy python-GeoIP Django mod_wsgi
+
+Install Baruwa::
+
+    # rpm -Uvh --nodeps baruwa-<version>.noarch.rpm
+
+Create the database::
+
+    # mysql -p < /usr/share/doc/baruwa-$(rpm --qf %{VERSION} -q baruwa)/baruwa-create.sql
+
+Create the database user::
+
+    mysql> GRANT ALL ON baruwa.* TO baruwa@localhost IDENTIFIED BY '<password>';
+    mysql> flush privileges;
+
+Configure MailScanner
+=====================
+
+:ref:`Configure <setupmailscanner>` MailScanner if you have not already done so.
+
+Configure Baruwa
+================
+
+Edit /usr/lib/python2.4/site-packages/baruwa/settings.py and 
+set the mysql database details::
+
+    DATABASE_ENGINE = 'mysql'           
+    DATABASE_NAME = 'baruwa'             
+    DATABASE_USER = 'baruwa'             
+    DATABASE_PASSWORD = '<baruwa_password>'         
+    DATABASE_HOST = 'localhost'            
+
+If your MailScanner config file is not located in the standard 
+location (/etc/MailScanner/MailScanner.conf) then edit the
+baruwa_settings.py file which is in the same directory as the
+settings.py file and set::
+
+    MS_CONFIG = '/etc/MailScanner/MailScanner.conf'
+
+**Setup Web server**
+
+Edit your apache configurations to enable virtual hosting if
+not enabled already. Then set the correct hostname in 
+/etc/httpd/conf.d/baruwa.conf::
+
+    # change to your hostname
+    ServerName baruwa-alpha.local
+
+Restart apache and point your browser to the hostname url.

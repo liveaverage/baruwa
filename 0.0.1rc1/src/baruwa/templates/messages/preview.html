@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Baruwa :: Previewing message - {{ message_id }} {% endblock %}
+{% block heading %}Previewing message - {{ message_id }} {% endblock %}
+{% block submenu %}
+<ul>
+  <li><a href="{% url message-detail message_id %}#qheading">Release message</a></li>
+  <li><a href="{% url message-detail message_id %}">Return to message</a></li>
+</ul>
+{% endblock submenu %}
+{% block content %}
+{% if message %}
+{% load messages_extras %}
+    <div class="LightBlue_div">
+        <div class="mailitem">From:</div>
+        <div class="maildetail">{{message.from|escape}}</div>
+    </div>
+    <div class="LightBlue_div">
+        <div class="mailitem">To:</div>
+        <div class="maildetail">{{message.to|escape}}</div>
+    </div>
+    <div class="LightBlue_div">
+        <div class="mailitem">Subject:</div>
+        <div class="maildetail">{{message.subject|escape}}</div>
+    </div>
+    <div class="LightBlue_div">
+        <div class="mailitem">Date:</div>
+        <div class="maildetail">{{message.date|escape}}</div>
+    </div>
+    {% if message.attachments %}
+    <div class="LightBlue_div">
+        <div class="mailitem">Attachments:</div>
+        <div class="maildetail">
+            {% for name in message.attachments %}
+            <a href="{% url download-attachment message_id=message_id, attachment_id=forloop.counter %}">{{name}}</a>&nbsp;
+            {%endfor%}
+        </div>
+    </div>
+    {% endif %}
+    <div class="header_div">
+        <div class="Reports_heading">Message content</div>
+    </div>
+    <div class="lightblue_div">
+        <div id="mailpreview">
+            {{message.body|linebreaksbr|escape}}
+        </div>
+    </div>
+    <div class="LightBlue_div">
+        <div class="spanrow">
+            {% if message.has_html %}
+            <small>:: Displaying text version of the HTML message due to security settings</small>
+            {%endif%}
+        </div>
+    </div>
+{% else %}
+    <div class="LightBlue_div">
+        <div class="spanrow">Message could not be previewed</div>
+    </div>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,16 @@
+
+Baruwa
+======
+
+From            To          Subject             Reason
+===============================================================
+{% for item in items %}
++ {{ item.from_address }}         {{ item.to_address }}           {{ item.subject }}              {% if item.isspam and not item.spamblacklisted and not item.virusinfected and not item.nameinfected and not item.otherinfected %}Spam{% endif %}{% if item.spamblacklisted %}Blacklisted{%endif%}{% if item.virusinfected or item.nameinfected or item.otherinfected %}Infected{% endif %}
+{% endfor %}
+
+{% if host_url %}
+To view these quarantined messages please visit :
+{{ host_url }}{% url quarantine-index %}
+{% endif %}
+===============================================================
+Powered by Baruwa http://www.topdog.za.net/baruwa

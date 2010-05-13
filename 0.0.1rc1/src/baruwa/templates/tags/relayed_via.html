@@ -1,0 +1,23 @@
+{% if hosts %}
+<div>
+    <div class="relayed_heading">
+        <div class="relayed_col">IP address</div>
+        <div class="relayed_col">Hostname</div>
+        <div class="relayed_col">Country</div>
+    </div>
+{% for host in hosts %}
+    <div class="relayed_div">
+        <div class="relayed_col">{{host.ip_address}}</div>
+        <div class="relayed_col">{{host.hostname}}</div>
+        <div class="relayed_col">
+            {% if host.country_code %}
+            <img src="/static/imgs/flags/{{host.country_code}}.png" alt="{{host.country_code}}" />
+            {% endif %}
+            &nbsp;{{host.country_name}}
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% else %}
+&nbsp;&nbsp;&nbsp;-- direct connection --
+{% endif %}

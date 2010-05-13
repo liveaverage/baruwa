@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block submenu %}
+{% if user.is_superuser %}
+<ul>
+    <li><a href="{% url bayes-info %}">Bayes information</a></li>
+    <li><a href="{% url sa-lint %}">Spamassassin lint</a></li>
+</ul>
+{% endif %}
+{% endblock submenu %}
+{% block title %}System Status{% endblock title %}
+{% block heading %}System Status{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Status_service">Service Status</div>
+    <div class="Status_message">Message Totals</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Status_col">Scanners</div>
+    <div class="Status_col">
+        {% if scanners %}
+        <img src="/static/imgs/status_ok.png" alt="x" />
+        {%else%}
+        <img src="/static/imgs/caution.png" alt="x" />
+        {%endif%}
+        &nbsp;{{scanners}} processes
+        </div>
+    <div class="Status_col">Processed</div>
+    <div class="Status_col">{{ data.total }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Status_col">MTA</div>
+    <div class="Status_col">
+        {% if mta %}
+        <img src="/static/imgs/status_ok.png" alt="x" />
+        {%else%}
+        <img src="/static/imgs/caution.png" alt="x" />
+        {%endif%}
+        &nbsp;{{mta}} processes
+    </div>
+    <div class="Status_col">Clean</div>
+    <div class="Status_col">{{ data.clean }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Status_col">Load</div>
+    <div class="Status_col">
+    <img src="/static/imgs/status_ok.png" alt="x" />&nbsp;{{load}}
+    </div>
+    <div class="Status_col">High scoring spam</div>
+    <div class="Status_col">{{ data.highspam }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Status_col">AV</div>
+    <div class="Status_col">
+        {% if av %}
+        <img src="/static/imgs/status_ok.png" alt="x" />
+        {%else%}
+        <img src="/static/imgs/caution.png" alt="x" />
+        {%endif%}
+        &nbsp;{{av}} processes
+    </div>
+    <div class="Status_col">Low scoring spam</div>
+    <div class="Status_col">{{ data.spam }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Status_col">Uptime</div>
+    <div class="Status_col"></div>
+    <div class="Status_col">Virii</div>
+    <div class="Status_col">{{ data.virii }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Status_col">System restart</div>
+    <div class="Status_col"></div>
+    <div class="Status_col">Blocked files</div>
+    <div class="Status_col">{{ data.otherinfected }}</div>
+</div>
+{% endblock content %}

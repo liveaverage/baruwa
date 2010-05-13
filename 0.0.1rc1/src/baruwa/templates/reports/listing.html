@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block body_class%}{% if pie_data.mail and pie_data.spam and pie_data.virii and pie_data.dates%} class="tundra"{%endif%}{%endblock body_class%}
+{% block headers %}{% if pie_data.mail and pie_data.spam and pie_data.virii and pie_data.dates%}
+<link rel="stylesheet" type="text/css" href="/static/js/dijit/themes/tundra/tundra.css" />
+<script type="text/javascript">
+    var djConfig = { parseOnLoad:true, isDebug:false };
+</script>
+<script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
+<script type="text/javascript" src="/static/js/dojo/listing.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+var dc = dojox.charting;
+var dur = 450;
+
+createChart = function(){
+{% if active_filters %}
+dojo.byId("fhl").style.display = "none";
+dojo.create("a",{href:"#",innerHTML:"&darr;&nbsp;Show filters",id:"filter-toggle"},"fhl","before");
+dojo.connect(dojo.byId("filter-toggle"),"onclick",function(e){
+        e.preventDefault();
+        em = dojo.byId("fhl");
+        if(em.style.display == "block"){
+            em.style.display = "none";
+            dojo.byId("filter-toggle").innerHTML = "&darr;&nbsp;Show filters";
+        }else{
+            em.style.display = "block";
+            dojo.byId("filter-toggle").innerHTML = "&uarr;&nbsp;Hide filters";
+        }
+});
+{% endif %}
+    var mail_chart = new dojox.charting.Chart2D("mailchart");
+    mail_chart.addAxis("x"{% if pie_data.dates%},{labels: [{% for i in pie_data.dates%}
+{% if not forloop.last %}{value:{{forloop.counter}}, text:"{{i}}"},{% else %}{value:{{forloop.counter}}, text:"{{i}}"}{% endif %}{%endfor%}
+],majorTickStep:15}{%endif%});
+    mail_chart.addAxis("y",{vertical:true});
+    mail_chart.addPlot("default",{type: "ClusteredColumns",gap:2});
+    mail_chart.addSeries("mail", {{pie_data.mail|safe}}, {stroke: {color: "black"}, fill: "green"});
+    mail_chart.addSeries("spam", {{pie_data.spam|safe}}, {stroke: {color: "black"}, fill: "pink"});
+    mail_chart.addSeries("virii", {{pie_data.virii|safe}}, {stroke: {color: "black"}, fill: "red"});
+    var anim6a = new dc.action2d.Highlight(mail_chart, "default", {
+    duration: dur,
+    easing:   dojo.fx.easing.sineOut
+    });
+    var anim6b = new dc.action2d.Shake(mail_chart, "default");
+    var anim6c = new dc.action2d.Tooltip(mail_chart, "default");
+    mail_chart.render();
+    var mail_legend = new dojox.charting.widget.Legend({chart: mail_chart}, "mail_legend");
+};
+dojo.addOnLoad(createChart);
+//]]>
+</script>{%endif%}
+{% endblock headers %}
+{% block submenu %}
+&nbsp;
+{% endblock submenu %}
+{% block title %}
+Reports - {{report_title}}
+{% endblock title %}
+{% block heading %}
+Reports - {{report_title}}
+{% endblock heading %}
+{% block content %}
+<table class="maillog">
+<tbody>
+<tr>
+<td colspan="8" class="align_center">
+
+<div id="mailchart" style="width: 950px; height: 250px;">
+<noscript>Enable Javascript to view graphs</noscript>
+</div>
+<div id="mail_legend"></div>
+</td>
+</tr>
+{% if top_items %}
+<tr class="header">
+<td class="first-t">&nbsp;</td>
+<td class="first-t">Date</td>
+<td class="first-t">Mail</td>
+<td class="first-t">Virii</td>
+<td class="first-t">Virii %</td>
+<td class="first-t">Spam</td>
+<td class="first-t">Spam %</td>
+<td class="first-t">Volume</td>
+</tr>
+{% for item in top_items %}
+<tr class="sascores">
+<td class="first-t sascores {% cycle '' 'even' %}">&nbsp;</td>
+<td class="first-t sascores {% cycle '' 'even' %}">{{item.date}}</td>
+<td class="first-t sascores {% cycle '' 'even' %}">{{item.count}}</td>
+<td class="first-t sascores {% cycle '' 'even' %}">{{item.virii}}</td>
+<td class="first-t sascores {% cycle '' 'even' %}">{{item.vpercent}}%</td>
+<td class="first-t sascores {% cycle '' 'even' %}">{{item.spam}}</td>
+<td class="first-t sascores {% cycle '' 'even' %}">{{item.spercent}}%</td>
+<td class="first-t sascores {% cycle '' 'even' %}">{{item.size|filesizeformat}}</td>
+</tr>
+{% endfor %}
+{% endif %}
+{% if active_filters %}
+<tr>
+<td colspan="8" class="first-t"><b>Filters have been applied :</b><span id="fhl" style="display:inline;">
+{% for f in active_filters %}
+"<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
+{% endfor %}
+</span>
+</td>
+</tr>
+{% endif %}
+</tbody>
+</table>
+{% endblock content %}
