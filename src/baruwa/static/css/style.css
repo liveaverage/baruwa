@@ -779,16 +779,24 @@ img{
 	}
 
 #Main_Content .Grid_content .LightBlue_div .Bayes_title{
-	width:488px;
+	width:478px;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
     font-weight:bold;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:7px 0 7px 0;
+	padding:7px 0 7px 10px;
 	}
 
-#Main_Content .Grid_content .LightBlue_div .Bayes_value, #Main_Content .Grid_content .LightBlue_div .Reports_cols,
+#Main_Content .Grid_content .LightBlue_div .Bayes_value{
+	width:478px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 10px;
+	}
+
 #Main_Content .Grid_content .lightblue_div .Reports_cols{
 	width:488px;
 	font-family:Arial, Helvetica, sans-serif;
@@ -798,7 +806,6 @@ img{
 	padding:7px 0 7px 0;
 	}
 
-#Main_Content .Grid_content .LightBlue_div .Bayes_value, #Main_Content .Grid_content .LightBlue_div .Reports_cols .title,
 #Main_Content .Grid_content .lightblue_div .Reports_cols .title{
     width:478px;
     padding:0 0 0 10px;
@@ -1161,22 +1168,22 @@ img{
 }
 
 #Main_Content .Grid_content .DarkGray_div .Bayes_title{
-	width:488px;
+	width:478px;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
     font-weight:bold;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:7px 0 7px 0;
+	padding:7px 0 7px 10px;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .Bayes_value{
-	width:488px;
+	width:478px;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
 	float:left;margin:0px;
-	padding:7px 0 7px 0;
+	padding:7px 0 7px 10px;
 	}
 
 #Main_Content .Grid_content .DarkGray_div .SA_row{
