@@ -811,6 +811,20 @@ img{
     padding:0 0 0 10px;
 }
 
+#Main_Content .Grid_content .LightBlue_div .Reports_cols{
+	width:488px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+	}
+
+#Main_Content .Grid_content .LightBlue_div .Reports_cols .title{
+    width:478px;
+    padding:0 0 0 10px;
+}
+
 #Main_Content .Grid_content .LightBlue_div .SA_row, #Main_Content .Grid_content .LightBlue_div .Active_filters,
 #Main_Content .Grid_content .whitelisted_div .Active_filters{
 	width:955px;
