@@ -27,11 +27,12 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from django.template.defaultfilters import force_escape
 from baruwa.messages.models import Maillog
 from baruwa.reports.models import SavedFilters
 from baruwa.reports.forms import FilterForm,FILTER_ITEMS,FILTER_BY
 from baruwa.messages.templatetags.messages_extras import tds_get_rules
-from baruwa.accounts.models import Users, UserFilters
+from baruwa.accounts.models import User, UserFilters
 
 
 pie_colors = ['#FF0000','#ffa07a','#deb887','#d2691e','#008b8b','#006400','#ff8c00','#ffd700','#f0e68c','#000000']
@@ -44,7 +45,7 @@ def to_dict(tuple_list):
 
 def set_user_filter(user,request):
     filter_addresses = []
-    login = Users.objects.get(username=user.username)
+    login = User.objects.get(username=user.username)
     if not user.is_superuser:
         #if login.type == 'D':
         filter_addresses = UserFilters.objects.filter(username=user.username).exclude(active='N')
@@ -633,13 +634,14 @@ def index(request):
         filter_form = FilterForm(request.POST)
         if filter_form.is_valid():
             cleaned_data = filter_form.cleaned_data
+            in_field = force_escape(cleaned_data['filtered_field'])
+            in_value = force_escape(cleaned_data['filtered_value'])
+            in_filtered_by = force_escape(cleaned_data['filtered_by'])
             if not request.session.get('filter_by', False):
                 request.session['filter_by'] = []
-                request.session['filter_by'].append({'field':cleaned_data['filtered_field'],
-                    'filter':cleaned_data['filtered_by'],'value':cleaned_data['filtered_value']})
+                request.session['filter_by'].append({'field':in_field,'filter':in_filtered_by,'value':in_value})
             else:
-                fitem = {'field':cleaned_data['filtered_field'],'filter':cleaned_data['filtered_by'],
-                    'value':cleaned_data['filtered_value']}
+                fitem = {'field':in_field,'filter':in_filtered_by,'value':in_value}
                 if not fitem in request.session['filter_by']:
                     request.session['filter_by'].append(fitem)
                     request.session.modified = True
