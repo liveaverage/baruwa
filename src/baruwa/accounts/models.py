@@ -43,17 +43,18 @@ class UserFilters(models.Model):
     class Meta:
         db_table = u'user_filters'
 
-class Users(models.Model):
+class User(models.Model):
     id = models.IntegerField(primary_key=True)
     username = models.CharField(max_length=60, unique=True)
     password = models.CharField(max_length=32)
     fullname = models.CharField(max_length=50)
     type = models.CharField(max_length=1, choices=TYPE_CHOICES, default='U')
-    quarantine_report = models.IntegerField(null=True, blank=True)
-    spamscore = models.IntegerField(null=True, blank=True, default=0)
-    highspamscore = models.IntegerField(null=True, blank=True, default=0)
-    noscan = models.IntegerField(null=True, blank=True)
+    quarantine_report = models.IntegerField(default=0)
+    spamscore = models.IntegerField(default=0)
+    highspamscore = models.IntegerField(default=0)
+    noscan = models.IntegerField(default=0)
     quarantine_rcpt = models.CharField(max_length=60, blank=True)
 
     class Meta:
         db_table = u'users'
+        verbose_name_plural = 'Users'

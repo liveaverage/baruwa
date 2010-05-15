@@ -18,7 +18,7 @@
 #
 # vim: ai ts=4 sts=4 et sw=4
 from django.contrib.auth.models import User
-from baruwa.accounts.models import Users,UserFilters
+from baruwa.accounts.models import User as UserObject, UserFilters
 try:
     import hashlib as md5
 except ImportError:
@@ -31,7 +31,7 @@ class MailwatchBackend:
         m = md5.md5(password)
         hashv = m.hexdigest()
         try:
-            login = Users.objects.get(username__exact=username,password__exact=hashv)
+            login = UserObject.objects.get(username__exact=username,password__exact=hashv)
         except:
             return None
         else:
@@ -148,9 +148,9 @@ class MailBackend:
                 user.is_superuser = False
                 user.save()
             try:
-                mwuser = Users.objects.get(username=username)
-            except Users.DoesNotExist:
-                mwuser = Users(username=username)
+                mwuser = UserObject.objects.get(username=username)
+            except UserObject.DoesNotExist:
+                mwuser = UserObject(username=username)
                 mwuser.save()
             return user
         else:

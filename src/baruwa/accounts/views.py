@@ -25,8 +25,8 @@ from django.views.decorators.cache import never_cache
 from django.core.urlresolvers import reverse
 from django.utils import simplejson
 from django.contrib.auth.decorators import login_required
-from baruwa.accounts.models import Users,UserFilters
-from baruwa.accounts.forms import UserForm, UserUpdateForm, StrippedUserForm, UserFilterForm, DomainUserFilterForm
+from baruwa.accounts.models import User, UserFilters
+from baruwa.accounts.forms import UserForm, UserUpdateForm, StrippedUserForm, UserFilterForm, DomainUserFilterForm, DeleteFilter
 from baruwa.reports.views import set_user_filter
 from baruwa.utilities.decorators import onlysuperusers
 from django.template import RequestContext
@@ -57,7 +57,6 @@ def index(request,page=1,direction='dsc',order_by='username'):
             m = md5.new(new_user.password)
             hashv = m.hexdigest()
             new_user.password = hashv
-            form = UserForm()
             new_user.save()
         except:
             error_msg = 'Account creation failed'
@@ -73,9 +72,10 @@ def index(request,page=1,direction='dsc',order_by='username'):
                     html = {'none':['none']}
                 response = simplejson.dumps({'error': unicode(error_list[0]),'form_field':html.keys()[0]})
             return HttpResponse(response,mimetype='application/javascript')
+        form = UserForm()
     else:
         form = UserForm()
-    user_list = Users.objects.all()
+    user_list = User.objects.all()
     return object_list(request,template_name='accounts/index.html',queryset=user_list,paginate_by=10,page=page,
         extra_context={'quarantine':0,'direction':direction,'order_by':ordering,'app':'accounts','active_filters':[],'list_all':1,'form':form})
 
@@ -89,18 +89,18 @@ def user_account(request, user_id=None, add_filter=False):
         return HttpResponseRedirect(reverse('user-profile',args=[request.user.username]))
 
     if user_id is None:
-        user = Users.objects.get(username=request.user.username)
+        user = User.objects.get(username=request.user.username)
         user_id = user.id
     else:
         user_id = int(user_id)
     try:
-        vu = Users.objects.get(pk=user_id)
+        vu = User.objects.get(pk=user_id)
     except:
         response = HttpResponseBadRequest('Error occured')
         return response
 
     if not request.user.is_superuser:
-        login = Users.objects.get(username=request.user.username)
+        login = User.objects.get(username=request.user.username)
         if login:
             if login.type == 'D':
                 if login.id != user_id:
@@ -120,7 +120,7 @@ def user_account(request, user_id=None, add_filter=False):
         else:
             response = HttpResponseBadRequest('Error occured why processing your session info')
             return response
-    user_object = Users.objects.get(pk=user_id) #get_object_or_404(Users,pk=user_name)
+    user_object = User.objects.get(pk=user_id) #get_object_or_404(User,pk=user_name)
     user_filters = UserFilters.objects.filter(username__exact=vu.username)
     if request.method == 'POST':
         if request.user.is_superuser:
@@ -134,10 +134,10 @@ def user_account(request, user_id=None, add_filter=False):
                 hashv = m.hexdigest()
                 updated_user_object.password = hashv
             else:
-                user_object = get_object_or_404(Users,pk=user_id)
+                user_object = get_object_or_404(User,pk=user_id)
                 updated_user_object.password = user_object.password
             updated_user_object.save()
-            user_object = get_object_or_404(Users,pk=user_id)
+            user_object = get_object_or_404(User,pk=user_id)
             if request.user.is_superuser:
                 form = UserUpdateForm(instance=user_object)
             else:
@@ -204,7 +204,7 @@ def add_filter(request, user_id):
     "Adds a filter to a user account"
     if request.user.is_superuser:
         if request.method == "POST":
-            user_object = Users.objects.get(pk=user_id)
+            user_object = User.objects.get(pk=user_id)
             if user_object.type == 'D':
                 form = DomainUserFilterForm(request.POST)
             elif user_object.type == 'U':
@@ -230,17 +230,26 @@ def add_filter(request, user_id):
 @never_cache
 @onlysuperusers
 @login_required
-def delete_filter(request, user_id, filter):
+def delete_filter(request, user_id=None, filter=None):
     "Deletes a filter"
-    try:
-        filter = UserFilters.objects.get(id=filter)
-        filter.delete()
-    except:
-        if request.is_ajax():
-            response = simplejson.dumps({'success':'False','html':'Deletion of the filter failed'})
-            return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+    if request.method == 'POST':
+        form = DeleteFilter(request.POST)
+        if form.is_valid():
+            filter_id = int(form.cleaned_data['id'])
+            user_id = form.cleaned_data['user_id']
+            filter = get_object_or_404(UserFilters, id=filter_id)
+            try:
+                filter.delete()
+            except:
+                if request.is_ajax():
+                    response = simplejson.dumps({'success':'False','html':'Deletion of the filter failed'})
+                    return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+            else:
+                if request.is_ajax():
+                    response = simplejson.dumps({'success':'True','html':'Filter has been deleted'})
+                    return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+            return HttpResponseRedirect(reverse('user-profile',args=[user_id]))
     else:
-        if request.is_ajax():
-            response = simplejson.dumps({'success':'True','html':'Filter has been deleted'})
-            return HttpResponse(response, content_type='application/javascript; charset=utf-8')
-    return HttpResponseRedirect(reverse('user-profile',args=[user_id]))
+        form = DeleteFilter()
+        filter = get_object_or_404(UserFilters, id=filter)
+    return render_to_response('accounts/delete_filter.html', {'form':form, 'item':filter, 'user_id':user_id}, context_instance=RequestContext(request))

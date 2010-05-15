@@ -21,7 +21,7 @@ from django import forms
 from django.forms.util import ErrorList
 from django.forms import ModelForm
 from django.forms.fields import email_re
-from baruwa.accounts.models import ACTIVE_CHOICES, TYPE_CHOICES, Users, UserFilters
+from baruwa.accounts.models import ACTIVE_CHOICES, TYPE_CHOICES, User, UserFilters
 import re
 
 YES_NO = (
@@ -35,17 +35,33 @@ Y_N = (
 )
 
 domain_re = re.compile(r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?$', re.IGNORECASE)
+user_re = re.compile(r'[A-Za-z0-9-_@\.]+')
+fullname_re = re.compile(r'[A-Za-z0-9-_\']+')
 
 class UserForm(ModelForm):
     """
     Generates a form to create user accounts (only full admin)
     """
+    username = forms.CharField()
+    fullname = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
     quarantine_report = forms.BooleanField(required=False)
     noscan = forms.ChoiceField(choices=YES_NO)
     class Meta:
-        model = Users
+        model = User
         exclude = ('id')
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if not user_re.match(username):
+            raise forms.ValidationError('provide a valid username')
+        return username
+
+    def clean_fullname(self):
+        fullname = self.cleaned_data['fullname']
+        if not fullname_re.match(fullname):
+            raise forms.ValidationError('provide valid full names')
+        return fullname
 
     def clean_password(self):
         passwd = self.cleaned_data['password']
@@ -57,31 +73,43 @@ class UserUpdateForm(ModelForm):
     """
     Update user accounts admin only
     """
-    #id = forms.CharField(widget=forms.HiddenInput)
     password = forms.CharField(widget=forms.PasswordInput)
     quarantine_report = forms.BooleanField(required=False)
     noscan = forms.ChoiceField(choices=YES_NO)
     class Meta:
-        model = Users
+        model = User
         exclude = ('id')
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if not user_re.match(username):
+            raise forms.ValidationError('provide a valid username')
+        return username
+
+    def clean_fullname(self):
+        fullname = self.cleaned_data['fullname']
+        if not fullname_re.match(fullname):
+            raise forms.ValidationError('provide valid full names')
+        return fullname
+
 
 class StrippedUserForm(ModelForm):
     """
     Generates a form update user accounts
     """
-    #id = forms.CharField(widget=forms.HiddenInput)
     password = forms.CharField(widget=forms.PasswordInput)
     quarantine_report = forms.BooleanField(required=False)
     noscan = forms.ChoiceField(choices=YES_NO)
     class Meta:
-        model = Users
+        model = User
         exclude = ('id', 'type', 'username')
 
-    #def clean_password(self):
-    #    passwd = self.cleaned_data['password']
-    #    if passwd == 'XXXXXXXXXX':
-    #        raise forms.ValidationError('provide a valid password')
-    #    return passwd
+    def clean_fullname(self):
+        fullname = self.cleaned_data['fullname']
+        if not fullname_re.match(fullname):
+            raise forms.ValidationError('provide valid full names')
+        return fullname
+
 
 class UserFilterForm(forms.Form):
     """
@@ -91,16 +119,29 @@ class UserFilterForm(forms.Form):
     filter = forms.CharField()
     active = forms.ChoiceField(choices=Y_N)
 
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if not user_re.match(username):
+            raise forms.ValidationError('provide a valid username')
+        return username
+
+
     def clean_filter(self):
         to = self.cleaned_data['filter']
         if not email_re.match(to.strip()):
-            raise forms.ValidationError('%s is not a valid e-mail address.' % to)
+            raise forms.ValidationError('provide a valid e-mail address.')
         return to
 
 class DomainUserFilterForm(UserFilterForm):
     """
     Generates a form to create a domain user filters
     """
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if not user_re.match(username):
+            raise forms.ValidationError('provide a valid username')
+        return username
+
     def clean_filter(self):
         domain = self.cleaned_data['filter']
         domain = domain.strip()
@@ -109,3 +150,7 @@ class DomainUserFilterForm(UserFilterForm):
             if not domain_re.match(domain):
                 raise forms.ValidationError('provide a valid domain')
         return domain
+
+class DeleteFilter(forms.Form):
+    id = forms.CharField()
+    user_id = forms.CharField()
