@@ -296,6 +296,14 @@ img{
 	text-align:center;
     }
 
+#Main_Content .Grid_content .listdel {
+	width:956px;
+	background:#e9f8ff;
+    padding:7px 10px 7px 10px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+    }
+
 #Main_Content .Grid_content .Grid_heading{
 	background:url(/static/imgs/css/top_heading_bg.gif) no-repeat;
 	margin:10px 0 0 0;

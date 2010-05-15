@@ -9,6 +9,7 @@ function ajax_stop(){
         $('#lists-spinner').remove();
     }
     $('div.ui-dialog-titlebar img').remove();
+
 }
 
 function ajax_error(event, request, settings){
@@ -20,6 +21,12 @@ function ajax_error(event, request, settings){
         }
     }else{
         $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>');
+        $('#list-form').before('<div id="ajax-error-msg" class="ui-state-highlight">Server error</div>');
+        $('#submit-button').removeAttr('disabled');
+        $('#cancel-button').removeAttr('disabled');
+        setTimeout(function() {
+            $('#ajax-error-msg').empty().remove();
+        }, 3900);
     }
     $('div.ui-dialog-titlebar img').remove();
 }
@@ -131,7 +138,7 @@ function lists_from_json(data){
             $("div.Grid_heading").after(tti.join(''));
         }else{
             $("div.Grid_heading").siblings('div').remove();
-            $("div.Grid_heading").after('<div class="LightBlue_div">No items at the moment</div>');
+            $("div.Grid_heading").after('<div class="LightBlue_div"><div class="spanrow">No items at the moment</div></div>');
         }
         if(rj.order_by == 'id'){
             $('#filterbox').hide('fast');
@@ -185,11 +192,11 @@ function submitForm(event){
         query_type: $("#id_query_type").val(),
         search_for: $("#id_search_for").val()
     };
-    link = $("#lists_filter_form").attr("action");
-    $.post(link,filter_request,
+    lk = $("#lists_filter_form").attr("action");
+    $.post(lk,filter_request,
         function(response){
             lists_from_json(response);
-            url = link.replace(/\//g, '-').replace(/^-/, '').replace(/-$/,'');
+            url = lk.replace(/\//g, '-').replace(/^-/, '').replace(/-$/,'');
             $.address.value('?u='+url);
             $.address.history($.address.baseURL() + url);
         },"json");
@@ -221,7 +228,11 @@ function confirm_delete(event) {
                         }
                     }
                 }
-                $.get(str,function(response){
+                delete_post = {
+                   list_kind: found[1], 
+                   list_item: found[2]
+                };
+                $.post('/lists/delete/',delete_post,function(response){
                     window.scroll(0,0);
                     if($('#in-progress').length){clearTimeout(ip);$('#in-progress').empty().remove();}
                     if(!response.error){

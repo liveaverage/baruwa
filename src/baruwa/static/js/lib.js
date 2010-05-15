@@ -157,7 +157,11 @@ function confirm_delete(event){
         'Delete': function(){
             $(this).dialog('close');
             id = parts[6];
-            $.get(link,function(response){
+            filter_del_post = {
+                id: id,
+                user_id: parts[5]
+            };
+            $.post('/accounts/user/delete/filter/', filter_del_post, function(response){
                 if(response.success == 'True'){
                     $('#fid_'+id).empty().remove();
                     if(!$('div.Grid_heading ~ div').length){

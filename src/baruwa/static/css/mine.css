@@ -16,6 +16,14 @@ a img {
 	border: 0;
 }
 
+div.hide {
+    display:none;
+}
+
+div.right {
+    float:right;
+}
+
 div.relayed_col img, div.maildetail img {
     vertical-align:middle;
 }

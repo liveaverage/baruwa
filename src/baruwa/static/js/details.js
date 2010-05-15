@@ -28,7 +28,7 @@ function confirm_listing(event){
     if(found.length == 2){
         event.preventDefault();
         clearTimeout(ip);
-        alt = 'This will '+found[1]+' all emails with "From address" '+$('#from-addr').text()+'<br/><b>Do you wish to continue ?</b>';
+        alt = 'This will '+found[1]+' all emails from '+$(this).attr('title')+'<br/><b>Do you wish to continue ?</b>';
         $dialog.html(alt);
         $dialog.dialog('option','buttons',{
             'Yes':function(){
