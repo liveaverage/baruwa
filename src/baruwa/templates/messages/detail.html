@@ -36,10 +36,10 @@
         {{ message_details.from_address|tds_wrap:80|linebreaksbr }}
         <div id="listing" class="listings">
             <div class="whitelist">
-                {% if not message_details.spamwhitelisted %}<a id="whitelist" href="{% url whitelist-sender message_id=message_details.id %}">Whitelist</a>{% else %}Whitelist{% endif %}
+                {% if not message_details.spamwhitelisted %}<a title="{{ message_details.from_address }}" id="whitelist" href="{% url whitelist-sender message_id=message_details.id %}">Whitelist</a>{% else %}Whitelist{% endif %}
             </div>
             <div class="blacklist">
-                {% if not message_details.spamblacklisted %}<a id="blacklist" href="{% url blacklist-sender message_id=message_details.id %}">Blacklist</a>{% else %}Blacklist{% endif %}
+                {% if not message_details.spamblacklisted %}<a title="{{ message_details.from_address }}" id="blacklist" href="{% url blacklist-sender message_id=message_details.id %}">Blacklist</a>{% else %}Blacklist{% endif %}
             </div>
         </div>
     </div>
