@@ -20,6 +20,7 @@
 
 from django import forms
 from django.forms.fields import email_re
+from django.template.defaultfilters import force_escape
 
 SALEARN_OPTIONS = (
   ('1', 'Spam'),
@@ -41,7 +42,7 @@ class QuarantineProcessForm(forms.Form):
     todelete = forms.BooleanField(required=False)
     use_alt = forms.BooleanField(required=False)
     altrecipients = forms.CharField(required=False)
-    message_id = forms.CharField()
+    message_id = forms.CharField(widget=forms.HiddenInput)
     
     def clean(self):
         """
@@ -65,5 +66,5 @@ class QuarantineProcessForm(forms.Form):
                     emails = altrecipients.split(',')
                     for email in emails:
                         if not email_re.match(email.strip()):
-                            raise forms.ValidationError('%s is not a valid e-mail address.' % email)
+                            raise forms.ValidationError('%s is not a valid e-mail address.' % force_escape(email))
         return cleaned_data

@@ -24,7 +24,7 @@ class Command(NoArgsCommand):
 
     def handle_noargs(self, **options):
         from django.template.loader import render_to_string
-        from baruwa.accounts.models import Users,UserFilters
+        from baruwa.accounts.models import User, UserFilters
         from baruwa.messages.models import Maillog
         from baruwa.reports.views import user_filter
         from django.forms.fields import email_re
@@ -32,7 +32,7 @@ class Command(NoArgsCommand):
         from django.conf import settings
         import datetime
 
-        users = Users.objects.filter(quarantine_report__exact=1)
+        users = User.objects.filter(quarantine_report__exact=1)
         url = getattr(settings, 'QUARANTINE_REPORT_HOSTURL','')
         a_day = datetime.timedelta(days=1)
         yesterday = datetime.date.today() - a_day

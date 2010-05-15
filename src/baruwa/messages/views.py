@@ -29,6 +29,7 @@ from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.template import RequestContext
+from django.template.defaultfilters import force_escape
 from baruwa.messages.models import Maillog
 from baruwa.messages.forms import QuarantineProcessForm
 from baruwa.messages.process_mail import *
@@ -43,6 +44,9 @@ def json_ready(element):
     """
     element['timestamp'] = str(element['timestamp'])
     element['sascore'] = str(element['sascore'])
+    element['subject'] = force_escape(element['subject'])
+    element['to_address'] = force_escape(element['to_address'])
+    element['from_address'] = force_escape(element['from_address'])
     return element 
 
 @never_cache
