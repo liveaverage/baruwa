@@ -54,7 +54,7 @@ List management
             {% ifequal listitem.from_address "127.0.0.1" %} 
             =builtin=
             {% else %}
-            <a href="/lists/delete/{{list_kind}}/{{listitem.id}}/"><img src="/static/imgs/action_delete.png" title="Delete" alt="Delete" /></a>
+            <a href="{% url list-del list_kind, listitem.id %}"><img src="/static/imgs/action_delete.png" title="Delete" alt="Delete" /></a>
             {% endifequal %}
             </div>
         </div>

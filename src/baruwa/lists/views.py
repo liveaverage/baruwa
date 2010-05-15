@@ -17,10 +17,10 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # vim: ai ts=4 sts=4 et sw=4
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from django.utils import simplejson
@@ -29,13 +29,16 @@ from django.forms.util import ErrorList as errorlist
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from django.template.defaultfilters import force_escape
 from baruwa.lists.models import Blacklist, Whitelist
-from baruwa.lists.forms import ListAddForm,FilterForm,UserListAddForm
-from baruwa.accounts.models import Users
+from baruwa.lists.forms import ListAddForm, FilterForm, UserListAddForm, ListDeleteForm
+from baruwa.accounts.models import User
 import re
 
 def json_ready(element):
     element['id'] = str(element['id'])
+    element['from_address'] = force_escape(element['from_address'])
+    element['to_address'] = force_escape(element['to_address'])
     return element
 
 @never_cache
@@ -170,11 +173,11 @@ def add_to_list(request):
             clean_data = form.cleaned_data
             if user_type != 'U':
                 if clean_data['to_domain'] != '' and clean_data['to_address'] != 'default':
-                    to = "%s@%s" % (clean_data['to_address'],clean_data['to_domain'])
+                    to = "%s@%s" % (force_escape(clean_data['to_address']), force_escape(clean_data['to_domain']))
                 elif clean_data['to_domain'] != '' and clean_data['to_address'] == 'default':
-                    to = clean_data['to_domain']
+                    to = force_escape(clean_data['to_domain'])
                 else:
-                    to = clean_data['to_address']
+                    to = force_escape(clean_data['to_address'])
             else:
                 to = clean_data['to_address']
             if not request.user.is_superuser:
@@ -182,13 +185,14 @@ def add_to_list(request):
                 a = [address.filter for address in addresses]
                 if user_type == 'D':
                     if clean_data['to_domain'] not in a:
-                        error_msg = 'You do not have authorization to add filters to the %s domain' % clean_data['to_domain']
+                        return HttpResponseForbidden('You do not have authorization to add filters to the %s domain' % force_escape(clean_data['to_domain']))
                 if user_type == 'U':
                     if to != request.user.username:
                         if to not in a:
-                            error_msg = 'You are only authorized to add filters to your email address %s' % request.user.username
+                            return HttpResponseForbidden('You are only authorized to add filters to your email address %s' % request.user.username)
             kwargs = {'to_address':to,'from_address':clean_data['from_address']}
-            if int(clean_data['list_type']) == 1:
+            lt = int(clean_data['list_type'])
+            if lt == 1:
                 try:
                     b = Blacklist.objects.get(**kwargs)
                     error_msg = '%s is blacklisted, please remove from blacklist before attempting to whitelist' % clean_data['from_address']
@@ -218,7 +222,7 @@ def add_to_list(request):
                     json = simplejson.dumps({'items':[],'paginator':[],'error':error_msg})
                     return HttpResponse(json,mimetype='application/javascript')
             else:
-                return HttpResponseRedirect(reverse('lists-index'))
+                return HttpResponseRedirect(reverse('lists-start', args=[lt]))
         else:
             if request.is_ajax():
                 error_list = form.errors.values()[0]
@@ -230,77 +234,51 @@ def add_to_list(request):
 
 @never_cache
 @login_required
-def delete_from_list(request, list_kind, item_id):
+def delete_from_list(request, list_kind=0, item_id=0):
+    if request.method == 'POST':
+        form = ListDeleteForm(request.POST)
+        if form.is_valid():
+            item_id = form.cleaned_data['list_item']
+            list_kind = form.cleaned_data['list_kind']
+        else:
+            error_list = form.errors.values()[0]
+            return HttpResponse('Error occured while deleting the item')
+
     item_id = int(item_id)
     list_kind = int(list_kind)
     error_msg = ''
-    if list_kind == 1:
-        try:
-            w = Whitelist.objects.get(pk=item_id)
-            if w.from_address == '127.0.0.1' and w.to_address == 'default':
-                error_msg = 'This is a buildin item, it cannot be deleted'
-            if not request.user.is_superuser:
-                user_type = request.session['user_filter']['user_type']
-                addresses = request.session['user_filter']['filter_addresses']
-                a = [address.filter for address in addresses]
-                if user_type == 'D':
-                    dom = w.to_address
-                    if '@' in dom:
-                        dom = dom.split('@')[1]
-                    if dom not in a:
-                        error_msg = 'The list item does not belong to you'
-                if user_type == 'U':
-                    if request.user.username != w.to_address:
-                        if w.to_address not in a:
-                            error_msg = 'The list item does not belong to you'
-            if error_msg == '':
-                w.delete()
-        except Whitelist.DoesNotExist:
-            if request.is_ajax():
-                error_msg = 'The list item does not exist'
-                pass
-            else:
-                raise Http404()
-    elif list_kind == 2:
-        try:
-            b = Blacklist.objects.get(pk=item_id)
-            if not request.user.is_superuser:
-                user_type = request.session['user_filter']['user_type']
-                addresses = request.session['user_filter']['filter_addresses']
-                a = [address.filter.filter for address in addresses]
-                if user_type == 'D':
-                    dom = b.to_address
-                    if '@' in dom:
-                        dom = dom.split('@')[1]
-                    if dom not in a:
-                        error_msg = 'The list item does not belong to you'
-                if user_type == 'U':
-                    if request.user.username != b.to_address:
-                        if b.to_address not in a:
-                            error_msg = 'The list item does not belong to you'
-            if error_msg == '':
-                b.delete()
-        except Blacklist.DoesNotExist:
-            if request.is_ajax():
-                error_msg = 'The list item does not exist'
-                pass
-            else:
-                raise Http404()
-    if request.is_ajax():
-        if error_msg == '':
-            page = 1
-            direction = 'dsc'
-            order_by = 'id'
-            params = request.META.get('HTTP_X_LIST_PARAMS', None)
-            if params:
-                g = re.match(r"^lists\-([1-2])\-([0-9]+)\-(dsc|asc)\-(id|to_address|from_address)$",params)
-                if g:
-                    list_kind, page, direction, order_by = g.groups()
-            request.method = 'GET'
-            return index(request,list_kind,page,direction,order_by,'',3)
-        else:
-            json = simplejson.dumps({'items':[],'paginator':[],'error':error_msg})
-            return HttpResponse(json,mimetype='application/javascript')
-    else:
-        return HttpResponseRedirect(reverse('lists-index'))
 
+    if list_kind == 1:
+        list = Whitelist
+    else:
+        list = Blacklist
+
+    list_item = get_object_or_404(list, pk=item_id)
+    if not list_item.can_access(request):
+        return HttpResponseForbidden('The list item does not belong to you')
+
+    if request.method == 'POST':
+        list_item.delete()
+        if request.is_ajax():
+            if error_msg == '':
+                page = 1
+                direction = 'dsc'
+                order_by = 'id'
+                params = request.META.get('HTTP_X_LIST_PARAMS', None)
+                if params:
+                    g = re.match(r"^lists\-([1-2])\-([0-9]+)\-(dsc|asc)\-(id|to_address|from_address)$",params)
+                    if g:
+                        list_kind, page, direction, order_by = g.groups()
+                request.method = 'GET'
+                return index(request, list_kind, page, direction, order_by, '', 3)
+            else:
+                json = simplejson.dumps({'items':[],'paginator':[],'error':error_msg})
+            return HttpResponse(json, mimetype='application/javascript')
+        else:
+            return HttpResponseRedirect(reverse('lists-start', args=[list_kind]))
+    else:
+        if request.is_ajax():
+            return HttpResponseRedirect(reverse('lists-index'))
+        else:
+            form = ListDeleteForm()
+            return render_to_response('lists/delete.html', {'item':list_item, 'list_kind':list_kind, 'form':form}, context_instance=RequestContext(request))

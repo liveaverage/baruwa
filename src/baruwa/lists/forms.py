@@ -19,6 +19,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 from django import forms
 from django.forms.util import ErrorList
+from django.forms import ModelForm
 import re
 
 LIST_OPTIONS = (
@@ -46,7 +47,7 @@ class ListAddForm(forms.Form):
             r = re.compile(r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*"
                 r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-011\013\014\016-\177])*")', re.IGNORECASE)
             if not r.match(to):
-                raise forms.ValidationError('%s is not a valid user part of an email address',to)
+                raise forms.ValidationError('provide a valid user part of the email address')
         return to
     
     def clean_to_domain(self):
@@ -65,11 +66,15 @@ class ListAddForm(forms.Form):
         to_domain = cleaned_data.get("to_domain")
 
         if to_user != 'default' and to_domain == '':
-            error_msg = u"Must provide domain name."
+            error_msg = u"provide domain name."
             self._errors["to_domain"] = ErrorList([error_msg])
             del cleaned_data["to_domain"]
             del cleaned_data["to_address"]
         return cleaned_data
+
+class ListDeleteForm(forms.Form):
+    list_kind = forms.CharField()
+    list_item = forms.CharField()
 
 class FilterForm(forms.Form):
     query_type = forms.ChoiceField(choices=((1,'containing'),(2,'excluding')))
