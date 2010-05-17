@@ -43,7 +43,7 @@ class UserListAddForm(forms.Form):
                 if addresses:
                     for address in addresses:
                         load_addresses.append((address.filter, address.filter))
-            self.fields['to_address'] = forms.ChoiceField(choices=list(load_addresses))
+            self.fields['to_address'] = forms.ChoiceField(choices=load_addresses)
 
     def clean_to_address(self):
         to_address = self.cleaned_data['to_address']
@@ -67,7 +67,7 @@ class ListAddForm(forms.Form):
                 if addresses:
                     for address in addresses:
                         load_addresses.append((address.filter, address.filter))
-            self.fields['to_domain'] = forms.ChoiceField(choices=list(load_addresses))
+            self.fields['to_domain'] = forms.ChoiceField(choices=load_addresses)
 
     def clean_to_address(self):
         to = self.cleaned_data['to_address']

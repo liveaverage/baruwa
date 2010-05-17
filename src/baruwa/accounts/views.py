@@ -98,8 +98,7 @@ def user_account(request, user_id=None, add_filter=False):
     try:
         vu = User.objects.get(pk=user_id)
     except:
-        response = HttpResponseBadRequest('Error occured')
-        return response
+        return HttpResponseBadRequest('Error occured')
 
     if not request.user.is_superuser:
         login = User.objects.get(username=request.user.username)
@@ -113,15 +112,12 @@ def user_account(request, user_id=None, add_filter=False):
                     except:
                         ld = 'example.net'
                     if ld not in d:
-                        response = HttpResponseForbidden('Hahaha - play nice, dont try access profiles in domains you do not manage')
-                        return response
+                        return HttpResponseForbidden('You are not authorized to access this page')
             if login.type == 'U':
                 if login.username != vu.username:
-                    response = HttpResponseForbidden('Hahaha - play nice, dont try access other users profiles')
-                    return response
+                    return HttpResponseForbidden('You are not authorized to access this page')
         else:
-            response = HttpResponseBadRequest('Error occured why processing your session info')
-            return response
+            return HttpResponseBadRequest('Error occured why processing your session info')
     user_object = User.objects.get(pk=user_id) #get_object_or_404(User,pk=user_name)
     user_filters = UserFilters.objects.filter(username__exact=vu.username)
     if request.method == 'POST':
@@ -171,6 +167,8 @@ def user_account(request, user_id=None, add_filter=False):
         extern_user = True
     else:
         extern_user = False
+    form.fields['spamscore'].widget.attrs['size'] = '4'
+    form.fields['highspamscore'].widget.attrs['size'] = '4'
     return render_to_response('accounts/user.html',{'form':form,
         'filters':user_filters,'target_user':user_id,'add_filter':add_filter,
         'auth_type':extern_user,'user_name':vu.username},context_instance=RequestContext(request))
