@@ -152,5 +152,5 @@ class DomainUserFilterForm(UserFilterForm):
         return domain
 
 class DeleteFilter(forms.Form):
-    id = forms.CharField()
-    user_id = forms.CharField()
+    id = forms.CharField(widget=forms.HiddenInput)
+    user_id = forms.CharField(widget=forms.HiddenInput)

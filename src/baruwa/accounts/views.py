@@ -72,9 +72,11 @@ def index(request,page=1,direction='dsc',order_by='username'):
                     html = {'none':['none']}
                 response = simplejson.dumps({'error': unicode(error_list[0]),'form_field':html.keys()[0]})
             return HttpResponse(response,mimetype='application/javascript')
-        form = UserForm()
+        #form = UserForm()
     else:
         form = UserForm()
+    form.fields['spamscore'].widget.attrs['size'] = '4'
+    form.fields['highspamscore'].widget.attrs['size'] = '4'
     user_list = User.objects.all()
     return object_list(request,template_name='accounts/index.html',queryset=user_list,paginate_by=10,page=page,
         extra_context={'quarantine':0,'direction':direction,'order_by':ordering,'app':'accounts','active_filters':[],'list_all':1,'form':form})
@@ -251,5 +253,7 @@ def delete_filter(request, user_id=None, filter=None):
             return HttpResponseRedirect(reverse('user-profile',args=[user_id]))
     else:
         form = DeleteFilter()
+        form.fields['id'].widget.attrs['value'] = filter
+        form.fields['user_id'].widget.attrs['value'] = user_id
         filter = get_object_or_404(UserFilters, id=filter)
-    return render_to_response('accounts/delete_filter.html', {'form':form, 'item':filter, 'user_id':user_id}, context_instance=RequestContext(request))
+    return render_to_response('accounts/delete_filter.html', {'form':form, 'item':filter}, context_instance=RequestContext(request))

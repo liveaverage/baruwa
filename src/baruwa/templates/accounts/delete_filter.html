@@ -7,8 +7,8 @@
 </div>
 <form method="post" action="{% url rdelete-filter %}">
 <div class="hide">
-    <input type="hidden" name="id" value="{{ item.id }}" />
-    <input type="hidden" name="user_id" value="{{ user_id }}" />
+    {{ form.id }}
+    {{ form.user_id }}
 </div>
 <div class="LightBlue_div">
     <div class="listdel">This will delete filter {{ item.filter }} belonging to {{ item.username }} <div class="right"><input type="submit" value="Delete" /></div></div>
