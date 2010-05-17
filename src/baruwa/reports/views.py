@@ -690,7 +690,7 @@ def index(request):
                     if fitem['filter'] == filter.operator and fitem['value'] == filter.value and fitem['field'] == filter.col:
                         loaded = 1
                         break
-            saved_filters.append({'filter_id':filter.id,'filter_name':filter.name,'is_loaded':loaded})
+            saved_filters.append({'filter_id':filter.id, 'filter_name':force_escape(filter.name), 'is_loaded':loaded})
     if request.is_ajax():
         if not data['newest'] is None and not data['oldest'] is None:
             data['newest'] = data['newest'].strftime("%a %d %b %Y @ %H:%M %p")
