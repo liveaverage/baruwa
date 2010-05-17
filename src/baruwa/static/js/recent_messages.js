@@ -27,6 +27,7 @@ function do_table_sort(){
     full_messages_listing = false;
     $('.nojs').remove();
     ax_in_progress = false;
+	$("#heading small").empty().append("[updated every 60 sec's]");
     $("#my-spinner").ajaxSend(function(){
 	    $(this).empty().append($("<img/>").attr("src","/static/imgs/loader-orig.gif")).append('&nbsp;Refreshing...');
 	    ax_error = false;
