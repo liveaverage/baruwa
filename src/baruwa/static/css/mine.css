@@ -324,15 +324,18 @@ table.status tr.last {
 }
 
 #Main_Content .Grid_content .form_block {
-    background:#eee;
+    float:left;
     width:976px;
+    background:#dedede;
+    margin-top:10px;
 }
 
 #Main_Content .Grid_content .form_row {
+	background:#e9f8ff;
     width:976px;
-	background:#dedede;
+    margin-bottom:1px;
     float:left;
-    padding:10px 0 0 0;
+    padding:5px 0 5px 0;
 }
 
 #Main_Content .Grid_content .form_row .form_label {
