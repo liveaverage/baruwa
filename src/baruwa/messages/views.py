@@ -143,6 +143,8 @@ def detail(request,message_id,success=0,error_list=None):
             raise Http404
         message_details = message_details[0]
     quarantine_form = QuarantineProcessForm()
+    quarantine_form.fields['message_id'].widget.attrs['value'] = message_details.id
+    quarantine_form.fields['altrecipients'].widget.attrs['size'] = '55'
     return render_to_response('messages/detail.html', {'message_details': message_details, 'form': quarantine_form,'error_list':error_list,'succeeded':success},context_instance=RequestContext(request))
 
 @login_required
