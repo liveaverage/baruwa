@@ -20,6 +20,7 @@
 from django import forms
 from django.forms.util import ErrorList
 from django.forms import ModelForm
+from django.forms.fields import email_re
 import re
 
 LIST_OPTIONS = (
@@ -28,15 +29,45 @@ LIST_OPTIONS = (
 )
 
 class UserListAddForm(forms.Form):
-    from_address = forms.EmailField()
-    to_address = forms.EmailField()
+    from_address = forms.EmailField(widget=forms.TextInput(attrs={'size':'50'}))
+    to_address = forms.EmailField(widget=forms.TextInput(attrs={'size':'50'}))
     list_type = forms.ChoiceField(choices=LIST_OPTIONS)
 
+    def __init__(self, request=None, *args, **kwargs):
+        super(UserListAddForm, self).__init__(*args, **kwargs)
+        if not request.user.is_superuser:
+            user_type = request.session['user_filter']['user_type']
+            addresses = request.session['user_filter']['filter_addresses']
+            load_addresses = [(request.user.username, request.user.username)]
+            if user_type == 'U':
+                if addresses:
+                    for address in addresses:
+                        load_addresses.append((address.filter, address.filter))
+            self.fields['to_address'] = forms.ChoiceField(choices=list(load_addresses))
+
+    def clean_to_address(self):
+        to_address = self.cleaned_data['to_address']
+        if not email_re.match(to_address):
+            raise forms.ValidationError('%s provide a valid e-mail address' % to_address)
+        return to_address
+
 class ListAddForm(forms.Form):
-    from_address = forms.EmailField()
+    from_address = forms.EmailField(widget=forms.TextInput(attrs={'size':'50'}))
     to_address = forms.CharField(required=False)
-    to_domain = forms.CharField(required=False)
+    to_domain = forms.CharField(required=False, widget=forms.TextInput(attrs={'size':'24'}))
     list_type = forms.ChoiceField(choices=LIST_OPTIONS)
+
+    def __init__(self, request=None, *args, **kwargs):
+        super(ListAddForm, self).__init__(*args, **kwargs)
+        if not request.user.is_superuser:
+            user_type = request.session['user_filter']['user_type']
+            addresses = request.session['user_filter']['filter_addresses']
+            load_addresses = []
+            if user_type == 'D':
+                if addresses:
+                    for address in addresses:
+                        load_addresses.append((address.filter, address.filter))
+            self.fields['to_domain'] = forms.ChoiceField(choices=list(load_addresses))
 
     def clean_to_address(self):
         to = self.cleaned_data['to_address']
@@ -73,8 +104,8 @@ class ListAddForm(forms.Form):
         return cleaned_data
 
 class ListDeleteForm(forms.Form):
-    list_kind = forms.CharField()
-    list_item = forms.CharField()
+    list_kind = forms.CharField(widget=forms.HiddenInput)
+    list_item = forms.CharField(widget=forms.HiddenInput)
 
 class FilterForm(forms.Form):
     query_type = forms.ChoiceField(choices=((1,'containing'),(2,'excluding')))

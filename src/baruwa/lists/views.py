@@ -45,9 +45,7 @@ def json_ready(element):
 @login_required
 def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for='',query_type=3):
     list_kind = int(list_kind)
-    load_domain = []
-    load_email = []
-    user_type = 'A'
+    user_type = request.session['user_filter']['user_type']
     query_type = int(query_type)
     if query_type == 3:
         query_type = None
@@ -66,31 +64,29 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
     elif list_kind == 2:
         listing = Blacklist.objects.values('id','to_address','from_address').order_by(order_by)
 
+    form = ListAddForm(request)
+    
     if not request.user.is_superuser:
         q = Q()
-        user_type = request.session['user_filter']['user_type']
         addresses = request.session['user_filter']['filter_addresses']
         if user_type == 'D':
             if addresses:
                 for domain in addresses:
-                    load_domain.append(domain.filter)
                     kw = {'to_address__iendswith':domain.filter}
                     q = q | Q(**kw)
                 listing = listing.filter(q)
             else:
                 listing = listing.filter(to_address__iendswith='example.net')
         if user_type == 'U':
+            form = UserListAddForm(request)
             if addresses:
                 for email in addresses:
-                   load_email.append(email.filter)
                    kw = {'to_address__exact':email.filter}
                    q = q | Q(**kw)
-                load_email.append(request.user.username)
                 kw = {'to_address__exact':request.user.username}
                 q = q | Q(**kw)
                 listing = listing.filter(q)
             else:
-                load_email.append(request.user.username)
                 listing = listing.filter(to_address__exact=request.user.username)
 
     if request.method == 'POST':
@@ -133,42 +129,24 @@ def index(request,list_kind=1,page=1,direction='dsc',order_by='id',search_for=''
     else:
         return object_list(request,template_name='lists/index.html',queryset=listing, paginate_by=20,page=page,
             extra_context={'app':app,'list_kind':list_kind,'direction':direction,'order_by':ordering,'search_for':search_for,'query_type':query_type,'list_all':0,
-            'ld':load_domain,'user_type':user_type,'le':load_email})
+            'form':form})
 
 @login_required
 def add_to_list(request):
     template = 'lists/add.html'
-    load_domain = []
-    load_email = []
-    user_type = 'A'
     error_msg = ''
-    if not request.user.is_superuser:
-        user_type = request.session['user_filter']['user_type']
-        addresses = request.session['user_filter']['filter_addresses']
-        q = Q()
-        if user_type == 'D':
-            if addresses:
-                for domain in addresses:
-                    load_domain.append(domain.filter)
-        if user_type == 'U':
-            if addresses:
-                for email in addresses:
-                    load_email.append(email.filter)
-            else:
-                load_email.append(request.user.username)
+    user_type = request.session['user_filter']['user_type']
 
     if request.method == 'GET':
         if user_type == 'U':
-            add_form = UserListAddForm(request.POST)
+            form = UserListAddForm(request)
         else:
-            add_form = ListAddForm() 
-        add_dict = {'form':add_form,'ld':load_domain,'user_type':user_type,'le':load_email}
+            form = ListAddForm(request) 
     elif request.method == 'POST':
-        user_type = request.session['user_filter']['user_type']
         if user_type == 'U':
-            form = UserListAddForm(request.POST)
+            form = UserListAddForm(request, request.POST)
         else:
-            form = ListAddForm(request.POST) 
+            form = ListAddForm(request, request.POST) 
         if form.is_valid():
             clean_data = form.cleaned_data
             if user_type != 'U':
@@ -185,35 +163,38 @@ def add_to_list(request):
                 a = [address.filter for address in addresses]
                 if user_type == 'D':
                     if clean_data['to_domain'] not in a:
-                        return HttpResponseForbidden('You do not have authorization to add filters to the %s domain' % force_escape(clean_data['to_domain']))
+                        return HttpResponseForbidden('You do not have authorization')
                 if user_type == 'U':
                     if to != request.user.username:
                         if to not in a:
-                            return HttpResponseForbidden('You are only authorized to add filters to your email address %s' % request.user.username)
+                            return HttpResponseForbidden('You do not have authorization')
             kwargs = {'to_address':to,'from_address':clean_data['from_address']}
             lt = int(clean_data['list_type'])
             if lt == 1:
                 try:
                     b = Blacklist.objects.get(**kwargs)
-                    error_msg = '%s is blacklisted, please remove from blacklist before attempting to whitelist' % clean_data['from_address']
+                    error_msg = '%s is blacklisted, please remove from blacklist before attempting to whitelist' % force_escape(clean_data['from_address'])
                 except Blacklist.DoesNotExist:
                     wl = Whitelist(to_address=to,from_address=clean_data['from_address'])
-                    if error_msg == '':
-                        try:
-                            wl.save()
-                        except IntegrityError:
-                            error_msg = 'The list item already exists'
+                    try:
+                        wl.save()
+                    except IntegrityError:
+                        error_msg = 'The list item already exists'
+                    except:
+                        error_msg = 'Unknown error occured'
             else:
                 try:
                     w = Whitelist.objects.get(**kwargs)
-                    error_msg = '%s is whitelisted, please remove from whitelist before attempting to blacklist' % clean_data['from_address']
+                    error_msg = '%s is whitelisted, please remove from whitelist before attempting to blacklist' % force_escape(clean_data['from_address'])
                 except Whitelist.DoesNotExist:    
                     bl = Blacklist(to_address=to,from_address=clean_data['from_address'])
-                    if error_msg == '':
-                        try:
-                            bl.save()
-                        except IntegrityError:
-                            error_msg = 'The list item already exists'
+                    try:
+                        bl.save()
+                    except IntegrityError:
+                        error_msg = 'The list item already exists'
+                    except:
+                        error_msg = 'Unknown error occured'
+
             if request.is_ajax():
                 if error_msg == '':
                     request.method = 'GET'
@@ -229,8 +210,7 @@ def add_to_list(request):
                 html = dict([(k, [unicode(e) for e in v]) for k,v in form.errors.items()]) #form.errors
                 response = simplejson.dumps({'error': unicode(error_list[0]),'form_field':html.keys()[0]})
                 return HttpResponse(response,mimetype='application/javascript')
-            add_dict = {'form':form,'ld':load_domain,'user_type':user_type,'le':load_email}
-    return render_to_response(template,add_dict,context_instance=RequestContext(request))
+    return render_to_response(template, {'form':form}, context_instance=RequestContext(request))
 
 @never_cache
 @login_required
@@ -255,7 +235,7 @@ def delete_from_list(request, list_kind=0, item_id=0):
 
     list_item = get_object_or_404(list, pk=item_id)
     if not list_item.can_access(request):
-        return HttpResponseForbidden('The list item does not belong to you')
+        return HttpResponseForbidden('You do not have authorization')
 
     if request.method == 'POST':
         list_item.delete()
@@ -281,4 +261,6 @@ def delete_from_list(request, list_kind=0, item_id=0):
             return HttpResponseRedirect(reverse('lists-index'))
         else:
             form = ListDeleteForm()
-            return render_to_response('lists/delete.html', {'item':list_item, 'list_kind':list_kind, 'form':form}, context_instance=RequestContext(request))
+            form.fields['list_kind'].widget.attrs['value'] = list_kind
+            form.fields['list_item'].widget.attrs['value'] = list_item.id
+            return render_to_response('lists/delete.html', {'item':list_item, 'form':form}, context_instance=RequestContext(request))
