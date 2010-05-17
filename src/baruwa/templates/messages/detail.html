@@ -215,6 +215,11 @@
     <div id="qheading" class="header_div">
         <div class="Reports_heading">Quarantine</div>
     </div>
+    {% if error_list %}
+    <div id="filter-error">
+        {{ error_list }}
+    </div>
+    {% endif %}
     <div class="LightBlue_div">
         <div class="Release_col">Release</div>
         <div class="Release_col">Delete</div>
@@ -239,8 +244,8 @@
             {{ form.use_alt }}
         </div>
         <div class="Alt_col">
-            <input type="text" id="id_altrecipients" name="altrecipients" size="55" />
-            <input type="hidden" name="message_id" id="id_message_id" value="{{ message_details.id }}" />
+            {{ form.altrecipients }}
+            {{ form.message_id }}
         </div>
         <div class="Release_col">
             <input type="submit" id="submit_q_request" value="Submit" />
