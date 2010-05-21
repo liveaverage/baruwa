@@ -34,7 +34,7 @@ Run the commands from the mysql prompt::
 
     # mysql baruwa -u baruwa -p
     Enter password: ******
-    mysql> INSERT INTO users (username,password,type) 
+    mysql> INSERT INTO users (username,password,fullname,type) 
     mysql> VALUES ('<username>',md5('<password>'),'<name>','A');
 
 **Install Baruwa**
@@ -74,6 +74,11 @@ To the correct file name.
 
     **Apache/Mod_WSGI**
 
+    Make sure mod_wsgi is enabled, uncomment the following line in
+    /etc/httpd/conf.d/wsgi.conf::
+
+        LoadModule wsgi_module modules/mod_wsgi.so
+    
     Use the sample configuration provided (extras/baruwa-mod_wsgi.conf) 
     as a template. Copy to your apache configuration directory usually
     /etc/httpd/conf.d
@@ -167,5 +172,5 @@ Distribution / OS installation
 
     + :ref:`installcentos`.
     + :ref:`installfedora`.
-    + Debian
+    + :ref:`installdeb`.
 

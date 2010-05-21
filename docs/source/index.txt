@@ -11,6 +11,7 @@ Contents:
     install.txt
     install_centos.txt 
     install_fedora.txt 
+    install_debian.txt
     migration.txt
     migration_centos.txt
     migration_fedora.txt
