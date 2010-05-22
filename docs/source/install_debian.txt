@@ -1,0 +1,44 @@
+.. _installdeb:
+
+=======================
+Baruwa on Ubuntu/Debian
+=======================
+
+Baruwa deb install
+==================
+
+Download the deb from `topdog-software.com <http://www.topdog-software.com/oss/baruwa/>`_,
+The installation process will also configure apache, mysql and baruwa should you choose.
+
+The install asks you for the following info
+
+    + apache virtualhost name (The name used to configure the baruwa apache virtualhost)
+    + database host (The hostname or ip of the host running your mysql database)
+    + database admin user (A user account with admin access on the database server)
+    + database admin password (The password fo the above user)
+    + database user (The user baruwa will use to connect to the database)
+    + database password (The password for the above)
+    + database name (The name of the baruwa database)
+    + baruwa admin user (The baruwa admin user)
+    + baruwa admin password (The baruwa admin user password)
+
+Install Baruwa::
+
+    # gdebi baruwa_<version>_all.deb
+
+Configure MailScanner
+=====================
+
+:ref:`Configure <setupmailscanner>` MailScanner if you have not already done so.
+
+Configure Baruwa
+================
+
+If your MailScanner config file is not located in the standard 
+location (/etc/MailScanner/MailScanner.conf) then edit the
+baruwa_settings.py file which is in the same directory as the
+settings.py file and set::
+
+    MS_CONFIG = '/etc/MailScanner/MailScanner.conf'
+
+Thats it point your browser to the apache virtualhost url.
