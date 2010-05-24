@@ -7,6 +7,14 @@
 <link rel="stylesheet" type="text/css" href="/static/css/login.css" />
 <link rel="icon" href="/static/imgs/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="/static/imgs/favicon.ico" type="image/x-icon" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    if(!$('#csrfmiddlewaretoken').length){
+       location.href = '/accounts/login/'; 
+    }
+});
+</script>
 </head>
 <body>
 <div id="login-wrapper">

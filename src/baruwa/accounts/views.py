@@ -174,6 +174,7 @@ def user_account(request, user_id=None, add_filter=False):
         'auth_type':extern_user,'user_name':vu.username},context_instance=RequestContext(request))
 
 # modified from django source
+@never_cache
 def login(request,redirect_field_name=REDIRECT_FIELD_NAME):
     "Displays the login form and handles the login action."
     from django.conf import settings
