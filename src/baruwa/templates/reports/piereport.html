@@ -6,9 +6,14 @@
         var djConfig = { parseOnLoad:true, isDebug:false };
 </script>
 <script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
-<script type="text/javascript" src="/static/js/dojo/pie.js"></script>
 <script type="text/javascript">
 //<![CDATA[
+dojo.require("dojox.charting.Chart2D");
+dojo.require("dojox.charting.plot2d.Pie");
+dojo.require("dojox.charting.action2d.Highlight");
+dojo.require("dojox.charting.action2d.MoveSlice");
+dojo.require("dojox.charting.action2d.Tooltip");
+dojo.require("dojox.charting.themes.MiamiNice");
 dojo.addOnLoad(function() {
 {% if active_filters %}
 dojo.byId("fhl").style.display = "none";

@@ -6,9 +6,14 @@
     var djConfig = { parseOnLoad:true, isDebug:false };
 </script>
 <script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
-<script type="text/javascript" src="/static/js/dojo/listing.js"></script>
 <script type="text/javascript">
 //<![CDATA[
+dojo.require("dojox.charting.Chart2D");
+dojo.require("dojox.charting.action2d.Highlight");
+dojo.require("dojox.charting.action2d.Magnify");
+dojo.require("dojox.charting.action2d.Shake");
+dojo.require("dojox.charting.action2d.Tooltip");
+dojo.require("dojox.charting.widget.Legend");
 var dc = dojox.charting;
 var dur = 450;
 
