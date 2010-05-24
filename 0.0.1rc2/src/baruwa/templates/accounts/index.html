@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block headers %}
+<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-custom.css" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/js/jquery.clearform.js"></script>
+<script type="text/javascript" src="/static/js/accounts.js"></script>
+{% endblock headers %}
+{% block submenu %}
+<ul>
+  <li><a id="user-add" href="#">Create account</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}Accounts{% endblock title %}
+{% block heading %}Accounts{% endblock heading %}
+{% block add_item %}
+<div class="form_block" id="add-item" style="display:block;">
+<form id="add-account-form" method="post" action="/accounts/">
+{% include "accounts/form.html" %}
+    <div class="form_row">
+        <div class="form_label">&nbsp;</div>
+        <div class="form_value">
+            <input id="cancel-button" type="button" value="Cancel" />&nbsp;
+            <input id="submit-button" type="submit" value="Add" />
+        </div>
+        <div id="model-ajax" class="form_error">&nbsp;</div>
+    </div>
+</form>
+</div>
+{% endblock add_item %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Users_grid_hash">&nbsp;</div>
+    <div class="Users_grid_username">Username</div>
+    <div class="Users_grid_fullname">Full names</div>
+    <div class="Users_grid_account">Account type</div>
+</div>
+{% for item in object_list %}
+<div class="{% cycle 'LightBlue' 'DarkGray' %}_div">
+    <div class="Users_{% cycle 'LightBlue' 'DarkGray' %}_hash">
+        <a href="{% url user-profile item.id %}">
+        {% ifequal item.type 'A' %}
+        <img src="/static/imgs/user_red.png" alt=" " title="View account" />
+        {% endifequal %}
+        {% ifequal item.type 'D' %}
+        <img src="/static/imgs/user_orange.png" alt=" " title="View account" />
+        {% endifequal %}
+        {% ifequal item.type 'U' %}
+        <img src="/static/imgs/user.png" alt=" " title="View account" />
+        {% endifequal %}
+        </a>
+    </div>
+    <div class="Users_{% cycle 'LightBlue' 'DarkGray' %}_username">
+    {{ item.username }}
+    </div>
+    <div class="Users_{% cycle 'LightBlue' 'DarkGray' %}_fullname">
+    {{ item.fullname }}
+    </div>
+    <div class="Users_{% cycle 'LightBlue' 'DarkGray' %}_account">
+    {{ item.get_type_display }}
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
+{% block paging %}
+<div class="content_footer">
+    <div id="paginator">
+    {% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+    </div>
+</div>
+{% endblock paging %}

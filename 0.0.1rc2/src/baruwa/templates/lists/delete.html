@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block submenu %}
+<ul>
+  <li><a id="list-link" href="/lists/1/">Whitelist</a></li>
+  <li><a id="list-link" href="/lists/2/">Blacklist</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}Delete from List{% endblock title %}
+{% block heading %}Delete from List{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Reports_heading">Delete Item from {% ifequal list_kind 1 %}Whitelist{% else %}Blacklist{% endifequal %}</div>
+</div>
+<form method="post" action="{% url list-delete %}">
+<div class="hide">
+    {{ form.list_kind }}
+    {{ form.list_item }}
+</div>
+<div class="LightBlue_div">
+    <div class="listdel">This will delete {{ item.from_address }} from the {% ifequal list_kind 1 %}Whitelist{% else %}Blacklist{% endifequal %} <div class="right"><input type="submit" value="Delete" /></div></div>
+</div>
+</form>
+{% endblock content %}

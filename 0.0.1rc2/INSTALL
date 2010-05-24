@@ -1,0 +1,14 @@
+=======
+INSTALL
+=======
+Thanks for downloading Baruwa.
+
+Documentation on installing is in the docs directory,
+or online at http://www.baruwa.org
+
+To generate html documentation run::
+
+    make html
+
+Sphinx is required to be able to generate the html
+documentation.

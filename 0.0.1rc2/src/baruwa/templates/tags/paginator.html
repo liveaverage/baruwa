@@ -1,0 +1,29 @@
+Showing page {{ page }} of {{ pages }} pages.
+{% if show_first %}
+<span><a href="{%ifequal app "messages"%}/messages/{{ quarantine }}{%else%}/{{app}}{%endifequal%}/1/{%if direction %}{{direction}}/{{order_by}}/{%endif%}{%if search_for%}{{search_for}}/{%endif%}{%if query_type%}{{query_type}}/{%endif%}">
+<img src="/static/imgs/first_pager.png" alt="First"/></a></span>
+<span>......</span>
+{% endif %}
+{% if has_previous %}
+<span>
+<a href="{%ifequal app "messages"%}/messages/{{ quarantine }}{%else%}/{{app}}{%endifequal%}/{{ previous }}/{%if direction %}{{direction}}/{{order_by}}/{%endif%}{%if search_for%}{{search_for}}/{%endif%}{%if query_type%}{{query_type}}/{%endif%}">
+<img src="/static/imgs/previous_pager.png" alt="Previous"/></a></span>
+{% endif %}
+{% for linkpage in page_numbers %}
+{% ifequal linkpage page %}
+<span><b>{{ page }}</b></span>
+{% else %}
+<span>
+<a href="{%ifequal app "messages"%}/messages/{{ quarantine }}{%else%}/{{app}}{%endifequal%}/{{ linkpage }}/{%if direction %}{{direction}}/{{order_by}}/{%endif%}{%if search_for%}{{search_for}}/{%endif%}{%if query_type%}{{query_type}}/{%endif%}">{{ linkpage }}</a></span>
+{% endifequal %}
+{% endfor %}
+{% if has_next %}
+<span><a href="{%ifequal app "messages"%}/messages/{{ quarantine }}{%else%}/{{app}}{%endifequal%}/{{ next }}/{%if direction %}{{direction}}/{{order_by}}/{%endif%}{%if search_for%}{{search_for}}/{%endif%}{%if query_type%}{{query_type}}/{%endif%}">
+<img src="/static/imgs/next_pager.png" alt="Next"/></a></span>
+{% endif %}
+{% if show_last %}
+<span>......</span>
+<span>
+<a href="{%ifequal app "messages"%}/messages/{{ quarantine }}{%else%}/{{app}}{%endifequal%}/last/{%if direction %}{{direction}}/{{order_by}}/{%endif%}{%if search_for%}{{search_for}}/{%endif%}{%if query_type%}{{query_type}}/{%endif%}">
+<img src="/static/imgs/last_pager.png" alt="Last"/></a></span>
+{% endif %}
