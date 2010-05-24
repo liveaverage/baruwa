@@ -20,11 +20,11 @@
 import os,re,GeoIP,socket
 from textwrap import wrap
 from django import template
-from django.template.defaultfilters import stringfilter,wordwrap,linebreaksbr
+from django.template.defaultfilters import stringfilter, wordwrap, linebreaksbr
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from baruwa.messages.models import SaRules
-from baruwa.messages.process_mail import get_config_option,clean_regex
+from baruwa.messages.process_mail import get_config_option, clean_regex
 
 register = template.Library()
 
@@ -218,15 +218,19 @@ def read_rules(filename):
 
 @register.simple_tag
 def tds_action(value,from_address,to_address):
-    rv = ''
+    return_value = ''
     srules = []
     if value == 1:
         option = 'Spam Actions'
     else:
         option = 'High Scoring Spam Actions'
-    rv = get_config_option(option)
-    if re.match(r'^/.*[^/]$',rv):
-        rules = read_rules(rv)
+    return_value = get_config_option(option)
+    if re.match(r'^/.*[^/]$',return_value) or re.match(r'(^%[a-z-]+%)(.*)',return_value):
+        m = re.match(r'(^%[a-z-]+%)(.*)',return_value)
+        if m:
+            the_dir = get_config_option(m.groups()[0])
+            return_value = the_dir + m.groups()[1]
+        rules = read_rules(return_value)
         for r in rules:
             sec={}
             m=re.match(r'^(\S+)\s+(\S+)(\s+(.*))?$',r)
@@ -268,6 +272,6 @@ def tds_action(value,from_address,to_address):
                         return item["action"]
         return 'I do not know how to read it'
     else:
-        return rv
-    return rv
+        return return_value
+    return return_value
 
