@@ -72,8 +72,12 @@ def index(request):
     ms = get_config_option('MTA')
     mta = get_processes(ms)
     clamd = get_processes('clamd')
+    p1 = subprocess.Popen('uptime',shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    u = p1.stdout.read().split()
+    uptime = u[2] + ' ' + u[3].rstrip(',')
     data = {'total':row[0],'clean':row[1],'virii':row[2],'infected':row[3],'otherinfected':row[4],'spam':row[5],'highspam':row[6]}
-    return render_to_response('status/index.html',{'data':data,'load':load,'scanners':scanners,'mta':mta,'av':clamd},context_instance=RequestContext(request))
+    return render_to_response('status/index.html',{'data':data, 'load':load, 'scanners':scanners, 'mta':mta, 'av':clamd, 'uptime':uptime},
+        context_instance=RequestContext(request))
 
 @onlysuperusers
 @login_required
