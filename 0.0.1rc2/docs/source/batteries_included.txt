@@ -1,0 +1,43 @@
+.. _batteries:
+
+========================
+Other batteries included
+========================
+
+Baruwa provides custom `django manage.py <http://docs.djangoproject.com/en/1.1/ref/django-admin/>`_
+commands to enable scripting of house keeping tasks such as quarantine management and Database
+maintenance.
+
+Quarantine management
+=====================
+::
+
+    manage.py quarantine_clean
+
+Deletes quarantined files older than QUARANTINE_DAYS_TO_KEEP. QUARANTINE_DAYS_TO_KEEP is set in
+the baruwa_settings.py file
+
+Quarantine reports
+==================
+::
+
+    manage.py send_quarantine_reports
+
+Generates an email report of the quarantined messages for the past 24 hours, for each user that
+has quarantine report enabled.
+
+Database maintenance
+====================
+::
+
+    manage.py dbclean
+
+Deletes records older than 60 days from the maillog table of the database
+
+Spamassassin rule description updates
+=====================================
+::
+
+    manage.py update_sarules
+
+Updates the Spamassassin rule descriptions in the database.

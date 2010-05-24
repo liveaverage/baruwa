@@ -1,0 +1,36 @@
+<div class="form_block" id="add-item" style="display:block;">
+    <form id="list-form" method="post" action="/lists/add/">
+    <div class="form_row">
+        <div class="form_label">From address:</div>
+        <div class="form_value">
+            {{ form.from_address }}
+        </div>
+        <div class="form_error">{{ form.from_address.errors }}</div>
+    </div>
+    <div class="form_row">
+        <div class="form_label">To address:</div>
+        <div class="form_value">
+            {{ form.to_address }}{% if form.to_domain %}&nbsp;&#64;&nbsp;{{ form.to_domain }}{% endif %}
+        </div>
+        <div class="form_error">
+            {{ form.to_address.errors }}
+            {{ form.to_domain.errors }}
+        </div>
+    </div>
+    <div class="form_row">
+        <div class="form_label">List type:</div>
+        <div class="form_value">
+            {{ form.list_type }}
+        </div>
+        <div class="form_error">{{ form.list_type.errors }}</div>
+    </div>
+    <div class="form_row">
+        <div class="form_label">&nbsp;</div>
+        <div class="form_value">
+            <input id="cancel-button" type="button" value="Cancel" />&nbsp;
+            <input id="submit-button" type="submit" value="Add" />
+        </div>
+        <div class="form_error" id="model-ajax"></div>
+    </div>
+    </form>
+</div>

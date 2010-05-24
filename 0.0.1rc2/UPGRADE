@@ -1,0 +1,13 @@
+=========
+Upgrading
+=========
+
+Upgrading from 0.0.1b and below to 0.0.1rc
+
+DO NOT run the full update sql script.
+
+Just run this::
+
+    ALTER TABLE users DROP PRIMARY KEY;
+    ALTER TABLE users ADD UNIQUE (username);
+    ALTER TABLE users ADD column id integer NOT NULL auto_increment PRIMARY KEY first;

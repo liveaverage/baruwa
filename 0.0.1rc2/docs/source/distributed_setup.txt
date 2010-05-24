@@ -1,0 +1,12 @@
+.. _distributed:
+
+==================
+Distributed setups
+==================
+
+Baruwa is capable of running in a distributed setup, It uses REST to process quarantined messages residing on other
+nodes, the only requirement is that the nodes share session infomation. If you are running your nodes from the same
+database backend or running multi master replication then this will work out of the box.
+
+The baruwa implementation differs from the mailwatch one in that it uses REST and the users credentials to process
+the message on the other node, mailwatch uses an XML-RPC system which does not use authentication.

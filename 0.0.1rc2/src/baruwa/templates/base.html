@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+<title>.:. Baruwa :: {% block title %}{% endblock title %}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/mine.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="/static/imgs/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/static/imgs/favicon.ico" type="image/x-icon" /> 
+{% block headers %}{% endblock headers %}
+</head>
+<body{%block body_class%}{%endblock body_class%}>
+    <div id="header">
+    	<div class="logo"><a href="{% url index-page %}"><img src="/static/imgs/css/logo.jpg" alt="" /></a></div>
+        <div class="search">
+        	<div class="Link">
+                <ul>
+                    <li>Signed in as <a href="{% url user-account %}">{{user.username}}</a></li>
+                    {% if user.is_superuser %}
+                    <li><a href="{% url accounts %}">Accounts</a></li>
+                    {% endif %}
+                    <li><a href="{% url logout %}">Logout</a></li>
+                </ul>
+            </div>
+            <div class="clearer"></div>
+            <div class="search_box">
+                <form method="post" action="{% url message-search %}">
+            	    <div class="text_box"><input name="message_id" type="text" /></div>
+                    <div class="search_btn"><input name="submit" type="image" src="/static/imgs/css/search_btn.gif" /></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="clearer"></div>
+    <div class="Box_Mainnav"> <!-- Box_Mainnav start here -->
+        <div class="Mainnav"> <!-- Mainnav start here -->
+            <a href="{% url main-index %}" class="topnav selectednav"><span>Messages</span></a> 
+            <a href="{% url lists-index %}" class="topnav"><span>Lists</span></a> 
+            <a href="{% url reports-index %}" class="topnav"><span>Reports</span></a> 
+            <a href="{% url status-index %}" class="topnav"><span>Status</span></a>
+        </div> <!-- Mainnav end here -->
+   </div> <!-- Box_Mainnav end here -->
+   <div class="clearer"></div>
+   <div id="sub-menu-links" class="Sub_Nav">
+        {% block submenu %}{%endblock submenu %}
+   </div>
+   <div class="clearer"></div>
+   <div id="Main_Content">
+        <div class="Curb"><img src="/static/imgs/css/top_curb.gif" alt="" /></div>
+        <div class="heading">
+        <span id="heading">
+            {% block heading %}{% endblock heading %}
+        </span>
+        <div id="my-spinner"></div>
+        </div>
+        <div class="clearer"></div>
+        <div class="Grid_content"><!--GRID CONTAINER START HERE-->
+        {% block content %}{% endblock content %}	
+        {% block add_item %}{% endblock add_item %}
+        </div><!--GRID CONTAINER END HERE-->
+        {% block paging %}{% endblock paging %}
+        <div class="Curb"><img src="/static/imgs/css/footer_curb.gif" alt="" /></div>
+   </div>
+   <div id="Footer_container">
+        <div class="Copy_right">Baruwa &copy; 2010 Andrew Colin Kissa </div>
+        <div class="Links_footer">
+            <!--
+            <ul>
+                <li class="none"><a href="http://www.topdog.za.net/baruwa">About Us</a></li>
+            </ul>
+            -->
+        </div>
+        <!--
+        <div class="Gray_logo"><a href="#"><img src="/static/imgs/css/gray_logo.gif" alt="" /></a></div>
+        -->
+    </div>
+</body>
+</html>
