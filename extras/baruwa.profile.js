@@ -5,7 +5,7 @@ dependencies = {
     copyTests: false,
     loader: "default",
     cssOptimize: "comments",
-    version: "1.4.1",
+    version: "1.4.3",
 	stripConsole: "all",
     localeList: "en-us",
     layers: [
@@ -24,14 +24,16 @@ dependencies = {
                 "dojox.charting.action2d.MoveSlice",
                 "dojox.charting.action2d.Tooltip",
                 "dojox.charting.themes.MiamiNice",
-                "dojox.gfx.svg"
+                "dojox.gfx.svg",
+                "dojox.gfx.vml"
             ]
         },
         {
             name:"bar.js",
             dependencies:[
                 "dojox.charting.Chart2D",
-                "dojox.gfx.svg"
+                "dojox.gfx.svg",
+                "dojox.gfx.vml"
             ]
         },
         {
@@ -43,7 +45,8 @@ dependencies = {
                 "dojox.charting.action2d.Shake",
                 "dojox.charting.action2d.Tooltip",
                 "dojox.charting.widget.Legend",
-                "dojox.gfx.svg"
+                "dojox.gfx.svg",
+                "dojox.gfx.vml"
             ]
         }
     ],
