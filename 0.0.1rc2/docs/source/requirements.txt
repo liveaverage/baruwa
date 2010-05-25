@@ -1,0 +1,21 @@
+============
+Requirements
+============
+
+Baruwa requirements
+===================
+
+    + `Python <http://www.python.org/>`_ >= 2.4
+    + `Django <http://www.djangoproject.com/>`_ >= 1.1.1
+    + `MySQLdb <http://mysql-python.sourceforge.net/>`_ >= 1.2.1p2
+    + `GeoIP <http://www.maxmind.com/app/python>`_
+    + `iPy <http://software.inl.fr/trac/wiki/IPy>`_
+    + Any Web server that can run Django (`Apache <http://httpd.apache.org/>`_/`mod_wsgi <http://code.google.com/p/modwsgi/>`_ recommended)
+    + `MySQL <http://www.mysql.com>`_
+    + `Sphinx <http://sphinx.pocoo.org/>`_ (Optional - to build documentation)
+
+MailScanner requirements
+========================
+    
+    + `DBI <http://dbi.perl.org/>`_
+    + `DBD-MySQL <http://search.cpan.org/dist/DBD-mysql/>`_

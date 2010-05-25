@@ -1,0 +1,5 @@
+{% if rlink %}
+{{ field_text }} <a href="{{ rlink }}">{% ifequal dir 'dsc' %}&darr;{% else %}&uarr;{% endifequal %}</a>
+{% else %}
+<a href="{{ link }}">{{ field_text }}</a>
+{% endif %}

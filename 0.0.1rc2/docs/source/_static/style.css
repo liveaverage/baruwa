@@ -1,0 +1,21 @@
+div.footer ul.social {
+list-style:none;
+list-style-type:square;
+list-style-position:outside;
+margin:0;
+padding:0;
+}
+
+div.footer ul.social li {
+text-align: right;
+float: right;
+list-style: none;
+padding-right:10px;
+padding-left:10px;
+padding-top:10px;
+padding-bottom:10px;
+}
+
+ul.social li img {
+vertical-align:middle;
+}

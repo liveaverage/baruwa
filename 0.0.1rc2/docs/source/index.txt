@@ -1,0 +1,22 @@
+Baruwa documentation manual
+===========================
+
+Contents:
+
+.. toctree::
+    :maxdepth: 2
+
+    introduction.txt
+    requirements.txt
+    install.txt
+    install_centos.txt 
+    install_fedora.txt 
+    install_debian.txt
+    migration.txt
+    migration_centos.txt
+    migration_fedora.txt
+    authentication.txt
+    distributed_setup.txt
+    batteries_included.txt
+    users.txt
+
