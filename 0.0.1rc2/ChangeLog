@@ -1,0 +1,41 @@
+Version 0.0.1rc2 2010.05.25
+ - Added filter delete functions
+ - Changed GET requests with effects to POST requests
+ - Moved some business logic to the module
+ - Removed the useless footer links
+ - fixed the listing by ajax prompt
+ - moved business logic into forms and modules
+ - added no javascript message
+ - improved the form rendering code
+ - added XSS protections
+ - improved the form layout for none ajax interfaces
+ - updated the rpm spec
+ - added spamassassin rules update command
+ - fixed minor bugs
+ - updated documentation
+ - added debian info to documentation
+ - added support for %option-value% like MailScanner config options
+ - added uptime status
+ - updated dojo to upstream version 1.4.3
+ - fixed graphing with IE versions
+ - bundled an trimed dojo install
+ - removed the custom dojo build
+ - fixed the 403 bug caused by the CSRF protection
+
+Version 0.0.1rc1 2010.05.11
+ - Rewrote the whole template layouts
+ - Improved the code
+ - Added support for POP3, IMAP, SMTP authentication
+ - Cleaned up Code
+ - Added new settings for quarantine management
+ - Added management commands for quarantine management
+ - Added management command for maillog db table pruning
+
+Version 0.0.1b 2010.04.04
+ - Added documentation
+ - Added filter management
+ - Cleanup bugs
+ - beta release
+
+Version 0.0.1a 2010.03.31
+ - alpha release

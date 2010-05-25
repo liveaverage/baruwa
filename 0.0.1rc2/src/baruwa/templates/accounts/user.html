@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block headers %}
+<link rel="stylesheet" type="text/css" href="/static/css/smoothness/jquery-ui-custom.css" />
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/js/jquery.clearform.js"></script>
+<script type="text/javascript" language="javascript" src="/static/js/lib.js"></script>
+{% if not add_filter %}
+<script type="text/javascript" src="/static/js/user.js"></script>
+{% else %}
+<script type="text/javascript" src="/static/js/filters.js"></script>
+{% endif %}
+{% endblock headers %}
+{% block submenu %}
+<ul>
+  {% if not add_filter %}
+  <li><a id="user-update" href="#">Update account</a></li>
+  {% endif %}
+  {% if user.is_superuser %}
+  {% ifnotequal user.username user_name %}
+  <li><a id="filter-add" href="{% url add-filter target_user %}">Add filter</a></li>
+  {% endifnotequal %}
+  {% endif %}
+</ul>
+{% endblock submenu %}
+{% block title %}{% if add_filter %}Accounts add filter{% else %}Accounts viewing user {{ user_name }}{% endif %}{% endblock title %}
+{% block heading %}{% if add_filter %}Accounts :: Add filter{% else %}Accounts :: viewing user {{ user_name }}{% endif %}{% endblock heading %}
+{% block add_item %}
+<div class="form_block" id="add-item" style="display:block;">
+{% if add_filter %}
+    <form id="filter_form" method="post" action="{% url process-filter target_user %}">
+    <div class="form_row" style="display:none;">
+        <input type="hidden" name="username" id="id_username" value="{{ target_user }}" />
+    </div>
+    {{ form.verify_key }}
+    <div class="form_row">
+        <div class="form_label">Filter:</div>
+        <div class="form_value">
+            {{form.filter}}
+        </div>
+        <div class="form_error">{{ form.filter.errors }}</div>
+    </div>
+    <div class="form_row">
+        <div class="form_label">Active:</div>
+        <div class="form_value">
+            {{form.active}}
+        </div>
+        <div class="form_error">{{ form.active.errors }}</div>
+    </div>
+{% else %}
+    <form id="update-account-form" method="post" action="/accounts/user/{{ target_user }}/">
+    {% include "accounts/form.html" %}
+{% endif %}
+    <div class="form_row">
+        <div class="form_label">&nbsp;</div>
+        <div class="form_value">
+{% if not add_filter %}
+            <input id="cancel-button" type="button" value="Cancel" />&nbsp;
+            <input id="submit-button" type="submit" value="Update" />
+{% else %}
+            <input id="cancel-button" type="button" value="Cancel" />
+            <input id="submit-button" type="submit" value="Add" />
+{% endif %}
+        </div>
+        <div class="form_error"></div>
+    </div>
+    <div class="form_row">&nbsp;</div>
+</form>
+</div>
+{% endblock add_item %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Filters_grid_name">
+    Filter
+    </div>
+    <div class="Filters_grid_status">
+    Filter status
+    </div>
+    <div class="Filters_grid_actions">
+    Perform actions
+    </div>
+</div>
+{% for item in filters %}
+<div id="fid_{{ item.id }}" class="{% cycle 'LightBlue' 'DarkGray' %}_div">
+    <div class="Filters_row_name">
+        {{ item.filter }}
+    </div>
+    <div class="Filters_row_status">
+        {% ifequal item.active 'Y' %}
+        <img src="/static/imgs/action_check.png" alt="Y" title="Enabled" />
+        {% else %}
+        <img src="/static/imgs/action_grey_check.png" alt="Y" title="Disabled" />
+        {% endifequal %}
+    </div>
+    <div class="Filters_row_actions">
+        {% if user.is_superuser %}
+        <a href="{% url delete-filter target_user item.id %}"><img src="/static/imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+        {%else%}
+        <img src="/static/imgs/action_grey_delete.png" alt="Delete" />
+        {%endif%}
+    </div>
+</div>
+{% empty %}
+<div class="spanrow">
+No filters configured
+</div>
+{% endfor %}
+{% endblock content %}

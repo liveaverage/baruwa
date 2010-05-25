@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Delete Filter{% endblock title %}
+{% block heading %}Delete Filter{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Reports_heading">Delete Filter</div>
+</div>
+<form method="post" action="{% url rdelete-filter %}">
+<div class="hide">
+    {{ form.id }}
+    {{ form.user_id }}
+</div>
+<div class="LightBlue_div">
+    <div class="listdel">This will delete filter {{ item.filter }} belonging to {{ item.username }} <div class="right"><input type="submit" value="Delete" /></div></div>
+</div>
+</form>
+{% endblock content %}
