@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block submenu %}
+<ul>
+  <li><a id="list-link" href="/lists/1/">Whitelist</a></li>
+  <li><a id="list-link" href="/lists/2/">Blacklist</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}Adding to list{% endblock title %}
+{% block heading %}Adding to Lists{% endblock heading %}
+{% block content %}
+{% include "lists/add.form.html" %}
+{% endblock content %}

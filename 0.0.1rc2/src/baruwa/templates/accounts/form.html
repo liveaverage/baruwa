@@ -1,0 +1,74 @@
+    {% if user.is_superuser %}
+    <div class="form_row">
+        <div class="form_label">Username:</div>
+        <div class="form_value">
+        {{ form.username }}
+        </div>
+        <div class="form_error">{{ form.username.errors }}</div>
+    </div>
+    {% endif %}
+    <div class="form_row">
+        <div class="form_label">Full Names:</div>
+        <div class="form_value">
+        {{ form.fullname }}
+        </div>
+        <div class="form_error">{{ form.fullname.errors }}</div>
+    </div>
+    {% if not auth_type %}
+    <div class="form_row">
+        <div class="form_label">Password:</div>
+        <div class="form_value">
+        <input id="id_password" type="password" name="password" value="XXXXXXXXXX" />
+        </div>
+        <div class="form_error">{{ form.password.errors }}</div>
+    </div>
+    {% else %}
+    <div class="form_row" style="display:none;">
+        <input id="id_password" type="hidden" name="password" value="XXXXXXXXXX" />
+    </div>
+    {% endif %}
+    {% if user.is_superuser %}
+    <div class="form_row">
+        <div class="form_label">Account type:</div>
+        <div class="form_value">
+        {{ form.type }}
+        </div>
+        <div class="form_error">{{ form.type.errors }}</div>
+    </div>
+    {% endif %}
+    <div class="form_row">
+        <div class="form_label">Quarantine report:</div>
+        <div class="form_value"> 
+        <small>Send Daily report ?</small>
+        {{ form.quarantine_report }}
+        </div>
+        <div class="form_error">{{ form.quarantine_report.errors }}</div>
+    </div>
+    <div class="form_row">
+        <div class="form_label">Quarantine report recipient:</div>
+        <div class="form_value">
+        {{ form.quarantine_rcpt }}
+        </div>
+        <div class="form_error">{{ form.quarantine_rcpt.errors }}</div>
+    </div>
+    <div class="form_row">
+        <div class="form_label">Enable spam scanning:</div>
+        <div class="form_value">
+        {{ form.noscan }}
+        </div>
+        <div class="form_error">{{ form.noscan.errors }}</div>
+    </div>
+    <div class="form_row">
+        <div class="form_label">Spam score:</div>
+        <div class="form_value">
+        {{ form.spamscore }}<small> 0 uses the system defaults</small>
+        </div>
+        <div class="form_error">{{ form.spamscore.errors }}</div>
+    </div>
+    <div class="form_row">
+        <div class="form_label">High Spam score:</div>
+        <div class="form_value">
+        {{ form.highspamscore }}<small> 0 uses the system defaults</small>
+        </div>
+        <div class="form_error">{{ form.highspamscore.errors }}</div>
+    </div>

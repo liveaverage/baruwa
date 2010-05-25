@@ -1,0 +1,66 @@
+
+======
+Baruwa
+======
+Baruwa (swahili for letter or mail) is a `mailwatch <http://mailwatch.sf.net/>`_ inspired 
+web 2.0 `MailScanner <http://www.mailscanner.info/>`_ front-end. 
+
+It provides an easy to use interface for users to view details of messages processed by 
+MailScanner as well as perform operations such as releasing quarantined messages, 
+spam learning, whitelisting and blacklisting addresses etc. Baruwa has implemented web 2.0 
+features (AJAX) where deemed fit, graphing is also implemented on the client side using SVG.
+
+It also provides reporting functionality with an easy to use query builder, results can be 
+displayed as message lists or graphed as colorful and pretty graphs.
+
+Baruwa is written in Python using the Django Framework and MySQL for storage, it is released 
+under the GPLv2
+
+========
+Features
+========
+    + AJAX refreshed recent messages listing
+    + Detailed message view with AJAX enabled message processing (quarantine release/delete,spam learning,white/black listing)
+    + AJAX powered Full/Quarantine messages listings
+    + Reporting view with AJAX enabled query builder
+    + Interactive SVG graphs
+    + Multi user profiles
+    + User profile aware white/blacklist management
+    + REST API
+    + Easy plug-in authentication to external authentication systems (Mailwatch, POP3, IMAP and SMTP supported out of the box)
+    + Tools for housekeeping tasks (quarantine management, rule updates, quarantine notifications, etc)
+    + Works both with and without Javascript enabled (some features will have degraded performance)
+
+===========
+Screenshots
+===========
+`Screenshots <http://www.flickr.com/photos/baruwa/>`_ are on our Flickr page.
+
+============
+Requirements
+============
+    + Python >= 2.4
+    + Django >= 1.1.1
+    + MySQLdb >= 1.2.1p2
+    + GeoIP
+    + iPy
+    + Any Web server that can run Django (Apache/mod_wsgi recommended)
+    + MySQL
+
+============
+Installation
+============
+Baruwa is installed in the usual way::
+
+    python setup install
+
+========
+Packages
+========
+Binary packages for Ubuntu/Debian, Fedora and RHEL/CENTOS can be downloaded from http://topdog-software.com/oss/baruwa/
+
+=============
+Documentation
+=============
+Documentation is included in the docs directory of the tarball and can also be accessed on line at
+http://www.baruwa.org/
