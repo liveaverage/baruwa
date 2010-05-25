@@ -1,0 +1,410 @@
+
+form {
+	margin: 0;
+    padding:0;
+}
+
+input[type=radio], input[type=checkbox], input[type=submit], input[type=reset], input[type=button], input[type=file], select {
+	font-size: 12px;
+}
+
+input[type=text], input[type=password], input[type=checkbox], select {
+    border:1px solid #ddd;
+}
+
+a img {
+	border: 0;
+}
+
+div.hide {
+    display:none;
+}
+
+div.right {
+    float:right;
+}
+
+div.relayed_col img, div.maildetail img {
+    vertical-align:middle;
+}
+
+a[href], a[href]:link, a[href]:active, a[href]:visited {
+	color: #2B547D;
+	text-decoration: none;
+}
+
+ul.reports {
+    line-height:16px;
+}
+
+ul.reports li {
+    list-style-type: none;
+    padding-left: 2em;
+    background: url(/static/imgs/bullet_go.png) no-repeat;
+}
+
+span.positive {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    padding:2px 2px;
+}
+
+span.negative {
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    padding:2px 2px;
+}
+
+div.listings {
+    float:right;
+    padding-right:10px;
+    width:150px;
+}
+
+div.whitelist {
+    width:70px;
+    float:left;
+}
+
+div.blacklist {
+    width:70px;
+    float:left;
+}
+
+table {
+	padding: 0;
+	margin: 0;
+	font: 75% "Lucida Grande", Verdana, Arial, sans-serif;
+	line-height: 16px;
+}
+
+table.maillog {
+    margin-top:10px;
+    margin-bottom:10px;
+    color: black;
+	width: 976px !important;
+    font-size:8pt;
+	border-collapse: collapse;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+
+table.maillog tr {
+	height: 32px;
+	border-bottom: 1px solid #ddd;
+}
+
+table.maillog tr.header {
+	background: #eee;
+}
+
+table.maillog td {
+	height: 32px;
+    overflow:hidden;
+}
+
+table.maillog td.equal {
+    width:480px;
+    vertical-align:top;
+}
+
+table.maillog td.stats {
+    width:50%;
+    padding-left:10px;
+}
+
+table.maillog td.divider {
+    background-color: #eee;
+    font-weight:bold;
+    font-size:9pt;
+    text-align:center;
+}
+
+table.maillog td.first-t, th.first-t {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+table.maillog td.mailitem {
+    background-color: #eee;
+    font-weight:bold;
+    font-size:9pt;
+    vertical-align:text-top;
+    width:200px;
+    padding-left:10px;
+}
+
+table.maillog td.maildetail {
+    padding-left:10px;
+    width:760px;
+}
+
+table.maillog td.piebox {
+    text-align:center;
+    width:350px;
+	border-left: 1px solid #ddd;
+}
+
+table.maillog tr.lists, td.lists {
+    height:28px;
+    line-height:10px;
+}
+
+table.maillog td.sascores, td.filters {
+    height: 23px !important;
+    line-height:8px;
+}
+
+table.maillog tr.sascores {
+    height: 23px !important;
+    line-height:8px;
+}
+
+table.maillog td.even {
+    background-color:#eee;
+}
+
+table.inner {
+    width:100%;
+    color:black;
+    font-size:8pt;
+	border-collapse: collapse;
+}
+
+table.inner td {
+    height:10px !important;
+    border-bottom: 1px solid #ddd;
+    line-height:12px;
+    padding-left:10px;
+}
+
+table.inner td.last {
+    height:10px !important;
+    line-height:12px;
+    border-bottom: 0px;
+    padding-left:10px;
+}
+
+table.inner tr {
+    height:10px;
+}
+
+table.inner th {
+    padding-left:10px;
+}
+
+table.quarantine {
+    width:100%;
+    border-collapse:collapse;
+}
+
+table.quarantine tr {
+    border-bottom: 1px solid #ddd;
+}
+
+table.quarantine,table.maillog tr.last {
+    border-bottom: 0px;
+}
+
+table.status {
+    width:100%;
+    border-collapse:collapse;
+}
+
+table.status tr {
+	border-bottom: 1px solid #ddd;
+    height:23px !important;
+    line-height:8px;
+}
+
+table.status td {
+    padding-left:5px;
+    padding-right:5px;
+}
+
+table.status td {
+    height:23px !important;
+    line-height:8px;
+}
+
+table.status tr.last {
+    border-bottom: 0px;
+}
+
+.content_footer {
+	width:976px;
+    font-size: 10pt;
+	color: #525252;
+}
+
+.content_footer a {
+    text-decoration:none;
+	color: #525252;
+}
+
+.ajax_error {
+    color:red;
+    text-decoration:blink;
+}
+
+#in-progress {
+    z-index: 10;
+	margin:10px 0 0 10px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+    background:#ffc;
+    padding:5px 0 5px 0;
+    border:1px solid #CCCCCC;
+    text-align:center;
+    font-weight:bold;
+    width:976px;
+}
+
+#filter-error #dismiss, #in-progress #dismiss, #info-msg #dismiss {
+    float:right;
+    padding-right:15px;
+}
+
+#model-ajax {
+    padding:5px 5px 5px 5px;
+}
+
+#filterbox {
+    float:left;
+    padding-left:20px;
+    padding-top:5px;
+    width:560px;
+}
+
+#loading_message {
+    width:100%;
+    background-attachment:scroll;
+    background-color:transparent;
+    background-image:url('/static/imgs/st.png');
+    background-position: 0 0;
+    background-repeat:repeat;
+    height:100%;
+    left:0;
+    position:fixed;
+    top:0;
+}
+
+#loading_message p {
+    left:50%;
+    margin-bottom:0;
+    margin-left:0;
+    margin-right:0;
+    margin-top: -1em;
+    position:absolute;
+    top:50%;
+}
+
+
+#paginator {
+    float:right;
+    text-align:right;
+	padding-top:5px;
+    width:390px;
+}
+
+#filters {
+    float:left;
+    padding-left:15px;
+    width:565px;
+	padding-top:5px;
+}
+
+#mailpreview {
+    padding:10px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+
+#Main_Content .Grid_content .form_block {
+    float:left;
+    width:976px;
+    background:#dedede;
+    margin-top:10px;
+}
+
+#Main_Content .Grid_content .form_row {
+	background:#e9f8ff;
+    width:976px;
+    margin-bottom:1px;
+    float:left;
+    padding:5px 0 5px 0;
+}
+
+#Main_Content .Grid_content .form_row .form_label {
+    float:left;
+    width:305px;
+    text-align:right;
+    font-weight: bold;
+    margin-right:20px;
+}
+
+#Main_Content .Grid_content .form_row .form_value {
+    float:left;
+    width:375px;
+}
+
+#Main_Content .Grid_content .form_row .form_error {
+    float:left;
+    width:270px;
+    color:red;
+}
+
+#Main_Content .Grid_content .form_row .form_error ul.errorlist{
+    margin:0;
+    padding:0;
+}
+
+#Main_Content .Grid_content #filter-error {
+    background-color:#FFE3D4;
+    background-image:url("/static/imgs/exclamation.png");
+    background-position: 7px center;
+    background-repeat: no-repeat;
+    border-color:#FF7348;
+    border-style:solid;
+    border-width:1px;
+    width:933px;
+    float:left;
+    padding:5px 5px 5px 35px;
+    margin:2px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+
+#Main_Content .Grid_content #filter-ajax {
+    background-color:#D4FFD4;
+    background-image:url("/static/imgs/loader-orig.gif");
+    background-position: 7px center;
+    background-repeat: no-repeat;
+    border-color:#00B900;
+    border-style:solid;
+    border-width:1px;
+    width:933px;
+    float:left;
+    padding:5px 5px 5px 35px;
+    margin:2px 0 0 0;
+}
+
+#Main_Content .Grid_content #info-msg {
+    background-color:#D4FFD4;
+    background-image:url("/static/imgs/ok.png");
+    background-position: 7px center;
+    background-repeat: no-repeat;
+    border-color:#00B900;
+    border-style:solid;
+    border-width:1px;
+    width:933px;
+    float:left;
+    padding:5px 5px 5px 35px;
+    margin:2px 0 0 0;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+

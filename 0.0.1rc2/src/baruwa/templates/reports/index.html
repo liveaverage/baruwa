@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block headers %}
+<script type="text/javascript" language="javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jquery.clearform.js"></script>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var rj;
+var ax_error = false;
+//]]>
+</script>
+<script type="text/javascript" language="javascript" src="/static/js/reports.js"></script>
+{% endblock headers %}
+{% block title %}Reports{% endblock title %}
+{% block heading %}Reports{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Reports_heading">Statistics</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Reports_cols">
+        <div class="title">Message count</div>
+    </div>
+    <div id="msgcount" class="Reports_cols">{{ data.count }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Reports_cols">
+        <div class="title">Oldest message processed on</div>
+    </div>
+    <div id="oldestmsg" class="Reports_cols">{{ data.oldest }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Reports_cols">
+        <div class="title">Newest message processed on</div>
+    </div>
+    <div id="newestmsg" class="Reports_cols">{{ data.newest }}</div>
+</div>
+<div class="header_div">
+    <div class="Reports_heading">Reports</div>
+</div>
+<div class="lightblue_div">
+    <div class="Reports_cols">
+        <ul class="reports">
+            <li><a href="/reports/1/">Top Senders by Quantity</a></li>
+            <li><a href="/reports/2/">Top Senders by Volume</a></li>
+            <li><a href="/reports/3/">Top Sender Domains by Quantity</a></li>
+            <li><a href="/reports/4/">Top Sender Domains by Volume</a></li>
+            <li><a href="/reports/9/">Spamassassin Score Distribution</a></li>
+            <li><a href="/reports/10/">Top Mail hosts</a></li>
+        </ul>
+    </div>
+    <div class="Reports_cols">
+        <ul class="reports">
+            <li><a href="/reports/5/">Top Recipients by Quantity</a></li>
+            <li><a href="/reports/6/">Top Recipients by Volume</a></li>
+            <li><a href="/reports/7/">Top Recipient Domains By Quantity</a></li>
+            <li><a href="/reports/8/">Top Recipient Domains By Volume</a></li>
+            <li><a href="/reports/11/">Message Totals</a></li>
+            <li><a href="/messages/full/">Message Listings</a></li>
+        </ul>
+    </div>
+</div>
+<div id="afform" class="header_div">
+    <div class="Reports_heading">Add Filter</div>
+</div>
+<div class="LightBlue_div">
+    <form id="filter-form" method="post" action="{% url reports-index %}">
+        <div class="Reports_col">{{form.filtered_field}}</div>
+        <div class="Reports_col">{{form.filtered_by}}</div>
+        <div class="Reports_col"><input type="text" id="id_filtered_value" name="filtered_value" size="30" /></div>
+        <div class="Reports_col"><input id="filter_form_submit" type="submit" value="Add" /></div>
+    </form>
+</div>
+<div id="aheading" class="header_div">
+    <div class="Reports_heading">Active Filter(s)</div>
+</div>
+{% if errors %}
+<div id="filter-error">{{ errors }}</div>
+{% endif %}
+<div id="afilters">
+{% for f in active_filters %} 
+<div class="LightBlue_div">
+    <div class="Active_filters">
+        <div class="Filter_remove">
+            <a href="/reports/fd/{{ forloop.counter0 }}/"><img src="/static/imgs/action_remove.png" alt="x" title="Remove" /></a>
+        </div>
+        <div class="Filter_save">
+            <a href="/reports/fs/{{ forloop.counter0 }}/"><img src="/static/imgs/save.png" alt="Save" title="Save" /></a>
+        </div>
+        <div class="Filter_detail">
+            {{ f.filter_field }} {{ f.filter_by }} {{ f.filter_value }}
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+    <div class="spanrow">No active filters at the moment</div>
+</div>
+{% endfor %}
+</div>
+<div class="header_div">
+    <div class="Reports_heading">Saved Filter(s)</div>
+</div>
+<div id="sfilters">
+{% for sf in saved_filters %}
+<div class="LightBlue_div">
+    <div class="Active_filters">
+        <div class="Filter_remove">
+            <a href="/reports/sfd/{{ sf.filter_id }}/"><img src="/static/imgs/action_delete.png" alt="x" title="Delete" /></a>
+        </div>
+        <div class="Filter_save">
+            {% if not sf.is_loaded %}
+            <a href="/reports/sfl/{{ sf.filter_id }}/"><img src="/static/imgs/action_add.png" alt="Load" title="Load" /></a>
+            {% else %}
+            <img src="/static/imgs/action_add.png" alt="Load" />
+            {% endif %}
+        </div>
+        <div class="Filter_detail">
+            {{ sf.filter_name }}
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+    <div class="spanrow">No saved filters at the moment</div>
+</div>
+{% endfor %}
+</div>
+{% endblock content %}
