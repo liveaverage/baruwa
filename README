@@ -54,6 +54,11 @@ Baruwa is installed in the usual way::
 
     python setup install
 
+========
+Packages
+========
+Binary packages for Ubuntu/Debian, Fedora and RHEL/CENTOS can be downloaded from http://topdog-software.com/oss/baruwa/
+
 =============
 Documentation
 =============
