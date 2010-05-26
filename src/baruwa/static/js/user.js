@@ -8,12 +8,16 @@ function handlePost(event){
     }else{
         type = '';
     }
+    quarantine_report = 0;
+    if($('#id_quarantine_report').is(":checked")){
+        quarantine_report = 1;
+    }
     var accounts_create_request = {
         username: $('#id_username').val(),
         fullname: $('#id_fullname').val(),
         password: $('#id_password').val(),
         type: type,
-        quarantine_report: $('#id_quarantine_report').val(),
+        quarantine_report: quarantine_report,
         quarantine_rcpt: $('#id_quarantine_rcpt').val(),
         noscan: $('#id_noscan').val(),
         spamscore: $('#id_spamscore').val(),
