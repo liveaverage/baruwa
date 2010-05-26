@@ -250,6 +250,62 @@ table.status tr.last {
     text-decoration:blink;
 }
 
+.pie {
+    -moz-background-clip: border;
+    -moz-background-inline-policy: continuous;
+    -moz-background-origin:padding;
+    height: 0.8em;
+    width:0.8em;
+    float:left;
+    position:relative;
+}
+
+.pie_1 {
+    background:red none repeat scroll 0 0;
+}
+
+.pie_2 {
+    background:#ffa07a none repeat scroll 0 0;
+}
+
+.pie_3 {
+    background:#deb887 none repeat scroll 0 0;
+}
+
+.pie_4 {
+    background:#d2691e none repeat scroll 0 0;
+}
+
+.pie_5 {
+    background:#008b8b none repeat scroll 0 0;
+}
+
+.pie_6 {
+    background:#006400 none repeat scroll 0 0;
+}
+
+.pie_7 {
+    background:#ff8c00 none repeat scroll 0 0;
+}
+
+.pie_8 {
+    background:#ffd700 none repeat scroll 0 0;
+}
+
+.pie_9 {
+    background:#f0e68c none repeat scroll 0 0;
+}
+
+.pie_10 {
+    background:#000000 none repeat scroll 0 0;
+}
+
+.pie_text {
+    float:left;
+    padding-left:5px;
+    vertical-align:top;
+}
+
 #in-progress {
     z-index: 10;
 	margin:10px 0 0 10px;

@@ -58,53 +58,46 @@ Reports {{report_title}}
 Reports - {{report_title}}
 {% endblock heading %}
 {% block content %}
-<table class="maillog">
-<tbody>
-<tr class="header">
-<td class="first-t">#</td>
-<td class="first-t">Address</td>
-<td class="first-t">Count</td>
-<td class="first-t">Volume</td>
-<td>&nbsp;</td>
-</tr>
-{% if top_items %}
-{% load messages_extras %}
-{% for item in top_items %}
-<tr class="sascores">
-<td class="first-t sascores">{{ forloop.counter }}.</td>
-<td class="sascores">
-<div class="pie_{{forloop.counter}} pie"></div>
-&nbsp;
-{% if item.from_address %}{{item.from_address|tds_trunc:42}}{%endif%}
-{% if item.from_domain %}{{item.from_domain}}{%endif%}
-{% if item.to_address %}{{item.to_address|tds_trunc:42}}{%endif%}
-{% if item.to_domain %}{{item.to_domain}}{%endif%}
-</td>
-<td class="first-t sascores">{{item.num_count}}</td>
-<td class="first-t sascores">{{item.size|filesizeformat}}</td>
-{% if forloop.first %}<td class="piebox" rowspan="{{forloop.revcounter}}">
-<div id="pie_graph" style="width: 350px; height: 230px;">
-<noscript>Enable Javascript to view graphs</noscript>
+<div class="Grid_heading">
+    <div class="Grid_hash">#</div>
+    <div class="Grid_Address">Address</div>
+    <div class="Grid_Count">Count</div>
+    <div class="Grid_Volume">Volume</div>
+    <div class="Grid_Graph">&nbsp;</div>
 </div>
-</td>
-{%endif%}
-</tr>
-{% endfor %}
-{% else %}
-<tr>
-<td colspan="5" class="align_center">No records returned</td>
-</tr>
-{% endif %}
+<div class="lightblue_div">
+    <div class="Graph_rows_col">
+        {% load messages_extras %}
+        {% for item in top_items %}
+        <div class="graph_row">
+            <div class="row_hash">{{ forloop.counter }}.</div>
+            <div class="row_address">
+                <div class="pie_{{forloop.counter}} pie"></div>&nbsp;
+                {% if item.from_address %}{{item.from_address|tds_trunc:42}}{%endif%}
+                {% if item.from_domain %}{{item.from_domain}}{%endif%}
+                {% if item.to_address %}{{item.to_address|tds_trunc:42}}{%endif%}
+                {% if item.to_domain %}{{item.to_domain}}{%endif%}
+            </div>
+            <div class="row_count">{{ item.num_count }}</div>
+            <div class="row_volume">{{ item.size|filesizeformat }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="Graph_pie_col">
+        <div id="pie_graph" style="width: 350px; height: 284px;">
+        </div>
+    </div>
+</div>
 {% if active_filters %}
-<tr>
-<td colspan="5" class="first-t"><b>Filters have been applied :</b><span id="fhl" style="display:inline;">
-{% for f in active_filters %}
-"<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
-{% endfor %}
-</span>
-</td>
-</tr>
+<div class="lightblue_div">
+    <div class="filterrow">
+        Filters have been applied :
+        <span id="fhl" style="display:inline;">
+            {% for f in active_filters %}
+            "<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        </span>
+    </div>
+</div>
 {% endif %}
-</tbody>
-</table>
 {% endblock content %}

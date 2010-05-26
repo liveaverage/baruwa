@@ -237,7 +237,7 @@ img{
 	padding:0px;
 	}
 
-#Main_Content .highspam_div:hover, .spam_div:hover, .LightBlue_div:hover, .relayed_div:hover, .spamreport_div:hover, .whitelisted_div:hover, .DarkGray_div:hover { 
+#Main_Content .highspam_div:hover, .spam_div:hover, .LightBlue_div:hover, .relayed_div:hover, .spamreport_div:hover, .whitelisted_div:hover, .DarkGray_div:hover, .graph_row:hover { 
     background: #eed !important;
     }
 
@@ -302,6 +302,16 @@ img{
     padding:7px 10px 7px 10px;
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:12px;
+    }
+
+#Main_Content .Grid_content .filterrow {
+	width:956px;
+	background:#e9f8ff;
+    padding:7px 10px 7px 10px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+    float:left;
     }
 
 #Main_Content .Grid_content .Grid_heading{
@@ -551,6 +561,56 @@ img{
     text-align:center;
     float:left;margin:0px;
     padding:15px 0 0 0;
+    }
+
+#Main_Content .Grid_content .Grid_heading .Grid_Address, #Main_Content .Grid_content .Grid_heading .Grid_Graph{
+    width:387px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#005aab;
+    font-size:12px;
+    font-weight:bold;
+    float:left;margin:0px;
+    padding:15px 0 0 10px;
+    }
+
+#Main_Content .Grid_content .Grid_heading .Grid_Count, #Main_Content .Grid_content .Grid_heading .Grid_Volume{
+    width:60px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#005aab;
+    font-size:12px;
+    font-weight:bold;
+    float:left;margin:0px;
+    padding:15px 0 0 10px;
+    }
+
+#Main_Content .Grid_content .Grid_heading .Grid_Count, #Main_Content .Grid_content .Grid_heading .Grid_relay_address{
+    width:140px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#005aab;
+    font-size:12px;
+    font-weight:bold;
+    float:left;margin:0px;
+    padding:15px 0 0 10px;
+    }
+
+#Main_Content .Grid_content .Grid_heading .Grid_Count, #Main_Content .Grid_content .Grid_heading .Grid_relay_hostname{
+    width:167px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#005aab;
+    font-size:12px;
+    font-weight:bold;
+    float:left;margin:0px;
+    padding:15px 0 0 10px;
+    }
+
+#Main_Content .Grid_content .Grid_heading .Grid_Count, #Main_Content .Grid_content .Grid_heading .Grid_relay_country{
+    width:60px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#005aab;
+    font-size:12px;
+    font-weight:bold;
+    float:left;margin:0px;
+    padding:15px 0 0 10px;
     }
 
 #Main_Content .LightBlue_div a, .DarkGray_div a, .spam_div a, .highspam_div a, .blacklisted_div a, .whitelisted_div a, .infected_div a {
@@ -803,6 +863,68 @@ img{
 	font-size:12px;
 	float:left;margin:0px;
 	padding:7px 0 7px 10px;
+	}
+
+#Main_Content .Grid_content .lightblue_div .Graph_rows_col{
+	width:596px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:0px 0 0px 0;
+	}
+
+#Main_Content .Grid_content .lightblue_div .Graph_rows_col .graph_row{
+	width:596px;
+	float:left;margin:0px;
+	}
+
+#Main_Content .Grid_content .lightblue_div .Graph_rows_col .graph_row .row_hash{
+    width:32px;
+	float:left;margin:0px;
+	padding:7px 0 7px 10px;
+}
+
+#Main_Content .Grid_content .lightblue_div .Graph_rows_col .graph_row .row_address{
+    width:387px;
+	float:left;margin:0px;
+	padding:7px 0 7px 10px;
+}
+
+#Main_Content .Grid_content .lightblue_div .Graph_rows_col .graph_row .row_count,
+#Main_Content .Grid_content .lightblue_div .Graph_rows_col .graph_row .row_volume{
+    width:60px;
+	float:left;margin:0px;
+	padding:7px 0 7px 10px;
+}
+
+#Main_Content .Grid_content .lightblue_div .Graph_rows_col .graph_row .row_country{
+    width:60px;
+	float:left;margin:0px;
+	padding:7px 0 7px 10px;
+}
+
+#Main_Content .Grid_content .lightblue_div .Graph_rows_col .graph_row .row_hostname{
+    width:167px;
+	float:left;margin:0px;
+	padding:7px 0 7px 10px;
+}
+
+#Main_Content .Grid_content .lightblue_div .Graph_rows_col .graph_row .row_ip{
+    width:140px;
+	float:left;margin:0px;
+	padding:7px 0 7px 10px;
+}
+
+#Main_Content .Grid_content .lightblue_div .Graph_pie_col{
+	width:379px;
+    background:#fff;
+    border-bottom: 1px solid #E9F8FF;
+    border-right: 1px solid #E9F8FF;
+	color:#000;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:0px 0 0px 0;
 	}
 
 #Main_Content .Grid_content .lightblue_div .Reports_cols{
