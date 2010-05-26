@@ -163,12 +163,12 @@ def user_account(request, user_id=None, add_filter=False):
                 form = UserUpdateForm(instance=user_object)
             else:
                 form = StrippedUserForm(instance=user_object)
+            form.fields['spamscore'].widget.attrs['size'] = '4'
+            form.fields['highspamscore'].widget.attrs['size'] = '4'
     if user_object.password == '':
         extern_user = True
     else:
         extern_user = False
-    form.fields['spamscore'].widget.attrs['size'] = '4'
-    form.fields['highspamscore'].widget.attrs['size'] = '4'
     return render_to_response('accounts/user.html',{'form':form,
         'filters':user_filters,'target_user':user_id,'add_filter':add_filter,
         'auth_type':extern_user,'user_name':vu.username},context_instance=RequestContext(request))
