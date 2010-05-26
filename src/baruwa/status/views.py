@@ -89,6 +89,7 @@ def bayes_info(request):
     SA_PREFS = getattr(settings, 'SA_PREFS','/etc/MailScanner/spam.assassin.prefs.conf')
 
     p1 = subprocess.Popen('sa-learn -p '+SA_PREFS+' --dump magic',shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    import datetime
     while True:
         line = p1.stdout.readline()
         if not line: break
@@ -103,13 +104,13 @@ def bayes_info(request):
             elif m.group(5) == 'ntokens':
                 bayes_info['tokens'] = m.group(3)
             elif m.group(5) == 'oldest atime':
-                bayes_info['otoken'] = m.group(3)
+                bayes_info['otoken'] = datetime.datetime.fromtimestamp(m.group(3))
             elif m.group(5) == 'newest atime':
-                bayes_info['ntoken'] = m.group(3)
+                bayes_info['ntoken'] = datetime.datetime.fromtimestamp(m.group(3))
             elif m.group(5) == 'last journal sync atime':
-                bayes_info['ljournal'] = m.group(3)
+                bayes_info['ljournal'] = datetime.datetime.fromtimestamp(m.group(3))
             elif m.group(5) == 'last expiry atime':
-                bayes_info['expiry'] = m.group(3)
+                bayes_info['expiry'] = datetime.datetime.fromtimestamp(m.group(3))
             elif m.group(5) == 'last expire reduction count':
                 bayes_info['rcount'] = m.group(3)
 
