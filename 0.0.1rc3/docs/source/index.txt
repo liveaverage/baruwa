@@ -1,0 +1,33 @@
+Baruwa documentation manual
+===========================
+Baruwa (swahili for letter or mail) is a web 2.0 `MailScanner <http://www.mailscanner.info/>`_ 
+front-end. 
+
+It provides an easy to use interface for users to view details of messages processed by 
+MailScanner as well as perform operations such as releasing quarantined messages, 
+spam learning,whitelisting and blacklisting addresses etc. Baruwa has implemented web 2.0 
+features (AJAX) where deemed fit, graphing is also implemented on the client side using SVG.
+
+It also provides reporting functionality with an easy to use query builder, results can be 
+displayed as message lists or graphed as colorful and pretty graphs.
+
+Baruwa is written in Python using the Django Framework and MySQL for storage, it is released 
+under the GPLv2.
+
+.. toctree::
+    :maxdepth: 2
+
+    introduction.txt
+    requirements.txt
+    install.txt
+    install_centos.txt 
+    install_fedora.txt 
+    install_debian.txt
+    migration.txt
+    migration_centos.txt
+    migration_fedora.txt
+    authentication.txt
+    distributed_setup.txt
+    batteries_included.txt
+    users.txt
+

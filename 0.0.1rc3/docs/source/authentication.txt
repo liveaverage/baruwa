@@ -1,0 +1,28 @@
+.. _authentication:
+
+=======================
+External authentication
+=======================
+
+Baruwa supports authentication to external authentication systems. SMTP, POP3, IMAP are supported out of the box.
+TLS, APOP are also supported to ensure user authentication details are protected over the wire.
+
+Authentication is setup on a per domain basis.
+
+Configuration
+=============
+
+Edit the baruwa_setting.py file and modify the MAIL_AUTH_HOSTS variable
+
+Default: ``()`` (Empty tuple)
+
+A tuple which contains lists, The list holds the email domain, hostname or ip address of the authentication system,
+port to connect to, protocol, a boolean indicating if a username with an '@' in it should be split into host and
+domain parts.::
+
+    MAIL_AUTH_HOSTS = (
+        ['topdog.za.net','tdss.co.za','25','smtp',True],
+        ['topdog.za.net','tdss.co.za','110','pop3',True],
+        ['topdog.za.net','tdss.co.za','993','imap',True],
+    )
+
