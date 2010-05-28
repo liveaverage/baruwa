@@ -19,8 +19,12 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 from django import forms
-from django.forms.fields import email_re
 from django.template.defaultfilters import force_escape
+try:
+    from django.forms.fields import email_re
+except ImportError:
+    from django.core.validators import email_re
+
 
 SALEARN_OPTIONS = (
   ('1', 'Spam'),

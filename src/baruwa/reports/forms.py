@@ -19,8 +19,15 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 from django import forms
-from django.forms.fields import email_re, ipv4_re
 from baruwa.accounts.forms import domain_re
+from django.template.defaultfilters import force_escape
+try:
+    from django.forms.fields import email_re
+    from django.forms.fields import ipv4_re
+except ImportError:
+    from django.core.validators import email_re
+    from django.core.validators import ipv4_re
+
 
 FILTER_ITEMS = (
     ('id','Message ID'),
@@ -130,7 +137,7 @@ class FilterForm(forms.Form):
                 raise forms.ValidationError("Please supply a value to query")
             if (submited_field == 'from_address') or (submited_field == 'to_address'):
                 if not email_re.match(submited_value.strip()):
-                    raise forms.ValidationError('%s is not a valid e-mail address.' % submited_value)
+                    raise forms.ValidationError('%s is not a valid e-mail address.' % force_escape(submited_value))
             if (submited_field == 'from_domain') or (submited_field == 'to_domain'):
                 if not domain_re.match(submited_value.strip()):
                     raise forms.ValidationError('Please provide a valid domain name')

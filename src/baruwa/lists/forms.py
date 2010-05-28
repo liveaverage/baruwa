@@ -20,8 +20,13 @@
 from django import forms
 from django.forms.util import ErrorList
 from django.forms import ModelForm
-from django.forms.fields import email_re
+from django.template.defaultfilters import force_escape
 import re
+try:
+    from django.forms.fields import email_re
+except ImportError:
+    from django.core.validators import email_re
+
 
 LIST_OPTIONS = (
   ('1', 'Whitelist'),
@@ -48,7 +53,7 @@ class UserListAddForm(forms.Form):
     def clean_to_address(self):
         to_address = self.cleaned_data['to_address']
         if not email_re.match(to_address):
-            raise forms.ValidationError('%s provide a valid e-mail address' % to_address)
+            raise forms.ValidationError('%s provide a valid e-mail address' % force_escape(to_address))
         return to_address
 
 class ListAddForm(forms.Form):

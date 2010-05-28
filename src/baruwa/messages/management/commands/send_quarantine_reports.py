@@ -27,10 +27,14 @@ class Command(NoArgsCommand):
         from baruwa.accounts.models import User, UserFilters
         from baruwa.messages.models import Maillog
         from baruwa.reports.views import user_filter
-        from django.forms.fields import email_re
         from django.core.mail import EmailMultiAlternatives
         from django.conf import settings
         import datetime
+        try:
+            from django.forms.fields import email_re
+        except ImportError:
+            from django.core.validators import email_re
+
 
         users = User.objects.filter(quarantine_report__exact=1)
         url = getattr(settings, 'QUARANTINE_REPORT_HOSTURL','')
@@ -52,9 +56,12 @@ class Command(NoArgsCommand):
                 if email_re.match(user.quarantine_rcpt):
                     to = user.quarantine_rcpt
 
-                text_content = render_to_string('messages/quarantine_report_text.html',{'items':message_list,'host_url':url})
-                msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-                msg.attach_alternative(html_content, "text/html")
-                msg.send()
-                print "sent quarantine report to "+to
+                if message_list:
+                    text_content = render_to_string('messages/quarantine_report_text.html',{'items':message_list,'host_url':url})
+                    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+                    msg.attach_alternative(html_content, "text/html")
+                    msg.send()
+                    print "sent quarantine report to "+to
+                else:
+                    print "skipping report to "+to+" no messages"
         print "=================== completed quarantine notifications ======================"

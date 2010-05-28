@@ -20,9 +20,13 @@
 from django import forms
 from django.forms.util import ErrorList
 from django.forms import ModelForm
-from django.forms.fields import email_re
 from baruwa.accounts.models import ACTIVE_CHOICES, TYPE_CHOICES, User, UserFilters
 import re
+try:
+    from django.forms.fields import email_re
+except ImportError:
+    from django.core.validators import email_re
+
 
 YES_NO = (
     (0, 'YES'),
