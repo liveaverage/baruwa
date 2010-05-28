@@ -24,7 +24,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='baruwa',
-      version="0.0.1rc2",
+      version="0.0.1rc3",
       description="Ajax enabled MailScanner web frontend",
       long_description=read('README'),
       keywords='MailScanner Email Filters Quarantine Spam',
@@ -36,6 +36,9 @@ setup(name='baruwa',
       package_dir = {'': 'src'},
       include_package_data=True,
       zip_safe=False,
+      dependency_links = [
+        "http://geolite.maxmind.com/download/geoip/api/python/"
+      ],
       install_requires=['setuptools',
         'Django>= 1.1.1',
         'MySQLdb>=1.2.1p2',

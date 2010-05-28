@@ -2,8 +2,8 @@
 ======
 Baruwa
 ======
-Baruwa (swahili for letter or mail) is a `mailwatch <http://mailwatch.sf.net/>`_ inspired 
-web 2.0 `MailScanner <http://www.mailscanner.info/>`_ front-end. 
+Baruwa (swahili for letter or mail) is a web 2.0 `MailScanner <http://www.mailscanner.info/>`_
+front-end. 
 
 It provides an easy to use interface for users to view details of messages processed by 
 MailScanner as well as perform operations such as releasing quarantined messages, 
