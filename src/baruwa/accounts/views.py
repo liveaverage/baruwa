@@ -34,9 +34,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import REDIRECT_FIELD_NAME
 try:
-    import hashlib as md5
-except ImportError:
     import md5
+except ImportError:
+    import hashlib as md5
 
 @never_cache
 @login_required

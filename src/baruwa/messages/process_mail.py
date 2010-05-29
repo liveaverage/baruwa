@@ -136,8 +136,7 @@ def get_message_path(qdir,date,message_id):
         file_path = os.path.join(qdir, date, message_id,'message')
         if os.path.exists(file_path):
             return file_path
-        else:
-            return None
+    return None
 
 def release_mail(mail_path, to_addr, from_addr):
     """

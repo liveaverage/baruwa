@@ -47,7 +47,6 @@ CREATE TABLE IF NOT EXISTS `archive` (
   KEY `to_domain_idx` (`to_domain`(50)),
   KEY `archive_quarantined` (`quarantined`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-SET character_set_client = @saved_cs_client;
 
 CREATE TABLE IF NOT EXISTS `auth_permission` (
     `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
