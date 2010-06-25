@@ -60,6 +60,8 @@ def raw_user_filter(user,user_type,addresses):
                 for domain in addresses:
                     dsql.append('to_domain="'+domain.filter+'"')
                 sql = ' OR '.join(dsql)
+            else:
+                sql = 'to_domain="%s"' % user.username
         if user_type == 'U':
             if addresses:
                 for email in addresses:

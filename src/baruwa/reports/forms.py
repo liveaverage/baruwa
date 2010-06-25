@@ -80,7 +80,9 @@ FILTER_BY = (
 
 EMPTY_VALUES = (None, '')
 
-BOOL_FIELDS = ["archive","isspam","ishighspam","issaspam","isrblspam","spamwhitelisted","spamblacklisted","virusinfected","nameinfected","otherinfected","ismcp","ishighmcp","issamcp","mcpwhitelisted","mcpblacklisted","quarantined"]
+BOOL_FIELDS = ["archive","isspam","ishighspam","issaspam","isrblspam","spamwhitelisted",
+    "spamblacklisted","virusinfected","nameinfected","otherinfected","ismcp","ishighmcp",
+    "issamcp","mcpwhitelisted","mcpblacklisted","quarantined"]
 NUM_FIELDS = ["size","sascore","mcpscore"]
 TEXT_FIELDS = ["id","from_address","from_domain","to_address","to_domain","subject","clientip","spamreport","mcpreport","headers"]
 TIME_FIELDS = ["date","time"]
