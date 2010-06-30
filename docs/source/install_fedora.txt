@@ -1,0 +1,66 @@
+.. _installfedora:
+
+================
+Baruwa on Fedora
+================
+
+Configure MailScanner
+=====================
+
+:ref:`Configure <setupmailscanner>` MailScanner if you have not already done so.
+
+Baruwa rpm install
+==================
+
+Download the rpm from `topdog-software.com <http://www.topdog-software.com/oss/baruwa/>`_,
+
+Now proceed and install the rpm::
+
+    # yum --nogpgcheck localinstall baruwa-<version>.noarch.rpm
+
+Create the database::
+
+
+
+Create the database user::
+
+    mysql> GRANT ALL ON baruwa.* TO baruwa@localhost IDENTIFIED BY '<password>';
+    mysql> flush privileges;
+
+Create the baruwa admin user::
+
+
+Configure Baruwa
+================
+
+Edit /usr/lib/python2.6/site-packages/baruwa/settings.py and 
+set the mysql database details::
+
+    DATABASE_ENGINE = 'mysql'           
+    DATABASE_NAME = 'baruwa'             
+    DATABASE_USER = 'baruwa'             
+    DATABASE_PASSWORD = '<baruwa_password>'         
+    DATABASE_HOST = 'localhost'            
+
+If your MailScanner config file is not located in the standard 
+location (/etc/MailScanner/MailScanner.conf) then edit the
+baruwa_settings.py file which is in the same directory as the
+settings.py file and set::
+
+    MS_CONFIG = '/etc/MailScanner/MailScanner.conf'
+
+**Setup Web server**
+
+Edit your apache configurations to enable virtual hosting if
+not enabled already. Then set the correct hostname in 
+/etc/httpd/conf.d/baruwa.conf::
+
+    # change to your hostname
+    ServerName baruwa-alpha.local
+
+Make sure mod_wsgi is enabled, uncomment the following line in
+/etc/httpd/conf.d/wsgi.conf::
+
+    LoadModule wsgi_module modules/mod_wsgi.so
+    
+Restart apache and point your browser to the hostname url.

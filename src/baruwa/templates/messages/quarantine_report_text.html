@@ -1,0 +1,17 @@
+
+Baruwa
+======
+
+Date/Time   From            To          Subject             Reason
+===================================================================
+{% load messages_extras %}
+{% for item in items %}
++ {{ item.timestamp }}  {{ item.from_address }}         {{ item.to_address }}           {{ item.subject }}              {{ item|tds_msg_status }}
+{% endfor %}
+
+{% if host_url %}
+To view these quarantined messages please visit :
+{{ host_url }}{% url quarantine-index %}
+{% endif %}
+===================================================================
+Powered by Baruwa http://www.topdog.za.net/baruwa

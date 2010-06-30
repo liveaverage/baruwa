@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block headers %}{% endblock headers %}
+{% block submenu %}
+{% endblock submenu %}
+{% block title %}Update account{% endblock title %}
+{% block heading %}Update account{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Account_creation_heading">Update user account</div>
+</div>
+<form action="{% url update-account user_id %}" method="post">
+	{% csrf_token %}
+	{% for hidden in form.hidden_fields %}
+		{{ hidden }}
+	{% endfor %}
+    {% for field in form.visible_fields %}
+        <div class="LightBlue_div">
+			<div class="form_label">{{ field.label }}</div>
+			<div class="form_value">{{ field }}</div>
+			<div class="form_error">{{ field.errors }}</div>
+        </div>
+    {% endfor %}
+    <div class="LightBlue_div">
+        <div class="form_label">&nbsp;</div>
+        <div class="form_value">
+            <input id="cancel-button" type="reset" value="Cancel" />&nbsp;
+            <input id="submit-button" type="submit" value="Update" />
+        </div>
+        <div class="form_error"></div>
+    </div>
+</form>
+{% endblock content %}

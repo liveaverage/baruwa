@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block headers %}{% endblock headers %}
+{% block submenu %}
+{% endblock submenu %}
+{% block title %}Delete Address{% endblock title %}
+{% block heading %}Delete Address{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">Delete Address</div>
+</div>
+<form action="{% url delete-address address_id %}" method="post">
+	{% csrf_token %}
+	{% for hidden in form.hidden_fields %}
+		{{ hidden }}
+	{% endfor %}
+    <div class="LightBlue_div">
+        <div class="form_label">Delete the address: {{ address }} ?</div>
+        <div class="form_value">
+			<input id="submit-button" type="submit" value="Delete" />      
+        </div>
+        <div class="form_error"></div>
+    </div>
+</form>
+{% endblock content %}

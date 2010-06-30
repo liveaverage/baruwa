@@ -1,0 +1,12 @@
+include README
+include AUTHORS
+include INSTALL
+include LICENSE
+include ChangeLog
+include UPGRADE
+include MANIFEST.in
+include src/baruwa/baruwa.wsgi
+recursive-include docs *
+recursive-include extras *
+recursive-include src/baruwa/templates *
+recursive-include src/baruwa/static *

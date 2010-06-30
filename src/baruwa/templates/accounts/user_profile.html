@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block headers %}{% endblock headers %}
+{% block submenu %}
+<ul>
+{% ifequal user.id account_info.id %}
+{% if not user.is_superuser %}
+  	<li><a id="change-pw" href="{% url change-password %}">Change your password</a></li>	
+{% endif %}
+{% endifequal %}
+{% if user.is_superuser %}
+	<li><a href="{% url change-pw account_info.id %}">Change users password</a></li>
+{% endif %}
+</ul>	
+{% endblock submenu %}
+{% block title %}Account Profile{% endblock title %}
+{% block heading %}Account Profile{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">
+		Viewing {{ account_info.username }}'s Profile
+		<div class="Profile_edit">[ <a href="{% url update-account account_info.id %}">Edit</a> ]</div>
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		Username:
+	</div>
+	<div class="Profile_values">
+		{{ account_info.username }}
+	</div>
+</div>	
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		Full names:
+	</div>
+	<div class="Profile_values">
+		{{ account_info.first_name }} {{ account_info.last_name }}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		Email Address:
+	</div>
+	<div class="Profile_values">
+		{{ account_info.email }}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		Account status:
+	</div>
+	<div class="Profile_values">
+		{% if account_info.is_active %}Active{% else %}Disabled{% endif %}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		Last login:
+	</div>
+	<div class="Profile_values">
+		{{ account_info.last_login }}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		Account created on:
+	</div>
+	<div class="Profile_values">
+		{{ account_info.date_joined }}
+	</div>
+</div>
+<div class="header_div">
+    <div class="Reports_heading">
+		Profile Settings
+		<div class="Profile_edit">[ <a href="{% url update-profile account_info.id %}">Edit</a> ]</div>
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		Account type:
+	</div>
+	<div class="Profile_values">
+		{% if account_info.is_superuser  %}
+			Administrator
+		{% else %}
+		{% ifequal account_profile.account_type 2  %}
+			Domain Administrator
+		{% endifequal %}
+		{% ifequal account_profile.account_type 3  %}
+			User account
+		{% endifequal %}
+		{% endif %}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		Scan email:
+	</div>
+	<div class="Profile_values">
+		{% if account_profile.scan_mail %}
+			Yes
+		{% else %}
+			No
+		{% endif %}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		Send quarantine report:
+	</div>
+	<div class="Profile_values">
+		{% if account_profile.send_report %}
+			Yes
+		{% else %}
+			No
+		{% endif %}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		Spam High Score:
+	</div>
+	<div class="Profile_values">
+		{{ account_profile.sa_high_score }}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		Spam Low Score:
+	</div>
+	<div class="Profile_values">
+		{{ account_profile.sa_low_score }}
+	</div>
+</div>
+{% if not account_info.is_superuser %}
+<div class="header_div">
+    <div class="Reports_heading">
+		{% ifequal account_profile.account_type 2  %}
+		Domains managed
+		{% else %}
+		Associated Addresses
+		{% endifequal %}
+		{% if user.is_superuser %}
+		{% if addresses %}
+		<div class="Profile_edit">[ <a href="{% url add-address account_profile.id %}">Add</a> ]</div>	
+		{% endif %}	
+		{% endif %}	
+	</div>
+</div>
+{% for address in addresses %}
+	<div class="LightBlue_div">
+		<div class="Profile_cols">
+			{{ address.address }}
+		</div>
+		<div class="Profile_values">
+			{% if address.enabled %}
+				Enabled
+			{% else %}
+				Disabled
+			{% endif %}
+			<div class="Profile_edit">
+				 <a href="{% url edit-address address.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+				 <a href="{% url delete-address address.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+			</div>
+		</div>
+	</div>
+{% empty %}
+	<div class="LightBlue_div">
+		<div class="Profile_cols">
+			No addresses stored at the moment.
+		</div>
+		<div class="Profile_values">
+			{% if user.is_superuser %}
+			<a href="{% url add-address account_profile.id %}" title="Add Address"><img alt="Add Address" src="{{ MEDIA_URL }}imgs/action_add.png" /></a>
+			{% endif %}
+		</div>		 
+	</div>
+{% endfor %}	
+{% endif %}
+{% endblock content %}

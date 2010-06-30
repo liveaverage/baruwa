@@ -1,0 +1,77 @@
+
+======
+Baruwa
+======
+Baruwa (swahili for letter or mail) is a web 2.0 `MailScanner <http://www.mailscanner.info/>`_
+front-end. 
+
+It provides an easy to use interface for managing a MailScanner installation. It is used to
+perform operations such as releasing quarantined messages, spam learning, whitelisting and 
+blacklisting addresses, monitoring the health of the services etc. Baruwa is implemented 
+using web 2.0 features (AJAX) where deemed fit, graphing is also implemented on the client
+side using SVG, Silverlight or VML.
+
+It includes reporting functionality with an easy to use query builder, results can be 
+displayed as message lists or graphed as colorful and pretty interactive graphs.
+
+Custom MailScanner modules are provided to allow for logging of messages to the mysql
+database with Sqlite as backup and for managing whitelists and blacklists.
+
+Baruwa is written in Python/Perl using the Django Framework and MySQL for storage, it is 
+released under the GPLv2.
+
+========
+Features
+========
+    + AJAX refreshed recent messages listing
+    + Detailed message view with AJAX enabled message processing (quarantine management, Bayesian learning, white/black listing)
+    + AJAX powered Full/Quarantine messages listings
+    + Reporting view with AJAX enabled query builder
+    + Interactive SVG graphs
+    + Multi user profiles (No restrictions on username format)
+    + User profile aware white/blacklist management
+	+ Ip / network addresses supported in white/blacklist manager
+    + Easy plug-in authentication to external authentication systems (POP3, IMAP and SMTP supported out of the box)
+    + Tools for housekeeping tasks (quarantine management, rule updates, quarantine notifications, etc)
+    + Works both with and without Javascript enabled (graphs require Javascript)
+
+===========
+Screenshots
+===========
+`Screenshots <http://www.flickr.com/photos/baruwa/>`_ are on our Flickr page.
+
+============
+Requirements
+============
+    + Python >= 2.4
+    + Django >= 1.2.1
+    + MySQLdb >= 1.2.1p2
+    + GeoIP
+    + iPy
+    + Any Web server that can run Django (Apache/mod_wsgi recommended)
+    + MySQL
+	+ Dojo toolkit
+	
+====
+Note
+====
+Baruwa 1.0.x is not compatible with the 0.0.x versions and Mailwatch, as it
+uses a different database schema and its own MailScanner custom modules.
+
+============
+Installation
+============
+Baruwa is installed in the usual way::
+
+    python setup install
+
+========
+Packages
+========
+Binary packages for Ubuntu/Debian, Fedora and RHEL/CENTOS can be downloaded from http://topdog-software.com/oss/baruwa/
+
+=============
+Documentation
+=============
+Documentation is included in the docs directory of the tarball and can also be accessed on line at
+http://www.baruwa.org/

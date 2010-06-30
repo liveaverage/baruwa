@@ -1,0 +1,13 @@
+=========
+Upgrading
+=========
+
+Upgrading from 0.0.x to 1.0.x
+
+It is not possible to migrate between those versions
+without extra work as the database schema's are totally
+different.
+
+1.0.x breaks compatibility with the Mailwatch database
+schema and uses its own optimized schema.
+

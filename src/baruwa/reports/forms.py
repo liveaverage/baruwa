@@ -1,0 +1,142 @@
+from django import forms
+from django.template.defaultfilters import force_escape
+from baruwa.lists.forms import dom_re
+try:
+    from django.forms.fields import email_re
+    from django.forms.fields import ipv4_re
+except ImportError:
+    from django.core.validators import email_re
+    from django.core.validators import ipv4_re
+
+
+FILTER_ITEMS = (
+    ('id','Message ID'),
+    ('size','Size'),
+    ('from_address','From Address'),
+    ('from_domain', 'From Domain'),
+    ('to_address','To Address'),
+    ('to_domain','To Domain'),
+    ('subject','Subject'),
+    ('clientip','Received from'),
+    ('archive','Is Archived'),
+    ('spam','Is spam'),
+    ('highspam','Is high spam'),
+    ('saspam','Is SA spam'),
+    ('rblspam','Is RBL listed'),
+    ('whitelisted','Is whitelisted'),
+    ('blacklisted','Is blacklisted'),
+    ('sascore','SA score'),
+    ('spamreport','Spam report'),
+    ('virusinfected','Is virus infected'),
+    ('nameinfected','Is name infected'),
+    ('otherinfected','Is other infected'),
+    ('date','Date'),
+    ('time','Time'),
+    ('headers','Headers'),
+    ('isquarantined','Is quarantined'),
+)
+
+FILTER_BY = (
+    (1,'is equal to'),
+    (2,'is not equal to'),
+    (3,'is greater than'),
+    (4,'is less than'),
+    (5,'contains'),
+    (6,'does not contain'),
+    (7,'matches regex'),
+    (8,'does not match regex'),
+    (9,'is null'),
+    (10,'is not null'),
+    (11,'is true'),
+    (12,'is false'),
+)
+
+EMPTY_VALUES = (None, '')
+
+BOOL_FIELDS = ["archive", "spam", "highspam", "saspam", "rblspam", "whitelisted",
+    "blacklisted", "virusinfected", "nameinfected", "otherinfected", "isquarantined"]
+TEXT_FIELDS = ["id", "from_address", "from_domain", "to_address", "to_domain", 
+    "subject", "clientip", "spamreport", "headers"]
+TIME_FIELDS = ["date","time"]
+NUM_FIELDS = ["size", "sascore"]
+
+BOOL_FILTER = [11,12]
+NUM_FILTER = [1,2,3,4]
+TEXT_FILTER = [1,2,5,6,7,8,9,10]
+TIME_FILTER = [1,2,3,4]
+
+def isNumeric(value):
+    return str(value).replace(".", "").replace("-", "").isdigit()
+
+def to_dict(tuple_list):
+    d = {}
+    for i in tuple_list:
+        d[i[0]] = i[1]
+    return d
+    
+class FilterForm(forms.Form):
+    filtered_field = forms.ChoiceField(choices=FILTER_ITEMS)
+    filtered_by = forms.ChoiceField(choices=FILTER_BY)
+    filtered_value = forms.CharField(required=False)
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        submited_field = cleaned_data.get('filtered_field')
+        submited_by = int(cleaned_data.get('filtered_by'))
+        submited_value = cleaned_data.get('filtered_value')
+        if submited_by != 0:
+            sbi = (submited_by - 1)
+        else:
+            sbi = submited_by
+
+        if submited_field in BOOL_FIELDS:
+            if not submited_by in BOOL_FILTER:
+                filter_items = to_dict(list(FILTER_ITEMS))
+                e = "%s does not support the %s filter" % (filter_items[submited_field],FILTER_BY[sbi][1])
+                raise forms.ValidationError(e)
+        if submited_field in NUM_FIELDS:
+            if not submited_by in NUM_FILTER:
+                filter_items = to_dict(list(FILTER_ITEMS))
+                e = "%s does not support the %s filter" % (filter_items[submited_field],FILTER_BY[sbi][1])
+                raise forms.ValidationError(e)
+            if submited_value in EMPTY_VALUES:
+                raise forms.ValidationError("Please supply a value to query")
+            if not isNumeric(submited_value):
+                raise forms.ValidationError("The value has to be numeric")
+        if submited_field in TEXT_FIELDS:
+            if not submited_by in TEXT_FILTER:
+                filter_items = to_dict(list(FILTER_ITEMS))
+                e = "%s does not support the %s filter" % (filter_items[submited_field],FILTER_BY[sbi][1])
+                raise forms.ValidationError(e)
+            if submited_value in EMPTY_VALUES:
+                raise forms.ValidationError("Please supply a value to query")
+            if (submited_field == 'from_address') or (submited_field == 'to_address'):
+                if not email_re.match(submited_value.strip()):
+                    raise forms.ValidationError('%s is not a valid e-mail address.' % force_escape(submited_value))
+            if (submited_field == 'from_domain') or (submited_field == 'to_domain'):
+                if not dom_re.match(submited_value.strip()):
+                    raise forms.ValidationError('Please provide a valid domain name')
+            if submited_field == 'clientip':
+                if not ipv4_re.match(submited_value.strip()):
+                    raise forms.ValidationError('Please provide a valid ipv4 address')
+        if submited_field in TIME_FIELDS:
+            if not submited_by in TIME_FILTER:
+                filter_items = to_dict(list(FILTER_ITEMS))
+                e = "%s does not support the %s filter" % (filter_items[submited_field],FILTER_BY[sbi][1])
+                raise forms.ValidationError(e)
+            if submited_value in EMPTY_VALUES:
+                raise forms.ValidationError("Please supply a value to query")
+            if submited_field == 'date':
+                import datetime, time
+                try:
+                    datetime.date(*time.strptime(submited_value, '%Y-%m-%d')[:3])
+                except ValueError:
+                    raise forms.ValidationError('Please provide a valid date in YYYY-MM-DD format')
+            if submited_field == 'time':
+                import datetime, time
+                try:
+                    datetime.time(*time.strptime(submited_value, '%H:%M')[3:6])
+                except ValueError:
+                    raise forms.ValidationError('Please provide valid time in HH:MM format')
+
+        return cleaned_data

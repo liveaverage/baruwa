@@ -1,0 +1,21 @@
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    (r'^$','baruwa.accounts.views.index', {}, 'accounts'), 
+    (r'^(?P<page>([0-9]+|last))/$','baruwa.accounts.views.index'),
+    (r'^(?P<page>([0-9]+|last)/(?P<direction>(dsc|asc))/(?P<order_by>(username|fullname|type)))/$','baruwa.accounts.views.index'),
+    (r'^user/(?P<user_id>([0-9]+))/$', 'baruwa.accounts.views.user_profile',{},'user-profile'),
+    (r'^user/update/(?P<user_id>([0-9]+))/$', 'baruwa.accounts.views.update_account', {}, 'update-account'),
+    (r'^user/pw/(?P<user_id>([0-9]+))/$', 'baruwa.accounts.views.change_password', {}, 'change-pw'),
+    (r'^user/delete/(?P<user_id>([0-9]+))/$', 'baruwa.accounts.views.delete_account', {}, 'delete-account'),
+    (r'^create/$', 'baruwa.accounts.views.create_account', {}, 'create-account'),
+    (r'^profile/$', 'baruwa.accounts.views.profile', {}, 'user-account'),
+    (r'^profile/update/(?P<user_id>([0-9]+))/$', 'baruwa.accounts.views.update_profile', {}, 'update-profile'),
+    (r'^add/address/(?P<user_id>([0-9]+))/$', 'baruwa.accounts.views.add_address', {}, 'add-address'),
+    (r'^edit/address/(?P<address_id>([0-9]+))/$', 'baruwa.accounts.views.edit_address', {}, 'edit-address'),
+    (r'^delete/address/(?P<address_id>([0-9]+))/$', 'baruwa.accounts.views.delete_address', {}, 'delete-address'),
+    (r'^login/$','baruwa.accounts.views.login'),
+    (r'^logout$','django.contrib.auth.views.logout',{'next_page': '/'},'logout'),
+    (r'^pwchange/$', 'django.contrib.auth.views.password_change', 
+    {'template_name': 'accounts/change_pw.html', 'post_change_redirect': '/accounts/profile/'}, 'change-password'),
+)

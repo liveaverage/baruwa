@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block headers %}{% endblock headers %}
+{% block submenu %}
+{% endblock submenu %}
+{% block title %}Create account{% endblock title %}
+{% block heading %}Create account{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Account_creation_heading">User account creation</div>
+</div>
+<form action="{% url create-account %}" method="post">
+	{% csrf_token %}
+    {% for field in form %}
+        <div class="LightBlue_div">
+			<div class="form_label">{{ field.label }}</div>
+			<div class="form_value">{{ field }}</div>
+			<div class="form_error">{{ field.errors }}</div>
+        </div>
+    {% endfor %}
+    <div class="LightBlue_div">
+        <div class="form_label">&nbsp;</div>
+        <div class="form_value">
+            <input id="cancel-button" type="reset" value="Cancel" />&nbsp;
+            <input id="submit-button" type="submit" value="Create" />
+        </div>
+        <div class="form_error"></div>
+    </div>
+</form>
+{% endblock content %}
