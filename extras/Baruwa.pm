@@ -234,7 +234,49 @@ sub BaruwaLogging {
     @todomain = @{ $message->{todomain} };
     $todomain = $todomain[0];
 
-    # Place all data into %msg
+    unless ( defined( $$message{actions} ) and $$message{actions} ) {
+        $$message{actions} = 'deliver';
+    }
+
+    unless ( defined( $$message{isrblspam} ) and $$message{isrblspam} ) {
+        $$message{isrblspam} = 0;
+    }
+    unless ( defined( $$message{isspam} ) and $$message{isspam} ) {
+        $$message{isspam} = 0;
+    }
+
+    unless ( defined( $$message{issaspam} ) and $$message{issaspam} ) {
+        $$message{issaspam} = 0;
+    }
+
+    unless ( defined( $$message{ishigh} ) and $$message{ishigh} ) {
+        $$message{ishigh} = 0;
+    }
+
+    unless ( defined( $$message{spamblacklisted} )
+        and $$message{spamblacklisted} )
+    {
+        $$message{spamblacklisted} = 0;
+    }
+
+    unless ( defined( $$message{spamwhitelisted} )
+        and $$message{spamwhitelisted} )
+    {
+        $$message{spamwhitelisted} = 0;
+    }
+
+    unless ( defined( $$message{sascore} ) and $$message{sascore} ) {
+        $$message{sascore} = 0;
+    }
+
+    unless ( defined( $$message{subject} ) and $$message{subject} ) {
+        $$message{subject} = '';
+    }
+
+    unless ( defined($spamreport) and $spamreport ) {
+        $spamreport = '';
+    }
+
     my %msg;
     $msg{timestamp}       = $timestamp;
     $msg{id}              = $message->{id};

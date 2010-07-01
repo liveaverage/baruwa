@@ -27,6 +27,7 @@ Features
     + AJAX powered Full/Quarantine messages listings
     + Reporting view with AJAX enabled query builder
     + Interactive SVG graphs
+	+ SQLite backup prevents loss of messages when MySQL is down
     + Multi user profiles (No restrictions on username format)
     + User profile aware white/blacklist management
 	+ Ip / network addresses supported in white/blacklist manager

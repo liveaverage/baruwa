@@ -1,27 +1,36 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 Name:           baruwa
-Version:        0.0.1
-Release:        0.3.rc1%{?dist}
+Version:        1.0.0
+Release:        0.1.a%{?dist}
 Summary:        Ajax enabled MailScanner web frontend      
 Group:          Development/Languages
 License:        GPLv2
 URL:            http://www.topdog.za.net/baruwa
-Source0:        http://www.topdog-software.com/oss/files/%{name}-%{version}rc1.tar.gz
+Source0:        http://www.topdog-software.com/oss/files/%{name}-%{version}a.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel, python-setuptools, python-sphinx
 Requires:       Django >= 1.1.1, MySQL-python, python-GeoIP, python-IPy, httpd
 
 %description
-Baruwa is a mailwatch inspired web 2.0 MailScanner frontend
-It provides an easy to use interface for users to view details
-of messages processed by MailScanner as well as perform
-operations such as releasing quarantined messages, spam learning,
-whitelisting and blacklisting addresses etc.
+Baruwa (swahili for letter or mail) is a web 2.0 MailScanner
+front-end. 
 
-It also provides reporting functionality with an easy to use
-query builder, results are displayed in colorful graphs and
-charts.
+It provides an easy to use interface for managing a MailScanner
+installation. It is used to perform operations such as releasing
+quarantined messages, spam learning, whitelisting and 
+blacklisting addresses, monitoring the health of the services etc. 
+Baruwa is implemented using web 2.0 features (AJAX) where deemed 
+fit, graphing is also implemented on the client side using SVG, 
+Silverlight or VML.
+
+It includes reporting functionality with an easy to use query 
+builder, results can be displayed as message lists or graphed
+as colorful and pretty interactive graphs.
+
+Custom MailScanner modules are provided to allow for logging of
+messages to the mysql database with SQLite as backup and for 
+managing whitelists and blacklists.
 
 %prep
 %setup -q -n %{name}-%{version}rc1
@@ -72,13 +81,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS LICENSE README BSD-LICENSE NOTICE UPGRADE extras/*.sql extras/*.pm docs/build/html docs/source
+%doc AUTHORS LICENSE README TODO UPGRADE docs/build/html docs/source
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 %{_sysconfdir}/cron.daily/%{name}
 %{python_sitelib}/*
 
 
 %changelog
+* Web Jun 30 2010 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.0-0.1.a
+- Upgrade to latest version
+
 * Tue May 11 2010 Andrew Colin Kissa <andrew@topdog.za.net> 0.0.1-0.3.rc1
 - update to latest version
 

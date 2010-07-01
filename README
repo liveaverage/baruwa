@@ -15,7 +15,7 @@ It includes reporting functionality with an easy to use query builder, results c
 displayed as message lists or graphed as colorful and pretty interactive graphs.
 
 Custom MailScanner modules are provided to allow for logging of messages to the mysql
-database with Sqlite as backup and for managing whitelists and blacklists.
+database with SQLite as backup and for managing whitelists and blacklists.
 
 Baruwa is written in Python/Perl using the Django Framework and MySQL for storage, it is 
 released under the GPLv2.
@@ -28,6 +28,7 @@ Features
     + AJAX powered Full/Quarantine messages listings
     + Reporting view with AJAX enabled query builder
     + Interactive SVG graphs
+	+ SQLite backup prevents loss of messages when MySQL is down
     + Multi user profiles (No restrictions on username format)
     + User profile aware white/blacklist management
 	+ Ip / network addresses supported in white/blacklist manager
@@ -73,5 +74,5 @@ Binary packages for Ubuntu/Debian, Fedora and RHEL/CENTOS can be downloaded from
 =============
 Documentation
 =============
-Documentation is included in the docs directory of the tarball and can also be accessed on line at
+Documentation is included in the docs directory of the tar ball and can also be accessed on line at
 http://www.baruwa.org/

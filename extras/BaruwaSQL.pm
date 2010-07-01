@@ -325,7 +325,6 @@ sub BaruwaSQL {
         $spamreport = '';
     }
 
-    # Place all data into %msg
     my %msg;
     $msg{timestamp}     = $timestamp;
     $msg{id}            = $message->{id};

@@ -19,7 +19,7 @@ run as a privileged user.
 
 **Create the database**::
 
-    # mysql -p < extras/baruwa-create.sql
+    # mysqladmin -u root -p create baruwa
 
 **Create a Mysql user for baruwa**
 
@@ -51,6 +51,13 @@ Set the following options::
     DATABASE_USER = 'baruwa'
     DATABASE_PASSWORD = '<password>'
     DATABASE_HOST = 'localhost'
+
+Populate the database and create admin user::
+
+	# /usr/lib/python2.4/site-packages/baruwa/manage.py syncdb
+	
+Please use the correct site-packages directory above if not the
+same as the above. Answer the questions to setup the admin account.
 
 If your MailScanner config file is not located in the standard 
 location (/etc/MailScanner/MailScanner.conf) then edit the
@@ -85,10 +92,6 @@ To the correct file name.
 
         # /etc/init.d/httpd reload
 
-    **Apache/Mod_python**
-
-    TODO
-
     **Lighttpd**
 
     TODO
@@ -102,7 +105,7 @@ To the correct file name.
 Setup MailScanner
 =================
 
-**Edit and install MailWatch.pm**
+**Edit and install BaruwaSQL.pm**
 
 Edit extras/BaruwaSQL.pm and set the variables $db_user to 'baruwa' and
 $db_pass to the password you set above. Then move extras/BaruwaSQL.pm

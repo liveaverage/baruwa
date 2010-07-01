@@ -37,16 +37,12 @@ Install Baruwa::
 
 Create the database::
 
-
+    # mysqladmin -u root -p create baruwa
 
 Create the database user::
 
     mysql> GRANT ALL ON baruwa.* TO baruwa@localhost IDENTIFIED BY '<password>';
     mysql> flush privileges;
-
-Create the baruwa admin user::
-
-
 
 Configure Baruwa
 ================
@@ -58,7 +54,11 @@ set the mysql database details::
     DATABASE_NAME = 'baruwa'             
     DATABASE_USER = 'baruwa'             
     DATABASE_PASSWORD = '<baruwa_password>'         
-    DATABASE_HOST = 'localhost'            
+    DATABASE_HOST = 'localhost'    
+
+Create the baruwa admin user and populate the database::
+
+	# /usr/lib/python2.4/site-packages/baruwa/manage.py syncdb        
 
 If your MailScanner config file is not located in the standard 
 location (/etc/MailScanner/MailScanner.conf) then edit the
