@@ -27,7 +27,6 @@ from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, REDIRECT_FIELD_NAME, logout
 from django.contrib.auth.models import User
-from django.contrib import messages
 from baruwa.accounts.forms import UserProfileForm, UserCreateForm, UserAddressForm, \
 OrdUserProfileForm, UserUpdateForm, AdminUserUpdateForm, EditAddressForm, \
 DeleteAddressForm, DeleteUserForm
@@ -86,8 +85,6 @@ def create_account(request, template_name='accounts/create_account.html'):
         form = UserCreateForm(request.POST)
         if form.is_valid():
             user = form.save()
-            msg = 'User account created successfully.'
-            messages.success(request, msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user.id]))
     else:
         form = UserCreateForm()
@@ -108,8 +105,6 @@ def update_account(request, user_id, template_name='accounts/update_account.html
             form = UserUpdateForm(request.POST, instance=user_account)
         if form.is_valid():
             form.save()
-            msg = 'Account updated successfully.'
-            messages.success(request, msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
         if request.user.is_superuser:
@@ -130,18 +125,12 @@ def delete_account(request, user_id, template_name='accounts/delete_account.html
         form = DeleteUserForm(request.POST, instance=user_account)
         if form.is_valid():
             if user_account.id == request.user.id:
-                msg = 'You cannot delete your own account !'
-                messages.error(request, msg)
                 return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
             else:
                 try:
                     user_account.delete()
-                    msg = 'The user account was deleted successfully.'
-                    messages.success(request, msg)
                     return HttpResponseRedirect(reverse('accounts'))
                 except:
-                    msg = 'The deletion of the account failed, try again !'
-                    messages.error(request, msg)
                     return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
         form = DeleteUserForm(instance=user_account)
@@ -157,8 +146,6 @@ def add_address(request, user_id, template_name='accounts/add_address.html'):
         form = UserAddressForm(request.POST)
         if form.is_valid():
             form.save()
-            msg = 'Address/Domain added successfully.'
-            messages.success(request, msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
         form = UserAddressForm()
@@ -175,8 +162,6 @@ def edit_address(request, address_id, template_name='accounts/edit_address.html'
         form = EditAddressForm(request.POST, instance=a)
         if form.is_valid():
             form.save()
-            msg = 'Address/Domain updated successfully.'
-            messages.success(request, msg)
             return HttpResponseRedirect(reverse('user-profile', args=[a.user.id]))
     else:
         form = EditAddressForm(instance=a)
@@ -192,8 +177,6 @@ def delete_address(request, address_id, template_name='accounts/delete_address.h
     if request.method == 'POST':
         id = a.user.id
         a.delete()
-        msg = 'Address/Domain deleted successfully.'
-        messages.success(request, msg)
         return HttpResponseRedirect(reverse('user-profile', args=[id]))
     else:
         form = DeleteAddressForm(instance=a)
@@ -212,8 +195,6 @@ def change_password(request, user_id, template_name='accounts/change_pw.html'):
         form = AdminPasswordChangeForm(user_account, request.POST)
         if form.is_valid():
             form.save()
-            msg = 'Password changed successfully.'
-            messages.success(request, msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
         form = AdminPasswordChangeForm(user_account)
@@ -259,8 +240,6 @@ def update_profile(request, user_id, template_name='accounts/update_profile.html
             
         if form.is_valid():
             form.save()
-            msg = 'Profile updated successfully.'
-            messages.success(request, msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
         if request.user.is_superuser:

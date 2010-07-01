@@ -25,7 +25,6 @@ from django.template import RequestContext
 from django.db.models import Count, Max, Min
 from django.db import IntegrityError, connection
 from django.utils import simplejson
-from django.contrib import messages
 from django.forms.util import ErrorList as errorlist
 from django.template.defaultfilters import force_escape
 from baruwa.reports.forms import FilterForm, FILTER_ITEMS, FILTER_BY
@@ -119,8 +118,6 @@ def rem_filter(request, index_num):
         request.session.modified = True
         if request.is_ajax():
             return index(request)
-        msg = 'The filter has been removed.'
-        messages.error(request, msg) 
     return HttpResponseRedirect(reverse('reports-index'))
     
 
@@ -136,12 +133,9 @@ def save_filter(request, index_num):
         name = filter_items[filter["field"]]+" "+filter_by[int(filter["filter"])]+" "+filter["value"]
         f = SavedFilter(name=name, field=filter["field"], op_field=filter["filter"], value=filter["value"], user=request.user)
         try:
-            f.save()
-            msg = 'The filter has been saved.'
-            messages.error(request, msg) 
+            f.save() 
         except IntegrityError:
             error_msg = 'This filter already exists'
-            messages.error(request, error_msg)
         if request.is_ajax():
             if error_msg == '':
                 return index(request)
@@ -165,8 +159,6 @@ def load_filter(request, index_num):
         if request.is_ajax():
             return index(request)
         else:
-            msg = 'The filter has been loaded.'
-            messages.error(request, msg) 
             return HttpResponseRedirect(reverse('reports-index'))
     except:
         error_msg = 'This filter you attempted to load does not exist'
@@ -174,7 +166,6 @@ def load_filter(request, index_num):
             response = simplejson.dumps({'success':False,'data':[],'errors':error_msg,'active_filters':[],'saved_filters':[]})
             return HttpResponse(response, content_type='application/javascript; charset=utf-8')
         else:
-            messages.error(request, error_msg)
             return HttpResponseRedirect(reverse('reports-index'))
 
 @login_required
@@ -187,7 +178,6 @@ def del_filter(request, index_num):
             response = simplejson.dumps({'success':False,'data':[],'errors':error_msg,'active_filters':[],'saved_filters':[]})
             return HttpResponse(response, content_type='application/javascript; charset=utf-8')
         else:
-            messages.error(request, error_msg)
             return HttpResponseRedirect(reverse('reports-index'))
     else:
         try:
@@ -196,13 +186,10 @@ def del_filter(request, index_num):
             error_msg = 'Deletion of the filter failed, Try again'
             if request.is_ajax():
                 response = simplejson.dumps({'success':False,'data':[],'errors':error_msg,'active_filters':[],'saved_filters':[]})
-                return HttpResponse(response, content_type='application/javascript; charset=utf-8') 
-            messages.error(request, error_msg)  
+                return HttpResponse(response, content_type='application/javascript; charset=utf-8')  
         if request.is_ajax():
             return index(request)
-        else:
-            msg = 'The filter has been deleted.'
-            messages.error(request, msg) 
+        else: 
             return HttpResponseRedirect(reverse('reports-index'))
             
 @login_required

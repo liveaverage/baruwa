@@ -25,7 +25,6 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedire
 from django.template import RequestContext
 from django.template.defaultfilters import force_escape
 from django.utils import simplejson
-from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.db.models import Q
@@ -182,11 +181,6 @@ def add_to_list(request):
             if request.is_ajax():
                 response = simplejson.dumps({'success':is_saved, 'error_msg':error_msg})
                 return HttpResponse(response, content_type='application/javascript; charset=utf-8')
-            if is_saved:
-                msg = 'The list item has been added successfully.'
-                messages.success(request, msg)
-            else:
-                messages.error(request, error_msg)
         else:
             if request.is_ajax():
                 error_list = form.errors.values()[0]
@@ -209,8 +203,6 @@ def delete_from_list(request, item_id):
             if request.is_ajax():
                 response = simplejson.dumps({'success':True})
                 return HttpResponse(response, content_type='application/javascript; charset=utf-8')
-            msg = 'The list item has been deleted successfully.'
-            messages.success(request, msg)
             return HttpResponseRedirect(reverse('lists-start', args=[id]))
         else:
             if request.is_ajax():
