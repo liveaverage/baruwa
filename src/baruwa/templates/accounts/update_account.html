@@ -9,7 +9,6 @@
     <div class="Account_creation_heading">Update user account</div>
 </div>
 <form action="{% url update-account user_id %}" method="post">
-	{% csrf_token %}
 	{% for hidden in form.hidden_fields %}
 		{{ hidden }}
 	{% endfor %}

@@ -64,7 +64,6 @@ var ax_error = false;
 </div>
 <div class="LightBlue_div">
     <form id="filter-form" method="post" action="{% url reports-index %}">
-		{% csrf_token %}
         <div class="Reports_col">{{ form.filtered_field }}</div>
         <div class="Reports_col">{{ form.filtered_by }}</div>
         <div class="Reports_col"><input type="text" id="id_filtered_value" name="filtered_value" size="30" /></div>

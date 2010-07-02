@@ -9,7 +9,6 @@
     <div class="Bayes_heading">Delete Address</div>
 </div>
 <form action="{% url delete-address address_id %}" method="post">
-	{% csrf_token %}
 	{% for hidden in form.hidden_fields %}
 		{{ hidden }}
 	{% endfor %}

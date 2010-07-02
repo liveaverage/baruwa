@@ -64,7 +64,6 @@ var ax_error = false;
         <div class="content_footer">
             <div id="filterbox" style="display:{% ifnotequal order_by "id" %}block{%else%}none{%endifnotequal%};">
                 <form id="lists_filter_form" method="post" action="/{{app}}/{{direction}}/{{order_by}}/">
-					{% csrf_token %}
                     Filter <span id="filterlabel">
                     {%ifequal order_by "to_address"%}<b>To:</b>{%endifequal%}{%ifequal order_by "from_address"%}<b>From:</b>{%endifequal%}</span>
                     <select id="id_query_type" name="query_type">

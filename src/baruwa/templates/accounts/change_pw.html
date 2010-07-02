@@ -9,7 +9,6 @@
     <div class="Bayes_heading">Change Password</div>
 </div>
 <form action="{% url change-pw user_id %}" method="post">
-	{% csrf_token %}
 	{% for hidden in form.hidden_fields %}
 		{{ hidden }}
 	{% endfor %}
