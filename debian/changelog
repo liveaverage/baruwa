@@ -1,0 +1,24 @@
+baruwa (1.0.0a-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Fri, 02 Jul 2010 11:37:23 +0200
+
+baruwa (0.0.1rc2-1) unstable; urgency=low
+
+  * New upstream release* 
+
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Tue, 25 May 2010 12:23:21 +0200
+
+baruwa (0.0.1rc1-2) unstable; urgency=low
+
+  * Fix packaging bugs* 
+
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Mon, 24 May 2010 14:40:06 +0200
+
+baruwa (0.0.1rc1-1) unstable; urgency=low
+
+  * Initial release (Closes: #9999)  
+  * Switch to dpkg-source 3.0 (quilt) format
+
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Mon, 24 May 2010 14:37:36 +0200

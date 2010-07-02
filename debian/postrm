@@ -1,0 +1,87 @@
+#! /bin/sh
+
+set -e
+
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+    for websvrs in apache2; do
+	if [ -f /etc/$websvrs/sites-enabled/*baruwa ]; then
+		a2dissite baruwa
+	fi
+	rm -f /etc/$websvrs/sites-available/baruwa
+    done
+
+    if [ -f /etc/cron.daily/baruwa ]; then
+	rm -f /etc/cron.daily/baruwa
+    fi
+
+    if [ "$1" = "purge" ]; then
+	if [ -d /etc/baruwa ]; then
+	    rmdir --ignore-fail-on-non-empty /etc/baruwa || true
+	fi
+    fi
+
+    if [ -f /usr/share/debconf/confmodule ]; then
+	. /usr/share/debconf/confmodule
+	db_version 2.0 || [ $? -lt 30 ]
+
+	db_get baruwa/reconfigure || true
+
+	if [ "$1" = "purge" ]; then
+	    db_get baruwa/mysql/configure
+
+	    if [ "$RET" = true ]; then
+		db_get baruwa/purge
+
+		if [ "$RET" = true ]; then
+		    db_get baruwa/mysql/dbserver
+		    dbserver=$RET
+		    db_get baruwa/mysql/dbadmin
+		    dbadmin=$RET
+		    db_input critical baruwa/mysql/dbadmpass || true
+		    db_go || true
+
+		    db_get baruwa/mysql/dbadmpass || true
+		    dbadmpass=$RET
+
+		    if [ -x /usr/share/wwwconfig-common/mysql-dropdb.sh ]; then
+			# remove the database
+			db_get baruwa/mysql/dbname
+			dbname=$RET
+			. /usr/share/wwwconfig-common/mysql-dropdb.sh || true
+		    fi
+
+		    if [ -x /usr/share/wwwconfig-common/mysql-dropuser.sh ]; then
+			# remove user
+			db_get baruwa/mysql/dbuser
+			dbuser=$RET
+			. /usr/share/wwwconfig-common/mysql-dropuser.sh || true
+		    fi
+		fi
+	    fi
+	fi
+
+	db_get baruwa/webserver_type
+	webservers="$RET"
+
+	for webserver in $webservers; do
+	    webserver=${webserver%,}
+
+	    case "$webserver" in
+		apache2)
+		    test -x /usr/sbin/$webserver || continue
+		    if [ -x /usr/sbin/invoke-rc.d ]; then
+			invoke-rc.d $webserver reload 3>/dev/null || true
+		    else
+			/etc/init.d/$webserver reload 3>/dev/null || true
+		    fi
+		    ;;
+	    esac
+	done
+
+	if [ "$1" = "purge" ]; then
+		db_purge
+	fi
+    fi
+fi
+
+#DEBHELPER#

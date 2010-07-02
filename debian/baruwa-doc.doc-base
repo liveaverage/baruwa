@@ -1,0 +1,12 @@
+Document: baruwa-doc
+Title: Baruwa Documentation
+Author: Andrew Colin Kissa
+Abstract: This documentation gives an introduction to Baruwa
+Section: Network/Monitoring
+
+Format: HTML
+Index: /usr/share/doc/baruwa-doc/html/index.html
+Files: /usr/share/doc/baruwa-doc/html/*.html
+
+Format: Text
+Files: /usr/share/doc/baruwa-doc/html/_sources/*.txt

@@ -1,0 +1,78 @@
+
+Template: baruwa/webserver_type
+Type: multiselect
+__Choices: apache2
+Default: apache2
+_Description: Web server to reconfigure automatically:
+ Please choose the web server that should be automatically configured
+ to run baruwa.
+
+Template: baruwa/webserver/vhost
+Type: string
+Default: localhost.localdomain
+_Description: Apache Virtual Host name:
+ Please enter the name of the virtualhost to serve baruwa.
+
+Template: baruwa/mysql/configure
+Type: boolean
+Default: true
+_Description: Configure MySQL?
+ Please confirm whether MySQL should be configured automatically.
+ .
+ If you do not choose this option, please see the instructions in
+ /usr/share/doc/baruwa/README.
+
+Template: baruwa/mysql/dbserver
+Type: string
+Default: localhost
+_Description: MySQL host:
+ Please enter the name or IP address of the MySQL database server
+ that will store the baruwa database.
+
+Template: baruwa/mysql/dbadmin
+Type: string
+Default: root
+_Description: Database server administrator username:
+ Please enter the username of the database server administrator. This
+ account must have database creation privileges.
+
+Template: baruwa/purge
+Type: boolean
+Default: true
+_Description: Delete database on purge?
+ Please choose whether the database should be removed when the baruwa
+ package is purged.
+
+Template: baruwa/mysql/dbname
+Type: string
+Default: baruwa
+_Description: Baruwa database name:
+ Please enter the name of the database that will host data for Baruwa.
+
+Template: baruwa/mysql/dbadmpass
+Type: password
+_Description: Database server administrator password:
+
+Template: baruwa/mysql/dbuser
+Type: string
+Default: baruwa
+_Description: Database user for Baruwa:
+ Please choose the MySQL account that will be used to access the
+ database hosting Baruwa data.
+
+Template: baruwa/mysql/dbpass
+Type: password
+_Description: Database user password:
+ Please choose the password for the account that will be used to
+ access the database hosting Baruwa data.
+
+Template: baruwa/mysql/baruwauser
+Type: string
+Default: baruwa-admin
+_Description: Admin user for Baruwa:
+ Please choose an admin user used to administer the baruwa system..
+
+Template: baruwa/mysql/baruwapass
+Type: password
+_Description: Baruwa admin user password:
+ Please choose the password for the admin account.

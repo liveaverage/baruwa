@@ -1,0 +1,47 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	rm -rf docs.debian
+	rm -f apache.conf
+	dh_auto_clean
+
+override_dh_auto_build:
+	dh_auto_build
+	cp -r docs docs.debian	
+	make -C docs.debian html
+	cp extras/baruwa-mod_wsgi.conf apache.conf	
+	sed -i -e "s|/usr/lib/python2.4/site-packages|/usr/share/pyshared|;s|logs|/var/log/apache2|;" apache.conf
+	
+override_dh_compress:
+	dh_compress -X.sql -X.js -X.pm
+
+override_dh_install:
+	cd debian/baruwa/
+	dh_install
+	dh_install apache.conf /etc/baruwa/
+
+override_dh_pysupport:
+	dh_pysupport
+	cd debian/baruwa/usr/share/pyshared/baruwa/static/js \
+		&& ln -s ../../../../javascript/dijit \
+		&& ln -s ../../../../javascript/dojo \
+		&& ln -s ../../../../javascript/dojox .
+
+override_dh_installdocs:
+	dh_installdocs
+	# Remove embedded copy of libjs-jquery
+	cd debian/baruwa-doc/usr/share/doc/baruwa-doc/html/_static \
+		&& rm jquery.js \
+		&& ln -s ../../../../javascript/jquery/jquery.js .
