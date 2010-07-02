@@ -24,7 +24,7 @@ from django.db.models.signals import post_save
 class UserAddresses(models.Model):
     """
     """
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     address = models.CharField(unique=True, max_length=255)
     enabled = models.BooleanField(default=True)
     user = models.ForeignKey(User)
@@ -44,7 +44,7 @@ class UserProfile(models.Model):
         (3, 'User'),
     )
     
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     send_report = models.BooleanField(default=True)
     scan_mail = models.BooleanField(default=True)
     sa_high_score = models.IntegerField(default=0)

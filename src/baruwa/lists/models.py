@@ -24,7 +24,7 @@ class List(models.Model):
     """
     Spam Whitelist and Blacklist
     """
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     list_type = models.IntegerField(default=0)
     from_address = models.TextField(default='any')
     to_address = models.TextField(default='any')
