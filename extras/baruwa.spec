@@ -10,7 +10,7 @@ Source0:        http://www.topdog-software.com/oss/files/%{name}-%{version}a.tar
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel, python-setuptools, python-sphinx
-Requires:       Django >= 1.1.1, MySQL-python, python-GeoIP, python-IPy, httpd
+Requires:       Django >= 1.2.1, MySQL-python, python-GeoIP, python-IPy, httpd
 
 %description
 Baruwa (swahili for letter or mail) is a web 2.0 MailScanner
@@ -33,7 +33,7 @@ messages to the mysql database with SQLite as backup and for
 managing whitelists and blacklists.
 
 %prep
-%setup -q -n %{name}-%{version}rc1
+%setup -q -n %{name}-%{version}a
 %{__sed} -i 's:/usr/lib/python2.4/site-packages:%{python_sitelib}:' extras/baruwa-mod_wsgi.conf
 
 %{__cat} <<'EOF' > %{name}.cron
@@ -71,6 +71,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__chmod} 0755 $RPM_BUILD_ROOT%{python_sitelib}/%{name}/manage.py
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily
+%{__install} -d -p $RPM_BUILD_ROOT%{_libdir}/%{name}
+%{__install} -p -m0644 extras/*.pm $RPM_BUILD_ROOT%{_prefix}/lib/%{name}/
 %{__install} -p -m0644 extras/baruwa-mod_wsgi.conf $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
 %{__install} -p -m0755 %{name}.cron $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily/%{name}
 
@@ -81,14 +83,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS LICENSE README TODO UPGRADE docs/build/html docs/source
+%doc AUTHORS LICENSE README UPGRADE docs/build/html docs/source
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 %{_sysconfdir}/cron.daily/%{name}
 %{python_sitelib}/*
+%{_prefix}/lib/%{name}/
 
 
 %changelog
-* Web Jun 30 2010 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.0-0.1.a
+* Wed Jun 30 2010 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.0-0.1.a
 - Upgrade to latest version
 
 * Tue May 11 2010 Andrew Colin Kissa <andrew@topdog.za.net> 0.0.1-0.3.rc1
