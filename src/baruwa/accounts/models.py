@@ -25,7 +25,7 @@ class UserAddresses(models.Model):
     """
     """
     id = models.IntegerField(primary_key=True)
-    address = models.TextField(unique=True)
+    address = models.TextField(unique=True, max_length=300)
     enabled = models.BooleanField(default=True)
     user = models.ForeignKey(User)
 
