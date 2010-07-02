@@ -62,11 +62,11 @@ class Message(models.Model):
     """
 
     id = models.CharField(max_length=255, primary_key=True)
-    actions = models.TextField(max_length=100)
+    actions = models.CharField(max_length=255)
     clientip = models.IPAddressField()
     date = models.DateField()
-    from_address = models.TextField(blank=True, db_index=True)
-    from_domain = models.TextField(db_index=True)
+    from_address = models.CharField(blank=True, db_index=True)
+    from_domain = models.CharField(db_index=True)
     headers = models.TextField()
     hostname = models.TextField()
     highspam = models.IntegerField(default=0, db_index=True)
@@ -85,8 +85,8 @@ class Message(models.Model):
     subject = models.TextField(blank=True)
     time = models.TimeField()
     timestamp = models.DateTimeField()
-    to_address = models.TextField(db_index=True)
-    to_domain = models.TextField(db_index=True)
+    to_address = models.CharField(db_index=True)
+    to_domain = models.CharField(db_index=True)
     virusinfected = models.IntegerField(default=0)
     
     objects = models.Manager()
