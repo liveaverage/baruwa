@@ -805,6 +805,7 @@ div.blacklist {
 	font-weight:normal;
 	float:left;margin:0px;
 	padding:7px 10px 7px 0px;
+	overflow:hidden;
 }
 
 .To_row{
@@ -816,6 +817,7 @@ div.blacklist {
 	float:left;
 	margin:0px;
 	padding:7px 5px 7px 7px;
+	overflow:hidden;
 }
 
 .Subject_row{
@@ -826,6 +828,7 @@ div.blacklist {
 	font-weight:normal;
 	float:left;margin:0px;
 	padding:7px 5px 7px 5px;
+	overflow:hidden;
 }
 
 .Size_row{
@@ -836,6 +839,7 @@ div.blacklist {
 	font-weight:normal;
 	float:left;margin:0px;
 	padding:7px 0 7px 0;
+	overflow:hidden;
 }
 
 .Score_row{

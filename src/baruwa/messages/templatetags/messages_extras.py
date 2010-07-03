@@ -43,7 +43,7 @@ def tds_msg_class(message):
     if message['nameinfected'] or message['virusinfected']:
         value='infected'
     if not message['scaned']:
-        value='White'
+        value='LightGray'
     return mark_safe(value)
 
 @register.filter(name='tds_msg_status')

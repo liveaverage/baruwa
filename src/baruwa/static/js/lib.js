@@ -110,6 +110,10 @@ function json2html(data){
                 mstatus = 'BL';
                 c =  'blacklisted';
             }
+            if (!n.scaned) {
+                mstatus = 'NS';
+                c = 'LightGray';
+            };
             rows[count++] = '<div class="'+stripHTML(c)+'_div">';
             rows[count++] = '<div class="Date_Time"><a href="/messages/'+n.id+'/">'+n.timestamp+'</a></div>';
             rows[count++] = '<div class="From_row"><a href="/messages/'+n.id+'/">'+from+'</a></div>';
