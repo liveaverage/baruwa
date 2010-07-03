@@ -46,7 +46,7 @@ def index(request):
     AND otherinfected=0 AND highspam=0 THEN 1 ELSE 0 END) AS spam_mail,
     SUM(CASE WHEN highspam>0 AND virusinfected=0 AND nameinfected=0
     AND otherinfected=0 THEN 1 ELSE 0 END) AS high_spam,
-    SUM(size) AS size FROM messages WHERE date = %s
+    SUM(size) AS size FROM messages WHERE date = '%s'
     """ % today
     if request.user.is_superuser:
         c.execute(q)

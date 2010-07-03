@@ -8,7 +8,7 @@
 <div class="Grid_heading">
     <div class="Bayes_heading">Change Password</div>
 </div>
-<form action="{% url change-pw user_id %}" method="post">
+<form action="{% url django.contrib.auth.views.password_change %}" method="post">
 	{% for hidden in form.hidden_fields %}
 		{{ hidden }}
 	{% endfor %}

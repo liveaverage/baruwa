@@ -25,10 +25,12 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
+from django.template.loader import render_to_string
 from baruwa.messages.models import Message
 from baruwa.messages.forms import QuarantineProcessForm
 from baruwa.utils.process_mail import search_quarantine, host_is_local, release_mail, \
-    parse_email, remote_attachment_download, remote_preview, remote_process, return_attachment
+    parse_email, remote_attachment_download, remote_preview, remote_process, \
+    return_attachment, sa_learn
 from baruwa.utils.misc import jsonify_msg_list, apply_filter
 import re, urllib
 
@@ -144,7 +146,7 @@ def detail(request, message_id):
                         else:
                             to_addr = message_details.to_address
                         to_addr = to_addr.split(',')
-                        if not release_mail(file_name,to_addr,m.from_address):
+                        if not release_mail(file_name,to_addr,message_details.from_address):
                             success = False
                         template = 'messages/released.html'
                         html = render_to_string(template, {'id': message_details.id,'addrs':to_addr,'success':success})

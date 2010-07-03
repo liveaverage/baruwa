@@ -150,7 +150,7 @@ function do_quarantine_release(event){
     $.post($('#qform').attr('action'),quarantine_process_request,
         function(response){
             $('#filter-ajax').remove();
-            if(response.success == 'True'){
+            if(response.success){
                 if($('#info-msg').length){clearTimeout(timeout);$('#info-msg').remove();}
                 $('#qheading').after('<div id="info-msg">'+response.html+'</div>');
                 $('#info-msg').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
