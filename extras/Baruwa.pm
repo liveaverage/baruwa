@@ -23,18 +23,18 @@ use strict;
 use Sys::Hostname;
 use Storable(qw[freeze thaw]);
 use POSIX;
-use Socket;
+use IO::Socket;
 use DBI;
 use CouchDB::Client;
 
 my ($db);
 my ($bdb);
 my ($sth);
-my ($couchhost) = "127.0.0.1";
-my ($couchport) = "5984";
-my ($sqlite_db) = "/var/spool/MailScanner/incoming/baruwa.db";
+my ($couchhost) = '127.0.0.1';
+my ($couchport) = '5984';
+my ($sqlite_db) = '/var/spool/MailScanner/incoming/baruwa.db';
 my ($hostname)  = hostname;
-my $loop        = inet_aton("127.0.0.1");
+my $server_addr = '127.0.0.1';
 my $server_port = 11554;
 my $timeout     = 3600;
 
@@ -120,11 +120,13 @@ sub PrepSqlite {
 }
 
 sub InitCouchConnection() {
-    socket( SERVER, PF_INET, SOCK_STREAM, getprotobyname("tcp") );
-    setsockopt( SERVER, SOL_SOCKET, SO_REUSEADDR, 1 );
-    my $addr = sockaddr_in( $server_port, $loop );
-    bind( SERVER, $addr ) or exit;
-    listen( SERVER, SOMAXCONN ) or exit;
+    $server = IO::Socket::INET->new(
+        LocalAddr => $server_addr,
+        LocalPort => $server_port,
+        Proto     => 'tcp',
+        Listen    => SOMAXCONN,
+        Reuse     => 1
+    ) or exit;
 
     my $couch = CouchDB::Client->new( uri => "http://$couchhost:$couchport" );
     if ( !$couch->testConnection ) {
@@ -137,23 +139,24 @@ sub InitCouchConnection() {
 }
 
 sub ExitBaruwaLogging {
-    close(SERVER);
+    close($server);
     eval { $bdb->disconnect; };
     exit;
 }
 
 sub ListenForMessages {
-    my $message;
-    while ( my $cli = accept( CLIENT, SERVER ) ) {
-        my ( $port, $packed_ip ) = sockaddr_in($cli);
-        my $dotted_quad = inet_ntoa($packed_ip);
+    my ($message, $client, $client_address);
+    while ( ( $client, $client_address ) = $server->accept() ) {
+        my ( $port, $packed_ip ) = sockaddr_in($client_address);
+        my $client_ip = inet_ntoa($packed_ip);
         alarm $timeout;
-        if ( $dotted_quad ne "127.0.0.1" ) {
-            close CLIENT;
+        if ( $client_ip ne '127.0.0.1' ) {
+            close($client);
             next;
         }
+        
         my @in;
-        while (<CLIENT>) {
+        while (<$client>) {
             last if /^END$/;
             ExitBaruwaLogging if /^EXIT$/;
             chop;
@@ -171,7 +174,7 @@ sub ListenForMessages {
         eval { my $doc = $db->newDoc( $msgid, undef, $message )->create; };
         if ($@) {
             MailScanner::Log::InfoLog(
-"$msgid: Baruwa CouchDB Cannot create record - falling back on sql"
+                "$msgid: Baruwa CouchDB Cannot create record - falling back on sql"
             );
             $sth->execute(
                 $$message{timestamp},       $msgid,
@@ -200,11 +203,14 @@ sub ListenForMessages {
 
 sub EndBaruwaLogging {
     MailScanner::Log::InfoLog("Shutting down Baruwa CouchDB logger");
-    socket( TO_SERVER, PF_INET, SOCK_STREAM, getprotobyname("tcp") );
-    my $addr = sockaddr_in( $server_port, $loop );
-    connect( TO_SERVER, $addr ) or return;
-    print TO_SERVER "EXIT\n";
-    close TO_SERVER;
+    my $client = IO::Socket::INET->new(
+        PeerAddr => $server_addr,
+        PeerPort => $server_port,
+        Proto    => 'tcp',
+        Type     => SOCK_STREAM
+    ) or return;
+    print $client "EXIT\n";
+    close($client);
 }
 
 sub BaruwaLogging {
@@ -296,17 +302,19 @@ sub BaruwaLogging {
         $spamreport = '';
     }
 
+    my @actions = split(',', $message->{actions});
+    
     my %msg;
     $msg{timestamp}       = $timestamp;
     $msg{id}              = $message->{id};
     $msg{size}            = $message->{size};
     $msg{from_address}    = $message->{from};
     $msg{from_domain}     = $message->{fromdomain};
-    $msg{to_address}      = join( ",", @{ $message->{to} } );
+    $msg{to_address}      = $message->{to};
     $msg{to_domain}       = $todomain;
-    $msg{subject}         = $message->{subject};
+    $msg{subject}         = $message->{utf8subject};
     $msg{clientip}        = $clientip;
-    $msg{archiveplaces}   = join( ",", @{ $message->{archiveplaces} } );
+    $msg{archiveplaces}   = $message->{archiveplaces};
     $msg{isspam}          = $message->{isspam};
     $msg{ishigh}          = $message->{ishigh};
     $msg{issaspam}        = $message->{issaspam};
@@ -315,32 +323,36 @@ sub BaruwaLogging {
     $msg{spamblacklisted} = $message->{spamblacklisted};
     $msg{sascore}         = $message->{sascore};
     $msg{spamreport}      = $spamreport;
-    $msg{virusinfected}   = $message->{virusinfected};
+    $msg{virusinfected}   = int($message->{virusinfected});
     $msg{nameinfected}    = $message->{nameinfected};
     $msg{otherinfected}   = $message->{otherinfected};
     $msg{hostname}        = $hostname;
     $msg{date}            = $date;
     $msg{time}            = $time;
-    $msg{headers}         = join( "\n", @{ $message->{headers} } );
-    $msg{actions}         = $message->{actions};
+    $msg{headers}         = $message->{headers};
+    $msg{actions}         = \@actions;
     $msg{quarantined}     = $quarantined;
     $msg{scanmail}        = $message->{scanmail};
 
     my $f = freeze \%msg;
     my $p = pack( "u", $f );
 
+    my $client_socket;
     while (1) {
-        socket( TO_SERVER, PF_INET, SOCK_STREAM, getprotobyname("tcp") );
-        my $addr = sockaddr_in( $server_port, $loop );
-        connect( TO_SERVER, $addr ) and last;
+        $client_socket = IO::Socket::INET->new(
+            PeerAddr => $server_addr,
+            PeerPort => $server_port,
+            Proto    => 'tcp',
+            Type     => SOCK_STREAM
+        ) and last;
         InitBaruwaLogging();
         sleep 5;
     }
 
     MailScanner::Log::InfoLog("Logging message $msg{id} to CouchDB");
-    print TO_SERVER $p;
-    print TO_SERVER "END\n";
-    close TO_SERVER;
+    print $client_socket $p;
+    print $client_socket "END\n";
+    close $client_socket;
 }
 
 1;
