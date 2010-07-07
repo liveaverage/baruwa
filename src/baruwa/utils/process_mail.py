@@ -81,8 +81,12 @@ def get_header(header_text, default="ascii"):
     """
     Returns the headers from text
     """
-    headers = decode_header(header_text)
-    header_sections = [unicode(text, charset or default) for text, charset in headers]
+    header_sections = []
+    try:
+        headers = decode_header(header_text)
+        header_sections = [unicode(text, charset or default) for text, charset in headers]
+    except:
+        pass
     return u"".join(header_sections)
 
 def parse_email(msg):
