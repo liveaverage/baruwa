@@ -10,7 +10,7 @@ Source0:        http://www.topdog-software.com/oss/files/%{name}-%{version}a.tar
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel, python-setuptools, python-sphinx
-Requires:       Django >= 1.2.1, MySQL-python, python-GeoIP, python-IPy, httpd, dojo
+Requires:       Django >= 1.1.1, MySQL-python, python-GeoIP, python-IPy, httpd, dojo, mailscanner
 
 %description
 Baruwa (swahili for letter or mail) is a web 2.0 MailScanner
@@ -71,7 +71,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__chmod} 0755 $RPM_BUILD_ROOT%{python_sitelib}/%{name}/manage.py
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily
-%{__install} -d -p $RPM_BUILD_ROOT%{_libdir}/%{name}
+%{__install} -d -p $RPM_BUILD_ROOT%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions
+%{__install} -d -p $RPM_BUILD_ROOT%{_prefix}/lib/%{name}
 %{__install} -p -m0644 extras/*.pm $RPM_BUILD_ROOT%{_prefix}/lib/%{name}/
 %{__install} -p -m0644 extras/baruwa-mod_wsgi.conf $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
 %{__install} -p -m0755 %{name}.cron $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily/%{name}
@@ -80,7 +81,10 @@ ln -s ../../../../../../share/dojo/dojo .
 ln -s ../../../../../../share/dojo/dojox .
 ln -s ../../../../../../share/dojo/dijit .
 popd
- 
+pushd $RPM_BUILD_ROOT%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions
+ln -s ../../../baruwa/BaruwaSQL.pm .
+ln -s ../../../baruwa/BaruwaLists.pm .
+popd  
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -92,6 +96,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/cron.daily/%{name}
 %{python_sitelib}/*
 %{_prefix}/lib/%{name}/
+%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions/BaruwaSQL.pm
+%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions/BaruwaLists.pm
 
 
 %changelog
