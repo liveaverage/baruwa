@@ -27,9 +27,7 @@ use IO::Socket;
 use DBI;
 use CouchDB::Client;
 
-my ($db);
-my ($bdb);
-my ($sth);
+my ($db, $bdb, $sth, $server);
 my ($couchhost) = '127.0.0.1';
 my ($couchport) = '5984';
 my ($sqlite_db) = '/var/spool/MailScanner/incoming/baruwa.db';
