@@ -108,7 +108,7 @@ class UserAddressForm(forms.ModelForm):
         
     class Meta:
         model = UserAddresses
-        exclude = ('id')
+        exclude = ('id', 'address_type')
         
 class EditAddressForm(forms.ModelForm):
     "Edit address"
@@ -141,7 +141,7 @@ class EditAddressForm(forms.ModelForm):
            
     class Meta:
         model = UserAddresses
-        exclude = ('id')
+        exclude = ('id', 'address_type')
         
 class DeleteAddressForm(forms.ModelForm):
     "Delete address"

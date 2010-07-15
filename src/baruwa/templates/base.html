@@ -17,9 +17,6 @@
         	<div class="Link">
                 <ul>
 					<li>Signed in as <a href="{% url user-profile user.id %}">{{user.username}}</a></li>
-                    {% ifnotequal request.session.user_filter.account_type 3 %}
-                    <li><a href="{% url accounts %}">Accounts</a></li>
-                    {% endifnotequal %}
                     <li><a href="{% url logout %}">Logout</a></li>
                 </ul>
             </div>
@@ -39,6 +36,7 @@
             <a href="{% url lists-index %}" class="topnav"><span>Lists</span></a> 
             <a href="{% url reports-index %}" class="topnav"><span>Reports</span></a> 
             <a href="{% url status-index %}" class="topnav"><span>Status</span></a>
+			<a href="{% url settings-index %}" class="topnav"><span>Settings</span></a>
         </div> <!-- Mainnav end here -->
    </div> <!-- Box_Mainnav end here -->
    <div class="clearer"></div>

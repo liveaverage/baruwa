@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block headers %}
+{% endblock headers %}
+{% block submenu %}
+<ul>
+  <li><a href="">Add Domain</a></li>
+  <li><a href="{% url accounts %}">Accounts</a></li>
+  <li><a href="">Scanners</a></li>
+</ul>	
+{% endblock submenu %}
+{% block title %}Settings{% endblock title %}
+{% block heading %}Settings :: Domains{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+	<div class="Domains_grid_hash">		
+	</div>
+	<div class="Domains_grid_name">
+		Domain Name
+	</div>
+	<div class="Domains_grid_owner">
+		Owner
+	</div>
+	<div class="Domains_grid_status">
+		Status
+	</div>
+	<div class="Domains_grid_action">
+		Actions
+	</div>
+</div>
+{% for domain in object_list %}
+<div class="{% cycle 'LightBlue' 'DarkGray' %}_div">
+	<div class="Domains_hash">
+		{% if domain.enabled %}
+			<img src="{{ MEDIA_URL }}imgs/domain-active.png" alt="" />
+		{% else %}
+			<img src="{{ MEDIA_URL }}imgs/domain-inactive.png" alt="" />
+		{% endif %}	
+	</div>
+	<div class="Domains_name">
+		<a href="">{{ domain.address }}</a>
+	</div>
+	<div class="Domains_owner">
+		<a href="{% url user-profile domain.user.id %}">{{ domain.user.first_name }} {{ domain.user.last_name }} ( {{ domain.user.username }} )</a>
+	</div>
+	<div class="Domains_status">
+		{% if domain.enabled %}
+			<img src="{{ MEDIA_URL }}imgs/tick.png" alt="" />
+		{% else %}
+			<img src="{{ MEDIA_URL }}imgs/minus.png" alt="" />
+		{% endif %}
+	</div>
+	<div class="Domains_action">
+		<div class="Domains_action_edit">
+			<a href="{% url edit-address domain.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+		</div>
+		<div class="Domains_action_delete">
+			<a href="{% url delete-address domain.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="spanrow">No domains found</div>
+{% endfor %}
+{% endblock content %}

@@ -5,6 +5,8 @@
 {% if user.is_superuser %}
 <ul>
   <li><a id="user-add" href="{% url create-account %}">Create account</a></li>
+  <li><a href="{% url settings-index %}">Domains</a></li>
+  <li><a href="">Scanners</a></li>
 </ul>	
 {% endif %}
 {% endblock submenu %}

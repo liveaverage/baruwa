@@ -18,17 +18,10 @@
 #
 # vim: ai ts=4 sts=4 et sw=4
 from django.conf.urls.defaults import *
-import os
 
-CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8')).replace('\\', '/')
-
-urlpatterns = patterns('',
-    (r'^$', 'baruwa.messages.views.index', {}, 'index-page'),
-    (r'^messages/', include('baruwa.messages.urls')),
-    (r'^lists/', include('baruwa.lists.urls')),
-    (r'^reports/', include('baruwa.reports.urls')),
-    (r'^status/', include('baruwa.status.urls')),
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root' : os.path.join(CURRENT_PATH, 'static') }),
-    (r'^accounts/', include('baruwa.accounts.urls')),
-    (r'^settings/', include('baruwa.config.urls')),
+urlpatterns = patterns('baruwa.config.views',
+    (r'^$', 'index', {}, 'settings-index'),
+    (r'^(?P<page>([0-9]+|last))/$','index'), 
+    (r'^domains/add/$', 'add_domain', {}, 'add-domain'),
+    (r'^domains/view/(?P<domain_id>([0-9]+))/$', 'view_domain', {}, 'view-domain'),
 )

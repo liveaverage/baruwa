@@ -21,19 +21,47 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
+
 class UserAddresses(models.Model):
     """
     """
+    ADDRESS_TYPES = (
+        (1, 'Domain'),
+        (2, 'email'),
+    )
     id = models.AutoField(primary_key=True)
     address = models.CharField(unique=True, max_length=255)
     enabled = models.BooleanField(default=True)
     user = models.ForeignKey(User)
+    address_type = models.IntegerField(choices=ADDRESS_TYPES, default=2) 
 
     class Meta:
         db_table = 'user_addresses'
 
     def __unicode__(self):
         return u"Address for user "+ self.user.username
+        
+    def save(self):
+        ""
+        account = UserProfile.objects.get(user=self.user)
+        if account.account_type == 2:
+            self.address_type = 1
+        else:
+            self.address_type = 2
+        super(UserAddresses, self).save()
+        
+class MailHost(models.Model):
+    """Mail hosts"""
+    id = models.AutoField(primary_key=True)
+    address = models.CharField(max_length=255)
+    enabled = models.BooleanField(default=True)
+    useraddress = models.ForeignKey(UserAddresses)
+
+    class Meta:
+        db_table = 'mail_hosts'
+
+    def __unicode__(self):
+        return u"Mail host "+ self.address
         
 class UserProfile(models.Model):
     """
