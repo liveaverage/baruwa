@@ -1,0 +1,8 @@
+<div class="LightBlue_div">
+    <form id="filter-form" method="post" action="{% url reports-index %}">
+        <div class="Reports_col">{{ form.filtered_field }}</div>
+        <div class="Reports_col">{{ form.filtered_by }}</div>
+        <div class="Reports_col"><input type="text" id="id_filtered_value" name="filtered_value" size="30" /></div>
+        <div class="Reports_col"><input id="filter_form_submit" type="submit" value="Add" /></div>
+    </form>
+</div>
