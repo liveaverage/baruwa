@@ -22,6 +22,5 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('baruwa.config.views',
     (r'^$', 'index', {}, 'settings-index'),
     (r'^(?P<page>([0-9]+|last))/$','index'), 
-    (r'^domains/add/$', 'add_domain', {}, 'add-domain'),
     (r'^domains/view/(?P<domain_id>([0-9]+))/$', 'view_domain', {}, 'view-domain'),
 )

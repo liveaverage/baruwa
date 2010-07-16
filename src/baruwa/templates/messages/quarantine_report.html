@@ -14,6 +14,11 @@
         </tr>
     </table>
     <table width="600" cellpadding="10" cellspacing="0" bgcolor="#FFFFFF" style="border-bottom:1px solid #DDDDDD;border-top:1px solid #DDDDDD;border-left:1px solid #DDDDDD;border-right:1px solid #DDDDDD;">
+        {% load messages_extras %}
+		{% if spam_items %}
+		<tr>
+			<td colspan="5" style="font-weight:bold;font-size:14px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">Spam Report</td>
+		</tr>
         <tr>
             <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
                 Date/Time
@@ -28,14 +33,10 @@
                 Subject
             </td>
             <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                Reason
-            </td>
-            <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                View
+                Release
             </td>
         </tr>
-        {% load messages_extras %}
-        {% for item in items %}
+        {% for item in spam_items %}
         <tr bgcolor="{% cycle '#FFFFFF' '#EEEEEE' %}">
             <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
                 {{ item.timestamp }}
@@ -47,18 +48,57 @@
                 {{ item.to_address|tds_wrap:50 }}
             </td>
             <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                {{ item.subject|striptags|escape|tds_trunc:45 }}
+                {{ item.subject|striptags|escape|tds_trunc:50 }}
             </td>
             <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-           		{{ item|tds_msg_status }}
-            </td>
-            <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                <a style="text-decoration:none;" href="{% if host_url %}{{ host_url }}{% endif %}{% url message-detail item.id %}">View</a>
+                <a style="text-decoration:none;" href="{% if host_url %}{{ host_url }}{% endif %}{% url message-detail item.id %}">Release</a>
             </td>
         </tr>
         {% endfor %}
+		{% endif %}
+		{% if policy_items %}
+		<tr>
+			<td colspan="5" style="font-weight:bold;font-size:14px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">Policy Blocked Report</td>
+		</tr>
         <tr>
-            <td colspan="6" style="background-color:#FFFFCC;border-top:10px;" valign="center">
+            <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                Date/Time
+            </td>
+            <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                From
+            </td>
+            <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                To
+            </td>
+            <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                Subject
+            </td>
+            <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                Release
+            </td>
+        </tr>
+		{% for item in policy_items %}
+        <tr bgcolor="{% cycle '#FFFFFF' '#EEEEEE' %}">
+            <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                {{ item.timestamp }}
+            </td>
+            <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                {{ item.from_address|tds_wrap:50 }}
+            </td>
+            <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                {{ item.to_address|tds_wrap:50 }}
+            </td>
+            <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                {{ item.subject|striptags|escape|tds_trunc:50 }}
+            </td>
+            <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
+                <a style="text-decoration:none;" href="{% if host_url %}{{ host_url }}{% endif %}{% url message-detail item.id %}">Release</a>
+            </td>
+        </tr>			
+		{% endfor %}	
+		{% endif %}
+        <tr>
+            <td colspan="5" style="background-color:#FFFFCC;border-top:10px;" valign="center">
                 <span style="font-size:10px;color:#996600;line-height:10%;font-family:verdana;">
                     &copy; 2010 Powered by <a style="text-decoration:none;" href="http://www.topdog.za.net/baruwa">Baruwa</a>
                 </span>

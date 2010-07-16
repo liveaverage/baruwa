@@ -2,12 +2,27 @@
 Baruwa
 ======
 
-Date/Time   From            To          Subject             Reason
-===================================================================
 {% load messages_extras %}
-{% for item in items %}
-+ {{ item.timestamp }}  {{ item.from_address }}         {{ item.to_address }}           {{ item.subject }}              {{ item|tds_msg_status }}
+{% if spam_items %}
+Spam Report
+============
+
+Date/Time   From            To          Subject          
+===================================================================	
+{% for item in spam_items %}
++ {{ item.timestamp }}  {{ item.from_address }}         {{ item.to_address }}           {{ item.subject }}              
 {% endfor %}
+{% endif %}
+{% if policy_items %}
+Policy Blocked Report
+=====================
+
+Date/Time   From            To          Subject             
+===================================================================
+{% for item in policy_items %}
++ {{ item.timestamp }}  {{ item.from_address }}         {{ item.to_address }}           {{ item.subject }}              
+{% endfor %}
+{% endif %}
 
 {% if host_url %}
 To view these quarantined messages please visit :

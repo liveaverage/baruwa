@@ -1,4 +1,16 @@
+- Write a new paginator (split messages from other apps)
 - Caching
 - Queue management
 - PDF reports
 - Blocked file report
+- Auto release (hashed url)
+- Reformat the quarantine report DONE
+- Domain management (deliver to) [destinations,port, multiplex, test destination]
+- Filter queries on the reports pages
+- Re-factor the accounts system to link to domains
+- Status aggregation [rrd graphs]
+- Separate spam from other quarantined mail. DONE
+- SQL based configuration management
+- Ajaxify the whole app
+- Achieve to document store.
+- fix queries (scaned)

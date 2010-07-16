@@ -36,12 +36,6 @@ def index(request, page=1, template='config/index.html'):
     return  object_list(request, template_name=template, 
         queryset=domains, paginate_by=10, page=page, extra_context={'app':'settings', 'list_all':1})
     #
-
-@login_required
-@onlysuperusers    
-def add_domain(request, template='config/add_domain.html'):
-    """add_domain"""
-    return render_to_response(template, locals(), context_instance=RequestContext(request))
     
 def view_domain(request, template='config/domain.html'):
     ""

@@ -35,9 +35,10 @@ from baruwa.utils.misc import jsonify_msg_list, apply_filter
 import re, urllib
 
 @login_required
-def index(request, list_all=0, page=1, quarantine=0, direction='dsc', order_by='timestamp'):
+def index(request, list_all=0, page=1, quarantine=0, direction='dsc', order_by='timestamp', show_only=0):
     """index"""
     active_filters = []
+    show_only = int(show_only)
     ordering = order_by
     if direction == 'dsc':
         ordering = order_by
@@ -62,6 +63,10 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc', order_by='
             message_list = Message.quarantine.for_user(request).values('id','timestamp','from_address',
             'to_address','subject','size','sascore','highspam','spam','virusinfected','otherinfected',
             'whitelisted','blacklisted','isquarantined','nameinfected','scaned').order_by(order_by)
+            if show_only == 1:
+                message_list = message_list.filter(spam=1)
+            if show_only == 2:
+                message_list = message_list.filter(spam=0)
         else:
             message_list = Message.messages.for_user(request).values('id','timestamp','from_address',
             'to_address','subject','size','sascore','highspam','spam','virusinfected','otherinfected',

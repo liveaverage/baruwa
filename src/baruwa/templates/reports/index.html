@@ -62,14 +62,7 @@ var ax_error = false;
 <div id="afform" class="header_div">
     <div class="Reports_heading">Add Filter</div>
 </div>
-<div class="LightBlue_div">
-    <form id="filter-form" method="post" action="{% url reports-index %}">
-        <div class="Reports_col">{{ form.filtered_field }}</div>
-        <div class="Reports_col">{{ form.filtered_by }}</div>
-        <div class="Reports_col"><input type="text" id="id_filtered_value" name="filtered_value" size="30" /></div>
-        <div class="Reports_col"><input id="filter_form_submit" type="submit" value="Add" /></div>
-    </form>
-</div>
+{% include "reports/filter.form.html" %}
 <div id="aheading" class="header_div">
     <div class="Reports_heading">Active Filter(s)</div>
 </div>

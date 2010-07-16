@@ -40,20 +40,28 @@ class QuarantineMessageManager(models.Manager):
             addresses = request.session['user_filter']['addresses']
             account_type = request.session['user_filter']['account_type']
             if account_type == 2:
-                return super(QuarantineMessageManager, self).get_query_set().filter(Q(from_domain__in=addresses) | Q(to_domain__in=addresses)).filter(isquarantined__exact=1)
+                return super(QuarantineMessageManager, self).get_query_set().filter(Q(from_domain__in=addresses)\
+                 | Q(to_domain__in=addresses)).filter(isquarantined__exact=1)
             if account_type == 3:
-                return super(QuarantineMessageManager, self).get_query_set().filter(Q(from_address__in=addresses) | Q(to_address__in=addresses)).filter(isquarantined__exact=1)
+                return super(QuarantineMessageManager, self).get_query_set().filter(Q(from_address__in=addresses)\
+                 | Q(to_address__in=addresses)).filter(isquarantined__exact=1)
         return super(QuarantineMessageManager, self).get_query_set().filter(isquarantined__exact=1)
         
 class EmailReportMessageManager(models.Manager):
     "Used in processing the quarantine email reports"
-    def for_user(self, addresses, account_type):
-        if account_type == 1:
+    def for_user(self, user):
+        from baruwa.accounts.models import UserProfile, UserAddresses
+        addresses = UserAddresses.objects.values('address').filter(user=user).exclude(enabled=0)
+        account_type = UserProfile.objects.values('account_type').get(user=user)
+        if user.is_superuser:
             return super(EmailReportMessageManager, self).get_query_set().filter(isquarantined__exact=1)
-        elif account_type == 2:
-            return super(EmailReportMessageManager, self).get_query_set().filter(Q(from_domain__in=addresses) | Q(to_domain__in=addresses)).filter(isquarantined__exact=1)
         else:
-            return super(EmailReportMessageManager, self).get_query_set().filter(Q(from_address__in=addresses) | Q(to_address__in=addresses)).filter(isquarantined__exact=1)
+            if account_type == 1:
+                return super(EmailReportMessageManager, self).get_query_set().filter(Q(from_domain__in=addresses)\
+                | Q(to_domain__in=addresses)).filter(isquarantined__exact=1)
+            else:
+                return super(EmailReportMessageManager, self).get_query_set().filter(Q(from_address__in=addresses)\
+                | Q(to_address__in=addresses) | Q(to_address=user.username) | Q(from_address=user.username)).filter(isquarantined__exact=1)
 
 class Message(models.Model):
     """

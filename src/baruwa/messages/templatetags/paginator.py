@@ -58,11 +58,15 @@ def paginator(context, adjacent_pages=2):
 
     if not context.has_key('order_by'):
         context['order_by'] = None
+        
     if not context.has_key('search_for'):
         context['search_for'] = None
 
     if not context.has_key('query_type'):
         context['query_type'] = None
+        
+    if not context.has_key('show_only'):
+        context['show_only'] = None
 
     return {
         'page_obj': page_obj,
@@ -85,6 +89,7 @@ def paginator(context, adjacent_pages=2):
         'search_for': context['search_for'],
         'query_type': context['query_type'],
         'list_all': context['list_all'],
+        'show_only': context['show_only'],
     }
 
 register.inclusion_tag('tags/paginator.html', takes_context=True)(paginator)
