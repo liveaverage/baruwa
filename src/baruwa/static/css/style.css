@@ -271,7 +271,7 @@ div.blacklist {
     width:949px;
 }
 
-#filter-error #dismiss, #in-progress #dismiss, #info-msg #dismiss {
+#filter-error #dismiss, #in-progress #dismiss, #info-msg #dismiss, #builtin-msg #dismiss {
     float:right;
     padding-right:15px;
 }
@@ -1725,7 +1725,7 @@ div.blacklist {
     float:left;
 }
 
-.Profile_cols{
+.Profile_cols, .Domain_cols{
 	width:478px;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;
@@ -1735,7 +1735,7 @@ div.blacklist {
 	padding:7px 0 7px 10px;
 }
 
-.Profile_values{
+.Profile_values, .Domain_values{
 	width:488px;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#000;

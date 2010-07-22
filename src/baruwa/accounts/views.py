@@ -17,16 +17,18 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
+#
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, AdminPasswordChangeForm
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponseForbidden
-from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, REDIRECT_FIELD_NAME, logout
 from django.contrib.auth.models import User
+from django.template import RequestContext
 from baruwa.accounts.forms import UserProfileForm, UserCreateForm, UserAddressForm, \
 OrdUserProfileForm, UserUpdateForm, AdminUserUpdateForm, EditAddressForm, \
 DeleteAddressForm, DeleteUserForm
@@ -54,7 +56,7 @@ def login(request, redirect_field_name=REDIRECT_FIELD_NAME):
     else:
         form = AuthenticationForm(request)
     request.session.set_test_cookie()
-    return render_to_response('accounts/login.html', {'form': form,redirect_field_name: redirect_to,},
+    return render_to_response('accounts/login.html', {'form': form,redirect_field_name: redirect_to},
         context_instance=RequestContext(request))
 
 @login_required
@@ -73,7 +75,8 @@ def index(request, page=1, direction='dsc', order_by='id'):
         users = User.objects.filter(q)
         
     return object_list(request, template_name='accounts/index.html', 
-        queryset=users, paginate_by=10, page=page, extra_context={'app':'accounts', 'list_all':1})
+        queryset=users, paginate_by=20, page=page, extra_context={'app':'accounts',
+        'list_all':1, 'direction':direction, 'order_by':order_by}, allow_empty=True)
         
 @login_required
 @onlysuperusers

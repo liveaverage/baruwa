@@ -17,12 +17,19 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
-from django.shortcuts import render_to_response
+#
+
+from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
+from django.db.models import Q
+from django.core.urlresolvers import reverse
 from baruwa.utils.decorators import onlysuperusers
 from baruwa.accounts.models import UserAddresses
+from baruwa.config.models import MailHost
+from baruwa.config.forms import  MailHostForm, EditMailHost
 
 @login_required
 @onlysuperusers
@@ -37,6 +44,46 @@ def index(request, page=1, template='config/index.html'):
         queryset=domains, paginate_by=10, page=page, extra_context={'app':'settings', 'list_all':1})
     #
     
-def view_domain(request, template='config/domain.html'):
-    ""
+@login_required
+@onlysuperusers    
+def view_domain(request, domain_id, template='config/domain.html'):
+    "view_domain"
+    domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
+    servers = MailHost.objects.filter(useraddress=domain)
+    return render_to_response(template, locals(), context_instance=RequestContext(request))
+
+@login_required
+@onlysuperusers    
+def add_host(request, domain_id, template='config/add_host.html'):
+    "add_host"
+    domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
+    
+    if request.method == 'POST':
+        form = MailHostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('view-domain', args=[domain.id]))
+    else:
+        form =  MailHostForm(initial = {'useraddress': domain.id})
+    return render_to_response(template, locals(), context_instance=RequestContext(request))
+    
+@login_required
+@onlysuperusers
+def edit_host(request, host_id, template='config/edit_host.html'):
+    "edit host"
+    #domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
+    host = get_object_or_404(MailHost, id=host_id)
+    if request.method == 'POST':
+        form = EditMailHost(request.POST, instance=host)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('view-domain', args=[host.useraddress.id]))
+    else:
+        form = EditMailHost(instance=host)
+    return render_to_response(template, locals(), context_instance=RequestContext(request))
+    
+@login_required
+@onlysuperusers
+def delete_host(request, host_id, template='config/delete_host.html'):
+    'Delete host'
     return render_to_response(template, locals(), context_instance=RequestContext(request))

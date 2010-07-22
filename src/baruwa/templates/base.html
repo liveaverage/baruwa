@@ -32,7 +32,7 @@
     <div class="clearer"></div>
     <div class="Box_Mainnav"> <!-- Box_Mainnav start here -->
         <div class="Mainnav"> <!-- Mainnav start here -->
-            <a href="{% url main-index %}" class="topnav selectednav"><span>Messages</span></a> 
+            <a href="{% url main-messages-index %}" class="topnav selectednav"><span>Messages</span></a> 
             <a href="{% url lists-index %}" class="topnav"><span>Lists</span></a> 
             <a href="{% url reports-index %}" class="topnav"><span>Reports</span></a> 
             <a href="{% url status-index %}" class="topnav"><span>Status</span></a>
@@ -53,13 +53,27 @@
         <div id="my-spinner"></div>
         </div>
         <div class="clearer"></div>
-		{% if messages %}
+		{% ifequal app 'lists' %}
+		{% ifnotequal order_by 'id'  %}
+		{% if filter_active %}
 		<div id="builtin-msg">
-			{% for message in messages %}
-			{{ message }}<br/>
-			{% endfor %}
-		</div>
-		{% endif %}
+			Filtered by
+			{% ifequal ordering 'to_address' %}
+				 To address 
+			{% else %}
+			     From address 
+			{% endifequal %}
+			{% ifequal request.session.query_type 1  %}
+				containing 
+			{% else %}
+				NOT containing 
+			{% endifequal %}
+			"{{ request.session.search_for }}"
+			<div id="dismiss"><a href="{% url rem-filter %}">Remove</a></div>
+		</div>			
+		{% endif %}		
+		{% endifnotequal %}	
+		{% endifequal %}
         <div class="Grid_content"><!--GRID CONTAINER START HERE-->
         {% block content %}{% endblock content %}	
         {% block add_item %}{% endblock add_item %}

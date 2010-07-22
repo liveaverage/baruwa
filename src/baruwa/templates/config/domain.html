@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block headers %}
+{% endblock headers %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url settings-index %}">Domains</a></li>
+  	<li><a href="{% url accounts %}">Accounts</a></li>
+  	<li><a href="">Scanners</a></li>
+</ul>	
+{% endblock submenu %}
+{% block title %}Settings :: Domain{% endblock title %}
+{% block heading %}Domains :: Showing - {{ domain.address }}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">
+		Domain information
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Domain_cols">
+		Domain name:
+	</div>
+	<div class="Domain_values">
+		{{ domain.address }}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Domain_cols">
+		Status:
+	</div>
+	<div class="Domain_values">
+		{% if domain.enabled %}
+ 		Enabled
+		{% else %}
+		Inactive
+		{% endif %}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Domain_cols">
+		Load Balance servers:
+	</div>
+	<div class="Domain_values">
+	</div>
+</div>
+<div class="header_div">
+    <div class="Reports_heading">
+		Delivery SMTP Servers
+		<div class="Profile_edit">[ <a href="{% url add-host domain.id %}">Add</a> ]</div>
+	</div>
+</div>
+{% for server in servers  %}
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{{ server.address }}
+	</div>
+	<div class="Profile_values">
+		{% if server.enabled %}
+			Enabled
+		{% else %}
+			Disabled
+		{% endif %}
+		<div class="Profile_edit">
+			 <a href="{% url edit-host server.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+			 <a href="{% url delete-host server.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+	<div class="spanrow">No servers configured</div>
+</div>
+{% endfor %}
+{% endblock content %}

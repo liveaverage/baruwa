@@ -17,12 +17,14 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
+#
+
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
     (r'^$','baruwa.accounts.views.index', {}, 'accounts'), 
     (r'^(?P<page>([0-9]+|last))/$','baruwa.accounts.views.index'),
-    (r'^(?P<page>([0-9]+|last)/(?P<direction>(dsc|asc))/(?P<order_by>(username|fullname|type)))/$','baruwa.accounts.views.index'),
+    (r'^(?P<page>([0-9]+|last))/(?P<direction>(dsc|asc))/(?P<order_by>(id|username|fullname|type))/$','baruwa.accounts.views.index'),
     (r'^user/(?P<user_id>([0-9]+))/$', 'baruwa.accounts.views.user_profile',{},'user-profile'),
     (r'^user/update/(?P<user_id>([0-9]+))/$', 'baruwa.accounts.views.update_account', {}, 'update-account'),
     (r'^user/pw/(?P<user_id>([0-9]+))/$', 'baruwa.accounts.views.change_password', {}, 'change-pw'),

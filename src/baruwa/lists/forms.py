@@ -17,23 +17,21 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
+#
+
 from django import forms
 from django.forms.util import ErrorList
 from django.template.defaultfilters import force_escape
-import re
 try:
     from django.forms.fields import email_re
 except ImportError:
     from django.core.validators import email_re
+from baruwa.utils.regex import dom_re, ipv4_re, user_re
     
 LIST_TYPES = (
     ('1', 'Whitelist'),
     ('2', 'Blacklist'),
 )
-dom_re = re.compile(r'^(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?$', re.IGNORECASE)
-ipv4_re = re.compile(r'^(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}$')
-user_re = re.compile(
-    r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*|^([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-011\013\014\016-\177])*)$", re.IGNORECASE)
 
 class ListAddForm(forms.Form):
     """ListAddForm"""

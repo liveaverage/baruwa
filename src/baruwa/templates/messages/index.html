@@ -22,14 +22,14 @@ var ax_in_progress = false;
 {% endblock headers %}
 {% block submenu %}
 <ul>
-{% if not quarantine %}
-	<li><a href="{% url full-msg-index %}">Full message list</a></li>
-	<li><a href="{% url quarantine-index %}">Quarantine</a></li>
+{% ifequal view_type 'full' %}
+	<li><a href="{% url all-messages-index 'full' %}">Full message list</a></li>
+	<li><a href="{% url all-messages-index 'quarantine' %}">Quarantine</a></li>
 {% else %}
-	<li><a href="{% url quarantine-index %}">Full Quarantine</a></li>
-	<li><a href="{% url quarantine-spam-index %}">Spam</a></li>
-	<li><a href="{% url quarantine-other-index %}">Non Spam</a></li>
-{% endif %}
+	<li><a href="{% url all-messages-index 'quarantine' %}">Full Quarantine</a></li>
+	<li><a href="{% url quarantine-bytype-index 'quarantine', 'spam' %}">Spam</a></li>
+	<li><a href="{% url quarantine-bytype-index 'quarantine', 'policyblocked' %}">Non Spam</a></li>
+{% endifequal %}
 </ul>
 {% endblock submenu %}
 {% block title %}

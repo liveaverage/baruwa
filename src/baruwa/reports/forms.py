@@ -17,9 +17,11 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
+#
+
 from django import forms
 from django.template.defaultfilters import force_escape
-from baruwa.lists.forms import dom_re
+from baruwa.utils.regex import dom_re
 try:
     from django.forms.fields import email_re
     from django.forms.fields import ipv4_re

@@ -17,23 +17,20 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
+#
+
 from django import forms
 from django.forms.util import ErrorList
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from baruwa.accounts.models import UserProfile, UserAddresses
-from baruwa.lists.forms import dom_re
+from baruwa.utils.regex import dom_re
 import re
 try:
     from django.forms.fields import email_re
 except ImportError:
     from django.core.validators import email_re
-
-address_re = re.compile(
-r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*"  
-r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-011\013\014\016-\177])*")' 
-r'@(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?$'
-r'|^(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?$', re.IGNORECASE)
+from baruwa.utils.regex import address_re
 
 
 class UserProfileForm(forms.ModelForm):

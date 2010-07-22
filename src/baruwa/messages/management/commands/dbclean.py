@@ -17,6 +17,8 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
+#
+
 from django.core.management.base import NoArgsCommand
 
 class Command(NoArgsCommand):

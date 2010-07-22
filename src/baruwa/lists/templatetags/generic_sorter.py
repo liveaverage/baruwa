@@ -19,15 +19,22 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-from django.conf.urls.defaults import *
+from django import template
+from django.core.urlresolvers import reverse
 
-urlpatterns = patterns('baruwa.lists.views',
-    (r'^$', 'index', {}, 'lists-index'),
-    (r'^(?P<list_kind>([1-2]))/$', 'index', {}, 'lists-start'),
-    (r'^(?P<list_kind>([1-2]))/(?P<page>([0-9]+|last))/$', 'index'),
-    (r'^(?P<list_kind>([1-2]))/(?P<direction>(dsc|asc))/(?P<order_by>(id|to_address|from_address))/$', 'index', {}, 'lists-full-sort'),
-    (r'^(?P<list_kind>([1-2]))/(?P<page>([0-9]+|last))/(?P<direction>(dsc|asc))/(?P<order_by>(id|to_address|from_address))/$', 'index'),
-    (r'^add/$', 'add_to_list', {}, 'add-to-list'),
-    (r'^delete/(?P<item_id>(\d+))/$', 'delete_from_list', {}, 'list-del'),
-    (r'^rmfilter/$', 'rem_filter', {}, 'rem-filter'),
-) 
+register = template.Library()
+
+def generic_sorter(context, field_name, field_text):
+    rlink = None
+    link = ''
+    direc = 'dsc'
+    if context['app'] == 'lists':
+        link = reverse('lists-full-sort', args=[context['list_kind'], context['direction'], field_name])
+        if field_name == context['order_by']:
+            if context['direction'] == 'dsc':
+                direc = 'asc'
+            else:
+                direc = 'dsc'
+            rlink = reverse('lists-full-sort', args=[context['list_kind'], direc, context['order_by']])
+    return {'field_text': field_text, 'link': link, 'rlink': rlink, 'dir': direc}
+register.inclusion_tag('tags/sorter.html', takes_context=True)(generic_sorter)

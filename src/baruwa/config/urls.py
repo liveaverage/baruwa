@@ -17,10 +17,15 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
+#
+
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('baruwa.config.views',
     (r'^$', 'index', {}, 'settings-index'),
     (r'^(?P<page>([0-9]+|last))/$','index'), 
-    (r'^domains/view/(?P<domain_id>([0-9]+))/$', 'view_domain', {}, 'view-domain'),
+    (r'^domains/(?P<domain_id>([0-9]+))/$', 'view_domain', {}, 'view-domain'),
+    (r'^domains/(?P<domain_id>([0-9]+))/addhost/$', 'add_host', {}, 'add-host'),
+    (r'^hosts/(?P<host_id>([0-9]+))/delete/$', 'delete_host', {}, 'delete-host'),
+    (r'^hosts/(?P<host_id>([0-9]+))/edit/$', 'edit_host', {}, 'edit-host'),
 )

@@ -12,8 +12,8 @@
   <li><a href="{%url preview-message message_id=message_details.id%}">Preview message</a></li>
   <li><a href="#qheading">Release message</a></li>
 {% else %}
-  <li><a href="{% url full-msg-index %}">Full message list</a></li>
-  <li><a href="{% url quarantine-index %}">Quarantine</a></li>
+  <li><a href="{% url all-messages-index 'full' %}">Full message list</a></li>
+  <li><a href="{% url all-messages-index 'quarantine' %}">Quarantine</a></li>
 {% endif %}
 </ul>
 {% endblock submenu %}

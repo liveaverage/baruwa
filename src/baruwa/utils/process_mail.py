@@ -17,6 +17,8 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
+#
+
 import email, smtplib, os, re, socket, httplib
 from subprocess import Popen, PIPE
 from email.Header import decode_header

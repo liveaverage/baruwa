@@ -49,7 +49,7 @@
 {% block paging %}
 <div class="content_footer">
     <div id="paginator">
-    {% load paginator %}{% paginator 3 %}
+    {% load generic_paginator %}{% generic_paginator 3 %}
     </div>
 </div>
 {% endblock paging %}

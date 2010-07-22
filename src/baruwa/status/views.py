@@ -17,6 +17,8 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
+#
+
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext

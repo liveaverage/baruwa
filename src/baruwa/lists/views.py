@@ -17,13 +17,15 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
+#
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
-from django.template import RequestContext
 from django.template.defaultfilters import force_escape
+from django.template import RequestContext
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
@@ -33,7 +35,7 @@ from baruwa.lists.models import List
 from baruwa.utils.misc import jsonify_list
 
 @login_required
-def index(request, list_kind=1, page=1, direction='dsc', order_by='id', search_for='', query_type=3):
+def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
     """index"""
     
     if request.user.is_superuser:
@@ -42,14 +44,8 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id', search_f
         account_type = request.session['user_filter']['account_type']
     
     list_kind = int(list_kind)
-    query_type = int(query_type)
-    if query_type == 3:
-        query_type = None
     ordering = order_by
-    if search_for == '':
-        do_filtering = False
-    else:
-        do_filtering = True
+    filter_active = False
     
     if direction == 'dsc':
         ordering = order_by
@@ -82,12 +78,15 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id', search_f
     if request.method == 'POST':
         filter_form = FilterForm(request.POST)
         if filter_form.is_valid():
-            query_type = int(filter_form.cleaned_data['query_type'])
-            search_for = filter_form.cleaned_data['search_for']
-            if search_for != "" and not search_for is None:
-                do_filtering = True
-                            
-    if do_filtering:
+            request.session['query_type'] = int(filter_form.cleaned_data['query_type'])
+            request.session['search_for'] = filter_form.cleaned_data['search_for']
+            request.session.modified = True
+            
+    search_for = request.session.get('search_for', '')
+    query_type = request.session.get('query_type', 1)
+    
+    if search_for != "":
+        filter_active = True
         if query_type == 1:
             if ordering == 'to_address':
                 listing = listing.filter(to_address__icontains=search_for)
@@ -98,7 +97,7 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id', search_f
                 listing = listing.exclude(to_address__icontains=search_for)
             elif ordering == 'from_address':
                 listing = listing.exclude(from_address__icontains=search_for)
-    app = "lists/%d" % list_kind
+    #app = "lists/%d" % list_kind
     
     if request.is_ajax():
         p = Paginator(listing,20)
@@ -115,13 +114,13 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id', search_f
         pn = [n for n in range(sp,ep) if n > 0 and n <= p.num_pages]
         pg = {'page':page,'pages':p.num_pages,'page_numbers':pn,'next':po.next_page_number(),'previous':po.previous_page_number(),
         'has_next':po.has_next(),'has_previous':po.has_previous(),'show_first':1 not in pn,'show_last':p.num_pages not in pn,
-        'app':app,'list_kind':list_kind,'direction':direction,'order_by':ordering,'search_for':search_for,'query_type':query_type}
+        'app': 'lists','list_kind':list_kind,'direction':direction,'order_by':ordering,'filter_active':filter_active}
         json = simplejson.dumps({'items':listing,'paginator':pg})
         return HttpResponse(json, mimetype='application/javascript')
             
-    return object_list(request,template_name='lists/index.html',queryset=listing, paginate_by=20, page=page,
-        extra_context={'app':app, 'list_kind':list_kind, 'direction':direction, 'order_by':ordering,
-        'search_for':search_for, 'query_type':query_type, 'list_all':0})
+    return object_list(request,template_name='lists/index.html',queryset=listing, paginate_by=10, page=page,
+        extra_context={'app': 'lists', 'list_kind':list_kind, 'direction':direction, 'order_by':ordering,
+        'filter_active':filter_active, 'list_all':0})
 
 @login_required
 def add_to_list(request):
@@ -213,6 +212,13 @@ def delete_from_list(request, item_id):
         form.fields['list_item'].widget.attrs['value'] = item_id
     return render_to_response('lists/delete.html', locals(), context_instance=RequestContext(request))
     
-    
-        
+@login_required
+def rem_filter(request):
+    try:
+        del request.session['search_for']
+        del request.session['query_type']
+        request.session.modified = True  
+    except KeyError:
+        pass
+    return HttpResponseRedirect(reverse('lists-index'))
     

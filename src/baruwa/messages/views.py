@@ -17,15 +17,17 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
+#
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponse, Http404, HttpResponseRedirect
-from django.template import RequestContext
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
+from django.template import RequestContext
 from baruwa.messages.models import Message
 from baruwa.messages.forms import QuarantineProcessForm
 from baruwa.utils.process_mail import search_quarantine, host_is_local, release_mail, \
@@ -35,10 +37,9 @@ from baruwa.utils.misc import jsonify_msg_list, apply_filter
 import re, urllib
 
 @login_required
-def index(request, list_all=0, page=1, quarantine=0, direction='dsc', order_by='timestamp', show_only=0):
+def index(request, list_all=0, page=1, view_type='full', direction='dsc', order_by='timestamp', quarantine_type=None):
     """index"""
     active_filters = []
-    show_only = int(show_only)
     ordering = order_by
     if direction == 'dsc':
         ordering = order_by
@@ -59,13 +60,13 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc', order_by='
             'to_address','subject','size','sascore','highspam','spam','virusinfected','otherinfected',
             'whitelisted','blacklisted','nameinfected','scaned')[:50]
     else:
-        if quarantine:
+        if view_type == 'quarantine':
             message_list = Message.quarantine.for_user(request).values('id','timestamp','from_address',
             'to_address','subject','size','sascore','highspam','spam','virusinfected','otherinfected',
             'whitelisted','blacklisted','isquarantined','nameinfected','scaned').order_by(order_by)
-            if show_only == 1:
+            if quarantine_type == 'spam':
                 message_list = message_list.filter(spam=1)
-            if show_only == 2:
+            if quarantine_type == 'policyblocked':
                 message_list = message_list.filter(spam=0)
         else:
             message_list = Message.messages.for_user(request).values('id','timestamp','from_address',
@@ -85,7 +86,6 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc', order_by='
             message_list = po.object_list
             message_list = map(jsonify_msg_list, message_list)
             page = int(page)
-            quarantine = int(quarantine)
             ap = 2
             sp = max(page - ap, 1)
             if sp <= 3: sp = 1
@@ -93,20 +93,20 @@ def index(request, list_all=0, page=1, quarantine=0, direction='dsc', order_by='
             pn = [n for n in range(sp,ep) if n > 0 and n <= p.num_pages]
             pg = {'page':page,'pages':p.num_pages,'page_numbers':pn,'next':po.next_page_number(),
             'previous':po.previous_page_number(),'has_next':po.has_next(),'has_previous':po.has_previous(),
-            'show_first':1 not in pn,'show_last':p.num_pages not in pn,'quarantine':quarantine,
+            'show_first':1 not in pn,'show_last':p.num_pages not in pn,'view_type':view_type,
             'direction':direction,'order_by':ordering}
         json = simplejson.dumps({'items':message_list,'paginator':pg})
         return HttpResponse(json, mimetype='application/javascript')
 
     if list_all:
         return object_list(request, template_name='messages/index.html', queryset=message_list, 
-        paginate_by=50, page=page, extra_context={'quarantine': quarantine,'direction':direction,
-        'order_by':ordering,'app':'messages','active_filters':active_filters, 'list_all':list_all},
-        allow_empty=True)
+        paginate_by=50, page=page, extra_context={'view_type': view_type, 'direction': direction,
+        'order_by': ordering, 'active_filters':active_filters, 'list_all':list_all, 
+        'quarantine_type': quarantine_type}, allow_empty=True)
     else:
         return object_list(request, template_name='messages/index.html', queryset=message_list, 
-        extra_context={'quarantine': quarantine,'direction':direction,'order_by':ordering,
-        'app':'messages','active_filters':active_filters, 'list_all':list_all})
+        extra_context={'view_type':view_type, 'direction':direction, 'order_by':ordering,
+        'active_filters':active_filters, 'list_all':list_all, 'quarantine_type':quarantine_type})
 
 @login_required
 def detail(request, message_id):
@@ -238,7 +238,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0):
                     response = simplejson.dumps({'message':message,'message_id':message_details.id})
                     return HttpResponse(response, content_type='application/javascript; charset=utf-8')
                 return render_to_response('messages/preview.html', {'message':message,'message_id':message_details.id},
-                    context_instance=RequestContext(request))
+                 context_instance=RequestContext(request))
             except:
                 raise Http404
         else:

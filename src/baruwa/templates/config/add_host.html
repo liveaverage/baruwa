@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block headers %}
+{% endblock headers %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url settings-index %}">Domains</a></li>
+</ul>	
+{% endblock submenu %}
+{% block title %}Settings :: Add destination mail server{% endblock title %}
+{% block heading %}Domains :: {{ domain.address }} - add destination mail server{% endblock heading %}
+{% block content %}
+<form action="" method="post">
+<div class="Grid_heading">
+    <div class="Bayes_heading">
+		Add Mail Server 
+	</div>
+</div>
+{% for hidden in form.hidden_fields %}
+	{{ hidden }}
+{% endfor %}
+{% for field in form.visible_fields %}
+<div class="LightBlue_div">
+	<div class="form_label">{{ field.label }}</div>
+	<div class="form_value">{{ field }}</div>
+	<div class="form_error">{{ field.errors }}</div>
+</div>
+{% endfor %}
+<div class="LightBlue_div">
+    <div class="form_label">&nbsp;</div>
+    <div class="form_value">
+        <input id="cancel-button" type="reset" value="Clear" />&nbsp;
+        <input id="submit-button" type="submit" value="Add" />
+    </div>
+    <div class="form_error"></div>
+</div>
+</form>
+{% endblock content %}

@@ -17,15 +17,17 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
+#
+
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
-from django.template import RequestContext
 from django.db.models import Count, Max, Min
 from django.db import IntegrityError, connection
 from django.utils import simplejson
 from django.forms.util import ErrorList as errorlist
+from django.template import RequestContext
 from django.template.defaultfilters import force_escape
 from baruwa.reports.forms import FilterForm, FILTER_ITEMS, FILTER_BY
 from baruwa.reports.models import SavedFilter
@@ -289,6 +291,6 @@ def report(request, report_kind):
         pie_data = {'dates':dates, 'mail':simplejson.dumps(mail_total), 'spam':simplejson.dumps(spam_total), 'virii':simplejson.dumps(virus_total)}
         report_title = "Total messages [ After SMTP ]"
         template = "reports/listing.html"
-    
+    filter_form = FilterForm()
     return render_to_response(template, {'pie_data':pie_data,'top_items':data,'report_title':report_title,
-        'report_kind':report_kind,'active_filters':active_filters}, context_instance=RequestContext(request))
+        'report_kind':report_kind,'active_filters':active_filters, 'form':filter_form}, context_instance=RequestContext(request))

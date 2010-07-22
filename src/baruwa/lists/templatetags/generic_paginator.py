@@ -25,12 +25,13 @@
 #  link context.  For usage documentation see:
 #
 #     http://www.tummy.com/Community/Articles/django-pagination/
+# 
 
 from django import template
 
 register = template.Library()
 
-def paginator(context, adjacent_pages=2):
+def generic_paginator(context, adjacent_pages=2):
     """
     To be used in conjunction with the object_list generic view.
 
@@ -53,6 +54,11 @@ def paginator(context, adjacent_pages=2):
 
     if not context.has_key('order_by'):
         context['order_by'] = None
+        
+    if context['app'] == 'lists':
+        app = "lists/%d" % context['list_kind']
+    else:
+        app = context['app'] 
 
     return {
         'page_obj': page_obj,
@@ -68,11 +74,10 @@ def paginator(context, adjacent_pages=2):
         'has_previous': context['has_previous'],
         'show_first': 1 not in page_numbers,
         'show_last': context['pages'] not in page_numbers,
-        'view_type': context['view_type'],
+        'app': app,
         'order_by': context['order_by'],
         'direction': context['direction'],
         'list_all': context['list_all'],
-        'quarantine_type': context['quarantine_type'],
     }
 
-register.inclusion_tag('tags/paginator.html', takes_context=True)(paginator)
+register.inclusion_tag('tags/generic_paginator.html', takes_context=True)(generic_paginator)

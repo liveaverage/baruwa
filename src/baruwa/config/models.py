@@ -17,6 +17,20 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # vim: ai ts=4 sts=4 et sw=4
-from django.db import models
+#
 
-# Create your models here.
+from django.db import models
+from baruwa.accounts.models import UserAddresses
+
+class MailHost(models.Model):
+    """Mail hosts"""
+    id = models.AutoField(primary_key=True)
+    address = models.CharField(max_length=255)
+    enabled = models.BooleanField(default=True)
+    useraddress = models.ForeignKey(UserAddresses)
+
+    class Meta:
+        db_table = 'mail_hosts'
+
+    def __unicode__(self):
+        return u"Mail host "+ self.address

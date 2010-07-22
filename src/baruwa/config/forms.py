@@ -19,15 +19,23 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-from django.conf.urls.defaults import *
+from django import forms
+from baruwa.accounts.models import UserAddresses
+from baruwa.config.models import MailHost
+from baruwa.utils.regex import dom_re
 
-urlpatterns = patterns('baruwa.lists.views',
-    (r'^$', 'index', {}, 'lists-index'),
-    (r'^(?P<list_kind>([1-2]))/$', 'index', {}, 'lists-start'),
-    (r'^(?P<list_kind>([1-2]))/(?P<page>([0-9]+|last))/$', 'index'),
-    (r'^(?P<list_kind>([1-2]))/(?P<direction>(dsc|asc))/(?P<order_by>(id|to_address|from_address))/$', 'index', {}, 'lists-full-sort'),
-    (r'^(?P<list_kind>([1-2]))/(?P<page>([0-9]+|last))/(?P<direction>(dsc|asc))/(?P<order_by>(id|to_address|from_address))/$', 'index'),
-    (r'^add/$', 'add_to_list', {}, 'add-to-list'),
-    (r'^delete/(?P<item_id>(\d+))/$', 'delete_from_list', {}, 'list-del'),
-    (r'^rmfilter/$', 'rem_filter', {}, 'rem-filter'),
-) 
+class MailHostForm(forms.ModelForm):
+    "Mail host add form"
+    address = forms.RegexField(regex=dom_re, widget=forms.TextInput(attrs={'size':'50'}))
+    useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(), widget=forms.HiddenInput())
+    
+    class Meta:
+        model = MailHost
+        exclude = ('id')
+
+class EditMailHost(forms.ModelForm):
+    "Edit Mail host form"
+    address = forms.RegexField(regex=dom_re, widget=forms.TextInput(attrs={'size':'50'}))
+    class Meta:
+        model = MailHost
+        exclude = ('id', 'useraddress')
