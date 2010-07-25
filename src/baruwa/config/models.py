@@ -27,6 +27,7 @@ class MailHost(models.Model):
     id = models.AutoField(primary_key=True)
     address = models.CharField(max_length=255)
     enabled = models.BooleanField(default=True)
+    port = models.IntegerField(default=25)
     useraddress = models.ForeignKey(UserAddresses)
 
     class Meta:

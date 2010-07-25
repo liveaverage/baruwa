@@ -281,3 +281,25 @@ def remote_process(host, cookie, message_id, params):
     resource = reverse('message-detail', args=[message_id])
     rv = rest_request(host, resource, 'POST', headers, params)
     return rv
+
+def test_smtp_server(server, port, test_address):
+    "Test smtp server delivery"
+    try:
+        if port == '465':
+            conn = smtplib.SMTP_SSL(server)
+        elif port == '25':
+            conn = smtplib.SMTP(server)
+        else:
+            conn = smtplib.SMTP(server,port)
+        conn.ehlo()
+        if conn.has_extn('STARTTLS') and port != '465':
+            conn.starttls()
+            conn.ehlo()
+        conn.docmd('MAIL FROM:', 'postmaster@baruwa.org') 
+        result = conn.docmd('RCPT TO:', test_address)
+        if result[0] == '250':
+            return True
+        else:
+            return False
+    except:
+        return False

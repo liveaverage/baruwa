@@ -28,4 +28,5 @@ urlpatterns = patterns('baruwa.config.views',
     (r'^domains/(?P<domain_id>([0-9]+))/addhost/$', 'add_host', {}, 'add-host'),
     (r'^hosts/(?P<host_id>([0-9]+))/delete/$', 'delete_host', {}, 'delete-host'),
     (r'^hosts/(?P<host_id>([0-9]+))/edit/$', 'edit_host', {}, 'edit-host'),
+    (r'^hosts/(?P<host_id>([0-9]+))/test/$', 'test_host', {}, 'test-host'),
 )

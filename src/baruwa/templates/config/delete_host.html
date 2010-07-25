@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block headers %}{% endblock headers %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url view-domain host.useraddress.id %}">Domain page</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}Delete Mail host{% endblock title %}
+{% block heading %}Delete Mail host{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">Delete Mail Host</div>
+</div>
+<form action="" method="post">
+	{% for hidden in form.hidden_fields %}
+		{{ hidden }}
+	{% endfor %}
+    <div class="LightBlue_div">
+        <div class="form_label">Delete the mail host {{ host.address }}: ?</div>
+        <div class="form_value">
+			<input id="submit-button" type="submit" value="Delete" />      
+        </div>
+        <div class="form_error"></div>
+    </div>
+</form>
+{% endblock content %}

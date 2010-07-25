@@ -39,3 +39,10 @@ class EditMailHost(forms.ModelForm):
     class Meta:
         model = MailHost
         exclude = ('id', 'useraddress')
+        
+class DeleteMailHost(forms.ModelForm):
+    "Delete a mail host form"
+    id = forms.CharField(widget=forms.HiddenInput)
+    class Meta:
+        model = MailHost
+        fields = ('id',)

@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block headers %}{% endblock headers %}
 {% block submenu %}
+<ul>
+	<li><a href="{% url settings-index %}">Domains</a></li>
+  	<li><a href="{% url accounts %}">Accounts</a></li>
+  	<li><a href="">Scanners</a></li>
+</ul>
 {% endblock submenu %}
 {% block title %}Edit Address{% endblock title %}
 {% block heading %}Edit Address{% endblock heading %}

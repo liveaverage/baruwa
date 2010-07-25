@@ -74,6 +74,13 @@
 		{% endif %}		
 		{% endifnotequal %}	
 		{% endifequal %}
+		{% if messages %}
+		<div id="builtin-msg">
+			{% for message in messages %}
+			{{ message }}<br/>
+			{% endfor %}
+		</div>
+		{% endif %}
         <div class="Grid_content"><!--GRID CONTAINER START HERE-->
         {% block content %}{% endblock content %}	
         {% block add_item %}{% endblock add_item %}

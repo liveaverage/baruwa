@@ -29,12 +29,14 @@ from django.core.urlresolvers import reverse
 from baruwa.utils.decorators import onlysuperusers
 from baruwa.accounts.models import UserAddresses
 from baruwa.config.models import MailHost
-from baruwa.config.forms import  MailHostForm, EditMailHost
+from baruwa.config.forms import  MailHostForm, EditMailHost, DeleteMailHost
 
 @login_required
 @onlysuperusers
 def index(request, page=1, template='config/index.html'):
-    """index"""
+    """
+    Displays a paginated list of domains mail is processed for
+    """
     if request.user.is_superuser:
         domains = UserAddresses.objects.all()
     else:
@@ -42,12 +44,11 @@ def index(request, page=1, template='config/index.html'):
         
     return  object_list(request, template_name=template, 
         queryset=domains, paginate_by=10, page=page, extra_context={'app':'settings', 'list_all':1})
-    #
     
 @login_required
 @onlysuperusers    
 def view_domain(request, domain_id, template='config/domain.html'):
-    "view_domain"
+    "Displays a domain"
     domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
     servers = MailHost.objects.filter(useraddress=domain)
     return render_to_response(template, locals(), context_instance=RequestContext(request))
@@ -55,14 +56,17 @@ def view_domain(request, domain_id, template='config/domain.html'):
 @login_required
 @onlysuperusers    
 def add_host(request, domain_id, template='config/add_host.html'):
-    "add_host"
+    "Adds Mail host"
     domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
     
     if request.method == 'POST':
         form = MailHostForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('view-domain', args=[domain.id]))
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('view-domain', args=[domain.id]))
+            except:
+                pass
     else:
         form =  MailHostForm(initial = {'useraddress': domain.id})
     return render_to_response(template, locals(), context_instance=RequestContext(request))
@@ -70,14 +74,16 @@ def add_host(request, domain_id, template='config/add_host.html'):
 @login_required
 @onlysuperusers
 def edit_host(request, host_id, template='config/edit_host.html'):
-    "edit host"
-    #domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
+    "Edists Mail host"
     host = get_object_or_404(MailHost, id=host_id)
     if request.method == 'POST':
         form = EditMailHost(request.POST, instance=host)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('view-domain', args=[host.useraddress.id]))
+            try:
+                form.save()
+                return HttpResponseRedirect(reverse('view-domain', args=[host.useraddress.id]))
+            except:
+                pass
     else:
         form = EditMailHost(instance=host)
     return render_to_response(template, locals(), context_instance=RequestContext(request))
@@ -85,5 +91,33 @@ def edit_host(request, host_id, template='config/edit_host.html'):
 @login_required
 @onlysuperusers
 def delete_host(request, host_id, template='config/delete_host.html'):
-    'Delete host'
+    'Deletes Mail host'
+    host = get_object_or_404(MailHost, id=host_id)
+    if request.method == 'POST':
+        form = DeleteMailHost(request.POST, instance=host)
+        if form.is_valid():
+            try:
+                go_id = host.useraddress.id
+                host.delete()
+                return HttpResponseRedirect(reverse('view-domain', args=[go_id]))
+            except:
+                pass
+    else:
+        form = DeleteMailHost(instance=host)
     return render_to_response(template, locals(), context_instance=RequestContext(request))
+    
+@login_required
+@onlysuperusers
+def test_host(request, host_id):
+    'Tests SMTP delivery to mail host'
+    host = get_object_or_404(MailHost, id=host_id)
+    test_address = "postmaster@%s" % host.useraddress.address
+    from baruwa.utils.process_mail import test_smtp_server
+    if test_smtp_server(host.address, host.port, test_address):
+        msg = 'Server %s is operational and accepting mail for: %s' % (host.address, host.useraddress.address)
+        request.user.message_set.create(message=msg)
+    else:
+        msg = 'Server %s is NOT accepting mail for : %s' % (host.address, host.useraddress.address)
+        request.user.message_set.create(message=msg)
+    return HttpResponseRedirect(reverse('view-domain', args=[host.useraddress.id]))
+    

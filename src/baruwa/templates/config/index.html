@@ -61,3 +61,10 @@
 <div class="spanrow">No domains found</div>
 {% endfor %}
 {% endblock content %}
+{% block paging %}
+<div class="content_footer">
+    <div id="paginator">
+    {% load generic_paginator %}{% generic_paginator 3 %}
+    </div>
+</div>
+{% endblock paging %}

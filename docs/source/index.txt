@@ -13,10 +13,10 @@ It includes reporting functionality with an easy to use query builder, results c
 displayed as message lists or graphed as colorful and pretty interactive graphs.
 
 Custom MailScanner modules are provided to allow for logging of messages to the mysql
-database with Sqlite as backup and for managing whitelists and blacklists.
+database with SQLite as backup and for managing whitelists and blacklists.
 
-Baruwa is written in Python/Perl using the Django Framework and MySQL for storage, it is 
-released under the GPLv2.
+Baruwa is open source software, written in Python/Perl using the Django Framework and 
+MySQL for storage, it is released under the GPLv2 and is available for free download.
 
 .. toctree::
     :maxdepth: 2

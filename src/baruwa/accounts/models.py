@@ -35,7 +35,8 @@ class UserAddresses(models.Model):
     address = models.CharField(unique=True, max_length=255)
     enabled = models.BooleanField(default=True)
     user = models.ForeignKey(User)
-    address_type = models.IntegerField(choices=ADDRESS_TYPES, default=2) 
+    address_type = models.IntegerField(choices=ADDRESS_TYPES, default=2)
+    load_balance = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'user_addresses'

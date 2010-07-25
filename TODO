@@ -5,7 +5,7 @@
 - Blocked file report
 - Auto release (hashed url)
 - Reformat the quarantine report DONE
-- Domain management (deliver to) [destinations,port, multiplex, test destination]
+- Domain management (deliver to) [destinations,port, multiplex, test destination] DONE
 - Filter queries on the reports pages
 - Re-factor the accounts system to link to domains DONE
 - Status aggregation [rrd graphs]

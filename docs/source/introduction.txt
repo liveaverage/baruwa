@@ -14,10 +14,10 @@ It includes reporting functionality with an easy to use query builder, results c
 displayed as message lists or graphed as colorful and pretty interactive graphs.
 
 Custom MailScanner modules are provided to allow for logging of messages to the mysql
-database with Sqlite as backup and for managing whitelists and blacklists.
+database with SQLite as backup and for managing whitelists and blacklists.
 
-Baruwa is written in Python/Perl using the Django Framework and MySQL for storage, it is 
-released under the GPLv2.
+Baruwa is open source software, written in Python/Perl using the Django Framework and 
+MySQL for storage, it is released under the GPLv2 and is available for free download.
 
 ========
 Features
@@ -27,10 +27,10 @@ Features
     + AJAX powered Full/Quarantine messages listings
     + Reporting view with AJAX enabled query builder
     + Interactive SVG graphs
-	+ SQLite backup prevents loss of messages when MySQL is down
+    + SQLite backup prevents loss of messages when MySQL is down
     + Multi user profiles (No restrictions on username format)
     + User profile aware white/blacklist management
-	+ Ip / network addresses supported in white/blacklist manager
+    + Ip / network addresses supported in white/blacklist manager
     + Easy plug-in authentication to external authentication systems (POP3, IMAP and SMTP supported out of the box)
     + Tools for housekeeping tasks (quarantine management, rule updates, quarantine notifications, etc)
     + Works both with and without Javascript enabled (graphs require Javascript)
