@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block headers %}{% endblock headers %}
+{% block submenu %}
+{% endblock submenu %}
+{% block title %}Release message{% endblock title %}
+{% block heading %}Release message{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">Quarantined Message release</div>
+</div>
+<div class="lightblue_div">
+	<div class="spanrow">
+	{% if success %}
+		The message: {{ message_id }} has been released to {{ release_address }}
+	{% else %}
+	    The release of message: {{ message_id }} to {{ release_address }} failed, contact your email admin for assistance.
+	{% endif %}
+	</div>
+</div>
+{% endblock content %}

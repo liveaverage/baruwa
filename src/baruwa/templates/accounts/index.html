@@ -11,7 +11,7 @@
 {% endif %}
 {% endblock submenu %}
 {% block title %}Accounts{% endblock title %}
-{% block heading %}Accounts{% endblock heading %}
+{% block heading %}Accounts :: {% load pagination_heading %}{% pagination_heading %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
     <div class="Users_grid_hash">&nbsp;</div>

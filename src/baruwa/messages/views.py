@@ -28,11 +28,11 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.template import RequestContext
-from baruwa.messages.models import Message
+from baruwa.messages.models import Message, Release
 from baruwa.messages.forms import QuarantineProcessForm
 from baruwa.utils.process_mail import search_quarantine, host_is_local, release_mail, \
     parse_email, remote_attachment_download, remote_preview, remote_process, \
-    return_attachment, sa_learn
+    return_attachment, sa_learn, remote_release
 from baruwa.utils.misc import jsonify_msg_list, apply_filter
 import re, urllib
 
@@ -94,7 +94,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc', order_
             pg = {'page':page,'pages':p.num_pages,'page_numbers':pn,'next':po.next_page_number(),
             'previous':po.previous_page_number(),'has_next':po.has_next(),'has_previous':po.has_previous(),
             'show_first':1 not in pn,'show_last':p.num_pages not in pn,'view_type':view_type,
-            'direction':direction,'order_by':ordering}
+            'direction':direction,'order_by':ordering,'quarantine_type':quarantine_type}
         json = simplejson.dumps({'items':message_list,'paginator':pg})
         return HttpResponse(json, mimetype='application/javascript')
 
@@ -111,7 +111,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc', order_
 @login_required
 def detail(request, message_id):
     """
-    Displays details of a message
+    Displays details of a message, and processes quarantined messages
     """
     message_details = get_object_or_404(Message, id=message_id)
     if not message_details.can_access(request):
@@ -279,3 +279,41 @@ def search(request):
     if (request.method == 'POST') and request.REQUEST['message_id']:
         return HttpResponseRedirect(reverse('message-detail', args=[request.REQUEST['message_id']]))
     return HttpResponseRedirect(reverse('main-index'))
+    
+def auto_release(request, message_uuid, template='messages/release.html'):
+    "Releases message from the quarantine without need to login"
+    
+    success = False
+    
+    release_record = get_object_or_404(Release, uuid=message_uuid)
+    message_details = get_object_or_404(Message, id=release_record.message_id)
+    
+    if not host_is_local(message_details.hostname):
+        remote_response = remote_release(message_details.hostname, release_record.uuid)
+        response = remote_response['response']
+        if request.is_ajax():
+            return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+        try:
+            json_response = simplejson.loads(response)
+            if json_response['success']:
+                success = True
+        except:
+            pass
+    else:
+        file_name = search_quarantine(message_details.date, release_record.message_id)
+        if not file_name is None:
+            if release_mail(file_name, release_record.release_address, message_details.from_address):
+                success = True
+        else:
+            raise Http404
+            
+    html = render_to_string('messages/released.html', {'id': message_details.id,
+     'addrs':release_record.release_address, 'success':success})
+            
+    if request.is_ajax():
+        response = simplejson.dumps({'success':success,'html': html})
+        return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+    return render_to_response(template, {'message_id':release_record.message_id,
+     'release_address':release_record.release_address, 'success':success},
+     context_instance=RequestContext(request))
+    

@@ -138,3 +138,13 @@ class SaRules(models.Model):
 
     class Meta:
         db_table = u'sa_rules'
+        
+class Release(models.Model):
+    message_id = models.CharField(max_length=255, unique=True)
+    release_address = models.CharField(max_length=255)
+    uuid = models.CharField(max_length=36)
+    timestamp = models.DateTimeField()
+    released = models.IntegerField(default=0)
+    class Meta:
+        db_table = u'quarantine_releases'
+    

@@ -16,27 +16,35 @@
         <div class="search">
         	<div class="Link">
                 <ul>
+					{% if user.is_authenticated %}
 					<li>Signed in as <a href="{% url user-profile user.id %}">{{user.username}}</a></li>
                     <li><a href="{% url logout %}">Logout</a></li>
+					{% else %}
+					<li>Not logged in :: <a href="{% url please-login %}">Login</a></li>
+					{% endif %}
                 </ul>
             </div>
             <div class="clearer"></div>
             <div class="search_box">
+				{% if user.is_authenticated %}
                 <form method="post" action="{% url message-search %}">
             	    <div class="text_box"><input name="message_id" type="text" /></div>
                     <div class="search_btn"><input name="submit" type="image" src="{{ MEDIA_URL }}imgs/css/search_btn.gif" /></div>
                 </form>
+				{% endif %}
             </div>
         </div>
     </div>
     <div class="clearer"></div>
     <div class="Box_Mainnav"> <!-- Box_Mainnav start here -->
         <div class="Mainnav"> <!-- Mainnav start here -->
+			{% if user.is_authenticated %}
             <a href="{% url main-messages-index %}" class="topnav selectednav"><span>Messages</span></a> 
             <a href="{% url lists-index %}" class="topnav"><span>Lists</span></a> 
             <a href="{% url reports-index %}" class="topnav"><span>Reports</span></a> 
             <a href="{% url status-index %}" class="topnav"><span>Status</span></a>
 			<a href="{% url settings-index %}" class="topnav"><span>Settings</span></a>
+			{% endif %}
         </div> <!-- Mainnav end here -->
    </div> <!-- Box_Mainnav end here -->
    <div class="clearer"></div>

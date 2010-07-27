@@ -1,9 +1,9 @@
 - Write a new paginator (split messages from other apps) DONE
-- Caching
+- Implement Caching
 - Queue management
 - PDF reports
 - Blocked file report
-- Auto release (hashed url)
+- Auto release (hashed url) DONE
 - Reformat the quarantine report DONE
 - Domain management (deliver to) [destinations,port, multiplex, test destination] DONE
 - Filter queries on the reports pages
@@ -14,3 +14,4 @@
 - Ajaxify the whole app
 - Achieve to document store.
 - fix queries (scaned)
+- Write Tests

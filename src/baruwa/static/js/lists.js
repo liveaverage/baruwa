@@ -25,18 +25,18 @@ function ajax_error(event, request, settings){
     }
 }
 
-function toplinkize(app,direction,field_name){
+function toplinkize(list_kind,direction,field_name){
     var tmp = '';
     if(direction == 'dsc'){
-        tmp = ' <a href="/'+app+'/asc/'+field_name+'/">&uarr;</a>';
+        tmp = ' <a href="/lists/'+list_kind+'/asc/'+field_name+'/">&uarr;</a>';
     }else{
-        tmp = ' <a href="/'+app+'/dsc/'+field_name+'/">&darr;</a>';
+        tmp = ' <a href="/lists/'+list_kind+'/dsc/'+field_name+'/">&darr;</a>';
     }
     return tmp;
 }
 
-function paginate(list_type){
-    if(list_type == '1'){
+function paginate(){
+    if(rj.list_kind == 1){
         lt = 'Whitelist :: ';
     }else{
         lt = 'Blacklist :: ';
@@ -47,14 +47,14 @@ function paginate(list_type){
     li = '';
 
     if(rj.show_first){
-        tmp +='<span><a href="/'+rj.app+'/1/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/first_pager.png" alt="First"/></a></span>';
+        tmp +='<span><a href="/lists/'+rj.list_kind+'/1/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/first_pager.png" alt="First"/></a></span>';
         tmp +='<span>.....</span>';
     }
     if(rj.has_previous){
-        tmp +='<span><a href="/'+rj.app+'/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/previous_pager.png" alt="Previous"/></a></span>';
+        tmp +='<span><a href="/lists/'+rj.list_kind+'/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/previous_pager.png" alt="Previous"/></a></span>';
     }
     $.each(rj.page_numbers,function(itr,lnk){
-        li = '/'+rj.app+'/'+lnk+'/'+rj.direction+'/'+rj.order_by+'/';
+        li = '/lists/'+rj.list_kind+'/'+lnk+'/'+rj.direction+'/'+rj.order_by+'/';
         if(rj.page == lnk){
             tmp +='<span><b>'+lnk+'</b>&nbsp;</span>';
         }else{
@@ -62,11 +62,11 @@ function paginate(list_type){
         }
     });
     if(rj.has_next){
-        tmp +='<span><a href="/'+rj.app+'/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/next_pager.png" alt="Next"/></a></span>';
+        tmp +='<span><a href="/lists/'+rj.list_kind+'/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/next_pager.png" alt="Next"/></a></span>';
     }
     if(rj.show_last){
         tmp +='<span>......</span>';
-        tmp +='<a href="/'+rj.app+'/last/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/last_pager.png" alt="Last"/></a></span>';
+        tmp +='<a href="/lists/'+rj.list_kind+'/last/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/last_pager.png" alt="Last"/></a></span>';
     }
     columns = "id to_address from_address";
     linfo = "hash To From"
@@ -75,11 +75,11 @@ function paginate(list_type){
     for(i=0; i< carray.length;i++){
         if(larray[i] == 'hash'){h = '#';}else{h = larray[i];}
         if(rj.order_by == carray[i]){
-            tmpl = toplinkize(rj.app,rj.direction,carray[i]);
+            tmpl = toplinkize(rj.list_kind,rj.direction,carray[i]);
             $('.Lists_grid_'+larray[i]).empty().html(h).append(tmpl);
-            $('#lists_filter_form').attr('action','/'+rj.app+'/'+rj.direction+'/'+carray[i]+'/');
+            $('#lists_filter_form').attr('action','/lists/'+rj.list_kind+'/'+rj.direction+'/'+carray[i]+'/');
         }else{
-            ur = '<a href="/'+rj.app+'/'+rj.direction+'/'+carray[i]+'/">'+h+'</a>';
+            ur = '<a href="/lists/'+rj.list_kind+'/'+rj.direction+'/'+carray[i]+'/">'+h+'</a>';
             $('.Lists_grid_'+larray[i]).empty().html(ur);
         }
     }

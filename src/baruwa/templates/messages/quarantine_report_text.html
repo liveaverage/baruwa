@@ -26,7 +26,7 @@ Date/Time   From            To          Subject
 
 {% if host_url %}
 To view these quarantined messages please visit :
-{{ host_url }}{% url quarantine-index %}
+{{ host_url }}{% url all-messages-index 'quarantine' %}
 {% endif %}
 ===================================================================
 Powered by Baruwa http://www.topdog.za.net/baruwa

@@ -2,6 +2,7 @@
 {% block headers %}{% endblock headers %}
 {% block submenu %}
 <ul>
+	<li><a href="{% url accounts %}">Accounts</a></li>
 {% ifequal user.id account_info.id %}
 {% if not user.is_superuser %}
   	<li><a id="change-pw" href="{% url change-password %}">Change your password</a></li>	
@@ -150,7 +151,7 @@
 {% for address in addresses %}
 	<div class="LightBlue_div">
 		<div class="Profile_cols">
-			{{ address.address }}
+			<a href="{% url view-domain address.id %}">{{ address.address }}</a>
 		</div>
 		<div class="Profile_values">
 			{% if address.enabled %}

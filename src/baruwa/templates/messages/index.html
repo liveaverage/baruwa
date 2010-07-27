@@ -22,6 +22,7 @@ var ax_in_progress = false;
 {% endblock headers %}
 {% block submenu %}
 <ul>
+	<!--<li><a href="{% url main-messages-index %}">Recent messages</a></li>-->
 {% ifequal view_type 'full' %}
 	<li><a href="{% url all-messages-index 'full' %}">Full message list</a></li>
 	<li><a href="{% url all-messages-index 'quarantine' %}">Quarantine</a></li>

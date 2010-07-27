@@ -1,10 +1,13 @@
-function toplinkize(direction,link_url,field_name){
+function toplinkize(direction,view_type,field_name,quarantine_type){
     var tmp = '';
     if(direction == 'dsc'){
-        tmp = ' <a href="/messages/'+link_url+'/asc/'+field_name+'/">&uarr;</a>';
+        tmp = ' <a href="/messages/'+view_type+'/asc/'+field_name+'/">&uarr;</a>';
     }else{
-        tmp = ' <a href="/messages/'+link_url+'/dsc/'+field_name+'/">&darr;</a>';
+        tmp = ' <a href="/messages/'+view_type+'/dsc/'+field_name+'/">&darr;</a>';
     }
+    if (view_type == 'quarantine' && quarantine_type) {
+        tmp = tmp.replace(/quarantine\//g,'quarantine/'+quarantine_type+'/');
+    };
     return tmp;
 }
 
@@ -13,6 +16,16 @@ function en_history(){
     $.address.value('?u='+url);
     $.address.history($.address.baseURL() + url);
     window.scrollTo(0,0);
+    if (url == 'messages-quarantine') {
+        $('#sub-menu-links ul li').remove();
+        var qlinks = ['/messages/quarantine/', '/messages/quarantine/spam/', '/messages/quarantine/policyblocked/'];
+        var qtexts = ['Full quarantine', 'Spam', 'Non Spam'];
+        var mylinks = [];
+        for (var i=0; i < qlinks.length; i++) {
+            mylinks[i] = '<li><a href="'+qlinks[i]+'">'+qtexts[i]+'</a></li>';
+        };
+        $('#sub-menu-links ul').append(mylinks.join(''));
+    };
     $('#Footer_container').after('<div id="loading_message"><p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p></div>');
     $.getJSON($(this).attr('href'),json2html);
     return false;
@@ -22,7 +35,7 @@ function handlextern(){
    page = $.address.parameter("u");
    if(page){
         page = $.trim(page);
-        re = /^messages\-quarantine|full\-[0-9]+|last\-dsc|asc\-timestamp|to_address|from_address|subject|size|sascore$/;
+        re = /^messages\-quarantine|full|quarantine\-spam|quarantine\-policyblocked\-[0-9]+|last\-dsc|asc\-timestamp|to_address|from_address|subject|size|sascore$/;
         if(re.test(page)){
             page = page.replace(/-/g,'/');
             url = '/'+ page + '/';
@@ -36,38 +49,29 @@ function handlextern(){
 
 function paginate(){
    tmp='Showing page '+rj.page+' of '+rj.pages+' pages. ';
-   link_url = 'full';
    li='',col='',tmpl='';
-    if(rj.quarantine){
-        link_url = 'quarantine';
-    }
+
    if(rj.show_first){
         if(rj.direction){
-            li='/messages/'+link_url+'/'+rj.direction+'/'+rj.order_by+'/';
+            li='/messages/'+rj.view_type+'/'+rj.direction+'/'+rj.order_by+'/';
         }else{
-            li='/messages/'+link_url+'/'+rj.order_by+'/';
+            li='/messages/'+rj.view_type+'/'+rj.order_by+'/';
         }
-        if(rj.search_for){
-            li += rj.search_for+'/';
-        }
-        if(rj.query_type){
-            li += rj.query_type+'/';
-        }
+        if (rj.view_type == 'quarantine' && rj.quarantine_type) {
+            li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
+        };
         tmp +='<span><a href="'+li+'"><img src="/static/imgs/first_pager.png" alt="First"/></a></span>';
         tmp +='<span>.....</span>';
    }
    if(rj.has_previous){
         if(rj.direction){
-            li='/messages/'+link_url+'/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/';
+            li='/messages/'+rj.view_type+'/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/';
         }else{
-            li='/messages/'+link_url+'/'+rj.previous+'/'+rj.order_by+'/';
+            li='/messages/'+rj.view_type+'/'+rj.previous+'/'+rj.order_by+'/';
         }
-        if(rj.search_for){
-            li += rj.search_for+'/';
-        }
-        if(rj.query_type){
-            li += rj.query_type+'/';
-        }
+        if (rj.view_type == 'quarantine' && rj.quarantine_type) {
+            li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
+        };
         tmp +='<span><a href="'+li+'"><img src="/static/imgs/previous_pager.png" alt="Previous"/></a></span>';
    }
    $.each(rj.page_numbers,function(itr,lnk){
@@ -75,45 +79,36 @@ function paginate(){
             tmp +='<span><b>'+lnk+'</b>&nbsp;</span>';
         }else{
             if(rj.direction){
-                li='/messages/'+link_url+'/'+lnk+'/'+rj.direction+'/'+rj.order_by+'/';
+                li='/messages/'+rj.view_type+'/'+lnk+'/'+rj.direction+'/'+rj.order_by+'/';
             }else{
-                li='/messages/'+link_url+'/'+lnk+'/'+rj.order_by+'/';
+                li='/messages/'+rj.view_type+'/'+lnk+'/'+rj.order_by+'/';
             }
-            if(rj.search_for){
-                li += rj.search_for+'/';
-            }
-            if(rj.query_type){
-                li += rj.query_type+'/';
-            }
+            if (rj.view_type == 'quarantine' && rj.quarantine_type) {
+                li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
+            };
             tmp +='<span><a href="'+li+'">'+lnk+'</a>&nbsp;</span>';
         }
    });
    if(rj.has_next){
         if(rj.direction){
-            li='/messages/'+link_url+'/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/';
+            li='/messages/'+rj.view_type+'/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/';
         }else{
-            li='/messages/'+link_url+'/'+rj.next+'/'+rj.order_by+'/';
+            li='/messages/'+rj.view_type+'/'+rj.next+'/'+rj.order_by+'/';
         }
-        if(rj.search_for){
-            li += rj.search_for+'/';
-        }
-        if(rj.query_type){
-            li += rj.query_type+'/';
-        }
+        if (rj.view_type == 'quarantine' && rj.quarantine_type) {
+            li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
+        };
         tmp +='<span><a href="'+li+'"><img src="/static/imgs/next_pager.png" alt="Next"/></a></span>';
    }
    if(rj.show_last){
         if(rj.direction){
-            li='/messages/'+link_url+'/last/'+rj.direction+'/'+rj.order_by+'/';
+            li='/messages/'+rj.view_type+'/last/'+rj.direction+'/'+rj.order_by+'/';
         }else{
-            li='/messages/'+link_url+'/last/'+rj.order_by+'/';
+            li='/messages/'+rj.view_type+'/last/'+rj.order_by+'/';
         }
-        if(rj.search_for){
-            li += rj.search_for+'/';
-        }
-        if(rj.query_type){
-            li += rj.query_type+'/';
-        }
+        if (rj.view_type == 'quarantine' && rj.quarantine_type) {
+            li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
+        };
         tmp +='<span>......</span>';
         tmp +='<a href="'+li+'"><img src="/static/imgs/last_pager.png" alt="Last"/></a></span>';
    }
@@ -124,10 +119,13 @@ function paginate(){
     for(i=0; i< carray.length;i++){
         if(larray[i] == 'Date_Time'){h = 'Date/Time';}else{h = larray[i];}
         if(carray[i] == rj.order_by){
-            tmpl = toplinkize(rj.direction,link_url,carray[i]);
+            tmpl = toplinkize(rj.direction,rj.view_type,carray[i],rj.quarantine_type);
             $('.'+larray[i]+'_heading').empty().html(h).append(tmpl);
         }else{
-            ur = '<a href="/messages/'+link_url+'/'+rj.direction+'/'+carray[i]+'/">'+h+'</a>';
+            ur = '<a href="/messages/'+rj.view_type+'/'+rj.direction+'/'+carray[i]+'/">'+h+'</a>';
+            if (rj.view_type == 'quarantine' && rj.quarantine_type) {
+                ur = ur.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
+            };
             $('.'+larray[i]+'_heading').empty().html(ur);
         }
     }

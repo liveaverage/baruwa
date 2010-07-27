@@ -253,6 +253,8 @@ def rest_request(host,resource,method,headers,params=None):
     else:
         return {'success':False, 'response': data}
 
+#TODO
+# Use a Class for DRY
 def remote_attachment_download(host, cookie, message_id, attachment_id):
     """
     Returns a email attachment from a remote node using a RESTFUL request
@@ -281,23 +283,34 @@ def remote_process(host, cookie, message_id, params):
     resource = reverse('message-detail', args=[message_id])
     rv = rest_request(host, resource, 'POST', headers, params)
     return rv
+    
+def remote_release(host, message_uuid):
+    "Release a message quarantined on a remote host"
+    headers = {'X-Requested-With':'XMLHttpRequest'}
+    resource = reverse('auto-release', args=[message_uuid])
+    rv = rest_request(host, resource, 'GET', headers)
+    return rv
 
 def test_smtp_server(server, port, test_address):
     "Test smtp server delivery"
     try:
-        if port == '465':
+        port = int(port)
+        if port == 465:
             conn = smtplib.SMTP_SSL(server)
-        elif port == '25':
+        elif port == 25:
             conn = smtplib.SMTP(server)
         else:
             conn = smtplib.SMTP(server,port)
+        conn.set_debuglevel(5)
         conn.ehlo()
-        if conn.has_extn('STARTTLS') and port != '465':
+        if conn.has_extn('STARTTLS') and port != 465:
             conn.starttls()
             conn.ehlo()
         conn.docmd('MAIL FROM:', 'postmaster@baruwa.org') 
         result = conn.docmd('RCPT TO:', test_address)
-        if result[0] == '250':
+        if conn:
+            conn.quit()
+        if result[0] == 250:
             return True
         else:
             return False

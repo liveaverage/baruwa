@@ -100,7 +100,7 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
     #app = "lists/%d" % list_kind
     
     if request.is_ajax():
-        p = Paginator(listing,20)
+        p = Paginator(listing,15)
         if page == 'last':
             page = p.num_pages
         po = p.page(page)
@@ -118,7 +118,7 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
         json = simplejson.dumps({'items':listing,'paginator':pg})
         return HttpResponse(json, mimetype='application/javascript')
             
-    return object_list(request,template_name='lists/index.html',queryset=listing, paginate_by=10, page=page,
+    return object_list(request,template_name='lists/index.html',queryset=listing, paginate_by=15, page=page,
         extra_context={'app': 'lists', 'list_kind':list_kind, 'direction':direction, 'order_by':ordering,
         'filter_active':filter_active, 'list_all':0})
 

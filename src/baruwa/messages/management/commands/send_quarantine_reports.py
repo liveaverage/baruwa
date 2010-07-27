@@ -21,6 +21,32 @@
 
 from django.core.management.base import NoArgsCommand
 
+def generate_release_records(query_list):
+    """
+    Creates the DB records to be lookedup by the release
+    mechanisim
+    """
+    for record in query_list:
+        try:
+            if not email_re.match(user.email):
+                release_address = user.username
+            else:
+                release_address = user.email
+            r = Release(uuid=record['uuid'],timestamp=record['timestamp'],message_id=record['id'],
+            release_address=release_address)
+            r.save()
+        except:
+            pass
+ 
+def add_uuids(query_list):
+    """
+    Adds uuids to the queryset for using in the template
+    """
+    import uuid
+     
+    for index, msg in enumerate(query_list):
+        query_list[index]['uuid'] = str(uuid.uuid5(uuid.NAMESPACE_OID, str(msg['id'])))  
+    
 class Command(NoArgsCommand):
     help = "Generates an email report of the quarantined messages for the past 24 hours"
 
@@ -29,7 +55,7 @@ class Command(NoArgsCommand):
         from django.contrib.auth.models import User
         from django.core.mail import EmailMultiAlternatives
         from django.conf import settings
-        from baruwa.messages.models import Message
+        from baruwa.messages.models import Message, Release
         from baruwa.accounts.models import UserProfile
         import datetime
         try:
@@ -52,20 +78,29 @@ class Command(NoArgsCommand):
                     'to_address','subject').exclude(timestamp__lt=yesterday).exclude(spam=0).order_by('sascore')[:25]
                 policy_list = Message.quarantine_report.for_user(user).values('id','timestamp','from_address',
                     'to_address','subject').exclude(timestamp__lt=yesterday).exclude(spam=1).order_by('sascore')[:25]
-                html_content = render_to_string('messages/quarantine_report.html',
-                    {'spam_items':spam_list, 'policy_items':policy_list, 'host_url':url})
                 subject = 'Baruwa quarantine report for %s' % user.username
+                
                 if email_re.match(user.username):
                     to = user.username
                 if email_re.match(user.email):
                     to = user.email
 
                 if spam_list or policy_list:
+                    for query_list in [spam_list, policy_list]:
+                        add_uuids(query_list)
+                        
+                    html_content = render_to_string('messages/quarantine_report.html',
+                        {'spam_items':spam_list, 'policy_items':policy_list, 'host_url':url})
                     text_content = render_to_string('messages/quarantine_report_text.html',
                         {'spam_items':spam_list, 'policy_items':policy_list, 'host_url':url})
+                        
                     msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
                     msg.attach_alternative(html_content, "text/html")
                     msg.send()
+
+                    for query_list in [spam_list, policy_list]:
+                        generate_release_records(query_list)
+
                     print "sent quarantine report to "+to
                 else:
                     print "skipping report to "+to+" no messages"

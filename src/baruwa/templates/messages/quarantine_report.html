@@ -51,7 +51,7 @@
                 {{ item.subject|striptags|escape|tds_trunc:50 }}
             </td>
             <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                <a style="text-decoration:none;" href="{% if host_url %}{{ host_url }}{% endif %}{% url message-detail item.id %}">Release</a>
+                <a style="text-decoration:none;" href="{% if host_url %}{{ host_url }}{% endif %}{% url auto-release item.uuid %}">Release</a>
             </td>
         </tr>
         {% endfor %}
