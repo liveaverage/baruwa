@@ -63,10 +63,13 @@ def add_host(request, domain_id, template='config/add_host.html'):
         form = MailHostForm(request.POST)
         if form.is_valid():
             try:
-                form.save()
+                host = form.save()
+                msg = 'Delivery SMTP server: %s was added successfully' % host.address
+                request.user.message_set.create(message=msg)
                 return HttpResponseRedirect(reverse('view-domain', args=[domain.id]))
             except:
-                pass
+                msg = 'Adding of Delivery SMTP server failed'
+                request.user.message_set.create(message=msg)
     else:
         form =  MailHostForm(initial = {'useraddress': domain.id})
     return render_to_response(template, locals(), context_instance=RequestContext(request))
@@ -81,9 +84,12 @@ def edit_host(request, host_id, template='config/edit_host.html'):
         if form.is_valid():
             try:
                 form.save()
+                msg = 'Delivery SMTP server: %s has been updated successfully' % host.address
+                request.user.message_set.create(message=msg)
                 return HttpResponseRedirect(reverse('view-domain', args=[host.useraddress.id]))
             except:
-                pass
+                msg = 'Delivery SMTP server: %s update failed' % host.address
+                request.user.message_set.create(message=msg)
     else:
         form = EditMailHost(instance=host)
     return render_to_response(template, locals(), context_instance=RequestContext(request))
@@ -98,10 +104,13 @@ def delete_host(request, host_id, template='config/delete_host.html'):
         if form.is_valid():
             try:
                 go_id = host.useraddress.id
+                msg = 'Delivery SMTP server: %s has been deleted' % host.address
                 host.delete()
+                request.user.message_set.create(message=msg)
                 return HttpResponseRedirect(reverse('view-domain', args=[go_id]))
             except:
-                pass
+                msg = 'Delivery SMTP server: %s could not be deleted' % host.address
+                request.user.message_set.create(message=msg)
     else:
         form = DeleteMailHost(instance=host)
     return render_to_response(template, locals(), context_instance=RequestContext(request))

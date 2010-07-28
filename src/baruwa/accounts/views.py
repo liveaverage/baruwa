@@ -24,17 +24,20 @@ from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, AdminPasswordChangeForm
 from django.db.models import Q
-from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponseForbidden
+from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpResponseForbidden, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, REDIRECT_FIELD_NAME, logout
 from django.contrib.auth.models import User
 from django.template import RequestContext
+from django.utils import simplejson
 from baruwa.accounts.forms import UserProfileForm, UserCreateForm, UserAddressForm, \
 OrdUserProfileForm, UserUpdateForm, AdminUserUpdateForm, EditAddressForm, \
 DeleteAddressForm, DeleteUserForm
 from baruwa.accounts.profile import set_user_addresses
 from baruwa.accounts.models import UserAddresses, UserProfile
 from baruwa.utils.decorators import onlysuperusers, authorized_users_only, only_admins
+from baruwa.utils.misc import jsonify_accounts_list
 
 def login(request, redirect_field_name=REDIRECT_FIELD_NAME):
     """
@@ -63,19 +66,37 @@ def login(request, redirect_field_name=REDIRECT_FIELD_NAME):
 @only_admins
 def index(request, page=1, direction='dsc', order_by='id'):
     """
-    index
+    Displays a paginated list of user accounts
     """
     if request.user.is_superuser:
-        users = User.objects.all()
+        users = User.objects.values('id','username','first_name','last_name','is_superuser','email')
     else:
         domains = request.session['user_filter']['addresses']
         q = Q(id=request.user.id)
         for domain in domains:
             q = q | Q(username__endswith=domain)
-        users = User.objects.filter(q)
+        users = User.objects.values('id','username','first_name','last_name','is_superuser','email').filter(q)
+    
+    if request.is_ajax():
+        p = Paginator(users,15)
+        if page == 'last':
+            page = p.num_pages
+        po = p.page(page)
+        users = map(jsonify_accounts_list, po.object_list)
+        page = int(page)
+        ap = 2
+        sp = max(page - ap, 1)
+        if sp <= 3: sp = 1
+        ep = page + ap + 1
+        pn = [n for n in range(sp,ep) if n > 0 and n <= p.num_pages]
+        pg = {'page':page,'pages':p.num_pages,'page_numbers':pn,'next':po.next_page_number(),'previous':po.previous_page_number(),
+        'has_next':po.has_next(),'has_previous':po.has_previous(),'show_first':1 not in pn,'show_last':p.num_pages not in pn,
+        'app': 'accounts','list_all':1,'direction':direction,'order_by':order_by}
+        json = simplejson.dumps({'items':users,'paginator':pg})
+        return HttpResponse(json, mimetype='application/javascript')
         
     return object_list(request, template_name='accounts/index.html', 
-        queryset=users, paginate_by=20, page=page, extra_context={'app':'accounts',
+        queryset=users, paginate_by=15, page=page, extra_context={'app':'accounts',
         'list_all':1, 'direction':direction, 'order_by':order_by}, allow_empty=True)
         
 @login_required
@@ -88,6 +109,8 @@ def create_account(request, template_name='accounts/create_account.html'):
         form = UserCreateForm(request.POST)
         if form.is_valid():
             user = form.save()
+            msg = 'The user account %s was created successfully' % user.username
+            request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user.id]))
     else:
         form = UserCreateForm()
@@ -107,7 +130,9 @@ def update_account(request, user_id, template_name='accounts/update_account.html
         else:
             form = UserUpdateForm(request.POST, instance=user_account)
         if form.is_valid():
-            form.save()
+            account = form.save()
+            msg = 'The user account %s has been updated' % account.username
+            request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
         if request.user.is_superuser:
@@ -132,8 +157,18 @@ def delete_account(request, user_id, template_name='accounts/delete_account.html
             else:
                 try:
                     user_account.delete()
+                    msg = 'The user account %s has been deleted' % user_account.username
+                    if request.is_ajax():
+                        response = simplejson.dumps({'success':True,'html':msg})
+                        return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+                    request.user.message_set.create(message=msg)
                     return HttpResponseRedirect(reverse('accounts'))
                 except:
+                    msg = 'The deletion of user account %s failed' % user_account.username
+                    if request.is_ajax():
+                        response = simplejson.dumps({'success':True,'html':msg})
+                        return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+                    request.user.message_set.create(message=msg)
                     return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
         form = DeleteUserForm(instance=user_account)
@@ -148,7 +183,9 @@ def add_address(request, user_id, template_name='accounts/add_address.html'):
     if request.method == 'POST':
         form = UserAddressForm(request.POST)
         if form.is_valid():
-            form.save()
+            address = form.save()
+            msg = 'The address %s has been added to %s account' % (address.address, address.user.username)
+            request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
         form = UserAddressForm()
@@ -164,7 +201,9 @@ def edit_address(request, address_id, template_name='accounts/edit_address.html'
     if request.method == 'POST':
         form = EditAddressForm(request.POST, instance=a)
         if form.is_valid():
-            form.save()
+            address = form.save()
+            msg = 'The address %s has been updated' % address.address
+            request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', args=[a.user.id]))
     else:
         form = EditAddressForm(instance=a)
@@ -176,15 +215,15 @@ def edit_address(request, address_id, template_name='accounts/edit_address.html'
 @onlysuperusers
 def delete_address(request, address_id, template_name='accounts/delete_address.html'):
     """Delete address"""
-    a = get_object_or_404(UserAddresses, pk=address_id)
+    address = get_object_or_404(UserAddresses, pk=address_id)
     if request.method == 'POST':
-        id = a.user.id
-        a.delete()
+        id = address.user.id
+        msg = 'The address %s has been updated' % address.address
+        address.delete()
+        request.user.message_set.create(message=msg)
         return HttpResponseRedirect(reverse('user-profile', args=[id]))
     else:
-        form = DeleteAddressForm(instance=a)
-    address = a.address
-    a = None
+        form = DeleteAddressForm(instance=address)
     return render_to_response(template_name, locals(), context_instance=RequestContext(request))
 
 @login_required
@@ -198,6 +237,8 @@ def change_password(request, user_id, template_name='accounts/change_pw.html'):
         form = AdminPasswordChangeForm(user_account, request.POST)
         if form.is_valid():
             form.save()
+            msg = 'The password for user %s has been updated' % user_account.username
+            request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
         form = AdminPasswordChangeForm(user_account)
@@ -242,7 +283,9 @@ def update_profile(request, user_id, template_name='accounts/update_profile.html
             form = OrdUserProfileForm(request.POST, instance=user_profile)
             
         if form.is_valid():
-            form.save()
+            profile = form.save()
+            msg = 'The user profile for %s has been updated' % profile.user.username
+            request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
         if request.user.is_superuser:

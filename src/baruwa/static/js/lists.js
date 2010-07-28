@@ -145,7 +145,7 @@ function lists_from_json(data){
             }
         }
         $('div.Grid_heading ~ div a').bind('click',confirm_delete);
-        paginate(list_type);
+        paginate();
     }
 }
 

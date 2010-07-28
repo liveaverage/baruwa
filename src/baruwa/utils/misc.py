@@ -42,6 +42,11 @@ def jsonify_list(element):
     element['to_address'] = force_escape(element['to_address'])
     return element
 
+def jsonify_accounts_list(element):
+    "Jsonify accounts list"
+    element['id'] = str(element['id'])
+    return element
+
 def to_dict(tuple_list):
     d = {}
     for i in tuple_list:

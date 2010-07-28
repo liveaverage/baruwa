@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% block headers %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[{{ MEDIA_URL }}
+var rj;
+var ax_error = false;
+//]]>
+</script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.address.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/accounts.js"></script>
 {% endblock headers %}
 {% block submenu %}
 {% if user.is_superuser %}
@@ -21,7 +30,7 @@
 	<div class="Users_grid_del"></div>
 </div>
 {% for user in object_list %}
-<div class="{% cycle 'LightBlue' 'DarkGray' %}_div">
+<div id="account-id-{{ user.id }}" class="{% cycle 'LightBlue' 'DarkGray' %}_div">
     <div class="hash">
         <a href="{% url user-profile user.id %}">
         {% if user.is_superuser %}

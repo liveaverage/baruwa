@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% block headers %}{% endblock headers %}
 {% block submenu %}
+<ul>
+	{% ifequal address.address_type 1 %}
+	<li><a href="{% url settings-index %}">Domains</a></li>
+	{% else %}
+	<li><a href="{% url accounts %}">Accounts</a></li>	
+	{% endifequal %}	
+</ul>
 {% endblock submenu %}
 {% block title %}Delete Address{% endblock title %}
 {% block heading %}Delete Address{% endblock heading %}
@@ -13,7 +20,7 @@
 		{{ hidden }}
 	{% endfor %}
     <div class="LightBlue_div">
-        <div class="form_label">Delete the address: {{ address }} ?</div>
+        <div class="form_label">Delete the address: {{ address.address }} ?</div>
         <div class="form_value">
 			<input id="submit-button" type="submit" value="Delete" />      
         </div>
