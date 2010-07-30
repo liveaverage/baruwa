@@ -23,7 +23,8 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('baruwa.config.views',
     (r'^$', 'index', {}, 'settings-index'),
-    (r'^(?P<page>([0-9]+|last))/$','index'), 
+    (r'^(?P<page>([0-9]+|last))/$','index'),
+    (r'^(?P<page>([0-9]+|last))/(?P<direction>(dsc|asc))/(?P<order_by>(id|address))/$', 'index', {}, 'domains-list'), 
     (r'^domains/(?P<domain_id>([0-9]+))/$', 'view_domain', {}, 'view-domain'),
     (r'^domains/(?P<domain_id>([0-9]+))/addhost/$', 'add_host', {}, 'add-host'),
     (r'^hosts/(?P<host_id>([0-9]+))/delete/$', 'delete_host', {}, 'delete-host'),

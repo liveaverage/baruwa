@@ -166,62 +166,61 @@ function addFilter(){
 }
 
 $(document).ready(function(){
-bool_fields = ["archive","spam","highspam","saspam","rblspam","whitelisted","blacklisted","virusinfected","nameinfected","otherinfected","isquarantined"];
-num_fields = ["size","sascore"];
-text_fields = ["id","from_address","from_domain","to_address","to_domain","subject","clientip","spamreport","headers"];
-time_fields = ["date","time"];
-num_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':3,'opt':'is greater than'},{'value':4,'opt':'is less than'}];
-text_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':9,'opt':'is null'},{'value':10,'opt':'is not null'},{'value':5,'opt':'contains'},{'value':6,'opt':'does not contain'},{'value':7,'opt':'matches regex'},{'value':8,'opt':'does not match regex'}];
-time_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':3,'opt':'is greater than'},{'value':4,'opt':'is less than'}];
-bool_values = [{'value':11,'opt':'is true'},{'value':12,'opt':'is false'}];
-$('#id_filtered_field').prepend('<option value="0" selected="0">Please select</option>');
-$('#id_filtered_value').attr({'disabled':'disabled'});
-$('#id_filtered_field').bind('change',function(){
-    if($.inArray($(this).val(),bool_fields) != -1){
-        $('#id_filtered_by').empty();
-        $.each(bool_values,function(i,n){
-            $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
-        });
-        $('#id_filtered_value').attr({'disabled':'disabled'}).val("");
-    }
-    if($.inArray($(this).val(),num_fields) != -1){
-        $('#id_filtered_by').empty();
-        $.each(num_values,function(i,n){
-            $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
-        });
-        $('#id_filtered_value').removeAttr("disabled").val("");
-    }
-    if($.inArray($(this).val(),text_fields) != -1){
-        $('#id_filtered_by').empty();
-        $.each(text_values,function(i,n){
-            $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
-        });
-        $('#id_filtered_value').removeAttr("disabled").val("");
-    }
-    if($.inArray($(this).val(),time_fields) != -1){
-        $('#id_filtered_by').empty();
-        $.each(time_values,function(i,n){
-            $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
-        });
-        $('#id_filtered_value').removeAttr("disabled").val("");
-        if($(this).val() == 'date'){
-            $('#id_filtered_value').val('YYYY-MM-DD');
+    bool_fields = ["archive","spam","highspam","saspam","rblspam","whitelisted","blacklisted","virusinfected","nameinfected","otherinfected","isquarantined"];
+    num_fields = ["size","sascore"];
+    text_fields = ["id","from_address","from_domain","to_address","to_domain","subject","clientip","spamreport","headers"];
+    time_fields = ["date","time"];
+    num_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':3,'opt':'is greater than'},{'value':4,'opt':'is less than'}];
+    text_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':9,'opt':'is null'},{'value':10,'opt':'is not null'},{'value':5,'opt':'contains'},{'value':6,'opt':'does not contain'},{'value':7,'opt':'matches regex'},{'value':8,'opt':'does not match regex'}];
+    time_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':3,'opt':'is greater than'},{'value':4,'opt':'is less than'}];
+    bool_values = [{'value':11,'opt':'is true'},{'value':12,'opt':'is false'}];
+    $('#id_filtered_field').prepend('<option value="0" selected="0">Please select</option>');
+    $('#id_filtered_value').attr({'disabled':'disabled'});
+    $('#id_filtered_field').bind('change',function(){
+        if($.inArray($(this).val(),bool_fields) != -1){
+            $('#id_filtered_by').empty();
+            $.each(bool_values,function(i,n){
+                $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
+            });
+            $('#id_filtered_value').attr({'disabled':'disabled'}).val("");
         }
-        if($(this).val() == 'time'){
-            $('#id_filtered_value').val('HH:MM');
+        if($.inArray($(this).val(),num_fields) != -1){
+            $('#id_filtered_by').empty();
+            $.each(num_values,function(i,n){
+                $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
+            });
+            $('#id_filtered_value').removeAttr("disabled").val("");
         }
-    }
-});
-$("#filter-form").submit(addFilter);
-$("#my-spinner").ajaxStart(function(){$(this).empty().append('&nbsp;Processing...').show();})
-    .ajaxError(function(event, request, settings){
-        if(request.status == 200){
-            location.href=settings.url;
-        }else{
-            $(this).empty().append($("<span/>").addClass('ajax_error')).append('&nbsp;Error occured');
+        if($.inArray($(this).val(),text_fields) != -1){
+            $('#id_filtered_by').empty();
+            $.each(text_values,function(i,n){
+                $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
+            });
+            $('#id_filtered_value').removeAttr("disabled").val("");
         }
-    }).ajaxStop(function(){$(this).empty().hide();});
-$("#afilters div a").bind('click',ajaxify_active_filter_links);
-$("#sfilters div a").bind('click',ajaxify_active_filter_links);
-
+        if($.inArray($(this).val(),time_fields) != -1){
+            $('#id_filtered_by').empty();
+            $.each(time_values,function(i,n){
+                $('#id_filtered_by').append($("<option/>").attr({value:n.value,innerHTML:n.opt}));
+            });
+            $('#id_filtered_value').removeAttr("disabled").val("");
+            if($(this).val() == 'date'){
+                $('#id_filtered_value').val('YYYY-MM-DD');
+            }
+            if($(this).val() == 'time'){
+                $('#id_filtered_value').val('HH:MM');
+            }
+        }
+    });
+    $("#filter-form").submit(addFilter);
+    $("#my-spinner").ajaxStart(function(){$(this).empty().append('&nbsp;Processing...').show();})
+        .ajaxError(function(event, request, settings){
+            if(request.status == 200){
+                location.href=settings.url;
+            }else{
+                $(this).empty().append($("<span/>").addClass('ajax_error')).append('&nbsp;Error occured');
+            }
+        }).ajaxStop(function(){$(this).empty().hide();});
+    $("#afilters div a").bind('click',ajaxify_active_filter_links);
+    $("#sfilters div a").bind('click',ajaxify_active_filter_links);
 });

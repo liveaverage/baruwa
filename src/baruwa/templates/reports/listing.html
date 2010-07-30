@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block body_class%}{% if pie_data.mail and pie_data.spam and pie_data.virii and pie_data.dates%} class="tundra"{%endif%}{%endblock body_class%}
-{% block headers %}{% if pie_data.mail and pie_data.spam and pie_data.virii and pie_data.dates%}
+{% block headers %}
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />
 <script type="text/javascript">
     var djConfig = { parseOnLoad:true, isDebug:false };
@@ -53,7 +53,7 @@ dojo.connect(dojo.byId("filter-toggle"),"onclick",function(e){
 };
 dojo.addOnLoad(createChart);
 //]]>
-</script>{%endif%}
+</script>
 {% endblock headers %}
 {% block submenu %}
 &nbsp;

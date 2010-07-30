@@ -41,7 +41,7 @@ function lastupdatetime(){
 http://www.elctech.com/snippets/convert-filesize-bytes-to-readable-string-in-javascript 
 */
 function filesizeformat(bytes){
-    var s = ['bytes', 'kb', 'MB', 'GB', 'TB', 'PB'];
+    var s = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
     var e = Math.floor(Math.log(bytes)/Math.log(1024));
     return (bytes/Math.pow(1024, Math.floor(e))).toFixed(1)+" "+s[e];
 }

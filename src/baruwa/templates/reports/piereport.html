@@ -4,49 +4,12 @@
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />
 <script type="text/javascript">
         var djConfig = { parseOnLoad:true, isDebug:false };
+		var json_data = {{pie_data|safe}};
 </script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/dojo/dojo.js"></script>
-<script type="text/javascript">
-//<![CDATA[
-dojo.require("dojox.charting.Chart2D");
-dojo.require("dojox.charting.plot2d.Pie");
-dojo.require("dojox.charting.action2d.Highlight");
-dojo.require("dojox.charting.action2d.MoveSlice");
-dojo.require("dojox.charting.action2d.Tooltip");
-dojo.require("dojox.charting.themes.Tufte");
-dojo.addOnLoad(function() {
-{% if active_filters %}
-dojo.byId("fhl").style.display = "none";
-dojo.create("a",{href:"#",innerHTML:"&darr;&nbsp;Show filters",id:"filter-toggle"},"fhl","before");
-dojo.connect(dojo.byId("filter-toggle"),"onclick",function(e){
-        e.preventDefault();
-        em = dojo.byId("fhl");
-        if(em.style.display == "inline"){
-            em.style.display = "none";
-            dojo.byId("filter-toggle").innerHTML = "&darr;&nbsp;Show filters";
-        }else{
-            em.style.display = "inline";
-            dojo.byId("filter-toggle").innerHTML = "&uarr;&nbsp;Hide filters";
-        }
-});
-{% endif %}
-var dc = dojox.charting;
-var pie_graph = new dc.Chart2D("pie_graph");
-pie_graph.setTheme(dc.themes.Tufte).addPlot("default", {
-type: "Pie",
-font: "normal normal 8pt Tahoma",
-fontColor: "black",
-labelOffset: -30,
-radius: 80
-});
-pie_graph.addSeries("Series A", {{pie_data|safe}});
-var anim_a = new dc.action2d.MoveSlice(pie_graph, "default");
-var anim_b = new dc.action2d.Highlight(pie_graph, "default");
-var anim_c = new dc.action2d.Tooltip(pie_graph, "default");
-pie_graph.render();
-});
-//]]>
-</script>{%endif%}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/lib.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/reports.pie.js"></script>
+{%endif%}
 {% endblock headers %}
 {% block submenu %}
 &nbsp;
@@ -66,7 +29,7 @@ Reports - {{report_title}}
     <div class="Grid_Graph">&nbsp;</div>
 </div>
 <div class="lightblue_div">
-    <div class="Graph_rows_col">
+    <div id="graphrows" class="Graph_rows_col">
         {% load messages_extras %}
         {% for item in top_items %}
         <div class="graph_row">
@@ -89,7 +52,6 @@ Reports - {{report_title}}
         </div>
     </div>
 </div>
-{% if active_filters %}
 <div class="lightblue_div">
     <div class="filterrow">
         Filters have been applied :
@@ -101,6 +63,5 @@ Reports - {{report_title}}
         </span>
     </div>
 </div>
-{% endif %}
 {% include "reports/filter.form.html" %}
 {% endblock content %}

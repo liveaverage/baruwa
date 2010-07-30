@@ -47,6 +47,12 @@ def jsonify_accounts_list(element):
     element['id'] = str(element['id'])
     return element
 
+def jsonify_domains_list(element):
+    "Jsonify domains list"
+    element['id'] = str(element['id'])
+    element['user__id'] = str(element['user__id'])
+    return element
+
 def to_dict(tuple_list):
     d = {}
     for i in tuple_list:

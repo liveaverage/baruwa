@@ -39,7 +39,8 @@ def pack_json_data(data, arg1, arg2):
         pie_data['tooltip'] = item[arg1]
         rv.append(pie_data)
         n += 1
-    return simplejson.dumps(rv)
+    #return simplejson.dumps(rv)
+    return rv
   
 def run_hosts_query(request, active_filters):
     data = Message.messages.for_user(request).values('clientip').filter(clientip__isnull=False).exclude(clientip = '').annotate(num_count=Count('clientip'),

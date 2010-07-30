@@ -292,5 +292,13 @@ def report(request, report_kind):
         report_title = "Total messages [ After SMTP ]"
         template = "reports/listing.html"
     filter_form = FilterForm()
-    return render_to_response(template, {'pie_data':pie_data,'top_items':data,'report_title':report_title,
+    
+    if request.is_ajax():
+        response = simplejson.dumps({'items':list(data),'pie_data':pie_data})
+        #response = {'pie_data':pie_data}
+        return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+    else:
+        if not report_kind in [9, 11]:
+            pie_data = simplejson.dumps(pie_data) 
+        return render_to_response(template, {'pie_data':pie_data,'top_items':data,'report_title':report_title,
         'report_kind':report_kind,'active_filters':active_filters, 'form':filter_form}, context_instance=RequestContext(request))

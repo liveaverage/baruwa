@@ -220,6 +220,9 @@ def delete_address(request, address_id, template_name='accounts/delete_address.h
         id = address.user.id
         msg = 'The address %s has been updated' % address.address
         address.delete()
+        if request.is_ajax():
+            response = simplejson.dumps({'success':True,'html':msg})
+            return HttpResponse(response, content_type='application/javascript; charset=utf-8')
         request.user.message_set.create(message=msg)
         return HttpResponseRedirect(reverse('user-profile', args=[id]))
     else:

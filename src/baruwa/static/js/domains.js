@@ -31,9 +31,9 @@ function navigate(){
 }
 
 function paginate(){
-    tmp = 'Showing page '+rj.page+' of '+rj.pages+' pages. ';
-    $('#heading').empty().append('Accounts :: '+tmp);
-    $.address.title('Accounts :: '+tmp);
+    tmp = 'Domains :: Showing page '+rj.page+' of '+rj.pages+' pages. ';
+    $('#heading').empty().append(tmp);
+    $.address.title(tmp);
     count = 0;
     row = [];
     row[count++] = tmp;
@@ -66,7 +66,7 @@ function paginate(){
 function confirm_delete(event){
     event.preventDefault();
     $(this).blur();
-    re = /\/accounts\/user\/delete\/([0-9]+)/
+    re = /\/accounts\/delete\/address\/([0-9]+)/
     l = $(this).attr('href');
     m = l.match(re)
     if (m) {
@@ -74,7 +74,7 @@ function confirm_delete(event){
         count = 0;
         del_warning[count++] = '<div id="confirm-del-msg">';
         del_warning[count++] = '<div id="confirm-del-info">';
-        del_warning[count++] = 'This will delete the account ';
+        del_warning[count++] = 'This will delete the domain ';
         del_warning[count++] = 'and all associated data. This action is not reversible</div>';
         del_warning[count++] = '<div id="confirm-del-buttons">';
         del_warning[count++] = 'Do you wish to continue ?&nbsp;';
@@ -85,7 +85,7 @@ function confirm_delete(event){
         if ($('#confirm-del-msg').length) {
             $('#confirm-del-msg').remove();
         };
-        $('#account-id-'+m[1]).after(del_warning.join(''));
+        $('#domain-id-'+m[1]).after(del_warning.join(''));
         $('#no_del').bind('click', function(event) {
             event.preventDefault();
             $('#confirm-del-msg').remove();
@@ -95,7 +95,7 @@ function confirm_delete(event){
             $('#confirm-del-msg').remove();
             $.post(l, {id: m[1]}, function(response) {
                 if (response.success) {
-                    $('#account-id-'+m[1]).remove();
+                    $('#domain-id-'+m[1]).remove();
                     $('.Grid_content').before('<div id="in-progress">'+response.html+'</div>');
                     $('#in-progress').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
                     ip = setTimeout(function() {$('#in-progress').remove();}, 15050);
@@ -122,28 +122,36 @@ function page_from_json(data){
             }else{
                 css = 'LightBlue';
             }
-            if (n.is_superuser) {
-                img = '<img src="/static/imgs/user_red.png" alt="x" title="View account" />';
+            if (n.enabled) {
+                img = '<img src="/static/imgs/domain-active.png" alt="" />';
+                eimg = '<img src="/static/imgs/tick.png" alt="" />';
             }else{
-                img = '<img src="/static/imgs/user.png" alt="x" title="View account" />';
+                img = '<img src="/static/imgs/domain-inactive.png" alt="" />';
+                eimg = '<img src="/static/imgs/minus.png" alt="" />';
             };
-            row[count++] = '<div id="account-id-'+n.id+'" class="'+css+'_div">';
-            row[count++] = '<div class="hash"><a href="/accounts/user/'+n.id+'/">'+img+'</a></div>';
-            row[count++] = '<div class="Users_username">'+n.username+'</div>';
-            row[count++] = '<div class="Users_fullname">'+n.first_name+' '+n.last_name+'</div>';
-            row[count++] = '<div class="Users_email">'+n.email+'</div>';
-            row[count++] = '<div class="Users_del"><a href="/accounts/user/delete/'+n.id+'/">';
-            row[count++] = '<img src="/static/imgs/action_delete.png" alt="Delete" title="Delete" />';
-            row[count++] = '</a></div></div>';
+            row[count++] = '<div id="domain-id-'+n.id+'" class="'+css+'_div">';
+            row[count++] = '<div class="Domains_hash">'+img+'</div>';
+            row[count++] = '<div class="Domains_name"><a href="/settings/domains/'+n.id+'/">';
+            row[count++] = ' '+n.address+'</a></div>';
+            row[count++] = '<div class="Domains_owner"><a href="/accounts/user/'+n.user__id+'/">';
+            row[count++] = ' '+n.user__first_name+' '+n.user__last_name+' ('+n.user__username+')</a>';
+            row[count++] = '</div><div class="Domains_status">'+eimg+'</div>';
+            row[count++] = '<div class="Domains_action"><div class="Domains_action_edit">';
+            row[count++] = '<a href="/accounts/edit/address/'+n.id+'/">';
+            row[count++] = '<img src="/static/imgs/edit.png" alt="Edit" title="Edit" /></a></div>';
+            row[count++] = '<div class="Domains_action_delete">';
+            row[count++] = '<a href="/accounts/delete/address/'+n.id+'/">';
+            row[count++] = '<img src="/static/imgs/action_delete.png" alt="Delete" title="Delete" /></a>';
+            row[count++] = '</div></div></div>';
         });
         if(row.length){
             $("div.Grid_heading").siblings('div').remove();
             $("div.Grid_heading").after(row.join(''));
         }else{
             $("div.Grid_heading").siblings('div').remove();
-            $("div.Grid_heading").after('<div class="LightBlue_div"><div class="spanrow">No accounts at the moment</div></div>');
+            $("div.Grid_heading").after('<div class="LightBlue_div"><div class="spanrow">No domains at the moment</div></div>');
         }
-        $('div.Users_del a').bind('click',confirm_delete);
+        $('div.Domains_action_delete a').bind('click',confirm_delete);
         paginate();
     }
 }
@@ -153,7 +161,7 @@ function handlextern(){
     if(page){
         window.scrollTo(0,0);
         page = $.trim(page);
-        re = /^accounts\-[0-9]+\-dsc|asc\-id|username|email$/
+        re = /^settings\-[0-9]+\-dsc|asc\-id|address$/
         if(re.test(page)){
             page = page.replace(/-/g,'/');
             url = '/'+ page + '/';
@@ -169,6 +177,6 @@ function jsize_page(){
     $('#my-spinner').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
     $('#paginator span a').bind('click',navigate);
     $.address.externalChange(handlextern);
-    $('div.Users_del a').bind('click',confirm_delete);
+    $('div.Domains_action_delete a').bind('click',confirm_delete);
 }
 $(document).ready(jsize_page);

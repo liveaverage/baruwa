@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% block headers %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[{{ MEDIA_URL }}
+var rj;
+var ax_error = false;
+//]]>
+</script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.address.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/domains.js"></script>
 {% endblock headers %}
 {% block submenu %}
 <ul>
@@ -27,7 +36,7 @@
 	</div>
 </div>
 {% for domain in object_list %}
-<div class="{% cycle 'LightBlue' 'DarkGray' %}_div">
+<div id="domain-id-{{domain.id}}" class="{% cycle 'LightBlue' 'DarkGray' %}_div">
 	<div class="Domains_hash">
 		{% if domain.enabled %}
 			<img src="{{ MEDIA_URL }}imgs/domain-active.png" alt="" />
@@ -39,7 +48,7 @@
 		<a href="{% url view-domain domain.id %}">{{ domain.address }}</a>
 	</div>
 	<div class="Domains_owner">
-		<a href="{% url user-profile domain.user.id %}">{{ domain.user.first_name }} {{ domain.user.last_name }} ( {{ domain.user.username }} )</a>
+		<a href="{% url user-profile domain.user__id %}">{{ domain.user__first_name }} {{ domain.user__last_name }} ( {{ domain.user__username }} )</a>
 	</div>
 	<div class="Domains_status">
 		{% if domain.enabled %}

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% block body_class%}{%if pie_data.scores and pie_data.count%} class="tundra"{%endif%}{%endblock body_class%}
-{% block headers %}{% if pie_data.scores and pie_data.count %}
+{% block body_class%} class="tundra"{%endblock body_class%}
+{% block headers %}
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />
 <script type="text/javascript">
     var djConfig = { parseOnLoad:true, isDebug:false };
@@ -36,7 +36,7 @@ dojo.connect(dojo.byId("filter-toggle"),"onclick",function(e){
 };
 dojo.addOnLoad(dochart);
 //]]>
-</script>{%endif%}
+</script>
 {% endblock headers %}
 {% block submenu %}
 &nbsp;

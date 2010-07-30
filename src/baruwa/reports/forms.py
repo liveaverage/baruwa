@@ -39,7 +39,7 @@ FILTER_ITEMS = (
     ('to_domain','To Domain'),
     ('subject','Subject'),
     ('clientip','Received from'),
-    ('archive','Is Archived'),
+#    ('archive','Is Archived'),
     ('spam','Is spam'),
     ('highspam','Is high spam'),
     ('saspam','Is SA spam'),
@@ -74,7 +74,7 @@ FILTER_BY = (
 
 EMPTY_VALUES = (None, '')
 
-BOOL_FIELDS = ["archive", "spam", "highspam", "saspam", "rblspam", "whitelisted",
+BOOL_FIELDS = ["spam", "highspam", "saspam", "rblspam", "whitelisted",
     "blacklisted", "virusinfected", "nameinfected", "otherinfected", "isquarantined"]
 TEXT_FIELDS = ["id", "from_address", "from_domain", "to_address", "to_domain", 
     "subject", "clientip", "spamreport", "headers"]
