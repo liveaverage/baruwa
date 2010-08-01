@@ -115,9 +115,12 @@ def index(request):
 @login_required
 def rem_filter(request, index_num):
     if request.session.get('filter_by', False):
-        li = request.session.get('filter_by')
-        li.remove(li[int(index_num)])
-        request.session.modified = True
+        try:
+            li = request.session.get('filter_by')
+            li.remove(li[int(index_num)])
+            request.session.modified = True
+        except:
+            pass
         if request.is_ajax():
             return index(request)
     return HttpResponseRedirect(reverse('reports-index'))
@@ -255,12 +258,17 @@ def report(request, report_kind):
          rows = c.fetchall()
          c.close()
          counts, scores, data = format_sa_data(rows)
-         pie_data = {'scores':scores,'count':simplejson.dumps(counts)}
+         pie_data = {'scores':scores,'count':counts}
          template = "reports/barreport.html"
          report_title = "Spam Score distribution"
     elif report_kind == 10:
         data = run_hosts_query(request, active_filters)
         pie_data = pack_json_data(data,'clientip','num_count')
+        if request.is_ajax():
+            from baruwa.messages.templatetags.messages_extras import tds_geoip, tds_hostname
+            for row in data:
+                row['country'] = tds_geoip(row['clientip'])
+                row['hostname'] = tds_hostname(row['clientip'])
         report_title = "Top mail hosts by quantity"
         template = "reports/relays.html"
     elif report_kind == 11:
@@ -288,7 +296,7 @@ def report(request, report_kind):
         rows = c.fetchall()
         c.close()
         mail_total, spam_total, virus_total, dates, data = format_totals_data(rows)
-        pie_data = {'dates':dates, 'mail':simplejson.dumps(mail_total), 'spam':simplejson.dumps(spam_total), 'virii':simplejson.dumps(virus_total)}
+        pie_data = {'dates':dates, 'mail':mail_total, 'spam':spam_total, 'virii':virus_total}
         report_title = "Total messages [ After SMTP ]"
         template = "reports/listing.html"
     filter_form = FilterForm()

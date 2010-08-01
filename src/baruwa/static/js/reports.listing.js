@@ -19,39 +19,32 @@
 // vim: ai ts=4 sts=4 et sw=4
 //
 dojo.require("dojox.charting.Chart2D");
-dojo.require("dojox.charting.plot2d.Pie");
 dojo.require("dojox.charting.action2d.Highlight");
-dojo.require("dojox.charting.action2d.MoveSlice");
+dojo.require("dojox.charting.action2d.Magnify");
+dojo.require("dojox.charting.action2d.Shake");
 dojo.require("dojox.charting.action2d.Tooltip");
-dojo.require("dojox.charting.themes.Tufte");
+dojo.require("dojox.charting.widget.Legend");
 
 //functions
 function build_rows(build_array){
 	var rows = [];
 	var count = 0;
-	var c = 1;
+	var c = 'LightBlue_div'
 	dojo.forEach(build_array, function(item, i){
-		if (item.from_address) {
-			address = item.from_address;
-		};
-		if (item.to_address) {
-			address = item.to_address;
-		};
-		if (item.from_domain) {
-			address = item.from_domain;
-		};
-		if (item.to_domain) {
-			address = item.to_domain;
-		};
-		rows[count++] = '<div class="graph_row">';
-		rows[count++] = '<div class="row_hash">'+c+'.</div>';
-		rows[count++] = '<div class="row_address">';
-		rows[count++] = '<div class="pie_'+c+' pie"></div>&nbsp;';
-		rows[count++] = ' '+address+'</div>';
-		rows[count++] = '<div class="row_count">'+item.num_count+'</div>';
-		rows[count++] = '<div class="row_volume">'+filesizeformat(item.size)+'</div>';
+	    if (c == 'LightBlue_div') {
+	        c = 'LightGray_div';
+	    }else{
+	        c = 'LightBlue_div';
+	    };
+		rows[count++] = '<div class="'+c+'">';
+		rows[count++] = '<div class="totals_date">'+item.date+'</div>';
+		rows[count++] = '<div class="totals_mail">'+item.count+'</div>';
+		rows[count++] = '<div class="totals_virii">'+item.virii+'</div>';
+		rows[count++] = '<div class="totals_viriip">'+item.vpercent+'</div>';
+		rows[count++] = '<div class="totals_spam">'+item.spam+'</div>';
+		rows[count++] = '<div class="totals_spamp">'+item.spercent+'</div>';
+		rows[count++] = '<div class="totals_volume">'+filesizeformat(item.size)+'</div>';
 		rows[count++] = '</div>';
-		c++;
 	});
 	return rows.join('');
 }
@@ -79,7 +72,9 @@ function process_response(data){
 				dojo.empty("graphrows");
 				var rows = build_rows(response.items);
 				dojo.place(rows,"graphrows","last");
-				chart.updateSeries("Series A", response.pie_data);
+				chart.updateSeries("mail", response.pie_data.mail);
+				chart.updateSeries("spam", response.pie_data.spam);
+				chart.updateSeries("virii", response.pie_data.virii);
 				chart.render();
 				spinner.innerHTML = '';
             	dojo.style('my-spinner','display','none');
@@ -99,7 +94,7 @@ function process_response(data){
 	};
 }
 
-dojo.addOnLoad(function() {
+dojo.addOnLoad(function(){
     init_form();
     //bind to form submit
     dojo.query("#filter-form").onsubmit(function(e){
@@ -116,20 +111,22 @@ dojo.addOnLoad(function() {
     dojo.query("#fhl a").onclick(function(e){
         remove_filter(e,this);
     });
-    //pie chart initialization and rendering
+    //init chart and render
 	var dc = dojox.charting;
-	chart = new dc.Chart2D("chart");
-	chart.setTheme(dc.themes.Tufte).addPlot("default", {
-	type: "Pie",
-	font: "normal normal 8pt Tahoma",
-	fontColor: "black",
-	labelOffset: -30,
-	radius: 80
+	var dur = 450;
+	chart = new dojox.charting.Chart2D("chart");
+	chart.addAxis("x",{labels: labels,majorTickStep:15});
+	chart.addAxis("y",{vertical:true});
+	chart.addPlot("default",{type: "ClusteredColumns",gap:2});
+	chart.addSeries("mail", mail_data, {stroke: {color: "black"}, fill: "green"});
+	chart.addSeries("spam", spam_data, {stroke: {color: "black"}, fill: "pink"});
+	chart.addSeries("virii", virii_data, {stroke: {color: "black"}, fill: "red"});
+	var anim6a = new dc.action2d.Highlight(chart, "default", {
+	duration: dur,
+	easing:   dojo.fx.easing.sineOut
 	});
-	chart.addSeries("Series A", json_data);
-	var anim_a = new dc.action2d.MoveSlice(chart, "default");
-	var anim_b = new dc.action2d.Highlight(chart, "default");
-	var anim_c = new dc.action2d.Tooltip(chart, "default");
+	var anim6b = new dc.action2d.Shake(chart, "default");
+	var anim6c = new dc.action2d.Tooltip(chart, "default");
 	chart.render();
-	
+	var mail_legend = new dojox.charting.widget.Legend({chart: chart}, "mail_legend");
 });

@@ -6,7 +6,7 @@
 - Auto release (hashed url) DONE
 - Reformat the quarantine report DONE
 - Domain management (deliver to) [destinations,port, multiplex, test destination] DONE
-- Filter queries on the reports pages
+- Filter queries on the reports pages DONE
 - Re-factor the accounts system to link to domains DONE
 - Status aggregation [rrd graphs]
 - Separate spam from other quarantined mail. DONE

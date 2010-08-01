@@ -3,57 +3,16 @@
 {% block headers %}
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />
 <script type="text/javascript">
-    var djConfig = { parseOnLoad:true, isDebug:false };
+	var djConfig = { parseOnLoad:true, isDebug:false };
+	var labels = [{% for i in pie_data.dates%}{% if not forloop.last %}{value:{{forloop.counter}}, text:"{{i}}"},{% else %}{value:{{forloop.counter}},text:"{{i}}"}{% endif %}{%endfor%}];
+	var mail_data = {{pie_data.mail|safe}};
+	var spam_data = {{pie_data.spam|safe}};
+	var virii_data = {{pie_data.virii|safe}};
 </script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/dojo/dojo.js"></script>
-<script type="text/javascript">
-//<![CDATA[
-dojo.require("dojox.charting.Chart2D");
-dojo.require("dojox.charting.action2d.Highlight");
-dojo.require("dojox.charting.action2d.Magnify");
-dojo.require("dojox.charting.action2d.Shake");
-dojo.require("dojox.charting.action2d.Tooltip");
-dojo.require("dojox.charting.widget.Legend");
-var dc = dojox.charting;
-var dur = 450;
-
-createChart = function(){
-{% if active_filters %}
-dojo.byId("fhl").style.display = "none";
-dojo.create("a",{href:"#",innerHTML:"&darr;&nbsp;Show filters",id:"filter-toggle"},"fhl","before");
-dojo.connect(dojo.byId("filter-toggle"),"onclick",function(e){
-        e.preventDefault();
-        em = dojo.byId("fhl");
-        if(em.style.display == "block"){
-            em.style.display = "none";
-            dojo.byId("filter-toggle").innerHTML = "&darr;&nbsp;Show filters";
-        }else{
-            em.style.display = "block";
-            dojo.byId("filter-toggle").innerHTML = "&uarr;&nbsp;Hide filters";
-        }
-});
-{% endif %}
-    var mail_chart = new dojox.charting.Chart2D("mailchart");
-    mail_chart.addAxis("x"{% if pie_data.dates%},{labels: [{% for i in pie_data.dates%}
-{% if not forloop.last %}{value:{{forloop.counter}}, text:"{{i}}"},{% else %}{value:{{forloop.counter}}, text:"{{i}}"}{% endif %}{%endfor%}
-],majorTickStep:15}{%endif%});
-    mail_chart.addAxis("y",{vertical:true});
-    mail_chart.addPlot("default",{type: "ClusteredColumns",gap:2});
-    mail_chart.addSeries("mail", {{pie_data.mail|safe}}, {stroke: {color: "black"}, fill: "green"});
-    mail_chart.addSeries("spam", {{pie_data.spam|safe}}, {stroke: {color: "black"}, fill: "pink"});
-    mail_chart.addSeries("virii", {{pie_data.virii|safe}}, {stroke: {color: "black"}, fill: "red"});
-    var anim6a = new dc.action2d.Highlight(mail_chart, "default", {
-    duration: dur,
-    easing:   dojo.fx.easing.sineOut
-    });
-    var anim6b = new dc.action2d.Shake(mail_chart, "default");
-    var anim6c = new dc.action2d.Tooltip(mail_chart, "default");
-    mail_chart.render();
-    var mail_legend = new dojox.charting.widget.Legend({chart: mail_chart}, "mail_legend");
-};
-dojo.addOnLoad(createChart);
-//]]>
-</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/lib.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/reports.common.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/reports.listing.js"></script>
 {% endblock headers %}
 {% block submenu %}
 &nbsp;
@@ -66,7 +25,7 @@ Reports - {{report_title}}
 {% endblock heading %}
 {% block content %}
 <div class="White_div">
-	<div id="mailchart" style="width: 950px; height: 250px;">
+	<div id="chart" style="width: 950px; height: 250px;">
 		<noscript>Enable Javascript to view graphs</noscript>
 	</div>	
 </div>
@@ -96,6 +55,7 @@ Reports - {{report_title}}
 		Volume
 	</div>
 </div>
+<div id="graphrows">
 {% for row in top_items %}
 <div class="{% cycle 'LightBlue_div' 'LightGray_div' %}">
 	<div class="totals_date">
@@ -125,18 +85,17 @@ Reports - {{report_title}}
 	No records returned.
 </div>
 {% endfor %}
-{% if active_filters %}
-<div class="lightblue_div">
-	<div class="filterrow">
+</div>
+<div id="filterrow" class="lightblue_div{% if not active_filters %} hide{% endif %}">
+    <div class="filterrow">
         Filters have been applied :
         <span id="fhl">
             {% for f in active_filters %}
-            	"<a href="{% url reports-index %}#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"
+            	&nbsp;<a href="{% url remove-filter forloop.counter0 %}"><img src="/static/imgs/sm-del.png" alt="x"/></a> "{{ f.filter_field }} {{f.filter_by}} {{f.filter_value}}"
 				{% if not forloop.last %},{% endif %}
             {% endfor %}
         </span>
     </div>
 </div>
-{% endif %}
 {% include "reports/filter.form.html" %}
 {% endblock content %}

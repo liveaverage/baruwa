@@ -1,3 +1,23 @@
+// 
+// Baruwa - Web 2.0 MailScanner front-end.
+// Copyright (C) 2010  Andrew Colin Kissa <andrew@topdog.za.net>
+// 
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License along
+// with this program; if not, write to the Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+//
+// vim: ai ts=4 sts=4 et sw=4
+//
 function toplinkize(direction,view_type,field_name,quarantine_type){
     var tmp = '';
     if(direction == 'dsc'){
@@ -26,7 +46,7 @@ function en_history(){
         };
         $('#sub-menu-links ul').append(mylinks.join(''));
     };
-    $('#Footer_container').after('<div id="loading_message"><p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p></div>');
+    $('#Footer_container').after(loading_msg);
     $.getJSON($(this).attr('href'),json2html);
     return false;
 }
@@ -40,7 +60,7 @@ function handlextern(){
             page = page.replace(/-/g,'/');
             url = '/'+ page + '/';
             window.scrollTo(0,0);
-            $('#Footer_container').after('<div id="loading_message"><p><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/>Loading.......</p></div>');
+            $('#Footer_container').after(loading_msg);
             $.getJSON(url,json2html);
             return false;
         }
@@ -168,4 +188,5 @@ function jsize_page(){
     });
     $.address.externalChange(handlextern);
 }
+var loading_msg = '<div id="loading_message"><div id="loading"><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/><b>Loading</b></div></div>';
 $(document).ready(jsize_page);

@@ -300,7 +300,7 @@ div.blacklist {
     top:0;
 }
 
-#loading_message p {
+#loading {
     left:50%;
     margin-bottom:0;
     margin-left:0;
@@ -308,6 +308,17 @@ div.blacklist {
     margin-top: -1em;
     position:absolute;
     top:50%;
+    font-family:Helvetica, sans-serif;
+    border: 1px solid #5c9ccc;
+    padding: 2px;
+    background-color: #5c9ccc;
+    color: #ffffff;
+    opacity: 0.90;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    width: 100px;
+    height: 50px;
+    text-align: center;
 }
 
 #paginator {

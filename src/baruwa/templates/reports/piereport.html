@@ -8,7 +8,8 @@
 </script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/dojo/dojo.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/lib.js"></script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/reports.pie.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/reports.common.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/reports.pie.js"></script>
 {%endif%}
 {% endblock headers %}
 {% block submenu %}
@@ -47,17 +48,17 @@ Reports - {{report_title}}
         {% endfor %}
     </div>
     <div class="Graph_pie_col">
-        <div id="pie_graph" style="width: 350px; height: 284px;">
+        <div id="chart" style="width: 350px; height: 284px;">
 		<noscript>Javascript required to view graphs</noscript>
         </div>
     </div>
 </div>
-<div class="lightblue_div">
+<div id="filterrow" class="lightblue_div{% if not active_filters %} hide{% endif %}">
     <div class="filterrow">
         Filters have been applied :
         <span id="fhl">
             {% for f in active_filters %}
-            	"<a href="{% url reports-index %}#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"
+            	&nbsp;<a href="{% url remove-filter forloop.counter0 %}"><img src="/static/imgs/sm-del.png" alt="x"/></a> "{{ f.filter_field }} {{f.filter_by}} {{f.filter_value}}"
 				{% if not forloop.last %},{% endif %}
             {% endfor %}
         </span>

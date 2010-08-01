@@ -19,39 +19,22 @@
 // vim: ai ts=4 sts=4 et sw=4
 //
 dojo.require("dojox.charting.Chart2D");
-dojo.require("dojox.charting.plot2d.Pie");
-dojo.require("dojox.charting.action2d.Highlight");
-dojo.require("dojox.charting.action2d.MoveSlice");
-dojo.require("dojox.charting.action2d.Tooltip");
-dojo.require("dojox.charting.themes.Tufte");
 
 //functions
 function build_rows(build_array){
 	var rows = [];
 	var count = 0;
-	var c = 1;
+	var c = 'LightBlue_div'
 	dojo.forEach(build_array, function(item, i){
-		if (item.from_address) {
-			address = item.from_address;
-		};
-		if (item.to_address) {
-			address = item.to_address;
-		};
-		if (item.from_domain) {
-			address = item.from_domain;
-		};
-		if (item.to_domain) {
-			address = item.to_domain;
-		};
-		rows[count++] = '<div class="graph_row">';
-		rows[count++] = '<div class="row_hash">'+c+'.</div>';
-		rows[count++] = '<div class="row_address">';
-		rows[count++] = '<div class="pie_'+c+' pie"></div>&nbsp;';
-		rows[count++] = ' '+address+'</div>';
-		rows[count++] = '<div class="row_count">'+item.num_count+'</div>';
-		rows[count++] = '<div class="row_volume">'+filesizeformat(item.size)+'</div>';
+	    if (c == 'LightBlue_div') {
+	        c = 'LightGray_div';
+	    }else{
+	        c = 'LightBlue_div';
+	    };
+		rows[count++] = '<div class="'+c+'">';
+		rows[count++] = '<div class="SA_score">'+item.score+'</div>';
+		rows[count++] = '<div class="SA_count">'+item.count+'</div>';
 		rows[count++] = '</div>';
-		c++;
 	});
 	return rows.join('');
 }
@@ -79,7 +62,15 @@ function process_response(data){
 				dojo.empty("graphrows");
 				var rows = build_rows(response.items);
 				dojo.place(rows,"graphrows","last");
-				chart.updateSeries("Series A", response.pie_data);
+				chart.removeAxis("x");
+				var l = [];
+				var c = 1;
+				for (var i=0; i < response.pie_data.scores.length; i++) {
+				    l[i] =  {value:c,text:response.pie_data.scores[i]};
+				    c++;
+				};
+				chart.addAxis("x",{labels: l,majorTickStep:10});
+				chart.updateSeries("SA scores",response.pie_data.count,{stroke: {color: "black"}, fill: "blue"});
 				chart.render();
 				spinner.innerHTML = '';
             	dojo.style('my-spinner','display','none');
@@ -99,7 +90,7 @@ function process_response(data){
 	};
 }
 
-dojo.addOnLoad(function() {
+dojo.addOnLoad(function(){
     init_form();
     //bind to form submit
     dojo.query("#filter-form").onsubmit(function(e){
@@ -116,20 +107,11 @@ dojo.addOnLoad(function() {
     dojo.query("#fhl a").onclick(function(e){
         remove_filter(e,this);
     });
-    //pie chart initialization and rendering
-	var dc = dojox.charting;
-	chart = new dc.Chart2D("chart");
-	chart.setTheme(dc.themes.Tufte).addPlot("default", {
-	type: "Pie",
-	font: "normal normal 8pt Tahoma",
-	fontColor: "black",
-	labelOffset: -30,
-	radius: 80
-	});
-	chart.addSeries("Series A", json_data);
-	var anim_a = new dc.action2d.MoveSlice(chart, "default");
-	var anim_b = new dc.action2d.Highlight(chart, "default");
-	var anim_c = new dc.action2d.Tooltip(chart, "default");
-	chart.render();
-	
+    //init chart and render
+	chart = new dojox.charting.Chart2D("chart");
+	chart.addPlot("default", {type: "ClusteredColumns",gap:1});
+	chart.addAxis("x",{labels: labels,majorTickStep:10});
+	chart.addAxis("y", {vertical: true});
+	chart.addSeries("SA scores", sa_scores,{stroke: {color: "black"}, fill: "blue"});
+	chart.render();	
 });

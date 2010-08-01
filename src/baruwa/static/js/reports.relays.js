@@ -24,7 +24,6 @@ dojo.require("dojox.charting.action2d.Highlight");
 dojo.require("dojox.charting.action2d.MoveSlice");
 dojo.require("dojox.charting.action2d.Tooltip");
 dojo.require("dojox.charting.themes.Tufte");
-
 //functions
 function build_rows(build_array){
 	var rows = [];
@@ -45,11 +44,13 @@ function build_rows(build_array){
 		};
 		rows[count++] = '<div class="graph_row">';
 		rows[count++] = '<div class="row_hash">'+c+'.</div>';
-		rows[count++] = '<div class="row_address">';
-		rows[count++] = '<div class="pie_'+c+' pie"></div>&nbsp;';
-		rows[count++] = ' '+address+'</div>';
-		rows[count++] = '<div class="row_count">'+item.num_count+'</div>';
-		rows[count++] = '<div class="row_volume">'+filesizeformat(item.size)+'</div>';
+		rows[count++] = '<div class="row_ip">';
+        rows[count++] = '<div class="pie_{{forloop.counter}} pie"></div>';
+        rows[count++] = ' '+item.clientip+'</div>';
+        rows[count++] = '<div class="row_hostname">'+item.hostname+'</div>';
+        rows[count++] = '<div class="row_country">'+item.country+'</div>';
+        rows[count++] = '<div class="row_count">'+item.num_count+'/'+item.spam_total+'/'+item.virus_total+'</div>';
+        rows[count++] = '<div class="row_volume">'+filesizeformat(item.size)+'</div>';
 		rows[count++] = '</div>';
 		c++;
 	});
@@ -116,20 +117,19 @@ dojo.addOnLoad(function() {
     dojo.query("#fhl a").onclick(function(e){
         remove_filter(e,this);
     });
-    //pie chart initialization and rendering
-	var dc = dojox.charting;
-	chart = new dc.Chart2D("chart");
-	chart.setTheme(dc.themes.Tufte).addPlot("default", {
-	type: "Pie",
-	font: "normal normal 8pt Tahoma",
-	fontColor: "black",
-	labelOffset: -30,
-	radius: 80
-	});
-	chart.addSeries("Series A", json_data);
-	var anim_a = new dc.action2d.MoveSlice(chart, "default");
-	var anim_b = new dc.action2d.Highlight(chart, "default");
-	var anim_c = new dc.action2d.Tooltip(chart, "default");
-	chart.render();
-	
+    //chart init and render
+    var dc = dojox.charting;
+    chart = new dc.Chart2D("chart");
+    chart.setTheme(dc.themes.Tufte).addPlot("default", {
+    type: "Pie",
+    font: "normal normal 8pt Tahoma",
+    fontColor: "black",
+    labelOffset: -30,
+    radius: 80
+    });
+    chart.addSeries("Series A", json_data);
+    var anim_a = new dc.action2d.MoveSlice(chart, "default");
+    var anim_b = new dc.action2d.Highlight(chart, "default");
+    var anim_c = new dc.action2d.Tooltip(chart, "default");
+    chart.render();
 });
