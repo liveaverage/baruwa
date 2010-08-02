@@ -33,6 +33,12 @@ from baruwa.accounts.models import UserAddresses
 from baruwa.config.models import MailHost
 from baruwa.config.forms import  MailHostForm, EditMailHost, DeleteMailHost
 from baruwa.utils.misc import jsonify_domains_list
+from baruwa.auth.models import MailAuthHost
+from baruwa.config.forms import MailAuthHostForm, EditMailAuthHostForm,\
+ DeleteMailAuthHostForm
+
+
+auth_types = ['', 'pop3', 'imap', 'smtp']
 
 @login_required
 @onlysuperusers
@@ -75,6 +81,7 @@ def view_domain(request, domain_id, template='config/domain.html'):
     domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
     
     servers = MailHost.objects.filter(useraddress=domain)
+    authservers = MailAuthHost.objects.filter(useraddress=domain)
     return render_to_response(template, locals(), context_instance=RequestContext(request))
 
 @login_required
@@ -91,14 +98,14 @@ def add_host(request, domain_id, template='config/add_host.html'):
                 host = form.save()
                 msg = 'Delivery SMTP server: %s was added successfully' % host.address
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True,'html':success})
+                    response = simplejson.dumps({'success':True,'html':msg})
                     return HttpResponse(response, content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
                 return HttpResponseRedirect(reverse('view-domain', args=[domain.id]))
             except:
                 msg = 'Adding of Delivery SMTP server failed'
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True,'html':success})
+                    response = simplejson.dumps({'success':True,'html':msg})
                     return HttpResponse(response, content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
     else:
@@ -119,14 +126,14 @@ def edit_host(request, host_id, template='config/edit_host.html'):
                 form.save()
                 msg = 'Delivery SMTP server: %s has been updated successfully' % host.address
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True,'html':success})
+                    response = simplejson.dumps({'success':True,'html':msg})
                     return HttpResponse(response, content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
                 return HttpResponseRedirect(reverse('view-domain', args=[host.useraddress.id]))
             except:
                 msg = 'Delivery SMTP server: %s update failed' % host.address
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True,'html':success})
+                    response = simplejson.dumps({'success':True,'html':msg})
                     return HttpResponse(response, content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
     else:
@@ -155,7 +162,7 @@ def delete_host(request, host_id, template='config/delete_host.html'):
             except:
                 msg = 'Delivery SMTP server: %s could not be deleted' % host.address
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':False,'html':success})
+                    response = simplejson.dumps({'success':False,'html':msg})
                     return HttpResponse(response, content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
     else:
@@ -180,9 +187,95 @@ def test_host(request, host_id):
         msg = 'Server %s is NOT accepting mail for : %s' % (host.address, host.useraddress.address)
         
     if request.is_ajax():
-        response = simplejson.dumps({'success':True,'html':success})
+        response = simplejson.dumps({'success':success,'html':msg})
         return HttpResponse(response, content_type='application/javascript; charset=utf-8')
         
     request.user.message_set.create(message=msg)
     return HttpResponseRedirect(reverse('view-domain', args=[host.useraddress.id]))
+    
+@login_required
+@onlysuperusers
+def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
+    'Add an external auth host'
+    domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
+    if request.method == 'POST':
+        form = MailAuthHostForm(request.POST)
+        if form.is_valid():
+            try:
+                host = form.save()
+                msg = 'External authentication %s: on host %s for domain %s was added successfully' % (auth_types[host.protocol], 
+                host.address, host.useraddress.address)
+                if request.is_ajax():
+                    response = simplejson.dumps({'success':True,'html':msg})
+                    return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+                request.user.message_set.create(message=msg)
+                return HttpResponseRedirect(reverse('view-domain', args=[domain.id]))
+            except:
+                msg = 'Addition of external authentication failed'
+                if request.is_ajax():
+                    response = simplejson.dumps({'success':True,'html':msg})
+                    return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+                request.user.message_set.create(message=msg)
+    else:
+        form = MailAuthHostForm(initial = {'useraddress': domain.id})
+    return render_to_response(template, locals(), context_instance=RequestContext(request))
+    
+@login_required
+@onlysuperusers
+def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
+    'Edits an external auth host'
+    
+    host = get_object_or_404(MailAuthHost, id=host_id)
+    
+    if request.method == 'POST':
+        form = EditMailAuthHostForm(request.POST, instance=host)
+        if form.is_valid():
+            try:
+                saved_host = form.save()
+                msg = 'External authentication %s: on host %s for domain %s has been updated successfully' % (auth_types[saved_host.protocol], 
+                saved_host.address, saved_host.useraddress.address)
+                if request.is_ajax():
+                    response = simplejson.dumps({'success':True,'html':msg})
+                    return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+                request.user.message_set.create(message=msg)
+                return HttpResponseRedirect(reverse('view-domain', args=[saved_host.useraddress.id]))
+            except:
+                msg = 'Update of external authentication failed'
+                if request.is_ajax():
+                    response = simplejson.dumps({'success':True,'html':msg})
+                    return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+                request.user.message_set.create(message=msg)
+    else:
+        form = EditMailAuthHostForm(instance=host)
+    return render_to_response(template, locals(), context_instance=RequestContext(request))
+    
+@login_required
+@onlysuperusers
+def delete_auth_host(request, host_id, template='config/delete_auth_host.html'):
+    'Deletes an external auth host'
+    host = get_object_or_404(MailAuthHost, id=host_id)
+    
+    if request.method == 'POST':
+        form = DeleteMailAuthHostForm(request.POST, instance=host)
+        if form.is_valid():
+            try:
+                go_id = host.useraddress.id
+                msg = 'External authentication %s: on host %s for domain %s has been deleted' % (auth_types[host.protocol], 
+                host.address, host.useraddress.address)
+                host.delete()
+                if request.is_ajax():
+                    response = simplejson.dumps({'success':True,'html':msg})
+                    return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+                request.user.message_set.create(message=msg)
+                return HttpResponseRedirect(reverse('view-domain', args=[go_id]))
+            except:
+                msg = 'External authentication %s: on host %s for domain %s could not be deleted' % (auth_types[host.protocol], 
+                host.address, host.useraddress.address)
+                if request.is_ajax():
+                    response = simplejson.dumps({'success':False,'html':msg})
+                    return HttpResponse(response, content_type='application/javascript; charset=utf-8')
+                request.user.message_set.create(message=msg)
+    else:
+        form = DeleteMailAuthHostForm(instance=host)
+    return render_to_response(template, locals(), context_instance=RequestContext(request))
     

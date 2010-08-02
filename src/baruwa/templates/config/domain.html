@@ -82,7 +82,35 @@
 </div>
 {% empty %}
 <div class="LightBlue_div">
-	<div class="spanrow">No servers configured</div>
+	<div class="spanrow">No smtp delivery servers configured</div>
+</div>
+{% endfor %}
+<div class="header_div">
+    <div class="Reports_heading">
+		Authentication Servers
+		<div class="Profile_edit">[ <a href="{% url add-auth-host domain.id %}">Add</a> ]</div>
+	</div>
+</div>
+{% for authserver in authservers  %}
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{{ authserver.address }}
+	</div>
+	<div class="Profile_values">
+		{% if authserver.enabled %}
+			Enabled
+		{% else %}
+			Disabled
+		{% endif %}
+		<div class="Profile_edit">
+			 <a href="{% url edit-auth-host  authserver.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+			 <a href="{% url delete-auth-host authserver.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+	<div class="spanrow">No auth servers configured</div>
 </div>
 {% endfor %}
 {% endblock content %}

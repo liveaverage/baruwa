@@ -185,7 +185,7 @@ function addFilter(){
 }
 
 $(document).ready(function(){
-    bool_fields = ["archive","spam","highspam","saspam","rblspam","whitelisted","blacklisted","virusinfected","nameinfected","otherinfected","isquarantined"];
+    bool_fields = ["scaned","spam","highspam","saspam","rblspam","whitelisted","blacklisted","virusinfected","nameinfected","otherinfected","isquarantined"];
     num_fields = ["size","sascore"];
     text_fields = ["id","from_address","from_domain","to_address","to_domain","subject","clientip","spamreport","headers"];
     time_fields = ["date","time"];

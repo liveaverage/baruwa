@@ -22,11 +22,13 @@
 from django import forms
 from baruwa.accounts.models import UserAddresses
 from baruwa.config.models import MailHost
-from baruwa.utils.regex import dom_re
+from baruwa.utils.regex import host_or_ipv4_re
+from baruwa.auth.models import MailAuthHost
 
 class MailHostForm(forms.ModelForm):
     "Mail host add form"
-    address = forms.RegexField(regex=dom_re, widget=forms.TextInput(attrs={'size':'50'}))
+    address = forms.RegexField(regex=host_or_ipv4_re, widget=forms.TextInput(attrs={'size':'40'}))
+    port = forms.CharField(widget=forms.TextInput(attrs={'size':'5'}))
     useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(), widget=forms.HiddenInput())
     
     class Meta:
@@ -35,7 +37,8 @@ class MailHostForm(forms.ModelForm):
 
 class EditMailHost(forms.ModelForm):
     "Edit Mail host form"
-    address = forms.RegexField(regex=dom_re, widget=forms.TextInput(attrs={'size':'50'}))
+    address = forms.RegexField(regex=host_or_ipv4_re, widget=forms.TextInput(attrs={'size':'40'}))
+    port = forms.CharField(widget=forms.TextInput(attrs={'size':'5'}))
     class Meta:
         model = MailHost
         exclude = ('id', 'useraddress')
@@ -46,3 +49,27 @@ class DeleteMailHost(forms.ModelForm):
     class Meta:
         model = MailHost
         fields = ('id',)
+        
+class MailAuthHostForm(forms.ModelForm):
+    "Mail auth host add form"
+    address = forms.RegexField(regex=host_or_ipv4_re, widget=forms.TextInput(attrs={'size':'40'}))
+    port = forms.CharField(widget=forms.TextInput(attrs={'size':'5'}))
+    useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(), widget=forms.HiddenInput())
+    class Meta:
+        model = MailAuthHost
+        
+class EditMailAuthHostForm(forms.ModelForm):
+    "Edit Mail auth host form"
+    address = forms.RegexField(regex=host_or_ipv4_re, widget=forms.TextInput(attrs={'size':'40'}))
+    port = forms.CharField(widget=forms.TextInput(attrs={'size':'5'}))
+    class Meta:
+        model = MailAuthHost
+        exclude = ('id', 'useraddress')
+        
+class DeleteMailAuthHostForm(forms.ModelForm):
+    "Delete a mail auth form"
+    id = forms.CharField(widget=forms.HiddenInput)
+    class Meta:
+        model = MailAuthHost
+        fields = ('id')
+        

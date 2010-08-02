@@ -80,6 +80,7 @@ function process_response(data){
             	dojo.style('my-spinner','display','none');
             	dojo.attr("filter_form_submit", {'value':'Add'});
             	dojo.removeAttr('filter_form_submit','disabled');
+            	window.scrollTo(0,0);
 			}
 		});
 	}else{
