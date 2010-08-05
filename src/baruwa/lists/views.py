@@ -65,15 +65,15 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
             else:
                 listing = listing.filter(user=request.user.id)
         if account_type == 3:
-            if addresses:
-                for email in addresses:
-                   kw = {'to_address__exact':email}
-                   q = q | Q(**kw)
-                kw = {'to_address__exact':request.user.username}
-                q = q | Q(**kw)
-                listing = listing.filter(q)
-            else:
-                listing = listing.filter(user=request.user.id)
+            # if addresses:
+            #     for email in addresses:
+            #        kw = {'to_address__exact':email}
+            #        q = q | Q(**kw)
+            #     kw = {'to_address__exact':request.user.username}
+            #     q = q | Q(**kw)
+            #     listing = listing.filter(q)
+            # else:
+            listing = listing.filter(user=request.user.id)
                 
     if request.method == 'POST':
         filter_form = FilterForm(request.POST)
@@ -97,7 +97,6 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
                 listing = listing.exclude(to_address__icontains=search_for)
             elif ordering == 'from_address':
                 listing = listing.exclude(from_address__icontains=search_for)
-    #app = "lists/%d" % list_kind
     
     if request.is_ajax():
         p = Paginator(listing,15)

@@ -81,8 +81,13 @@ def create_user_profile(sender, **kwargs):
     create_user_profile
     """
     user = kwargs['instance']
-    if kwargs.get('created', False): 
+    if kwargs.get('created', False):
         UserProfile.objects.get_or_create(user=user)
+    else:
+        profile = UserProfile.objects.get(user=user)
+        if user.is_superuser:
+            profile.account_type = 1
+            profile.save()
         
 #def delete_user_profile(sender, **kwargs):
 #    """delete_user_profile"""

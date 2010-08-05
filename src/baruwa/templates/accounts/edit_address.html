@@ -7,18 +7,18 @@
   	<li><a href="">Scanners</a></li>
 </ul>
 {% endblock submenu %}
-{% block title %}Edit Address{% endblock title %}
-{% block heading %}Edit Address{% endblock heading %}
+{% block title %}Edit {% ifequal a.address_type 1  %}Domain {% else %}Address{% endifequal %}{% endblock title %}
+{% block heading %}Edit {% ifequal a.address_type 1  %}Domain {% else %}Address{% endifequal %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
-    <div class="Bayes_heading">Edit Address</div>
+    <div class="Bayes_heading">Edit {% ifequal a.address_type 1  %}Domain {% else %}Address{% endifequal %}</div>
 </div>
 <form action="{% url edit-address address_id %}" method="post">
 	{% for hidden in form.hidden_fields %}
 		{{ hidden }}
 	{% endfor %}
 	<!-- <input type="hidden" name="user" value="{{ user_id }}" /> -->
-	<input type="hidden" name="user" value="{{ user_id }}" />
+	<input type="hidden" name="user" value="{{ a.user.id }}" />
     {% for field in form.visible_fields %}
 	{% ifnotequal field.label 'User'  %}
 			<div class="LightBlue_div">
@@ -31,7 +31,6 @@
     <div class="LightBlue_div">
         <div class="form_label">&nbsp;</div>
         <div class="form_value">
-            <input id="cancel-button" type="reset" value="Clear" />&nbsp;
             <input id="submit-button" type="submit" value="Update" />
         </div>
         <div class="form_error"></div>

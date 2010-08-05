@@ -59,11 +59,19 @@
     <div class="Box_Mainnav"> <!-- Box_Mainnav start here -->
         <div class="Mainnav"> <!-- Mainnav start here -->
 			{% if user.is_authenticated %}
-            <a href="{% url main-messages-index %}" class="topnav selectednav"><span>Messages</span></a> 
+            <a href="{% url main-messages-index %}" class="topnav"><span>Messages</span></a> 
             <a href="{% url lists-index %}" class="topnav"><span>Lists</span></a> 
-            <a href="{% url reports-index %}" class="topnav"><span>Reports</span></a> 
-            <a href="{% url status-index %}" class="topnav"><span>Status</span></a>
-			<a href="{% url settings-index %}" class="topnav"><span>Settings</span></a>
+            <a href="{% url reports-index %}" class="topnav"><span>Reports</span></a>
+ 			{% ifnotequal user.get_profile.account_type 3  %}
+ 				<a href="{% url status-index %}" class="topnav"><span>Status</span></a>
+				{% if user.is_superuser %}
+				<a href="{% url settings-index %}" class="topnav"><span>Settings</span></a>
+				{% else %}
+				<a href="{% url accounts %}" class="topnav"><span>Accounts</span></a>
+				{% endif %}
+			{% else %}
+				<a href="{% url user-profile user.id %}" class="topnav"><span>Account</span></a>
+ 			{% endifnotequal %}
 			{% endif %}
         </div> <!-- Mainnav end here -->
    </div> <!-- Box_Mainnav end here -->

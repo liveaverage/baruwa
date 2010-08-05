@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block headers %}{% endblock headers %}
 {% block submenu %}
+{% ifnotequal user.get_profile.account_type 3  %}
 <ul>
 	<li><a href="{% url accounts %}">Accounts</a></li>
 </ul>
+{% endifnotequal %}
 {% endblock submenu %}
 {% block title %}Change Password{% endblock title %}
 {% block heading %}Change Password{% endblock heading %}

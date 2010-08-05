@@ -28,10 +28,29 @@ class MailHost(models.Model):
     address = models.CharField(max_length=255)
     enabled = models.BooleanField(default=True)
     port = models.IntegerField(default=25)
-    useraddress = models.ForeignKey(UserAddresses)
+    useraddress = models.ForeignKey(UserAddresses, related_name='mh_ua')
 
     class Meta:
         db_table = 'mail_hosts'
 
     def __unicode__(self):
         return u"Mail host "+ self.address
+
+class MailAuthHost(models.Model):
+    "Holds authentication hosts"
+
+    AUTH_TYPE = (
+        (1, 'POP3'),
+        (2, 'IMAP'),
+        (3, 'SMTP'),
+    )
+
+    address = models.CharField(max_length=255)
+    protocol = models.IntegerField(choices=AUTH_TYPE, default=1)
+    port = models.IntegerField(blank=True)
+    enabled = models.BooleanField(default=True)
+    split_address = models.BooleanField()
+    useraddress = models.ForeignKey(UserAddresses, related_name='mah_ua')
+
+    class Meta:
+        db_table = 'auth_hosts'

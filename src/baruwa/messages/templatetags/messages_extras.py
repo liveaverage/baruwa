@@ -167,7 +167,7 @@ def tds_get_rules(rules):
 
     for rule in rules:
       rule = rule.strip()
-      u = re.match(r'((\w+)(\s)(\d{1,2}\.\d{1,2}))',rule)
+      u = re.match(r'((\w+)(\s)(\-?\d{1,2}\.\d{1,2}))',rule)
       if u:
         rule = u.groups()[1]
         try:

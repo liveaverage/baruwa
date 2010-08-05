@@ -43,15 +43,22 @@ def pack_json_data(data, arg1, arg2):
     return rv
   
 def run_hosts_query(request, active_filters):
-    data = Message.messages.for_user(request).values('clientip').filter(clientip__isnull=False).exclude(clientip = '').annotate(num_count=Count('clientip'),
+    data = Message.messages.for_user(request).values('clientip')\
+    .exclude(Q(clientip__exact = '') | Q(clientip__exact = '127.0.0.1') | Q(clientip__isnull=True)).annotate(num_count=Count('clientip'),
         size=Sum('size'),virus_total=Sum('virusinfected'),spam_total=Sum('spam')).order_by('-num_count')
     data = apply_filter(data,request,active_filters)
     data = data[:10]
     return data
         
 def run_query(query_field, exclude_kwargs, order_by, request, active_filters):
+    # if query_field in ['from_address', 'from_domain']:
+    #         data = Message.messages.from_user(request).values(query_field).\
+    #         exclude(**exclude_kwargs).annotate(num_count=Count(query_field),size=Sum('size')).order_by(order_by)
+    #     if query_field in ['to_address', 'to_domain']:
+    #         data = Message.messages.to_user(request).values(query_field).\
+    #         exclude(**exclude_kwargs).annotate(num_count=Count(query_field),size=Sum('size')).order_by(order_by)
     data = Message.messages.for_user(request).values(query_field).\
-    exclude(**exclude_kwargs).annotate(num_count=Count(query_field),size=Sum('size')).order_by(order_by)
+        exclude(**exclude_kwargs).annotate(num_count=Count(query_field),size=Sum('size')).order_by(order_by)
     data = apply_filter(data,request,active_filters)
     data = data[:10]
     return data

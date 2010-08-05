@@ -69,13 +69,13 @@ def index(request, page=1, direction='dsc', order_by='id'):
     Displays a paginated list of user accounts
     """
     if request.user.is_superuser:
-        users = User.objects.values('id','username','first_name','last_name','is_superuser','email')
+        users = User.objects.values('id','username','first_name','last_name','is_superuser','email').order_by('id')
     else:
         domains = request.session['user_filter']['addresses']
         q = Q(id=request.user.id)
         for domain in domains:
             q = q | Q(username__endswith=domain)
-        users = User.objects.values('id','username','first_name','last_name','is_superuser','email').filter(q)
+        users = User.objects.values('id','username','first_name','last_name','is_superuser','email').filter(q).order_by('id')
     
     if request.is_ajax():
         p = Paginator(users,15)
@@ -176,7 +176,7 @@ def delete_account(request, user_id, template_name='accounts/delete_account.html
     
 @login_required
 @onlysuperusers
-def add_address(request, user_id, template_name='accounts/add_address.html'):
+def add_address(request, user_id, is_domain=False, template_name='accounts/add_address.html'):
     """
     Adds an address to a user profile.
     """
@@ -188,7 +188,12 @@ def add_address(request, user_id, template_name='accounts/add_address.html'):
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
-        form = UserAddressForm()
+        if is_domain:
+            form = UserAddressForm()
+        else:
+            form = UserAddressForm(initial = {'load_balance': False})
+            from django import forms
+            form.fields['load_balance'].widget = forms.HiddenInput()
     return render_to_response(template_name, locals(), context_instance=RequestContext(request))
 
 @login_required
@@ -207,8 +212,11 @@ def edit_address(request, address_id, template_name='accounts/edit_address.html'
             return HttpResponseRedirect(reverse('user-profile', args=[a.user.id]))
     else:
         form = EditAddressForm(instance=a)
-    user_id = a.user.id
-    a = None
+        if a.address_type == 2:
+            from django import forms
+            form.fields['load_balance'].widget = forms.HiddenInput()
+    #user_id = a.user.id
+    #a = None
     return render_to_response(template_name, locals(), context_instance=RequestContext(request))
 
 @login_required

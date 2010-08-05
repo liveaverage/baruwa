@@ -33,7 +33,7 @@ from baruwa.accounts.models import UserAddresses
 from baruwa.config.models import MailHost
 from baruwa.config.forms import  MailHostForm, EditMailHost, DeleteMailHost
 from baruwa.utils.misc import jsonify_domains_list
-from baruwa.auth.models import MailAuthHost
+from baruwa.config.models import MailAuthHost
 from baruwa.config.forms import MailAuthHostForm, EditMailAuthHostForm,\
  DeleteMailAuthHostForm
 
@@ -48,10 +48,10 @@ def index(request, page=1, direction='dsc', order_by='id', template='config/inde
     """
     if request.user.is_superuser:
         domains = UserAddresses.objects.values('id', 'enabled', 'address', 'user__id',
-        'user__username', 'user__first_name', 'user__last_name')
+        'user__username', 'user__first_name', 'user__last_name').filter(address_type=1)
     else:
         domains = UserAddresses.objects.values('id', 'enabled', 'address', 'user__id',
-        'user__username', 'user__first_name', 'user__last_name').filter(user=request.user)
+        'user__username', 'user__first_name', 'user__last_name').filter(address_type=1).filter(user=request.user)
         
     if request.is_ajax():
         p = Paginator(domains,15)

@@ -34,6 +34,8 @@ class List(models.Model):
     
     class Meta:
         db_table = 'lists'
+        #mysql utf8 bug prevents this being used.
+        #unique_together = ('from_address', 'to_address')
 
     def can_access(self, request):
         if not request.user.is_superuser:

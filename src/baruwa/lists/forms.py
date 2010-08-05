@@ -68,6 +68,17 @@ class ListAddForm(forms.Form):
             raise forms.ValidationError("Provide either a valid IPv4, email, Domain address")
         return from_address
         
+    def clean(self):
+        "check for duplicates, implemented coz of mysql utf8 bug"
+        cleaned_data = self.cleaned_data
+        from_address = cleaned_data.get("from_address")
+        to_address = cleaned_data.get("to_address")
+        from baruwa.lists.models import List
+        list = List.objects.filter(from_address=from_address, to_address=to_address)
+        if list:
+            raise forms.ValidationError("The list item already exists")
+        return cleaned_data
+        
 class AdminListAddForm(ListAddForm):
     """AdminListAddForm"""
     

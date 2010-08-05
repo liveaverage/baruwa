@@ -32,6 +32,26 @@ class MessageManager(models.Manager):
             if account_type == 3:
                 return super(MessageManager, self).get_query_set().filter(Q(from_address__in=addresses) | Q(to_address__in=addresses))
         return super(MessageManager, self).get_query_set()
+        
+    def to_user(self, request):
+        if not request.user.is_superuser:
+            addresses = request.session['user_filter']['addresses']
+            account_type = request.session['user_filter']['account_type']
+            if account_type == 2:
+                return super(MessageManager, self).get_query_set().filter(Q(to_domain__in=addresses))
+            if account_type == 3:
+                return super(MessageManager, self).get_query_set().filter(Q(to_address__in=addresses))
+        return super(MessageManager, self).get_query_set()
+    
+    def from_user(self, request):
+        if not request.user.is_superuser:
+            addresses = request.session['user_filter']['addresses']
+            account_type = request.session['user_filter']['account_type']
+            if account_type == 2:
+                return super(MessageManager, self).get_query_set().filter(Q(from_domain__in=addresses))
+            if account_type == 3:
+                return super(MessageManager, self).get_query_set().filter(Q(from_address__in=addresses))
+        return super(MessageManager, self).get_query_set()
 
 class QuarantineMessageManager(models.Manager):
     """
@@ -51,8 +71,9 @@ class QuarantineMessageManager(models.Manager):
         
 class EmailReportMessageManager(models.Manager):
     "Used in processing the quarantine email reports"
+    from baruwa.accounts.models import UserProfile, UserAddresses
+    
     def for_user(self, user):
-        from baruwa.accounts.models import UserProfile, UserAddresses
         addresses = UserAddresses.objects.values('address').filter(user=user).exclude(enabled=0)
         account_type = UserProfile.objects.values('account_type').get(user=user)
         if user.is_superuser:
@@ -63,7 +84,51 @@ class EmailReportMessageManager(models.Manager):
                 | Q(to_domain__in=addresses)).filter(isquarantined__exact=1)
             else:
                 return super(EmailReportMessageManager, self).get_query_set().filter(Q(from_address__in=addresses)\
-                | Q(to_address__in=addresses) | Q(to_address=user.username) | Q(from_address=user.username)).filter(isquarantined__exact=1)
+                | Q(to_address__in=addresses) | Q(to_address=user.username) | Q(from_address=user.username)\
+                ).filter(isquarantined__exact=1)
+    
+    def to_user(self, user):
+        addresses = UserAddresses.objects.values('address').filter(user=user).exclude(enabled=0)
+        account_type = UserProfile.objects.values('account_type').get(user=user)
+        if user.is_superuser:
+            return super(EmailReportMessageManager, self).get_query_set().filter(isquarantined__exact=1)
+        else:
+            if account_type == 1:
+                return super(EmailReportMessageManager, self).get_query_set().filter(Q(to_domain__in=addresses)\
+                ).filter(isquarantined__exact=1)
+            else:
+                return super(EmailReportMessageManager, self).get_query_set().filter(\
+                Q(to_address__in=addresses) | Q(to_address=user.username)).filter(isquarantined__exact=1)
+                
+    def from_user(self, user):
+        addresses = UserAddresses.objects.values('address').filter(user=user).exclude(enabled=0)
+        account_type = UserProfile.objects.values('account_type').get(user=user)
+        if user.is_superuser:
+            return super(EmailReportMessageManager, self).get_query_set().filter(isquarantined__exact=1)
+        else:
+            if account_type == 1:
+                return super(EmailReportMessageManager, self).get_query_set().filter(Q(from_domain__in=addresses)\
+                ).filter(isquarantined__exact=1)
+            else:
+                return super(EmailReportMessageManager, self).get_query_set().filter(Q(from_address__in=addresses)\
+                | Q(from_address=user.username)).filter(isquarantined__exact=1)
+
+class ReportMessageManager(models.Manager):
+    
+    def all(self, user):
+        from baruwa.accounts.models import UserProfile, UserAddresses
+        addresses = UserAddresses.objects.values('address').filter(user=user).exclude(enabled=0)
+        account_type = UserProfile.objects.values('account_type').get(user=user)
+        if user.is_superuser:
+            return super(ReportMessageManager, self).get_query_set()
+        else:
+            if account_type == 1:
+                return super(ReportMessageManager, self).get_query_set().filter(Q(from_domain__in=addresses)\
+                | Q(to_domain__in=addresses))
+            else:
+                return super(ReportMessageManager, self).get_query_set().filter(Q(from_address__in=addresses)\
+                | Q(to_address__in=addresses) | Q(to_address=user.username) | Q(from_address=user.username))
+        
 
 class Message(models.Model):
     """
@@ -101,6 +166,7 @@ class Message(models.Model):
     
     objects = models.Manager()
     messages = MessageManager()
+    report = ReportMessageManager()
     quarantine = QuarantineMessageManager()
     quarantine_report = EmailReportMessageManager()
     
@@ -118,14 +184,18 @@ class Message(models.Model):
             account_type = request.session['user_filter']['account_type']
             addresses = request.session['user_filter']['addresses']
             if account_type == 2:
-                if ('@' not in self.to_address) and ('@' not in self.from_address):
+                if ('@' not in self.to_address) and ('@' not in self.from_address)\
+                 and (',' not in self.to_address) and (',' not in self.from_address):
                     return False
                 else:
-                    dom1 = self.to_address.split('@')[1]
-                    dom2 = self.from_address.split('@')[1]
-                    if (dom1 not in addresses) and (dom2 not in addresses):
-                        return False
-                return True
+                    parts = self.to_address.split(',')
+                    parts.extend(self.from_address.split(','))
+                    for part in parts:
+                        if '@' in part:
+                            dom = part.split('@')[1]
+                            if (dom in addresses) or (dom in addresses):
+                                return True
+                    return False
             if account_type == 3:
                 addresses = request.session['user_filter']['addresses']
                 if (self.to_address not in addresses) and (self.from_address not in addresses):

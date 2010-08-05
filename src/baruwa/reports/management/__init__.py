@@ -19,25 +19,3 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-from django.db import models
-from baruwa.accounts.models import UserAddresses
-
-class MailAuthHost(models.Model):
-    "Holds authentication hosts"
-    
-    AUTH_TYPE = (
-        (1, 'POP3'),
-        (2, 'IMAP'),
-        (3, 'SMTP'),
-    )
-    
-    address = models.CharField(max_length=255)
-    protocol = models.IntegerField(choices=AUTH_TYPE, default=1)
-    port = models.IntegerField(blank=True)
-    enabled = models.BooleanField(default=True)
-    split_address = models.BooleanField()
-    useraddress = models.ForeignKey(UserAddresses)
-    
-    class Meta:
-        db_table = 'auth_hosts'
-        

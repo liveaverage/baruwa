@@ -23,7 +23,7 @@ from django import forms
 from baruwa.accounts.models import UserAddresses
 from baruwa.config.models import MailHost
 from baruwa.utils.regex import host_or_ipv4_re
-from baruwa.auth.models import MailAuthHost
+from baruwa.config.models import MailAuthHost
 
 class MailHostForm(forms.ModelForm):
     "Mail host add form"

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block headers %}{% endblock headers %}
 {% block submenu %}
+{% ifnotequal user.get_profile.account_type 3  %}
 <ul>
 	<li><a href="{% url accounts %}">Accounts</a></li>
 {% ifequal user.id account_info.id %}
@@ -12,6 +13,7 @@
 	<li><a href="{% url change-pw account_info.id %}">Change users password</a></li>
 {% endif %}
 </ul>	
+{% endifnotequal %}
 {% endblock submenu %}
 {% block title %}Account Profile{% endblock title %}
 {% block heading %}Account Profile{% endblock heading %}
@@ -143,7 +145,9 @@
 		{% endifequal %}
 		{% if user.is_superuser %}
 		{% if addresses %}
-		<div class="Profile_edit">[ <a href="{% url add-address account_profile.id %}">Add</a> ]</div>	
+		<div class="Profile_edit">
+			[ <a href="{% ifequal account_profile.account_type 2  %}{% url add-domain account_profile.id %}{% else %}{% url add-address account_profile.id %}{% endifequal %}">Add</a> ]
+		</div>	
 		{% endif %}	
 		{% endif %}	
 	</div>
@@ -151,7 +155,15 @@
 {% for address in addresses %}
 	<div class="LightBlue_div">
 		<div class="Profile_cols">
+			{% if user.is_superuser %}
+			{% ifequal account_profile.account_type 2  %}
 			<a href="{% url view-domain address.id %}">{{ address.address }}</a>
+			{% else %}
+			{{ address.address }}
+			{% endifequal %}
+			{% else %}
+			{{ address.address }}	
+			{% endif %}
 		</div>
 		<div class="Profile_values">
 			{% if address.enabled %}
@@ -160,8 +172,12 @@
 				Disabled
 			{% endif %}
 			<div class="Profile_edit">
+				{% if user.is_superuser %}
+				{% ifnotequal user.get_profile.account_type 3  %}
 				 <a href="{% url edit-address address.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
 				 <a href="{% url delete-address address.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+				{% endifnotequal %}	
+				{% endif %}
 			</div>
 		</div>
 	</div>
@@ -172,7 +188,7 @@
 		</div>
 		<div class="Profile_values">
 			{% if user.is_superuser %}
-			<a href="{% url add-address account_profile.id %}" title="Add Address"><img alt="Add Address" src="{{ MEDIA_URL }}imgs/action_add.png" /></a>
+			<a href="{% ifequal account_profile.account_type 2  %}{% url add-domain account_profile.id %}{% else %}{% url add-address account_profile.id %}{% endifequal %}" title="Add Address"><img alt="Add Address" src="{{ MEDIA_URL }}imgs/action_add.png" /></a>
 			{% endif %}
 		</div>		 
 	</div>

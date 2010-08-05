@@ -28,6 +28,10 @@ function handle_listing(event){
     if ($('#confirm-listing').length) {
         $('#confirm-listing').remove();
     };
+    if ($('#filter-error').length) {
+        clearTimeout(timeout);
+        $('#filter-error').empty().remove();
+    };
     $('#fromaddr').after(list_confirm.join("\n"));
     $('#byip').bind('click', function(event) {
         //event.preventDefault();
@@ -117,6 +121,7 @@ function handle_ajax(){
 function do_quarantine_release(event){
     $("#submit_q_request").attr('disabled', 'disabled');
     if($('#filter-error').length){clearTimeout(timeout);$('#filter-error').remove();}
+    if($('#info-msg').length){clearTimeout(timeout);$('#info-msg').remove();}
     $('#qheading').after('<div id="filter-ajax">Processing request.............</div>');
     var release  = 0;
     var todelete = 0;

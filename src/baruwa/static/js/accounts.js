@@ -3,10 +3,12 @@ function ajax_start(){
     if ($('#in-progress').length) {
         $('#in-progress').remove();
     };
+    $('#Footer_container').after(loading_msg);
 }
 
 function ajax_stop(){
     $(this).empty().hide();
+    $('#loading_message').remove();
 }
 
 function ajax_error(event, request, settings){
@@ -19,6 +21,7 @@ function ajax_error(event, request, settings){
             $('#ajax-error-msg').empty().remove();
         }, 3900);
     }
+    $('#loading_message').remove();
 }
 
 function navigate(){
@@ -171,4 +174,5 @@ function jsize_page(){
     $.address.externalChange(handlextern);
     $('div.Users_del a').bind('click',confirm_delete);
 }
+var loading_msg = '<div id="loading_message"><div id="loading"><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/><b>Processing</b></div></div>';
 $(document).ready(jsize_page);

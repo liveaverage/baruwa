@@ -1517,9 +1517,19 @@ div.blacklist {
 	float:left;
 }
 
-.spamreport_col, .relayed_col{
+.spamreport_col {
     width:232px;
 	float:left;
+}
+
+.relayed_col {
+    float:left;
+    width:200px;
+}
+
+.relayed_col_country{
+    float:left;
+    width:264px;
 }
 
 .mailitem{

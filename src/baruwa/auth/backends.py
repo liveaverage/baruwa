@@ -21,7 +21,7 @@
 
 from django.contrib.auth.models import User
 from baruwa.accounts.models import UserProfile
-from baruwa.auth.models import MailAuthHost
+from baruwa.config.models import MailAuthHost
 from baruwa.accounts.models import UserAddresses
 
 class MailBackend:
@@ -90,7 +90,7 @@ class MailBackend:
             return None
 
         login_user,domain = username.split('@')
-        dom = UserAddresses.objects.get(address=domain,address_type=1)
+        dom = UserAddresses.objects.filter(address=domain,address_type=1)
         
         if not dom:
             return None
