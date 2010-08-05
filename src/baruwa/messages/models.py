@@ -79,7 +79,7 @@ class EmailReportMessageManager(models.Manager):
         if user.is_superuser:
             return super(EmailReportMessageManager, self).get_query_set().filter(isquarantined__exact=1)
         else:
-            if account_type == 1:
+            if account_type['account_type'] == 2:
                 return super(EmailReportMessageManager, self).get_query_set().filter(Q(from_domain__in=addresses)\
                 | Q(to_domain__in=addresses)).filter(isquarantined__exact=1)
             else:
@@ -93,7 +93,7 @@ class EmailReportMessageManager(models.Manager):
         if user.is_superuser:
             return super(EmailReportMessageManager, self).get_query_set().filter(isquarantined__exact=1)
         else:
-            if account_type == 1:
+            if account_type['account_type'] == 2:
                 return super(EmailReportMessageManager, self).get_query_set().filter(Q(to_domain__in=addresses)\
                 ).filter(isquarantined__exact=1)
             else:
@@ -106,7 +106,7 @@ class EmailReportMessageManager(models.Manager):
         if user.is_superuser:
             return super(EmailReportMessageManager, self).get_query_set().filter(isquarantined__exact=1)
         else:
-            if account_type == 1:
+            if account_type['account_type'] == 2:
                 return super(EmailReportMessageManager, self).get_query_set().filter(Q(from_domain__in=addresses)\
                 ).filter(isquarantined__exact=1)
             else:
@@ -122,13 +122,155 @@ class ReportMessageManager(models.Manager):
         if user.is_superuser:
             return super(ReportMessageManager, self).get_query_set()
         else:
-            if account_type == 1:
+            if account_type['account_type'] == 2:
                 return super(ReportMessageManager, self).get_query_set().filter(Q(from_domain__in=addresses)\
                 | Q(to_domain__in=addresses))
             else:
                 return super(ReportMessageManager, self).get_query_set().filter(Q(from_address__in=addresses)\
                 | Q(to_address__in=addresses) | Q(to_address=user.username) | Q(from_address=user.username))
+
+class TotalsMessageManager(models.Manager):
+   
+    def all(self, user, filters_list=[], addrs=[], at=3):
+        from django.db import connection
+        from baruwa.utils.misc import raw_user_filter
+        from baruwa.reports.utils import gen_dynamic_raw_query
         
+        conn = connection.cursor()
+        query = """
+            SELECT date, count(*) AS mail_total,
+            SUM(CASE WHEN virusinfected>0 THEN 1 ELSE 0 END) AS virus_total,
+            SUM(CASE WHEN (virusinfected=0) AND spam>0 THEN 1 ELSE 0 END) AS spam_total,
+            SUM(size) AS size_total FROM messages
+            """
+        if filters_list:
+            s = gen_dynamic_raw_query(filters_list)
+            if user.is_superuser:
+                conn.execute(query + " WHERE " + s[0] + " GROUP BY date ORDER BY date DESC",s[1])
+            else:
+                sql = raw_user_filter(user, addrs, at)
+                conn.execute(query + " WHERE " + sql +" AND "+ s[0] + " GROUP BY date ORDER BY date DESC",s[1])
+        else:
+            if user.is_superuser:
+                query = "%s GROUP BY date ORDER BY date DESC" % query
+                conn.execute(query)
+            else:
+                sql = raw_user_filter(user, addrs, at)
+                query = "%s WHERE %s GROUP BY date ORDER BY date DESC" % (query, sql)
+                conn.execute(query)
+        result_list = []
+        for i, row in enumerate(conn.fetchall()):
+            index = i
+            index += 1
+            vpct = "%.1f" % ((1.0 * int(row[2])/int(row[1]))*100)
+            spct = "%.1f" % ((1.0 * int(row[3])/int(row[1]))*100)
+            obj = self.model(id=index, date=row[0], mail_total=row[1], virus_total=row[2],
+             virus_percent=vpct, spam_total=row[3], spam_percent=spct, size_total=row[4])
+            obj.total = row[1]
+            result_list.append(obj)
+        return result_list
+        
+class SpamScoresManager(models.Manager):
+    
+    def all(self, user, filters_list=[], addrs=[], at=3):
+        from django.db import connection
+        from baruwa.utils.misc import raw_user_filter
+        from baruwa.reports.utils import gen_dynamic_raw_query
+        
+        conn = connection.cursor()
+        query = "SELECT round(sascore) AS score, count(*) AS count FROM messages"
+        
+        if filters_list:
+            s = gen_dynamic_raw_query(filters_list)
+            if user.is_superuser:
+                conn.execute(query + " WHERE " +  s[0] + " AND whitelisted=0 AND scaned = 1 GROUP BY score ORDER BY score",s[1]) 
+            else:
+                sql = raw_user_filter(user, addrs, at)
+                conn.execute(query + " WHERE " + sql + " AND "+ s[0] +" AND whitelisted=0 AND scaned = 1 GROUP BY score ORDER BY score",s[1])
+        else:
+            if user.is_superuser:
+                query = "%s WHERE whitelisted=0 AND scaned = 1 GROUP BY score ORDER BY score" % query
+                conn.execute(query)
+            else:
+                sql = raw_user_filter(user, addrs, at)
+                g = "WHERE "+sql+" AND whitelisted=0 AND scaned = 1 GROUP BY score ORDER BY score"
+                query = "%s %s" % (query, g)
+                conn.execute(query)
+        #rows = c.fetchall()
+        result_list = []
+        for i, row in enumerate(conn.fetchall()):
+            index = 1
+            index += 1
+            obj = self.model(id=index, score=row[0], count=row[1])
+            result_list.append(obj)
+            
+        return result_list
+
+class MessageStatsManager(models.Manager):
+    
+    def get(self, user, addrs=[], at=3):
+        from django.db import connection
+        import datetime
+        from baruwa.utils.misc import raw_user_filter
+        
+        conn = connection.cursor()
+        today = datetime.date.today()
+        
+        query = """
+        SELECT COUNT(*) AS mail, SUM(CASE WHEN virusinfected=0 AND nameinfected=0
+        AND otherinfected=0 AND spam=0 AND highspam=0 THEN 1 ELSE 0 END) AS clean_mail,
+        SUM(CASE WHEN virusinfected>0 THEN 1 ELSE 0 END) AS virii,
+        SUM(CASE WHEN nameinfected>0 AND virusinfected=0 AND otherinfected=0
+        AND spam=0 AND highspam=0 THEN 1 ELSE 0 END) AS infected,
+        SUM(CASE WHEN otherinfected>0 AND nameinfected=0 AND virusinfected=0
+        AND spam=0 AND highspam=0 THEN 1 ELSE 0 END) AS otherinfected,
+        SUM(CASE WHEN spam>0 AND virusinfected=0 AND nameinfected=0
+        AND otherinfected=0 AND highspam=0 THEN 1 ELSE 0 END) AS spam_mail,
+        SUM(CASE WHEN highspam>0 AND virusinfected=0 AND nameinfected=0
+        AND otherinfected=0 THEN 1 ELSE 0 END) AS high_spam,
+        SUM(size) AS size FROM messages WHERE date = '%s'
+        """ % today
+        
+        if user.is_superuser:
+            conn.execute(query)
+        else:
+            sql = raw_user_filter(user, addrs, at)
+            conn.execute(query + " AND " + sql)
+            
+        row = conn.fetchone()
+        return self.model(total=row[0], clean_mail=row[1], virii=row[2], infected=row[3],
+        otherinfected=row[4], spam_mail=row[5], high_spam=row[6], size=row[7])
+        
+
+class MessageStats(models.Model):
+    total = models.IntegerField()
+    clean_mail = models.IntegerField()
+    virii = models.IntegerField()
+    infected = models.IntegerField()
+    otherinfected = models.IntegerField()
+    spam_mail = models.IntegerField()
+    high_spam = models.IntegerField()
+    size = models.IntegerField()
+    
+    objects = MessageStatsManager()
+
+class SpamScores(models.Model):
+    score = models.FloatField()
+    count = models.IntegerField()
+    
+    objects = SpamScoresManager()
+        
+
+class MessageTotals(models.Model):
+    date = models.DateField()
+    mail_total = models.IntegerField()
+    virus_total = models.IntegerField()
+    virus_percent = models.CharField(max_length=10)
+    spam_total = models.IntegerField()
+    spam_percent = models.CharField(max_length=10)
+    size_total = models.IntegerField()
+    
+    objects = TotalsMessageManager()
 
 class Message(models.Model):
     """

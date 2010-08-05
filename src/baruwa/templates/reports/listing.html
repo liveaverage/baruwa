@@ -62,22 +62,22 @@ Reports - {{report_title}}
 		{{ row.date }}
 	</div>
 	<div class="totals_mail">
-		{{ row.count }}
+		{{ row.mail_total }}
 	</div>
 	<div class="totals_virii">
-		{{ row.virii }}
+		{{ row.virus_total }}
 	</div>
 	<div class="totals_viriip">
-		{{ row.vpercent }}
+		{{ row.virus_percent }}
 	</div>
 	<div class="totals_spam">
-		{{ row.spam }}
+		{{ row.spam_total }}
 	</div>
 	<div class="totals_spamp">
-		{{ row.spercent }}
+		{{ row.spam_percent }}
 	</div>
 	<div class="totals_volume">
-		{{ row.size|filesizeformat }}
+		{{ row.size_total|filesizeformat }}
 	</div>
 </div>
 {% empty %}

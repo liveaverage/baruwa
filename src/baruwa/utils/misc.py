@@ -275,13 +275,11 @@ def gen_dynamic_query(model, filter_list, active_filters=None):
         model = model.filter(q)
     return model
 
-def raw_user_filter(request):
+def raw_user_filter(user, addresses, account_type):
     dsql = []
     esql = []
     sql = '1 != 1'
-    if not request.user.is_superuser:
-        addresses = request.session['user_filter']['addresses']
-        account_type = request.session['user_filter']['account_type']
+    if not user.is_superuser:
         if account_type == 2:
             if addresses:
                 for domain in addresses:
@@ -293,10 +291,10 @@ def raw_user_filter(request):
                 for email in addresses:
                     esql.append('to_address="'+email+'"')
                     esql.append('from_address="'+email+'"')
-                esql.append('to_address="'+request.user.username+'"')
+                esql.append('to_address="'+user.username+'"')
                 sql = ' OR '.join(esql)
             else:
-                sql = 'to_address="%s"' % request.user.username
+                sql = 'to_address="%s"' % user.username
         return '(' + sql +')'
         
 def get_processes(process_name):
@@ -332,3 +330,5 @@ def get_config_option(search_option):
                     break
         f.close()
     return value
+
+

@@ -22,40 +22,25 @@
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from django.db import connection
+
 from django.conf import settings
-from baruwa.utils.misc import raw_user_filter, get_processes, get_config_option
+from baruwa.utils.misc import get_processes, get_config_option
 from baruwa.utils.decorators import onlysuperusers
+from baruwa.messages.models import MessageStats
 import os, subprocess, re
 
 
 @login_required
 def index(request):
-    active_filters = []
-    c = connection.cursor()
-    import datetime
-
+    addrs = []
+    at = 3
     
-    today = datetime.date.today()
-    q = """SELECT COUNT(*) AS mail, SUM(CASE WHEN virusinfected=0 AND nameinfected=0
-    AND otherinfected=0 AND spam=0 AND highspam=0 THEN 1 ELSE 0 END) AS clean_mail,
-    SUM(CASE WHEN virusinfected>0 THEN 1 ELSE 0 END) AS virii,
-    SUM(CASE WHEN nameinfected>0 AND virusinfected=0 AND otherinfected=0
-    AND spam=0 AND highspam=0 THEN 1 ELSE 0 END) AS infected,
-    SUM(CASE WHEN otherinfected>0 AND nameinfected=0 AND virusinfected=0
-    AND spam=0 AND highspam=0 THEN 1 ELSE 0 END) AS otherinfected,
-    SUM(CASE WHEN spam>0 AND virusinfected=0 AND nameinfected=0
-    AND otherinfected=0 AND highspam=0 THEN 1 ELSE 0 END) AS spam_mail,
-    SUM(CASE WHEN highspam>0 AND virusinfected=0 AND nameinfected=0
-    AND otherinfected=0 THEN 1 ELSE 0 END) AS high_spam,
-    SUM(size) AS size FROM messages WHERE date = '%s'
-    """ % today
-    if request.user.is_superuser:
-        c.execute(q)
-    else:
-        sql = raw_user_filter(request)
-        c.execute(q+" AND "+sql)
-    row = c.fetchone()
+    if not request.user.is_superuser:
+         addrs = request.session['user_filter']['addresses']
+         at = request.session['user_filter']['account_type']
+    
+    data = MessageStats.objects.get(request.user, addrs, at)
+    
     v1, v2, v3 = os.getloadavg()
     load = "%.2f %.2f %.2f" % (v1,v2,v3)
 
@@ -63,11 +48,11 @@ def index(request):
     ms = get_config_option('MTA')
     mta = get_processes(ms)
     clamd = get_processes('clamd')
+    
     p1 = subprocess.Popen('uptime',shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     u = p1.stdout.read().split()
     uptime = u[2] + ' ' + u[3].rstrip(',')
-    data = {'total':row[0],'clean':row[1],'virii':row[2],'infected':row[3],'otherinfected':row[4],
-        'spam':row[5],'highspam':row[6]}
+    
     return render_to_response('status/index.html',{'data':data, 'load':load, 'scanners':scanners,
         'mta':mta, 'av':clamd, 'uptime':uptime}, context_instance=RequestContext(request))
         

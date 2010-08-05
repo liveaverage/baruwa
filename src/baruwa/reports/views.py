@@ -31,10 +31,9 @@ from django.template import RequestContext
 from django.template.defaultfilters import force_escape
 from baruwa.reports.forms import FilterForm, FILTER_ITEMS, FILTER_BY
 from baruwa.reports.models import SavedFilter
-from baruwa.reports.utils import to_dict, pack_json_data, run_query, run_hosts_query, \
-format_sa_data, format_totals_data, gen_dynamic_raw_query 
+from baruwa.reports.utils import to_dict, pack_json_data, run_query, run_hosts_query 
 from baruwa.messages.models import Message
-from baruwa.utils.misc import gen_dynamic_query, raw_user_filter
+from baruwa.utils.misc import gen_dynamic_query
 
 @login_required
 def index(request):
@@ -235,29 +234,26 @@ def report(request, report_kind):
         pie_data = pack_json_data(data,'to_domain','size')
         report_title = "Top recipient domains by volume"
     elif report_kind == 9:
-         c = connection.cursor()
-         q = "select round(sascore) as score, count(*) as count from messages"
+         from baruwa.messages.models import SpamScores
          
+         filter_list = []
+         addrs = []
+         counts = []
+         scores = []
+         at = 3
+
+         if not request.user.is_superuser:
+             addrs = request.session['user_filter']['addresses']
+             at = request.session['user_filter']['account_type']
+
          if request.session.get('filter_by', False):
              filter_list = request.session.get('filter_by')
-             s = gen_dynamic_raw_query(filter_list,active_filters)
-             if request.user.is_superuser:
-                 c.execute(q + " WHERE " +  s[0] + " AND whitelisted=0 AND scaned > 0 GROUP BY score ORDER BY score",s[1]) 
-             else:
-                 sql = raw_user_filter(request)
-                 c.execute(q + " WHERE " + sql + " AND "+ s[0] +" AND whitelisted=0 AND scaned > 0 GROUP BY score ORDER BY score",s[1])
-         else:
-             if request.user.is_superuser:
-                 q = "%s WHERE whitelisted=0 AND scaned > 0 GROUP BY score ORDER BY score" % q
-                 c.execute(q)
-             else:
-                 sql = raw_user_filter(request)
-                 g = "WHERE "+sql+" AND whitelisted=0 AND scaned > 0 GROUP BY score ORDER BY score"
-                 q = "%s %s" % (q,g)
-                 c.execute(q)
-         rows = c.fetchall()
-         c.close()
-         counts, scores, data = format_sa_data(rows)
+         
+         data = SpamScores.objects.all(request.user, filter_list, addrs, at)
+         for row in data:
+             scores.append(int(row.score))
+             counts.append(int(row.count))
+         
          pie_data = {'scores':scores,'count':counts}
          template = "reports/barreport.html"
          report_title = "Spam Score distribution"
@@ -272,30 +268,31 @@ def report(request, report_kind):
         report_title = "Top mail hosts by quantity"
         template = "reports/relays.html"
     elif report_kind == 11:
-        c = connection.cursor()
-        q = """SELECT date, count(*) AS mail_total,
-            SUM(CASE WHEN virusinfected>0 THEN 1 ELSE 0 END) AS virus_total,
-            SUM(CASE WHEN (virusinfected=0) AND spam>0 THEN 1 ELSE 0 END) AS spam_total,
-            SUM(size) AS size_total FROM messages"""
+        from baruwa.messages.models import MessageTotals
+        
+        filter_list = []
+        addrs = []
+        dates = []
+        mail_total = []
+        spam_total = []
+        virus_total = []
+        at = 3
+        
+        if not request.user.is_superuser:
+            addrs = request.session['user_filter']['addresses']
+            at = request.session['user_filter']['account_type']
+        
         if request.session.get('filter_by', False):
             filter_list = request.session.get('filter_by')
-            s = gen_dynamic_raw_query(filter_list, active_filters)
-            if request.user.is_superuser:
-                c.execute(q + " WHERE " + s[0] + " GROUP BY date ORDER BY date DESC",s[1])
-            else:
-                sql = raw_user_filter(request)
-                c.execute(q + " WHERE " + sql +" AND "+ s[0] + " GROUP BY date ORDER BY date DESC",s[1])
-        else:
-            if request.user.is_superuser:
-                q = "%s GROUP BY date ORDER BY date DESC" % q
-                c.execute(q)
-            else:
-                sql = raw_user_filter(request)
-                q = "%s WHERE %s GROUP BY date ORDER BY date DESC" % (q,sql)
-                c.execute(q)
-        rows = c.fetchall()
-        c.close()
-        mail_total, spam_total, virus_total, dates, data = format_totals_data(rows)
+            
+        data = MessageTotals.objects.all(request.user, filter_list, addrs, at)
+        
+        for row in data:
+            dates.append(str(row.date))
+            mail_total.append(int(row.mail_total))
+            spam_total.append(int(row.spam_total))
+            virus_total.append(int(row.virus_total))
+            
         pie_data = {'dates':dates, 'mail':mail_total, 'spam':spam_total, 'virii':virus_total}
         report_title = "Total messages [ After SMTP ]"
         template = "reports/listing.html"
@@ -303,7 +300,6 @@ def report(request, report_kind):
     
     if request.is_ajax():
         response = simplejson.dumps({'items':list(data),'pie_data':pie_data})
-        #response = {'pie_data':pie_data}
         return HttpResponse(response, content_type='application/javascript; charset=utf-8')
     else:
         if not report_kind in [9, 11]:

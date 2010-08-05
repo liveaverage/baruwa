@@ -63,39 +63,8 @@ def run_query(query_field, exclude_kwargs, order_by, request, active_filters):
     data = data[:10]
     return data
 
-def format_totals_data(rows):
-    data = []
-    dates = []
-    mail_total = []
-    spam_total = []
-    virus_total = []
-    for i in range(len(rows)):
-        date = "%s" % rows[i][0]
-        total = int(rows[i][1])
-        virii = int(rows[i][2])
-        spam = int(rows[i][3])
-        vpercent = "%.1f" % ((1.0 * virii/total)*100)
-        spercent = "%.1f" % ((1.0 * spam/total)*100)
-        mail_total.append(total)
-        spam_total.append(spam)
-        virus_total.append(virii)
-        dates.append(date)
-        data.append({'date':date,'count':total,'virii':virii,'vpercent':vpercent,'spam':spam,'spercent':spercent,'size':int(rows[i][4])})
-    return mail_total, spam_total, virus_total, dates, data
 
-def format_sa_data(rows):
-    counts = []
-    scores = []
-    data = []
-    for i in range(len(rows)):
-        score = "%s" % rows[i][0]
-        count = int(rows[i][1])
-        counts.append(count)
-        scores.append(score)
-        data.append({'score':score,'count':count})
-    return counts, scores, data
-
-def gen_dynamic_raw_query(filter_list,active_filters=None):
+def gen_dynamic_raw_query(filter_list):
     filter_items = to_dict(list(FILTER_ITEMS))
     filter_by = to_dict(list(FILTER_BY))
     sql = []
@@ -287,9 +256,9 @@ def gen_dynamic_raw_query(filter_list,active_filters=None):
         if filter_item['filter'] == 12:
             tmp = "%s = 0" % filter_item['field']
             sql.append(tmp)
-        if not active_filters is None:
-            active_filters.append({'filter_field':filter_items[filter_item['field']],
-                'filter_by':filter_by[int(filter_item['filter'])],'filter_value':filter_item['value']})
+        #if not active_filters is None:
+        #    active_filters.append({'filter_field':filter_items[filter_item['field']],
+        #        'filter_by':filter_by[int(filter_item['filter'])],'filter_value':filter_item['value']})
     for item in sql:
         asql.append(item)
 

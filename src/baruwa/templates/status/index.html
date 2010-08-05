@@ -38,7 +38,7 @@
         &nbsp;{{mta}} processes
     </div>
     <div class="Status_col">Clean</div>
-    <div class="Status_col">{{ data.clean }}</div>
+    <div class="Status_col">{{ data.clean_mail }}</div>
 </div>
 <div class="LightBlue_div">
     <div class="Status_col">Load</div>
@@ -46,7 +46,7 @@
     <img src="{{ MEDIA_URL }}imgs/status_ok.png" alt="x" />&nbsp;{{ load }}
     </div>
     <div class="Status_col">High scoring spam</div>
-    <div class="Status_col">{{ data.highspam }}</div>
+    <div class="Status_col">{{ data.high_spam }}</div>
 </div>
 <div class="LightBlue_div">
     <div class="Status_col">AV</div>
@@ -59,7 +59,7 @@
         &nbsp;{{av}} processes
     </div>
     <div class="Status_col">Low scoring spam</div>
-    <div class="Status_col">{{ data.spam }}</div>
+    <div class="Status_col">{{ data.spam_mail }}</div>
 </div>
 <div class="LightBlue_div">
     <div class="Status_col">Uptime</div>

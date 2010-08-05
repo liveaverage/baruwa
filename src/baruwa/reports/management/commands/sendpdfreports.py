@@ -39,20 +39,19 @@ class Command(NoArgsCommand):
         from django.contrib.auth.models import User
         from django.db.models import Count, Sum
         from django.template.defaultfilters import filesizeformat
-        from django.core.mail import EmailMessage
+        from django.core.mail import EmailMessage, SMTPConnection
         from django.conf import settings
         from django.template.loader import render_to_string
-        from baruwa.accounts.models import UserProfile
+        from baruwa.accounts.models import UserProfile, UserAddresses
         from baruwa.messages.models import Message
         from baruwa.messages.templatetags.messages_extras import tds_trunc
+        from baruwa.messages.models import MessageTotals
+        from baruwa.utils.graphs import MessageTotalsGraph, PieChart, pie_chart_colors, BarChart
         from reportlab.lib import colors
-        from reportlab.lib.styles import getSampleStyleSheet
+        from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
         from reportlab.lib.units import inch
         from reportlab.platypus import SimpleDocTemplate, Spacer, Table, TableStyle, Paragraph, Image, PageBreak
-        from reportlab.lib.styles import ParagraphStyle
-        from reportlab.graphics.shapes import Drawing
-        from reportlab.graphics.charts.piecharts import Pie
-        from reportlab.lib.colors import HexColor
+        
         try:
             from django.forms.fields import email_re
         except ImportError:
@@ -62,9 +61,6 @@ class Command(NoArgsCommand):
             from cStringIO import StringIO
         except:
             from StringIO import StringIO
-            
-        pie_colors = ['#FF0000','#ffa07a','#deb887','#d2691e','#008b8b','#006400','#ff8c00','#ffd700','#f0e68c','#000000']
-        pie_chart_colors = [ HexColor(hex) for hex in pie_colors ]
         
         table_style = TableStyle([
             ('FONT', (0, 0), (-1, -1), 'Helvetica'),
@@ -91,17 +87,18 @@ class Command(NoArgsCommand):
             ['to_domain', {'to_domain__exact':"", 'to_domain__isnull':False}, 'size', 'Top recipient domains by volume'],
         ]
         
+        emails = []
+        
         from_email = getattr(settings, 'DEFAULT_FROM_EMAIL','postmaster@localhost')
         url = getattr(settings, 'QUARANTINE_REPORT_HOSTURL','')
         logo_dir = getattr(settings, 'MEDIA_ROOT', '')
         
-        profiles = UserProfile.objects.values('user').filter(send_report=1)
-        ids = [ id['user'] for id in profiles ]
-        users = User.objects.filter(id__in=ids)
+        profiles = UserProfile.objects.filter(send_report=1)
         
         print "=================== Processing reports ======================"
        
-        for user in users:
+        for profile in profiles:
+            user = profile.user
             if email_re.match(user.email) or email_re.match(user.username):
                 
                 pdf = StringIO()
@@ -135,8 +132,8 @@ class Command(NoArgsCommand):
                     if data:
                         sentry += 1
                         headings = [('', 'Address', 'Count', 'Volume', '')]
-                        rows = [[draw_square(pie_chart_colors[index]), tds_trunc(row[column], 45), row['num_count'], 
-                        filesizeformat(row['size']),''] for index,row in enumerate(data)]
+                        rows = [[draw_square(pie_chart_colors[index]), tds_trunc(row[column], 45),
+                        row['num_count'], filesizeformat(row['size']),''] for index,row in enumerate(data)]
                     
                         if len(rows) != 10:
                             missing = 10 - len(rows)
@@ -144,34 +141,54 @@ class Command(NoArgsCommand):
                             rows.extend(add_rows)
                         
                         headings.extend(rows)
-                        chart = Drawing(100, 100)
-                        cht = Pie()
                         d = [row[order] for row in data]
                         total = sum(d)
                         labels = [("%.1f%%" % ((1.0 * row[order] / total) * 100)) for row in data]
-                        cht.labels = labels
-                        cht.data = d
-                        m = len(pie_chart_colors)
-                        n = len(d)
-                        i = m // n
-                    
-                        for j in xrange(n):
-                            setattr(cht.slices[j], 'fillColor', pie_chart_colors[j * i % m])
-                            setattr(cht.slices[j], 'labelRadius', 1.4)
-                            setattr(cht.slices[j], 'fontName', 'Helvetica')
-                            setattr(cht.slices[j], 'fontSize', 7)
                         
-                        chart.add(cht)
-                        headings[1][4] = chart
+                        pie = PieChart()
+                        pie.chart.labels = labels
+                        pie.chart.data = d
+                        headings[1][4] = pie
+                        
                         table_with_style = Table(headings, [0.2 * inch, 2.8 * inch, 0.5 * inch, 0.7 * inch, 3.2 * inch])
                         table_with_style.setStyle(table_style)
                     
                         paragraph = Paragraph(title, styles['Heading1'])
+                        
                         parts.append(paragraph)
                         parts.append(table_with_style)
                         parts.append(Spacer(1, 70))
                         if (sentry % 2) == 0:
                             parts.append(PageBreak())
+                #
+                parts.append(Paragraph('Message Totals', styles['Heading1']))
+                addrs = [addr.address for addr in UserAddresses.objects.filter(user=user).exclude(enabled__exact=0)]
+                
+                fr = MessageTotals.objects.all(user, [], addrs, profile.account_type)
+                mail_total = []
+                spam_total = []
+                virus_total = []
+                dates = []
+                for i, r in enumerate(fr):
+                    if i % 10:
+                        dates.append('')
+                    else:
+                        dates.append(str(r.date))
+                        
+                    mail_total.append(int(r.mail_total))
+                    spam_total.append(int(r.spam_total))
+                    virus_total.append(int(r.virus_total))
+                    
+                #graph = MessageTotalsGraph()
+                graph = BarChart()
+                graph.chart.data = [tuple(mail_total), tuple(spam_total), tuple(virus_total)]
+                graph.chart.categoryAxis.categoryNames = dates
+                graph_table = Table([[graph],], [7.4 * inch])
+                parts.append(graph_table)
+                
+                if not sentry:
+                    sentry += 1
+                    
                 if sentry:
                     doc.build(parts)
                     
@@ -185,8 +202,14 @@ class Command(NoArgsCommand):
                         
                     msg = EmailMessage(subject, text_content, from_email, [to])
                     msg.attach('baruwa.pdf', pdf.getvalue(), "application/pdf")
-                    msg.send()
-                    print "* Sent to "+user.username+"'s report to: "+to
+                    #msg.send()
+                    emails.append(msg)
+                    print "* Queue "+user.username+"'s report to: "+to
                     pdf.close()
-    
+        if emails:
+            conn = SMTPConnection()
+            conn.send_messages(emails)
+            print "============ sending "+str(len(emails))+" messages ==============="
+
+
         

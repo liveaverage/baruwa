@@ -1,7 +1,7 @@
 - Write a new paginator (split messages from other apps) DONE
 - Implement Caching
 - Queue management
-- PDF reports
+- PDF reports DONE
 - Blocked file report
 - Auto release (hashed url) DONE
 - Reformat the quarantine report DONE

@@ -135,5 +135,6 @@ class FilterForm(forms.Form):
     
 class ListDeleteForm(forms.Form):
     list_item = forms.CharField(widget=forms.HiddenInput)
-    
+
+
         
