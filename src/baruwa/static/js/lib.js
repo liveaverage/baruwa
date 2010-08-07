@@ -135,13 +135,13 @@ function json2html(data){
                 c = 'LightGray';
             };
             rows[count++] = '<div class="'+stripHTML(c)+'_div">';
-            rows[count++] = '<div class="Date_Time"><a href="/messages/'+n.id+'/">'+n.timestamp+'</a></div>';
-            rows[count++] = '<div class="From_row"><a href="/messages/'+n.id+'/">'+from+'</a></div>';
-            rows[count++] = '<div class="To_row"><a href="/messages/'+n.id+'/">'+to+'</a></div>';
-            rows[count++] = '<div class="Subject_row"><a href="/messages/'+n.id+'/">'+subject+'</a></div>';
-            rows[count++] = '<div class="Size_row"><a href="/messages/'+n.id+'/">'+filesizeformat(n.size)+'</a></div>';
-            rows[count++] = '<div class="Score_row"><a href="/messages/'+n.id+'/">'+n.sascore+'</a></div>';
-            rows[count++] = '<div class="Status_row"><a href="/messages/'+n.id+'/">'+mstatus+'</a></div>';
+            rows[count++] = '<div class="Date_Time"><a href="/messages/view/'+n.id+'/">'+n.timestamp+'</a></div>';
+            rows[count++] = '<div class="From_row"><a href="/messages/view/'+n.id+'/">'+from+'</a></div>';
+            rows[count++] = '<div class="To_row"><a href="/messages/view/'+n.id+'/">'+to+'</a></div>';
+            rows[count++] = '<div class="Subject_row"><a href="/messages/view/'+n.id+'/">'+subject+'</a></div>';
+            rows[count++] = '<div class="Size_row"><a href="/messages/view/'+n.id+'/">'+filesizeformat(n.size)+'</a></div>';
+            rows[count++] = '<div class="Score_row"><a href="/messages/view/'+n.id+'/">'+n.sascore+'</a></div>';
+            rows[count++] = '<div class="Status_row"><a href="/messages/view/'+n.id+'/">'+mstatus+'</a></div>';
             rows[count++] = '</div>';
         });
         if(!rows.length){

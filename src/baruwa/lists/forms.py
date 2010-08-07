@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -20,14 +20,13 @@
 #
 
 from django import forms
-from django.forms.util import ErrorList
 from django.template.defaultfilters import force_escape
 try:
     from django.forms.fields import email_re
 except ImportError:
     from django.core.validators import email_re
-from baruwa.utils.regex import dom_re, ipv4_re, user_re
-    
+from baruwa.utils.regex import DOM_RE, IPV4_RE, USER_RE, IPV4_NET_OR_RANGE_RE
+
 LIST_TYPES = (
     ('1', 'Whitelist'),
     ('2', 'Blacklist'),
@@ -35,67 +34,71 @@ LIST_TYPES = (
 
 class ListAddForm(forms.Form):
     """ListAddForm"""
-    
-    list_type = forms.ChoiceField(choices=LIST_TYPES)
-    from_address = forms.CharField(widget=forms.TextInput(attrs={'size':'50'}))
+
+    list_type = forms.ChoiceField(choices = LIST_TYPES)
+    from_address = forms.CharField(widget = forms.TextInput(
+        attrs = {'size':'50'}))
     to_address = forms.CharField(required=False)
-        
+
     def __init__(self, request=None, *args, **kwargs):
         super(ListAddForm, self).__init__(*args, **kwargs)
         self.request = request
         if not request.user.is_superuser:
-            account_type = request.session['user_filter']['account_type']
             addresses = request.session['user_filter']['addresses']
-            load_addresses = []
-            if addresses:
-                for address in addresses:
-                    load_addresses.append((address, address))
-            self.fields['to_address'] = forms.ChoiceField(choices=load_addresses)
+            load_addresses = [(address, address) for address in addresses]
+            self.fields['to_address'] = forms.ChoiceField(
+                choices=load_addresses)
 
     def clean_to_address(self):
         to_address = self.cleaned_data['to_address']
         if not email_re.match(to_address):
-            raise forms.ValidationError('%s provide a valid e-mail address' % force_escape(to_address))
-        if to_address not in self.request.session['user_filter']['addresses'] and not self.request.user.is_superuser():
-            raise forms.ValidationError("The address: %s does not belong to you." % force_escape(to_address))
+            raise forms.ValidationError(
+                '%s provide a valid e-mail address' % force_escape(to_address))
+        if to_address not in self.request.session['user_filter']['addresses'] \
+            and not self.request.user.is_superuser():
+            raise forms.ValidationError(
+                "The address: %s does not belong to you." % force_escape(
+                to_address))
         return to_address
-    
+
     def clean_from_address(self):
         from_address = self.cleaned_data['from_address']
         from_address = from_address.strip()
 
-        if not email_re.match(from_address) and not dom_re.match(from_address) and not ipv4_re.match(from_address):
-            raise forms.ValidationError("Provide either a valid IPv4, email, Domain address")
+        if not (email_re.match(from_address) and not DOM_RE.match(from_address)
+                and not IPV4_RE.MATCH(from_address) and not
+                IPV4_NET_OR_RANGE_RE.match(from_address)):
+            raise forms.ValidationError("Provide either a valid IPv4, \
+            email, Domain address, or IPv4 network or range")
         return from_address
-        
+
     def clean(self):
         "check for duplicates, implemented coz of mysql utf8 bug"
         cleaned_data = self.cleaned_data
         from_address = cleaned_data.get("from_address")
         to_address = cleaned_data.get("to_address")
         from baruwa.lists.models import List
-        list = List.objects.filter(from_address=from_address, to_address=to_address)
-        if list:
+        list_objs = List.objects.filter(from_address = from_address,
+        to_address = to_address)
+        if list_objs:
             raise forms.ValidationError("The list item already exists")
         return cleaned_data
-        
+
 class AdminListAddForm(ListAddForm):
     """AdminListAddForm"""
-    
-    user_part = forms.CharField(required=False)
+
+    user_part = forms.CharField(required = False)
     def __init__(self, *args, **kwargs):
         super(AdminListAddForm, self).__init__(*args, **kwargs)
         if not self.request.user.is_superuser:
-            account_type = self.request.session['user_filter']['account_type']
             addresses = self.request.session['user_filter']['addresses']
-            load_addresses = []
-            if addresses:
-                for address in addresses:
-                    load_addresses.append((address, address))
-            self.fields['to_address'] = forms.ChoiceField(choices=load_addresses)
+            load_addresses = [(address, address) for address in addresses]
+            self.fields['to_address'] = forms.ChoiceField(
+            choices = load_addresses)
         else:
-            self.fields['to_address'].widget=forms.TextInput(attrs={'size':'24'})
-     
+            self.fields['to_address'].widget = forms.TextInput(
+            attrs = {'size':'24'})
+
     def clean_to_address(self):
         """clean_to_address"""
         to_address = self.cleaned_data['to_address']
@@ -104,37 +107,37 @@ class AdminListAddForm(ListAddForm):
         except:
             pass
         if not self.request.user.is_superuser:
-            account_type = self.request.session['user_filter']['account_type']
             addresses = self.request.session['user_filter']['addresses']
             if to_address not in addresses:
-                raise forms.ValidationError("The address: %s does not belong to you." % force_escape(to_address))
-        
+                raise forms.ValidationError(
+                "The address: %s does not belong to you." % force_escape(
+                to_address))
+
         if to_address != "" and not to_address is None:
-            if not dom_re.match(to_address):
+            if not DOM_RE.match(to_address):
                 raise forms.ValidationError("Provide either a valid domain")
         else:
             to_address = 'any'
-        
+
         return to_address
-        
+
     def clean_user_part(self):
         """clean_user_part"""
         user_part = self.cleaned_data['user_part']
-        
+
         if user_part == '' or user_part is None:
             user_part = 'any'
         else:
             user_part = user_part.strip()
-            if not user_re.match(user_part):
-                raise forms.ValidationError('provide a valid user part of the email address')
+            if not USER_RE.match(user_part):
+                raise forms.ValidationError(
+                'provide a valid user part of the email address')
         return user_part
-        
+
 class FilterForm(forms.Form):
-    query_type = forms.ChoiceField(choices=((1,'containing'),(2,'excluding')))
-    search_for = forms.CharField(required=False)
-    
+    query_type = forms.ChoiceField(
+        choices = ((1, 'containing'), (2, 'excluding')))
+    search_for = forms.CharField(required = False)
+
 class ListDeleteForm(forms.Form):
-    list_item = forms.CharField(widget=forms.HiddenInput)
-
-
-        
+    list_item = forms.CharField(widget = forms.HiddenInput)

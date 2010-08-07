@@ -14,6 +14,7 @@
 {% else %}
   <li><a href="{% url all-messages-index 'full' %}">Full message list</a></li>
   <li><a href="{% url all-messages-index 'quarantine' %}">Quarantine</a></li>
+  <li><a href="{% url all-messages-index 'archive' %}">Archive</a></li>
 {% endif %}
 </ul>
 {% endblock submenu %}

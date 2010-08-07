@@ -25,21 +25,27 @@ from django.core.urlresolvers import reverse
 register = template.Library()
 
 def sorter(context, field_name, field_text):
+    "sort the fields"
     rlink = None
     direc = 'dsc'
     if context['quarantine_type']:
-        link = reverse('quarantine-messages-list', args=[context['view_type'], context['quarantine_type'], context['direction'], field_name])
+        link = reverse('quarantine-messages-list', args=[context['view_type'], 
+        context['quarantine_type'], context['direction'], field_name])
     else:
-        link = reverse('all-messages-list', args=[context['view_type'], context['direction'], field_name])
+        link = reverse('all-messages-list', args=[context['view_type'], 
+        context['direction'], field_name])
     if field_name == context['order_by']:
         if context['direction'] == 'dsc':
             direc = 'asc'
         else:
             direc = 'dsc'
         if context['quarantine_type']:
-            rlink = reverse('quarantine-messages-list', args=[context['view_type'], context['quarantine_type'], direc, context['order_by']])
+            rlink = reverse('quarantine-messages-list', 
+            args=[context['view_type'], context['quarantine_type'], 
+            direc, context['order_by']])
         else:
-            rlink = reverse('all-messages-list', args=[context['view_type'], direc, context['order_by']])
+            rlink = reverse('all-messages-list', args=[context['view_type'], 
+            direc, context['order_by']])
 
     return { 
         'field_text': field_text,

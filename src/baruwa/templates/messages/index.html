@@ -23,14 +23,15 @@ var ax_in_progress = false;
 {% block submenu %}
 <ul>
 	<!--<li><a href="{% url main-messages-index %}">Recent messages</a></li>-->
-{% ifequal view_type 'full' %}
+{% ifnotequal view_type 'quarantine' %}
 	<li><a href="{% url all-messages-index 'full' %}">Full message list</a></li>
 	<li><a href="{% url all-messages-index 'quarantine' %}">Quarantine</a></li>
+	<li><a href="{% url all-messages-index 'archive' %}">Archive</a></li>
 {% else %}
 	<li><a href="{% url all-messages-index 'quarantine' %}">Full Quarantine</a></li>
 	<li><a href="{% url quarantine-bytype-index 'quarantine', 'spam' %}">Spam</a></li>
 	<li><a href="{% url quarantine-bytype-index 'quarantine', 'policyblocked' %}">Non Spam</a></li>
-{% endifequal %}
+{% endifnotequal %}
 </ul>
 {% endblock submenu %}
 {% block title %}

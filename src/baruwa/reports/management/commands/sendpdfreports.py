@@ -22,21 +22,21 @@
 from django.core.management.base import NoArgsCommand
 
 def draw_square(color):
+    "draws a square"
     from reportlab.graphics.shapes import Rect
     from reportlab.graphics.shapes import Drawing
     
     square = Drawing(5, 5)
-    sq = Rect(0, 2.5, 5, 5)
-    sq.fillColor = color
-    sq.strokeColor = color
-    square.add(sq)
+    sqr = Rect(0, 2.5, 5, 5)
+    sqr.fillColor = color
+    sqr.strokeColor = color
+    square.add(sqr)
     return square
     
 class Command(NoArgsCommand):
     "Generate and email PDF reports"
     
     def handle_noargs(self, **options):
-        from django.contrib.auth.models import User
         from django.db.models import Count, Sum
         from django.template.defaultfilters import filesizeformat
         from django.core.mail import EmailMessage, SMTPConnection
@@ -46,11 +46,12 @@ class Command(NoArgsCommand):
         from baruwa.messages.models import Message
         from baruwa.messages.templatetags.messages_extras import tds_trunc
         from baruwa.messages.models import MessageTotals
-        from baruwa.utils.graphs import MessageTotalsGraph, PieChart, pie_chart_colors, BarChart
+        from baruwa.utils.graphs import PieChart, PIE_CHART_COLORS, BarChart
         from reportlab.lib import colors
-        from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+        from reportlab.lib.styles import getSampleStyleSheet
         from reportlab.lib.units import inch
-        from reportlab.platypus import SimpleDocTemplate, Spacer, Table, TableStyle, Paragraph, Image, PageBreak
+        from reportlab.platypus import SimpleDocTemplate, Spacer, Table, \
+        TableStyle, Paragraph, Image, PageBreak
         
         try:
             from django.forms.fields import email_re
@@ -77,19 +78,38 @@ class Command(NoArgsCommand):
         styles = getSampleStyleSheet()
         
         reports = [
-            ['from_address', {'from_address__exact':""}, 'num_count', 'Top senders by quantity'],
-            ['from_address', {'from_address__exact':""}, 'size', 'Top senders by volume'],
-            ['from_domain', {'from_domain__exact':""}, 'num_count', 'Top sender domains by quantity'],
-            ['from_domain', {'from_domain__exact':""}, 'size', 'Top sender domains by volume'],
-            ['to_address', {'to_address__exact':""}, 'num_count', 'Top recipients by quantity'],
-            ['to_address', {'to_address__exact':""}, 'size', 'Top recipients by volume'],
-            ['to_domain', {'to_domain__exact':"", 'to_domain__isnull':False}, 'num_count', 'Top recipient domains by quantity'],
-            ['to_domain', {'to_domain__exact':"", 'to_domain__isnull':False}, 'size', 'Top recipient domains by volume'],
+            [
+                'from_address', {'from_address__exact':""}, 'num_count', 
+                'Top senders by quantity'],
+            [
+                'from_address', {'from_address__exact':""}, 'size', 
+                'Top senders by volume'],
+            [   
+                'from_domain', {'from_domain__exact':""}, 'num_count', 
+                'Top sender domains by quantity'],
+            [   
+                'from_domain', {'from_domain__exact':""}, 'size', 
+                'Top sender domains by volume'],
+            [   
+                'to_address', {'to_address__exact':""}, 'num_count', 
+                'Top recipients by quantity'],
+            [
+                'to_address', {'to_address__exact':""}, 'size', 
+                'Top recipients by volume'],
+            [
+                'to_domain', {'to_domain__exact':"", 
+                'to_domain__isnull':False}, 'num_count', 
+                'Top recipient domains by quantity'],
+            [
+                'to_domain', {'to_domain__exact':"", 
+                'to_domain__isnull':False}, 'size', 
+                'Top recipient domains by volume'],
         ]
         
         emails = []
         
-        from_email = getattr(settings, 'DEFAULT_FROM_EMAIL','postmaster@localhost')
+        from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 
+            'postmaster@localhost')
         url = getattr(settings, 'QUARANTINE_REPORT_HOSTURL','')
         logo_dir = getattr(settings, 'MEDIA_ROOT', '')
         
@@ -104,8 +124,8 @@ class Command(NoArgsCommand):
                 pdf = StringIO()
                 
                 doc = SimpleDocTemplate(pdf, topMargin=50, bottomMargin=18)
-                im = Image(logo_dir + '/imgs/css/logo.jpg')
-                logo = [(im,'Baruwa mail report')]
+                img = Image(logo_dir + '/imgs/css/logo.jpg')
+                logo = [(img, 'Baruwa mail report')]
                 logo_table = Table(logo, [2.0 * inch, 5.4 * inch])
                 logo_table.setStyle(TableStyle([
                 ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold'),
@@ -125,32 +145,40 @@ class Command(NoArgsCommand):
                     title = report[3]
                     
                     data = Message.report.all(user).values(column).\
-                    exclude(**exclude_kwargs).\
-                    annotate(num_count=Count(column),size=Sum('size')).\
-                    order_by(order_by)[:10]
+                    exclude(**exclude_kwargs).annotate(
+                        num_count=Count(column), size=Sum('size')
+                    ).order_by(order_by)[:10]
                 
                     if data:
                         sentry += 1
                         headings = [('', 'Address', 'Count', 'Volume', '')]
-                        rows = [[draw_square(pie_chart_colors[index]), tds_trunc(row[column], 45),
-                        row['num_count'], filesizeformat(row['size']),''] for index,row in enumerate(data)]
+                        rows = [[draw_square(PIE_CHART_COLORS[index]), 
+                        tds_trunc(row[column], 45), row['num_count'], 
+                        filesizeformat(row['size']),''] 
+                        for index,row in enumerate(data)]
                     
                         if len(rows) != 10:
                             missing = 10 - len(rows)
-                            add_rows = [('', '', '', '', '') for i in range(missing)]
+                            add_rows = [
+                                ('', '', '', '', '') for ind in range(missing)
+                                ]
                             rows.extend(add_rows)
                         
                         headings.extend(rows)
-                        d = [row[order] for row in data]
-                        total = sum(d)
-                        labels = [("%.1f%%" % ((1.0 * row[order] / total) * 100)) for row in data]
+                        dat = [row[order] for row in data]
+                        total = sum(dat)
+                        labels = [
+                                ("%.1f%%" % ((1.0 * row[order] / total) * 100)) 
+                                for row in data
+                            ]
                         
                         pie = PieChart()
                         pie.chart.labels = labels
-                        pie.chart.data = d
+                        pie.chart.data = dat
                         headings[1][4] = pie
                         
-                        table_with_style = Table(headings, [0.2 * inch, 2.8 * inch, 0.5 * inch, 0.7 * inch, 3.2 * inch])
+                        table_with_style = Table(headings, [0.2 * inch, 
+                            2.8 * inch, 0.5 * inch, 0.7 * inch, 3.2 * inch])
                         table_with_style.setStyle(table_style)
                     
                         paragraph = Paragraph(title, styles['Heading1'])
@@ -162,26 +190,33 @@ class Command(NoArgsCommand):
                             parts.append(PageBreak())
                 #
                 parts.append(Paragraph('Message Totals', styles['Heading1']))
-                addrs = [addr.address for addr in UserAddresses.objects.filter(user=user).exclude(enabled__exact=0)]
+                addrs = [
+                    addr.address for addr in UserAddresses.objects.filter(
+                        user=user
+                    ).exclude(enabled__exact=0)]
                 
-                fr = MessageTotals.objects.all(user, [], addrs, profile.account_type)
+                msg_totals = MessageTotals.objects.all(
+                    user, [], addrs, profile.account_type)
                 mail_total = []
                 spam_total = []
                 virus_total = []
                 dates = []
-                for i, r in enumerate(fr):
-                    if i % 10:
+                for ind, msgt in enumerate(msg_totals):
+                    if ind % 10:
                         dates.append('')
                     else:
-                        dates.append(str(r.date))
+                        dates.append(str(msgt.date))
                         
-                    mail_total.append(int(r.mail_total))
-                    spam_total.append(int(r.spam_total))
-                    virus_total.append(int(r.virus_total))
+                    mail_total.append(int(msgt.mail_total))
+                    spam_total.append(int(msgt.spam_total))
+                    virus_total.append(int(msgt.virus_total))
                     
                 #graph = MessageTotalsGraph()
                 graph = BarChart()
-                graph.chart.data = [tuple(mail_total), tuple(spam_total), tuple(virus_total)]
+                graph.chart.data = [
+                        tuple(mail_total), tuple(spam_total), 
+                        tuple(virus_total)
+                    ]
                 graph.chart.categoryAxis.categoryNames = dates
                 graph_table = Table([[graph],], [7.4 * inch])
                 parts.append(graph_table)
@@ -196,20 +231,20 @@ class Command(NoArgsCommand):
                         {'user':user, 'url':url})
                     subject = 'Baruwa usage report for: %s' % user.username
                     if email_re.match(user.username):
-                        to = user.username
+                        toaddr = user.username
                     if email_re.match(user.email):
-                        to = user.email
+                        toaddr = user.email
                         
-                    msg = EmailMessage(subject, text_content, from_email, [to])
+                    msg = EmailMessage(subject, text_content, from_email, [toaddr])
                     msg.attach('baruwa.pdf', pdf.getvalue(), "application/pdf")
                     #msg.send()
                     emails.append(msg)
-                    print "* Queue "+user.username+"'s report to: "+to
+                    print "* Queue "+user.username+"'s report to: "+toaddr
                     pdf.close()
         if emails:
             conn = SMTPConnection()
             conn.send_messages(emails)
-            print "============ sending "+str(len(emails))+" messages ==============="
+            print "====== sending "+str(len(emails))+" messages ======="
 
 
         

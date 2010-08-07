@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -19,26 +19,27 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-import email, smtplib, os, re, socket, httplib
+import smtplib, os, re, socket, httplib
 from subprocess import Popen, PIPE
 from email.Header import decode_header
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from baruwa.utils.misc import get_config_option
 
-def return_attachment(msg, id):
+def return_attachment(msg, msg_id):
     "Returns an attachment from a mime file"
 
     from StringIO import StringIO
 
-    n = 1
-    id = int(id)
+    num = 1
+    msg_id = int(msg_id)
     for message_part in msg.walk():
         content_disposition  = message_part.get("Content-Disposition", None)
         if content_disposition:
             dispositions  = content_disposition.strip().split(";")
-            if bool(content_disposition  and dispositions[0].lower()  == "attachment"):
-                if id == n:
+            if bool(content_disposition  and (
+                dispositions[0].lower()  == "attachment")):
+                if msg_id == num:
                     file_data  = message_part.get_payload(decode=True)
                     attachment  = StringIO(file_data)
                     attachment.content_type =  message_part.get_content_type()
@@ -48,7 +49,7 @@ def return_attachment(msg, id):
                     attachment.mod_date =  None
                     attachment.read_date =  None
                     for param in dispositions[1:]:
-                        name,value =  param.split("=")
+                        name, value =  param.split("=")
                         name = name.lower().strip()
                         if name == "filename":
                             attachment.name = value
@@ -59,8 +60,7 @@ def return_attachment(msg, id):
                         elif name == "read-date":
                             attachment.read_date =  value
                     return attachment
-                    break
-                n = n + 1
+                num += 1
     return None
 
 def parse_attachment(part):
@@ -71,9 +71,10 @@ def parse_attachment(part):
     content_disposition = part.get("Content-Disposition", None)
     if content_disposition:
         dispositions = content_disposition.strip().split(";")
-        if bool(content_disposition and dispositions[0].lower() == "attachment"):
+        if bool(content_disposition and
+            (dispositions[0].lower() == "attachment")):
             for param in dispositions[1:]:
-                name,value = param.split("=")
+                name, value = param.split("=")
                 if name.lower().strip() == "filename":
                     attachment = value
             return attachment
@@ -86,14 +87,17 @@ def get_header(header_text, default="ascii"):
     header_sections = []
     try:
         headers = decode_header(header_text)
-        header_sections = [unicode(text, charset or default) for text, charset in headers]
+        header_sections = [
+                unicode(text, charset or default) 
+                for text, charset in headers
+            ]
     except:
         pass
     return u"".join(header_sections)
 
 def parse_email(msg):
     """
-    Parses an email and returns a dict representing 
+    Parses an email and returns a dict representing
     the message
     """
     attachments = []
@@ -109,7 +113,10 @@ def parse_email(msg):
             if body is None:
                 body = ""
             try:
-                body += unicode(part.get_payload(decode=True),part.get_content_charset(),'replace').encode('utf8','replace')
+                body += unicode(
+                    part.get_payload(decode=True), 
+                    part.get_content_charset(), 'replace'
+                ).encode('utf8', 'replace')
             except:
                 pass
         elif part.get_content_type() == "text/html":
@@ -117,31 +124,34 @@ def parse_email(msg):
             if html is None:
                 html = ""
             try:
-                html += unicode(part.get_payload(decode=True),part.get_content_charset(),'replace').encode('utf8','replace')
+                html += unicode(
+                        part.get_payload(decode=True), 
+                        part.get_content_charset(), 'replace'
+                    ).encode('utf8', 'replace')
             except:
                 pass
     return {
-        'subject' : get_header(msg.get('Subject')),
-        'to' : get_header(msg.get('To')),
-        'from' : get_header(msg.get('From')),
-        'date' : get_header(msg.get('Date')),
-        'has_html' : has_html,
-        'body' : body,
-        'html' : html,
-        'attachments' : attachments,
+        'subject': get_header(msg.get('Subject')),
+        'to': get_header(msg.get('To')),
+        'from': get_header(msg.get('From')),
+        'date': get_header(msg.get('Date')),
+        'has_html': has_html,
+        'body': body,
+        'html': html,
+        'attachments': attachments,
     }
 
-def get_message_path(qdir,date,message_id):
+def get_message_path(qdir, date, message_id):
     """
     Returns the on disk path of a message
     or None if path does not exist
     """
-    qdirs = ["spam","nonspam","mcp"]
+    qdirs = ["spam", "nonspam", "mcp"]
     for message_kind in qdirs:
-        file_path = os.path.join(qdir,date,message_kind,message_id)
+        file_path = os.path.join(qdir, date, message_kind, message_id)
         if os.path.exists(file_path):
             return file_path
-        file_path = os.path.join(qdir, date, message_id,'message')
+        file_path = os.path.join(qdir, date, message_id, 'message')
         if os.path.exists(file_path):
             return file_path
     return None
@@ -161,8 +171,8 @@ def release_mail(mail_path, to_addr, from_addr):
     msg = ""
     host = settings.EMAIL_HOST
     if os.path.exists(mail_path):
-        file = open(mail_path)
-        for line in file:
+        mail_file = open(mail_path)
+        for line in mail_file:
             msg = msg + line
         try:
             server = smtplib.SMTP(host)
@@ -179,20 +189,21 @@ def sa_learn(mail_path, learn_as):
     Spam assassin learns a message
     """
     learn = "--%s" % learn_as
-    SA_LEARN = ['/usr/bin/sa-learn',learn,mail_path]
-    LEARN_OPTS = ('spam','ham','forget')
+    sa_learn_cmd = ['/usr/bin/sa-learn', learn, mail_path]
+    learn_opts = ('spam', 'ham', 'forget')
 
-    if not learn_as in LEARN_OPTS:
-        return {'success':False,'output':'','errormsg':'Incorrect learn option'}
+    if not learn_as in learn_opts:
+        return {'success': False, 'output': '',
+         'errormsg': 'Incorrect learn option'}
     if os.path.exists(mail_path):
-        p = Popen(SA_LEARN, stdout=PIPE, stderr=PIPE)
-        stdout, stderr = p.communicate()
-        if p.returncode == 0:
-            return {'success':True,'output':stdout}
+        pipe = Popen(sa_learn_cmd, stdout=PIPE, stderr=PIPE)
+        stdout, stderr = pipe.communicate()
+        if pipe.returncode == 0:
+            return {'success': True, 'output': stdout}
         else:
-            return {'success':False,'output':stderr}
+            return {'success': False, 'output': stderr}
     else:
-        return {'success':False,'output':'mail file could not be read'}
+        return {'success': False, 'output': 'mail file could not be read'}
 
 def clean_regex(rule):
     """
@@ -202,15 +213,15 @@ def clean_regex(rule):
     if rule == 'default' or rule == '*':
         rule = '*@*'
     if not '@' in rule:
-        if re.match(r'^\*',rule):
+        if re.match(r'^\*', rule):
             rule = "*@%s" % rule
         else:
             rule = "*@%s" % rule
-    if re.match(r'^@',rule):
+    if re.match(r'^@', rule):
         rule = "*%s" % rule
-    if re.match(r'@$',rule):
+    if re.match(r'@$', rule):
         rule = "%s*" % rule
-    rule = re.sub(r'\*','.*',rule)
+    rule = re.sub(r'\*', '.*', rule)
     rule = "^%s\.?$" % rule
     return rule
 
@@ -218,14 +229,14 @@ def host_is_local(host):
     """
     Checks if host is local to host running the function
     """
-    h = socket.gethostbyname(host)
-    ip = socket.gethostbyname(socket.gethostname())
-    if h in [ip,'127.0.0.1']:
+    host_name = socket.gethostbyname(host)
+    ip_addr = socket.gethostbyname(socket.gethostname())
+    if host_name in [ip_addr, '127.0.0.1']:
         return True
     else:
         return False
 
-def rest_request(host,resource,method,headers,params=None):
+def rest_request(host, resource, method, headers, params=None):
     """
     Performs a REST request and returns a JSON representation
     of the result.
@@ -238,20 +249,21 @@ def rest_request(host,resource,method,headers,params=None):
         resource = resource + '/'
 
     try:
-        c = httplib.HTTPConnection(host)
-        r = c.request(method,resource,params,headers)
-        response = c.getresponse()
+        conn = httplib.HTTPConnection(host)
+        req = conn.request(method, resource, params, headers)
+        response = conn.getresponse()
         data = response.read()
-        c.close()
+        conn.close()
     except:
-        return {'success':False, 'response': 'an error occured'}
+        return {'success': False, 'response': 'an error occured'}
 
     if response.status == 200:
-        return {'success':True, 'response': data}
+        return {'success': True, 'response': data}
     elif response.status == 302:
-        return {'success':False, 'response': 'redirection - possible auth sync failure'}
+        return {'success': False, 
+        'response': 'redirection - possible auth sync failure'}
     else:
-        return {'success':False, 'response': data}
+        return {'success': False, 'response': data}
 
 #TODO
 # Use a Class for DRY
@@ -259,37 +271,34 @@ def remote_attachment_download(host, cookie, message_id, attachment_id):
     """
     Returns a email attachment from a remote node using a RESTFUL request
     """
-    headers = {'Cookie':cookie,'X-Requested-With':'XMLHttpRequest'}
+    headers = {'Cookie': cookie, 'X-Requested-With': 'XMLHttpRequest'}
     resource = reverse('download-attachment', args=[message_id, attachment_id])
-    rv = rest_request(host, resource, 'GET', headers)
-    return rv
-    
-def remote_preview(host,cookie,message_id):
+    return rest_request(host, resource, 'GET', headers)
+
+def remote_preview(host, cookie, message_id):
     """
     Returns the message preview of a message on a
     remote node using a RESTFUL request
     """
-    headers = {'Cookie':cookie,'X-Requested-With':'XMLHttpRequest'}
+    headers = {'Cookie':cookie, 'X-Requested-With':'XMLHttpRequest'}
     resource = reverse('preview-message', args=[message_id])
-    rv = rest_request(host, resource, 'GET', headers)
-    return rv
+    return rest_request(host, resource, 'GET', headers)
 
 def remote_process(host, cookie, message_id, params):
     """
     Processes a message quarantined on a remote
     node
     """
-    headers = {'Cookie':cookie,'X-Requested-With':'XMLHttpRequest'}
+    headers = {'Cookie':cookie, 'X-Requested-With':'XMLHttpRequest'}
     resource = reverse('message-detail', args=[message_id])
-    rv = rest_request(host, resource, 'POST', headers, params)
-    return rv
-    
+    return rest_request(host, resource, 'POST', headers, params)
+
 def remote_release(host, message_uuid):
     "Release a message quarantined on a remote host"
     headers = {'X-Requested-With':'XMLHttpRequest'}
     resource = reverse('auto-release', args=[message_uuid])
-    rv = rest_request(host, resource, 'GET', headers)
-    return rv
+    return rest_request(host, resource, 'GET', headers)
+
 
 def test_smtp_server(server, port, test_address):
     "Test smtp server delivery"
@@ -300,13 +309,13 @@ def test_smtp_server(server, port, test_address):
         elif port == 25:
             conn = smtplib.SMTP(server)
         else:
-            conn = smtplib.SMTP(server,port)
+            conn = smtplib.SMTP(server, port)
         conn.set_debuglevel(5)
         conn.ehlo()
         if conn.has_extn('STARTTLS') and port != 465:
             conn.starttls()
             conn.ehlo()
-        conn.docmd('MAIL FROM:', 'postmaster@baruwa.org') 
+        conn.docmd('MAIL FROM:', 'postmaster@baruwa.org')
         result = conn.docmd('RCPT TO:', test_address)
         if conn:
             conn.quit()

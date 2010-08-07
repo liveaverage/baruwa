@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -27,10 +27,10 @@ from baruwa.accounts.models import UserAddresses
 class MailBackend:
     "Authenticates users using pop3 imap and smtp auth"
 
-    def mail_auth(self, protocol, username, password, server,port=None):
+    def mail_auth(self, protocol, username, password, server, port=None):
         "Authenticates to pop3,imap,smtp servers"
         if protocol == 1:
-            import poplib,re
+            import poplib, re
             regex = re.compile(r"^.+\<\d+\.\d+\@.+\>$")
             try:
                 if port == 995:
@@ -38,9 +38,9 @@ class MailBackend:
                 elif port == 110 or port is None:
                     conn = poplib.POP3(server)
                 else:
-                    conn = poplib.POP3(server,port)
+                    conn = poplib.POP3(server, port)
                 if regex.match(conn.getwelcome()):
-                    conn.apop(username,password)
+                    conn.apop(username, password)
                 else:
                     dump = conn.user(username)
                     conn.pass_(password)
@@ -56,8 +56,8 @@ class MailBackend:
                 elif port == 143 or port is None:
                     conn = imaplib.IMAP4(server)
                 else:
-                    conn = imaplib.IMAP4(server,port)
-                dump = conn.login(username,password)
+                    conn = imaplib.IMAP4(server, port)
+                dump = conn.login(username, password)
                 dump = conn.logout()
                 return True
             except:
@@ -70,12 +70,12 @@ class MailBackend:
                 elif port == 25 or port is None:
                     conn = smtplib.SMTP(server)
                 else:
-                    conn = smtplib.SMTP(server,port)
+                    conn = smtplib.SMTP(server, port)
                 conn.ehlo()
                 if conn.has_extn('STARTTLS') and port != 465:
                     conn.starttls()
                     conn.ehlo()
-                conn.login(username,password)
+                conn.login(username, password)
                 conn.quit()
                 return True
             except:
@@ -84,27 +84,27 @@ class MailBackend:
             return False
 
     def authenticate(self, username=None, password=None):
-        from django.conf import settings
 
         if not '@' in username:
             return None
 
-        login_user,domain = username.split('@')
-        dom = UserAddresses.objects.filter(address=domain,address_type=1)
-        
+        login_user, domain = username.split('@')
+        dom = UserAddresses.objects.filter(address=domain, address_type=1)
+
         if not dom:
             return None
-            
+
         hosts = MailAuthHost.objects.filter(useraddress=dom)
-        
+
         if not hosts:
             return None
-            
+
         for host in hosts:
             if not host.split_address:
                 login_user = username
-            
-            if self.mail_auth(host.protocol, login_user, password, host.address, host.port):
+
+            if self.mail_auth(host.protocol, login_user, password,
+                host.address, host.port):
                 try:
                     user = User.objects.get(username=username)
                 except User.DoesNotExist:
@@ -125,7 +125,6 @@ class MailBackend:
                     profile = UserProfile(user=user, account_type=3)
                     profile.save()
                 return user
-                break
         return None
 
 
@@ -134,3 +133,4 @@ class MailBackend:
             return User.objects.get(pk=user_id)
         except:
             return None
+

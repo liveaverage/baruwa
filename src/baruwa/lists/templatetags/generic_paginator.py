@@ -40,11 +40,13 @@ def generic_paginator(context, adjacent_pages=2):
     view.
 
     """
-    startPage = max(context['page'] - adjacent_pages, 1)
-    if startPage <= 3: startPage = 1
-    endPage = context['page'] + adjacent_pages + 1
-    if endPage >= context['pages'] - 1: endPage = context['pages'] + 1
-    page_numbers = [n for n in range(startPage, endPage) \
+    startpage = max(context['page'] - adjacent_pages, 1)
+    if startpage <= 3:
+        startpage = 1
+    endpage = context['page'] + adjacent_pages + 1
+    if endpage >= context['pages'] - 1:
+        endpage = context['pages'] + 1
+    page_numbers = [n for n in range(startpage, endpage) \
             if n > 0 and n <= context['pages']]
     page_obj = context['page_obj']
     paginator = context['paginator']
@@ -80,4 +82,5 @@ def generic_paginator(context, adjacent_pages=2):
         'list_all': context['list_all'],
     }
 
-register.inclusion_tag('tags/generic_paginator.html', takes_context=True)(generic_paginator)
+register.inclusion_tag('tags/generic_paginator.html', 
+    takes_context=True)(generic_paginator)

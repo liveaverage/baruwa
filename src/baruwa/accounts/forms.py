@@ -24,13 +24,12 @@ from django.forms.util import ErrorList
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from baruwa.accounts.models import UserProfile, UserAddresses
-from baruwa.utils.regex import dom_re
-import re
+from baruwa.utils.regex import DOM_RE
 try:
     from django.forms.fields import email_re
 except ImportError:
     from django.core.validators import email_re
-from baruwa.utils.regex import address_re
+from baruwa.utils.regex import ADDRESS_RE
 
 
 class UserProfileForm(forms.ModelForm):
@@ -39,6 +38,7 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ('user',)
+
         
 class OrdUserProfileForm(forms.ModelForm):
     id = forms.CharField(widget=forms.HiddenInput)
@@ -46,11 +46,15 @@ class OrdUserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ('user', 'account_type')
+
         
 class UserCreateForm(forms.ModelForm):
-    username = forms.RegexField(label=_("Username"), max_length=30, regex=r'^[\w.@+-]+$',
-            help_text = _("Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."),
-            error_messages = {'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")})
+    username = forms.RegexField(
+        label=_("Username"), max_length=30, regex=r'^[\w.@+-]+$',
+            help_text = _(
+            "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."),
+            error_messages = {'invalid': _(
+            "This value may contain only letters, numbers and @/./+/-/_ characters.")})
     password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
             
     def clean_username(self):
@@ -59,7 +63,8 @@ class UserCreateForm(forms.ModelForm):
             User.objects.get(username=username)
         except User.DoesNotExist:
             return username
-        raise forms.ValidationError(_("A user with that username already exists."))
+        raise forms.ValidationError(
+            _("A user with that username already exists."))
 
     def save(self, commit=True):
         user = super(UserCreateForm, self).save(commit=False)
@@ -70,13 +75,16 @@ class UserCreateForm(forms.ModelForm):
         
     class Meta:
         model = User
-        exclude = ('is_staff', 'last_login', 'date_joined', 'groups', 'user_permissions',)
+        exclude = ('is_staff', 'last_login', 'date_joined', 
+            'groups', 'user_permissions',)
+
         
 class UserAddressForm(forms.ModelForm):
     """
     Used by admin to associate addresses or domains.
     """
-    address = forms.RegexField(regex=address_re, widget=forms.TextInput(attrs={'size':'50'}))
+    address = forms.RegexField(regex=ADDRESS_RE, 
+        widget=forms.TextInput(attrs={'size':'50'}))
     
     def clean(self):
         """clean_address"""
@@ -92,7 +100,7 @@ class UserAddressForm(forms.ModelForm):
             del cleaned_data['address']
         account = UserProfile.objects.get(user=user)
         if account.account_type == 2:
-            if not dom_re.match(address):
+            if not DOM_RE.match(address):
                 error_msg = 'provide a valid domain address'
                 self._errors["address"] = ErrorList([error_msg])
                 del cleaned_data['address']
@@ -106,10 +114,12 @@ class UserAddressForm(forms.ModelForm):
     class Meta:
         model = UserAddresses
         exclude = ('id', 'address_type')
+
         
 class EditAddressForm(forms.ModelForm):
     "Edit address"
-    address = forms.RegexField(regex=address_re, widget=forms.TextInput(attrs={'size':'50'}))
+    address = forms.RegexField(
+        regex=ADDRESS_RE, widget=forms.TextInput(attrs={'size':'50'}))
     
     def clean(self):
         """clean_address"""
@@ -125,7 +135,7 @@ class EditAddressForm(forms.ModelForm):
             del cleaned_data['address']
         account = UserProfile.objects.get(user=user)
         if account.account_type == 2:
-            if not dom_re.match(address):
+            if not DOM_RE.match(address):
                 error_msg = 'provide a valid domain address'
                 self._errors["address"] = ErrorList([error_msg])
                 del cleaned_data['address']
@@ -139,6 +149,7 @@ class EditAddressForm(forms.ModelForm):
     class Meta:
         model = UserAddresses
         exclude = ('id', 'address_type')
+
         
 class DeleteAddressForm(forms.ModelForm):
     "Delete address"
@@ -146,6 +157,7 @@ class DeleteAddressForm(forms.ModelForm):
     class Meta:
         model = UserAddresses
         exclude = ('address', 'enabled', 'user')
+
         
 class UserUpdateForm(forms.ModelForm):
     """
@@ -154,25 +166,36 @@ class UserUpdateForm(forms.ModelForm):
     id = forms.CharField(widget=forms.HiddenInput)
     class Meta:
         model = User
-        exclude = ('last_login', 'date_joined', 'username', 'groups', 'is_superuser', 'user_permissions', 'is_staff', 'password', 'is_active')
-        
+        exclude = ('last_login', 'date_joined', 'username', 
+            'groups', 'is_superuser', 'user_permissions', 
+            'is_staff', 'password', 'is_active')
+            
+
 class AdminUserUpdateForm(forms.ModelForm):
     """
     Allows the admins to manage account info
     """
-    username = forms.RegexField(label=_("Username"), max_length=30, regex=r'^[\w.@+-]+$',
-            help_text = _("Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."),
-            error_messages = {'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")})
+    username = forms.RegexField(label=_("Username"), 
+        max_length=30, regex=r'^[\w.@+-]+$',
+            help_text = _(
+            "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."),
+            error_messages = {'invalid': _(
+            "This value may contain only letters, numbers and @/./+/-/_ characters.")})
     id = forms.CharField(widget=forms.HiddenInput)
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'is_superuser', 'is_active')
+        fields = ('id', 'username', 'first_name', 
+            'last_name', 'email', 'is_superuser', 'is_active')
+
         
 class DeleteUserForm(forms.ModelForm):
     """DeleteUserForm"""
     id = forms.CharField(widget=forms.HiddenInput)
     class Meta:
         model = User
-        exclude = ('last_login', 'date_joined', 'username', 'groups', 'is_superuser', 'user_permissions', 'is_staff', 'password', 'is_active', 'first_name', 'last_name', 'email')
+        exclude = ('last_login', 'date_joined', 'username', 
+            'groups', 'is_superuser', 'user_permissions', 
+            'is_staff', 'password', 'is_active', 'first_name', 
+            'last_name', 'email')
         #fields = ('id')
         

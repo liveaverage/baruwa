@@ -25,7 +25,7 @@
 	<p class="error">{{ message }}</p>
 	{% endfor %}
 	{% endif %}
-    <form action="{% url baruwa.accounts.views.login %}" method="post">
+    <form action="{% url please-login %}" method="post">
         <input type="hidden" name="next" value="{{ next }}" />
         <label>Username</label>
         <input type="text" name="username" class="field" id="id_username" maxlength="30" />

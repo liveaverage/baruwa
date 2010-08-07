@@ -39,14 +39,16 @@ def paginator(context, adjacent_pages=2):
     view.
 
     """
-    startPage = max(context['page'] - adjacent_pages, 1)
-    if startPage <= 3: startPage = 1
-    endPage = context['page'] + adjacent_pages + 1
-    if endPage >= context['pages'] - 1: endPage = context['pages'] + 1
-    page_numbers = [n for n in range(startPage, endPage) \
+    startpage = max(context['page'] - adjacent_pages, 1)
+    if startpage <= 3:
+        startpage = 1
+    endpage = context['page'] + adjacent_pages + 1
+    if endpage >= context['pages'] - 1:
+        endpage = context['pages'] + 1
+    page_numbers = [n for n in range(startpage, endpage) \
             if n > 0 and n <= context['pages']]
     page_obj = context['page_obj']
-    paginator = context['paginator']
+    local_paginator = context['paginator']
 
     if not context.has_key('direction'):
         context['direction'] = None
@@ -56,7 +58,7 @@ def paginator(context, adjacent_pages=2):
 
     return {
         'page_obj': page_obj,
-        'paginator': paginator,
+        'paginator': local_paginator,
         'hits': context['hits'],
         'results_per_page': context['results_per_page'],
         'page': context['page'],

@@ -22,6 +22,7 @@
 from django.core.management.base import NoArgsCommand
 
 class Command(NoArgsCommand):
+    "update the rules table"
     help = "Updates the database with the spam descriptions"
 
     def handle_noargs(self, **options):
@@ -29,20 +30,21 @@ class Command(NoArgsCommand):
         from django.conf import settings
         from baruwa.messages.models import SaRules
 
-        search_dirs = getattr(settings, 'SA_RULES_DIRS',[])
+        search_dirs = getattr(settings, 'SA_RULES_DIRS', [])
         regex = re.compile(r'^describe\s+(\S+)\s+(.+)$')
-        for dir in search_dirs:
-            if not dir.endswith(os.sep):
-                dir = dir + os.sep
-            for file in glob.glob(dir + '*.cf'):
-                f = open(file,'r')
-                for line in f.readlines():
-                    m = regex.match(line)
-                    if m:
-                        print m.groups()[0] + ' ' + m.groups()[1]
-                        rule = SaRules(rule=m.groups()[0],rule_desc=m.groups()[1])
+        for dirc in search_dirs:
+            if not dirc.endswith(os.sep):
+                dirc = dirc + os.sep
+            for the_file in glob.glob(dirc + '*.cf'):
+                rule_file = open(the_file, 'r')
+                for line in rule_file.readlines():
+                    match = regex.match(line)
+                    if match:
+                        print match.groups()[0] + ' ' + match.groups()[1]
+                        rule = SaRules(rule = match.groups()[0], 
+                        rule_desc = match.groups()[1])
                         try:
                             rule.save()
                         except:
                             pass
-                f.close()
+                rule_file.close()

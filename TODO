@@ -14,4 +14,5 @@
 - Ajaxify the whole app
 - Achieve to document store.
 - fix queries (scaned) DONE
+- Track false positives
 - Write Tests

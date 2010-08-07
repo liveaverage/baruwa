@@ -25,16 +25,20 @@ from django.core.urlresolvers import reverse
 register = template.Library()
 
 def generic_sorter(context, field_name, field_text):
+    "sort by field"
     rlink = None
     link = ''
     direc = 'dsc'
     if context['app'] == 'lists':
-        link = reverse('lists-full-sort', args=[context['list_kind'], context['direction'], field_name])
+        link = reverse('lists-full-sort', args=[context['list_kind'], 
+            context['direction'], field_name])
         if field_name == context['order_by']:
             if context['direction'] == 'dsc':
                 direc = 'asc'
             else:
                 direc = 'dsc'
-            rlink = reverse('lists-full-sort', args=[context['list_kind'], direc, context['order_by']])
-    return {'field_text': field_text, 'link': link, 'rlink': rlink, 'dir': direc}
+            rlink = reverse('lists-full-sort', args=[context['list_kind'], 
+                direc, context['order_by']])
+    return {'field_text': field_text, 'link': link, 
+        'rlink': rlink, 'dir': direc}
 register.inclusion_tag('tags/sorter.html', takes_context=True)(generic_sorter)

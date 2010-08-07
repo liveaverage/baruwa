@@ -22,14 +22,16 @@
 from django import forms
 from baruwa.accounts.models import UserAddresses
 from baruwa.config.models import MailHost
-from baruwa.utils.regex import host_or_ipv4_re
+from baruwa.utils.regex import HOST_OR_IPV4_RE
 from baruwa.config.models import MailAuthHost
 
 class MailHostForm(forms.ModelForm):
     "Mail host add form"
-    address = forms.RegexField(regex=host_or_ipv4_re, widget=forms.TextInput(attrs={'size':'40'}))
+    address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
+        widget=forms.TextInput(attrs={'size':'40'}))
     port = forms.CharField(widget=forms.TextInput(attrs={'size':'5'}))
-    useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(), widget=forms.HiddenInput())
+    useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(), 
+        widget=forms.HiddenInput())
     
     class Meta:
         model = MailHost
@@ -37,7 +39,8 @@ class MailHostForm(forms.ModelForm):
 
 class EditMailHost(forms.ModelForm):
     "Edit Mail host form"
-    address = forms.RegexField(regex=host_or_ipv4_re, widget=forms.TextInput(attrs={'size':'40'}))
+    address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
+        widget=forms.TextInput(attrs={'size':'40'}))
     port = forms.CharField(widget=forms.TextInput(attrs={'size':'5'}))
     class Meta:
         model = MailHost
@@ -52,15 +55,18 @@ class DeleteMailHost(forms.ModelForm):
         
 class MailAuthHostForm(forms.ModelForm):
     "Mail auth host add form"
-    address = forms.RegexField(regex=host_or_ipv4_re, widget=forms.TextInput(attrs={'size':'40'}))
+    address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
+        widget=forms.TextInput(attrs={'size':'40'}))
     port = forms.CharField(widget=forms.TextInput(attrs={'size':'5'}))
-    useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(), widget=forms.HiddenInput())
+    useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(), 
+        widget=forms.HiddenInput())
     class Meta:
         model = MailAuthHost
         
 class EditMailAuthHostForm(forms.ModelForm):
     "Edit Mail auth host form"
-    address = forms.RegexField(regex=host_or_ipv4_re, widget=forms.TextInput(attrs={'size':'40'}))
+    address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
+        widget=forms.TextInput(attrs={'size':'40'}))
     port = forms.CharField(widget=forms.TextInput(attrs={'size':'5'}))
     class Meta:
         model = MailAuthHost

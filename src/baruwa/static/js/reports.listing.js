@@ -38,12 +38,12 @@ function build_rows(build_array){
 	    };
 		rows[count++] = '<div class="'+c+'">';
 		rows[count++] = '<div class="totals_date">'+item.date+'</div>';
-		rows[count++] = '<div class="totals_mail">'+item.count+'</div>';
-		rows[count++] = '<div class="totals_virii">'+item.virii+'</div>';
-		rows[count++] = '<div class="totals_viriip">'+item.vpercent+'</div>';
-		rows[count++] = '<div class="totals_spam">'+item.spam+'</div>';
-		rows[count++] = '<div class="totals_spamp">'+item.spercent+'</div>';
-		rows[count++] = '<div class="totals_volume">'+filesizeformat(item.size)+'</div>';
+		rows[count++] = '<div class="totals_mail">'+item.mail_total+'</div>';
+		rows[count++] = '<div class="totals_virii">'+item.virus_total+'</div>';
+		rows[count++] = '<div class="totals_viriip">'+item.virus_percent+'</div>';
+		rows[count++] = '<div class="totals_spam">'+item.spam_total+'</div>';
+		rows[count++] = '<div class="totals_spamp">'+item.spam_percent+'</div>';
+		rows[count++] = '<div class="totals_volume">'+filesizeformat(item.size_total)+'</div>';
 		rows[count++] = '</div>';
 	});
 	return rows.join('');

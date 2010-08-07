@@ -25,11 +25,13 @@ from django.contrib.auth.models import User
 
 def onlysuperusers(function):
     """
+    Allow access only to super users
     """
     def _inner(request, *args, **kwargs):
+        "check if is super user"
         if not request.user.is_superuser:
             raise PermissionDenied
-        return function(request,*args,**kwargs)
+        return function(request, *args, **kwargs)
     return _inner
     
 def authorized_users_only(function):
@@ -39,6 +41,7 @@ def authorized_users_only(function):
     """
     
     def _inner(request, *args, **kwargs):
+        "check if super user"
         if not request.user.is_superuser:
             account_type = request.session['user_filter']['account_type']
             user_id = kwargs['user_id']
@@ -56,7 +59,7 @@ def authorized_users_only(function):
                 if request.user.id != account_info.id:
                     raise PermissionDenied
             else:
-               raise PermissionDenied
+                raise PermissionDenied
         return function(request, *args, **kwargs)
     return _inner
 
@@ -65,6 +68,7 @@ def only_admins(function):
     Allows view access for only admins and domain admins
     """
     def _inner(request, *args, **kwargs):
+        "check if authorized admin"
         if not request.user.is_superuser:
             account_type = request.session['user_filter']['account_type']
             if account_type != 2:

@@ -26,6 +26,7 @@ from django.db.models.signals import post_save
 
 class UserAddresses(models.Model):
     """
+    email and domain addresses
     """
     ADDRESS_TYPES = (
         (1, 'Domain'),
@@ -52,9 +53,11 @@ class UserAddresses(models.Model):
         else:
             self.address_type = 2
         super(UserAddresses, self).save()
-        
+
+
 class UserProfile(models.Model):
     """
+    user profiles
     """
     ACCOUNT_TYPES = (
         (1, 'Administrator'),

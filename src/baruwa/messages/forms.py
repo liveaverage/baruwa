@@ -59,17 +59,19 @@ class QuarantineProcessForm(forms.Form):
         salearn = cleaned_data.get("salearn")
         release = cleaned_data.get("release")
         todelete = cleaned_data.get("todelete")
-        message_id = cleaned_data.get("message_id")
 
         if not salearn and not release and not todelete:
             raise forms.ValidationError("Select atleast one action to perform")
         else:
             if altrecipients in EMPTY_VALUES and use_alt and release:
-                raise forms.ValidationError("Provide atleast one alternative recipient")
+                raise forms.ValidationError(
+                    "Provide atleast one alternative recipient")
             else:
                 if use_alt and release:
                     emails = altrecipients.split(',')
                     for email in emails:
                         if not email_re.match(email.strip()):
-                            raise forms.ValidationError('%s is not a valid e-mail address.' % force_escape(email))
+                            raise forms.ValidationError(
+                            '%s is not a valid e-mail address.' 
+                            % force_escape(email))
         return cleaned_data
