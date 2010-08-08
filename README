@@ -23,11 +23,10 @@ MySQL for storage, it is released under the GPLv2 and is available for free down
 ========
 Features
 ========
-	+ AJAX refreshed recent messages listing
-	+ Detailed message view with AJAX enabled message processing (quarantine management, Bayesian learning, white/black listing)
-	+ AJAX powered Full/Quarantine messages listings
-	+ Reporting view with AJAX enabled query builder
-	+ Interactive SVG graphs
+	+ AJAX support for most operations
+	+ Reporting with AJAX enabled query builder
+	+ Interactive SVG graphs and PDF reports
+	+ Archiving of old message logs
 	+ SQLite backup prevents loss of messages when MySQL is down
 	+ Multi user profiles (No restrictions on username format)
 	+ User profile aware white/blacklist management
@@ -45,7 +44,7 @@ Screenshots
 Requirements
 ============
     + Python >= 2.4
-    + Django >= 1.2.1
+    + Django >= 1.1.1
     + MySQLdb >= 1.2.1p2
     + GeoIP
     + iPy

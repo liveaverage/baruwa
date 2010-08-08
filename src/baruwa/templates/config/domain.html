@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block headers %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/domain.js"></script>
 {% endblock headers %}
 {% block submenu %}
 <ul>
@@ -74,7 +76,7 @@
 			Disabled
 		{% endif %}
 		<div class="Profile_edit">
-			 <a href="{% url test-host server.id %}"><img src="{{ MEDIA_URL }}imgs/connect.png" alt="Test" title="Test"></a>
+			 <a class="selector" href="{% url test-host server.id %}"><img src="{{ MEDIA_URL }}imgs/connect.png" alt="Test" title="Test"></a>
 			 <a href="{% url edit-host server.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
 			 <a href="{% url delete-host server.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
 		</div>

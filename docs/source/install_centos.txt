@@ -7,7 +7,7 @@ Baruwa on Centos/RHEL
 Configure MailScanner
 =====================
 
-:ref:`Configure <setupmailscanner>` MailScanner if you have not already done so.
+:ref:`Configure <mailscanner>` MailScanner if you have not already done so.
 
 Install EPEL
 ============
@@ -47,8 +47,12 @@ Create the database user::
 Configure Baruwa
 ================
 
-Edit /usr/lib/python2.4/site-packages/baruwa/settings.py and 
-set the mysql database details::
+Edit the baruwa settings.py::
+
+	# baruwa_path=$(python2.4 -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
+	# vi $baruwa_path/setttings.py
+
+And set the mysql database details::
 
     DATABASE_ENGINE = 'mysql'           
     DATABASE_NAME = 'baruwa'             
@@ -58,14 +62,12 @@ set the mysql database details::
 
 Create the baruwa admin user and populate the database::
 
-	# /usr/lib/python2.4/site-packages/baruwa/manage.py syncdb        
+	# $baruwa_path/baruwa/manage.py syncdb       
 
-If your MailScanner config file is not located in the standard 
-location (/etc/MailScanner/MailScanner.conf) then edit the
-baruwa_settings.py file which is in the same directory as the
-settings.py file and set::
+Edit the baruwa_settings.py file and make the changes to suit
+your install::
 
-    MS_CONFIG = '/etc/MailScanner/MailScanner.conf'
+	# vi $baruwa_path/baruwa_setttings.py
 
 **Setup Web server**
 

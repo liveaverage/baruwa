@@ -30,7 +30,7 @@ var ax_error = false;
 	<div class="Users_grid_del"></div>
 </div>
 {% for user in object_list %}
-<div id="account-id-{{ user.id }}" class="{% cycle 'LightBlue' 'DarkGray' %}_div">
+<div id="account-id-{{ user.id }}" class="{% cycle 'LightBlue' 'LightGray' %}_div">
     <div class="hash">
         <a href="{% url user-profile user.id %}">
         {% if user.is_superuser %}

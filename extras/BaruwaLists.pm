@@ -34,8 +34,8 @@ sub PopulateList {
 
     my ($db_name) = 'baruwa';
     my ($db_host) = 'localhost';
-    my ($db_user) = 'hotsexygirl';
-    my ($db_pass) = 't0nyd4nz4$$$';
+    my ($db_user) = 'baruwa';
+    my ($db_pass) = '';
 
     my ( $conn, $sth, $to_address, $from_address, $count );
 

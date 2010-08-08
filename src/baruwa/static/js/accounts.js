@@ -121,7 +121,7 @@ function page_from_json(data){
         css = 'DarkGray';
         $.each(data.items, function(i, n) {
             if(css == 'LightBlue'){
-                css = 'DarkGray';
+                css = 'LightGray';
             }else{
                 css = 'LightBlue';
             }

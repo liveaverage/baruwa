@@ -43,13 +43,13 @@ managing whitelists and blacklists.
 #
 
 # send quarantine reports
-%{python_sitelib}/%{name}/manage.py send_quarantine_reports
+%{python_sitelib}/%{name}/manage.py sendquarantinereports
 # clean quarantine 
-%{python_sitelib}/%{name}/manage.py quarantine_clean
+%{python_sitelib}/%{name}/manage.py cleanquarantine
 # clean up the DB
 %{python_sitelib}/%{name}/manage.py dbclean
 # update sa rule definitions
-%{python_sitelib}/%{name}/manage.py update_sarules
+%{python_sitelib}/%{name}/manage.py updatesarules
 # clean up stale sessions
 %{python_sitelib}/%{name}/manage.py cleanup
 # update geoip database

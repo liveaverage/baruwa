@@ -1,0 +1,68 @@
+.. _mailscanner:
+
+=================
+Setup MailScanner
+=================
+
+Configuration
+=============
+
+**Edit and install BaruwaSQL.pm**
+
+Edit extras/BaruwaSQL.pm and set the variables::
+
+	my ($db_name)   = 'baruwa';
+	my ($db_host)   = 'localhost';
+	my ($db_user)   = 'baruwa';
+	my ($db_pass)   = '';
+	my ($sqlite_db) = "/var/spool/MailScanner/incoming/baruwa.db";
+
+Copy it to the MailScanner custom functions directory::
+
+	# confdir=$(/usr/sbin/Quick.Peek 'Custom Functions Dir' /etc/MailScanner/MailScanner.conf)
+	# cp extras/BaruwaSQL.pm $confdir/
+
+Stop MailScanner::
+
+    # /etc/init.d/MailScanner stop
+
+Next edit the MailScanner config file /etc/MailScanner/MailScanner.conf,
+you need to make sure that the following options are set::
+
+    Quarantine User = exim (Or what ever your "Run As User" is set to)
+    Quarantine Group = apache (or your webserver user if not apache)
+    Quarantine Permissions = 0660
+    Quarantine Whole Message = yes
+    Quarantine Whole Message As Queue Files = no
+    Detailed Spam Report = yes
+    Include Scores In SpamAssassin Report = yes
+    Always Looked Up Last = &BaruwaSQL
+
+To actually quarantine and later process messages with in baruwa, set
+'store' as one of your keywords for the "Spam Actions" and
+"High Scoring Spam Actions" MailScanner options
+
+**Integrate SQL Blacklist/Whitelist**
+
+Edit extras/BaruwaLists.pm and set the variables::
+
+	my ($db_name) = 'baruwa';
+	my ($db_host) = 'localhost';
+	my ($db_user) = 'baruwa';
+	my ($db_pass) = '';
+
+Copy it to the MailScanner custom functions directory::
+
+	# confdir=$(/usr/sbin/Quick.Peek 'Custom Functions Dir' /etc/MailScanner/MailScanner.conf)
+	# cp extras/BaruwaLists.pm $confdir/
+
+Next edit the MailScanner config file /etc/MailScanner/MailScanner.conf, and
+set the following options::
+
+    Is Definitely Not Spam = &BaruwaWhitelist
+    Is Definitely Spam = &BaruwaBlacklist
+
+Start up MailScanner::
+
+    # /etc/init.d/MailScanner start
+

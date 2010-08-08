@@ -1,5 +1,5 @@
-Baruwa documentation manual
-===========================
+Baruwa
+======
 Baruwa (swahili for letter or mail) is a web 2.0 `MailScanner <http://www.mailscanner.info/>`_
 front-end. 
 
@@ -23,13 +23,12 @@ MySQL for storage, it is released under the GPLv2 and is available for free down
 
     introduction.txt
     requirements.txt
+    mailscanner.txt
     install.txt
     install_centos.txt 
     install_fedora.txt 
     install_debian.txt
     migration.txt
-    migration_centos.txt
-    migration_fedora.txt
     authentication.txt
     distributed_setup.txt
     batteries_included.txt

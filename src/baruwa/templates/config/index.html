@@ -36,7 +36,7 @@ var ax_error = false;
 	</div>
 </div>
 {% for domain in object_list %}
-<div id="domain-id-{{domain.id}}" class="{% cycle 'LightBlue' 'DarkGray' %}_div">
+<div id="domain-id-{{domain.id}}" class="{% cycle 'LightBlue' 'LightGray' %}_div">
 	<div class="Domains_hash">
 		{% if domain.enabled %}
 			<img src="{{ MEDIA_URL }}imgs/domain-active.png" alt="" />

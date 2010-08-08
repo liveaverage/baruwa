@@ -61,11 +61,13 @@ function paginate(){
     row = [];
     row[count++] = tmp;
     if(rj.show_first){
-       row[count++] = '<span><a href="/'+rj.app+'/1/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/first_pager.png" alt="First"/></a></span>';
+       row[count++] = '<span><a href="/'+rj.app+'/1/'+rj.direction+'/'+rj.order_by+'/">';
+       row[count++] = '<img src="/static/imgs/first_pager.png" alt="First"/></a></span>';
        row[count++] = '<span>.....</span>';
     }
     if(rj.has_previous){
-       row[count++] = '<span><a href="/'+rj.app+'/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/previous_pager.png" alt="Previous"/></a></span>';
+       row[count++] = '<span><a href="/'+rj.app+'/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/">';
+       row[count++] = '<img src="/static/imgs/previous_pager.png" alt="Previous"/></a></span>';
     }
     $.each(rj.page_numbers,function(itr,lnk){
        li = '/'+rj.app+'/'+lnk+'/'+rj.direction+'/'+rj.order_by+'/';
@@ -76,11 +78,13 @@ function paginate(){
        }
     });
     if(rj.has_next){
-       row[count++] = '<span><a href="/'+rj.app+'/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/next_pager.png" alt="Next"/></a></span>';
+       row[count++] = '<span><a href="/'+rj.app+'/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/">';
+       row[count++] = '<img src="/static/imgs/next_pager.png" alt="Next"/></a></span>';
     }
     if(rj.show_last){
        row[count++] = '<span>......</span>';
-       row[count++] = '<a href="/'+rj.app+'/last/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/last_pager.png" alt="Last"/></a></span>';
+       row[count++] = '<a href="/'+rj.app+'/last/'+rj.direction+'/'+rj.order_by+'/">';
+       row[count++] = '<img src="/static/imgs/last_pager.png" alt="Last"/></a></span>';
     }
     $('#paginator').html(row.join(''));
     $('#paginator span a').bind('click',navigate);
@@ -141,7 +145,7 @@ function page_from_json(data){
         css = 'DarkGray';
         $.each(data.items, function(i, n) {
             if(css == 'LightBlue'){
-                css = 'DarkGray';
+                css = 'LightGray';
             }else{
                 css = 'LightBlue';
             }
