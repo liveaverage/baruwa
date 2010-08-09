@@ -9,7 +9,7 @@
 {% block submenu %}
 <ul>
 {% if message_details.isquarantined %}
-  <li><a href="{%url preview-message message_id=message_details.id%}">Preview message</a></li>
+  <li><a href="{% if archive %}{%url archive-preview-message message_id=message_details.id%}{% else %}{%url preview-message message_id=message_details.id%}{% endif %}">Preview message</a></li>
   <li><a href="#qheading">Release message</a></li>
 {% else %}
   <li><a href="{% url all-messages-index 'full' %}">Full message list</a></li>
@@ -188,6 +188,7 @@
 </div>
 {% endif %}
     {% if message_details.isquarantined %}
+	{% if not archive %}
     <div id="qheading" class="header_div">
         <div class="Reports_heading">Quarantine<a id="q"></a></div>
     </div>
@@ -237,6 +238,7 @@
         </div>
         </form>
     </div>
+	{% endif %}
     {% endif %}
 {% else %}
 <div class="LightBlue_div">

@@ -35,6 +35,7 @@ urlpatterns = patterns('baruwa.messages.views',
     (r'^(?P<view_type>(quarantine))/(?P<quarantine_type>(spam|policyblocked))/(?P<page>([0-9]+|last))/$', 'index', {'list_all': 1}, 'quarantine-bytype-pager'),
     (r'^(?P<view_type>(quarantine))/(?P<quarantine_type>(spam|policyblocked))/(?P<page>([0-9]+|last))/(?P<direction>(dsc|asc))/(?P<order_by>(timestamp|from_address|to_address|subject|size|sascore))/$'
     , 'index', {'list_all': 1}, 'quarantine-sorted-bytype-pager'),
+    (r'^archive/preview/(?P<message_id>([A-Za-z0-9]){6}-([A-Za-z0-9]){6}-([A-Za-z0-9]){2}|.+)/$', 'preview',{'archive':True},'archive-preview-message'),
     (r'^preview/(?P<message_id>([A-Za-z0-9]){6}-([A-Za-z0-9]){6}-([A-Za-z0-9]){2}|.+)/$', 'preview',{},'preview-message'),
     (r'^dlattachment/(?P<message_id>([A-Za-z0-9]){6}-([A-Za-z0-9]){6}-([A-Za-z0-9]){2}|.+)/(?P<attachment_id>(\d+))/$',
     'preview',{'is_attach':True},'download-attachment'),

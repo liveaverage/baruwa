@@ -267,21 +267,27 @@ def rest_request(host, resource, method, headers, params=None):
 
 #TODO
 # Use a Class for DRY
-def remote_attachment_download(host, cookie, message_id, attachment_id):
+def remote_attachment_download(host, cookie, message_id, attachment_id, archived):
     """
     Returns a email attachment from a remote node using a RESTFUL request
     """
     headers = {'Cookie': cookie, 'X-Requested-With': 'XMLHttpRequest'}
-    resource = reverse('download-attachment', args=[message_id, attachment_id])
+    if archived:
+        resource = reverse('archive-download-attachment', args=[message_id, attachment_id])
+    else:
+        resource = reverse('download-attachment', args=[message_id, attachment_id])
     return rest_request(host, resource, 'GET', headers)
 
-def remote_preview(host, cookie, message_id):
+def remote_preview(host, cookie, message_id, archived):
     """
     Returns the message preview of a message on a
     remote node using a RESTFUL request
     """
     headers = {'Cookie':cookie, 'X-Requested-With':'XMLHttpRequest'}
-    resource = reverse('preview-message', args=[message_id])
+    if archived:
+        resource = reverse('archive-preview-message', args=[message_id])
+    else:
+        resource = reverse('preview-message', args=[message_id])
     return rest_request(host, resource, 'GET', headers)
 
 def remote_process(host, cookie, message_id, params):
@@ -310,7 +316,7 @@ def test_smtp_server(server, port, test_address):
             conn = smtplib.SMTP(server)
         else:
             conn = smtplib.SMTP(server, port)
-        conn.set_debuglevel(5)
+        #conn.set_debuglevel(5)
         conn.ehlo()
         if conn.has_extn('STARTTLS') and port != 465:
             conn.starttls()

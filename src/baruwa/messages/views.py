@@ -239,12 +239,17 @@ def detail(request, message_id, archive=False):
         context_instance=RequestContext(request))
 
 @login_required
-def preview(request, message_id, is_attach=False, attachment_id=0):
+def preview(request, message_id, is_attach=False, attachment_id=0, 
+        archive=False):
     """
     Returns a message preview of a quarantined message, depending on
     the call it returns XHTML or JSON
     """
-    message_details = get_object_or_404(Message, id=message_id)
+    if archive:
+        obj = Archive
+    else:
+        obj = Message
+    message_details = get_object_or_404(obj, id=message_id)
     if not message_details.can_access(request):
         return HttpResponseForbidden(
             'You are not authorized to access this page')
@@ -285,8 +290,8 @@ def preview(request, message_id, is_attach=False, attachment_id=0):
                         'message_id':message_details.id})
                     return HttpResponse(response,
                         content_type='application/javascript; charset=utf-8')
-                return render_to_response('messages/preview.html', {'message':message,
-                    'message_id':message_details.id},
+                return render_to_response('messages/preview.html', 
+                    {'message':message, 'message_id':message_details.id},
                  context_instance=RequestContext(request))
             except:
                 raise Http404
@@ -296,7 +301,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0):
         #remote
         if is_attach:
             remote_response = remote_attachment_download(message_details.hostname,
-                request.META['HTTP_COOKIE'], message_id, attachment_id)
+                request.META['HTTP_COOKIE'], message_id, attachment_id, archive)
             if remote_response['success']:
                 import base64
                 data = remote_response['response']
@@ -311,7 +316,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0):
             raise Http404
         else:
             remote_response = remote_preview(message_details.hostname,
-                request.META['HTTP_COOKIE'], message_id)
+                request.META['HTTP_COOKIE'], message_id, archive)
             if remote_response['success']:
                 data = remote_response['response']
                 items = simplejson.loads(data)

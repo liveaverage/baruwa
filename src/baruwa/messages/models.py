@@ -511,3 +511,31 @@ class Archive(models.Model):
         db_table = u'archive'
         get_latest_by = 'timestamp'
         ordering = ['-timestamp']
+    
+    #not ideal to duplicate will work on it later    
+    def can_access(self, request):
+        """can_access"""
+        if not request.user.is_superuser:
+            account_type = request.session['user_filter']['account_type']
+            addresses = request.session['user_filter']['addresses']
+            if account_type == 2:
+                if (('@' not in self.to_address) and
+                    ('@' not in self.from_address)
+                    and (',' not in self.to_address)
+                    and (',' not in self.from_address)):
+                    return False
+                else:
+                    parts = self.to_address.split(',')
+                    parts.extend(self.from_address.split(','))
+                    for part in parts:
+                        if '@' in part:
+                            dom = part.split('@')[1]
+                            if (dom in addresses) or (dom in addresses):
+                                return True
+                    return False
+            if account_type == 3:
+                addresses = request.session['user_filter']['addresses']
+                if ((self.to_address not in addresses) and
+                    (self.from_address not in addresses)):
+                    return False
+        return True

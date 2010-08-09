@@ -78,25 +78,25 @@ var ax_in_progress = false;
 {% for message in object_list %}
 <div class="{{ message|tds_msg_class }}_div">
 	<div class="Date_Time">
-		<a href="{% url message-detail message.id %}">{{ message.timestamp|date:"Y-m-d H:i:s"  }}</a>
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message.timestamp|date:"Y-m-d H:i:s"  }}</a>
 	</div>
 	<div class="From_row">
-		<a href="{% url message-detail message.id %}">{{ message.from_address|tds_trunc:30 }}</a>
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message.from_address|tds_trunc:30 }}</a>
 	</div>
 	<div class="To_row">
-		<a href="{% url message-detail message.id %}">{{ message.to_address|tds_nl_commas|linebreaksbr }}</a>
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message.to_address|tds_nl_commas|linebreaksbr }}</a>
 	</div>
 	<div class="Subject_row">
-		<a href="{% url message-detail message.id %}">{{ message.subject|striptags|escape|tds_trunc:45 }}</a>
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message.subject|striptags|escape|tds_trunc:45 }}</a>
 	</div>
 	<div class="Size_row">
-		<a href="{% url message-detail message.id %}">{{ message.size|filesizeformat }}</a>
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message.size|filesizeformat }}</a>
 	</div>
 	<div class="Score_row">
-		<a href="{% url message-detail message.id %}">{{ message.sascore }}</a>
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message.sascore }}</a>
 	</div>
 	<div class="Status_row">
-		<a href="{% url message-detail message.id %}">{{ message|tds_msg_status }}</a>
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message|tds_msg_status }}</a>
 	</div>                        
 </div>
 {% empty %}
