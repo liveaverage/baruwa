@@ -65,8 +65,8 @@ class ListAddForm(forms.Form):
         from_address = self.cleaned_data['from_address']
         from_address = from_address.strip()
 
-        if not (email_re.match(from_address) and not DOM_RE.match(from_address)
-                and not IPV4_RE.MATCH(from_address) and not
+        if (not email_re.match(from_address) and not DOM_RE.match(from_address)
+                and not IPV4_RE.match(from_address) and not
                 IPV4_NET_OR_RANGE_RE.match(from_address)):
             raise forms.ValidationError("Provide either a valid IPv4, \
             email, Domain address, or IPv4 network or range")

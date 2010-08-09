@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -46,7 +46,7 @@ sub PopulateList {
             $DBI::errstr );
     }
     $sth = $conn->prepare(
-        "SELECT from_address, to_address FROM lists where type = ?");
+        "SELECT to_address, from_address FROM lists where list_type = ?");
     $sth->execute($type);
     $sth->bind_columns( undef, \$to_address, \$from_address );
     $count = 0;
@@ -61,16 +61,18 @@ sub PopulateList {
             $mcount = @mcount;
             if ( $mcount == 4 ) {
                 my $range = Net::CIDR::addrandmask2cidr( $network, $bits );
-                push @$ips, $range;
+                push( @$ips, $range );
             }
             else {
-                push @$ips, "$network/$bits";
+                push( @$ips, "$network/$bits" );
             }
         }
         elsif ( $from_address =~ /^[.:\da-f]+\s*-\s*[.:\da-f]+$/ ) {
             $from_address =~ s/\s*//g;
             my @cidr = Net::CIDR::range2cidr($from_address);
-            push( @$ips, @cidr );
+            foreach my $cidr (@cidr) {
+                push( @$ips, $cidr );
+            }
         }
         else {
             $list->{ lc($to_address) }{ lc($from_address) } = 1;
@@ -116,6 +118,7 @@ sub InitBaruwaWhitelist {
     MailScanner::Log::InfoLog("Starting Baruwa whitelists");
     my $total = PopulateList( 1, \%Whitelist, \@WhiteIPs );
     MailScanner::Log::InfoLog( "Read %d whitelist items", $total );
+    MailScanner::Log::InfoLog( "Ip blocks whitelisted: @WhiteIPs" );
     $wtime = time();
 }
 
@@ -136,6 +139,7 @@ sub InitBaruwaBlacklist {
     MailScanner::Log::InfoLog("Starting Baruwa blacklists");
     my $total = PopulateList( 2, \%Blacklist, \@BlackIPs );
     MailScanner::Log::InfoLog( "Read %d blacklist items", $total );
+    MailScanner::Log::InfoLog( "Ip blocks blacklisted: @BlackIPs" );
     $btime = time();
 }
 
