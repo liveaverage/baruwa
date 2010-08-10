@@ -31,6 +31,7 @@ my ($refresh_time) = 10;
 
 sub PopulateList {
     my ( $type, $list, $ips ) = @_;
+    @$ips = ();
 
     my ($db_name) = 'baruwa';
     my ($db_host) = 'localhost';

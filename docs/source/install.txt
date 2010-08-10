@@ -60,6 +60,11 @@ your install::
 
 	# vi $baruwa_path/baruwa_setttings.py
 
+Link to the dojo toolkit::
+
+	# ln -s /path/to/dojo $baruwa_path/baruwa/static/js
+	# ln -s /path/to/dojox $baruwa_path/baruwa/static/js
+	# ln -s /path/to/dijit $baruwa_path/baruwa/static/js
 
 **Setup Web server**
 
