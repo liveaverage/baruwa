@@ -88,10 +88,12 @@ class QuarantineMessageManager(models.Manager):
 
 class EmailReportMessageManager(models.Manager):
     "Used in processing the quarantine email reports"
-    from baruwa.accounts.models import UserProfile, UserAddresses
+    
 
     def for_user(self, user):
         "users messages"
+        from baruwa.accounts.models import UserProfile, UserAddresses
+        
         addresses = UserAddresses.objects.values('address').filter(
                 user=user
             ).exclude(enabled=0)
@@ -117,6 +119,8 @@ class EmailReportMessageManager(models.Manager):
 
     def to_user(self, user):
         "messages to user"
+        from baruwa.accounts.models import UserProfile, UserAddresses
+        
         addresses = UserAddresses.objects.values('address').filter(
             user=user
         ).exclude(enabled=0)
@@ -136,6 +140,8 @@ class EmailReportMessageManager(models.Manager):
 
     def from_user(self, user):
         "messages from user"
+        from baruwa.accounts.models import UserProfile, UserAddresses
+        
         addresses = UserAddresses.objects.values('address').filter(
             user=user
         ).exclude(enabled=0)

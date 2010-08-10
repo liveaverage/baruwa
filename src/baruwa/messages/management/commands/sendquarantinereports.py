@@ -105,12 +105,14 @@ class Command(NoArgsCommand):
                     msg = EmailMultiAlternatives(subject, text_content, 
                         from_email, [to_addr])
                     msg.attach_alternative(html_content, "text/html")
-                    msg.send()
+                    try:
+                        msg.send()
+                        for query_list in [spam_list, policy_list]:
+                            generate_release_records(query_list, user)
 
-                    for query_list in [spam_list, policy_list]:
-                        generate_release_records(query_list, user)
-
-                    print "sent quarantine report to "+to_addr
+                        print "sent quarantine report to "+to_addr
+                    except:
+                        pass
                 else:
                     print "skipping report to "+to_addr+" no messages"
         print "=== completed quarantine notifications ==="
