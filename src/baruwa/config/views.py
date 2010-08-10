@@ -205,7 +205,7 @@ def test_host(request, host_id):
     
     if test_smtp_server(host.address, host.port, test_address):
         msg = ('Server %s is operational and accepting mail for: %s' 
-            % host.address, host.useraddress.address)
+            % (host.address, host.useraddress.address))
         success = True
     else:
         success = False
