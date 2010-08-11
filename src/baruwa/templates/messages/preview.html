@@ -7,7 +7,7 @@
   	<li><a href="{% url message-detail message_id %}#qheading">Release message</a></li>
 	<li><a href="{% url message-detail message_id %}">Return to message</a></li>
 	{% else %}
-	<li><a href="{% url message-detail archive-message_id %}">Return to message</a></li>
+	<li><a href="{% url archive-message-detail message_id %}">Return to message</a></li>
 	{% endif %}
   	
 </ul>
