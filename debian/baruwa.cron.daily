@@ -3,9 +3,9 @@
 # Baruwa
 #
 # send quarantine reports
-/usr/share/pyshared/baruwa/manage.py send_quarantine_reports
+/usr/share/pyshared/baruwa/manage.py sendquarantinereports
 # clean quarantine 
-/usr/share/pyshared/baruwa/manage.py quarantine_clean
+/usr/share/pyshared/baruwa/manage.py cleanquarantine
 # clean up the DB
 /usr/share/pyshared/baruwa/manage.py dbclean
 # update sa rule definitions

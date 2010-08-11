@@ -66,3 +66,17 @@ Start up MailScanner::
 
     # /etc/init.d/MailScanner start
 
+**Verify that is working**
+
+Check your log files you should see
+
+Baruwa SQL logger::
+
+	Aug  9 18:58:27 localhost MailScanner[8470]: Logging message 1OiVg7-0003zS-9s to Baruwa SQL 
+	Aug  9 18:58:27 localhost MailScanner[11052]: 1OiVg7-0003zS-9s: Logged to Baruwa SQL
+
+Baruwa Lists::
+
+	Aug 9 18:32:42 localhost MailScanner[27260]: Starting Baruwa whitelists 
+	Aug 9 18:32:42 localhost MailScanner[27260]: Read 6 whitelist items 
+	Aug 9 18:32:42 localhost MailScanner[27260]: Ip blocks configured 192.168.1.0/24 192.168.2.0/24 xxx.xx.xxx.0/26

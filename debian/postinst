@@ -51,36 +51,30 @@ if [ "$1" = "configure" ]; then
 	dbadmin=$RET
 	db_get baruwa/mysql/dbadmpass
 	dbadmpass=$RET
-	db_reset baruwa/mysql/dbadmpass
 	db_get baruwa/mysql/dbname
 	dbname=$RET
 	db_get baruwa/mysql/dbuser
 	dbuser=$RET
 	db_get baruwa/mysql/dbpass
 	dbpass=$RET
-	db_reset baruwa/mysql/dbpass
-	db_get baruwa/mysql/baruwauser
+	db_get baruwa/django/baruwauser
 	baruwauser=$RET
-	db_reset baruwa/mysql/baruwauser
-	db_get baruwa/mysql/baruwapass
+	db_get baruwa/django/baruwapass
 	baruwapass=$RET
-	db_reset baruwa/mysql/baruwapass
+	db_get baruwa/django/baruwaemail
+	baruwaemail=$RET
 
 	# create the database
 	. /usr/share/wwwconfig-common/mysql-createdb.sh
 	# create user
 	. /usr/share/wwwconfig-common/mysql-createuser.sh
 	# grant rights to db
-	echo "GRANT ALL ON $dbname.* TO $dbuser@$dbserver IDENTIFIED BY '$dbpass';" >> /usr/share/doc/baruwa/baruwa-create.sql
-	# add admin user
-	echo "INSERT INTO users (username,password,fullname,type) VALUES ('$baruwauser',md5('$baruwapass'),'Global admin','A');" >> /usr/share/doc/baruwa/baruwa-create.sql
-	sqlfile="/usr/share/doc/baruwa/baruwa-create.sql"
-	# create schema
+	echo "GRANT ALL ON $dbname.* TO $dbuser@$dbserver IDENTIFIED BY '$dbpass';" > /var/tmp/baruwa-create.sql
+	sqlfile="/var/tmp/baruwa-create.sql"
+	# run the grants
 	. /usr/share/wwwconfig-common/mysql-exec.sh
 	# remove credentials
-	sed -i -e "s/GRANT ALL ON $dbname.* TO $dbuser@$dbserver IDENTIFIED BY '$dbpass';//" /usr/share/doc/baruwa/baruwa-create.sql
-	sed -i -e "s/INSERT INTO users (username,password,fullname,type) VALUES ('$baruwauser',md5('$baruwapass'),'Global admin','A');//" /usr/share/doc/baruwa/baruwa-create.sql
-
+	rm -f /var/tmp/baruwa-create.sql
     fi
 
     db_stop
@@ -93,7 +87,16 @@ if [ "$1" = "configure" ]; then
     s/DATABASE_HOST = ''/DATABASE_HOST = '$dbserver'/;
     " \
     /usr/share/pyshared/baruwa/settings.py
-
+    # populate the database
+    /usr/share/pyshared/baruwa/manage.py syncdb --noinput
+    # create the admin user
+    /usr/share/pyshared/baruwa/manage.py createsuperuser --username $baruwauser --email $baruwaemail --noinput
+    # set the password
+    export DJANGO_SETTINGS_MODULE=baruwa.settings
+    python -c "from django.contrib.auth.models import User;
+    user = User.objects.get(username__exact='$baruwauser');
+    user.set_password('$baruwapass');user.save()" > /dev/null
+    # restart webserver
     for webserver in $restart; do
 	webserver=${webserver%,}
 	if [ -x /usr/sbin/invoke-rc.d ]; then

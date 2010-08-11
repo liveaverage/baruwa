@@ -21,6 +21,7 @@ The install asks you for the following info
     + database name (The name of the baruwa database)
     + baruwa admin user (The baruwa admin user)
     + baruwa admin password (The baruwa admin user password)
+    + baruwa admin email (The baruwa admin user email address)
 
 Install Baruwa::
 

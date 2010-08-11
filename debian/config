@@ -25,8 +25,9 @@ if [ "$RET" = "true" ]; then
    db_input critical baruwa/mysql/dbuser || true
    db_input critical baruwa/mysql/dbpass || true
    db_input critical baruwa/mysql/dbname || true
-   db_input critical baruwa/mysql/baruwauser || true
-   db_input critical baruwa/mysql/baruwapass || true
+   db_input critical baruwa/django/baruwauser || true
+   db_input critical baruwa/django/baruwapass || true
+   db_input critical baruwa/django/baruwaemail || true
    db_input critical baruwa/purge || true
    db_go || true
 fi

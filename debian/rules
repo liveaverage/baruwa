@@ -31,6 +31,7 @@ override_dh_install:
 	cd debian/baruwa/
 	dh_install
 	dh_install apache.conf /etc/baruwa/
+	dh_install extras/*.pm /etc/MailScanner/CustomFunctions
 
 override_dh_pysupport:
 	dh_pysupport
@@ -45,3 +46,7 @@ override_dh_installdocs:
 	cd debian/baruwa-doc/usr/share/doc/baruwa-doc/html/_static \
 		&& rm jquery.js \
 		&& ln -s ../../../../javascript/jquery/jquery.js .
+
+override_dh_fixperms:
+	dh_fixperms
+	chmod 0755 debian/baruwa/usr/share/pyshared/baruwa/manage.py

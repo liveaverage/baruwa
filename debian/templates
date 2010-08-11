@@ -66,13 +66,18 @@ _Description: Database user password:
  Please choose the password for the account that will be used to
  access the database hosting Baruwa data.
 
-Template: baruwa/mysql/baruwauser
+Template: baruwa/django/baruwauser
 Type: string
 Default: baruwa-admin
 _Description: Admin user for Baruwa:
  Please choose an admin user used to administer the baruwa system..
 
-Template: baruwa/mysql/baruwapass
+Template: baruwa/django/baruwapass
 Type: password
 _Description: Baruwa admin user password:
  Please choose the password for the admin account.
+
+Template: baruwa/django/baruwaemail
+Type: string
+_Description: Admin user's email address:
+ Please supply and email address for the admin user.

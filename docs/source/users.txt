@@ -4,25 +4,63 @@ User Documentation
 
 Interface primer
 ================
+The interface is a simplified and AJAX is supported for most operations
 
-TODO
+The following have full AJAX support::
+	* Messages
+	* Lists
+	* Reports
+
+Messages
+--------
+The messages tab provides access to the following functionality::
+	* Recent messages (top 50) automatically refreshed every 60 seconds
+	* Full message list, paginated access to all records
+	* Quarantine, split into 
+		* full quarantine
+		* spam
+		* non spam
+	* Archive, paginated access to all archived records
+	* Message details with quarantine processing, list operations
+		* message release
+		* bayesian learning
+		* message deletion
+		* whitelist, blacklist from email address or IP address
+	* Message release
+		* Automated release from quarantine
 
 Whitelists/Blacklists
-=====================
+---------------------
+The lists tab provides access to the following::
+	* Management of black and whitelists
 
-TODO
-
-User accounts
-=============
-
-TODO
+Settings
+--------
+The settings tab provides access to the following::
+	* User accounts management
+	* Domain management
+		* SMTP delivery host management
+		* Authentication management
+	* Scanner engine configuration
 
 Reports
-=======
+-------
+The settings tab provides access to the following::
+	* Running of reports
+	* Management of filters
+	* Construction of custom queries
 
-TODO
-
-Quarantine
-==========
-
-TODO
+Status
+------
+The settings tab provides access to the following::
+	* System status
+		* Message totals (daily)
+		* Service status
+	* Bayesian status
+	* Spamassassin lint check
+	
+Account
+-------
+The settings tab provides access to the following::
+	* Account management
+	* Profile management
