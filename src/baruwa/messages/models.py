@@ -470,7 +470,7 @@ class SaRules(models.Model):
 class Release(models.Model):
     "quarantine release records"
     message_id = models.CharField(max_length=255, unique=True)
-    release_address = models.CharField(max_length=255)
+    #release_address = models.CharField(max_length=255)
     uuid = models.CharField(max_length=36)
     timestamp = models.DateTimeField()
     released = models.IntegerField(default=0)

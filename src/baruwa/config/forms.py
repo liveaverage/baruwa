@@ -29,7 +29,7 @@ class MailHostForm(forms.ModelForm):
     "Mail host add form"
     address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
         widget=forms.TextInput(attrs={'size':'40'}))
-    port = forms.CharField(widget=forms.TextInput(attrs={'size':'5'}))
+    port = forms.CharField(widget=forms.TextInput(attrs={'size':'5', 'value':'25'}))
     useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(), 
         widget=forms.HiddenInput())
     

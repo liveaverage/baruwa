@@ -33,12 +33,12 @@ def generate_release_records(query_list, user):
     from baruwa.messages.models import Release
     for record in query_list:
         try:
-            if not email_re.match(user.email):
-                release_address = user.username
-            else:
-                release_address = user.email
+            # if not email_re.match(user.email):
+            #     release_address = user.username
+            # else:
+            #     release_address = user.email
             rec = Release(uuid=record['uuid'], timestamp=record['timestamp'], 
-            message_id=record['id'], release_address=release_address)
+            message_id=record['id'])
             rec.save()
         except:
             pass
@@ -112,7 +112,7 @@ class Command(NoArgsCommand):
 
                         print "sent quarantine report to "+to_addr
                     except:
-                        pass
+                        print "failed to send to: "+to_addr
                 else:
                     print "skipping report to "+to_addr+" no messages"
         print "=== completed quarantine notifications ==="

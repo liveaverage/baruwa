@@ -346,7 +346,7 @@ def auto_release(request, message_uuid, template='messages/release.html'):
 
     success = False
 
-    release_record = get_object_or_404(Release, uuid=message_uuid)
+    release_record = get_object_or_404(Release, uuid=message_uuid, released=0)
     message_details = get_object_or_404(Message, id=release_record.message_id)
 
     if not host_is_local(message_details.hostname):
@@ -360,20 +360,24 @@ def auto_release(request, message_uuid, template='messages/release.html'):
             json_response = simplejson.loads(response)
             if json_response['success']:
                 success = True
+                release_record.released = 1
+                release_record.save()
         except:
             pass
     else:
         file_name = search_quarantine(message_details.date,
             release_record.message_id)
         if not file_name is None:
-            if release_mail(file_name, release_record.release_address,
+            if release_mail(file_name, message_details.to_address,
                 message_details.from_address):
                 success = True
+                release_record.released = 1
+                release_record.save()
         else:
             raise Http404
 
     html = render_to_string('messages/released.html',
-        {'id': message_details.id, 'addrs':release_record.release_address,
+        {'id': message_details.id, 'addrs':message_details.to_address,
         'success':success})
 
     if request.is_ajax():
@@ -382,5 +386,5 @@ def auto_release(request, message_uuid, template='messages/release.html'):
             content_type='application/javascript; charset=utf-8')
     return render_to_response(template,
         {'message_id':release_record.message_id,
-        'release_address':release_record.release_address, 'success':success},
+        'release_address':message_details.to_address, 'success':success},
      context_instance=RequestContext(request))
