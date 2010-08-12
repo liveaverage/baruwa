@@ -25,6 +25,15 @@ try:
 except ImportError:
     from django.core.validators import email_re
 
+def embed_img(email, img_id, img_data):
+    "Embeds an image in an html email"
+    from email.MIMEImage import MIMEImage
+    
+    img = MIMEImage(img_data)
+    img.add_header('Content-ID', '<%s>' % img_id)
+    img.add_header('Content-Disposition', 'inline; filename=logo.jpg')
+    email.attach(img)
+
 def generate_release_records(query_list, user):
     """
     Creates the DB records to be lookedup by the release
@@ -73,6 +82,8 @@ class Command(NoArgsCommand):
         a_day = datetime.timedelta(days=1)
         yesterday = datetime.date.today() - a_day
         from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'postmaster@localhost')
+        logo_path = getattr(settings, 'MEDIA_ROOT', '') + '/imgs/css/logo.jpg'
+        logo = open(logo_path, 'rb').read()
         print "=== Processing quarantine notifications ==="
         for user in users:
             if email_re.match(user.email) or email_re.match(user.username):
@@ -104,6 +115,7 @@ class Command(NoArgsCommand):
                         
                     msg = EmailMultiAlternatives(subject, text_content, 
                         from_email, [to_addr])
+                    embed_img(msg, 'baruwalogo', logo)
                     msg.attach_alternative(html_content, "text/html")
                     try:
                         msg.send()

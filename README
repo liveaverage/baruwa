@@ -27,7 +27,7 @@ Features
 	+ Reporting with AJAX enabled query builder
 	+ Interactive SVG graphs and PDF reports
 	+ Archiving of old message logs
-	+ SQLite backup prevents loss of messages when MySQL is down
+	+ SQLite backup prevents data loss when MySQL is down
 	+ Multi user profiles (No restrictions on username format)
 	+ User profile aware white/blacklist management
 	+ Ip / network addresses supported in white/blacklist manager

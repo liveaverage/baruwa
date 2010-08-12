@@ -106,11 +106,11 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             message_list = map(jsonify_msg_list, message_list)
             page = int(page)
             ap = 2
-            sp = max(page - ap, 1)
-            if sp <= 3:
-                sp = 1
-            ep = page + ap + 1
-            pn = [n for n in range(sp, ep) if n > 0 and n <= p.num_pages]
+            startp = max(page - ap, 1)
+            if startp <= 3:
+                startp = 1
+            endp = page + ap + 1
+            pn = [n for n in range(startp, endp) if n > 0 and n <= p.num_pages]
             pg = {'page':page, 'pages':p.num_pages, 'page_numbers':pn,
             'next':po.next_page_number(), 'previous':po.previous_page_number(),
             'has_next':po.has_next(), 'has_previous':po.has_previous(),
@@ -166,12 +166,12 @@ def detail(request, message_id, archive=False):
                     return HttpResponse(response,
                         content_type='application/javascript; charset=utf-8')
                 try:
-                    r = simplejson.loads(response)
-                    if r['success']:
+                    resp = simplejson.loads(response)
+                    if resp['success']:
                         success = True
                     else:
                         success = False
-                    error_list = r['response']
+                    error_list = resp['response']
                 except:
                     success = False
                     error_list = 'Error: Empty server response'
@@ -259,24 +259,24 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
         if not file_name is None:
             try:
                 import email
-                fp = open(file_name)
-                msg = email.message_from_file(fp)
-                fp.close()
+                fip = open(file_name)
+                msg = email.message_from_file(fip)
+                fip.close()
                 if is_attach:
                     message = return_attachment(msg, attachment_id)
                     if message:
                         import base64
                         attachment_data = message.getvalue()
-                        ct = message.content_type
+                        mimetype = message.content_type
                         if request.is_ajax():
                             json = simplejson.dumps({'success':True,
                             'attachment':base64.encodestring(attachment_data),
-                            'mimetype':ct, 'name':message.name})
+                            'mimetype':mimetype, 'name':message.name})
                             response = HttpResponse(json,
                                 content_type='application/javascript; charset=utf-8')
                             message.close()
                             return response
-                        response = HttpResponse(attachment_data, mimetype=ct)
+                        response = HttpResponse(attachment_data, mimetype=mimetype)
                         response['Content-Disposition'] = (
                             'attachment; filename=%s' % message.name)
                         message.close()
@@ -308,8 +308,8 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                 attach = simplejson.loads(data)
                 if attach['success']:
                     attachment_data = base64.decodestring(attach['attachment'])
-                    ct = attach['mimetype']
-                    response = HttpResponse(attachment_data, mimetype=ct)
+                    mimetype = attach['mimetype']
+                    response = HttpResponse(attachment_data, mimetype=mimetype)
                     response['Content-Disposition'] = (
                         'attachment; filename=%s' % attach['name'])
                     return response
@@ -336,6 +336,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
 
 @login_required
 def search(request):
+    "Redirect to message details"
     if (request.method == 'POST') and request.REQUEST['message_id']:
         return HttpResponseRedirect(reverse('message-detail',
             args=[request.REQUEST['message_id']]))

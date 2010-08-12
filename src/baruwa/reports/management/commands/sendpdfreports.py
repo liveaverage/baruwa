@@ -112,7 +112,7 @@ class Command(NoArgsCommand):
             'postmaster@localhost')
         url = getattr(settings, 'QUARANTINE_REPORT_HOSTURL','')
         logo_dir = getattr(settings, 'MEDIA_ROOT', '')
-        
+        img = Image(logo_dir + '/imgs/css/logo.jpg')
         profiles = UserProfile.objects.filter(send_report=1)
         
         print "=================== Processing reports ======================"
@@ -124,7 +124,6 @@ class Command(NoArgsCommand):
                 pdf = StringIO()
                 
                 doc = SimpleDocTemplate(pdf, topMargin=50, bottomMargin=18)
-                img = Image(logo_dir + '/imgs/css/logo.jpg')
                 logo = [(img, 'Baruwa mail report')]
                 logo_table = Table(logo, [2.0 * inch, 5.4 * inch])
                 logo_table.setStyle(TableStyle([
