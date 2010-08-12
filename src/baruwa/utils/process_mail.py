@@ -100,6 +100,8 @@ def parse_email(msg):
     Parses an email and returns a dict representing
     the message
     """
+    from django.utils.html import strip_tags
+    
     attachments = []
     body = None
     html = None
@@ -128,6 +130,7 @@ def parse_email(msg):
                         part.get_payload(decode=True), 
                         part.get_content_charset(), 'replace'
                     ).encode('utf8', 'replace')
+                body = strip_tags(html)
             except:
                 pass
     return {

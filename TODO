@@ -16,4 +16,5 @@
 - fix queries (scaned) DONE
 - Track false positives
 - Localization
+- Group filters
 - Write Tests
