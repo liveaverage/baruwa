@@ -58,8 +58,11 @@ EOF
 
 %build
 %{__python} setup.py build
-%{__python} setup.py build_sphinx
-%{__rm} -rf build/sphinx/html/.buildinfo
+cd docs
+mkdir -p build/html
+mkdir -p source/_static
+%{__make} html
+%{__rm}  -rf build/html/.buildinf
 
 
 %install
@@ -88,7 +91,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS LICENSE README UPGRADE build/sphinx/html docs/source
+%doc AUTHORS LICENSE README UPGRADE docs/build/html docs/source
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 %{_sysconfdir}/cron.daily/%{name}
 %{python_sitelib}/*
