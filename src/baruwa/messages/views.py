@@ -338,8 +338,9 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
 def search(request):
     "Redirect to message details"
     if (request.method == 'POST') and request.REQUEST['message_id']:
+        message_details = get_object_or_404(Message, id=request.REQUEST['message_id'])
         return HttpResponseRedirect(reverse('message-detail',
-            args=[request.REQUEST['message_id']]))
+            args=[message_details.id]))
     return HttpResponseRedirect(reverse('main-index'))
 
 def auto_release(request, message_uuid, template='messages/release.html'):

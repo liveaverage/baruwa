@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+LightGray_div{% extends "base.html" %}
 {% block headers %}
 {% endblock headers %}
 {% block submenu %}
@@ -20,7 +20,7 @@ Spamassassin Lint
     <div class="SA_heading">Spamassassin Lint</div>
 </div>
 {% for item in data %}
-<div class="{% cycle 'LightBlue' 'DarkGray' %}_div">
+<div class="{% cycle 'LightBlue' 'LightGray' %}_div">
     <div class="SA_row">{{ item }}</div>
 </div>
 {% empty %}
