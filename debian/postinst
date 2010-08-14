@@ -69,12 +69,13 @@ if [ "$1" = "configure" ]; then
 	# create user
 	. /usr/share/wwwconfig-common/mysql-createuser.sh
 	# grant rights to db
-	echo "GRANT ALL ON $dbname.* TO $dbuser@$dbserver IDENTIFIED BY '$dbpass';" > /var/tmp/baruwa-create.sql
-	sqlfile="/var/tmp/baruwa-create.sql"
+	TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX`
+	echo "GRANT ALL ON $dbname.* TO $dbuser@$dbserver IDENTIFIED BY '$dbpass';" > "$TMPDEST.sql"
+	sqlfile="$TMPDEST.sql"
 	# run the grants
 	. /usr/share/wwwconfig-common/mysql-exec.sh
 	# remove credentials
-	rm -f /var/tmp/baruwa-create.sql
+	rm -f $TMPDEST
     fi
 
     db_stop
@@ -87,15 +88,22 @@ if [ "$1" = "configure" ]; then
     s/DATABASE_HOST = ''/DATABASE_HOST = '$dbserver'/;
     " \
     /usr/share/pyshared/baruwa/settings.py
+    sed -i \
+    "
+    s/) = 'baruwa'/) = '$dbname'/;
+    s/) = 'localhost'/) = '$dbserver'/;
+    s/) = 'baruwa'/) = '$dbuser'/;
+    s/) = ''/) = '$dbpass'/;
+    " \
+    /etc/MailScanner/CustomFunctions/Baruwa*.pm 
     # populate the database
     /usr/share/pyshared/baruwa/manage.py syncdb --noinput
     # create the admin user
     /usr/share/pyshared/baruwa/manage.py createsuperuser --username $baruwauser --email $baruwaemail --noinput
     # set the password
     export DJANGO_SETTINGS_MODULE=baruwa.settings
-    python -c "from django.contrib.auth.models import User;
-    user = User.objects.get(username__exact='$baruwauser');
-    user.set_password('$baruwapass');user.save()" > /dev/null
+    python -c "import sys;sys.path.append('/usr/share/pyshared');from django.contrib.auth.models import User;\
+    user = User.objects.get(username__exact='$baruwauser');user.set_password('$baruwapass');user.save()" > /dev/null
     # restart webserver
     for webserver in $restart; do
 	webserver=${webserver%,}

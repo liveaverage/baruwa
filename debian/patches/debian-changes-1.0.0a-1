@@ -1,0 +1,1538 @@
+Description: Upstream changes introduced in version 1.0.0a-1
+ This patch has been created by dpkg-source during the package build.
+ Here's the last changelog entry, hopefully it gives details on why
+ those changes were made:
+ .
+ baruwa (1.0.0a-1) unstable; urgency=low
+ .
+   * New upstream release
+ .
+ The person named in the Author field signed this changelog entry.
+Author: Andrew Colin Kissa <andrew@topdog.za.net>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: http://bugs.debian.org/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- /dev/null
++++ baruwa-1.0.0a/@
+@@ -0,0 +1 @@
++uupdate warning: using a debian.tar.{gz|bz2|lzma} file in old Debian source,
+--- /dev/null
++++ baruwa-1.0.0a/src/baruwa.egg-info/PKG-INFO
+@@ -0,0 +1,103 @@
++Metadata-Version: 1.0
++Name: baruwa
++Version: 1.0.0a
++Summary: Ajax enabled MailScanner web frontend
++Home-page: http://www.topdog.za.net/baruwa
++Author: Andrew Colin Kissa
++Author-email: andrew@topdog.za.net
++License: GPL
++Description: 
++        ======
++        Baruwa
++        ======
++        Baruwa (swahili for letter or mail) is a web 2.0 `MailScanner <http://www.mailscanner.info/>`_
++        front-end. 
++        
++        It provides an easy to use interface for managing a MailScanner installation. It is used to
++        perform operations such as releasing quarantined messages, spam learning, whitelisting and 
++        blacklisting addresses, monitoring the health of the services etc. Baruwa is implemented 
++        using web 2.0 features (AJAX) where deemed fit, graphing is also implemented on the client
++        side using SVG, Silverlight or VML.
++        
++        It includes reporting functionality with an easy to use query builder, results can be 
++        displayed as message lists or graphed as colorful and pretty interactive graphs.
++        
++        Custom MailScanner modules are provided to allow for logging of messages to the mysql
++        database with SQLite as backup and for managing whitelists and blacklists.
++        
++        Baruwa is open source software, written in Python/Perl using the Django Framework and 
++        MySQL for storage, it is released under the GPLv2 and is available for free download.
++        
++        ========
++        Features
++        ========
++        	+ AJAX support for most operations
++        	+ Reporting with AJAX enabled query builder
++        	+ Interactive SVG graphs and PDF reports
++        	+ Archiving of old message logs
++        	+ SQLite backup prevents data loss when MySQL is down
++        	+ Multi user profiles (No restrictions on username format)
++        	+ User profile aware white/blacklist management
++        	+ Ip / network addresses supported in white/blacklist manager
++        	+ Easy plug-in authentication to external authentication systems (POP3, IMAP and SMTP supported out of the box)
++        	+ Tools for housekeeping tasks (quarantine management, rule updates, quarantine notifications, etc)
++        	+ Works both with and without Javascript enabled (graphs require Javascript)
++        
++        ===========
++        Screenshots
++        ===========
++        `Screenshots <http://www.flickr.com/photos/baruwa/>`_ are on our Flickr page.
++        
++        ============
++        Requirements
++        ============
++            + Python >= 2.4
++            + Django >= 1.1.1
++            + MySQLdb >= 1.2.1p2
++            + GeoIP
++            + iPy
++            + Any Web server that can run Django (Apache/mod_wsgi recommended)
++            + MySQL
++            + Dojo toolkit
++            + Reportlab
++            + UUID (python 2.4 only)
++            + Sphinx (optional for building docs)
++        	
++        ====
++        Note
++        ====
++        Baruwa 1.0.x is not compatible with the 0.0.x versions and Mailwatch, as it
++        uses a different database schema and its own MailScanner custom modules.
++        
++        ============
++        Installation
++        ============
++        Baruwa is installed in the usual way::
++        
++            python setup install
++        
++        ========
++        Packages
++        ========
++        Binary packages for Ubuntu/Debian, Fedora and RHEL/CENTOS can be downloaded from http://topdog-software.com/oss/baruwa/
++        
++        =============
++        Documentation
++        =============
++        Documentation is included in the docs directory of the tar ball and can also be accessed on line at
++        http://www.baruwa.org/
++        
++Keywords: MailScanner Email Filters Quarantine Spam
++Platform: UNKNOWN
++Classifier: Development Status :: 4 - Beta
++Classifier: Environment :: Web Environment
++Classifier: Framework :: Django
++Classifier: Intended Audience :: System Administrators
++Classifier: License :: OSI Approved :: GNU General Public License (GPL)
++Classifier: Operating System :: POSIX :: Linux
++Classifier: Programming Language :: Python
++Classifier: Topic :: Internet :: WWW/HTTP
++Classifier: Topic :: Communications :: Email :: Filters
++Classifier: Topic :: System :: Monitoring
++Classifier: Topic :: Multimedia :: Graphics :: Presentation
++Classifier: Topic :: System :: Systems Administration
+--- /dev/null
++++ baruwa-1.0.0a/src/baruwa.egg-info/top_level.txt
+@@ -0,0 +1 @@
++baruwa
+--- /dev/null
++++ baruwa-1.0.0a/src/baruwa.egg-info/not-zip-safe
+@@ -0,0 +1 @@
++
+--- /dev/null
++++ baruwa-1.0.0a/src/baruwa.egg-info/SOURCES.txt
+@@ -0,0 +1,469 @@
++AUTHORS
++ChangeLog
++INSTALL
++LICENSE
++MANIFEST.in
++README
++UPGRADE
++setup.cfg
++setup.py
++docs/Makefile
++docs/source/authentication.txt
++docs/source/batteries_included.txt
++docs/source/conf.py
++docs/source/distributed_setup.txt
++docs/source/index.txt
++docs/source/install.txt
++docs/source/install_centos.txt
++docs/source/install_debian.txt
++docs/source/install_fedora.txt
++docs/source/introduction.txt
++docs/source/mailscanner.txt
++docs/source/migration.txt
++docs/source/requirements.txt
++docs/source/users.txt
++docs/source/_static/favicon.ico
++docs/source/_static/flickr_16.png
++docs/source/_static/fm.png
++docs/source/_static/google_16.png
++docs/source/_static/identi.png
++docs/source/_static/style.css
++docs/source/_static/twitter_16.png
++docs/source/_templates/layout.html
++extras/Baruwa.pm
++extras/BaruwaLists.pm
++extras/BaruwaSQL.pm
++extras/baruwa-mod_wsgi.conf
++extras/baruwa.spec
++src/baruwa/__init__.py
++src/baruwa/baruwa.wsgi
++src/baruwa/baruwa_settings.py
++src/baruwa/manage.py
++src/baruwa/settings.py
++src/baruwa/urls.py
++src/baruwa.egg-info/PKG-INFO
++src/baruwa.egg-info/SOURCES.txt
++src/baruwa.egg-info/dependency_links.txt
++src/baruwa.egg-info/not-zip-safe
++src/baruwa.egg-info/requires.txt
++src/baruwa.egg-info/top_level.txt
++src/baruwa/accounts/__init__.py
++src/baruwa/accounts/forms.py
++src/baruwa/accounts/models.py
++src/baruwa/accounts/profile.py
++src/baruwa/accounts/urls.py
++src/baruwa/accounts/views.py
++src/baruwa/auth/__init__.py
++src/baruwa/auth/backends.py
++src/baruwa/config/__init__.py
++src/baruwa/config/forms.py
++src/baruwa/config/models.py
++src/baruwa/config/urls.py
++src/baruwa/config/views.py
++src/baruwa/lists/__init__.py
++src/baruwa/lists/forms.py
++src/baruwa/lists/models.py
++src/baruwa/lists/urls.py
++src/baruwa/lists/views.py
++src/baruwa/lists/templatetags/__init__.py
++src/baruwa/lists/templatetags/generic_paginator.py
++src/baruwa/lists/templatetags/generic_sorter.py
++src/baruwa/messages/__init__.py
++src/baruwa/messages/forms.py
++src/baruwa/messages/models.py
++src/baruwa/messages/urls.py
++src/baruwa/messages/views.py
++src/baruwa/messages/management/__init__.py
++src/baruwa/messages/management/commands/__init__.py
++src/baruwa/messages/management/commands/cleanquarantine.py
++src/baruwa/messages/management/commands/dbclean.py
++src/baruwa/messages/management/commands/sendquarantinereports.py
++src/baruwa/messages/management/commands/updatesarules.py
++src/baruwa/messages/templatetags/__init__.py
++src/baruwa/messages/templatetags/messages_extras.py
++src/baruwa/messages/templatetags/pagination_heading.py
++src/baruwa/messages/templatetags/paginator.py
++src/baruwa/messages/templatetags/relayed_via.py
++src/baruwa/messages/templatetags/sorter.py
++src/baruwa/reports/__init__.py
++src/baruwa/reports/forms.py
++src/baruwa/reports/models.py
++src/baruwa/reports/urls.py
++src/baruwa/reports/utils.py
++src/baruwa/reports/views.py
++src/baruwa/reports/management/__init__.py
++src/baruwa/reports/management/commands/__init__.py
++src/baruwa/reports/management/commands/sendpdfreports.py
++src/baruwa/static/css/login.css
++src/baruwa/static/css/style.css
++src/baruwa/static/imgs/action_add.png
++src/baruwa/static/imgs/action_delete.png
++src/baruwa/static/imgs/action_remove.png
++src/baruwa/static/imgs/add.png
++src/baruwa/static/imgs/ajax-loader.gif
++src/baruwa/static/imgs/ajax-pager.gif
++src/baruwa/static/imgs/bullet_go.png
++src/baruwa/static/imgs/caution.png
++src/baruwa/static/imgs/connect.png
++src/baruwa/static/imgs/delete.png
++src/baruwa/static/imgs/domain-active.png
++src/baruwa/static/imgs/domain-inactive.png
++src/baruwa/static/imgs/edit.png
++src/baruwa/static/imgs/exclamation.png
++src/baruwa/static/imgs/favicon.ico
++src/baruwa/static/imgs/first_pager.png
++src/baruwa/static/imgs/information.png
++src/baruwa/static/imgs/last_pager.png
++src/baruwa/static/imgs/loader-orig.gif
++src/baruwa/static/imgs/maximize.png
++src/baruwa/static/imgs/minimize.png
++src/baruwa/static/imgs/minus.png
++src/baruwa/static/imgs/next_pager.png
++src/baruwa/static/imgs/ok.png
++src/baruwa/static/imgs/previous_pager.png
++src/baruwa/static/imgs/save.png
++src/baruwa/static/imgs/sm-del.png
++src/baruwa/static/imgs/st.png
++src/baruwa/static/imgs/status_ok.png
++src/baruwa/static/imgs/tick.png
++src/baruwa/static/imgs/user.png
++src/baruwa/static/imgs/user_red.png
++src/baruwa/static/imgs/css/arrow.gif
++src/baruwa/static/imgs/css/bg.gif
++src/baruwa/static/imgs/css/footer_curb.gif
++src/baruwa/static/imgs/css/gray_logo.gif
++src/baruwa/static/imgs/css/logo.jpg
++src/baruwa/static/imgs/css/search_btn.gif
++src/baruwa/static/imgs/css/spinner.gif
++src/baruwa/static/imgs/css/tab_left.gif
++src/baruwa/static/imgs/css/tab_right.gif
++src/baruwa/static/imgs/css/text_box.gif
++src/baruwa/static/imgs/css/top_curb.gif
++src/baruwa/static/imgs/css/top_heading_bg.gif
++src/baruwa/static/imgs/flags/ad.png
++src/baruwa/static/imgs/flags/ae.png
++src/baruwa/static/imgs/flags/af.png
++src/baruwa/static/imgs/flags/ag.png
++src/baruwa/static/imgs/flags/ai.png
++src/baruwa/static/imgs/flags/al.png
++src/baruwa/static/imgs/flags/am.png
++src/baruwa/static/imgs/flags/an.png
++src/baruwa/static/imgs/flags/ao.png
++src/baruwa/static/imgs/flags/ar.png
++src/baruwa/static/imgs/flags/as.png
++src/baruwa/static/imgs/flags/at.png
++src/baruwa/static/imgs/flags/au.png
++src/baruwa/static/imgs/flags/aw.png
++src/baruwa/static/imgs/flags/ax.png
++src/baruwa/static/imgs/flags/az.png
++src/baruwa/static/imgs/flags/ba.png
++src/baruwa/static/imgs/flags/bb.png
++src/baruwa/static/imgs/flags/bd.png
++src/baruwa/static/imgs/flags/be.png
++src/baruwa/static/imgs/flags/bf.png
++src/baruwa/static/imgs/flags/bg.png
++src/baruwa/static/imgs/flags/bh.png
++src/baruwa/static/imgs/flags/bi.png
++src/baruwa/static/imgs/flags/bj.png
++src/baruwa/static/imgs/flags/bm.png
++src/baruwa/static/imgs/flags/bn.png
++src/baruwa/static/imgs/flags/bo.png
++src/baruwa/static/imgs/flags/br.png
++src/baruwa/static/imgs/flags/bs.png
++src/baruwa/static/imgs/flags/bt.png
++src/baruwa/static/imgs/flags/bv.png
++src/baruwa/static/imgs/flags/bw.png
++src/baruwa/static/imgs/flags/by.png
++src/baruwa/static/imgs/flags/bz.png
++src/baruwa/static/imgs/flags/ca.png
++src/baruwa/static/imgs/flags/cc.png
++src/baruwa/static/imgs/flags/cd.png
++src/baruwa/static/imgs/flags/cf.png
++src/baruwa/static/imgs/flags/cg.png
++src/baruwa/static/imgs/flags/ch.png
++src/baruwa/static/imgs/flags/ci.png
++src/baruwa/static/imgs/flags/ck.png
++src/baruwa/static/imgs/flags/cl.png
++src/baruwa/static/imgs/flags/cm.png
++src/baruwa/static/imgs/flags/cn.png
++src/baruwa/static/imgs/flags/co.png
++src/baruwa/static/imgs/flags/cr.png
++src/baruwa/static/imgs/flags/cs.png
++src/baruwa/static/imgs/flags/cu.png
++src/baruwa/static/imgs/flags/cv.png
++src/baruwa/static/imgs/flags/cx.png
++src/baruwa/static/imgs/flags/cy.png
++src/baruwa/static/imgs/flags/cz.png
++src/baruwa/static/imgs/flags/de.png
++src/baruwa/static/imgs/flags/dj.png
++src/baruwa/static/imgs/flags/dk.png
++src/baruwa/static/imgs/flags/dm.png
++src/baruwa/static/imgs/flags/do.png
++src/baruwa/static/imgs/flags/dz.png
++src/baruwa/static/imgs/flags/ec.png
++src/baruwa/static/imgs/flags/ee.png
++src/baruwa/static/imgs/flags/eg.png
++src/baruwa/static/imgs/flags/eh.png
++src/baruwa/static/imgs/flags/er.png
++src/baruwa/static/imgs/flags/es.png
++src/baruwa/static/imgs/flags/et.png
++src/baruwa/static/imgs/flags/eu.png
++src/baruwa/static/imgs/flags/fam.png
++src/baruwa/static/imgs/flags/fi.png
++src/baruwa/static/imgs/flags/fj.png
++src/baruwa/static/imgs/flags/fk.png
++src/baruwa/static/imgs/flags/fm.png
++src/baruwa/static/imgs/flags/fo.png
++src/baruwa/static/imgs/flags/fr.png
++src/baruwa/static/imgs/flags/ga.png
++src/baruwa/static/imgs/flags/gb.png
++src/baruwa/static/imgs/flags/gd.png
++src/baruwa/static/imgs/flags/ge.png
++src/baruwa/static/imgs/flags/gf.png
++src/baruwa/static/imgs/flags/gh.png
++src/baruwa/static/imgs/flags/gi.png
++src/baruwa/static/imgs/flags/gl.png
++src/baruwa/static/imgs/flags/gm.png
++src/baruwa/static/imgs/flags/gn.png
++src/baruwa/static/imgs/flags/gp.png
++src/baruwa/static/imgs/flags/gq.png
++src/baruwa/static/imgs/flags/gr.png
++src/baruwa/static/imgs/flags/gs.png
++src/baruwa/static/imgs/flags/gt.png
++src/baruwa/static/imgs/flags/gu.png
++src/baruwa/static/imgs/flags/gw.png
++src/baruwa/static/imgs/flags/gy.png
++src/baruwa/static/imgs/flags/hk.png
++src/baruwa/static/imgs/flags/hm.png
++src/baruwa/static/imgs/flags/hn.png
++src/baruwa/static/imgs/flags/hr.png
++src/baruwa/static/imgs/flags/ht.png
++src/baruwa/static/imgs/flags/hu.png
++src/baruwa/static/imgs/flags/id.png
++src/baruwa/static/imgs/flags/ie.png
++src/baruwa/static/imgs/flags/il.png
++src/baruwa/static/imgs/flags/in.png
++src/baruwa/static/imgs/flags/io.png
++src/baruwa/static/imgs/flags/iq.png
++src/baruwa/static/imgs/flags/ir.png
++src/baruwa/static/imgs/flags/is.png
++src/baruwa/static/imgs/flags/it.png
++src/baruwa/static/imgs/flags/jm.png
++src/baruwa/static/imgs/flags/jo.png
++src/baruwa/static/imgs/flags/jp.png
++src/baruwa/static/imgs/flags/ke.png
++src/baruwa/static/imgs/flags/kg.png
++src/baruwa/static/imgs/flags/kh.png
++src/baruwa/static/imgs/flags/ki.png
++src/baruwa/static/imgs/flags/km.png
++src/baruwa/static/imgs/flags/kn.png
++src/baruwa/static/imgs/flags/kp.png
++src/baruwa/static/imgs/flags/kr.png
++src/baruwa/static/imgs/flags/kw.png
++src/baruwa/static/imgs/flags/ky.png
++src/baruwa/static/imgs/flags/kz.png
++src/baruwa/static/imgs/flags/la.png
++src/baruwa/static/imgs/flags/lb.png
++src/baruwa/static/imgs/flags/lc.png
++src/baruwa/static/imgs/flags/li.png
++src/baruwa/static/imgs/flags/lk.png
++src/baruwa/static/imgs/flags/lr.png
++src/baruwa/static/imgs/flags/ls.png
++src/baruwa/static/imgs/flags/lt.png
++src/baruwa/static/imgs/flags/lu.png
++src/baruwa/static/imgs/flags/lv.png
++src/baruwa/static/imgs/flags/ly.png
++src/baruwa/static/imgs/flags/ma.png
++src/baruwa/static/imgs/flags/mc.png
++src/baruwa/static/imgs/flags/md.png
++src/baruwa/static/imgs/flags/me.png
++src/baruwa/static/imgs/flags/mg.png
++src/baruwa/static/imgs/flags/mh.png
++src/baruwa/static/imgs/flags/mk.png
++src/baruwa/static/imgs/flags/ml.png
++src/baruwa/static/imgs/flags/mm.png
++src/baruwa/static/imgs/flags/mn.png
++src/baruwa/static/imgs/flags/mo.png
++src/baruwa/static/imgs/flags/mp.png
++src/baruwa/static/imgs/flags/mq.png
++src/baruwa/static/imgs/flags/mr.png
++src/baruwa/static/imgs/flags/ms.png
++src/baruwa/static/imgs/flags/mt.png
++src/baruwa/static/imgs/flags/mu.png
++src/baruwa/static/imgs/flags/mv.png
++src/baruwa/static/imgs/flags/mw.png
++src/baruwa/static/imgs/flags/mx.png
++src/baruwa/static/imgs/flags/my.png
++src/baruwa/static/imgs/flags/mz.png
++src/baruwa/static/imgs/flags/na.png
++src/baruwa/static/imgs/flags/nc.png
++src/baruwa/static/imgs/flags/ne.png
++src/baruwa/static/imgs/flags/nf.png
++src/baruwa/static/imgs/flags/ng.png
++src/baruwa/static/imgs/flags/ni.png
++src/baruwa/static/imgs/flags/nl.png
++src/baruwa/static/imgs/flags/no.png
++src/baruwa/static/imgs/flags/np.png
++src/baruwa/static/imgs/flags/nr.png
++src/baruwa/static/imgs/flags/nu.png
++src/baruwa/static/imgs/flags/nz.png
++src/baruwa/static/imgs/flags/om.png
++src/baruwa/static/imgs/flags/pa.png
++src/baruwa/static/imgs/flags/pe.png
++src/baruwa/static/imgs/flags/pf.png
++src/baruwa/static/imgs/flags/pg.png
++src/baruwa/static/imgs/flags/ph.png
++src/baruwa/static/imgs/flags/pk.png
++src/baruwa/static/imgs/flags/pl.png
++src/baruwa/static/imgs/flags/pm.png
++src/baruwa/static/imgs/flags/pn.png
++src/baruwa/static/imgs/flags/pr.png
++src/baruwa/static/imgs/flags/ps.png
++src/baruwa/static/imgs/flags/pt.png
++src/baruwa/static/imgs/flags/pw.png
++src/baruwa/static/imgs/flags/py.png
++src/baruwa/static/imgs/flags/qa.png
++src/baruwa/static/imgs/flags/re.png
++src/baruwa/static/imgs/flags/ro.png
++src/baruwa/static/imgs/flags/rs.png
++src/baruwa/static/imgs/flags/ru.png
++src/baruwa/static/imgs/flags/rw.png
++src/baruwa/static/imgs/flags/sa.png
++src/baruwa/static/imgs/flags/sb.png
++src/baruwa/static/imgs/flags/sc.png
++src/baruwa/static/imgs/flags/scotland.png
++src/baruwa/static/imgs/flags/sd.png
++src/baruwa/static/imgs/flags/se.png
++src/baruwa/static/imgs/flags/sg.png
++src/baruwa/static/imgs/flags/sh.png
++src/baruwa/static/imgs/flags/si.png
++src/baruwa/static/imgs/flags/sj.png
++src/baruwa/static/imgs/flags/sk.png
++src/baruwa/static/imgs/flags/sl.png
++src/baruwa/static/imgs/flags/sm.png
++src/baruwa/static/imgs/flags/sn.png
++src/baruwa/static/imgs/flags/so.png
++src/baruwa/static/imgs/flags/sr.png
++src/baruwa/static/imgs/flags/st.png
++src/baruwa/static/imgs/flags/sv.png
++src/baruwa/static/imgs/flags/sy.png
++src/baruwa/static/imgs/flags/sz.png
++src/baruwa/static/imgs/flags/tc.png
++src/baruwa/static/imgs/flags/td.png
++src/baruwa/static/imgs/flags/tf.png
++src/baruwa/static/imgs/flags/tg.png
++src/baruwa/static/imgs/flags/th.png
++src/baruwa/static/imgs/flags/tj.png
++src/baruwa/static/imgs/flags/tk.png
++src/baruwa/static/imgs/flags/tl.png
++src/baruwa/static/imgs/flags/tm.png
++src/baruwa/static/imgs/flags/tn.png
++src/baruwa/static/imgs/flags/to.png
++src/baruwa/static/imgs/flags/tp.png
++src/baruwa/static/imgs/flags/tr.png
++src/baruwa/static/imgs/flags/tt.png
++src/baruwa/static/imgs/flags/tv.png
++src/baruwa/static/imgs/flags/tw.png
++src/baruwa/static/imgs/flags/tz.png
++src/baruwa/static/imgs/flags/ua.png
++src/baruwa/static/imgs/flags/ug.png
++src/baruwa/static/imgs/flags/uk.png
++src/baruwa/static/imgs/flags/um.png
++src/baruwa/static/imgs/flags/us.png
++src/baruwa/static/imgs/flags/uy.png
++src/baruwa/static/imgs/flags/uz.png
++src/baruwa/static/imgs/flags/va.png
++src/baruwa/static/imgs/flags/vc.png
++src/baruwa/static/imgs/flags/ve.png
++src/baruwa/static/imgs/flags/vg.png
++src/baruwa/static/imgs/flags/vi.png
++src/baruwa/static/imgs/flags/vn.png
++src/baruwa/static/imgs/flags/vu.png
++src/baruwa/static/imgs/flags/wales.png
++src/baruwa/static/imgs/flags/wf.png
++src/baruwa/static/imgs/flags/ws.png
++src/baruwa/static/imgs/flags/ye.png
++src/baruwa/static/imgs/flags/yt.png
++src/baruwa/static/imgs/flags/yu.png
++src/baruwa/static/imgs/flags/za.png
++src/baruwa/static/imgs/flags/zm.png
++src/baruwa/static/imgs/flags/zw.png
++src/baruwa/static/js/accounts.js
++src/baruwa/static/js/details.js
++src/baruwa/static/js/domain.js
++src/baruwa/static/js/domains.js
++src/baruwa/static/js/jquery.address.js
++src/baruwa/static/js/jquery.clearform.js
++src/baruwa/static/js/jquery.js
++src/baruwa/static/js/lib.js
++src/baruwa/static/js/lists.add.js
++src/baruwa/static/js/lists.js
++src/baruwa/static/js/messages.js
++src/baruwa/static/js/recent_messages.js
++src/baruwa/static/js/reports.barreport.js
++src/baruwa/static/js/reports.common.js
++src/baruwa/static/js/reports.js
++src/baruwa/static/js/reports.listing.js
++src/baruwa/static/js/reports.pie.js
++src/baruwa/static/js/reports.relays.js
++src/baruwa/status/__init__.py
++src/baruwa/status/models.py
++src/baruwa/status/urls.py
++src/baruwa/status/views.py
++src/baruwa/templates/404.html
++src/baruwa/templates/500.html
++src/baruwa/templates/base.html
++src/baruwa/templates/accounts/add_address.html
++src/baruwa/templates/accounts/change_pw.html
++src/baruwa/templates/accounts/create_account.html
++src/baruwa/templates/accounts/delete_account.html
++src/baruwa/templates/accounts/delete_address.html
++src/baruwa/templates/accounts/edit_address.html
++src/baruwa/templates/accounts/index.html
++src/baruwa/templates/accounts/login.html
++src/baruwa/templates/accounts/update_account.html
++src/baruwa/templates/accounts/update_profile.html
++src/baruwa/templates/accounts/user_profile.html
++src/baruwa/templates/config/add_auth_host.html
++src/baruwa/templates/config/add_host.html
++src/baruwa/templates/config/delete_auth_host.html
++src/baruwa/templates/config/delete_host.html
++src/baruwa/templates/config/domain.html
++src/baruwa/templates/config/edit_auth_host.html
++src/baruwa/templates/config/edit_host.html
++src/baruwa/templates/config/index.html
++src/baruwa/templates/lists/add.form.html
++src/baruwa/templates/lists/add.html
++src/baruwa/templates/lists/delete.html
++src/baruwa/templates/lists/index.html
++src/baruwa/templates/messages/delete.html
++src/baruwa/templates/messages/detail.html
++src/baruwa/templates/messages/index.html
++src/baruwa/templates/messages/preview.html
++src/baruwa/templates/messages/quarantine_report.html
++src/baruwa/templates/messages/quarantine_report_text.html
++src/baruwa/templates/messages/release.html
++src/baruwa/templates/messages/released.html
++src/baruwa/templates/messages/salearn.html
++src/baruwa/templates/reports/barreport.html
++src/baruwa/templates/reports/filter.form.html
++src/baruwa/templates/reports/index.html
++src/baruwa/templates/reports/listing.html
++src/baruwa/templates/reports/pdf_report.txt
++src/baruwa/templates/reports/piereport.html
++src/baruwa/templates/reports/relays.html
++src/baruwa/templates/status/bayes.html
++src/baruwa/templates/status/index.html
++src/baruwa/templates/status/lint.html
++src/baruwa/templates/tags/generic_paginator.html
++src/baruwa/templates/tags/pagination_heading.html
++src/baruwa/templates/tags/paginator.html
++src/baruwa/templates/tags/relayed_via.html
++src/baruwa/templates/tags/sorter.html
++src/baruwa/templates/tags/spamreport.html
++src/baruwa/utils/__init__.py
++src/baruwa/utils/decorators.py
++src/baruwa/utils/graphs.py
++src/baruwa/utils/misc.py
++src/baruwa/utils/process_mail.py
++src/baruwa/utils/regex.py
+\ No newline at end of file
+--- /dev/null
++++ baruwa-1.0.0a/src/baruwa.egg-info/requires.txt
+@@ -0,0 +1,5 @@
++setuptools
++Django>= 1.1.1
++MySQLdb>=1.2.1p2
++GeoIP
++iPy
+\ No newline at end of file
+--- /dev/null
++++ baruwa-1.0.0a/src/baruwa.egg-info/dependency_links.txt
+@@ -0,0 +1 @@
++http://geolite.maxmind.com/download/geoip/api/python/
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/changelog
+@@ -0,0 +1,24 @@
++baruwa (1.0.0a-1) unstable; urgency=low
++
++  * New upstream release
++
++ -- Andrew Colin Kissa <andrew@topdog.za.net>  Fri, 02 Jul 2010 11:37:23 +0200
++
++baruwa (0.0.1rc2-1) unstable; urgency=low
++
++  * New upstream release* 
++
++ -- Andrew Colin Kissa <andrew@topdog.za.net>  Tue, 25 May 2010 12:23:21 +0200
++
++baruwa (0.0.1rc1-2) unstable; urgency=low
++
++  * Fix packaging bugs* 
++
++ -- Andrew Colin Kissa <andrew@topdog.za.net>  Mon, 24 May 2010 14:40:06 +0200
++
++baruwa (0.0.1rc1-1) unstable; urgency=low
++
++  * Initial release (Closes: #9999)  
++  * Switch to dpkg-source 3.0 (quilt) format
++
++ -- Andrew Colin Kissa <andrew@topdog.za.net>  Mon, 24 May 2010 14:37:36 +0200
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/watch
+@@ -0,0 +1,2 @@
++version=3
++http://pypi.python.org/packages/source/b/baruwa/baruwa-(\d.*)\.tar\.gz
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/baruwa.docs
+@@ -0,0 +1,3 @@
++AUTHORS
++UPGRADE
++README
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/README.source
+@@ -0,0 +1,9 @@
++baruwa for Debian
++-----------------
++
++<this file describes information about the source package, see Debian policy
++manual section 4.14. You WILL either need to modify or delete this file>
++
++
++
++
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/templates
+@@ -0,0 +1,83 @@
++
++Template: baruwa/webserver_type
++Type: multiselect
++__Choices: apache2
++Default: apache2
++_Description: Web server to reconfigure automatically:
++ Please choose the web server that should be automatically configured
++ to run baruwa.
++
++Template: baruwa/webserver/vhost
++Type: string
++Default: localhost.localdomain
++_Description: Apache Virtual Host name:
++ Please enter the name of the virtualhost to serve baruwa.
++
++Template: baruwa/mysql/configure
++Type: boolean
++Default: true
++_Description: Configure MySQL?
++ Please confirm whether MySQL should be configured automatically.
++ .
++ If you do not choose this option, please see the instructions in
++ /usr/share/doc/baruwa/README.
++
++Template: baruwa/mysql/dbserver
++Type: string
++Default: localhost
++_Description: MySQL host:
++ Please enter the name or IP address of the MySQL database server
++ that will store the baruwa database.
++
++Template: baruwa/mysql/dbadmin
++Type: string
++Default: root
++_Description: Database server administrator username:
++ Please enter the username of the database server administrator. This
++ account must have database creation privileges.
++
++Template: baruwa/purge
++Type: boolean
++Default: true
++_Description: Delete database on purge?
++ Please choose whether the database should be removed when the baruwa
++ package is purged.
++
++Template: baruwa/mysql/dbname
++Type: string
++Default: baruwa
++_Description: Baruwa database name:
++ Please enter the name of the database that will host data for Baruwa.
++
++Template: baruwa/mysql/dbadmpass
++Type: password
++_Description: Database server administrator password:
++
++Template: baruwa/mysql/dbuser
++Type: string
++Default: baruwa
++_Description: Database user for Baruwa:
++ Please choose the MySQL account that will be used to access the
++ database hosting Baruwa data.
++
++Template: baruwa/mysql/dbpass
++Type: password
++_Description: Database user password:
++ Please choose the password for the account that will be used to
++ access the database hosting Baruwa data.
++
++Template: baruwa/django/baruwauser
++Type: string
++Default: baruwa-admin
++_Description: Admin user for Baruwa:
++ Please choose an admin user used to administer the baruwa system..
++
++Template: baruwa/django/baruwapass
++Type: password
++_Description: Baruwa admin user password:
++ Please choose the password for the admin account.
++
++Template: baruwa/django/baruwaemail
++Type: string
++_Description: Admin user's email address:
++ Please supply and email address for the admin user.
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/baruwa-doc.docs
+@@ -0,0 +1 @@
++docs.debian/build/html
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/config
+@@ -0,0 +1,33 @@
++#!/bin/bash
++
++set -e
++
++action=$1
++version=$2
++
++# Source debconf library.
++. /usr/share/debconf/confmodule
++db_version 2.0 || [ 0 -lt 30 ]
++
++  db_input critical baruwa/webserver_type || true
++  db_input critical baruwa/webserver/vhost || true
++  db_go || true
++
++db_set baruwa/mysql/configure true
++db_input critical baruwa/mysql/configure || true
++db_go || true
++
++db_get baruwa/mysql/configure || true
++if [ "$RET" = "true" ]; then
++   db_input critical baruwa/mysql/dbserver || true
++   db_input critical baruwa/mysql/dbadmin || true
++   db_input critical baruwa/mysql/dbadmpass || true
++   db_input critical baruwa/mysql/dbuser || true
++   db_input critical baruwa/mysql/dbpass || true
++   db_input critical baruwa/mysql/dbname || true
++   db_input critical baruwa/django/baruwauser || true
++   db_input critical baruwa/django/baruwapass || true
++   db_input critical baruwa/django/baruwaemail || true
++   db_input critical baruwa/purge || true
++   db_go || true
++fi
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/rules
+@@ -0,0 +1,52 @@
++#!/usr/bin/make -f
++# -*- makefile -*-
++# Sample debian/rules that uses debhelper.
++# This file was originally written by Joey Hess and Craig Small.
++# As a special exception, when this file is copied by dh-make into a
++# dh-make output file, you may use that output file without restriction.
++# This special exception was added by Craig Small in version 0.37 of dh-make.
++
++# Uncomment this to turn on verbose mode.
++#export DH_VERBOSE=1
++
++%:
++	dh $@
++
++override_dh_auto_clean:
++	rm -rf docs.debian
++	rm -f apache.conf
++	dh_auto_clean
++
++override_dh_auto_build:
++	dh_auto_build
++	cp -r docs docs.debian	
++	make -C docs.debian html
++	cp extras/baruwa-mod_wsgi.conf apache.conf	
++	sed -i -e "s|/usr/lib/python2.4/site-packages|/usr/share/pyshared|;s|logs|/var/log/apache2|;" apache.conf
++	
++override_dh_compress:
++	dh_compress -X.sql -X.js -X.pm
++
++override_dh_install:
++	cd debian/baruwa/
++	dh_install
++	dh_install apache.conf /etc/baruwa/
++	dh_install extras/*.pm /etc/MailScanner/CustomFunctions
++
++override_dh_pysupport:
++	dh_pysupport
++	cd debian/baruwa/usr/share/pyshared/baruwa/static/js \
++		&& ln -s ../../../../javascript/dijit \
++		&& ln -s ../../../../javascript/dojo \
++		&& ln -s ../../../../javascript/dojox .
++
++override_dh_installdocs:
++	dh_installdocs
++	# Remove embedded copy of libjs-jquery
++	cd debian/baruwa-doc/usr/share/doc/baruwa-doc/html/_static \
++		&& rm jquery.js \
++		&& ln -s ../../../../javascript/jquery/jquery.js .
++
++override_dh_fixperms:
++	dh_fixperms
++	chmod 0755 debian/baruwa/usr/share/pyshared/baruwa/manage.py
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/control
+@@ -0,0 +1,62 @@
++Source: baruwa
++Section: python
++Priority: optional
++Maintainer: Andrew Colin Kissa <andrew@topdog.za.net>
++Build-Depends: debhelper (>= 7.0.50~), python-support, python (>=2.4), po-debconf, python-setuptools
++Build-Depends-Indep: python-sphinx, libjs-jquery
++Standards-Version: 3.8.4
++Homepage: http://www.topdog.za.net/baruwa
++
++Package: baruwa
++Architecture: all
++Depends: ${misc:Depends}, ${python:Depends}, libapache2-mod-wsgi, wwwconfig-common, debconf (>= 0.2.26), libjs-dojo-dojox, libjs-dojo-dijit, libjs-dojo-dojox, python-mysqldb, python-django (>= 1.1.1), python-ipy, python-geoip, mysql-client, python-reportlab, mailscanner
++Description: Web 2.0 MailScanner front-end.
++ .
++ Baruwa provides an easy to use interface for 
++ managing a MailScanner installation. It is used 
++ to perform operations such as releasing 
++ quarantined messages, spam learning, whitelisting 
++ and blacklisting addresses, monitoring the health 
++ of the services etc. Baruwa is implemented using 
++ web 2.0 features (AJAX) where deemed fit, 
++ graphing is also implemented on the client side 
++ using SVG, Silverlight or VML.
++ .
++ It includes reporting functionality with an easy 
++ to use query builder, results can be displayed as 
++ message lists or graphed as colorful and pretty 
++ interactive graphs.
++ .
++ Custom MailScanner modules are provided to allow 
++ for logging of messages to the mysql database 
++ with SQLite as backup and for managing whitelists
++ and blacklists.
++ 
++Package: baruwa-doc
++Section: doc
++Architecture: all
++Depends: ${misc:Depends}
++Recommends: libjs-jquery
++Description: Web 2.0 MailScanner front-end documentation.
++ .
++ Baruwa provides an easy to use interface for 
++ managing a MailScanner installation. It is used 
++ to perform operations such as releasing 
++ quarantined messages, spam learning, whitelisting 
++ and blacklisting addresses, monitoring the health 
++ of the services etc. Baruwa is implemented using 
++ web 2.0 features (AJAX) where deemed fit, 
++ graphing is also implemented on the client side 
++ using SVG, Silverlight or VML.
++ .
++ It includes reporting functionality with an easy 
++ to use query builder, results can be displayed as 
++ message lists or graphed as colorful and pretty 
++ interactive graphs.
++ .
++ Custom MailScanner modules are provided to allow 
++ for logging of messages to the mysql database 
++ with SQLite as backup and for managing whitelists
++ and blacklists.
++ .
++ This package contains the HTML documentation. 
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/pyversions
+@@ -0,0 +1 @@
++2.4-
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/postrm
+@@ -0,0 +1,87 @@
++#! /bin/sh
++
++set -e
++
++if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
++    for websvrs in apache2; do
++	if [ -f /etc/$websvrs/sites-enabled/*baruwa ]; then
++		a2dissite baruwa
++	fi
++	rm -f /etc/$websvrs/sites-available/baruwa
++    done
++
++    if [ -f /etc/cron.daily/baruwa ]; then
++	rm -f /etc/cron.daily/baruwa
++    fi
++
++    if [ "$1" = "purge" ]; then
++	if [ -d /etc/baruwa ]; then
++	    rmdir --ignore-fail-on-non-empty /etc/baruwa || true
++	fi
++    fi
++
++    if [ -f /usr/share/debconf/confmodule ]; then
++	. /usr/share/debconf/confmodule
++	db_version 2.0 || [ $? -lt 30 ]
++
++	db_get baruwa/reconfigure || true
++
++	if [ "$1" = "purge" ]; then
++	    db_get baruwa/mysql/configure
++
++	    if [ "$RET" = true ]; then
++		db_get baruwa/purge
++
++		if [ "$RET" = true ]; then
++		    db_get baruwa/mysql/dbserver
++		    dbserver=$RET
++		    db_get baruwa/mysql/dbadmin
++		    dbadmin=$RET
++		    db_input critical baruwa/mysql/dbadmpass || true
++		    db_go || true
++
++		    db_get baruwa/mysql/dbadmpass || true
++		    dbadmpass=$RET
++
++		    if [ -x /usr/share/wwwconfig-common/mysql-dropdb.sh ]; then
++			# remove the database
++			db_get baruwa/mysql/dbname
++			dbname=$RET
++			. /usr/share/wwwconfig-common/mysql-dropdb.sh || true
++		    fi
++
++		    if [ -x /usr/share/wwwconfig-common/mysql-dropuser.sh ]; then
++			# remove user
++			db_get baruwa/mysql/dbuser
++			dbuser=$RET
++			. /usr/share/wwwconfig-common/mysql-dropuser.sh || true
++		    fi
++		fi
++	    fi
++	fi
++
++	db_get baruwa/webserver_type
++	webservers="$RET"
++
++	for webserver in $webservers; do
++	    webserver=${webserver%,}
++
++	    case "$webserver" in
++		apache2)
++		    test -x /usr/sbin/$webserver || continue
++		    if [ -x /usr/sbin/invoke-rc.d ]; then
++			invoke-rc.d $webserver reload 3>/dev/null || true
++		    else
++			/etc/init.d/$webserver reload 3>/dev/null || true
++		    fi
++		    ;;
++	    esac
++	done
++
++	if [ "$1" = "purge" ]; then
++		db_purge
++	fi
++    fi
++fi
++
++#DEBHELPER#
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/copyright
+@@ -0,0 +1,45 @@
++This work was packaged for Debian by:
++
++    Andrew Colin Kissa <andrew@topdog.za.net> on Thu, 20 May 2010 11:57:01 +0200
++
++It was downloaded from:
++
++    http://pypi.python.org/pypi/baruwa
++
++Upstream Author(s):
++
++    	   2010 Andrew Colin Kissa <andrew@topdog.za.net>
++
++Copyright:
++
++    Copyright (C) 2010 Andrew Colin Kissa <andrew@topdog.za.net>
++
++License:
++
++    This package is free software; you can redistribute it and/or modify
++    it under the terms of the GNU General Public License as published by
++    the Free Software Foundation; either version 2 of the License, or
++    (at your option) any later version.
++
++    This package is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++    GNU General Public License for more details.
++
++    You should have received a copy of the GNU General Public License
++    along with this package; if not, write to the Free Software
++    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
++
++On Debian systems, the complete text of the GNU General
++Public License version 2 can be found in `/usr/share/common-licenses/GPL-2'.
++
++
++you can redistribute it and/or modify
++it under the terms of the GNU General Public License as published by
++the Free Software Foundation; either version 2 of the License, or
++(at your option) any later version.
++
++The Debian packaging is:
++
++    Copyright (C) 2010 Andrew Colin Kissa <andrew@topdog.za.net>
++    and is licensed under the GPL, see above.
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/compat
+@@ -0,0 +1 @@
++7
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/baruwa.cron.daily
+@@ -0,0 +1,16 @@
++#!/bin/sh
++#
++# Baruwa
++#
++# send quarantine reports
++/usr/share/pyshared/baruwa/manage.py sendquarantinereports
++# clean quarantine 
++/usr/share/pyshared/baruwa/manage.py cleanquarantine
++# clean up the DB
++/usr/share/pyshared/baruwa/manage.py dbclean
++# update sa rule definitions
++#/usr/share/pyshared/baruwa/manage.py update_sarules
++# clean up stale sessions
++/usr/share/pyshared/baruwa/manage.py cleanup
++# update geoip database
++/usr/share/doc/libgeoip1/examples/geolitecountryv4.sh
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/postinst
+@@ -0,0 +1,110 @@
++#!/bin/sh
++
++set -e
++
++. /usr/share/debconf/confmodule
++db_version 2.0 || [ $? -lt 30 ]
++
++if [ "$1" = "configure" ]; then
++
++    db_get baruwa/webserver_type
++    webservers="$RET"
++    restart=""
++
++    for webserver in $webservers; do
++	webserver=${webserver%,}
++	test -x /usr/sbin/$webserver || continue
++
++	case "$webserver" in
++	    apache2)
++		if [ -d /etc/$webserver/mods-enabled ]; then
++			a2enmod wsgi >/dev/null
++		fi
++		;;
++	esac
++
++	case "$webserver" in
++	    apache2)
++		test -d /etc/$webserver/sites-available || continue
++    		db_get baruwa/webserver/vhost
++    		vhost=$RET
++    		sed -i -e "s/baruwa-alpha.local/$vhost/" /etc/baruwa/apache.conf
++		if [ ! -f /etc/$webserver/sites-available/baruwa -a ! -h /etc/$webserver/sites-available/baruwa ]; then
++		    ln -s /etc/baruwa/apache.conf /etc/$webserver/sites-available/baruwa
++		fi
++		if [ -d /etc/$webserver/sites-enabled ]; then
++			a2ensite baruwa >/dev/null
++		fi
++		restart="$restart $webserver"
++		;;
++	esac
++    done
++
++
++    db_get baruwa/mysql/configure
++    if [ "$RET" = true ]; then
++
++	# get the answers to our questions
++	db_get baruwa/mysql/dbserver
++	dbserver=$RET
++	db_get baruwa/mysql/dbadmin
++	dbadmin=$RET
++	db_get baruwa/mysql/dbadmpass
++	dbadmpass=$RET
++	db_get baruwa/mysql/dbname
++	dbname=$RET
++	db_get baruwa/mysql/dbuser
++	dbuser=$RET
++	db_get baruwa/mysql/dbpass
++	dbpass=$RET
++	db_get baruwa/django/baruwauser
++	baruwauser=$RET
++	db_get baruwa/django/baruwapass
++	baruwapass=$RET
++	db_get baruwa/django/baruwaemail
++	baruwaemail=$RET
++
++	# create the database
++	. /usr/share/wwwconfig-common/mysql-createdb.sh
++	# create user
++	. /usr/share/wwwconfig-common/mysql-createuser.sh
++	# grant rights to db
++	echo "GRANT ALL ON $dbname.* TO $dbuser@$dbserver IDENTIFIED BY '$dbpass';" > /var/tmp/baruwa-create.sql
++	sqlfile="/var/tmp/baruwa-create.sql"
++	# run the grants
++	. /usr/share/wwwconfig-common/mysql-exec.sh
++	# remove credentials
++	rm -f /var/tmp/baruwa-create.sql
++    fi
++
++    db_stop
++
++    sed -i -e \
++    "
++    s/DATABASE_NAME = 'baruwa'/DATABASE_NAME = '$dbname'/;
++    s/DATABASE_USER = ''/DATABASE_USER = '$dbuser'/;
++    s/DATABASE_PASSWORD = ''/DATABASE_PASSWORD = '$dbpass'/;
++    s/DATABASE_HOST = ''/DATABASE_HOST = '$dbserver'/;
++    " \
++    /usr/share/pyshared/baruwa/settings.py
++    # populate the database
++    /usr/share/pyshared/baruwa/manage.py syncdb --noinput
++    # create the admin user
++    /usr/share/pyshared/baruwa/manage.py createsuperuser --username $baruwauser --email $baruwaemail --noinput
++    # set the password
++    export DJANGO_SETTINGS_MODULE=baruwa.settings
++    python -c "from django.contrib.auth.models import User;
++    user = User.objects.get(username__exact='$baruwauser');
++    user.set_password('$baruwapass');user.save()" > /dev/null
++    # restart webserver
++    for webserver in $restart; do
++	webserver=${webserver%,}
++	if [ -x /usr/sbin/invoke-rc.d ]; then
++	    invoke-rc.d $webserver reload 3>/dev/null || true
++	else
++	    /etc/init.d/$webserver reload 3>/dev/null || true
++	fi
++    done
++fi
++
++#DEBHELPER#
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/baruwa.install
+@@ -0,0 +1 @@
++usr/
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/baruwa-doc.doc-base
+@@ -0,0 +1,12 @@
++Document: baruwa-doc
++Title: Baruwa Documentation
++Author: Andrew Colin Kissa
++Abstract: This documentation gives an introduction to Baruwa
++Section: Network/Monitoring
++
++Format: HTML
++Index: /usr/share/doc/baruwa-doc/html/index.html
++Files: /usr/share/doc/baruwa-doc/html/*.html
++
++Format: Text
++Files: /usr/share/doc/baruwa-doc/html/_sources/*.txt
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/.pc/.quilt_patches
+@@ -0,0 +1 @@
++patches
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/.pc/.quilt_series
+@@ -0,0 +1 @@
++series
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/.pc/.version
+@@ -0,0 +1 @@
++2
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/po/POTFILES.in
+@@ -0,0 +1 @@
++[type: gettext/rfc822deb] templates
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/po/templates.pot
+@@ -0,0 +1,181 @@
++# SOME DESCRIPTIVE TITLE.
++# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
++# This file is distributed under the same license as the PACKAGE package.
++# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
++#
++#, fuzzy
++msgid ""
++msgstr ""
++"Project-Id-Version: PACKAGE VERSION\n"
++"Report-Msgid-Bugs-To: baruwa@packages.debian.org\n"
++"POT-Creation-Date: 2010-05-22 11:17+0200\n"
++"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
++"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
++"Language-Team: LANGUAGE <LL@li.org>\n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=CHARSET\n"
++"Content-Transfer-Encoding: 8bit\n"
++
++#. Type: multiselect
++#. Choices
++#: ../templates:1001
++msgid "apache2"
++msgstr ""
++
++#. Type: multiselect
++#. Description
++#: ../templates:1002
++msgid "Web server to reconfigure automatically:"
++msgstr ""
++
++#. Type: multiselect
++#. Description
++#: ../templates:1002
++msgid ""
++"Please choose the web server that should be automatically configured to run "
++"baruwa."
++msgstr ""
++
++#. Type: string
++#. Description
++#: ../templates:2001
++msgid "Apache Virtual Host name:"
++msgstr ""
++
++#. Type: string
++#. Description
++#: ../templates:2001
++msgid "Please enter the name of the virtualhost to serve baruwa."
++msgstr ""
++
++#. Type: boolean
++#. Description
++#: ../templates:3001
++msgid "Configure MySQL?"
++msgstr ""
++
++#. Type: boolean
++#. Description
++#: ../templates:3001
++msgid "Please confirm whether MySQL should be configured automatically."
++msgstr ""
++
++#. Type: boolean
++#. Description
++#: ../templates:3001
++msgid ""
++"If you do not choose this option, please see the instructions in /usr/share/"
++"doc/baruwa/README."
++msgstr ""
++
++#. Type: string
++#. Description
++#: ../templates:4001
++msgid "MySQL host:"
++msgstr ""
++
++#. Type: string
++#. Description
++#: ../templates:4001
++msgid ""
++"Please enter the name or IP address of the MySQL database server that will "
++"store the baruwa database."
++msgstr ""
++
++#. Type: string
++#. Description
++#: ../templates:5001
++msgid "Database server administrator username:"
++msgstr ""
++
++#. Type: string
++#. Description
++#: ../templates:5001
++msgid ""
++"Please enter the username of the database server administrator. This account "
++"must have database creation privileges."
++msgstr ""
++
++#. Type: boolean
++#. Description
++#: ../templates:6001
++msgid "Delete database on purge?"
++msgstr ""
++
++#. Type: boolean
++#. Description
++#: ../templates:6001
++msgid ""
++"Please choose whether the database should be removed when the baruwa package "
++"is purged."
++msgstr ""
++
++#. Type: string
++#. Description
++#: ../templates:7001
++msgid "Baruwa database name:"
++msgstr ""
++
++#. Type: string
++#. Description
++#: ../templates:7001
++msgid "Please enter the name of the database that will host data for Baruwa."
++msgstr ""
++
++#. Type: password
++#. Description
++#: ../templates:8001
++msgid "Database server administrator password:"
++msgstr ""
++
++#. Type: string
++#. Description
++#: ../templates:9001
++msgid "Database user for Baruwa:"
++msgstr ""
++
++#. Type: string
++#. Description
++#: ../templates:9001
++msgid ""
++"Please choose the MySQL account that will be used to access the database "
++"hosting Baruwa data."
++msgstr ""
++
++#. Type: password
++#. Description
++#: ../templates:10001
++msgid "Database user password:"
++msgstr ""
++
++#. Type: password
++#. Description
++#: ../templates:10001
++msgid ""
++"Please choose the password for the account that will be used to access the "
++"database hosting Baruwa data."
++msgstr ""
++
++#. Type: string
++#. Description
++#: ../templates:11001
++msgid "Admin user for Baruwa:"
++msgstr ""
++
++#. Type: string
++#. Description
++#: ../templates:11001
++msgid "Please choose an admin user used to administer the baruwa system.."
++msgstr ""
++
++#. Type: password
++#. Description
++#: ../templates:12001
++msgid "Baruwa admin user password:"
++msgstr ""
++
++#. Type: password
++#. Description
++#: ../templates:12001
++msgid "Please choose the password for the admin account."
++msgstr ""
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/source/format
+@@ -0,0 +1 @@
++3.0 (quilt)
+--- /dev/null
++++ baruwa-1.0.0a/debian.upstream/patches/debian-changes-0.0.1rc1-1
+@@ -0,0 +1,110 @@
++Description: Upstream changes introduced in version 0.0.1rc1-1
++ This patch has been created by dpkg-source during the package build.
++ Here's the last changelog entry, hopefully it gives details on why
++ those changes were made:
++ .
++ baruwa (0.0.1rc1-1) unstable; urgency=low
++ .
++   * Initial release (Closes: #9999)
++   * Switch to dpkg-source 3.0 (quilt) format
++ .
++ The person named in the Author field signed this changelog entry.
++Author: Andrew Colin Kissa <andrew@topdog.za.net>
++Bug-Debian: http://bugs.debian.org/9999
++
++---
++The information above should follow the Patch Tagging Guidelines, please
++checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
++are templates for supplementary fields that you might want to add:
++
++Origin: <vendor|upstream|other>, <url of original patch>
++Bug: <url in upstream bugtracker>
++Bug-Debian: http://bugs.debian.org/<bugnumber>
++Forwarded: <no|not-needed|url proving that it has been forwarded>
++Reviewed-By: <name and email of someone who approved the patch>
++Last-Update: <YYYY-MM-DD>
++
++--- baruwa-0.0.1rc1.orig/src/baruwa.egg-info/PKG-INFO
+++++ baruwa-0.0.1rc1/src/baruwa.egg-info/PKG-INFO
++@@ -10,34 +10,34 @@ Description: 
++         ======
++         Baruwa
++         ======
++-        Baruwa (swahili for letter or mail) is a `mailwatch <http://mailwatch.sf.net/>`_ inspired
++-        web 2.0 `MailScanner <http://www.mailscanner.info/>`_ front-end.
+++        Baruwa (swahili for letter or mail) is a `mailwatch <http://mailwatch.sf.net/>`_ inspired 
+++        web 2.0 `MailScanner <http://www.mailscanner.info/>`_ front-end. 
++         
++-        It provides an easy to use interface for users to view details of messages processed by
++-        MailScanner as well as perform operations such as releasing quarantined messages,
++-        spam learning, whitelisting and blacklisting addresses etc. Baruwa has implemented web 2.0
+++        It provides an easy to use interface for users to view details of messages processed by 
+++        MailScanner as well as perform operations such as releasing quarantined messages, 
+++        spam learning, whitelisting and blacklisting addresses etc. Baruwa has implemented web 2.0 
++         features (AJAX) where deemed fit, graphing is also implemented on the client side using SVG.
++         
++-        It also provides reporting functionality with an easy to use query builder, results can be
+++        It also provides reporting functionality with an easy to use query builder, results can be 
++         displayed as message lists or graphed as colorful and pretty graphs.
++         
++-        Baruwa is written in Python using the Django Framework and MySQL for storage, it is released
+++        Baruwa is written in Python using the Django Framework and MySQL for storage, it is released 
++         under the GPLv2
++         
++         ========
++         Features
++         ========
++-        + AJAX refreshed recent messages listing
++-        + Detailed message view with AJAX enabled message processing (quarantine release/delete,spam learning,white/black listing)
++-        + AJAX powered Full/Quarantine messages listings
++-        + Reporting view with AJAX enabled query builder
++-        + Interactive SVG graphs
++-        + Multi user profiles
++-        + User profile aware white/blacklist management
++-        + REST API
++-        + Easy plug-in authentication to external authentication systems (Mailwatch, POP3, IMAP and SMTP supported out of the box)
++-        + Tools for housekeeping tasks (quarantine management, rule updates, quarantine notifications, etc)
++-        + Works both with and without Javascript enabled (some features will have degraded performance)
+++            + AJAX refreshed recent messages listing
+++            + Detailed message view with AJAX enabled message processing (quarantine release/delete,spam learning,white/black listing)
+++            + AJAX powered Full/Quarantine messages listings
+++            + Reporting view with AJAX enabled query builder
+++            + Interactive SVG graphs
+++            + Multi user profiles
+++            + User profile aware white/blacklist management
+++            + REST API
+++            + Easy plug-in authentication to external authentication systems (Mailwatch, POP3, IMAP and SMTP supported out of the box)
+++            + Tools for housekeeping tasks (quarantine management, rule updates, quarantine notifications, etc)
+++            + Works both with and without Javascript enabled (some features will have degraded performance)
++         
++         ===========
++         Screenshots
++@@ -47,20 +47,20 @@ Description: 
++         ============
++         Requirements
++         ============
++-        + Python >= 2.4
++-        + Django >= 1.1.1
++-        + MySQLdb >= 1.2.1p2
++-        + GeoIP
++-        + iPy
++-        + Any Web server that can run Django (Apache/mod_wsgi recommended)
++-        + MySQL
+++            + Python >= 2.4
+++            + Django >= 1.1.1
+++            + MySQLdb >= 1.2.1p2
+++            + GeoIP
+++            + iPy
+++            + Any Web server that can run Django (Apache/mod_wsgi recommended)
+++            + MySQL
++         
++         ============
++         Installation
++         ============
++         Baruwa is installed in the usual way::
++         
++-        python setup install
+++            python setup install
++         
++         =============
++         Documentation

@@ -68,7 +68,7 @@ _Description: Database user password:
 
 Template: baruwa/django/baruwauser
 Type: string
-Default: baruwa-admin
+Default: baruwaadmin
 _Description: Admin user for Baruwa:
  Please choose an admin user used to administer the baruwa system..
 

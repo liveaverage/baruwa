@@ -31,10 +31,10 @@ my ($hostname)  = hostname;
 my $server_port = 11553;
 my $timeout     = 3600;
 
-my ($db_name)   = 'baruwa';
-my ($db_host)   = 'localhost';
-my ($db_user)   = 'baruwa';
-my ($db_pass)   = '';
+my ($db_name) = 'baruwa';
+my ($db_host) = 'localhost';
+my ($db_user) = 'baruwa';
+my ($db_pass) = '';
 my ($sqlite_db) = "/var/spool/MailScanner/incoming/baruwa2.db";
 
 #DBI->trace(2,'/tmp/dbitrace.log');
