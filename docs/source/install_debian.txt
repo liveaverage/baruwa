@@ -30,15 +30,23 @@ Install Baruwa::
 Configure MailScanner
 =====================
 
-:ref:`Configure <mailscanner>` MailScanner if you have not already done so.
+Enable the custom functions in your MailScanner configuration, edit the configuration
+file /etc/MailScanner/MailScanner.conf and set the following::
+
+	Is Definitely Not Spam = &BaruwaWhitelist
+	Is Definitely Spam = &BaruwaBlacklist
+	Always Looked Up Last = &BaruwaSQL
+	
+Take a look at the :ref:`mailscanner <mailscanner>` configuration instructions for other 
+options.
 
 Configure Baruwa
 ================
 
-Edit the baruwa_settings.py file and make the changes to suit
+Edit the settings.py file and make the baruwa specific changes to suit
 your install::
 
 	# baruwa_path=$(python2.4 -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
-	# vi $baruwa_path/baruwa_setttings.py
+	# vi $baruwa_path/setttings.py
 
 Thats it point your browser to the apache virtualhost url.

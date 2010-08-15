@@ -51,7 +51,7 @@ Edit extras/BaruwaLists.pm and set the variables::
 	my ($db_user) = 'baruwa';
 	my ($db_pass) = '';
 
-Copy it to the MailScanner custom functions directory::
+Copy it to the MailScanner custom functions directory (No required if installing from deb or rpm)::
 
 	# confdir=$(/usr/sbin/Quick.Peek 'Custom Functions Dir' /etc/MailScanner/MailScanner.conf)
 	# cp extras/BaruwaLists.pm $confdir/
@@ -79,4 +79,4 @@ Baruwa Lists::
 
 	Aug 9 18:32:42 localhost MailScanner[27260]: Starting Baruwa whitelists 
 	Aug 9 18:32:42 localhost MailScanner[27260]: Read 6 whitelist items 
-	Aug 9 18:32:42 localhost MailScanner[27260]: Ip blocks configured 192.168.1.0/24 192.168.2.0/24 xxx.xx.xxx.0/26
+	Aug 9 18:32:42 localhost MailScanner[27260]: Ip blocks whitelisted 192.168.1.0/24 192.168.2.0/24 xxx.xx.xxx.0/26

@@ -19,19 +19,28 @@ Instructions on installing it can be found on `EPEL <http://fedoraproject.org/wi
 Baruwa rpm install
 ==================
 
-Download the rpm from `topdog-software.com <http://www.topdog-software.com/oss/baruwa/>`_,
 Due to the fact that the shipped MySQLdb module shipped on 
 Centos/RHEL is too old, do not install python-mysql install 
-MySQLdb from source instead. 
+MySQLdb from source instead::
 
-Instructions on installing MySQLdb from source can be found 
-`mydjangoblog.com <http://mydjangoblog.com/2008/04/24/deploying-and-tuning-django/>`_
+	# cd /usr/local/src
+	# wget http://garr.dl.sourceforge.net/sourceforge/mysql-python/MySQL-python-1.2.2.tar.gz
+	# tar xvzf MySQL-python-1.2.2.tar.gz
+	# yum install gcc python-devel mysql-devel
+	# cd MySQL-python-1.2.2
+	# python setup.py build
+	# python setup.py install
 
-Now proceed and install the dependencies::
+Now proceed and install the other dependencies::
 
-    # yum install python-IPy python-GeoIP Django mod_wsgi
+    # yum install python-IPy python-GeoIP Django mod_wsgi python-uuid
 
-Install Baruwa::
+Install the python-reportlab rpm from `topdog-software <http://www.topdog-software.com/oss/python-reportlab/>`_::
+
+	# rpm -Uvh python-reportlab-2.3-2.i386.rpm
+
+Download the Baruwa rpm from `topdog-software.com <http://www.topdog-software.com/oss/baruwa/>`_
+and install::
 
     # rpm -Uvh --nodeps baruwa-<version>.noarch.rpm
 
@@ -64,10 +73,10 @@ Create the baruwa admin user and populate the database::
 
 	# $baruwa_path/baruwa/manage.py syncdb       
 
-Edit the baruwa_settings.py file and make the changes to suit
+Edit the settings.py file and make the baruwa specific changes to suit
 your install::
 
-	# vi $baruwa_path/baruwa_setttings.py
+	# vi $baruwa_path/setttings.py
 
 **Setup Web server**
 

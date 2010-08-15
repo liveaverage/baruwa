@@ -15,7 +15,7 @@ Quarantine management
     manage.py cleanquarantine
 
 Deletes quarantined files older than QUARANTINE_DAYS_TO_KEEP. QUARANTINE_DAYS_TO_KEEP is set in
-the baruwa_settings.py file
+the settings.py file
 
 Quarantine reports
 ==================

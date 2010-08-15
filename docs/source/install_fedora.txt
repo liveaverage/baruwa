@@ -47,10 +47,10 @@ Create the baruwa admin user and populate the database::
 
 	# $baruwa_path/baruwa/manage.py syncdb       
 
-Edit the baruwa_settings.py file and make the changes to suit
+Edit the settings.py file and make the baruwa specific changes to suit
 your install::
 
-	# vi $baruwa_path/baruwa_setttings.py
+	# vi $baruwa_path/setttings.py
 
 **Setup Web server**
 

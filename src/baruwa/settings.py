@@ -109,8 +109,21 @@ AUTH_PROFILE_MODULE = 'accounts.userprofile'
 INTERNAL_IPS = ('127.0.0.1',)
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 28800
+# Baruwa only setting
 
-from baruwa_settings import *
+# mailscanner configuration file
+MS_CONFIG = '/etc/MailScanner/MailScanner.conf'
+
+# Number of days to keep in the quarantine
+QUARANTINE_DAYS_TO_KEEP = 60
+
+# The url to use in your quarantine report links
+QUARANTINE_REPORT_HOSTURL = 'http://baruwa-alpha.local'
+
+# spam assassin rules directories
+SA_RULES_DIRS = ['/usr/share/spamassassin','/etc/mail/spamassassin']
+# End Baruwa only settings
+
 try:
     from baruwa.dev_settings import *
 except:
