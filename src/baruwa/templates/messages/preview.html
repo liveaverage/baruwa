@@ -17,26 +17,26 @@
 {% load messages_extras %}
     <div class="LightBlue_div">
         <div class="mailitem">From:</div>
-        <div class="maildetail">{{message.from|escape}}</div>
+        <div class="maildetail">{{message.headers.from|escape}}</div>
     </div>
     <div class="LightBlue_div">
         <div class="mailitem">To:</div>
-        <div class="maildetail">{{message.to|escape}}</div>
+        <div class="maildetail">{{message.headers.to|escape}}</div>
     </div>
     <div class="LightBlue_div">
         <div class="mailitem">Subject:</div>
-        <div class="maildetail">{{message.subject|escape}}</div>
+        <div class="maildetail">{{message.headers.subject|escape}}</div>
     </div>
     <div class="LightBlue_div">
         <div class="mailitem">Date:</div>
-        <div class="maildetail">{{message.date|escape}}</div>
+        <div class="maildetail">{{message.headers.date|escape}}</div>
     </div>
     {% if message.attachments %}
-    <div class="LightBlue_div">
+    <div class="lightblue_div">
         <div class="mailitem">Attachments:</div>
         <div class="maildetail">
             {% for name in message.attachments %}
-            <a href="{% url download-attachment message_id=message_id, attachment_id=forloop.counter %}">{{name}}</a>&nbsp;
+            <img src="{{ MEDIA_URL }}imgs/dl.png" />&nbsp;<a href="{% url download-attachment message_id=message_id, attachment_id=forloop.counter %}">{{ name.filename }}</a>&nbsp;
             {%endfor%}
         </div>
     </div>
@@ -46,13 +46,17 @@
     </div>
     <div class="lightblue_div">
         <div id="mailpreview">
-            {{message.body|linebreaksbr|escape}}
+            {% ifequal message.parts.0.type "text" %}
+            {{message.parts.0.content|linebreaksbr|escape}}
+            {% else %}
+            {{ message.parts.0.content|safe }}	
+            {% endifequal %}
         </div>
     </div>
     <div class="LightBlue_div">
         <div class="spanrow">
-            {% if message.has_html %}
-            <small>:: Displaying text version of the HTML message due to security settings</small>
+            {% if message.parts.1 %}
+            <small>:: Message is multipart <a href="">view</a> the other part</small>
             {%endif%}
         </div>
     </div>

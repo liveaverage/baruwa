@@ -21,128 +21,10 @@
 
 import smtplib, os, re, socket, httplib
 from subprocess import Popen, PIPE
-from email.Header import decode_header
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from baruwa.utils.misc import get_config_option
 
-def return_attachment(msg, msg_id):
-    "Returns an attachment from a mime file"
-
-    from StringIO import StringIO
-
-    num = 1
-    msg_id = int(msg_id)
-    for message_part in msg.walk():
-        content_disposition  = message_part.get("Content-Disposition", None)
-        if content_disposition:
-            dispositions  = content_disposition.strip().split(";")
-            if bool(content_disposition  and (
-                dispositions[0].lower()  == "attachment")):
-                if msg_id == num:
-                    file_data  = message_part.get_payload(decode=True)
-                    attachment  = StringIO(file_data)
-                    attachment.content_type =  message_part.get_content_type()
-                    attachment.size = len(file_data)
-                    attachment.create_date =  None
-                    attachment.name = None
-                    attachment.mod_date =  None
-                    attachment.read_date =  None
-                    for param in dispositions[1:]:
-                        name, value =  param.split("=")
-                        name = name.lower().strip()
-                        if name == "filename":
-                            attachment.name = value
-                        elif name == "create-date":
-                            attachment.create_date =  value
-                        elif name == "modification-date":
-                            attachment.mod_date =  value
-                        elif name == "read-date":
-                            attachment.read_date =  value
-                    return attachment
-                num += 1
-    return None
-
-def parse_attachment(part):
-    """
-    Parses an email part and returns attachment name
-    """
-    attachment = ""
-    content_disposition = part.get("Content-Disposition", None)
-    if content_disposition:
-        dispositions = content_disposition.strip().split(";")
-        if bool(content_disposition and
-            (dispositions[0].lower() == "attachment")):
-            for param in dispositions[1:]:
-                name, value = param.split("=")
-                if name.lower().strip() == "filename":
-                    attachment = value
-            return attachment
-    return None
-
-def get_header(header_text, default="ascii"):
-    """
-    Returns the headers from text
-    """
-    header_sections = []
-    try:
-        headers = decode_header(header_text)
-        header_sections = [
-                unicode(text, charset or default) 
-                for text, charset in headers
-            ]
-    except:
-        pass
-    return u"".join(header_sections)
-
-def parse_email(msg):
-    """
-    Parses an email and returns a dict representing
-    the message
-    """
-    from django.utils.html import strip_tags
-    
-    attachments = []
-    body = None
-    html = None
-    has_html = False
-
-    for part in msg.walk():
-        attach = parse_attachment(part)
-        if attach:
-            attachments.append(attach)
-        elif part.get_content_type() == "text/plain":
-            if body is None:
-                body = ""
-            try:
-                body += unicode(
-                    part.get_payload(decode=True), 
-                    part.get_content_charset(), 'replace'
-                ).encode('utf8', 'replace')
-            except:
-                pass
-        elif part.get_content_type() == "text/html":
-            has_html = True
-            if html is None:
-                html = ""
-            try:
-                html += unicode(
-                        part.get_payload(decode=True), 
-                        part.get_content_charset(), 'replace'
-                    ).encode('utf8', 'replace')
-                body = strip_tags(html)
-            except:
-                pass
-    return {
-        'subject': get_header(msg.get('Subject')),
-        'to': get_header(msg.get('To')),
-        'from': get_header(msg.get('From')),
-        'date': get_header(msg.get('Date')),
-        'has_html': has_html,
-        'body': body,
-        'html': html,
-        'attachments': attachments,
-    }
 
 def get_message_path(qdir, date, message_id):
     """
@@ -177,6 +59,7 @@ def release_mail(mail_path, to_addr, from_addr):
         mail_file = open(mail_path)
         for line in mail_file:
             msg = msg + line
+        mail_file.close()
         try:
             server = smtplib.SMTP(host)
             server.sendmail(from_addr, to_addr, msg)

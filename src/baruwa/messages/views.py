@@ -32,10 +32,11 @@ from django.template import RequestContext
 from baruwa.messages.models import Message, Release, Archive
 from baruwa.messages.forms import QuarantineProcessForm
 from baruwa.utils.process_mail import search_quarantine, host_is_local
-from baruwa.utils.process_mail import release_mail, parse_email
+from baruwa.utils.process_mail import release_mail, remote_release
 from baruwa.utils.process_mail import remote_attachment_download, \
-remote_preview, remote_process, return_attachment, sa_learn, remote_release
+remote_preview, remote_process, sa_learn
 from baruwa.utils.misc import jsonify_msg_list, apply_filter
+from baruwa.utils.mail import EmailParser
 import re, urllib
 
 @login_required
@@ -262,8 +263,9 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                 fip = open(file_name)
                 msg = email.message_from_file(fip)
                 fip.close()
+                email_parser = EmailParser()
                 if is_attach:
-                    message = return_attachment(msg, attachment_id)
+                    message = email_parser.get_attachment(msg, attachment_id)
                     if message:
                         import base64
                         attachment_data = message.getvalue()
@@ -284,7 +286,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                     else:
                         raise Http404
                 else:
-                    message = parse_email(msg)
+                    message = email_parser.parse_msg(msg)
                 if request.is_ajax():
                     response = simplejson.dumps({'message':message,
                         'message_id':message_details.id})

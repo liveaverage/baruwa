@@ -65,7 +65,7 @@ Installation
 ==
 Baruwa is installed in the usual way
 
-    python setup install
+    python setup.py install
 
 
 Packages
@@ -78,3 +78,8 @@ Documentation
 ==
 Documentation is included in the docs directory of the tar ball and can also be accessed 
 [online](http://www.baruwa.org/)
+
+
+Support
+==
+Subscribe to the [Baruwa mailing list](http://lists.baruwa.org/mailman/listinfo/baruwa)
