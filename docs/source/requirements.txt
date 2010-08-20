@@ -14,6 +14,7 @@ Baruwa requirements
 	+ `MySQL <http://www.mysql.com>`_
 	+ `Dojo toolkit <http://dojotoolkit.org/>`_
 	+ `Reportlab <http://www.reportlab.org/>`_
+	+ `Lxml <http://codespeak.net/lxml/>`_
 	+ `UUID <http://pypi.python.org/pypi/uuid/>`_ (Only for python 2.4)
 	+ `Sphinx <http://sphinx.pocoo.org/>`_ (Optional - to build documentation)
 

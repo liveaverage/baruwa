@@ -10,7 +10,7 @@ Source0:        http://www.topdog-software.com/oss/files/%{name}-%{version}a.tar
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel, python-setuptools, python-sphinx
-Requires:       Django >= 1.1.1, MySQL-python, python-GeoIP, python-IPy, httpd, dojo, mailscanner, python-reportlab #, python-uuid
+Requires:       Django >= 1.1.1, MySQL-python, python-GeoIP, python-IPy, httpd, dojo, mailscanner, python-reportlab, python-lxml #, python-uuid
 
 %description
 Baruwa (swahili for letter or mail) is a web 2.0 MailScanner

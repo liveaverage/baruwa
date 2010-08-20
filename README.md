@@ -52,6 +52,7 @@ Requirements
 + MySQL
 + Dojo toolkit
 + Reportlab
++ Lxml
 + UUID (python 2.4 only)
 + Sphinx (optional for building docs)
 

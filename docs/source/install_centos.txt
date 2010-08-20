@@ -33,7 +33,7 @@ MySQLdb from source instead::
 
 Now proceed and install the other dependencies::
 
-    # yum install python-IPy python-GeoIP Django mod_wsgi python-uuid
+    # yum install python-IPy python-GeoIP Django mod_wsgi python-uuid python-lxml
 
 Install the python-reportlab rpm from `topdog-software <http://www.topdog-software.com/oss/python-reportlab/>`_::
 
