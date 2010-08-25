@@ -56,9 +56,8 @@ def release_mail(mail_path, to_addr, from_addr):
     msg = ""
     host = settings.EMAIL_HOST
     if os.path.exists(mail_path):
-        mail_file = open(mail_path)
-        for line in mail_file:
-            msg = msg + line
+        mail_file = open(mail_path, 'r')
+        msg = mail_file.read()
         mail_file.close()
         try:
             server = smtplib.SMTP(host)
@@ -136,7 +135,7 @@ def rest_request(host, resource, method, headers, params=None):
 
     try:
         conn = httplib.HTTPConnection(host)
-        req = conn.request(method, resource, params, headers)
+        conn.request(method, resource, params, headers)
         response = conn.getresponse()
         data = response.read()
         conn.close()
@@ -153,15 +152,18 @@ def rest_request(host, resource, method, headers, params=None):
 
 #TODO
 # Use a Class for DRY
-def remote_attachment_download(host, cookie, message_id, attachment_id, archived):
+def remote_attachment_download(host, cookie, message_id, 
+                                attachment_id, archived):
     """
     Returns a email attachment from a remote node using a RESTFUL request
     """
     headers = {'Cookie': cookie, 'X-Requested-With': 'XMLHttpRequest'}
     if archived:
-        resource = reverse('archive-download-attachment', args=[message_id, attachment_id])
+        resource = reverse('archive-download-attachment', 
+                        args=[message_id, attachment_id])
     else:
-        resource = reverse('download-attachment', args=[message_id, attachment_id])
+        resource = reverse('download-attachment', 
+                        args=[message_id, attachment_id])
     return rest_request(host, resource, 'GET', headers)
 
 def remote_preview(host, cookie, message_id, archived):

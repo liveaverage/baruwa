@@ -34,7 +34,7 @@ def embed_img(email, img_id, img_data):
     img.add_header('Content-Disposition', 'inline; filename=logo.jpg')
     email.attach(img)
 
-def generate_release_records(query_list, user):
+def generate_release_records(query_list):
     """
     Creates the DB records to be lookedup by the release
     mechanisim
@@ -71,6 +71,7 @@ class Command(NoArgsCommand):
         from django.contrib.auth.models import User
         from django.core.mail import EmailMultiAlternatives
         from django.conf import settings
+        from django.db.models import Q
         from baruwa.messages.models import Message
         from baruwa.accounts.models import UserProfile
         import datetime
@@ -81,7 +82,8 @@ class Command(NoArgsCommand):
         url = getattr(settings, 'QUARANTINE_REPORT_HOSTURL', '')
         a_day = datetime.timedelta(days=1)
         yesterday = datetime.date.today() - a_day
-        from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'postmaster@localhost')
+        from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 
+                            'postmaster@localhost')
         logo_path = getattr(settings, 'MEDIA_ROOT', '') + '/imgs/css/logo.jpg'
         logo = open(logo_path, 'rb').read()
         print "=== Processing quarantine notifications ==="
@@ -89,10 +91,13 @@ class Command(NoArgsCommand):
             if email_re.match(user.email) or email_re.match(user.username):
                 spam_list = Message.quarantine_report.for_user(user).values(
                     'id', 'timestamp', 'from_address', 'to_address', 'subject'
-                ).exclude(timestamp__lt=yesterday).exclude(spam=0).order_by('sascore')[:25]
+                ).exclude(timestamp__lt=yesterday).exclude(
+                spam=0).order_by('sascore')[:25]
                 policy_list = Message.quarantine_report.for_user(user).values(
                     'id', 'timestamp', 'from_address', 'to_address', 'subject'
-                ).exclude(timestamp__lt=yesterday).exclude(spam=1).order_by('sascore')[:25]
+                ).exclude(timestamp__lt=yesterday).exclude(Q(spam=1) | 
+                Q(nameinfected=0) | Q(otherinfected=0) | Q(virusinfected=0)
+                ).order_by('sascore')[:25]
                 subject = 'Baruwa quarantine report for %s' % user.username
                 
                 if email_re.match(user.username):
@@ -120,7 +125,7 @@ class Command(NoArgsCommand):
                     try:
                         msg.send()
                         for query_list in [spam_list, policy_list]:
-                            generate_release_records(query_list, user)
+                            generate_release_records(query_list)
 
                         print "sent quarantine report to "+to_addr
                     except:

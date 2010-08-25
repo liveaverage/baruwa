@@ -36,6 +36,20 @@
         <div class="search">
         	<div class="Link">
                 <ul>
+					<li>
+						System status <a href="{% url status-index %}">
+						{% if baruwa_status %}
+						<img src="{{ MEDIA_URL }}imgs/domain-active.png" alt="OK" />
+						{% else %}
+						<img src="{{ MEDIA_URL }}imgs/domain-inactive.png" alt="FAULTY" />
+						{% endif %}
+						</a>
+					</li>
+					<li>
+						Msgs: <a href="{% url status-index %}">
+								Total {{baruwa_mail_total}}, Spam {{baruwa_spam_total}}, Virus {{baruwa_virus_total}}
+							</a>
+					</li>
 					{% if user.is_authenticated %}
 					<li>Signed in as <a href="{% url user-profile user.id %}">{{user.username}}</a></li>
                     <li><a href="{% url logout %}">Logout</a></li>

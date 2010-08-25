@@ -66,7 +66,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
-    'django.core.context_processors.request'
+    'django.core.context_processors.request',
+    'baruwa.utils.context_processors.status',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -113,6 +114,9 @@ SESSION_COOKIE_AGE = 28800
 
 # mailscanner configuration file
 MS_CONFIG = '/etc/MailScanner/MailScanner.conf'
+
+# mailscanner Quick.Peek program location
+MS_QUICKPEEK = '/usr/sbin/Quick.Peek'
 
 # Number of days to keep in the quarantine
 QUARANTINE_DAYS_TO_KEEP = 60

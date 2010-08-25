@@ -22,6 +22,7 @@
 from django.template.defaultfilters import force_escape
 from django.conf import settings
 from django.db.models import Q
+import subprocess
 
 def jsonify_msg_list(element):
     """
@@ -318,10 +319,9 @@ def get_active_filters(filter_list, active_filters):
                 'filter_by': filter_by[int(filter_item['filter'])],
                 'filter_value': filter_item['value']}
                 )
-
+                            
 def get_processes(process_name):
     "Gets running processes by process name"
-    import subprocess
     pipe1 = subprocess.Popen(
         'ps ax',shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     pipe2 = subprocess.Popen(
@@ -342,21 +342,56 @@ def get_config_option(search_option):
     Returns a MailScanner config setting from the
     config file
     """
+    config = getattr(
+                settings, 'MS_CONFIG', '/etc/MailScanner/MailScanner.conf')
+    quickpeek = getattr(settings, 'MS_QUICKPEEK', '/usr/sbin/Quick.Peek')
+    # comment_char = '#'
+    # option_char =  '='
+    # value = ''
+    # if os.path.exists(config):
+    #     config_file = open(config, 'r')
+    #     for line in config_file:
+    #         if comment_char in line:
+    #             line, comment = line.split(comment_char, 1)
+    #         if option_char in line:
+    #             option, value = line.split(option_char, 1)
+    #             option = option.strip()
+    #             value = value.strip()
+    #             if search_option == option:
+    #                 break
+    #     config_file.close()
+    # return value
+    cmd = "%s '%s' %s" % (quickpeek, search_option, config)
+    pipe1 = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
+    return pipe1.stdout.read().strip()
+
+def get_sys_status(request):
+    "Returns system status"
     import os
-    config = getattr(settings, 'MS_CONFIG', '/etc/MailScanner/MailScanner.conf')
-    comment_char = '#'
-    option_char =  '='
-    value = ''
-    if os.path.exists(config):
-        config_file = open(config)
-        for line in config_file:
-            if comment_char in line:
-                line, comment = line.split(comment_char, 1)
-            if option_char in line:
-                option, value = line.split(option_char, 1)
-                option = option.strip()
-                value = value.strip()
-                if search_option == option:
-                    break
-        config_file.close()
-    return value
+    from baruwa.messages.models import MessageStats
+
+    addrs = []
+    act = 3
+
+    if not request.user.is_superuser:
+        addrs = request.session['user_filter']['addresses']
+        act = request.session['user_filter']['account_type']
+
+    data = MessageStats.objects.get(request.user, addrs, act)
+
+    val1, val2, val3 = os.getloadavg()
+
+    scanners = get_processes('MailScanner')
+    mas = get_config_option('MTA')
+    mta = get_processes(mas)
+    clamd = get_processes('clamd')
+
+    if 0 in [scanners, mta, clamd] or val1 > 10:
+        status = False
+    else:
+        status = True
+
+    return {'baruwa_status':status, 'baruwa_mail_total':data.total, 
+            'baruwa_spam_total':data.spam_mail, 
+            'baruwa_virus_total':data.virii}    

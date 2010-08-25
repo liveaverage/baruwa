@@ -69,7 +69,7 @@ def run_query(query_field, exclude_kwargs, order_by, request, active_filters):
 
 def gen_dynamic_raw_query(filter_list):
     "generates a dynamic query"
-    sql = []
+    sql = [] 
     asql = []
     avals = []
     osql = []

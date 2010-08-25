@@ -80,23 +80,30 @@ class Command(NoArgsCommand):
         ]
         dirs.sort()
         for direc in dirs:
-            print "== Processing directory "+os.path.join(quarantine_dir, direc)+" =="
-            ids = [f for f in os.listdir(os.path.join(quarantine_dir, direc)) 
-                if f not in ignore_dirs]
-            if os.path.exists(os.path.join(quarantine_dir, direc, 'spam')):
-                ids.extend([f for f in os.listdir(os.path.join(quarantine_dir, direc, 'spam'))])
-            if os.path.exists(os.path.join(quarantine_dir, direc, 'mcp')):
-                ids.extend([f for f in os.listdir(os.path.join(quarantine_dir, direc, 'mcp'))])
-            if os.path.exists(os.path.join(quarantine_dir, direc, 'nonspam')):
-                ids.extend([f for f in os.listdir(os.path.join(quarantine_dir, direc, 'nonspam'))])
+            process_path = os.path.join(quarantine_dir, direc)
+            print "== Processing directory "+process_path+" =="
+            ids = [f for f in os.listdir(process_path) if f not in ignore_dirs]
+            
+            if os.path.exists(os.path.join(process_path, 'spam')):
+                ids.extend(
+                [f for f in os.listdir(os.path.join(process_path, 'spam'))])
+                
+            if os.path.exists(os.path.join(process_path, 'mcp')):
+                ids.extend(
+                [f for f in os.listdir(os.path.join(process_path, 'mcp'))])
+                
+            if os.path.exists(os.path.join(process_path, 'nonspam')):
+                ids.extend(
+                [f for f in os.listdir(os.path.join(process_path, 'nonspam'))])
+                
             print ids
             Message.objects.filter(pk__in=ids).update(isquarantined=0)
-            if (os.path.isabs(os.path.join(quarantine_dir, direc)) and 
-                (not os.path.islink(os.path.join(quarantine_dir, direc)))):
-                print "== Removing directory   "+os.path.join(quarantine_dir, direc)+" =="
+            if (os.path.isabs(process_path) and 
+                (not os.path.islink(process_path))):
+                print "== Removing directory   "+process_path+" =="
                 try:
-                    shutil.rmtree(os.path.join(quarantine_dir, direc))
+                    shutil.rmtree(process_path)
                 except:
-                    print "Failed to remove "+os.path.join(quarantine_dir, direc)
+                    print "Failed to remove "+process_path
             else:
-                print "The directory "+os.path.join(quarantine_dir, direc)+" is a symbolic link skipping"
+                print "The directory "+process_path+" is a sym link skipping"

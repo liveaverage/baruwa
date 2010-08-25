@@ -85,7 +85,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             if quarantine_type == 'spam':
                 message_list = message_list.filter(spam=1)
             if quarantine_type == 'policyblocked':
-                message_list = message_list.filter(spam=0)
+                message_list = message_list.filter(spam=0) 
         else:
             message_list = Message.messages.for_user(request).values(
             'id', 'timestamp', 'from_address', 'to_address', 'subject',
@@ -198,7 +198,8 @@ def detail(request, message_id, archive=False):
                         #salean
                         salearn_opts = ('spam', 'ham', 'forget')
                         template = "messages/salearn.html"
-                        salearn = int(quarantine_form.cleaned_data['salearn_as'])
+                        salearn = int(
+                                    quarantine_form.cleaned_data['salearn_as'])
                         if salearn <= 2:
                             status = sa_learn(file_name, salearn_opts[salearn])
                             if not status['success']:
@@ -260,7 +261,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
         if not file_name is None:
             try:
                 import email
-                fip = open(file_name)
+                fip = open(file_name, 'r')
                 msg = email.message_from_file(fip)
                 fip.close()
                 email_parser = EmailParser()
@@ -275,10 +276,11 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                             'attachment':base64.encodestring(attachment_data),
                             'mimetype':mimetype, 'name':message.name})
                             response = HttpResponse(json,
-                                content_type='application/javascript; charset=utf-8')
+                            content_type='application/javascript; charset=utf-8')
                             message.close()
                             return response
-                        response = HttpResponse(attachment_data, mimetype=mimetype)
+                        response = HttpResponse(
+                            attachment_data, mimetype=mimetype)
                         response['Content-Disposition'] = (
                             'attachment; filename=%s' % message.name)
                         message.close()
@@ -302,8 +304,9 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
     else:
         #remote
         if is_attach:
-            remote_response = remote_attachment_download(message_details.hostname,
-                request.META['HTTP_COOKIE'], message_id, attachment_id, archive)
+            remote_response = remote_attachment_download(
+                message_details.hostname, request.META['HTTP_COOKIE'], 
+                message_id, attachment_id, archive)
             if remote_response['success']:
                 import base64
                 data = remote_response['response']
@@ -340,7 +343,8 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
 def search(request):
     "Redirect to message details"
     if (request.method == 'POST') and request.REQUEST['message_id']:
-        message_details = get_object_or_404(Message, id=request.REQUEST['message_id'])
+        message_details = get_object_or_404(Message, 
+                                    id=request.REQUEST['message_id'])
         return HttpResponseRedirect(reverse('message-detail',
             args=[message_details.id]))
     return HttpResponseRedirect(reverse('main-index'))
@@ -391,4 +395,4 @@ def auto_release(request, message_uuid, template='messages/release.html'):
     return render_to_response(template,
         {'message_id':release_record.message_id,
         'release_address':message_details.to_address, 'success':success},
-     context_instance=RequestContext(request))
+        context_instance=RequestContext(request))

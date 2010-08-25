@@ -24,7 +24,7 @@ from lxml.html.clean import Cleaner
 import re, codecs
 
 NOTFOUND = object()
-UNCLEANTAGS = ['html', 'head', 'link', 'img', 'a']
+UNCLEANTAGS = ['html', 'head', 'link', 'img', 'a', 'body']
 
 class EmailParser(object):
     """
@@ -162,5 +162,5 @@ class EmailParser(object):
         "Clean up html"
         cleaner = Cleaner(remove_tags=UNCLEANTAGS)
         return cleaner.clean_html(msg)
-        
 
+        
