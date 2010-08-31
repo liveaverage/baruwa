@@ -20,7 +20,7 @@
 #
 
 from django.db.models import Count, Sum, Q
-from baruwa.messages.models import Message
+from baruwa.messages.models import Message, Recipient
 from baruwa.utils.misc import apply_filter
 from baruwa.utils.graphs import PIE_COLORS
 
@@ -59,6 +59,14 @@ def run_query(query_field, exclude_kwargs, order_by, request, active_filters):
     #         data = Message.messages.to_user(request).values(query_field).\
     #         exclude(**exclude_kwargs).annotate(num_count=Count(query_field),
     #        size=Sum('size')).order_by(order_by)
+    # if query_field in ['to_address', 'to_domain']:
+    #     if not request.session.get('filter_by', False):
+    #         data = Recipient.messages.for_user(request).values(
+    #                 query_field).exclude(**exclude_kwargs).annotate(
+    #                 num_count=Count(query_field), size=Sum('message__size')
+    #                 ).order_by(order_by)
+    #         return data[:10]
+            
     data = Message.messages.for_user(request).values(query_field).exclude(
     **exclude_kwargs).annotate(num_count=Count(query_field),
     size=Sum('size')).order_by(order_by)
@@ -69,13 +77,14 @@ def run_query(query_field, exclude_kwargs, order_by, request, active_filters):
 
 def gen_dynamic_raw_query(filter_list):
     "generates a dynamic query"
-    sql = [] 
+    sql = []
     asql = []
     avals = []
     osql = []
     ovals = []
     nosql = []
-    novals = []
+    novals = [] 
+
     for filter_item in filter_list:
         if filter_item['filter'] == 1:
             tmp = "%s = %%s" % filter_item['field']

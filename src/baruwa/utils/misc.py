@@ -68,6 +68,38 @@ def apply_filter(model, request, active_filters):
         model = gen_dynamic_query(model, filter_list, active_filters)
     return model
 
+def place_positive_vars(key, largs, kwargs, lkwargs, value):
+    "utility function"
+    if kwargs.has_key(key):
+        kwords = {str(key):value}
+        largs.append(Q(**kwords))
+        kwords = {str(key):str(kwargs[key])}
+        largs.append(Q(**kwords))
+        lkwargs.update(kwords)
+        del kwargs[key]
+    else:
+        kwords = {str(key):value}
+        if lkwargs.has_key(key):
+            largs.append(Q(**kwords))
+        else:
+            kwargs.update(kwords)
+            
+def place_negative_vars(key, nargs, nkwargs, lnkwargs, value):
+    "utility function"
+    if nkwargs.has_key(key):
+        kwords = {str(key):value}
+        nargs.append(Q(**kwords))
+        kwords = {str(key):str(nkwargs[key])}
+        nargs.append(Q(**kwords))
+        lnkwargs.update(kwords)
+        del nkwargs[key]
+    else:
+        kwords = {str(key):value}
+        if lnkwargs.has_key(key):
+            nargs.append(Q(**kwords))
+        else:
+            nkwargs.update(kwords)
+
 def gen_dynamic_query(model, filter_list, active_filters=None):
     "build a dynamic query"
     from baruwa.reports.forms import FILTER_ITEMS, FILTER_BY
@@ -77,195 +109,54 @@ def gen_dynamic_query(model, filter_list, active_filters=None):
     lnkwargs = {}
     nargs = []
     largs = []
+    
     filter_items = to_dict(list(FILTER_ITEMS))
     filter_by = to_dict(list(FILTER_BY))
+
     for filter_item in filter_list:
+        value = str(filter_item['value'])
         if filter_item['filter'] == 1:
             tmp = "%s__exact" % filter_item['field']
-            if kwargs.has_key(tmp):
-                kwords = {str(tmp):str(filter_item['value'])}
-                largs.append(Q(**kwords))
-                kwords = {str(tmp):str(kwargs[tmp])}
-                largs.append(Q(**kwords))
-                lkwargs.update(kwords)
-                del kwargs[tmp]
-            else:
-                kwords = {str(tmp):str(filter_item['value'])}
-                if lkwargs.has_key(tmp):
-                    largs.append(Q(**kwords))
-                else:
-                    kwargs.update(kwords)
+            place_positive_vars(tmp, largs, kwargs, lkwargs, value)
         if filter_item['filter'] == 2:
             tmp = "%s__exact" % filter_item['field']
-            if nkwargs.has_key(tmp):
-                kwords = {str(tmp):str(filter_item['value'])}
-                nargs.append(Q(**kwords))
-                kwords = {str(tmp):str(nkwargs[tmp])}
-                nargs.append(Q(**kwords))
-                lnkwargs.update(kwords)
-                del nkwargs[tmp]
-            else:
-                kwords = {str(tmp):str(filter_item['value'])}
-                if lnkwargs.has_key(tmp):
-                    nargs.append(Q(**kwords))
-                else:
-                    nkwargs.update(kwords)
+            place_negative_vars(tmp, nargs, nkwargs, lnkwargs, value)
         if filter_item['filter'] == 3:
             tmp = "%s__gt" % filter_item['field']
-            if kwargs.has_key(tmp):
-                kwords = {str(tmp):str(filter_item['value'])}
-                largs.append(Q(**kwords))
-                kwords = {str(tmp):str(kwargs[tmp])}
-                largs.append(Q(**kwords))
-                lkwargs.update(kwords)
-                del kwargs[tmp]
-            else:
-                kwords = {str(tmp):str(filter_item['value'])}
-                if lkwargs.has_key(tmp):
-                    largs.append(Q(**kwords))
-                else:
-                    kwargs.update(kwords)
+            place_positive_vars(tmp, largs, kwargs, lkwargs, value)
         if filter_item['filter'] == 4:
             tmp = "%s__lt" % filter_item['field']
-            if kwargs.has_key(tmp):
-                kwords = {str(tmp):str(filter_item['value'])}
-                largs.append(Q(**kwords))
-                kwords = {str(tmp):str(kwargs[tmp])}
-                largs.append(Q(**kwords))
-                lkwargs.update(kwords)
-                del kwargs[tmp]
-            else:
-                kwords = {str(tmp):str(filter_item['value'])}
-                if lkwargs.has_key(tmp):
-                    largs.append(Q(**kwords))
-                else:
-                    kwargs.update(kwords)
+            place_positive_vars(tmp, largs, kwargs, lkwargs, value)
         if filter_item['filter'] == 5:
             tmp = "%s__icontains" % filter_item['field']
-            if kwargs.has_key(tmp):
-                kwords = {str(tmp):str(filter_item['value'])}
-                largs.append(Q(**kwords))
-                kwords = {str(tmp):str(kwargs[tmp])}
-                largs.append(Q(**kwords))
-                lkwargs.update(kwords)
-                del kwargs[tmp]
-            else:
-                kwords = {str(tmp):str(filter_item['value'])}
-                if lkwargs.has_key(tmp):
-                    largs.append(Q(**kwords))
-                else:
-                    kwargs.update(kwords)
+            place_positive_vars(tmp, largs, kwargs, lkwargs, value)
         if filter_item['filter'] == 6:
             tmp = "%s__icontains" % filter_item['field']
-            if nkwargs.has_key(tmp):
-                kwords = {str(tmp):str(filter_item['value'])}
-                nargs.append(Q(**kwords))
-                kwords = {str(tmp):str(nkwargs[tmp])}
-                nargs.append(Q(**kwords))
-                lnkwargs.update(kwords)
-                del nkwargs[tmp]
-            else:
-                kwords = {str(tmp):str(filter_item['value'])}
-                if lnkwargs.has_key(tmp):
-                    nargs.append(Q(**kwords))
-                else:
-                    nkwargs.update(kwords)
+            place_negative_vars(tmp, nargs, nkwargs, lnkwargs, value)
         if filter_item['filter'] == 7:
             tmp = "%s__regex" % filter_item['field']
-            if kwargs.has_key(tmp):
-                kwords = {str(tmp):str(filter_item['value'])}
-                largs.append(Q(**kwords))
-                kwords = {str(tmp):str(kwargs[tmp])}
-                largs.append(Q(**kwords))
-                lkwargs.update(kwords)
-                del kwargs[tmp]
-            else:
-                kwords = {str(tmp):str(filter_item['value'])}
-                if lkwargs.has_key(tmp):
-                    largs.append(Q(**kwords))
-                else:
-                    kwargs.update(kwords)
+            place_positive_vars(tmp, largs, kwargs, lkwargs, value)
         if filter_item['filter'] == 8:
             tmp = "%s__regex" % filter_item['field']
-            if nkwargs.has_key(tmp):
-                kwords = {str(tmp):str(filter_item['value'])}
-                nargs.append(Q(**kwords))
-                kwords = {str(tmp):str(nkwargs[tmp])}
-                nargs.append(Q(**kwords))
-                lnkwargs.update(kwords)
-                del nkwargs[tmp]
-            else:
-                kwords = {str(tmp):str(filter_item['value'])}
-                if lnkwargs.has_key(tmp):
-                    nargs.append(Q(**kwords))
-                else:
-                    nkwargs.update(kwords)
+            place_negative_vars(tmp, nargs, nkwargs, lnkwargs, value)
         if filter_item['filter'] == 9:
             tmp = "%s__isnull" % filter_item['field']
-            if kwargs.has_key(tmp):
-                kwords = {str(tmp):str('True')}
-                largs.append(Q(**kwords))
-                kwords = {str(tmp):str(kwargs[tmp])}
-                largs.append(Q(**kwords))
-                lkwargs.update(kwords)
-                del kwargs[tmp]
-            else:
-                kwords = {str(tmp):str('True')}
-                if lkwargs.has_key(tmp):
-                    largs.append(Q(**kwords))
-                else:
-                    kwargs.update(kwords)
+            place_positive_vars(tmp, largs, kwargs, lkwargs, value)
         if filter_item['filter'] == 10:
             tmp = "%s__isnull" % filter_item['field']
-            if nkwargs.has_key(tmp):
-                kwords = {str(tmp):str('True')}
-                nargs.append(Q(**kwords))
-                kwords = {str(tmp):str(nkwargs[tmp])}
-                nargs.append(Q(**kwords))
-                lnkwargs.update(kwords)
-                del nkwargs[tmp]
-            else:
-                kwords = {str(tmp):str('True')}
-                if lnkwargs.has_key(tmp):
-                    nargs.append(Q(**kwords))
-                else:
-                    nkwargs.update(kwords)
+            place_negative_vars(tmp, nargs, nkwargs, lnkwargs, value)
         if filter_item['filter'] == 11:
             tmp = "%s__gt" % filter_item['field']
-            if kwargs.has_key(tmp):
-                kwords = {str(tmp):str('0')}
-                largs.append(Q(**kwords))
-                kwords = {str(tmp):str(kwargs[tmp])}
-                largs.append(Q(**kwords))
-                lkwargs.update(kwords)
-                del kwargs[tmp]
-            else:
-                kwords = {str(tmp):str('0')}
-                if lkwargs.has_key(tmp):
-                    largs.append(Q(**kwords))
-                else:
-                    kwargs.update(kwords)
+            place_positive_vars(tmp, largs, kwargs, lkwargs, value)
         if filter_item['filter'] == 12:
             tmp = "%s__exact" % filter_item['field']
-            if kwargs.has_key(tmp):
-                kwords = {str(tmp):str('0')}
-                largs.append(Q(**kwords))
-                kwords = {str(tmp):str(kwargs[tmp])}
-                largs.append(Q(**kwords))
-                lkwargs.update(kwords)
-                del kwargs[tmp]
-            else:
-                kwords = {str(tmp):str('0')}
-                if lkwargs.has_key(tmp):
-                    largs.append(Q(**kwords))
-                else:
-                    kwargs.update(kwords)
+            place_positive_vars(tmp, largs, kwargs, lkwargs, value)
         if not active_filters is None:
             active_filters.append(
                 {
                 'filter_field': filter_items[filter_item['field']],
                 'filter_by': filter_by[int(filter_item['filter'])],
-                'filter_value': filter_item['value']}
+                'filter_value': value}
                 )
     if kwargs:
         model = model.filter(**kwargs)
@@ -288,6 +179,7 @@ def raw_user_filter(user, addresses, account_type):
     dsql = []
     esql = []
     sql = '1 != 1'
+    
     if not user.is_superuser:
         if account_type == 2:
             if addresses:
@@ -391,7 +283,21 @@ def get_sys_status(request):
         status = False
     else:
         status = True
-
+    
+    # if data.spam_mail is None:
+    #         spam = 0
+    #     else:
+    #         spam = data.spam_mail
+    #         
+    #     if data.high_spam is None:
+    #         high_spam = 0
+    #     else:
+    #         high_spam = data.high_spam
+    try:
+        spam = data.spam_mail + data.high_spam
+    except:
+        spam = 0
+        
     return {'baruwa_status':status, 'baruwa_mail_total':data.total, 
-            'baruwa_spam_total':data.spam_mail, 
+            'baruwa_spam_total':spam, 
             'baruwa_virus_total':data.virii}    

@@ -54,3 +54,34 @@ class MailAuthHost(models.Model):
 
     class Meta:
         db_table = 'auth_hosts'
+        
+class ScannerHost(models.Model):
+    "Holds scanning nodes"
+    id = models.AutoField(primary_key=True)
+    address = models.CharField(max_length=255)
+    
+    class Meta:
+        db_table = 'scanners'
+        
+class ConfigSection(models.Model):
+    "MailScanner configuration sections"
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    
+    class Meta:
+        db_table = 'scanner_config_sections'
+    
+class ScannerConfig(models.Model):
+    "Configuration container"
+    id = models.AutoField(primary_key=True)
+    internal = models.CharField(max_length=255)
+    external = models.CharField(max_length=255)
+    display = models.TextField()
+    help = models.TextField()
+    value = models.TextField()
+    section = models.ForeignKey(ConfigSection)
+    host = models.ForeignKey(ScannerHost)
+    
+    class Meta:
+        db_table = 'scanner_config'
+  

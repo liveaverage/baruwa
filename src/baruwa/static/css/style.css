@@ -1080,7 +1080,7 @@ div.blacklist {
 	padding:15px 0 0 5px;    
 }
 
-.Domains_grid_status {
+.Domains_grid_status, .Scanners_grid_status {
 	width:57px;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#005aab;
@@ -1090,7 +1090,7 @@ div.blacklist {
 	padding:15px 0 0 5px;    
 }
 
-.Domains_grid_action {
+.Domains_grid_action, .Scanners_grid_action {
 	width:107px;
 	font-family:Arial, Helvetica, sans-serif;
 	color:#005aab;
@@ -1127,7 +1127,7 @@ div.blacklist {
 	padding:7px 0 7px 5px;    
 }
 
-.Domains_status {
+.Domains_status, .Scanners_status {
 	width:57px;
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:12px;
@@ -1135,7 +1135,7 @@ div.blacklist {
 	padding:7px 0 7px 5px;    
 }
 
-.Domains_action {
+.Domains_action, .Scanners_action {
 	width:107px;
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:12px;
@@ -1143,11 +1143,29 @@ div.blacklist {
 	padding:7px 0 7px 5px;    
 }
 
-.Domains_action_edit, .Domains_action_delete{
+.Domains_action_edit, .Domains_action_delete, .Scanners_action_change{
     width:40px;
     float:left;
     padding:0 3px 0 3px;
     text-align:center;
+}
+
+.Scanners_grid_name {
+	width:750px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 5px;    
+}
+
+.Scanners_name{
+    width:750px;
+    font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	float:left;margin:0px;
+	padding:7px 0 7px 5px
 }
 
 .Status_service{

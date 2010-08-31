@@ -30,9 +30,11 @@ from django.core.urlresolvers import reverse
 from baruwa.utils.decorators import onlysuperusers
 from baruwa.accounts.models import UserAddresses
 from baruwa.config.models import MailHost
-from baruwa.config.forms import  MailHostForm, EditMailHost, DeleteMailHost
+from baruwa.config.forms import  MailHostForm, EditMailHost, DeleteMailHost, \
+InitializeConfigsForm
 from baruwa.utils.misc import jsonify_domains_list
-from baruwa.config.models import MailAuthHost
+from baruwa.config.models import MailAuthHost, ScannerHost, ScannerConfig, \
+ConfigSection
 from baruwa.config.forms import MailAuthHostForm, EditMailAuthHostForm, \
  DeleteMailAuthHostForm
 
@@ -41,7 +43,8 @@ AUTH_TYPES = ['', 'pop3', 'imap', 'smtp']
 
 @login_required
 @onlysuperusers
-def index(request, page=1, direction='dsc', order_by='id', template='config/index.html'):
+def index(request, page=1, direction='dsc', order_by='id', 
+        template='config/index.html'):
     """
     Displays a paginated list of domains mail is processed for
     """
@@ -60,7 +63,7 @@ def index(request, page=1, direction='dsc', order_by='id', template='config/inde
         if page == 'last':
             page = p.num_pages
         po = p.page(page)
-        users = map(jsonify_domains_list, po.object_list)
+        domains = map(jsonify_domains_list, po.object_list)
         page = int(page)
         ap = 2
         sp = max(page - ap, 1)
@@ -74,7 +77,7 @@ def index(request, page=1, direction='dsc', order_by='id', template='config/inde
         'show_first':1 not in pn, 'show_last':p.num_pages not in pn, 
         'app': 'settings', 'list_all':1, 'direction':direction, 
         'order_by':order_by}
-        json = simplejson.dumps({'items':users, 'paginator':pg})
+        json = simplejson.dumps({'items':domains, 'paginator':pg})
         return HttpResponse(json, mimetype='application/javascript')    
     return  object_list(request, template_name=template, queryset=domains, 
         paginate_by=15, page=page, extra_context={'app':'settings', 
@@ -179,7 +182,8 @@ def delete_host(request, host_id, template='config/delete_host.html'):
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
-                return HttpResponseRedirect(reverse('view-domain', args=[go_id]))
+                return HttpResponseRedirect(reverse('view-domain', 
+                                            args=[go_id]))
             except:
                 msg = ('Delivery SMTP server: %s could not be deleted' 
                     % host.address)
@@ -251,7 +255,7 @@ def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
         form = MailAuthHostForm(initial = {'useraddress': domain.id})
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
-    
+
 @login_required
 @onlysuperusers
 def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
@@ -265,7 +269,8 @@ def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
             try:
                 saved_host = form.save()
                 msg = 'External authentication %s: on host %s for domain %s has been updated successfully' % (
-                    auth_types[saved_host.protocol], saved_host.address, saved_host.useraddress.address)
+                    AUTH_TYPES[saved_host.protocol], saved_host.address, 
+                    saved_host.useraddress.address)
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
                     return HttpResponse(response, 
@@ -284,10 +289,11 @@ def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
         form = EditMailAuthHostForm(instance=host)
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
-    
+
 @login_required
 @onlysuperusers
-def delete_auth_host(request, host_id, template='config/delete_auth_host.html'):
+def delete_auth_host(request, host_id, 
+                    template='config/delete_auth_host.html'):
     'Deletes an external auth host'
     host = get_object_or_404(MailAuthHost, id=host_id)
     
@@ -297,7 +303,8 @@ def delete_auth_host(request, host_id, template='config/delete_auth_host.html'):
             try:
                 go_id = host.useraddress.id
                 msg = 'External authentication %s: on host %s for domain %s has been deleted' % (
-                    AUTH_TYPES[host.protocol], host.address, host.useraddress.address)
+                    AUTH_TYPES[host.protocol], host.address, 
+                    host.useraddress.address)
                 host.delete()
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
@@ -307,7 +314,8 @@ def delete_auth_host(request, host_id, template='config/delete_auth_host.html'):
                 return HttpResponseRedirect(reverse('view-domain', args=[go_id]))
             except:
                 msg = 'External authentication %s: on host %s for domain %s could not be deleted' % (
-                    AUTH_TYPES[host.protocol], host.address, host.useraddress.address)
+                    AUTH_TYPES[host.protocol], host.address, 
+                    host.useraddress.address)
                 if request.is_ajax():
                     response = simplejson.dumps({'success':False, 'html':msg})
                     return HttpResponse(response, 
@@ -317,4 +325,96 @@ def delete_auth_host(request, host_id, template='config/delete_auth_host.html'):
         form = DeleteMailAuthHostForm(instance=host)
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
+
+@login_required
+@onlysuperusers
+def list_scanners(request, page=1, direction='dsc', order_by='id', 
+                template='config/list_scanners.html'):
+    'lists the scanning nodes'
+    scanners = ScannerHost.objects.values('id', 'address')
+    configs = ScannerConfig.objects.values('value')[:1]
     
+    if request.is_ajax():
+        p = Paginator(scanners, 15)
+        if page == 'last':
+            page = p.num_pages
+        po = p.page(page)
+        page = int(page)
+        ap = 2
+        sp = max(page - ap, 1)
+        if sp <= 3:
+            sp = 1
+        ep = page + ap + 1
+        pn = [n for n in range(sp, ep) if n > 0 and n <= p.num_pages]
+        pg = {'page':page, 'pages':p.num_pages, 'page_numbers':pn, 
+        'next':po.next_page_number(), 'previous':po.previous_page_number(), 
+        'has_next':po.has_next(), 'has_previous':po.has_previous(), 
+        'show_first':1 not in pn, 'show_last':p.num_pages not in pn, 
+        'app': 'settings', 'list_all':1, 'direction':direction, 
+        'order_by':order_by}
+        json = simplejson.dumps({'items':scanners, 'paginator':pg})
+        return HttpResponse(json, mimetype='application/javascript')    
+    return  object_list(request, template_name=template, queryset=scanners, 
+        paginate_by=15, page=page, extra_context={'app':'settings', 
+        'direction':direction, 'order_by':order_by, 'list_all':1})
+        
+@login_required
+@onlysuperusers
+def view_scanner(request, scanner_id, template='config/view_scanner.html'):
+    'Displays links to various scanner configuration sections'
+    scanner = get_object_or_404(ScannerHost, id=scanner_id)
+    configs = ScannerConfig.objects.values('value')
+    if not configs:
+        msg = 'The node %s is not been initialized, Please initialize' % (
+                scanner.address)
+        request.user.message_set.create(message=msg)
+        return HttpResponseRedirect(reverse('init-scanner', 
+                                    args=[scanner.id]))
+
+    sections = ConfigSection.objects.values('id', 'name')
+    side1 = sections[:14]
+    side2 = sections[14:]
+    
+    return render_to_response(template, locals(), 
+        context_instance=RequestContext(request))
+    
+@login_required
+@onlysuperusers
+def init_scanner(request, scanner_id, template='config/init_scanner.html'):
+    'Initialiazes the default scanner configuration values'
+    scanner = get_object_or_404(ScannerHost, id=scanner_id)
+    if request.method == 'POST':
+        form = InitializeConfigsForm(request.POST)
+        if form.is_valid():
+            try:
+                from django.conf import settings
+                from django.db import connection
+                import re
+                path = getattr(
+                settings,'TEMPLATE_DIRS', ('/tmp'))[0] + '/config/scanner-init.sql'
+                sql_file = open(path, 'r')
+                sql = sql_file.read()
+                sql_file.close()
+                sql = re.sub(r'scanner_id', str(scanner.id), sql)
+                conn = connection.cursor()
+                conn.execute(sql)
+                msg = 'The node %s has been initialized' % scanner.address
+                request.user.message_set.create(message=msg)
+                return HttpResponseRedirect(reverse('view-scanner', 
+                                            args=[scanner.id]))
+            except:
+                msg = 'Initialization of node %s failed' % scanner.address
+                request.user.message_set.create(message=msg)          
+    else:
+        form = InitializeConfigsForm(initial = {'id': scanner.id})
+    return render_to_response(template, locals(), 
+        context_instance=RequestContext(request))
+
+@login_required
+@onlysuperusers
+def view_settings(request, scanner_id, section_id, 
+                template='config/view_settings.html'):
+    'Displays settings on a section basis'
+    return render_to_response(template, locals(), 
+        context_instance=RequestContext(request))
+   

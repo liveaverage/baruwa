@@ -63,6 +63,23 @@ class MessageManager(models.Manager):
                 Q(from_address__in=addresses))
         return super(MessageManager, self).get_query_set()
 
+
+class RecipientManager(models.Manager):
+    "Recipients manager"
+    def for_user(self, request):
+        "returns users records"
+        if not request.user.is_superuser:
+            addresses = request.session['user_filter']['addresses']
+            account_type = request.session['user_filter']['account_type']
+            if account_type == 2:
+                return super(RecipientManager, self).get_query_set().filter(
+                Q(to_domain__in=addresses))
+            if account_type == 3:
+                return super(RecipientManager, self).get_query_set().filter(
+                Q(to_address__in=addresses))
+        return super(RecipientManager, self).get_query_set()
+
+
 class QuarantineMessageManager(models.Manager):
     """
     QuarantineMessageManager
@@ -95,8 +112,7 @@ class EmailReportMessageManager(models.Manager):
         from baruwa.accounts.models import UserProfile, UserAddresses
         
         addresses = UserAddresses.objects.values('address').filter(
-                user=user
-            ).exclude(enabled=0)
+                user=user).exclude(enabled=0)
         account_type = UserProfile.objects.values('account_type').get(user=user)
         if user.is_superuser:
             return super(EmailReportMessageManager, self).get_query_set().\
@@ -448,7 +464,7 @@ class Message(models.Model):
                     for part in parts:
                         if '@' in part:
                             dom = part.split('@')[1]
-                            if (dom in addresses) or (dom in addresses):
+                            if dom in addresses:
                                 return True
                     return False
             if account_type == 3:
@@ -457,6 +473,19 @@ class Message(models.Model):
                     (self.from_address not in addresses)):
                     return False
         return True
+
+class Recipient(models.Model):
+    "message recipients"
+    message = models.ForeignKey(Message)
+    to_address = models.CharField(db_index=True, max_length=255)
+    to_domain = models.CharField(db_index=True, max_length=255)
+    
+    objects = models.Manager()
+    messages = RecipientManager()
+    
+    class Meta:
+        db_table = u'message_recipients'
+    
 
 class SaRules(models.Model):
     "spamassassin rules"
@@ -497,7 +526,7 @@ class Archive(models.Model):
     isquarantined = models.IntegerField(default=0, db_index=True)
     sascore = models.FloatField()
     scaned = models.IntegerField(default=0)
-    size = models.IntegerField()
+    size = models.IntegerField(db_index=True)
     blacklisted = models.IntegerField(default=0, db_index=True)
     spamreport = models.TextField(blank=True)
     whitelisted = models.IntegerField(default=0, db_index=True)

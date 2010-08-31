@@ -13,7 +13,7 @@ var ax_error = false;
 {% block submenu %}
 <ul>
   <li><a href="{% url accounts %}">Accounts</a></li>
-  <li><a href="">Scanners</a></li>
+  <li><a href="{% url list-scanners %}">Scanners</a></li>
 </ul>	
 {% endblock submenu %}
 {% block title %}Settings{% endblock title %}
@@ -39,9 +39,9 @@ var ax_error = false;
 <div id="domain-id-{{domain.id}}" class="{% cycle 'LightBlue' 'LightGray' %}_div">
 	<div class="Domains_hash">
 		{% if domain.enabled %}
-			<img src="{{ MEDIA_URL }}imgs/domain-active.png" alt="" />
+			<img src="{{ MEDIA_URL }}imgs/active.png" alt="" />
 		{% else %}
-			<img src="{{ MEDIA_URL }}imgs/domain-inactive.png" alt="" />
+			<img src="{{ MEDIA_URL }}imgs/inactive.png" alt="" />
 		{% endif %}	
 	</div>
 	<div class="Domains_name">

@@ -40,8 +40,8 @@ def index(request):
     errors = ''
     success = True
     active_filters = []
-    data = Message.messages.for_user(request)
     saved_filters = []
+    data = Message.messages.for_user(request)
     filters = SavedFilter.objects.all().filter(user=request.user)
     filter_form = FilterForm()
     if request.method == 'POST':

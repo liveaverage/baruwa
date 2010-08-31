@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block headers %}{% endblock headers %}
+{% block submenu %}
+{% endblock submenu %}
+{% block title %}Viewing Scanning Node {{scanner.address}}{% endblock title %}
+{% block heading %}Viewing Scanning Node :: {{scanner.address}}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">Configuration Settings</div>
+</div>
+<div class="lightblue_div">
+    <div class="Reports_cols">
+        <ul class="reports">
+			{% for section in side1  %}
+			<li><a href="{% url view-section scanner.id, section.id %}">{{section.name}}</a></li>	
+			{% endfor %}
+        </ul>
+    </div>
+    <div class="Reports_cols">
+        <ul class="reports">
+			{% for section in side2  %}
+			<li><a href="{% url view-section scanner.id, section.id %}">{{section.name}}</a></li>	
+			{% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}

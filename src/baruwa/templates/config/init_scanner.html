@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block headers %}{% endblock headers %}
+{% block submenu %}
+{% endblock submenu %}
+{% block title %}Initialize node{% endblock title %}
+{% block heading %}Initialize node{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">Initialize node</div>
+</div>
+<form action="" method="post">
+	{% for hidden in form.hidden_fields %}
+		{{ hidden }}
+	{% endfor %}
+    <div class="LightBlue_div">
+        <div class="form_label">Initialize node {{ scanner.address }}: ?</div>
+        <div class="form_value">
+			<input id="submit-button" type="submit" value="Initialize" />      
+        </div>
+        <div class="form_error"></div>
+    </div>
+</form>
+{% endblock content %}

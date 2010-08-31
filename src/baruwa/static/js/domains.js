@@ -150,10 +150,10 @@ function page_from_json(data){
                 css = 'LightBlue';
             }
             if (n.enabled) {
-                img = '<img src="/static/imgs/domain-active.png" alt="" />';
+                img = '<img src="/static/imgs/active.png" alt="" />';
                 eimg = '<img src="/static/imgs/tick.png" alt="" />';
             }else{
-                img = '<img src="/static/imgs/domain-inactive.png" alt="" />';
+                img = '<img src="/static/imgs/inactive.png" alt="" />';
                 eimg = '<img src="/static/imgs/minus.png" alt="" />';
             };
             row[count++] = '<div id="domain-id-'+n.id+'" class="'+css+'_div">';
