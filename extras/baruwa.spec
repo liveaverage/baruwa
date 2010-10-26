@@ -6,7 +6,7 @@ Summary:        Ajax enabled MailScanner web frontend
 Group:          Development/Languages
 License:        GPLv2
 URL:            http://www.topdog.za.net/baruwa
-Source0:        http://www.topdog-software.com/oss/files/%{name}-%{version}a.tar.gz
+Source0:        http://www.topdog-software.com/oss/files/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel, python-setuptools, python-sphinx
@@ -33,7 +33,7 @@ messages to the mysql database with SQLite as backup and for
 managing whitelists and blacklists.
 
 %prep
-%setup -q -n %{name}-%{version}a
+%setup -q -n %{name}-%{version}
 %{__sed} -i 's:/usr/lib/python2.4/site-packages:%{python_sitelib}:' extras/baruwa-mod_wsgi.conf
 
 %{__cat} <<'EOF' > %{name}.cron
