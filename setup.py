@@ -6,7 +6,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='baruwa',
-      version="1.0.0a",
+      version="1.0.0",
       description="Ajax enabled MailScanner web frontend",
       long_description=read('README'),
       keywords='MailScanner Email Filters Quarantine Spam',
@@ -28,7 +28,7 @@ setup(name='baruwa',
         'iPy',
         'lxml',
       ],
-      classifiers = ['Development Status :: 4 - Beta',
+      classifiers = ['Development Status :: 5 - Production/Stable',
                    'Environment :: Web Environment',
                    'Framework :: Django',
                    'Intended Audience :: System Administrators',

@@ -1,7 +1,7 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 Name:           baruwa
 Version:        1.0.0
-Release:        0.1.a%{?dist}
+Release:        1%{?dist}
 Summary:        Ajax enabled MailScanner web frontend      
 Group:          Development/Languages
 License:        GPLv2
@@ -10,7 +10,7 @@ Source0:        http://www.topdog-software.com/oss/files/%{name}-%{version}a.tar
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel, python-setuptools, python-sphinx
-Requires:       Django >= 1.1.1, MySQL-python, python-GeoIP, python-IPy, httpd, dojo, mailscanner, python-reportlab, python-lxml #, python-uuid
+Requires:       Django >= 1.1.1, MySQL-python, python-GeoIP, python-IPy, httpd, dojo, mailscanner, python-reportlab, python-lxml, python-uuid
 
 %description
 Baruwa (swahili for letter or mail) is a web 2.0 MailScanner
@@ -101,6 +101,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Oct 26 2010 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.0-1
+- Upgrade to latest version
+
 * Wed Jun 30 2010 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.0-0.1.a
 - Upgrade to latest version
 

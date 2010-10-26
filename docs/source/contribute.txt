@@ -1,0 +1,36 @@
+=======================
+Contributing to Baruwa
+=======================
+
+There are so many ways to help Baruwa's development,
+
+	* Blog about it.
+	* Report bugs and request features
+	* Submit patches for new and fixed behaviour
+	* Join the mailing lists and share ideas
+	* Donate to the project
+	* Documentation
+	* Translation
+	
+Reporting bugs
+--------------
+Please use the mailing lists for the time being as an
+issue tracking system is being configured at the moment.
+
+Submitting patches
+------------------
+Baruwa source code is maintained in a git repository
+at github http://github.com/akissa/baruwa Please
+submit your patches to the mailing list.
+
+Documentation
+-------------
+The documentation is part of the source, clone the
+repo make the changes and submit the patches to the
+mailing list.
+
+Donations
+---------
+Donations are appreciated please use the Pledge 
+system which accepts paypal payments 
+http://pledgie.com/campaigns/12056

@@ -1,0 +1,15 @@
+=============
+Getting Help
+=============
+
+How do I do X? Why doesn't Y work? Where can I go to get help?
+--------------------------------------------------------------
+If the documentation does not contain an answer to your issue
+try the Baruwa mailing list, Feel free to ask any questions
+on installing, configuring, integrating and troubleshooting
+Baruwa. You can subscribe to the list at http://lists.baruwa.org/
+
+I think I've found a security problem! What should I do?
+---------------------------------------------------------
+If you think you've found a security problem with Baruwa, 
+please send a message to andrew@topdog.za.net
