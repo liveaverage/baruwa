@@ -7,7 +7,7 @@ Baruwa on Ubuntu/Debian
 Baruwa deb install
 ==================
 
-Download the deb from `topdog-software.com <http://www.topdog-software.com/oss/baruwa/>`_,
+Download the deb from http://www.topdog-software.com/oss/baruwa/
 The installation process will also configure apache, mysql and baruwa should you choose.
 
 The install asks you for the following info
@@ -47,6 +47,6 @@ Edit the settings.py file and make the baruwa specific changes to suit
 your install::
 
 	# baruwa_path=$(python2.4 -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
-	# vi $baruwa_path/setttings.py
+	# vi $baruwa_path/baruwa/settings.py
 
 Thats it point your browser to the apache virtualhost url.

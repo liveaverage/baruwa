@@ -12,9 +12,13 @@ Configure MailScanner
 Baruwa rpm install
 ==================
 
-Download the rpm from `topdog-software.com <http://www.topdog-software.com/oss/baruwa/>`_,
+Install the dojo rpm from http://topdog-software.com/oss/dojo/::
 
-Now proceed and install the rpm::
+    # yum --nogpgcheck localinstall dojo-1.4.3-1.fc13.noarch.rpm
+
+Download the rpm from http://www.topdog-software.com/oss/baruwa/
+
+Then proceed and install the rpm::
 
     # yum --nogpgcheck localinstall baruwa-<version>.noarch.rpm
 
@@ -33,7 +37,7 @@ Configure Baruwa
 Edit the baruwa settings.py::
 
 	# baruwa_path=$(python2.4 -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
-	# vi $baruwa_path/setttings.py
+	# vi $baruwa_path/baruwa/settings.py
 
 And set the mysql database details::
 
@@ -50,7 +54,7 @@ Create the baruwa admin user and populate the database::
 Edit the settings.py file and make the baruwa specific changes to suit
 your install::
 
-	# vi $baruwa_path/setttings.py
+	# vi $baruwa_path/baruwa/settings.py
 
 **Setup Web server**
 

@@ -39,7 +39,7 @@ Run::
 Edit the Baruwa settings.py file::
 
 	# baruwa_path=$(python2.4 -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
-	# vi $baruwa_path/setttings.py
+	# vi $baruwa_path/baruwa/settings.py
 	
 Set the following options::
 
@@ -58,7 +58,7 @@ to create the admin user.
 Edit the settings.py file and make the baruwa specific changes to suit
 your install::
 
-	# vi $baruwa_path/setttings.py
+	# vi $baruwa_path/baruwa/settings.py
 
 Link to the dojo toolkit::
 

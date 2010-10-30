@@ -26,23 +26,27 @@ MySQLdb from source instead::
 	# cd /usr/local/src
 	# wget http://garr.dl.sourceforge.net/sourceforge/mysql-python/MySQL-python-1.2.2.tar.gz
 	# tar xvzf MySQL-python-1.2.2.tar.gz
-	# yum install gcc python-devel mysql-devel
+	# yum install gcc python-devel mysql-devel python-setuptools
 	# cd MySQL-python-1.2.2
 	# python setup.py build
 	# python setup.py install
 
 Now proceed and install the other dependencies::
 
-    # yum install python-IPy python-GeoIP Django mod_wsgi python-uuid python-lxml
+    # yum install mysql-server python-IPy python-GeoIP Django mod_wsgi python-uuid python-lxml
 
-Install the python-reportlab rpm from `topdog-software <http://www.topdog-software.com/oss/python-reportlab/>`_::
+Install the python-reportlab rpm from  http://www.topdog-software.com/oss/python-reportlab/::
 
-	# rpm -Uvh python-reportlab-2.3-2.i386.rpm
+    # yum --nogpgcheck localinstall python-reportlab-<version>.rpm
+	
+Install the dojo rpm from http://topdog-software.com/oss/dojo/::
 
-Download the Baruwa rpm from `topdog-software.com <http://www.topdog-software.com/oss/baruwa/>`_
+    # yum --nogpgcheck localinstall dojo-1.4.3-1.noarch.rpm
+
+Download the Baruwa rpm from http://www.topdog-software.com/oss/baruwa/
 and install::
 
-    # rpm -Uvh --nodeps baruwa-<version>.noarch.rpm
+    # yum --nogpgcheck localinstall baruwa-<version>.noarch.rpm
 
 Create the database::
 
@@ -59,7 +63,7 @@ Configure Baruwa
 Edit the baruwa settings.py::
 
 	# baruwa_path=$(python2.4 -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
-	# vi $baruwa_path/setttings.py
+	# vi $baruwa_path/baruwa/settings.py
 
 And set the mysql database details::
 
@@ -76,7 +80,7 @@ Create the baruwa admin user and populate the database::
 Edit the settings.py file and make the baruwa specific changes to suit
 your install::
 
-	# vi $baruwa_path/setttings.py
+	# vi $baruwa_path/baruwa/settings.py
 
 **Setup Web server**
 
