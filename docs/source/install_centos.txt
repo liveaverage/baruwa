@@ -20,16 +20,11 @@ Baruwa rpm install
 ==================
 
 Due to the fact that the shipped MySQLdb module shipped on 
-Centos/RHEL is too old, do not install python-mysql install 
-MySQLdb from source instead::
+Centos/RHEL is too old, use the updated rpm that i supply
+from http://topdog-software.com/oss/MySQL-python/ 
+or install from source::
 
-	# cd /usr/local/src
-	# wget http://garr.dl.sourceforge.net/sourceforge/mysql-python/MySQL-python-1.2.2.tar.gz
-	# tar xvzf MySQL-python-1.2.2.tar.gz
-	# yum install gcc python-devel mysql-devel python-setuptools
-	# cd MySQL-python-1.2.2
-	# python setup.py build
-	# python setup.py install
+	# yum --nogpgcheck localinstall MySQL-python-<version>.rpm
 
 Now proceed and install the other dependencies::
 
