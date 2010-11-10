@@ -71,7 +71,7 @@
           {%- if pagename != "search" %}
           <div id="searchbox" style="display: none">
             <h3>{{ _('Quick search') }}</h3>
-              <form class="search" action="{{ pathto('search') }}" method="get">
+              <!--<form class="search" action="{{ pathto('search') }}" method="get">
                 <input type="text" name="q" size="18" />
                 <input type="submit" value="{{ _('Go') }}" />
                 <input type="hidden" name="check_keywords" value="yes" />
@@ -79,7 +79,17 @@
               </form>
               <p class="searchtip" style="font-size: 90%">
               {{ _('Enter search terms or a module, class or function name.') }}
-              </p>
+              </p>-->
+              
+			<form action="http://www.google.com/cse" id="cse-search-box">
+			  <div>
+			    <input type="hidden" name="cx" value="partner-pub-3001556624430247:g7zpfj4e9qx" />
+			    <input type="hidden" name="ie" value="ISO-8859-1" />
+			    <input type="text" name="q" size="18" />
+			    <input type="submit" name="sa" value="Search" />
+			  </div>
+			</form>
+			<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
           </div>
           <script type="text/javascript">$('#searchbox').show(0);</script>
           {%- endif %}

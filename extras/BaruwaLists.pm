@@ -103,14 +103,14 @@ sub LookupAddress {
     return 1 if $list->{$to}{$from};
     return 1 if $list->{$to}{$fromdomain};
     return 1 if $list->{$to}{$ip};
-    return 1 if $list->{$to}{'all'};
+    return 1 if $list->{$to}{'any'};
     return 1 if $list->{$todomain}{$from};
     return 1 if $list->{$todomain}{$fromdomain};
     return 1 if $list->{$todomain}{$ip};
-    return 1 if $list->{$todomain}{'all'};
-    return 1 if $list->{'all'}{$from};
-    return 1 if $list->{'all'}{$fromdomain};
-    return 1 if $list->{'all'}{$ip};
+    return 1 if $list->{$todomain}{'any'};
+    return 1 if $list->{'any'}{$from};
+    return 1 if $list->{'any'}{$fromdomain};
+    return 1 if $list->{'any'}{$ip};
 
     return 0;
 }

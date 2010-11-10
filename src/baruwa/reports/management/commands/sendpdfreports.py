@@ -241,9 +241,12 @@ class Command(NoArgsCommand):
                     print "* Queue "+user.username+"'s report to: "+toaddr
                     pdf.close()
         if emails:
-            conn = SMTPConnection()
-            conn.send_messages(emails)
-            print "====== sending "+str(len(emails))+" messages ======="
+            try:
+                conn = SMTPConnection()
+                conn.send_messages(emails)
+                print "====== sending "+str(len(emails))+" messages ======="
+            except Exception, exception:
+                print "Sending failed ERROR: %s" % str(exception)
 
 
         

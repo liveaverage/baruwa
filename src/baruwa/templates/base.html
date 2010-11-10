@@ -19,6 +19,7 @@
  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 -->
+{% load i18n %}
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head>
 <title>.:. Baruwa :: {% block title %}{% endblock title %}</title>
@@ -37,7 +38,7 @@
         	<div class="Link">
                 <ul>
 					<li>
-						System status <a href="{% url status-index %}">
+						{% trans "System status " %}<a href="{% url status-index %}">
 						{% if baruwa_status %}
 						<img src="{{ MEDIA_URL }}imgs/active.png" alt="OK" />
 						{% else %}
@@ -46,15 +47,17 @@
 						</a>
 					</li>
 					<li>
-						Msgs: <a href="{% url status-index %}">
-								Total {{baruwa_mail_total}}, Spam {{baruwa_spam_total}}, Virus {{baruwa_virus_total}}
+						{% trans "Msgs: " %}<a href="{% url status-index %}">
+								{% blocktrans %}
+									Total {{baruwa_mail_total}}, Spam {{baruwa_spam_total}}, Virus {{baruwa_virus_total}}
+								{% endblocktrans %}
 							</a>
 					</li>
 					{% if user.is_authenticated %}
-					<li>Signed in as <a href="{% url user-profile user.id %}">{{user.username}}</a></li>
-                    <li><a href="{% url logout %}">Logout</a></li>
+					<li>{% trans "Signed in as " %}<a href="{% url user-profile user.id %}">{{user.username}}</a></li>
+                    <li><a href="{% url logout %}">{% trans Logout %}</a></li>
 					{% else %}
-					<li>Not logged in :: <a href="{% url please-login %}">Login</a></li>
+					<li>{% trans "Not logged in :: " %}<a href="{% url please-login %}">{% trans "Login" %}</a></li>
 					{% endif %}
                 </ul>
             </div>
@@ -73,18 +76,18 @@
     <div class="Box_Mainnav"> <!-- Box_Mainnav start here -->
         <div class="Mainnav"> <!-- Mainnav start here -->
 			{% if user.is_authenticated %}
-            <a href="{% url main-messages-index %}" class="topnav"><span>Messages</span></a> 
-            <a href="{% url lists-index %}" class="topnav"><span>Lists</span></a> 
-            <a href="{% url reports-index %}" class="topnav"><span>Reports</span></a>
+            <a href="{% url main-messages-index %}" class="topnav"><span>{% trans "Messages" %}</span></a> 
+            <a href="{% url lists-index %}" class="topnav"><span>{% trans "Lists" %}</span></a> 
+            <a href="{% url reports-index %}" class="topnav"><span>{% trans "Reports" %}</span></a>
  			{% ifnotequal user.get_profile.account_type 3  %}
- 				<a href="{% url status-index %}" class="topnav"><span>Status</span></a>
+ 				<a href="{% url status-index %}" class="topnav"><span>{% trans "Status" %}</span></a>
 				{% if user.is_superuser %}
-				<a href="{% url settings-index %}" class="topnav"><span>Settings</span></a>
+				<a href="{% url settings-index %}" class="topnav"><span>{% trans "Settings" %}</span></a>
 				{% else %}
-				<a href="{% url accounts %}" class="topnav"><span>Accounts</span></a>
+				<a href="{% url accounts %}" class="topnav"><span>{% trans "Accounts" %}</span></a>
 				{% endif %}
 			{% else %}
-				<a href="{% url user-profile user.id %}" class="topnav"><span>Account</span></a>
+				<a href="{% url user-profile user.id %}" class="topnav"><span>{% trans "Account" %}</span></a>
  			{% endifnotequal %}
 			{% endif %}
         </div> <!-- Mainnav end here -->
@@ -107,19 +110,19 @@
 		{% ifnotequal order_by 'id'  %}
 		{% if filter_active %}
 		<div id="builtin-msg">
-			Filtered by
+			{% trans "Filtered by" %}
 			{% ifequal ordering 'to_address' %}
-				 To address 
+				 {% trans "To address" %} 
 			{% else %}
-			     From address 
+			     {% trans "From address" %} 
 			{% endifequal %}
 			{% ifequal request.session.query_type 1  %}
-				containing 
+				{% trans "containing" %} 
 			{% else %}
-				NOT containing 
+				{% trans "NOT containing" %} 
 			{% endifequal %}
 			"{{ request.session.search_for }}"
-			<div id="dismiss"><a href="{% url rem-filter %}">Remove</a></div>
+			<div id="dismiss"><a href="{% url rem-filter %}">{% trans "Remove" %}</a></div>
 		</div>			
 		{% endif %}		
 		{% endifnotequal %}	
