@@ -86,6 +86,29 @@ Reports - {{report_title}}
 </div>
 {% endfor %}
 </div>
+<div class="LightBlue_div">
+	<div class="totals_date">
+		Totals
+	</div>
+	<div class="totals_mail">
+		{{pie_data.mail_total}}
+	</div>
+	<div class="totals_virii">
+		{{pie_data.virus_total}}
+	</div>
+	<div class="totals_viriip">
+		{{pie_data.vpct}}
+	</div>
+	<div class="totals_spam">
+		{{pie_data.spam_total}}
+	</div>
+	<div class="totals_spamp">
+		{{pie_data.spct}}
+	</div>
+	<div class="totals_volume">
+		{{ pie_data.volume_total|filesizeformat }}
+	</div>
+</div>
 <div id="filterrow" class="lightblue_div{% if not active_filters %} hide{% endif %}">
     <div class="filterrow">
         Filters have been applied :

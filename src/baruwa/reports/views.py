@@ -319,6 +319,7 @@ def report(request, report_kind):
         mail_total = []
         spam_total = []
         virus_total = []
+        size_total = []
         act = 3
 
         if not request.user.is_superuser:
@@ -336,9 +337,21 @@ def report(request, report_kind):
             mail_total.append(int(row.mail_total))
             spam_total.append(int(row.spam_total))
             virus_total.append(int(row.virus_total))
+            size_total.append(int(row.size_total))
 
-        pie_data = {'dates':dates, 'mail':mail_total, 'spam':spam_total, 
-            'virii':virus_total}
+        pie_data = {'dates':dates, 
+                    'mail':mail_total, 
+                    'spam':spam_total, 
+                    'virii':virus_total, 
+                    'mail_total':sum(mail_total), 
+                    'spam_total':sum(spam_total), 
+                    'virus_total':sum(virus_total), 
+                    'volume_total':sum(size_total)}
+        vpct = "%.1f" % ((1.0 * sum(virus_total)/sum(mail_total))*100)
+        spct = "%.1f" % ((1.0 * sum(spam_total)/sum(mail_total))*100)
+        pie_data['vpct'] = vpct
+        pie_data['spct'] = spct
+        #graph_totals = {}
         if request.is_ajax():
             data = [obj.obj_to_dict() for obj in data]
 
