@@ -133,7 +133,7 @@ class FilterForm(forms.Form):
                 raise forms.ValidationError("Please supply a value to query")
             if not isnumeric(submited_value):
                 raise forms.ValidationError("The value has to be numeric")
-        if submited_field in TEXT_FIELDS:
+        if submited_field in TEXT_FIELDS and ( FILTER_BY[sbi][1] == 'is equal to' or FILTER_BY[sbi][1] == 'is not equal to' ):
             if not submited_by in TEXT_FILTER:
                 filter_items = to_dict(list(FILTER_ITEMS))
                 error_msg = "%s does not support the %s filter" % (
