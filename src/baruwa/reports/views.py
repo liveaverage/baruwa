@@ -347,8 +347,12 @@ def report(request, report_kind):
                     'spam_total':sum(spam_total), 
                     'virus_total':sum(virus_total), 
                     'volume_total':sum(size_total)}
-        vpct = "%.1f" % ((1.0 * sum(virus_total)/sum(mail_total))*100)
-        spct = "%.1f" % ((1.0 * sum(spam_total)/sum(mail_total))*100)
+        try:
+            vpct = "%.1f" % ((1.0 * sum(virus_total)/sum(mail_total))*100)
+            spct = "%.1f" % ((1.0 * sum(spam_total)/sum(mail_total))*100)
+        except ZeroDivisionError:
+            vpct = "0.0"
+            spct = "0.0"
         pie_data['vpct'] = vpct
         pie_data['spct'] = spct
         #graph_totals = {}
