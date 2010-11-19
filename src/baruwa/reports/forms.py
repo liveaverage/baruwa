@@ -180,3 +180,4 @@ class FilterForm(forms.Form):
                         'Please provide valid time in HH:MM format')
 
         return cleaned_data
+
