@@ -147,10 +147,10 @@ def gen_dynamic_query(model, filter_list, active_filters=None):
             place_negative_vars(tmp, nargs, nkwargs, lnkwargs, value)
         if filter_item['filter'] == 11:
             tmp = "%s__gt" % filter_item['field']
-            place_positive_vars(tmp, largs, kwargs, lkwargs, value)
+            place_positive_vars(tmp, largs, kwargs, lkwargs, 0)
         if filter_item['filter'] == 12:
             tmp = "%s__exact" % filter_item['field']
-            place_positive_vars(tmp, largs, kwargs, lkwargs, value)
+            place_positive_vars(tmp, largs, kwargs, lkwargs, 0)
         if not active_filters is None:
             active_filters.append(
                 {
