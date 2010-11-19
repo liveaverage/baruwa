@@ -187,7 +187,7 @@ function addFilter(){
 $(document).ready(function(){
     bool_fields = ["scaned","spam","highspam","saspam","rblspam","whitelisted","blacklisted","virusinfected","nameinfected","otherinfected","isquarantined"];
     num_fields = ["size","sascore"];
-    text_fields = ["id","from_address","from_domain","to_address","to_domain","subject","clientip","spamreport","headers"];
+    text_fields = ["id","from_address","from_domain","to_address","to_domain","subject","clientip","spamreport","headers", "hostname"];
     time_fields = ["date","time"];
     num_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':3,'opt':'is greater than'},{'value':4,'opt':'is less than'}];
     text_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':9,'opt':'is null'},{'value':10,'opt':'is not null'},{'value':5,'opt':'contains'},{'value':6,'opt':'does not contain'},{'value':7,'opt':'matches regex'},{'value':8,'opt':'does not match regex'}];

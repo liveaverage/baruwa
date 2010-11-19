@@ -19,6 +19,8 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import re
+
 from django import forms
 from django.template.defaultfilters import force_escape
 from baruwa.utils.regex import DOM_RE
@@ -57,6 +59,7 @@ FILTER_ITEMS = (
     ('time','Time'),
     ('headers','Headers'),
     ('isquarantined','Is quarantined'),
+    ('hostname', 'Processed by host'),
 )
 
 FILTER_BY = (
@@ -80,7 +83,8 @@ BOOL_FIELDS = ["scaned", "spam", "highspam", "saspam", "rblspam",
     "whitelisted", "blacklisted", "virusinfected", "nameinfected",
     "otherinfected", "isquarantined"]
 TEXT_FIELDS = ["id", "from_address", "from_domain", "to_address",
-    "to_domain", "subject", "clientip", "spamreport", "headers"]
+    "to_domain", "subject", "clientip", "spamreport", "headers",
+    "hostname"]
 TIME_FIELDS = ["date","time"]
 NUM_FIELDS = ["size", "sascore"]
 
@@ -141,21 +145,45 @@ class FilterForm(forms.Form):
                 raise forms.ValidationError(error_msg)
             if submited_value in EMPTY_VALUES and submited_by not in [9, 10]:
                 raise forms.ValidationError("Please supply a value to query")
-            if (submited_field == 'from_address') or (
-                submited_field == 'to_address'):
+            if ((submited_field == 'from_address' or 
+                submited_field == 'to_address') and 
+                submited_by in [1, 2]):
                 if not email_re.match(submited_value.strip()):
                     raise forms.ValidationError(
                         '%s is not a valid e-mail address.'
                         % force_escape(submited_value))
-            if (submited_field == 'from_domain') or (
-                submited_field == 'to_domain'):
+            else:
+                if submited_by in [7, 8]:
+                    try:
+                        re.compile(submited_value)
+                    except:
+                        raise forms.ValidationError(
+                            "Please provide a valid regex"
+                        )
+            if ((submited_field == 'from_domain' or 
+                submited_field == 'to_domain') and
+                submited_by in [1, 2]):
                 if not DOM_RE.match(submited_value.strip()):
                     raise forms.ValidationError(
                         'Please provide a valid domain name')
+            else:
+                if submited_by in [7, 8]:
+                    try:
+                        re.compile(submited_value)
+                    except:
+                        raise forms.ValidationError(
+                            "Please provide a valid regex"
+                        )
             if submited_field == 'clientip':
                 if not ipv4_re.match(submited_value.strip()):
                     raise forms.ValidationError(
                         'Please provide a valid ipv4 address')
+            if submited_field == 'hostname':
+                if ((not ipv4_re.match(submited_value.strip())) and 
+                (not DOM_RE.match(submited_value.strip()))):
+                    raise forms.ValidationError(
+                    "Please provide a valid hostname or ipv4 address"
+                    )
         if submited_field in TIME_FIELDS:
             if not submited_by in TIME_FILTER:
                 filter_items = to_dict(list(FILTER_ITEMS))
