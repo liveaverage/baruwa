@@ -47,6 +47,12 @@ sub InitBaruwaSQL {
     }
     else {
         POSIX::setsid();
+
+        # Close all I/O filehandles to completely detach from terminal
+        open STDIN,  "</dev/null";
+        open STDOUT, ">/dev/null";
+        open STDERR, ">/dev/null";
+
         if ( !fork() ) {
             $SIG{HUP} = $SIG{INT} = $SIG{PIPE} = $SIG{TERM} = $SIG{ALRM} =
               \&ExitBaruwaSQL;
