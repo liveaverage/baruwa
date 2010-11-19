@@ -141,22 +141,21 @@ class FilterForm(forms.Form):
                 raise forms.ValidationError(error_msg)
             if submited_value in EMPTY_VALUES:
                 raise forms.ValidationError("Please supply a value to query")
-            if ( FILTER_BY[sbi][1] == 'is equal to' or FILTER_BY[sbi][1] == 'is not equal to' ):
-                if (submited_field == 'from_address') or (
-                    submited_field == 'to_address'):
-                    if not email_re.match(submited_value.strip()):
-                        raise forms.ValidationError(
-                            '%s is not a valid e-mail address.'
-                            % force_escape(submited_value))
-                if (submited_field == 'from_domain') or (
-                    submited_field == 'to_domain'):
-                    if not DOM_RE.match(submited_value.strip()):
-                        raise forms.ValidationError(
-                            'Please provide a valid domain name')
-                if submited_field == 'clientip':
-                    if not ipv4_re.match(submited_value.strip()):
-                        raise forms.ValidationError(
-                            'Please provide a valid ipv4 address')
+            if (submited_field == 'from_address') or (
+                submited_field == 'to_address'):
+                if not email_re.match(submited_value.strip()):
+                    raise forms.ValidationError(
+                        '%s is not a valid e-mail address.'
+                        % force_escape(submited_value))
+            if (submited_field == 'from_domain') or (
+                submited_field == 'to_domain'):
+                if not DOM_RE.match(submited_value.strip()):
+                    raise forms.ValidationError(
+                        'Please provide a valid domain name')
+            if submited_field == 'clientip':
+                if not ipv4_re.match(submited_value.strip()):
+                    raise forms.ValidationError(
+                        'Please provide a valid ipv4 address')
         if submited_field in TIME_FIELDS:
             if not submited_by in TIME_FILTER:
                 filter_items = to_dict(list(FILTER_ITEMS))
@@ -180,4 +179,3 @@ class FilterForm(forms.Form):
                         'Please provide valid time in HH:MM format')
 
         return cleaned_data
-
