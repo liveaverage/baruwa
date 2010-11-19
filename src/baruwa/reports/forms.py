@@ -139,7 +139,7 @@ class FilterForm(forms.Form):
                 error_msg = "%s does not support the %s filter" % (
                     filter_items[submited_field],FILTER_BY[sbi][1])
                 raise forms.ValidationError(error_msg)
-            if submited_value in EMPTY_VALUES:
+            if submited_value in EMPTY_VALUES and submited_by not in [9, 10]:
                 raise forms.ValidationError("Please supply a value to query")
             if (submited_field == 'from_address') or (
                 submited_field == 'to_address'):
