@@ -200,6 +200,7 @@ def detail(request, message_id, archive=False):
                         template = "messages/salearn.html"
                         salearn = int(
                                     quarantine_form.cleaned_data['salearn_as'])
+                        salearn = salearn - 1 
                         if salearn <= 2:
                             status = sa_learn(file_name, salearn_opts[salearn])
                             if not status['success']:
