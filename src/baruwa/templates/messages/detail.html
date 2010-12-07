@@ -211,14 +211,12 @@
     <div class="LightBlue_div">
         <form id="qform" action="{% url message-detail message_details.id %}#q" method="post">
         <div class="Release_col">
-            {% if not message_details.virusinfected and not message_details.namedinfected and not message_details.otherinfected %}
+            {% if not message_details.virusinfected %}
 			{{ quarantine_form.release }}
 			{%endif%}
         </div>
         <div class="Release_col">
-            {% if not message_details.virusinfected and not message_details.namedinfected and not message_details.otherinfected %}
 			{{ quarantine_form.todelete }}
-			{%endif%}
         </div>
         <div class="Release_col">
             {% if not message_details.virusinfected and not message_details.namedinfected and not message_details.otherinfected %}
