@@ -95,18 +95,18 @@ class UserAddressForm(forms.ModelForm):
         address = cleaned_data['address']
         user = cleaned_data['user']
         if user.is_superuser:
-            error_msg = 'Super users do not use addresses'
+            error_msg = _('Super users do not use addresses')
             self._errors["address"] = ErrorList([error_msg])
             del cleaned_data['address']
         account = UserProfile.objects.get(user=user)
         if account.account_type == 2:
             if not DOM_RE.match(address):
-                error_msg = 'provide a valid domain address'
+                error_msg = _('provide a valid domain address')
                 self._errors["address"] = ErrorList([error_msg])
                 del cleaned_data['address']
         else:
             if not email_re.match(address):
-                error_msg = 'provide a valid email address'
+                error_msg = _('provide a valid email address')
                 self._errors["address"] = ErrorList([error_msg])
                 del cleaned_data['address']
         return cleaned_data
@@ -130,18 +130,18 @@ class EditAddressForm(forms.ModelForm):
         address = cleaned_data['address']
         user = cleaned_data['user']
         if user.is_superuser:
-            error_msg = 'Super users do not use addresses'
+            error_msg = _('Super users do not use addresses')
             self._errors["address"] = ErrorList([error_msg])
             del cleaned_data['address']
         account = UserProfile.objects.get(user=user)
         if account.account_type == 2:
             if not DOM_RE.match(address):
-                error_msg = 'provide a valid domain address'
+                error_msg = _('provide a valid domain address')
                 self._errors["address"] = ErrorList([error_msg])
                 del cleaned_data['address']
         else:
             if not email_re.match(address):
-                error_msg = 'provide a valid email address'
+                error_msg = _('provide a valid email address')
                 self._errors["address"] = ErrorList([error_msg])
                 del cleaned_data['address']
         return cleaned_data    

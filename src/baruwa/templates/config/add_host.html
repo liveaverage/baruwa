@@ -1,18 +1,21 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}
 {% endblock headers %}
 {% block submenu %}
 <ul>
-	<li><a href="{% url settings-index %}">Domains</a></li>
+	<li><a href="{% url settings-index %}">{% trans "Domains" %}</a></li>
 </ul>	
 {% endblock submenu %}
-{% block title %}Settings :: Add destination mail server{% endblock title %}
-{% block heading %}Domains :: {{ domain.address }} - add destination mail server{% endblock heading %}
+{% block title %}{% trans "Settings :: Add destination mail server" %}{% endblock title %}
+{% block heading %}{% blocktrans with domain.address as domain_address %}
+Domains :: {{ domain_address }} - add destination mail server
+{% endblocktrans %}{% endblock heading %}
 {% block content %}
 <form action="" method="post">
 <div class="Grid_heading">
     <div class="Bayes_heading">
-		Add Mail Server 
+		{% trans "Add Mail Server" %} 
 	</div>
 </div>
 {% for hidden in form.hidden_fields %}

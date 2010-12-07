@@ -1,3 +1,4 @@
+{% load i18n %}
 <html>
 <body leftmagin="0" maginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor='#FFFFFF' >
 <style>
@@ -19,23 +20,23 @@
         {% load messages_extras %}
 		{% if spam_items %}
 		<tr>
-			<td colspan="5" style="font-weight:bold;font-size:14px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">Spam Report</td>
+			<td colspan="5" style="font-weight:bold;font-size:14px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">{% trans "Spam Report" %}</td>
 		</tr>
         <tr>
             <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                Date/Time
+                {% trans "Date/Time" %}
             </td>
             <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                From
+                {% trans "From" %}
             </td>
             <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                To
+                {% trans "To" %}
             </td>
             <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                Subject
+                {% trans "Subject" %}
             </td>
             <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                Release
+                {% trans "Release" %}
             </td>
         </tr>
         {% for item in spam_items %}
@@ -53,30 +54,30 @@
                 {{ item.subject|striptags|escape|tds_trunc:50 }}
             </td>
             <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                <a style="text-decoration:none;" href="{% if host_url %}{{ host_url }}{% endif %}{% url auto-release item.uuid %}">Release</a>
+                <a style="text-decoration:none;" href="{% if host_url %}{{ host_url }}{% endif %}{% url auto-release item.uuid %}">{% trans "Release" %}</a>
             </td>
         </tr>
         {% endfor %}
 		{% endif %}
 		{% if policy_items %}
 		<tr>
-			<td colspan="5" style="font-weight:bold;font-size:14px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">Policy Blocked Report</td>
+			<td colspan="5" style="font-weight:bold;font-size:14px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">{% trans "Policy Blocked Report" %}</td>
 		</tr>
         <tr>
             <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                Date/Time
+                {% trans "Date/Time" %}
             </td>
             <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                From
+                {% trans "From" %}
             </td>
             <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                To
+                {% trans "To" %}
             </td>
             <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                Subject
+                {% trans "Subject" %}
             </td>
             <td bgcolor="#EEEEEE" valign="center" style="font-weight:bold;font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                Release
+                {% trans "Release" %}
             </td>
         </tr>
 		{% for item in policy_items %}
@@ -94,7 +95,7 @@
                 {{ item.subject|striptags|escape|tds_trunc:50 }}
             </td>
             <td valign="center" style="font-size:12px;color:#000000;line-height:100%;font-family:trebuchet ms;border-bottom:1px solid #DDDDDD;">
-                <a style="text-decoration:none;" href="{% if host_url %}{{ host_url }}{% endif %}{% url message-detail item.id %}">Release</a>
+                <a style="text-decoration:none;" href="{% if host_url %}{{ host_url }}{% endif %}{% url message-detail item.id %}">{% trans "Release" %}</a>
             </td>
         </tr>			
 		{% endfor %}	

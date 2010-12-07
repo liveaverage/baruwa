@@ -1,32 +1,33 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}{% endblock headers %}
 {% block submenu %}
 {% ifnotequal user.get_profile.account_type 3  %}
 <ul>
-	<li><a href="{% url accounts %}">Accounts</a></li>
+	<li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
 {% ifequal user.id account_info.id %}
 {% if not user.is_superuser %}
-  	<li><a id="change-pw" href="{% url change-password %}">Change your password</a></li>	
+  	<li><a id="change-pw" href="{% url change-password %}">{% trans "Change your password" %}</a></li>	
 {% endif %}
 {% endifequal %}
 {% if user.is_superuser %}
-	<li><a href="{% url change-pw account_info.id %}">Change users password</a></li>
+	<li><a href="{% url change-pw account_info.id %}">{% trans "Change users password" %}</a></li>
 {% endif %}
 </ul>	
 {% endifnotequal %}
 {% endblock submenu %}
-{% block title %}Account Profile{% endblock title %}
-{% block heading %}Account Profile{% endblock heading %}
+{% block title %}{% trans "Account Profile" %}{% endblock title %}
+{% block heading %}{% trans "Account Profile" %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
     <div class="Bayes_heading">
-		Viewing {{ account_info.username }}'s Profile
-		<div class="Profile_edit">[ <a href="{% url update-account account_info.id %}">Edit</a> ]</div>
+		{% blocktrans with account_info.username as account %}Viewing {{ account }}'s Profile{% endblocktrans %}
+		<div class="Profile_edit">[ <a href="{% url update-account account_info.id %}">{% trans "Edit" %}</a> ]</div>
 	</div>
 </div>
 <div class="LightBlue_div">
 	<div class="Profile_cols">
-		Username:
+		{% trans "Username:" %}
 	</div>
 	<div class="Profile_values">
 		{{ account_info.username }}
@@ -34,7 +35,7 @@
 </div>	
 <div class="LightBlue_div">
 	<div class="Profile_cols">
-		Full names:
+		{% trans "Full names:" %}
 	</div>
 	<div class="Profile_values">
 		{{ account_info.first_name }} {{ account_info.last_name }}
@@ -42,7 +43,7 @@
 </div>
 <div class="LightBlue_div">
 	<div class="Profile_cols">
-		Email Address:
+		{% trans "Email Address:" %}
 	</div>
 	<div class="Profile_values">
 		{{ account_info.email }}
@@ -50,15 +51,15 @@
 </div>
 <div class="LightBlue_div">
 	<div class="Profile_cols">
-		Account status:
+		{% trans "Account status:" %}
 	</div>
 	<div class="Profile_values">
-		{% if account_info.is_active %}Active{% else %}Disabled{% endif %}
+		{% if account_info.is_active %}{% trans "Active" %}{% else %}{% trans "Disabled" %}{% endif %}
 	</div>
 </div>
 <div class="LightBlue_div">
 	<div class="Profile_cols">
-		Last login:
+		{% trans "Last login:" %}
 	</div>
 	<div class="Profile_values">
 		{{ account_info.last_login }}
@@ -66,7 +67,7 @@
 </div>
 <div class="LightBlue_div">
 	<div class="Profile_cols">
-		Account created on:
+		{% trans "Account created on:" %}
 	</div>
 	<div class="Profile_values">
 		{{ account_info.date_joined }}
@@ -74,54 +75,54 @@
 </div>
 <div class="header_div">
     <div class="Reports_heading">
-		Profile Settings
-		<div class="Profile_edit">[ <a href="{% url update-profile account_info.id %}">Edit</a> ]</div>
+		{% trans "Profile Settings" %}
+		<div class="Profile_edit">[ <a href="{% url update-profile account_info.id %}">{% trans "Edit" %}</a> ]</div>
 	</div>
 </div>
 <div class="LightBlue_div">
 	<div class="Profile_cols">
-		Account type:
+		{% trans "Account type:" %}
 	</div>
 	<div class="Profile_values">
 		{% if account_info.is_superuser  %}
-			Administrator
+			{% trans "Administrator" %}
 		{% else %}
 		{% ifequal account_profile.account_type 2  %}
-			Domain Administrator
+			{% trans "Domain Administrator" %}
 		{% endifequal %}
 		{% ifequal account_profile.account_type 3  %}
-			User account
+			{% trans "User account" %}
 		{% endifequal %}
 		{% endif %}
 	</div>
 </div>
 <div class="LightBlue_div">
 	<div class="Profile_cols">
-		Scan email:
+		{% trans "Scan email:" %}
 	</div>
 	<div class="Profile_values">
 		{% if account_profile.scan_mail %}
-			Yes
+			{% trans "Yes" %}
 		{% else %}
-			No
+			{% trans "No" %}
 		{% endif %}
 	</div>
 </div>
 <div class="LightBlue_div">
 	<div class="Profile_cols">
-		Send quarantine report:
+		{% trans "Send quarantine report:" %}
 	</div>
 	<div class="Profile_values">
 		{% if account_profile.send_report %}
-			Yes
+			{% trans "Yes" %}
 		{% else %}
-			No
+			{% trans "No" %}
 		{% endif %}
 	</div>
 </div>
 <div class="LightBlue_div">
 	<div class="Profile_cols">
-		Spam High Score:
+		{% trans "Spam High Score:" %}
 	</div>
 	<div class="Profile_values">
 		{{ account_profile.sa_high_score }}
@@ -129,7 +130,7 @@
 </div>
 <div class="LightBlue_div">
 	<div class="Profile_cols">
-		Spam Low Score:
+		{% trans "Spam Low Score:" %}
 	</div>
 	<div class="Profile_values">
 		{{ account_profile.sa_low_score }}
@@ -139,14 +140,14 @@
 <div class="header_div">
     <div class="Reports_heading">
 		{% ifequal account_profile.account_type 2  %}
-		Domains managed
+		{% trans "Domains managed" %}
 		{% else %}
-		Associated Addresses
+		{% trans "Associated Addresses" %}
 		{% endifequal %}
 		{% if user.is_superuser %}
 		{% if addresses %}
 		<div class="Profile_edit">
-			[ <a href="{% ifequal account_profile.account_type 2  %}{% url add-domain account_profile.id %}{% else %}{% url add-address account_profile.id %}{% endifequal %}">Add</a> ]
+			[ <a href="{% ifequal account_profile.account_type 2  %}{% url add-domain account_profile.id %}{% else %}{% url add-address account_profile.id %}{% endifequal %}">{% trans "Add" %}</a> ]
 		</div>	
 		{% endif %}	
 		{% endif %}	
@@ -167,9 +168,9 @@
 		</div>
 		<div class="Profile_values">
 			{% if address.enabled %}
-				Enabled
+				{% trans "Enabled" %}
 			{% else %}
-				Disabled
+				{% trans "Disabled" %}
 			{% endif %}
 			<div class="Profile_edit">
 				{% if user.is_superuser %}
@@ -184,7 +185,7 @@
 {% empty %}
 	<div class="LightBlue_div">
 		<div class="Profile_cols">
-			No addresses stored at the moment.
+			{% trans "No addresses stored at the moment." %}
 		</div>
 		<div class="Profile_values">
 			{% if user.is_superuser %}

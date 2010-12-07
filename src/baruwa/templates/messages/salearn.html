@@ -1,5 +1,10 @@
+{% load i18n %}
 {% if success %}
+{% blocktrans %}
 The message id: {{id}} processed, - {{msg}}
+{% endblocktrans %}
 {% else %}
+{% blocktrans %}
 The message id: {{id}} not learned, error message - {{msg}}
+{% endblocktrans %}
 {% endif %}

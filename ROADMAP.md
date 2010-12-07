@@ -5,18 +5,19 @@ Milestone 1.0.1
 --
 + Internationalization & Localization
 + Per domain PDF reports
++ Create packages for FreeBSD, OpenBSD and NetBSD
 
 Milestone 2.0.0
 --
-+ Support Postgresql and SQLite in addition to MySQL
++ <strike>Support Postgresql and SQLite in addition to MySQL</strike>
 + Account preferences (spam actions, scores, language, virus checks)
 + Bulk processing
 + Implement caching
-+ Mailscanner SQL configuration
++ <strike>Mailscanner SQL configuration</strike>
 + Use rulesets to replace white/black lists
-+ Create lightweight XML-RPC engine to manage mailscanner nodes
-+ Manage services via XML-RPC engine
-+ Queue management (exim)
++ <strike>Create lightweight XML-RPC engine to manage mailscanner nodes</strike>
++ <strike>Manage services via XML-RPC engine</strike>
++ <strike>Queue management (exim)</strike>
 + Full AJAX support
 + Log viewer
 + Accounting and audit trail

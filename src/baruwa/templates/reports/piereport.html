@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block body_class%}{%if pie_data%} class="tundra"{%endif%}{%endblock body_class%}
 {% block headers %}{%if pie_data %}
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />
@@ -16,17 +17,17 @@
 &nbsp;
 {% endblock submenu %}
 {% block title %}
-Reports {{report_title}}
+{% blocktrans %}Reports - {{report_title}}{% endblocktrans %}
 {% endblock title %}
 {% block heading %}
-Reports - {{report_title}}
+{% blocktrans %}Reports - {{report_title}}{% endblocktrans %}
 {% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
     <div class="Grid_hash">#</div>
-    <div class="Grid_Address">Address</div>
-    <div class="Grid_Count">Count</div>
-    <div class="Grid_Volume">Volume</div>
+    <div class="Grid_Address">{% trans "Address" %}</div>
+    <div class="Grid_Count">{% trans "Count" %}</div>
+    <div class="Grid_Volume">{% trans "Volume" %}</div>
     <div class="Grid_Graph">&nbsp;</div>
 </div>
 <div class="lightblue_div">
@@ -49,13 +50,13 @@ Reports - {{report_title}}
     </div>
     <div class="Graph_pie_col">
         <div id="chart" style="width: 350px; height: 284px;">
-		<noscript>Javascript required to view graphs</noscript>
+		<noscript>{% trans "Javascript required to view graphs" %}</noscript>
         </div>
     </div>
 </div>
 <div id="filterrow" class="lightblue_div{% if not active_filters %} hide{% endif %}">
     <div class="filterrow">
-        Filters have been applied :
+        {% trans "Filters have been applied :" %}
         <span id="fhl">
             {% for f in active_filters %}
             	&nbsp;<a href="{% url remove-filter forloop.counter0 %}"><img src="/static/imgs/sm-del.png" alt="x"/></a> "{{ f.filter_field }} {{f.filter_by}} {{f.filter_value}}"

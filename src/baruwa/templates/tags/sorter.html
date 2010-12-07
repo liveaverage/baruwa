@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if rlink %}
 {{ field_text }} <a href="{{ rlink }}">{% ifequal dir 'dsc' %}&darr;{% else %}&uarr;{% endifequal %}</a>
 {% else %}

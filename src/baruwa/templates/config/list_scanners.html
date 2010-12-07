@@ -1,28 +1,29 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}
 {% endblock headers %}
 {% block submenu %}
 {% if user.is_superuser %}
 <ul>
-  <li><a href="{% url accounts %}">Accounts</a></li>
-  <li><a href="{% url settings-index %}">Domains</a></li>
+  <li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
+  <li><a href="{% url settings-index %}">{% trans "Domains" %}</a></li>
 </ul>	
 {% endif %}
 {% endblock submenu %}
-{% block title %}Scanning Nodes{% endblock title %}
-{% block heading %}Scanning Nodes :: {% load pagination_heading %}{% pagination_heading %}{% endblock heading %}
+{% block title %}{% trans "Scanning Nodes" %}{% endblock title %}
+{% block heading %}{% trans "Scanning Nodes ::" %} {% load pagination_heading %}{% pagination_heading %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
 	<div class="Domains_grid_hash">		
 	</div>
 	<div class="Scanners_grid_name">
-		Node Name
+		{% trans "Node Name" %}
 	</div>
 	<div class="Scanners_grid_status">
-		Status
+		{% trans "Status" %}
 	</div>
 	<div class="Scanners_grid_action">
-		Actions
+		{% trans "Actions" %}
 	</div>
 </div>
 {% for scanner in object_list %}
@@ -41,7 +42,7 @@
 		{% if configs %}
 			<img src="{{ MEDIA_URL }}imgs/tick.png" alt="" />
 		{% else %}
-			<a href="{% url init-scanner scanner.id %}">Initialize</a>
+			<a href="{% url init-scanner scanner.id %}">{% trans "Initialize" %}</a>
 		{% endif %}
 	</div>
 	<div class="Scanners_action">
@@ -54,7 +55,7 @@
 	</div>
 </div>
 {% empty %}
-<div class="spanrow">No scanning nodes found</div>
+<div class="spanrow">{% trans "No scanning nodes found" %}</div>
 {% endfor %}
 {% endblock content %}
 {% block paging %}

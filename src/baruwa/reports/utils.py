@@ -20,7 +20,7 @@
 #
 
 from django.db.models import Count, Sum, Q
-from baruwa.messages.models import Message, Recipient
+from baruwa.messages.models import Message
 from baruwa.utils.misc import apply_filter
 from baruwa.utils.graphs import PIE_COLORS
 

@@ -1,26 +1,29 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/domain.js"></script>
 {% endblock headers %}
 {% block submenu %}
 <ul>
-	<li><a href="{% url settings-index %}">Domains</a></li>
-  	<li><a href="{% url accounts %}">Accounts</a></li>
-  	<li><a href="">Scanners</a></li>
+	<li><a href="{% url settings-index %}">{% trans "Domains" %}</a></li>
+  	<li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
+  	<li><a href="">{% trans "Scanners" %}</a></li>
 </ul>	
 {% endblock submenu %}
-{% block title %}Settings :: Domain{% endblock title %}
-{% block heading %}Domains :: Showing - {{ domain.address }}{% endblock heading %}
+{% block title %}{% trans "Settings :: Domain" %}{% endblock title %}
+{% block heading %}{% blocktrans with domain.address as domain_address %}
+	Domains :: Showing - {{ domain_address }}
+{% endblocktrans %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
     <div class="Bayes_heading">
-		Domain information
+		{% trans "Domain information" %}
 	</div>
 </div>
 <div class="LightBlue_div">
 	<div class="Domain_cols">
-		Domain name:
+		{% trans "Domain name:" %}
 	</div>
 	<div class="Domain_values">
 		{{ domain.address }}
@@ -28,19 +31,19 @@
 </div>
 <div class="LightBlue_div">
 	<div class="Domain_cols">
-		Status:
+		{% trans "Status:" %}
 	</div>
 	<div class="Domain_values">
 		{% if domain.enabled %}
- 		Enabled
+ 		{% trans "Enabled" %}
 		{% else %}
-		Inactive
+		{% trans "Inactive" %}
 		{% endif %}
 	</div>
 </div>
 <div class="LightBlue_div">
 	<div class="Domain_cols">
-		Owner:
+		{% trans "Owner:" %}
 	</div>
 	<div class="Domain_values">
 		{{ domain.user.first_name }} {{ domain.user.last_name }} ( {{ domain.user.username }} )
@@ -48,20 +51,20 @@
 </div>
 <div class="LightBlue_div">
 	<div class="Domain_cols">
-		Load Balance servers:
+		{% trans "Load Balance servers:" %}
 	</div>
 	<div class="Domain_values">
 		{% if domain.load_balance %}
-			Enabled
+			{% trans "Enabled" %}
 		{% else %}
-			Disabled
+			{% trans "Disabled" %}
 		{% endif %}
 	</div>
 </div>
 <div class="header_div">
     <div class="Reports_heading">
-		Delivery SMTP Servers
-		<div class="Profile_edit">[ <a href="{% url add-host domain.id %}">Add</a> ]</div>
+		{% trans "Delivery SMTP Servers" %}
+		<div class="Profile_edit">[ <a href="{% url add-host domain.id %}">{% trans "Add" %}</a> ]</div>
 	</div>
 </div>
 {% for server in servers  %}
@@ -71,9 +74,9 @@
 	</div>
 	<div class="Profile_values">
 		{% if server.enabled %}
-			Enabled
+			{% trans "Enabled" %}
 		{% else %}
-			Disabled
+			{% trans "Disabled" %}
 		{% endif %}
 		<div class="Profile_edit">
 			 <a class="selector" href="{% url test-host server.id %}"><img src="{{ MEDIA_URL }}imgs/connect.png" alt="Test" title="Test"></a>
@@ -84,13 +87,13 @@
 </div>
 {% empty %}
 <div class="LightBlue_div">
-	<div class="spanrow">No smtp delivery servers configured</div>
+	<div class="spanrow">{% trans "No smtp delivery servers configured" %}</div>
 </div>
 {% endfor %}
 <div class="header_div">
     <div class="Reports_heading">
-		Authentication Servers
-		<div class="Profile_edit">[ <a href="{% url add-auth-host domain.id %}">Add</a> ]</div>
+		{% trans "Authentication Servers" %}
+		<div class="Profile_edit">[ <a href="{% url add-auth-host domain.id %}">{% trans "Add" %}</a> ]</div>
 	</div>
 </div>
 {% for authserver in authservers  %}
@@ -100,9 +103,9 @@
 	</div>
 	<div class="Profile_values">
 		{% if authserver.enabled %}
-			Enabled
+			{% trans "Enabled" %}
 		{% else %}
-			Disabled
+			{% trans "Disabled" %}
 		{% endif %}
 		<div class="Profile_edit">
 			 <a href="{% url edit-auth-host  authserver.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
@@ -112,7 +115,7 @@
 </div>
 {% empty %}
 <div class="LightBlue_div">
-	<div class="spanrow">No auth servers configured</div>
+	<div class="spanrow">{% trans "No auth servers configured" %}</div>
 </div>
 {% endfor %}
 {% endblock content %}

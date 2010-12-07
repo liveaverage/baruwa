@@ -1,19 +1,20 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}{% endblock headers %}
 {% block submenu %}
 <ul>
 {% if is_domain %}
-<li><a href="{% url settings-index %}">Domains</a></li>
+<li><a href="{% url settings-index %}">{% trans "Domains" %}</a></li>
 {% else %}
-<li><a href="{% url accounts %}">Accounts</a></li>	
+<li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>	
 {% endif %}
 </ul>
 {% endblock submenu %}
-{% block title %}{% if is_domain %}Domains :: Add Domain{% else %}Accounts :: Add Address{% endif %}{% endblock title %}
-{% block heading %}{% if is_domain %}Domains :: Add Domain{% else %}Accounts :: Add Address{% endif %}{% endblock heading %}
+{% block title %}{% if is_domain %}{% trans "Domains :: Add Domain" %}{% else %}{% trans "Accounts :: Add Address" %}{% endif %}{% endblock title %}
+{% block heading %}{% if is_domain %}{% trans "Domains :: Add Domain" %}{% else %}{% trans "Accounts :: Add Address" %}{% endif %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
-    <div class="Bayes_heading">{% if is_domain %}Add Domain{% else %}Add Address{% endif %}</div>
+    <div class="Bayes_heading">{% if is_domain %}{% trans "Add Domain" %}{% else %}{% trans "Add Address" %}{% endif %}</div>
 </div>
 <form action="{% url add-address user_id %}" method="post">
 	{% for hidden in form.hidden_fields %}
@@ -32,8 +33,8 @@
     <div class="LightBlue_div">
         <div class="form_label">&nbsp;</div>
         <div class="form_value">
-            <input id="cancel-button" type="reset" value="Reset" />&nbsp;
-            <input id="submit-button" type="submit" value="Add" />
+            <input id="cancel-button" type="reset" value="{% trans "Reset" %}" />&nbsp;
+            <input id="submit-button" type="submit" value="{% trans "Add" %}" />
         </div>
         <div class="form_error"></div>
     </div>

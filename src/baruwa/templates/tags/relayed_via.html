@@ -1,9 +1,10 @@
+{% load i18n %}
 {% if hosts %}
 <div>
     <div class="relayed_heading">
-        <div class="relayed_col">IP address</div>
-        <div class="relayed_col_country">Hostname</div>
-        <div class="relayed_col">Country</div>
+        <div class="relayed_col">{% trans "IP address" %}</div>
+        <div class="relayed_col_country">{% trans "Hostname" %}</div>
+        <div class="relayed_col">{% trans "Country" %}</div>
     </div>
 {% for host in hosts %}
     <div class="relayed_div">
@@ -19,5 +20,5 @@
 {% endfor %}
 </div>
 {% else %}
-&nbsp;&nbsp;&nbsp;-- direct connection --
+&nbsp;&nbsp;&nbsp;-- {% trans "direct connection" %} --
 {% endif %}

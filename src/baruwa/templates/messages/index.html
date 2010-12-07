@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 {% if list_all %}
@@ -24,13 +25,13 @@ var ax_in_progress = false;
 <ul>
 	<!--<li><a href="{% url main-messages-index %}">Recent messages</a></li>-->
 {% ifnotequal view_type 'quarantine' %}
-	<li><a href="{% url all-messages-index 'full' %}">Full message list</a></li>
-	<li><a href="{% url all-messages-index 'quarantine' %}">Quarantine</a></li>
-	<li><a href="{% url all-messages-index 'archive' %}">Archive</a></li>
+	<li><a href="{% url all-messages-index 'full' %}">{% trans "Full message" %}</a></li>
+	<li><a href="{% url all-messages-index 'quarantine' %}">{% trans "Quarantine" %}</a></li>
+	<li><a href="{% url all-messages-index 'archive' %}">{% trans "Archive" %}</a></li>
 {% else %}
-	<li><a href="{% url all-messages-index 'quarantine' %}">Full Quarantine</a></li>
-	<li><a href="{% url quarantine-bytype-index 'quarantine', 'spam' %}">Spam</a></li>
-	<li><a href="{% url quarantine-bytype-index 'quarantine', 'policyblocked' %}">Non Spam</a></li>
+	<li><a href="{% url all-messages-index 'quarantine' %}">{% trans "Full Quarantine" %}</a></li>
+	<li><a href="{% url quarantine-bytype-index 'quarantine', 'spam' %}">{% trans "Spam" %}</a></li>
+	<li><a href="{% url quarantine-bytype-index 'quarantine', 'policyblocked' %}">{% trans "Non Spam" %}</a></li>
 {% endifnotequal %}
 </ul>
 {% endblock submenu %}
@@ -38,19 +39,19 @@ var ax_in_progress = false;
 {% if list_all %}
 	{% load pagination_heading %}{% pagination_heading %}
 {% else %}
-	Showing the 50 most recent messages
+	{% trans "Showing the 50 most recent messages" %}
 {% endif %}
 {% endblock title %}
 {% block heading %}
 {% if list_all %}
 	{% load pagination_heading %}{% pagination_heading %}
 	{%if active_filters %}
-		(<small><a href="{% url reports-index %}#active_filters">Filters</a> have been applied</small>)
+		(<small><a href="{% url reports-index %}#active_filters">{% trans "Filters" %}</a> {% trans "have been applied" %}</small>)
 	{%endif%}
 {% else %}
-	Showing the 50 most recent messages 
+	{% trans "Showing the 50 most recent messages" %}
 	<small>
-	    [Enable javascript for updates]
+	    [{% trans "Enable javascript for updates" %}]
 	</small>
 {% endif %}
 {% endblock heading %}
@@ -65,14 +66,14 @@ var ax_in_progress = false;
 	<div class="Size_heading">{% sorter "size" "Size" %}</div>
 	<div class="Score_heading">{% sorter "sascore" "Score" %}</div>
 	{% else %}
-	<div class="Date_Time_heading">Date/Time</div>
-	<div class="From_heading">From</div>
-	<div class="To_heading">To</div>
-	<div class="Subject_heading">Subject</div>
-	<div class="Size_heading">Size</div>
-	<div class="Score_heading">Score</div>
+	<div class="Date_Time_heading">{% trans "Date/Time" %}</div>
+	<div class="From_heading">{% trans "From" %}</div>
+	<div class="To_heading">{% trans "To" %}</div>
+	<div class="Subject_heading">{% trans "Subject" %}</div>
+	<div class="Size_heading">{% trans "Size" %}</div>
+	<div class="Score_heading">{% trans "Score" %}</div>
 	{% endif %}
-	<div class="Status_heading">Status</div>
+	<div class="Status_heading">{% trans "Status" %}</div>
 </div>	<!--Heading End Here-->
 {% load messages_extras %}
 {% for message in object_list %}
@@ -100,7 +101,7 @@ var ax_in_progress = false;
 	</div>                        
 </div>
 {% empty %}
-<div class="spanrow">No records returned</div>
+<div class="spanrow">{% trans "No records returned" %}</div>
 {% endfor %}
 {% endblock content %}
 {% block paging %}
@@ -108,7 +109,7 @@ var ax_in_progress = false;
 <div class="content_footer">
 	<div id="filters">
 		{% if active_filters %}
-		<b>Filters have been applied :</b>
+		<b>{% trans "Filters have been applied :" %}</b>
 		<span id="fhl" style="display:inline;">
 		{% for f in active_filters %}
 		"<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}

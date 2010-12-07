@@ -1,5 +1,6 @@
+{% load i18n %}
 {% if success %}
-The message id: {{id}} has been deleted
+{% blocktrans %}The message id: {{id}} has been deleted{% endblocktrans %}
 {% else %}
-The message id: {{id}} could not be deleted
+{% blocktrans %}The message id: {{id}} could not be deleted{% endblocktrans %}
 {% endif %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -12,27 +13,27 @@ var ax_error = false;
 {% endblock headers %}
 {% block submenu %}
 <ul>
-  <li><a href="{% url accounts %}">Accounts</a></li>
-  <li><a href="{% url list-scanners %}">Scanners</a></li>
+  <li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
+  <li><a href="{% url list-scanners %}">{% trans "Scanners" %}</a></li>
 </ul>	
 {% endblock submenu %}
-{% block title %}Settings{% endblock title %}
-{% block heading %}Domains :: {% load pagination_heading %}{% pagination_heading %}{% endblock heading %}
+{% block title %}{% trans "Settings" %}{% endblock title %}
+{% block heading %}{% trans "Domains :: " %}{% load pagination_heading %}{% pagination_heading %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
 	<div class="Domains_grid_hash">		
 	</div>
 	<div class="Domains_grid_name">
-		Domain Name
+		{% trans "Domain Name" %}
 	</div>
 	<div class="Domains_grid_owner">
-		Owner
+		{% trans "Owner" %}
 	</div>
 	<div class="Domains_grid_status">
-		Status
+		{% trans "Status" %}
 	</div>
 	<div class="Domains_grid_action">
-		Actions
+		{% trans "Actions" %}
 	</div>
 </div>
 {% for domain in object_list %}
@@ -67,7 +68,7 @@ var ax_error = false;
 	</div>
 </div>
 {% empty %}
-<div class="spanrow">No domains found</div>
+<div class="spanrow">{% trans "No domains found" %}</div>
 {% endfor %}
 {% endblock content %}
 {% block paging %}

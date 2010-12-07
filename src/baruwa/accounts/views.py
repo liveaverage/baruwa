@@ -31,6 +31,7 @@ from django.contrib.auth import login, REDIRECT_FIELD_NAME
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.utils import simplejson
+from django.utils.translation import ugettext_lazy as _
 from baruwa.accounts.forms import UserProfileForm, UserCreateForm, \
 UserAddressForm, OrdUserProfileForm, UserUpdateForm, AdminUserUpdateForm, \
 EditAddressForm, DeleteAddressForm, DeleteUserForm
@@ -117,8 +118,8 @@ def create_account(request, template_name='accounts/create_account.html'):
         form = UserCreateForm(request.POST)
         if form.is_valid():
             user = form.save()
-            msg = 'The user account %s was created successfully' % ( 
-                user.username)
+            msg = _('The user account %(account)s was created successfully') % {
+                'account':user.username} 
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', 
                 args=[user.id]))
@@ -142,7 +143,8 @@ def update_account(request, user_id, template_name='accounts/update_account.html
             form = UserUpdateForm(request.POST, instance=user_account)
         if form.is_valid():
             account = form.save()
-            msg = 'The user account %s has been updated' % account.username
+            msg = _('The user account %(account)s has been updated') % {
+            'account':account.username}
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', 
                 args=[user_id]))
@@ -171,8 +173,8 @@ def delete_account(request, user_id, template_name='accounts/delete_account.html
             else:
                 try:
                     user_account.delete()
-                    msg = 'The user account %s has been deleted' % (
-                        user_account.username)
+                    msg = _('The user account %(account)s has been deleted') % {
+                        'account':user_account.username}
                     if request.is_ajax():
                         response = simplejson.dumps({'success':True, 'html':msg})
                         return HttpResponse(response, 
@@ -180,8 +182,8 @@ def delete_account(request, user_id, template_name='accounts/delete_account.html
                     request.user.message_set.create(message=msg)
                     return HttpResponseRedirect(reverse('accounts'))
                 except:
-                    msg = 'The deletion of user account %s failed' % (
-                        user_account.username)
+                    msg = _('The deletion of user account %(account)s failed') % {
+                    'account':user_account.username}
                     if request.is_ajax():
                         response = simplejson.dumps({'success':True, 'html':msg})
                         return HttpResponse(response, 
@@ -204,8 +206,8 @@ def add_address(request, user_id, is_domain=False, template_name='accounts/add_a
         form = UserAddressForm(request.POST)
         if form.is_valid():
             address = form.save()
-            msg = 'The address %s has been added to %s account' % (
-                address.address, address.user.username)
+            msg = _('The address %(addr)s has been added to %(account)s account') % {
+            'addr':address.address, 'account':address.user.username}
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
@@ -229,7 +231,7 @@ def edit_address(request, address_id, template_name='accounts/edit_address.html'
         form = EditAddressForm(request.POST, instance=addr)
         if form.is_valid():
             address = form.save()
-            msg = 'The address %s has been updated' % address.address
+            msg = _('The address %(addr)s has been updated') % {'address':address.address}
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', 
                 args=[addr.user.id]))
@@ -248,7 +250,7 @@ def delete_address(request, address_id, template_name='accounts/delete_address.h
     address = get_object_or_404(UserAddresses, pk=address_id)
     if request.method == 'POST':
         addr_id = address.user.id
-        msg = 'The address %s has been updated' % address.address
+        msg = _('The address %(addr)s has been updated') % {'addr':address.address}
         address.delete()
         if request.is_ajax():
             response = simplejson.dumps({'success':True, 'html':msg})
@@ -272,8 +274,9 @@ def change_password(request, user_id, template_name='accounts/change_pw.html'):
         form = AdminPasswordChangeForm(user_account, request.POST)
         if form.is_valid():
             form.save()
-            msg = 'The password for user %s has been updated' % (
-                user_account.username)
+            msg = ('The password for user %(account)s has been updated') % {
+                'account':user_account.username
+            }
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', 
                 args=[user_id]))
@@ -324,8 +327,8 @@ def update_profiles(request, user_id, template_name='accounts/update_profile.htm
             
         if form.is_valid():
             user_profile = form.save()
-            msg = 'The user profile for %s has been updated' % (
-            user_profile.user.username)
+            msg = ('The user profile for %(account)s has been updated') % {
+                'account':user_profile.user.username}
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', 
                 args=[user_id]))

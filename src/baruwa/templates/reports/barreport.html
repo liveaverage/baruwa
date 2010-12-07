@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block body_class%} class="tundra"{%endblock body_class%}
 {% block headers %}
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />
@@ -15,23 +16,23 @@
 &nbsp;
 {% endblock submenu %}
 {% block title %}
-Reports - {{report_title}}
+{% blocktrans %}Reports - {{report_title}}{% endblocktrans %}
 {% endblock title %}
 {% block heading %}
-Reports - {{report_title}}
+{% blocktrans %}Reports - {{report_title}}{% endblocktrans %}
 {% endblock heading %}
 {% block content %}
 <div class="White_div">
 	<div id="chart" style="width: 950px; height: 250px;">
-		<noscript>Enable javascript to view graphs</noscript>
+		<noscript>{% trans "Enable javascript to view graphs" %}</noscript>
 	</div>
 </div>
 <div class="header_div">
 	<div class="SA_score">
-		Score
+		{% trans "Score" %}
 	</div>
 	<div class="SA_count">
-		Count
+		{% trans "Count" %}
 	</div>
 </div>
 <div id="graphrows">
@@ -46,13 +47,13 @@ Reports - {{report_title}}
 	</div>
 {% empty %}
 	<div class="spanrow">
-		No items returned
+		{% trans "No items returned" %}
 	</div>
 {% endfor %}
 </div>
 <div id="filterrow" class="lightblue_div{% if not active_filters %} hide{% endif %}">
     <div class="filterrow">
-        Filters have been applied :
+        {% trans "Filters have been applied :" %}
         <span id="fhl">
             {% for f in active_filters %}
             	&nbsp;<a href="{% url remove-filter forloop.counter0 %}"><img src="/static/imgs/sm-del.png" alt="x"/></a> "{{ f.filter_field }} {{f.filter_by}} {{f.filter_value}}"

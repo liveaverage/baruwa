@@ -1,17 +1,18 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}{% endblock headers %}
 {% block submenu %}
 {% ifnotequal user.get_profile.account_type 3  %}
 <ul>
-	<li><a href="{% url accounts %}">Accounts</a></li>
+	<li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
 </ul>
 {% endifnotequal %}
 {% endblock submenu %}
-{% block title %}Change Password{% endblock title %}
-{% block heading %}Change Password{% endblock heading %}
+{% block title %}{% trans "Change Password" %}{% endblock title %}
+{% block heading %}{% trans "Change Password" %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
-    <div class="Bayes_heading">Change Password</div>
+    <div class="Bayes_heading">{% trans "Change Password" %}</div>
 </div>
 <form action="{% url django.contrib.auth.views.password_change %}" method="post">
 	{% for hidden in form.hidden_fields %}
@@ -27,7 +28,7 @@
     <div class="LightBlue_div">
         <div class="form_label">&nbsp;</div>
         <div class="form_value">
-            <input id="submit-button" type="submit" value="Change" />
+            <input id="submit-button" type="submit" value="{% trans "Change" %}" />
         </div>
         <div class="form_error">{{form.errors}}</div>
     </div>

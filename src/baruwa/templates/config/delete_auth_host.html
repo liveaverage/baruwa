@@ -1,22 +1,25 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}{% endblock headers %}
 {% block submenu %}
 <ul>
-	<li><a href="{% url view-domain host.useraddress.id %}">Domain page</a></li>
+	<li><a href="{% url view-domain host.useraddress.id %}">{% trans "Domain page" %}</a></li>
 </ul>
 {% endblock submenu %}
-{% block title %}Delete authentication host{% endblock title %}
-{% block heading %}Delete authentication host{% endblock heading %}
+{% block title %}{% trans "Delete authentication host" %}{% endblock title %}
+{% block heading %}{% trans "Delete authentication host" %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
-    <div class="Bayes_heading">Delete Authentication Host</div>
+    <div class="Bayes_heading">{% trans "Delete Authentication Host" %}</div>
 </div>
 <form action="" method="post">
 	{% for hidden in form.hidden_fields %}
 		{{ hidden }}
 	{% endfor %}
     <div class="LightBlue_div">
-        <div class="form_label">Delete the Authentication host {{ host.address }}: ?</div>
+        <div class="form_label">{% blocktrans with host.address as host_address %}
+        Delete the Authentication host {{ host_address }}: ?
+        {% endblocktrans %}</div>
         <div class="form_value">
 			<input id="submit-button" type="submit" value="Delete" />      
         </div>

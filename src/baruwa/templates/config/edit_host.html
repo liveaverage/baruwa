@@ -1,18 +1,21 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}
 {% endblock headers %}
 {% block submenu %}
 <ul>
-	<li><a href="{% url view-domain host.useraddress.id %}">Domain page</a></li>
+	<li><a href="{% url view-domain host.useraddress.id %}">{% trans "Domain page" %}</a></li>
 </ul>	
 {% endblock submenu %}
-{% block title %}Settings :: Edit destination mail server{% endblock title %}
-{% block heading %}Domains :: Edit destination mail server{% endblock heading %}
+{% block title %}{% trans "Settings :: Edit destination mail server" %}{% endblock title %}
+{% block heading %}{% trans "Settings :: Edit destination mail server" %}{% endblock heading %}
 {% block content %}
 <form action="" method="post">
 <div class="Grid_heading">
     <div class="Bayes_heading">
-		Edit Mail Server {{forms.errors}}
+		{% blocktrans with forms.errors as forms_errors %}
+			Edit Mail Server {{forms.errors}}
+		{% endblocktrans %}
 	</div>
 </div>
 {% for hidden in form.hidden_fields %}

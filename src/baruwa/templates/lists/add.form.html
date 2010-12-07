@@ -1,13 +1,14 @@
+{% load i18n %}
     <form id="list-form" method="post" action="/lists/add/">
     <div class="LightBlue_div">
-        <div class="form_label">From address:</div>
+        <div class="form_label">{% trans "From address:" %}</div>
         <div class="form_value">
             {{ form.from_address }}
         </div>
         <div class="form_error">{{ form.from_address.errors }}</div>
     </div>
     <div class="LightBlue_div">
-        <div class="form_label">To address:</div>
+        <div class="form_label">{% trans "To address:" %}</div>
         <div class="form_value">
             {% if form.user_part %}{{ form.user_part }}&nbsp;&#64;&nbsp;{% endif %}{{ form.to_address }}
         </div>
@@ -17,7 +18,7 @@
         </div>
     </div>
     <div class="LightBlue_div">
-        <div class="form_label">List type:</div>
+        <div class="form_label">{% trans "List type:" %}</div>
         <div class="form_value">
             {{ form.list_type }}
         </div>
@@ -26,8 +27,8 @@
     <div class="LightBlue_div">
         <div class="form_label">&nbsp;</div>
         <div class="form_value">
-            <input id="cancel-button" type="reset" value="Reset" />&nbsp;
-            <input id="submit-button" type="submit" value="Add" />
+            <input id="cancel-button" type="reset" value="{% trans "Reset" %}" />&nbsp;
+            <input id="submit-button" type="submit" value="{% trans "Add" %}" />
         </div>
         <div class="form_error"></div>
     </div>

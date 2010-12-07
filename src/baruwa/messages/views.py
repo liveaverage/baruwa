@@ -29,6 +29,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.template import RequestContext
+from django.utils.translation import ugettext_lazy as _
 from baruwa.messages.models import Message, Release, Archive
 from baruwa.messages.forms import QuarantineProcessForm
 from baruwa.utils.process_mail import search_quarantine, host_is_local
@@ -147,7 +148,7 @@ def detail(request, message_id, archive=False):
     message_details = get_object_or_404(obj, id=message_id)
     if not message_details.can_access(request):
         return HttpResponseForbidden(
-            'You are not authorized to access this page')
+            _('You are not authorized to access this page'))
 
     error_list = ''
     quarantine_form = QuarantineProcessForm()
@@ -175,7 +176,7 @@ def detail(request, message_id, archive=False):
                     error_list = resp['response']
                 except:
                     success = False
-                    error_list = 'Error: Empty server response'
+                    error_list = _('Error: Empty server response')
             else:
                 file_name = search_quarantine(message_details.date, message_id)
                 if not file_name is None:
@@ -210,7 +211,7 @@ def detail(request, message_id, archive=False):
                                 'msg':status['output'], 'success':success})
                         else:
                             success = False
-                            html = 'Invalid salearn options supplied'
+                            html = _('Invalid salearn options supplied')
                     if quarantine_form.cleaned_data['todelete']:
                         #delete
                         import os
@@ -225,7 +226,7 @@ def detail(request, message_id, archive=False):
                         html = render_to_string(template,
                             {'id': message_details.id, 'success':success})
                 else:
-                    html = 'The quarantined file could not be processed'
+                    html = _('The quarantined file could not be processed')
                     success = False
         else:
             error_list = quarantine_form.errors.values()[0]
@@ -255,7 +256,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
     message_details = get_object_or_404(obj, id=message_id)
     if not message_details.can_access(request):
         return HttpResponseForbidden(
-            'You are not authorized to access this page')
+            _('You are not authorized to access this page'))
 
     if host_is_local(message_details.hostname):
         file_name = search_quarantine(message_details.date, message_id)

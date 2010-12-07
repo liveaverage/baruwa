@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block headers %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.clearform.js"></script>
@@ -6,15 +7,15 @@
 {% endblock %}
 {% block submenu %}
 <ul>
-  <li><a id="list-link" href="/lists/1/">Whitelist</a></li>
-  <li><a id="list-link" href="/lists/2/">Blacklist</a></li>
+  <li><a id="list-link" href="/lists/1/">{% trans "Whitelist" %}</a></li>
+  <li><a id="list-link" href="/lists/2/">{% trans "Blacklist" %}</a></li>
 </ul>
 {% endblock submenu %}
-{% block title %}Adding to list{% endblock title %}
-{% block heading %}Adding to Lists{% endblock heading %}
+{% block title %}{% trans "Adding to list" %}{% endblock title %}
+{% block heading %}{% trans "Adding to list" %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
-    <div class="Bayes_heading">Add List Item</div>
+    <div class="Bayes_heading">{% trans "Add List Item" %}</div>
 </div>
 {% include "lists/add.form.html" %}
 {% endblock content %}

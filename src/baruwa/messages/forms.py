@@ -21,6 +21,7 @@
 
 from django import forms
 from django.template.defaultfilters import force_escape
+from django.utils.translation import ugettext_lazy as _
 try:
     from django.forms.fields import email_re
 except ImportError:
@@ -61,17 +62,17 @@ class QuarantineProcessForm(forms.Form):
         todelete = cleaned_data.get("todelete")
 
         if not salearn and not release and not todelete:
-            raise forms.ValidationError("Select atleast one action to perform")
+            raise forms.ValidationError(_("Select atleast one action to perform"))
         else:
             if altrecipients in EMPTY_VALUES and use_alt and release:
                 raise forms.ValidationError(
-                    "Provide atleast one alternative recipient")
+                    _("Provide atleast one alternative recipient"))
             else:
                 if use_alt and release:
                     emails = altrecipients.split(',')
                     for email in emails:
                         if not email_re.match(email.strip()):
                             raise forms.ValidationError(
-                            '%s is not a valid e-mail address.' 
-                            % force_escape(email))
+                            _('%(email)s is not a valid e-mail address.') 
+                            % {'email':force_escape(email)})
         return cleaned_data

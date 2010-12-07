@@ -1,18 +1,23 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}
 {% endblock headers %}
 {% block submenu %}
 <ul>
-	<li><a href="{% url settings-index %}">Domains</a></li>
+	<li><a href="{% url settings-index %}">{% trans "Domains" %}</a></li>
 </ul>	
 {% endblock submenu %}
-{% block title %}Settings :: Add authentication server{% endblock title %}
-{% block heading %}Domains :: {{ domain.address }} - add authentication server{% endblock heading %}
+{% block title %}{% trans "Settings :: Add authentication server" %}{% endblock title %}
+{% block heading %}{% blocktrans with domain.address as address %}
+Domains :: {{ address }} - add authentication server
+{% endblocktrans %}{% endblock heading %}
 {% block content %}
 <form action="" method="post">
 <div class="Grid_heading">
     <div class="Bayes_heading">
-		Add Authentication server{{form.errors}}
+		{% blocktrans with form.errors as form_errors %}
+		Add Authentication server{{form_errors}}
+		{% endblocktrans %}
 	</div>
 </div>
 {% for hidden in form.hidden_fields %}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -13,16 +14,16 @@ var ax_error = false;
 {% block submenu %}
 <ul>
 {% ifequal list_kind 1 %}
-  <li><a id="list-link" href="{% url lists-start 2 %}">Blacklist</a></li>
+  <li><a id="list-link" href="{% url lists-start 2 %}">{% trans "Blacklist" %}</a></li>
 {%else%}
-  <li><a id="list-link" href="{% url lists-start 1 %}">Whitelist</a></li>
+  <li><a id="list-link" href="{% url lists-start 1 %}">{% trans "Whitelist" %}</a></li>
 {%endifequal%}
-  <li><a id="list-add" href="{% url add-to-list %}">Add to List</a></li>
+  <li><a id="list-add" href="{% url add-to-list %}">{% trans "Add to List" %}</a></li>
 </ul>
 {% endblock submenu %}
-{% block title %}List management{% endblock title %}
+{% block title %}{% trans "List management" %}{% endblock title %}
 {% block heading %}
-{% ifequal list_kind 1 %}Whitelist{%else%}Blacklist{%endifequal%}{%if is_paginated%}{% load pagination_heading %} :: {% pagination_heading %}{%endif%}
+{% ifequal list_kind 1 %}{% trans "Whitelist" %}{%else%}{% trans "Blacklist" %}{%endifequal%}{%if is_paginated%}{% load pagination_heading %} :: {% pagination_heading %}{%endif%}
 {% endblock heading %}
 {% block content %}
     <div class="Grid_heading">
@@ -36,7 +37,7 @@ var ax_error = false;
         <div class="Lists_grid_From">
         {% generic_sorter "from_address" "From" %}
         </div>
-        <div class="Lists_grid_Action">Action</div>
+        <div class="Lists_grid_Action">{% trans "Action" %}</div>
     </div>
     {% if object_list %}
         {% load messages_extras %}
@@ -55,21 +56,21 @@ var ax_error = false;
         </div>
         {% endfor %}
     {% else %}
-    <div class="spanrow">No records returned</div>
+    <div class="spanrow">{% trans "No records returned" %}</div>
     {% endif %}
 {% endblock content %}
 {% block paging %}
         <div class="content_footer">
             <div id="filterbox" style="display:{% ifnotequal order_by "id" %}block{%else%}none{%endifnotequal%};">
                 <form id="lists_filter_form" method="post" action="/{{ app }}/{{ list_kind }}/{{ direction }}/{{ order_by }}/">
-                    Filter <span id="filterlabel">
-                    {%ifequal order_by "to_address"%}<b>To:</b>{%endifequal%}{%ifequal order_by "from_address"%}<b>From:</b>{%endifequal%}</span>
+                    {% trans "Filter " %}<span id="filterlabel">
+                    {%ifequal order_by "to_address"%}<b>To:</b>{%endifequal%}{%ifequal order_by "from_address"%}<b>{% trans "From:" %}</b>{%endifequal%}</span>
                     <select id="id_query_type" name="query_type">
-                        <option value="1"{%ifequal query_type 1%} selected="selected"{%endifequal%}>containing</option>
-                        <option value="2"{%ifequal query_type 2%} selected="selected"{%endifequal%}>excluding</option>
+                        <option value="1"{%ifequal query_type 1%} selected="selected"{%endifequal%}>{% trans "containing" %}</option>
+                        <option value="2"{%ifequal query_type 2%} selected="selected"{%endifequal%}>{% trans "excluding" %}</option>
                     </select>
                     <input id="id_search_for" name="search_for" type="text" value="{{search_for}}" size="25" />
-                    <input id="id_lists_filter_submit" type="submit" value="GO" />
+                    <input id="id_lists_filter_submit" type="submit" value="{% trans "GO" %}" />
                 </form>
             </div>
             <div id="paginator">{% load generic_paginator %}{% generic_paginator 3 %}</div>

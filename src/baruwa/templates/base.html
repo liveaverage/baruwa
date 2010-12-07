@@ -55,7 +55,7 @@
 					</li>
 					{% if user.is_authenticated %}
 					<li>{% trans "Signed in as " %}<a href="{% url user-profile user.id %}">{{user.username}}</a></li>
-                    <li><a href="{% url logout %}">{% trans Logout %}</a></li>
+                    <li><a href="{% url logout %}">{% trans "Logout" %}</a></li>
 					{% else %}
 					<li>{% trans "Not logged in :: " %}<a href="{% url please-login %}">{% trans "Login" %}</a></li>
 					{% endif %}

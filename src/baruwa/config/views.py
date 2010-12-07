@@ -27,6 +27,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
 from baruwa.utils.decorators import onlysuperusers
 from baruwa.accounts.models import UserAddresses
 from baruwa.config.models import MailHost
@@ -108,8 +109,8 @@ def add_host(request, domain_id, template='config/add_host.html'):
         if form.is_valid():
             try:
                 host = form.save()
-                msg = ('Delivery SMTP server: %s was added successfully' 
-                    % host.address)
+                msg = _('Delivery SMTP server: %(server)s was'
+                        ' added successfully') % {'server':host.address}
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
                     return HttpResponse(response, 
@@ -118,7 +119,7 @@ def add_host(request, domain_id, template='config/add_host.html'):
                 return HttpResponseRedirect(reverse('view-domain', 
                     args=[domain.id]))
             except:
-                msg = 'Adding of Delivery SMTP server failed'
+                msg = _('Adding of Delivery SMTP server failed')
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
                     return HttpResponse(response, 
@@ -141,8 +142,8 @@ def edit_host(request, host_id, template='config/edit_host.html'):
         if form.is_valid():
             try:
                 form.save()
-                msg = ('Delivery SMTP server: %s has been updated successfully' 
-                    % host.address)
+                msg = _('Delivery SMTP server: %(server)s has '
+                        'been updated successfully') % {'server':host.address}
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
                     return HttpResponse(response, 
@@ -151,7 +152,8 @@ def edit_host(request, host_id, template='config/edit_host.html'):
                 return HttpResponseRedirect(reverse('view-domain', 
                     args=[host.useraddress.id]))
             except:
-                msg = 'Delivery SMTP server: %s update failed' % host.address
+                msg = _('Delivery SMTP server: %(server)s update failed') % {
+                'server':host.address}
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
                     return HttpResponse(response, 
@@ -174,8 +176,8 @@ def delete_host(request, host_id, template='config/delete_host.html'):
         if form.is_valid():
             try:
                 go_id = host.useraddress.id
-                msg = ('Delivery SMTP server: %s has been deleted' 
-                    % host.address)
+                msg = _('Delivery SMTP server: %(server)s has been deleted') % {
+                'server':host.address}
                 host.delete()
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
@@ -185,8 +187,8 @@ def delete_host(request, host_id, template='config/delete_host.html'):
                 return HttpResponseRedirect(reverse('view-domain', 
                                             args=[go_id]))
             except:
-                msg = ('Delivery SMTP server: %s could not be deleted' 
-                    % host.address)
+                msg = _('Delivery SMTP server: %(server)s could not be deleted') % {
+                'server':host.address}
                 if request.is_ajax():
                     response = simplejson.dumps({'success':False, 'html':msg})
                     return HttpResponse(response, 
@@ -208,13 +210,15 @@ def test_host(request, host_id):
     from baruwa.utils.process_mail import test_smtp_server
     
     if test_smtp_server(host.address, host.port, test_address):
-        msg = ('Server %s is operational and accepting mail for: %s' 
-            % (host.address, host.useraddress.address))
+        msg = _('Server %(server)s is operational and'
+                ' accepting mail for: %(dom)s') % {
+                'server':host.address, 
+                'dom':host.useraddress.address}
         success = True
     else:
         success = False
-        msg = 'Server %s is NOT accepting mail for : %s' % (
-            host.address, host.useraddress.address)
+        msg = _('Server %(server)s is NOT accepting mail for : %(dom)s') % {
+        'server':host.address, 'dom':host.useraddress.address}
         
     if request.is_ajax():
         response = simplejson.dumps({'success':success, 'html':msg})
@@ -235,8 +239,8 @@ def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
         if form.is_valid():
             try:
                 host = form.save()
-                msg = ('External authentication %s: on host %s for domain %s was added successfully' 
-                % ( AUTH_TYPES[host.protocol], host.address, host.useraddress.address))
+                msg = _('External authentication %(auth)s: on host %(host)s for domain %(dom)s was added successfully') % {
+                    'auth':AUTH_TYPES[host.protocol], 'host':host.address, 'dom':host.useraddress.address}
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
                     return HttpResponse(response, 
@@ -245,7 +249,7 @@ def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
                 return HttpResponseRedirect(reverse('view-domain', 
                     args=[domain.id]))
             except:
-                msg = 'Addition of external authentication failed'
+                msg = _('Addition of external authentication failed')
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
                     return HttpResponse(response, 
@@ -268,9 +272,11 @@ def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
         if form.is_valid():
             try:
                 saved_host = form.save()
-                msg = 'External authentication %s: on host %s for domain %s has been updated successfully' % (
-                    AUTH_TYPES[saved_host.protocol], saved_host.address, 
-                    saved_host.useraddress.address)
+                msg = _('External authentication %(auth)s: on host %(host)s for'
+                        ' domain %(dom)s has been updated successfully') % {
+                    'auth':AUTH_TYPES[saved_host.protocol], 
+                    'host':saved_host.address, 
+                    'dom':saved_host.useraddress.address}
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
                     return HttpResponse(response, 
@@ -279,7 +285,7 @@ def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
                 return HttpResponseRedirect(reverse('view-domain', 
                     args=[saved_host.useraddress.id]))
             except:
-                msg = 'Update of external authentication failed'
+                msg = _('Update of external authentication failed')
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
                     return HttpResponse(response, 
@@ -302,9 +308,12 @@ def delete_auth_host(request, host_id,
         if form.is_valid():
             try:
                 go_id = host.useraddress.id
-                msg = 'External authentication %s: on host %s for domain %s has been deleted' % (
-                    AUTH_TYPES[host.protocol], host.address, 
-                    host.useraddress.address)
+                msg = _('External authentication %(auth)s: on host %(host)s'
+                        ' for domain %(dom)s has been deleted') % {
+                            'auth':AUTH_TYPES[host.protocol], 
+                            'host':host.address, 
+                            'dom':host.useraddress.address
+                        }
                 host.delete()
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
@@ -313,9 +322,12 @@ def delete_auth_host(request, host_id,
                 request.user.message_set.create(message=msg)
                 return HttpResponseRedirect(reverse('view-domain', args=[go_id]))
             except:
-                msg = 'External authentication %s: on host %s for domain %s could not be deleted' % (
-                    AUTH_TYPES[host.protocol], host.address, 
-                    host.useraddress.address)
+                msg = _('External authentication %(auth)s: on host %(host)s'
+                        ' for domain %(dom)s could not be deleted') % {
+                        'auth':AUTH_TYPES[host.protocol], 
+                        'host':host.address, 
+                        'dom':host.useraddress.address
+                        }
                 if request.is_ajax():
                     response = simplejson.dumps({'success':False, 'html':msg})
                     return HttpResponse(response, 
@@ -365,8 +377,9 @@ def view_scanner(request, scanner_id, template='config/view_scanner.html'):
     scanner = get_object_or_404(ScannerHost, id=scanner_id)
     configs = ScannerConfig.objects.values('value')
     if not configs:
-        msg = 'The node %s is not been initialized, Please initialize' % (
-                scanner.address)
+        msg = _('The node %(node)s is not been initialized, Please initialize') % {
+            'node':scanner.address
+        }
         request.user.message_set.create(message=msg)
         return HttpResponseRedirect(reverse('init-scanner', 
                                     args=[scanner.id]))
@@ -398,7 +411,7 @@ def init_scanner(request, scanner_id, template='config/init_scanner.html'):
                 sql = re.sub(r'scanner_id', str(scanner.id), sql)
                 conn = connection.cursor()
                 conn.execute(sql)
-                msg = 'The node %s has been initialized' % scanner.address
+                msg = _('The node %(node)s has been initialized') % {'node':scanner.address}
                 request.user.message_set.create(message=msg)
                 return HttpResponseRedirect(reverse('view-scanner', 
                                             args=[scanner.id]))

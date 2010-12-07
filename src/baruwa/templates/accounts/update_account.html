@@ -1,17 +1,18 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}{% endblock headers %}
 {% block submenu %}
 {% ifnotequal user.get_profile.account_type 3  %}
 <ul>
-	<li><a href="{% url accounts %}">Accounts</a></li>
+	<li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
 </ul>
 {% endifnotequal %}
 {% endblock submenu %}
-{% block title %}Update account{% endblock title %}
-{% block heading %}Update account{% endblock heading %}
+{% block title %}{% trans "Update account" %}{% endblock title %}
+{% block heading %}{% trans "Update account" %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
-    <div class="Account_creation_heading">Update user account</div>
+    <div class="Account_creation_heading">{% trans "Update user account" %}</div>
 </div>
 <form action="{% url update-account user_id %}" method="post">
 	{% for hidden in form.hidden_fields %}
@@ -27,7 +28,7 @@
     <div class="LightBlue_div">
         <div class="form_label">&nbsp;</div>
         <div class="form_value">
-            <input id="submit-button" type="submit" value="Update" />
+            <input id="submit-button" type="submit" value="{% trans "Update" %}" />
         </div>
         <div class="form_error"></div>
     </div>

@@ -1,28 +1,29 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}{% endblock headers %}
 {% block submenu %}
 <ul>
 	{% ifequal address.address_type 1 %}
-	<li><a href="{% url settings-index %}">Domains</a></li>
+	<li><a href="{% url settings-index %}">{% trans "Domains" %}</a></li>
 	{% else %}
-	<li><a href="{% url accounts %}">Accounts</a></li>	
+	<li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>	
 	{% endifequal %}	
 </ul>
 {% endblock submenu %}
-{% block title %}Delete Address{% endblock title %}
-{% block heading %}Delete Address{% endblock heading %}
+{% block title %}{% trans "Delete Address" %}{% endblock title %}
+{% block heading %}{% trans "Delete Address" %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
-    <div class="Bayes_heading">Delete Address</div>
+    <div class="Bayes_heading">{% trans "Delete Address" %}</div>
 </div>
 <form action="{% url delete-address address_id %}" method="post">
 	{% for hidden in form.hidden_fields %}
 		{{ hidden }}
 	{% endfor %}
     <div class="LightBlue_div">
-        <div class="form_label">Delete the address: {{ address.address }} ?</div>
+        <div class="form_label">{% trans "Delete the address:" %} {{ address.address }} ?</div>
         <div class="form_value">
-			<input id="submit-button" type="submit" value="Delete" />      
+			<input id="submit-button" type="submit" value="{% trans "Delete" %}" />      
         </div>
         <div class="form_error"></div>
     </div>

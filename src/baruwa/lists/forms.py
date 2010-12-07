@@ -21,6 +21,7 @@
 
 from django import forms
 from django.template.defaultfilters import force_escape
+from django.utils.translation import ugettext_lazy as _
 try:
     from django.forms.fields import email_re
 except ImportError:
@@ -53,12 +54,13 @@ class ListAddForm(forms.Form):
         to_address = self.cleaned_data['to_address']
         if not email_re.match(to_address):
             raise forms.ValidationError(
-                '%s provide a valid e-mail address' % force_escape(to_address))
+                _('%(email)s provide a valid e-mail address') % 
+                {'email':force_escape(to_address)})
         if to_address not in self.request.session['user_filter']['addresses'] \
             and not self.request.user.is_superuser():
             raise forms.ValidationError(
-                "The address: %s does not belong to you." % force_escape(
-                to_address))
+                _("The address: %(email)s does not belong to you.") % 
+                {'email':force_escape(to_address)})
         return to_address
 
     def clean_from_address(self):
@@ -68,8 +70,8 @@ class ListAddForm(forms.Form):
         if (not email_re.match(from_address) and not DOM_RE.match(from_address)
                 and not IPV4_RE.match(from_address) and not
                 IPV4_NET_OR_RANGE_RE.match(from_address)):
-            raise forms.ValidationError("Provide either a valid IPv4, \
-            email, Domain address, or IPv4 network or range")
+            raise forms.ValidationError(_("Provide either a valid IPv4, email,"
+            " Domain address, or IPv4 network or range"))
         return from_address
 
     def clean(self):
@@ -81,7 +83,7 @@ class ListAddForm(forms.Form):
         list_objs = List.objects.filter(from_address = from_address,
         to_address = to_address)
         if list_objs:
-            raise forms.ValidationError("The list item already exists")
+            raise forms.ValidationError(_("The list item already exists"))
         return cleaned_data
 
 class AdminListAddForm(ListAddForm):
@@ -110,12 +112,12 @@ class AdminListAddForm(ListAddForm):
             addresses = self.request.session['user_filter']['addresses']
             if to_address not in addresses:
                 raise forms.ValidationError(
-                "The address: %s does not belong to you." % force_escape(
-                to_address))
+                _("The address: %(addr)s does not belong to you.") 
+                % {'addr':force_escape(to_address)})
 
         if to_address != "" and not to_address is None:
             if not DOM_RE.match(to_address):
-                raise forms.ValidationError("Provide either a valid domain")
+                raise forms.ValidationError(_("Provide either a valid domain"))
         else:
             to_address = 'any'
 
@@ -131,7 +133,7 @@ class AdminListAddForm(ListAddForm):
             user_part = user_part.strip()
             if not USER_RE.match(user_part):
                 raise forms.ValidationError(
-                'provide a valid user part of the email address')
+                _('provide a valid user part of the email address'))
         return user_part
 
 class FilterForm(forms.Form):

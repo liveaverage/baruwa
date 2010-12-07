@@ -1,15 +1,16 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block headers %}{% endblock headers %}
 {% block submenu %}
 <ul>
-  <li><a href="{% url accounts %}">Accounts</a></li>
+  <li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
 </ul>
 {% endblock submenu %}
-{% block title %}Create account{% endblock title %}
-{% block heading %}Create account{% endblock heading %}
+{% block title %}{% trans "Create account" %}{% endblock title %}
+{% block heading %}{% trans "Create account" %}{% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
-    <div class="Account_creation_heading">User account creation</div>
+    <div class="Account_creation_heading">{% trans "User account creation" %}</div>
 </div>
 <form action="{% url create-account %}" method="post">
     {% for field in form %}
@@ -22,8 +23,8 @@
     <div class="LightBlue_div">
         <div class="form_label">&nbsp;</div>
         <div class="form_value">
-            <input id="cancel-button" type="reset" value="Reset" />&nbsp;
-            <input id="submit-button" type="submit" value="Create" />
+            <input id="cancel-button" type="reset" value="{% trans "{% trans "Reset" %}" %}" />&nbsp;
+            <input id="submit-button" type="submit" value="{% trans "{% trans "Create" %}" %}" />
         </div>
         <div class="form_error"></div>
     </div>

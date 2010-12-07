@@ -1,23 +1,23 @@
-
+{% load i18n %}
 Baruwa
 ======
 
 {% load messages_extras %}
 {% if spam_items %}
-Spam Report
+{% trans "Spam Report" %}
 ============
 
-Date/Time   From            To          Subject          
+{% trans "Date/Time" %}   {% trans "From" %}            {% trans "To" %}          {% trans "Subject" %}          
 ===================================================================	
 {% for item in spam_items %}
 + {{ item.timestamp }}  {{ item.from_address }}         {{ item.to_address }}           {{ item.subject }}              
 {% endfor %}
 {% endif %}
 {% if policy_items %}
-Policy Blocked Report
+{% trans "Policy Blocked Report" %}
 =====================
 
-Date/Time   From            To          Subject             
+{% trans "Date/Time" %}   {% trans "From" %}            {% trans "To" %}          {% trans "Subject" %}             
 ===================================================================
 {% for item in policy_items %}
 + {{ item.timestamp }}  {{ item.from_address }}         {{ item.to_address }}           {{ item.subject }}              
@@ -25,7 +25,7 @@ Date/Time   From            To          Subject
 {% endif %}
 
 {% if host_url %}
-To view these quarantined messages please visit :
+{% trans "To view these quarantined messages please visit :" %}
 {{ host_url }}{% url all-messages-index 'quarantine' %}
 {% endif %}
 ===================================================================

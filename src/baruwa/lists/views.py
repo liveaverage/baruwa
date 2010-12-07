@@ -31,6 +31,7 @@ from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.db.models import Q
+from django.utils.translation import ugettext_lazy as _
 from baruwa.lists.forms import ListAddForm, AdminListAddForm
 from baruwa.lists.forms import FilterForm, ListDeleteForm
 from baruwa.lists.models import List
@@ -184,9 +185,9 @@ def add_to_list(request, template = 'lists/add.html'):
                 else:
                     form = ListAddForm(request)
             except IntegrityError:
-                error_msg = 'The list item already exists'
+                error_msg = _('The list item already exists')
             except:
-                error_msg = 'Error occured saving the list item'
+                error_msg = _('Error occured saving the list item')
                 
             if request.is_ajax():
                 response = simplejson.dumps({'success':is_saved, 
@@ -215,7 +216,7 @@ def delete_from_list(request, item_id):
         form = ListDeleteForm(request.POST)
         if form.is_valid():
             if not list_item.can_access(request):
-                return HttpResponseForbidden('You do not have authorization')
+                return HttpResponseForbidden(_('You do not have authorization'))
             list_type = list_item.list_type
             list_item.delete()
             if request.is_ajax():
