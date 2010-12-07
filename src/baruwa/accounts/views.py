@@ -274,7 +274,7 @@ def change_password(request, user_id, template_name='accounts/change_pw.html'):
         form = AdminPasswordChangeForm(user_account, request.POST)
         if form.is_valid():
             form.save()
-            msg = ('The password for user %(account)s has been updated') % {
+            msg = _('The password for user %(account)s has been updated') % {
                 'account':user_account.username
             }
             request.user.message_set.create(message=msg)
@@ -327,7 +327,7 @@ def update_profiles(request, user_id, template_name='accounts/update_profile.htm
             
         if form.is_valid():
             user_profile = form.save()
-            msg = ('The user profile for %(account)s has been updated') % {
+            msg = _('The user profile for %(account)s has been updated') % {
                 'account':user_profile.user.username}
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', 
