@@ -33,7 +33,7 @@ function ajax_error(event, request, settings){
     if(request.status == 200){
         location.href=settings.url;
     }else{
-        $('.Grid_heading').before('<div id="ajax-error-msg" class="ui-state-highlight">Server error</div>');
+        $('.Grid_heading').before('<div id="ajax-error-msg" class="ui-state-highlight">'+gettext('Server error')+'</div>');
         setTimeout(function() {
             $('#ajax-error-msg').empty().remove();
         }, 3900);
@@ -46,7 +46,7 @@ function test_conn(event){
     $.get($(this).attr('href'), function(response){
         if($('#in-progress').length){$('#in-progress').remove();}
         $('.Grid_content').before('<div id="in-progress">'+response.html+'</div>');
-        $('#in-progress').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+        $('#in-progress').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>')
         ip = setTimeout(function() {$('#in-progress').remove();}, 15050);
         $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(ip);$('#in-progress').empty().remove();});
         $('a.selector').bind('click', test_conn);
@@ -55,7 +55,7 @@ function test_conn(event){
 
 var loading_msg = '<div id="loading_message"><div id="loading">';
 loading_msg += '<img src="/static/imgs/ajax-loader.gif" alt="loading"/>';
-loading_msg += '<br/><b>Testing connection</b></div></div>';
+loading_msg += '<br/><b>'+gettext('Testing connection')+'</b></div></div>';
 $(document).ready(function(){
     $('body').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);
     $('a.selector').bind('click', test_conn);

@@ -35,8 +35,8 @@ function ajax_error(event, request, settings){
     if(request.status == 200){
         location.href=settings.url;
     }else{
-        $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>').show();
-        $('.Grid_heading').before('<div id="ajax-error-msg" class="ui-state-highlight">Server error</div>');
+        $(this).empty().append('<span class="ajax_error">'+gettext('Error connecting to server. check network!')+'</span>').show();
+        $('.Grid_heading').before('<div id="ajax-error-msg" class="ui-state-highlight">'+gettext('Server error')+'</div>');
         setTimeout(function() {
             $('#ajax-error-msg').empty().remove();
         }, 3900);
@@ -54,7 +54,9 @@ function navigate(){
 }
 
 function paginate(){
-    tmp = 'Domains :: Showing page '+rj.page+' of '+rj.pages+' pages. ';
+    fmt = gettext('Showing page %(page)s of %(pages)s pages.');
+    data = {'page':rj.page, 'pages':rj.pages}
+    tmp = interpolate(fmt, data);
     $('#heading').empty().append(tmp);
     $.address.title(tmp);
     count = 0;
@@ -101,11 +103,11 @@ function confirm_delete(event){
         count = 0;
         del_warning[count++] = '<div id="confirm-del-msg">';
         del_warning[count++] = '<div id="confirm-del-info">';
-        del_warning[count++] = 'This will delete the domain ';
-        del_warning[count++] = 'and all associated data. This action is not reversible</div>';
+        del_warning[count++] = gettext('This will delete the domain ');
+        del_warning[count++] = gettext('and all associated data. This action is not reversible')+'</div>';
         del_warning[count++] = '<div id="confirm-del-buttons">';
-        del_warning[count++] = 'Do you wish to continue ?&nbsp;';
-        del_warning[count++] = '<input type="button" value="Yes" id="yes_del" />&nbsp;';
+        del_warning[count++] = gettext('Do you wish to continue ?');
+        del_warning[count++] = '&nbsp;<input type="button" value="Yes" id="yes_del" />&nbsp;';
         del_warning[count++] = '<input type="button" value="No" id="no_del" />'
         del_warning[count++] = '</div>';
         del_warning[count++] = '</div>'
@@ -124,11 +126,11 @@ function confirm_delete(event){
                 if (response.success) {
                     $('#domain-id-'+m[1]).remove();
                     $('.Grid_content').before('<div id="in-progress">'+response.html+'</div>');
-                    $('#in-progress').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+                    $('#in-progress').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>')
                     ip = setTimeout(function() {$('#in-progress').remove();}, 15050);
                 }else{
                     $('.Grid_content').before('<div id="in-progress">'+response.html+'</div>');
-                    $('#in-progress').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+                    $('#in-progress').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>')
                     ip = setTimeout(function() {$('#in-progress').remove();}, 15050);
                 };
                 $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(ip);$('#in-progress').empty().remove();});
@@ -176,7 +178,7 @@ function page_from_json(data){
             $("div.Grid_heading").after(row.join(''));
         }else{
             $("div.Grid_heading").siblings('div').remove();
-            $("div.Grid_heading").after('<div class="LightBlue_div"><div class="spanrow">No domains at the moment</div></div>');
+            $("div.Grid_heading").after('<div class="LightBlue_div"><div class="spanrow">'+gettext('No domains at the moment')+'</div></div>');
         }
         $('div.Domains_action_delete a').bind('click',confirm_delete);
         paginate();
@@ -206,5 +208,5 @@ function jsize_page(){
     $.address.externalChange(handlextern);
     $('div.Domains_action_delete a').bind('click',confirm_delete);
 }
-var loading_msg = '<div id="loading_message"><div id="loading"><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/><b>Processing</b></div></div>';
+var loading_msg = '<div id="loading_message"><div id="loading"><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/><b>'+gettext('Processing')+'</b></div></div>';
 $(document).ready(jsize_page);

@@ -108,7 +108,7 @@ function json2html(data){
             }
             var mstatus = '';
             if(n.spam && !(n.virusinfected) && !(n.nameinfected) && !(n.otherinfected)){
-                mstatus = 'Spam';
+                mstatus = gettext('Spam');
                 if(n.highspam){
                     c =  'highspam';
                 }else{
@@ -116,11 +116,11 @@ function json2html(data){
                 }
             }
             if(n.virusinfected || n.nameinfected || n.otherinfected){
-                mstatus = 'Infected';
+                mstatus = gettext('Infected');
                 c =  'infected';
             }
             if(!(n.spam) && !(n.virusinfected) && !(n.nameinfected) && !(n.otherinfected)){
-                mstatus = 'Clean';
+                mstatus = gettext('Clean');
             }
             if(n.whitelisted && !(n.virusinfected) && !(n.nameinfected) && !(n.otherinfected)){
                 mstatus = 'WL';
@@ -155,7 +155,7 @@ function json2html(data){
         });
         if(!rows.length){
             if(full_messages_listing){
-                rows = '<div class="spanrow">No records returned</div>';
+                rows = '<div class="spanrow">'+gettext('No records returned')+'</div>';
                 $("div.Grid_heading").siblings('div').remove();
                 $("div.Grid_heading").after(rows);
             }
@@ -175,7 +175,7 @@ function json2html(data){
             }
         }
     }else{
-        $("#my-spinner").empty().append('Empty response from server. check network!');
+        $("#my-spinner").empty().append(gettext('Empty response from server. check network!'));
     }
 }
 

@@ -45,8 +45,8 @@ function handle_form(event){
                 clearTimeout(timeout);
                 $('#filter-error').remove();
             };
-            $('.Bayes_heading').after('<div id="info-msg">The address has been added to the list</div>');
-            $('#info-msg').append('<div id="dismiss"><a href="#">Dismiss</a></div>');
+            $('.Bayes_heading').after('<div id="info-msg">'+gettext('The address has been added to the list')+'</div>');
+            $('#info-msg').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>');
             timeout = setTimeout(function() {$('#info-msg').empty().remove();}, 15050);
             $('form').clearForm();
             window.scroll(0,0);
@@ -63,7 +63,7 @@ function handle_form(event){
                 $('#info-msg').remove();
             };
             $('.Bayes_heading').after('<div id="filter-error">'+response.error_msg+'</div>');
-            $('#filter-error').append('<div id="dismiss"><a href="#">Dismiss</a></div>');
+            $('#filter-error').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>');
             timeout = setTimeout(function() {
                 $('#filter-error').empty().remove(); 
                 $(error_field).removeClass('input_error');
@@ -82,11 +82,11 @@ function handle_form(event){
 $(document).ready(function() {
     $('#list-form').submit(handle_form);
     $('#my-spinner').ajaxStart(function() {
-        $(this).empty().append('Processing....').show();
+        $(this).empty().append(gettext('Processing....')).show();
     }).ajaxError(function(event, request, settings) {
         $(this).hide();
-        $('.Bayes_heading').after('<div id="filter-error">Server Error occured</div>');
-        $('#filter-error').append('<div id="dismiss"><a href="#">Dismiss</a></div>');
+        $('.Bayes_heading').after('<div id="filter-error">'+gettext('Server Error occured')+'</div>');
+        $('#filter-error').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>');
         timeout = setTimeout(function() {$('#filter-error').empty().remove();}, 15050);
         $('#dismiss a').click(function(event){event.preventDefault();
             clearTimeout(timeout);

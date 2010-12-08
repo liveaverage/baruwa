@@ -19,10 +19,10 @@ function handle_listing(event){
     list_confirm[count++] = ' to '+to_addr;
     list_confirm[count++] = '</div>';
     list_confirm[count++] = '<div id="confirm-listing-buttons">';
-    list_confirm[count++] = 'List by IP address <input type="checkbox" id="byip" />';
-    list_confirm[count++] = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Do you want to continue ? ';
-    list_confirm[count++] = '<input type="button" id="yes_list" value="Yes"/>';
-    list_confirm[count++] = '<input type="button" id="no" value="No"/>';
+    list_confirm[count++] = gettext('List by IP address')+' <input type="checkbox" id="byip" />';
+    list_confirm[count++] = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '+gettext('Do you want to continue ?')+' ';
+    list_confirm[count++] = '<input type="button" id="yes_list" value="'+gettext('Yes')+'"/>';
+    list_confirm[count++] = '<input type="button" id="no" value="'+gettext('No')+'"/>';
     list_confirm[count++] = '</div>';
     list_confirm[count++] = '</div>';
     if ($('#confirm-listing').length) {
@@ -47,7 +47,7 @@ function handle_listing(event){
     });
     $('#yes_list').bind('click', function(event) {
         event.preventDefault();
-        $('#yes_list').attr({'disabled':'disabled','value':'Submitting'});
+        $('#yes_list').attr({'disabled':'disabled','value':gettext('Submitting')});
         if ($('#listing').attr('title') == '1' ||  $('#listing').attr('title') == '2') {
             var addr_parts = to_addr.split('@');
             var list_params = {
@@ -66,27 +66,27 @@ function handle_listing(event){
         ajax_target = 2;
         $.post('/lists/add/', list_params, function(response, textStatus, xhr) {
             if (response.success) {
-                $('.Grid_content').before('<div id="in-progress">'+$('#listby').text()+' has been added to your '+list_name+'.</div>');
-                $('#in-progress').append('<div id="dismiss"><a href="#">Dismiss</a></div>');
+                $('.Grid_content').before('<div id="in-progress">'+$('#listby').text()+gettext(' has been added to your ')+list_name+'.</div>');
+                $('#in-progress').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>');
                 $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(ip);$('#in-progress').empty().remove();});
                 $('#confirm-listing').remove();
                 ip = setTimeout(function() {$('#in-progress').empty().remove();}, 15050);
                 window.scroll(0,0);
             }else{
                 $('#confirm-listing').remove();
-                $('#fromaddr').after('<div id="filter-error">Error adding to '+list_name+': '+response.error_msg+'</div>');
-                $('#filter-error').append('<div id="dismiss"><a href="#">Dismiss</a></div>');
+                $('#fromaddr').after('<div id="filter-error">'+gettext('Error adding to ')+list_name+': '+response.error_msg+'</div>');
+                $('#filter-error').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>');
                 timeout = setTimeout(function() {$('#filter-error').remove();}, 15050);
                 $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(timeout);$('#filter-error').empty().remove();});  
             };
-            $('#yes_list').removeAttr('disabled').attr({'value':'Yes'});
+            $('#yes_list').removeAttr('disabled').attr({'value':gettext('Yes')});
         }, "json");   
     });
 }
 
 function handle_ajax(){
     $('#my-spinner')
-    .ajaxStart(function(){$(this).empty().append('&nbsp;Processing...').show();})
+    .ajaxStart(function(){$(this).empty().append('&nbsp;'+gettext('Processing...')).show();})
     .ajaxStop(function(){if(!$('.ajax_error').length){$(this).hide();}})
     .ajaxError(function(event, request, settings){
         $(this).hide();
@@ -94,12 +94,12 @@ function handle_ajax(){
             if (ajax_target == 1) {
                 if($('#filter-ajax').length){$('#filter-ajax').remove();}
                 $("#submit_q_request").removeAttr('disabled');
-                $('#qheading').after('<div id="filter-error">Empty server response</div>');
+                $('#qheading').after('<div id="filter-error">'+gettext('Empty server response')+'</div>');
             }else{
                 $('#confirm-listing').remove();
-                $('#fromaddr').after('<div id="filter-error">Empty server response</div>');
+                $('#fromaddr').after('<div id="filter-error">'+gettext('Empty server response')+'</div>');
             };
-            $('#filter-error').append('<div id="dismiss"><a href="#">Dismiss</a></div>');
+            $('#filter-error').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>');
             timeout = setTimeout(function() {$('#filter-error').remove();}, 15050);
             $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(timeout);$('#filter-error').empty().remove();});
         }else{
@@ -107,12 +107,12 @@ function handle_ajax(){
             if (ajax_target == 1) {
                 if($('#filter-ajax').length){$('#filter-ajax').remove();}
                 $("#submit_q_request").removeAttr('disabled');
-                $('#qheading').after('<div id="filter-error">Error connecting to server. check network!</div>');
+                $('#qheading').after('<div id="filter-error">'+gettext('Error connecting to server. check network!')+'</div>');
             }else{
                 $('#confirm-listing').remove();
-                $('#fromaddr').after('<div id="filter-error">Error connecting to server. check network!</div>');
+                $('#fromaddr').after('<div id="filter-error">'+gettext('Error connecting to server. check network!')+'</div>');
             };
-            $('#filter-error').append('<div id="dismiss"><a href="#">Dismiss</a></div>');
+            $('#filter-error').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>');
             timeout = setTimeout(function() {$('#filter-error').remove();}, 15050);
             $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(timeout);$('#filter-error').empty().remove();});
         }
@@ -122,7 +122,7 @@ function do_quarantine_release(event){
     $("#submit_q_request").attr('disabled', 'disabled');
     if($('#filter-error').length){clearTimeout(timeout);$('#filter-error').remove();}
     if($('#info-msg').length){clearTimeout(timeout);$('#info-msg').remove();}
-    $('#qheading').after('<div id="filter-ajax">Processing request.............</div>');
+    $('#qheading').after('<div id="filter-ajax">'+gettext('Processing request.............')+'</div>');
     var release  = 0;
     var todelete = 0;
     var salearn  = 0;
@@ -158,13 +158,13 @@ function do_quarantine_release(event){
             if(response.success){
                 if($('#info-msg').length){clearTimeout(timeout);$('#info-msg').remove();}
                 $('#qheading').after('<div id="info-msg">'+response.html+'</div>');
-                $('#info-msg').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+                $('#info-msg').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>')
                 timeout = setTimeout(function() {$('#info-msg').remove();}, 15050);
                 $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(timeout);$('#info-msg').empty().remove();});
             }else{
                 if($('#filter-error').length){clearTimeout(timeout);$('#filter-error').remove();}
                 $('#qheading').after('<div id="filter-error">'+response.html+'</div>');
-                $('#filter-error').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+                $('#filter-error').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>')
                 timeout = setTimeout(function() {$('#filter-error').remove();}, 15050);
                 $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(timeout);$('#filter-error').empty().remove();});
             }
@@ -177,16 +177,16 @@ $(document).ready(function() {
     handle_ajax();
     mh = $('#mail-headers');
     mh.hide();
-    mh.after($("<a/>").attr({href:'#',id:'header-toggle',innerHTML:'<img src="/static/imgs/maximize.png" alt="&darr;">&nbsp;Show headers'}));
+    mh.after($("<a/>").attr({href:'#',id:'header-toggle',innerHTML:'<img src="/static/imgs/maximize.png" alt="&darr;">&nbsp;'+gettext('Show headers')}));
     $("#header-toggle").bind('click',function(event){
         event.preventDefault();
         if($("#mail-headers").css("display") == 'block'){
             $("#mail-headers").css({display:'none'})
-            $(this).blur().html('<img src="/static/imgs/maximize.png" alt="&darr;">&nbsp;Show headers');
+            $(this).blur().html('<img src="/static/imgs/maximize.png" alt="&darr;">&nbsp;'+gettext('Show headers'));
             window.scroll(0,50);
         }else{
             $("#mail-headers").css({display:'block'})
-            $(this).blur().html('<img src="/static/imgs/minimize.png" alt="&uarr;">&nbsp;Hide headers');
+            $(this).blur().html('<img src="/static/imgs/minimize.png" alt="&uarr;">&nbsp;'+gettext('Hide headers'));
         }
     });
     $("#qform").submit(do_quarantine_release);

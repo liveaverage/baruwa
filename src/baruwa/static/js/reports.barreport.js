@@ -81,7 +81,7 @@ function process_response(data){
 		});
 	}else{
 		dojo.destroy('filter-error');
-		dojo.create('div',{'id':"filter-error",'innerHTML':data.errors+'<div id="dismiss"><a href="#">Dismiss</a></div>'},'afform','before');
+		dojo.create('div',{'id':"filter-error",'innerHTML':data.errors+'<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>'},'afform','before');
 		var timeout = setTimeout(function(){dojo.destroy('filter-error');},15050);
 		dojo.query("#dismiss a").onclick(function(){clearTimeout(timeout); dojo.destroy('filter-error');});
 		spinner.innerHTML = '';
@@ -96,7 +96,7 @@ dojo.addOnLoad(function(){
     //bind to form submit
     dojo.query("#filter-form").onsubmit(function(e){
     	e.preventDefault();
-    	dojo.attr("filter_form_submit", {'disabled':'disabled','value':'Loading'});
+    	dojo.attr("filter_form_submit", {'disabled':'disabled','value':gettext('Loading')});
     	dojo.style('my-spinner','display','block');
     	dojo.destroy('filter-error');
     	dojo.xhrPost({

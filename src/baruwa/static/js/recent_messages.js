@@ -22,7 +22,7 @@ function prevent_interupt_refresh(event){
     if(ax_in_progress){
         event.preventDefault();
         if(!$("#in-progress").length){
-            $('.Grid_content').before('<div id="in-progress">Content refresh in progress, please wait for it to complete</div>');
+            $('.Grid_content').before('<div id="in-progress">'+gettext('Content refresh in progress, please wait for it to complete')+'</div>');
             setTimeout(function() {$('#in-progress').remove();}, 15050);
             window.scroll(0,0);
         }
@@ -48,16 +48,16 @@ function do_table_sort(){
     full_messages_listing = false;
     $('.nojs').remove();
     ax_in_progress = false;
-	$("#heading small").empty().append("[updated every 60 sec's]");
+	$("#heading small").empty().append(gettext("[updated every 60 sec's]"));
     $("#my-spinner").ajaxSend(function(){
-	    $(this).empty().append('&nbsp;Refreshing...').show();
+	    $(this).empty().append('&nbsp;'+gettext('Refreshing...')).show();
 	    ax_error = false;
         ax_in_progress = true;
     })
     .ajaxStop(function() {
 	    if(!ax_error){
 		    var lu = lastupdatetime();
-		    $("#heading small").empty().append('[last update at '+lu+']');
+		    $("#heading small").empty().append(gettext('[last update at ')+lu+']');
             $('#my-spinner').hide();
             ax_in_progress = false;
             if($("#in-progress").is(':visible')){
@@ -69,7 +69,7 @@ function do_table_sort(){
         if(request.status == 200){
             location.href=settings.url;
         }else{
-	        $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>').show();
+	        $(this).empty().append('<span class="ajax_error">'+gettext('Error connecting to server. check network!')+'</span>').show();
 	        ax_error = true;
             ax_in_progress = false;
             if($("#in-progress").is(':visible')){

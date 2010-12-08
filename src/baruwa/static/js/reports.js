@@ -47,7 +47,7 @@ function build_active_filters(active_filters){
     if(rows.length){
         $("#afilters").empty().append(rows.join(''));
     }else{
-        $("#afilters").empty().append('<div class="LightBlue_div"><div class="spanrow">No active filters at the moment</div></div>');
+        $("#afilters").empty().append('<div class="LightBlue_div"><div class="spanrow">'+gettext('No active filters at the moment')+'</div></div>');
     }
     $("#afilters div a").bind('click',ajaxify_active_filter_links);
 }
@@ -79,7 +79,7 @@ function build_saved_filters(saved_filters){
     if(rows.length){
         $("#sfilters").empty().append(rows.join(''));
     }else{
-        $("#sfilters").empty().append('<div class="LightBlue_div"><div class="spanrow">No saved filters at the moment</div></div>');
+        $("#sfilters").empty().append('<div class="LightBlue_div"><div class="spanrow">'+gettext('No saved filters at the moment')+'</div></div>');
     }
     $("#sfilters div a").bind('click',ajaxify_active_filter_links);
 }
@@ -92,11 +92,11 @@ function build_page(response){
     }else{
         if($('#filter-error').length){clearTimeout(timeout);$('#filter-error').remove();}
         $('#aheading').after('<div id="filter-error">'+response.errors+'</div>');
-        $('#filter-error').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+        $('#filter-error').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>')
         timeout = setTimeout(function() {$('#filter-error').remove();}, 15050);
         $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(timeout);$('#filter-error').empty().remove();});
     }
-    $("#filter_form_submit").removeAttr('disabled').attr('value','Add');;
+    $("#filter_form_submit").removeAttr('disabled').attr('value',gettext('Add'));;
 }
 
 function build_elements(response){
@@ -145,7 +145,7 @@ function build_elements(response){
                     row[count++] = '</div>';
                     $("#afilters").empty().append(row.join(''));
                 }else{
-                    row = '<div class="LightBlue_div"><div class="spanrow">No saved filters at the moment</div></div>';
+                    row = '<div class="LightBlue_div"><div class="spanrow">'+gettext('No saved filters at the moment')+'</div></div>';
                     $("#afilters").empty().append(row);
                 }
             }
@@ -158,23 +158,23 @@ function build_elements(response){
     }else{
         if($('#filter-error').length){clearTimeout(timeout);$('#filter-error').remove();}
         $('#aheading').after('<div id="filter-error">'+response.errors+'</div>');
-        $('#filter-error').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+        $('#filter-error').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>')
         timeout = setTimeout(function() {$('#filter-error').remove();}, 15050);
         $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(timeout);$('#filter-error').empty().remove();});
     }
-    $("#filter_form_submit").removeAttr('disabled').attr('value','Add');
+    $("#filter_form_submit").removeAttr('disabled').attr('value',gettext('Add'));
     $("#filter-ajax").remove();
 }
 
 function ajaxify_active_filter_links(e){
     e.preventDefault();
-    $("#filter_form_submit").attr({'disabled':'disabled','value':'Loading'});
+    $("#filter_form_submit").attr({'disabled':'disabled','value':gettext('Loading')});
     $.get($(this).attr('href'),build_page,'json');
 }
 
 function addFilter(){
-    $("#filter_form_submit").attr({'disabled':'disabled','value':'Loading'});
-    $('#afform').after('<div id="filter-ajax">Processing request.............</div>');
+    $("#filter_form_submit").attr({'disabled':'disabled','value':gettext('Loading')});
+    $('#afform').after('<div id="filter-ajax">'+gettext('Processing request.............')+'</div>');
     var add_filter_request = {
         filtered_field: $("#id_filtered_field").val(),
         filtered_by: $("#id_filtered_by").val(),
@@ -189,11 +189,16 @@ $(document).ready(function(){
     num_fields = ["size","sascore"];
     text_fields = ["id","from_address","from_domain","to_address","to_domain","subject","clientip","spamreport","headers", "hostname"];
     time_fields = ["date","time"];
-    num_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':3,'opt':'is greater than'},{'value':4,'opt':'is less than'}];
-    text_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':9,'opt':'is null'},{'value':10,'opt':'is not null'},{'value':5,'opt':'contains'},{'value':6,'opt':'does not contain'},{'value':7,'opt':'matches regex'},{'value':8,'opt':'does not match regex'}];
-    time_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':3,'opt':'is greater than'},{'value':4,'opt':'is less than'}];
+    num_values = [{'value':1,'opt':gettext('is equal to')},{'value':2,'opt':gettext('is not equal to')},
+                    {'value':3,'opt':gettext('is greater than')},{'value':4,'opt':gettext('is less than')}];
+    text_values = [{'value':1,'opt':gettext('is equal to')},{'value':2,'opt':gettext('is not equal to')},
+                    {'value':9,'opt':gettext('is null')},{'value':10,'opt':gettext('is not null')},
+                    {'value':5,'opt':gettext('contains')},{'value':6,'opt':gettext('does not contain')},
+                    {'value':7,'opt':gettext('matches regex')},{'value':8,'opt':gettext('does not match regex')}];
+    time_values = [{'value':1,'opt':gettext('is equal to')},{'value':2,'opt':gettext('is not equal to')},
+                    {'value':3,'opt':gettext('is greater than')},{'value':4,'opt':gettext('is less than')}];
     bool_values = [{'value':11,'opt':'is true'},{'value':12,'opt':'is false'}];
-    $('#id_filtered_field').prepend('<option value="0" selected="0">Please select</option>');
+    $('#id_filtered_field').prepend('<option value="0" selected="0">'+gettext('Please select')+'</option>');
     $('#id_filtered_value').attr({'disabled':'disabled'});
     $('#id_filtered_field').bind('change',function(){
         if($.inArray($(this).val(),bool_fields) != -1){
@@ -232,12 +237,12 @@ $(document).ready(function(){
         }
     });
     $("#filter-form").submit(addFilter);
-    $("#my-spinner").ajaxStart(function(){$(this).empty().append('&nbsp;Processing...').show();})
+    $("#my-spinner").ajaxStart(function(){$(this).empty().append('&nbsp;'+gettext('Processing...')).show();})
         .ajaxError(function(event, request, settings){
             if(request.status == 200){
                 location.href=settings.url;
             }else{
-                $(this).empty().append($("<span/>").addClass('ajax_error')).append('&nbsp;Error occured');
+                $(this).empty().append($("<span/>").addClass('ajax_error')).append('&nbsp;'+gettext('Error occured'));
             }
         }).ajaxStop(function(){$(this).empty().hide();});
     $("#afilters div a").bind('click',ajaxify_active_filter_links);

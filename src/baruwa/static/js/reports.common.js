@@ -24,12 +24,16 @@ function init_form(){
     num_fields = ["size","sascore"];
     text_fields = ["id","from_address","from_domain","to_address","to_domain","subject","clientip","spamreport","headers"];
     time_fields = ["date","time"];
-    num_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':3,'opt':'is greater than'},{'value':4,'opt':'is less than'}];
-    text_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':9,'opt':'is null'},{'value':10,'opt':'is not null'},
-    {'value':5,'opt':'contains'},{'value':6,'opt':'does not contain'},{'value':7,'opt':'matches regex'},{'value':8,'opt':'does not match regex'}];
-    time_values = [{'value':1,'opt':'is equal to'},{'value':2,'opt':'is not equal to'},{'value':3,'opt':'is greater than'},{'value':4,'opt':'is less than'}];
-    bool_values = [{'value':11,'opt':'is true'},{'value':12,'opt':'is false'}];
-    dojo.place('<option value="0" selected="0">Please select</option>', "id_filtered_field", 'first');
+    num_values = [{'value':1,'opt':gettext('is equal to')},{'value':2,'opt':gettext('is not equal to')},
+                    {'value':3,'opt':gettext('is greater than')},{'value':4,'opt':gettext('is less than')}];
+    text_values = [{'value':1,'opt':gettext('is equal to')},{'value':2,'opt':gettext('is not equal to')},
+                    {'value':9,'opt':gettext('is null')},{'value':10,'opt':gettext('is not null')},
+                    {'value':5,'opt':gettext('contains')},{'value':6,'opt':gettext('does not contain')},
+                    {'value':7,'opt':gettext('matches regex')},{'value':8,'opt':gettext('does not match regex')}];
+    time_values = [{'value':1,'opt':gettext('is equal to')},{'value':2,'opt':gettext('is not equal to')},
+                    {'value':3,'opt':gettext('is greater than')},{'value':4,'opt':gettext('is less than')}];
+    bool_values = [{'value':11,'opt':gettext('is true')},{'value':12,'opt':gettext('is false')}];
+    dojo.place('<option value="0" selected="0">'+gettext('Please select')+'</option>', "id_filtered_field", 'first');
     dojo.attr('id_filtered_value', 'disabled', 'disabled');
     select_field = dojo.query("#id_filtered_field");
     select_field.onchange(function(e){

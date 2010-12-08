@@ -39,7 +39,7 @@ function en_history(){
     if (url == 'messages-quarantine') {
         $('#sub-menu-links ul li').remove();
         var qlinks = ['/messages/quarantine/', '/messages/quarantine/spam/', '/messages/quarantine/policyblocked/'];
-        var qtexts = ['Full quarantine', 'Spam', 'Non Spam'];
+        var qtexts = [gettext('Full quarantine'), gettext('Spam'), gettext('Non Spam')];
         var mylinks = [];
         for (var i=0; i < qlinks.length; i++) {
             mylinks[i] = '<li><a href="'+qlinks[i]+'">'+qtexts[i]+'</a></li>';
@@ -133,11 +133,12 @@ function paginate(){
         tmp +='<a href="'+li+'"><img src="/static/imgs/last_pager.png" alt="Last"/></a></span>';
    }
     columns = "timestamp from_address to_address subject size sascore";
-    linfo = "Date_Time From To Subject Size Score";
+    linfo = 'Date_Time#'+gettext('From')+'#'+gettext('To')+'#'+gettext('Subject')+'#'+gettext('Size')+'#'+gettext('Score');
+    //alert(linfo);
     carray = columns.split(" ");
-    larray = linfo.split(" ");
+    larray = linfo.split("#");
     for(i=0; i< carray.length;i++){
-        if(larray[i] == 'Date_Time'){h = 'Date/Time';}else{h = larray[i];}
+        if(larray[i] == 'Date_Time'){h = gettext('Date/Time');}else{h = larray[i];}
         if(carray[i] == rj.order_by){
             tmpl = toplinkize(rj.direction,rj.view_type,carray[i],rj.quarantine_type);
             $('.'+larray[i]+'_heading').empty().html(h).append(tmpl);
@@ -150,11 +151,15 @@ function paginate(){
         }
     }
     pf = $('#heading small').html();
+    fmt = gettext('Showing page %(page)s of %(pages)s pages.');
+    transdata = {'page':rj.page, 'pages':rj.pages}
+    translted = interpolate(fmt, transdata);
     if(pf){
-        $('#heading').html('Showing page '+rj.page+' of '+rj.pages+' pages.'+' (<small>'+pf+'</small>)');
+        $('#heading').html(translted+' (<small>'+pf+'</small>)');
     }else{
-        $('#heading').html('Showing page '+rj.page+' of '+rj.pages+' pages.');
+        $('#heading').html(translted);
     }
+    //$.address.title(translted);
     $.address.title('Showing page '+rj.page+' of '+rj.pages+' pages.');
     $(this).html(tmp);
     $('#paginator a').bind('click',en_history);
@@ -165,15 +170,15 @@ function paginate(){
 
 function jsize_page(){
     full_messages_listing = true;
-    $('#fhl').before($('<a/>').attr({href:'#',id:'filter-toggle'}).html('&darr;&nbsp;Show filters'));
+    $('#fhl').before($('<a/>').attr({href:'#',id:'filter-toggle'}).html('&darr;&nbsp;'+gettext('Show filters')));
     $('#fhl').hide();
     $('#filter-toggle').bind('click',function(e){
         e.preventDefault();    
         $('#fhl').toggle();
         if($('#fhl').css('display') == 'inline'){
-            $(this).html('&uarr;&nbsp;Hide filters').blur();
+            $(this).html('&uarr;&nbsp;'+gettext('Hide filters')).blur();
         }else{
-            $(this).html('&darr;&nbsp;Show filters').blur();
+            $(this).html('&darr;&nbsp;'+gettext('Show filters')).blur();
         }
     });
     $('#paginator a').bind('click',en_history);
@@ -188,5 +193,5 @@ function jsize_page(){
     });
     $.address.externalChange(handlextern);
 }
-var loading_msg = '<div id="loading_message"><div id="loading"><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/><b>Loading</b></div></div>';
+var loading_msg = '<div id="loading_message"><div id="loading"><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/><b>'+gettext('Loading')+'</b></div></div>';
 $(document).ready(jsize_page);

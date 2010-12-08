@@ -51,7 +51,7 @@ function build_rows(build_array){
 
 function process_response(data){
     var spinner = dojo.byId("my-spinner");
-	spinner.innerHTML = 'Processing...........';
+	spinner.innerHTML = gettext('Processing...........');
 	if (data.success == true) {
 		url = window.location.pathname;
 		var links = build_filters(data.active_filters);
@@ -78,19 +78,19 @@ function process_response(data){
 				chart.render();
 				spinner.innerHTML = '';
             	dojo.style('my-spinner','display','none');
-            	dojo.attr("filter_form_submit", {'value':'Add'});
+            	dojo.attr("filter_form_submit", {'value':gettext('Add')});
             	dojo.removeAttr('filter_form_submit','disabled');
             	window.scrollTo(0,0);
 			}
 		});
 	}else{
 		dojo.destroy('filter-error');
-		dojo.create('div',{'id':"filter-error",'innerHTML':data.errors+'<div id="dismiss"><a href="#">Dismiss</a></div>'},'afform','before');
+		dojo.create('div',{'id':"filter-error",'innerHTML':data.errors+'<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>'},'afform','before');
 		var timeout = setTimeout(function(){dojo.destroy('filter-error');},15050);
 		dojo.query("#dismiss a").onclick(function(){clearTimeout(timeout); dojo.destroy('filter-error');});
 		spinner.innerHTML = '';
     	dojo.style('my-spinner','display','none');
-    	dojo.attr("filter_form_submit", {'value':'Add'});
+    	dojo.attr("filter_form_submit", {'value':gettext('Add')});
     	dojo.removeAttr('filter_form_submit','disabled');
 	};
 }
@@ -100,7 +100,7 @@ dojo.addOnLoad(function(){
     //bind to form submit
     dojo.query("#filter-form").onsubmit(function(e){
     	e.preventDefault();
-    	dojo.attr("filter_form_submit", {'disabled':'disabled','value':'Loading'});
+    	dojo.attr("filter_form_submit", {'disabled':'disabled','value':gettext('Loading')});
     	dojo.style('my-spinner','display','block');
     	dojo.destroy('filter-error');
     	dojo.xhrPost({

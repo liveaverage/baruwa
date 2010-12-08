@@ -1,0 +1,364 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-12-08 13:59+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: static/js/accounts.js:2
+msgid "&nbsp;Processing..."
+msgstr ""
+
+#: static/js/accounts.js:18 static/js/details.js:110
+#: static/js/details.js.py:113 static/js/domains.js:39 static/js/lists.js:41
+#: static/js/recent_messages.js:73
+msgid "Error connecting to server. check network!"
+msgstr ""
+
+#: static/js/accounts.js:19 static/js/domain.js:37 static/js/domains.js:40
+#: static/js/lists.js:42
+msgid "Server error"
+msgstr ""
+
+#: static/js/accounts.js:37 static/js/domains.js:58 static/js/lists.js:65
+#: static/js/messages.js:155
+msgid "Showing page %(page)s of %(pages)s pages."
+msgstr ""
+
+#: static/js/accounts.js:82
+msgid "This will delete the account "
+msgstr ""
+
+#: static/js/accounts.js:83 static/js/domains.js:108
+msgid "and all associated data. This action is not reversible"
+msgstr ""
+
+#: static/js/accounts.js:86 static/js/domains.js:110 static/js/lists.js:237
+msgid "Do you wish to continue ?"
+msgstr ""
+
+#: static/js/accounts.js:150
+msgid "No accounts at the moment"
+msgstr ""
+
+#: static/js/accounts.js:180 static/js/domains.js:212
+msgid "Processing"
+msgstr ""
+
+#: static/js/details.js:22
+msgid "List by IP address"
+msgstr ""
+
+#: static/js/details.js:23
+msgid "Do you want to continue ?"
+msgstr ""
+
+#: static/js/details.js:24 static/js/details.js.py:82
+msgid "Yes"
+msgstr ""
+
+#: static/js/details.js:25
+msgid "No"
+msgstr ""
+
+#: static/js/details.js:50
+msgid "Submitting"
+msgstr ""
+
+#: static/js/details.js:69
+msgid " has been added to your "
+msgstr ""
+
+#: static/js/details.js:70 static/js/details.js.py:78 static/js/details.js:102
+#: static/js/details.js.py:115 static/js/details.js:161
+#: static/js/details.js.py:167 static/js/domain.js:50 static/js/domains.js:130
+#: static/js/domains.js.py:134 static/js/lists.add.js:50
+#: static/js/lists.add.js.py:67 static/js/lists.add.js:90
+#: static/js/lists.js:257 static/js/lists.js.py:261
+#: static/js/reports.barreport.js:84 static/js/reports.js:96
+#: static/js/reports.js.py:162 static/js/reports.listing.js:88
+#: static/js/reports.pie.js:92 static/js/reports.relays.js:94
+msgid "Dismiss"
+msgstr ""
+
+#: static/js/details.js:77
+msgid "Error adding to "
+msgstr ""
+
+#: static/js/details.js:89 static/js/lists.js:23 static/js/reports.js:241
+msgid "Processing..."
+msgstr ""
+
+#: static/js/details.js:97 static/js/details.js.py:100
+msgid "Empty server response"
+msgstr ""
+
+#: static/js/details.js:125 static/js/reports.js:178
+msgid "Processing request............."
+msgstr ""
+
+#: static/js/details.js:180 static/js/details.js.py:185
+msgid "Show headers"
+msgstr ""
+
+#: static/js/details.js:189
+msgid "Hide headers"
+msgstr ""
+
+#: static/js/domain.js:59
+msgid "Testing connection"
+msgstr ""
+
+#: static/js/domains.js:107
+msgid "This will delete the domain "
+msgstr ""
+
+#: static/js/domains.js:182
+msgid "No domains at the moment"
+msgstr ""
+
+#: static/js/lib.js:120
+msgid "Infected"
+msgstr ""
+
+#: static/js/lib.js:124
+msgid "Clean"
+msgstr ""
+
+#: static/js/lib.js:159
+msgid "No records returned"
+msgstr ""
+
+#: static/js/lib.js:179
+msgid "Empty response from server. check network!"
+msgstr ""
+
+#: static/js/lists.add.js:49
+msgid "The address has been added to the list"
+msgstr ""
+
+#: static/js/lists.add.js:86
+msgid "Processing...."
+msgstr ""
+
+#: static/js/lists.add.js:89
+msgid "Server Error occured"
+msgstr ""
+
+#: static/js/lists.js:69
+msgid "List management "
+msgstr ""
+
+#: static/js/lists.js:124 static/js/lists.js.py:129
+msgid "Any address"
+msgstr ""
+
+#: static/js/lists.js:158
+msgid "No items at the moment"
+msgstr ""
+
+#: static/js/lists.js:165
+msgid "To:"
+msgstr ""
+
+#: static/js/lists.js:167
+msgid "From:"
+msgstr ""
+
+#: static/js/lists.js:179
+msgid "Blacklist"
+msgstr ""
+
+#: static/js/lists.js:181
+msgid "Whitelist :: "
+msgstr ""
+
+#: static/js/lists.js:183
+msgid "Whitelist"
+msgstr ""
+
+#: static/js/lists.js:185
+msgid "Blacklist :: "
+msgstr ""
+
+#: static/js/lists.js:206 static/js/messages.js:197
+#: static/js/reports.barreport.js:99 static/js/reports.js:172
+#: static/js/reports.js.py:177 static/js/reports.listing.js:103
+#: static/js/reports.pie.js:107 static/js/reports.relays.js:109
+msgid "Loading"
+msgstr ""
+
+#: static/js/lists.js:220
+msgid "Go"
+msgstr ""
+
+#: static/js/lists.js:234
+msgid "This will delete the item "
+msgstr ""
+
+#: static/js/lists.js:235
+msgid "from the list. This action is not reversible"
+msgstr ""
+
+#: static/js/lists.js:256
+msgid "List item deleted"
+msgstr ""
+
+#: static/js/lists.js:260
+msgid "List item could not be deleted"
+msgstr ""
+
+#: static/js/messages.js:43
+msgid "Full quarantine"
+msgstr ""
+
+#: static/js/messages.js:43
+msgid "Spam"
+msgstr ""
+
+#: static/js/messages.js:43
+msgid "Non Spam"
+msgstr ""
+
+#: static/js/messages.js:137
+msgid "From"
+msgstr ""
+
+#: static/js/messages.js:137
+msgid "To"
+msgstr ""
+
+#: static/js/messages.js:137
+msgid "Subject"
+msgstr ""
+
+#: static/js/messages.js:137
+msgid "Size"
+msgstr ""
+
+#: static/js/messages.js:137
+msgid "Score"
+msgstr ""
+
+#: static/js/messages.js:142
+msgid "Date/Time"
+msgstr ""
+
+#: static/js/messages.js:174 static/js/messages.js.py:182
+msgid "Show filters"
+msgstr ""
+
+#: static/js/messages.js:180
+msgid "Hide filters"
+msgstr ""
+
+#: static/js/recent_messages.js:26
+msgid "Content refresh in progress, please wait for it to complete"
+msgstr ""
+
+#: static/js/recent_messages.js:52
+msgid "[updated every 60 sec's]"
+msgstr ""
+
+#: static/js/recent_messages.js:54
+msgid "Refreshing..."
+msgstr ""
+
+#: static/js/recent_messages.js:61
+msgid "[last update at "
+msgstr ""
+
+#: static/js/reports.common.js:28 static/js/reports.common.js.py:30
+#: static/js/reports.common.js:34 static/js/reports.js:193
+#: static/js/reports.js.py:195 static/js/reports.js:199
+msgid "is equal to"
+msgstr ""
+
+#: static/js/reports.common.js:28 static/js/reports.common.js.py:30
+#: static/js/reports.common.js:34 static/js/reports.js:193
+#: static/js/reports.js.py:195 static/js/reports.js:199
+msgid "is not equal to"
+msgstr ""
+
+#: static/js/reports.common.js:29 static/js/reports.common.js.py:35
+#: static/js/reports.js:194 static/js/reports.js.py:200
+msgid "is greater than"
+msgstr ""
+
+#: static/js/reports.common.js:29 static/js/reports.common.js.py:35
+#: static/js/reports.js:194 static/js/reports.js.py:200
+msgid "is less than"
+msgstr ""
+
+#: static/js/reports.common.js:31 static/js/reports.js:196
+msgid "is null"
+msgstr ""
+
+#: static/js/reports.common.js:31 static/js/reports.js:196
+msgid "is not null"
+msgstr ""
+
+#: static/js/reports.common.js:32 static/js/reports.js:197
+msgid "contains"
+msgstr ""
+
+#: static/js/reports.common.js:32 static/js/reports.js:197
+msgid "does not contain"
+msgstr ""
+
+#: static/js/reports.common.js:33 static/js/reports.js:198
+msgid "matches regex"
+msgstr ""
+
+#: static/js/reports.common.js:33 static/js/reports.js:198
+msgid "does not match regex"
+msgstr ""
+
+#: static/js/reports.common.js:36
+msgid "is true"
+msgstr ""
+
+#: static/js/reports.common.js:36
+msgid "is false"
+msgstr ""
+
+#: static/js/reports.common.js:37 static/js/reports.js:202
+msgid "Please select"
+msgstr ""
+
+#: static/js/reports.js:51
+msgid "No active filters at the moment"
+msgstr ""
+
+#: static/js/reports.js:83 static/js/reports.js.py:149
+msgid "No saved filters at the moment"
+msgstr ""
+
+#: static/js/reports.js:100 static/js/reports.js.py:166
+#: static/js/reports.listing.js:81 static/js/reports.listing.js.py:93
+#: static/js/reports.pie.js:86 static/js/reports.pie.js.py:97
+#: static/js/reports.relays.js:88 static/js/reports.relays.js.py:99
+msgid "Add"
+msgstr ""
+
+#: static/js/reports.js:246
+msgid "Error occured"
+msgstr ""
+
+#: static/js/reports.listing.js:54 static/js/reports.pie.js:61
+#: static/js/reports.relays.js:63
+msgid "Processing..........."
+msgstr ""

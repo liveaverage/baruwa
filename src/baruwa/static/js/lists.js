@@ -19,7 +19,7 @@
 // vim: ai ts=4 sts=4 et sw=4
 //
 function ajax_start(){
-    $(this).append('&nbsp;Processing...').show();
+    $(this).append('&nbsp;'+gettext('Processing...')).show();
     if ($('#in-progress').length) {
         $('#in-progress').remove();
     };
@@ -37,8 +37,8 @@ function ajax_error(event, request, settings){
             location.href=settings.url;
         }
     }else{
-        $(this).empty().append('<span class="ajax_error">Error connecting to server. check network!</span>').show();
-        $('.Grid_heading').before('<div id="ajax-error-msg" class="ui-state-highlight">Server error</div>');
+        $(this).empty().append('<span class="ajax_error">'+gettext('Error connecting to server. check network!')+'</span>').show();
+        $('.Grid_heading').before('<div id="ajax-error-msg" class="ui-state-highlight">'+gettext('Server error')+'</div>');
         setTimeout(function() {
             $('#ajax-error-msg').empty().remove();
         }, 3900);
@@ -61,9 +61,11 @@ function paginate(){
     }else{
         lt = 'Blacklist :: ';
     }
-    tmp = 'Showing page '+rj.page+' of '+rj.pages+' pages. ';
+    fmt = gettext('Showing page %(page)s of %(pages)s pages.');
+    data = {'page':rj.page, 'pages':rj.pages}
+    tmp = interpolate(fmt, data);
     $('#heading').empty().append(lt+tmp);
-    $.address.title('Baruwa :: List management '+tmp);
+    $.address.title('Baruwa :: '+gettext('List management ')+tmp);
     li = '';
 
     if(rj.show_first){
@@ -118,12 +120,12 @@ function lists_from_json(data){
         $.each(data.items,function(i,n){
             list_type = rj.list_kind;
             if(n.from_address == 'any'){
-                from_address = 'Any address';
+                from_address = gettext('Any address');
             }else{
                 from_address = n.from_address;
             }
             if(n.to_address == 'any'){
-                to_address = 'Any address';
+                to_address = gettext('Any address');
             }else{
                 to_address = n.to_address;
             }
@@ -152,16 +154,16 @@ function lists_from_json(data){
             $("div.Grid_heading").after(tti.join(''));
         }else{
             $("div.Grid_heading").siblings('div').remove();
-            $("div.Grid_heading").after('<div class="LightBlue_div"><div class="spanrow">No items at the moment</div></div>');
+            $("div.Grid_heading").after('<div class="LightBlue_div"><div class="spanrow">'+gettext('No items at the moment')+'</div></div>');
         }
         if(rj.order_by == 'id'){
             $('#filterbox').hide('fast');
         }else{
             $('#filterbox').show('fast');
             if(rj.order_by == 'to_address'){
-                $('#filterlabel').html('<b>To:</b>');
+                $('#filterlabel').html('<b>'+gettext('To:')+'</b>');
             }else{
-                $('#filterlabel').html('<b>From:</b>');
+                $('#filterlabel').html('<b>'+gettext('From:')+'</b>');
             }
         }
         $('div.Grid_heading ~ div a').bind('click',confirm_delete);
@@ -173,13 +175,13 @@ function fetchPage(link,list_type){
     $.get(link,function(response){
         lists_from_json(response);
         if(list_type == '1'){
-            lt = 'Blacklist';
+            lt = gettext('Blacklist');
             ll = '/lists/2/';
-            ct = 'Whitelist :: ';
+            ct = gettext('Whitelist :: ');
         }else{
-            lt = 'Whitelist';
+            lt = gettext('Whitelist');
             ll = '/lists/1/';
-            ct = 'Blacklist :: ';
+            ct = gettext('Blacklist :: ');
         }
         $('#heading').empty().html(ct);
         $('#sub-menu-links ul li:first a').attr({id:'list-link',href:ll,innerHTML:lt});
@@ -200,7 +202,7 @@ function getPage(event){
 }
 
 function submitForm(event){
-    $('#id_lists_filter_submit').attr({'disabled':'disabled','value':'Loading'});
+    $('#id_lists_filter_submit').attr({'disabled':'disabled','value':gettext('Loading')});
     event.preventDefault();
     filter_request = {
         query_type: $("#id_query_type").val(),
@@ -214,7 +216,7 @@ function submitForm(event){
             $.address.value('?u='+url);
             $.address.history($.address.baseURL() + url);
         },"json");
-    $('#id_lists_filter_submit').removeAttr('disabled').attr('value','Go');
+    $('#id_lists_filter_submit').removeAttr('disabled').attr('value',gettext('Go'));
 }
 
 function confirm_delete(event) {
@@ -228,11 +230,11 @@ function confirm_delete(event) {
         count = 0;
         del_warning[count++] = '<div id="confirm-del-msg">';
         del_warning[count++] = '<div id="confirm-del-info">';
-        del_warning[count++] = 'This will delete the item ';
-        del_warning[count++] = 'from the list. This action is not reversible</div>';
-        del_warning[count++] = '<div id="confirm-del-buttons">';
-        del_warning[count++] = 'Do you wish to continue ?&nbsp;';
-        del_warning[count++] = '<input type="button" value="Yes" id="yes_del" />&nbsp;';
+        del_warning[count++] = gettext('This will delete the item ');
+        del_warning[count++] = gettext('from the list. This action is not reversible');
+        del_warning[count++] = '</div><div id="confirm-del-buttons">';
+        del_warning[count++] = gettext('Do you wish to continue ?');
+        del_warning[count++] = '&nbsp;<input type="button" value="Yes" id="yes_del" />&nbsp;';
         del_warning[count++] = '<input type="button" value="No" id="no_del" />'
         del_warning[count++] = '</div>';
         del_warning[count++] = '</div>'
@@ -250,12 +252,12 @@ function confirm_delete(event) {
             $.post(l, {list_item: m[1]}, function(response) {
                 if (response.success) {
                     $('#list-id-'+m[1]).remove();
-                    $('.Grid_content').before('<div id="in-progress">List item deleted</div>');
-                    $('#in-progress').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+                    $('.Grid_content').before('<div id="in-progress">'+gettext('List item deleted')+'</div>');
+                    $('#in-progress').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>')
                     ip = setTimeout(function() {$('#in-progress').remove();}, 15050);
                 }else{
-                    $('.Grid_content').before('<div id="in-progress">List item could not be deleted</div>');
-                    $('#in-progress').append('<div id="dismiss"><a href="#">Dismiss</a></div>')
+                    $('.Grid_content').before('<div id="in-progress">'+gettext('List item could not be deleted')+'</div>');
+                    $('#in-progress').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>')
                     ip = setTimeout(function() {$('#in-progress').remove();}, 15050);
                 };
                 $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(ip);$('#in-progress').empty().remove();});
