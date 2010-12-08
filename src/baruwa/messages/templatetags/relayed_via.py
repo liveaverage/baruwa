@@ -20,6 +20,7 @@
 #
 
 from django import template
+from django.utils.translation import ugettext_lazy as _
 from IPy import IP
 import re, socket, GeoIP
 
@@ -58,9 +59,9 @@ def relayed_via(headers):
                             hostname = socket.gethostbyaddr(ipaddr)[0]
                         except:
                             if iptype == "PRIVATE":
-                                hostname = "RFC1918 Private address"
+                                hostname = _("RFC1918 Private address")
                             else:
-                                hostname = "Reverse lookup failed"
+                                hostname = _("Reverse lookup failed")
                         if iptype != "PRIVATE":
                             gip = GeoIP.new(GeoIP.GEOIP_MEMORY_CACHE)
                             try:

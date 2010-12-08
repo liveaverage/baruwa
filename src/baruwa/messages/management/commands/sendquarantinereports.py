@@ -20,6 +20,7 @@
 #
 
 from django.core.management.base import NoArgsCommand
+from django.utils.translation import ugettext_lazy as _
 try:
     from django.forms.fields import email_re
 except ImportError:
@@ -86,7 +87,7 @@ class Command(NoArgsCommand):
                             'postmaster@localhost')
         logo_path = getattr(settings, 'MEDIA_ROOT', '') + '/imgs/css/logo.jpg'
         logo = open(logo_path, 'rb').read()
-        print "=== Processing quarantine notifications ==="
+        print _("=== Processing quarantine notifications ===")
         for user in users:
             if email_re.match(user.email) or email_re.match(user.username):
                 spam_list = Message.quarantine_report.for_user(user).values(
@@ -98,7 +99,8 @@ class Command(NoArgsCommand):
                 ).exclude(timestamp__lt=yesterday).exclude(Q(spam=1) | 
                 Q(nameinfected=0) | Q(otherinfected=0) | Q(virusinfected=0)
                 ).order_by('sascore')[:25]
-                subject = 'Baruwa quarantine report for %s' % user.username
+                subject = _('Baruwa quarantine report for %(user)s') % {
+                            'user':user.username}
                 
                 if email_re.match(user.username):
                     to_addr = user.username
@@ -127,9 +129,9 @@ class Command(NoArgsCommand):
                         for query_list in [spam_list, policy_list]:
                             generate_release_records(query_list)
 
-                        print "sent quarantine report to "+to_addr
+                        print _("sent quarantine report to %(addr)s") % {'addr':to_addr}
                     except:
-                        print "failed to send to: "+to_addr
+                        print _("failed to send to: %(addr)s") % {'addr':to_addr}
                 else:
-                    print "skipping report to "+to_addr+" no messages"
-        print "=== completed quarantine notifications ==="
+                    print _("skipping report to %(addr)s no messages") % {'addr':to_addr}
+        print _("=== completed quarantine notifications ===")

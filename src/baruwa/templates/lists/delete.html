@@ -20,7 +20,7 @@
 	    <div class="listdel">
 			{% blocktrans with list_item.from_address as address %}
 				This will delete {{ address }} from the {% endblocktrans %}{% ifequal list_item.list_type 1 %}{% trans "Whitelist" %}{% else %}{% trans "Blacklist" %}{% endifequal %} 
-			<div class="right"><input type="submit" value="Delete" /></div>
+			<div class="right"><input type="submit" value="{% trans "Delete" %}" /></div>
 		</div>
 	</div>
 </form>

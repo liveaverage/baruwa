@@ -25,6 +25,7 @@ from django import template
 from django.template.defaultfilters import stringfilter, wordwrap, linebreaksbr
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 from baruwa.messages.models import SaRules
 from baruwa.utils.process_mail import clean_regex
 from baruwa.utils.misc import get_config_option
@@ -110,7 +111,7 @@ def tds_trunc(value, arg):
 def tds_email_list(value):
     "list email"
     if re.match("default", value):
-        value = "Any address"
+        value = _("Any address")
     return value
 
 @register.filter(name='tds_geoip')
@@ -149,7 +150,7 @@ def tds_hostname(value):
             try:
                 hostname = socket.gethostbyaddr(match.groups()[0])[0]
             except:
-                hostname = 'unknown'
+                hostname = _('unknown')
     return mark_safe(hostname)
 
 @register.filter(name='tds_is_learned')
@@ -264,9 +265,9 @@ def tds_action(value, from_address, to_address):
     return_value = ''
     srules = []
     if value == 1:
-        option = 'Spam Actions'
+        option = _('Spam Actions')
     else:
-        option = 'High Scoring Spam Actions'
+        option = _('High Scoring Spam Actions')
     return_value = get_config_option(option)
     if re.match(
         r'^/.*[^/]$', return_value) or re.match(r'(^%[a-z-]+%)(.*)', 
@@ -326,7 +327,7 @@ def tds_action(value, from_address, to_address):
                     if (re.match(comb_regex, from_address, re.IGNORECASE) or 
                         re.match(comb_regex, to_address, re.IGNORECASE)):
                         return item["action"]
-        return 'I do not know how to read it'
+        return _('I do not know how to read it')
     else:
         return return_value
     return return_value

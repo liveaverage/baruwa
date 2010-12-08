@@ -20,6 +20,7 @@
 #
 
 from django.core.management.base import NoArgsCommand
+from django.utils.translation import ugettext_lazy as _
 
 def draw_square(color):
     "draws a square"
@@ -115,7 +116,7 @@ class Command(NoArgsCommand):
         img = Image(logo_dir + '/imgs/css/logo.jpg')
         profiles = UserProfile.objects.filter(send_report=1)
         
-        print "=================== Processing reports ======================"
+        print _("=================== Processing reports ======================")
        
         for profile in profiles:
             user = profile.user
@@ -124,7 +125,7 @@ class Command(NoArgsCommand):
                 pdf = StringIO()
                 
                 doc = SimpleDocTemplate(pdf, topMargin=50, bottomMargin=18)
-                logo = [(img, 'Baruwa mail report')]
+                logo = [(img, _('Baruwa mail report'))]
                 logo_table = Table(logo, [2.0 * inch, 5.4 * inch])
                 logo_table.setStyle(TableStyle([
                 ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold'),
@@ -150,7 +151,7 @@ class Command(NoArgsCommand):
                 
                     if data:
                         sentry += 1
-                        headings = [('', 'Address', 'Count', 'Volume', '')]
+                        headings = [('', _('Address'), _('Count'), _('Volume'), '')]
                         rows = [[draw_square(PIE_CHART_COLORS[index]), 
                         tds_trunc(row[column], 45), row['num_count'], 
                         filesizeformat(row['size']),''] 
@@ -188,7 +189,7 @@ class Command(NoArgsCommand):
                         if (sentry % 2) == 0:
                             parts.append(PageBreak())
                 #
-                parts.append(Paragraph('Message Totals', styles['Heading1']))
+                parts.append(Paragraph(_('Message Totals'), styles['Heading1']))
                 addrs = [
                     addr.address for addr in UserAddresses.objects.filter(
                         user=user
@@ -228,7 +229,8 @@ class Command(NoArgsCommand):
                     
                     text_content = render_to_string('reports/pdf_report.txt',
                         {'user':user, 'url':url})
-                    subject = 'Baruwa usage report for: %s' % user.username
+                    subject = _('Baruwa usage report for: %(user)s') % {
+                                'user':user.username}
                     if email_re.match(user.username):
                         toaddr = user.username
                     if email_re.match(user.email):
@@ -238,15 +240,17 @@ class Command(NoArgsCommand):
                     msg.attach('baruwa.pdf', pdf.getvalue(), "application/pdf")
                     #msg.send()
                     emails.append(msg)
-                    print "* Queue "+user.username+"'s report to: "+toaddr
+                    print _("* Queue %(user)s's report to: %(addr)s") % {
+                        'user':user.username, 'addr':toaddr}
                     pdf.close()
         if emails:
             try:
                 conn = SMTPConnection()
                 conn.send_messages(emails)
-                print "====== sending "+str(len(emails))+" messages ======="
+                print _("====== sending %(num)s messages =======") % {
+                        'num':str(len(emails))}
             except Exception, exception:
-                print "Sending failed ERROR: %s" % str(exception)
+                print _("Sending failed ERROR: %(error)s") % {'error':str(exception)}
 
 
         

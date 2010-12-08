@@ -48,7 +48,7 @@ var ax_error = false;
             <div class="Lists_from">{{ listitem.from_address }}</div>
             <div class="Lists_action">
             {% ifequal listitem.from_address "127.0.0.1" %} 
-            =builtin=
+            {% trans "=builtin=" %}
             {% else %}
             <a href="{% url list-del listitem.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" title="Delete" alt="Delete" /></a>
             {% endifequal %}

@@ -20,6 +20,7 @@
 #
 
 from django.core.management.base import NoArgsCommand
+from django.utils.translation import ugettext_lazy as _
 import re
 
 REGEX = re.compile(r"^\d{8}$")
@@ -81,7 +82,7 @@ class Command(NoArgsCommand):
         dirs.sort()
         for direc in dirs:
             process_path = os.path.join(quarantine_dir, direc)
-            print "== Processing directory "+process_path+" =="
+            print _("== Processing directory %(path)s ==") % {'path':process_path}
             ids = [f for f in os.listdir(process_path) if f not in ignore_dirs]
             
             if os.path.exists(os.path.join(process_path, 'spam')):
@@ -100,10 +101,10 @@ class Command(NoArgsCommand):
             Message.objects.filter(pk__in=ids).update(isquarantined=0)
             if (os.path.isabs(process_path) and 
                 (not os.path.islink(process_path))):
-                print "== Removing directory   "+process_path+" =="
+                print _("== Removing directory  %(path)s ==") % {'path':process_path}
                 try:
                     shutil.rmtree(process_path)
                 except:
-                    print "Failed to remove "+process_path
+                    print _("Failed to remove %(path)s") % {'path':process_path}
             else:
-                print "The directory "+process_path+" is a sym link skipping"
+                print _("The directory %(path)s is a sym link skipping") % {'path':process_path}
