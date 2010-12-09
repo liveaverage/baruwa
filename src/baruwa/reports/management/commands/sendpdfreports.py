@@ -42,6 +42,8 @@ class Command(BaseCommand):
             help='Generate reports per domain'),
         make_option('--domain', dest='domain_name', default='all',
             help='Specify the domain to report on, use "all" for all the domains'),
+        make_option('--copyadmin', action='store_true', dest='copy_admin', default=False,
+            help='Send a copy of the report to the admin'),
     )
     
     def handle(self, *args, **options):
@@ -50,10 +52,12 @@ class Command(BaseCommand):
         
         by_domain = options.get('by_domain')
         domain_name = options.get('domain_name')
+        copy_admin = options.get('copy_admin')
             
         from django.db.models import Count, Sum, Q
         from django.template.defaultfilters import filesizeformat
         from django.core.mail import EmailMessage, SMTPConnection
+        from django.contrib.auth.models import User
         from django.conf import settings
         from django.template.loader import render_to_string
         from baruwa.accounts.models import UserProfile, UserAddresses
@@ -121,6 +125,10 @@ class Command(BaseCommand):
         ]
         
         emails = []
+        admin_addrs = []
+        if copy_admin:
+            mails = User.objects.values('email').filter(is_superuser=True)
+            admin_addrs = [mail['email'] for mail in mails]
         
         from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 
             'postmaster@localhost')
@@ -266,7 +274,11 @@ class Command(BaseCommand):
             if email_re.match(user.email):
                 toaddr = user.email
                 
-            msg = EmailMessage(subject, text_content, from_email, [toaddr])
+            
+            if admin_addrs:
+                msg = EmailMessage(subject, text_content, from_email, [toaddr], admin_addrs)
+            else:
+                msg = EmailMessage(subject, text_content, from_email, [toaddr])
             msg.attach('baruwa.pdf', pdf.getvalue(), "application/pdf")
             print _("* Queue %(user)s's report to: %(addr)s") % {
                 'user':owner, 'addr':toaddr}
