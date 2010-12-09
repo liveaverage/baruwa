@@ -3,8 +3,8 @@ Roadmap
 
 Milestone 1.0.1
 --
-+ Internationalization & Localization
-+ Per domain PDF reports
++ <strike>Internationalization & Localization</strike>
++ <strike>Per domain PDF reports</strike>
 + Create packages for FreeBSD, OpenBSD and NetBSD
 
 Milestone 2.0.0

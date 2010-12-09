@@ -199,13 +199,39 @@ class ReportMessageManager(models.Manager):
 
 class TotalsMessageManager(models.Manager):
     "totals manager"
-
+    def doms(self, domain):
+        "domain message totals"
+        from django.db import connection
+        conn = connection.cursor()
+        query = """
+            SELECT date, count(*) AS mail_total,
+            SUM(CASE WHEN virusinfected>0 THEN 1 ELSE 0 END)
+            AS virus_total, SUM(CASE WHEN (virusinfected=0)
+            AND spam>0 THEN 1 ELSE 0 END) AS spam_total,
+            SUM(size) AS size_total FROM messages WHERE 
+            from_domain = %s OR to_domain = %s GROUP BY 
+            date ORDER BY date DESC
+            """
+        conn.execute(query, [domain, domain])
+        result_list = []
+        for i, row in enumerate(conn.fetchall()):
+            index = i
+            index += 1
+            vpct = "%.1f" % ((1.0 * int(row[2])/int(row[1]))*100)
+            spct = "%.1f" % ((1.0 * int(row[3])/int(row[1]))*100)
+            obj = self.model(id=index, date=str(row[0]),
+                mail_total=int(row[1]), virus_total=int(row[2]),
+                virus_percent=vpct, spam_total=int(row[3]),
+                spam_percent=spct, size_total=int(row[4]))
+            obj.total = row[1]
+            result_list.append(obj)
+        return result_list
+        
     def all(self, user, filters_list=None, addrs=None, act=3):
         "message totals"
         from django.db import connection
         from baruwa.utils.misc import raw_user_filter
         from baruwa.reports.utils import gen_dynamic_raw_query
-
         conn = connection.cursor()
         query = """
             SELECT date, count(*) AS mail_total,
