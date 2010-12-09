@@ -20,7 +20,7 @@
 #
 
 from django.core.management.base import NoArgsCommand
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 def draw_square(color):
     "draws a square"
@@ -42,6 +42,7 @@ class Command(NoArgsCommand):
         from django.template.defaultfilters import filesizeformat
         from django.core.mail import EmailMessage, SMTPConnection
         from django.conf import settings
+        from django.utils import translation
         from django.template.loader import render_to_string
         from baruwa.accounts.models import UserProfile, UserAddresses
         from baruwa.messages.models import Message
@@ -106,7 +107,7 @@ class Command(NoArgsCommand):
                 'to_domain__isnull':False}, 'size', 
                 'Top recipient domains by volume'],
         ]
-        
+        translation.activate(settings.LANGUAGE_CODE)
         emails = []
         
         from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 

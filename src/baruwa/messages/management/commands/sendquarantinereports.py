@@ -20,7 +20,7 @@
 #
 
 from django.core.management.base import NoArgsCommand
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 try:
     from django.forms.fields import email_re
 except ImportError:
