@@ -224,10 +224,15 @@
 			{{ quarantine_form.todelete }}
         </div>
         <div class="Release_col">
-            {% if not message_details.virusinfected and not message_details.namedinfected and not message_details.otherinfected %}
-            {{ quarantine_form.salearn }}&nbsp;
-            {{ quarantine_form.salearn_as }}
-            {% endif %}
+			{% ifequal user.get_profile.account_type 3  %}
+	           {% if not message_details.virusinfected and not message_details.namedinfected and not message_details.otherinfected %}
+	           {{ quarantine_form.salearn }}&nbsp;
+	           {{ quarantine_form.salearn_as }}
+	           {% endif %}
+			{% else %}
+				{{ quarantine_form.salearn }}&nbsp;
+		        {{ quarantine_form.salearn_as }}
+			{% endifequal %}
         </div>
         <div class="Release_col">
             {{ quarantine_form.use_alt }}
