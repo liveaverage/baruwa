@@ -46,7 +46,7 @@ def tds_msg_class(message):
         value = 'whitelisted'
     if message['blacklisted']:
         value = 'blacklisted'
-    if message['nameinfected'] or message['virusinfected']:
+    if message['nameinfected'] or message['virusinfected'] or message['otherinfected']:
         value = 'infected'
     if not message['scaned']:
         value = 'LightGray'
