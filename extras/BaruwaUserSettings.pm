@@ -113,7 +113,7 @@ sub CheckScores {
     }
 }
 
-sub InitBaruwalowScore {
+sub InitBaruwaLowScore {
     MailScanner::Log::InfoLog("Baruwa - Populating spam score settings");
     my $total = PopulateScores( 1, \%Lowscores );
     if ($total) {
@@ -139,11 +139,11 @@ sub InitBaruwaHighScore {
     $htime = time();
 }
 
-sub EndBaruwalowScore {
+sub EndBaruwaLowScore {
     MailScanner::Log::InfoLog("Shutting down Baruwa spam score settings");
 }
 
-sub EndBaruwahighScore {
+sub EndBaruwaHighScore {
     MailScanner::Log::InfoLog("Shutting down Baruwa high spam score settings");
 }
 
@@ -151,7 +151,7 @@ sub BaruwaLowScore {
     if ( ( time() - $ltime ) >= ( $refresh_time * 60 ) ) {
         MailScanner::Log::InfoLog(
             "Baruwa - spam score setting refresh time reached");
-        InitBaruwalowScore();
+        InitBaruwaLowScore();
     }
     my ($message) = @_;
     return CheckScores( 1, $message, \%Lowscores );
