@@ -85,6 +85,10 @@ Edit /usr/lib/baruwa/BaruwaUserSettings.pm and set the variables::
     my ($db_user) = 'baruwa';
     my ($db_pass) = '<password>';
 
+Link the BaruwaUserSettings module::
+
+    ln -s /usr/lib/baruwa/BaruwaUserSettings.pm /usr/lib/MailScanner/MailScanner/CustomFunctions/
+
 Edit the MailScanner config file /etc/MailScanner/MailScanner.conf, and
 set the following options::
 
