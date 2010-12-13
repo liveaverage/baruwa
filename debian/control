@@ -9,7 +9,7 @@ Homepage: http://www.topdog.za.net/baruwa
 
 Package: baruwa
 Architecture: all
-Depends: ${misc:Depends}, ${python:Depends}, libapache2-mod-wsgi, wwwconfig-common, debconf (>= 0.2.26), libjs-dojo-dojox, libjs-dojo-dijit, libjs-dojo-dojox, python-mysqldb, python-django (>= 1.1.1), python-ipy, python-geoip, mysql-client, python-reportlab, mailscanner, python-lxml
+Depends: ${misc:Depends}, ${python:Depends}, libapache2-mod-wsgi | nginx | lighttpd, wwwconfig-common, debconf (>= 0.2.26), libjs-dojo-dojox, libjs-dojo-dijit, libjs-dojo-dojox, python-mysqldb, python-django (>= 1.1.1), python-ipy, python-geoip, mysql-client, python-reportlab, mailscanner, python-lxml
 Description: Web 2.0 MailScanner front-end.
  .
  Baruwa provides an easy to use interface for 
