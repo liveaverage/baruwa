@@ -14,23 +14,33 @@ There are so many ways to help Baruwa's development,
 	
 Reporting bugs
 --------------
-Please use the mailing lists for the time being as an
-issue tracking system is being configured at the moment.
+Please use the Github issue tracking system to report
+bugs and request new features at https://github.com/akissa/baruwa/issues
 
 Submitting patches
 ------------------
 Baruwa source code is maintained in a git repository
-at github http://github.com/akissa/baruwa Please
-submit your patches to the mailing list.
+at Github http://github.com/akissa/baruwa Please submit 
+your patches to the mailing list and send me a pull 
+request on Github.
 
 Documentation
 -------------
 The documentation is part of the source, clone the
 repo make the changes and submit the patches to the
-mailing list.
+mailing list and send me a pull request on Github.
+
+You can also contribute tips and sightings on the baruwa
+wiki at Github https://github.com/akissa/baruwa/wiki
 
 Donations
 ---------
 Donations are appreciated please use the Pledge 
 system which accepts paypal payments 
 http://pledgie.com/campaigns/12056
+
+Translation
+-----------
+Clone the source code from Github, create a new language
+if it does not exist, translate and test then send me
+a pull request on Github

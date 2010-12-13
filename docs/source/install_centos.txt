@@ -4,10 +4,9 @@
 Baruwa on Centos/RHEL
 =====================
 
-Configure MailScanner
-=====================
-
-:ref:`Configure <mailscanner>` MailScanner if you have not already done so.
+The Baruwa rpm that is provided only supports apache out of the
+box, if you are running a different web server, please install
+from source or rebuild the source rpm to support your web server.
 
 Install EPEL
 ============
@@ -20,7 +19,7 @@ Baruwa rpm install
 ==================
 
 Due to the fact that the shipped MySQLdb module shipped on 
-Centos/RHEL is too old, use the updated rpm that i supply
+Centos/RHEL <= 5.x is too old, use the updated rpm that i supply
 from http://topdog-software.com/oss/MySQL-python/ 
 or install from source::
 
@@ -51,6 +50,94 @@ Create the database user::
 
     mysql> GRANT ALL ON baruwa.* TO baruwa@localhost IDENTIFIED BY '<password>';
     mysql> flush privileges;
+
+Configure MailScanner
+=====================
+
+It is assumed that you have a working MailScanner system already installed
+and configured, if you are installing from scratch please refer to their
+documentation on how to install and configure MailScanner. 
+
+Edit /usr/lib/baruwa/BaruwaSQL.pm and set the variables::
+
+    my ($db_name)   = 'baruwa';
+    my ($db_host)   = 'localhost';
+    my ($db_user)   = 'baruwa';
+    my ($db_pass)   = '<password>';
+    my ($sqlite_db) = "/var/spool/MailScanner/incoming/baruwa.db";
+
+Next edit the MailScanner config file /etc/MailScanner/MailScanner.conf,
+you need to make sure that the following options are set::
+
+    Quarantine User = exim (Or what ever your "Run As User" is set to)
+    Quarantine Group = apache (or your webserver user if not apache)
+    Quarantine Permissions = 0660
+    Quarantine Whole Message = yes
+    Quarantine Whole Message As Queue Files = no
+    Detailed Spam Report = yes
+    Include Scores In SpamAssassin Report = yes
+    Always Looked Up Last = &BaruwaSQL
+
+To actually quarantine and later process messages with in baruwa, set
+'store' as one of your keywords for the "Spam Actions" and
+"High Scoring Spam Actions" MailScanner options
+
+**Integrate SQL Blacklists/Whitelists**
+
+Edit /usr/lib/baruwa/BaruwaLists.pm and set the variables::
+
+    my ($db_name) = 'baruwa';
+    my ($db_host) = 'localhost';
+    my ($db_user) = 'baruwa';
+    my ($db_pass) = '<password>';
+
+Next edit the MailScanner config file /etc/MailScanner/MailScanner.conf, and
+set the following options::
+
+    Is Definitely Not Spam = &BaruwaWhitelist
+    Is Definitely Spam = &BaruwaBlacklist
+
+**Integrate per user settings**
+
+Edit /usr/lib/baruwa/BaruwaUserSettings.pm and set the variables::
+
+    my ($db_name) = 'baruwa';
+    my ($db_host) = 'localhost';
+    my ($db_user) = 'baruwa';
+    my ($db_pass) = '<password>';
+
+Edit the MailScanner config file /etc/MailScanner/MailScanner.conf, and
+set the following options::
+
+    Required SpamAssassin Score = &BaruwaLowScore
+    High SpamAssassin Score = &BaruwaHighScore
+
+If you want users to be able to turn off spam checks for their own profiles,
+set the following options::
+
+    Spam Checks = &BaruwaShouldScan
+
+**Apply configuration changes**
+
+Restart up MailScanner::
+
+    # /etc/init.d/MailScanner restart
+
+**Verify that is working**
+
+Check your log files you should see
+
+Baruwa SQL logger::
+
+	Aug  9 18:58:27 localhost MailScanner[8470]: Logging message 1OiVg7-0003zS-9s to Baruwa SQL 
+	Aug  9 18:58:27 localhost MailScanner[11052]: 1OiVg7-0003zS-9s: Logged to Baruwa SQL
+
+Baruwa Lists::
+
+	Aug 9 18:32:42 localhost MailScanner[27260]: Starting Baruwa whitelists 
+	Aug 9 18:32:42 localhost MailScanner[27260]: Read 6 whitelist items 
+	Aug 9 18:32:42 localhost MailScanner[27260]: Ip blocks whitelisted 192.168.1.0/24 192.168.2.0/24 xxx.xx.xxx.0/26
+
 
 Configure Baruwa
 ================

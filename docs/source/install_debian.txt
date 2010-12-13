@@ -8,6 +8,7 @@ Baruwa deb install
 ==================
 
 Download the deb from http://www.topdog-software.com/oss/baruwa/
+
 The installation process will also configure apache, mysql and baruwa should you choose.
 
 The install asks you for the following info
@@ -36,9 +37,38 @@ file /etc/MailScanner/MailScanner.conf and set the following::
 	Is Definitely Not Spam = &BaruwaWhitelist
 	Is Definitely Spam = &BaruwaBlacklist
 	Always Looked Up Last = &BaruwaSQL
-	
-Take a look at the :ref:`mailscanner <mailscanner>` configuration instructions for other 
-options.
+
+To actually quarantine and later process messages with in baruwa, set
+'store' as one of your keywords for the "Spam Actions" and
+"High Scoring Spam Actions" MailScanner options
+
+**Integrate per user settings**
+
+Edit the MailScanner config file /etc/MailScanner/MailScanner.conf, and
+set the following options::
+
+    Required SpamAssassin Score = &BaruwaLowScore
+    High SpamAssassin Score = &BaruwaHighScore
+
+If you want users to be able to turn off spam checks for their own profiles,
+set the following options::
+
+    Spam Checks = &BaruwaShouldScan
+
+**Verify that is working**
+
+Check your log files you should see
+
+Baruwa SQL logger::
+
+	Aug  9 18:58:27 localhost MailScanner[8470]: Logging message 1OiVg7-0003zS-9s to Baruwa SQL 
+	Aug  9 18:58:27 localhost MailScanner[11052]: 1OiVg7-0003zS-9s: Logged to Baruwa SQL
+
+Baruwa Lists::
+
+	Aug 9 18:32:42 localhost MailScanner[27260]: Starting Baruwa whitelists 
+	Aug 9 18:32:42 localhost MailScanner[27260]: Read 6 whitelist items 
+	Aug 9 18:32:42 localhost MailScanner[27260]: Ip blocks whitelisted 192.168.1.0/24 192.168.2.0/24 xxx.xx.xxx.0/26
 
 Configure Baruwa
 ================

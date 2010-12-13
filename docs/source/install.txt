@@ -4,8 +4,8 @@
 Installation
 ============
 
-Source installation
-===================
+Install Baruwa
+==============
 
 Download the `Baruwa <http://pypi.python.org/pypi/baruwa>`_ source
 and untar it::
@@ -13,9 +13,8 @@ and untar it::
     # tar xzvf baruwa-<version>.tar.gz
     # cd baruwa-<version>
 
-Make sure you have the required packages installed as well as a working
-MailScanner :ref:`setup <mailscanner>` then proceed. The following commands 
-should be run as a privileged user.
+Make sure you have the required packages installed then proceed. 
+The following commands should be run as a privileged user.
 
 **Create the database**::
 
@@ -33,6 +32,9 @@ Run the command from the mysql prompt::
 Run::
 
     # python setup.py install
+
+Configure Baruwa
+================
 
 **Configure the Baruwa settings**
 
@@ -66,47 +68,145 @@ Link to the dojo toolkit::
 	# ln -s /path/to/dojox $baruwa_path/baruwa/static/js
 	# ln -s /path/to/dijit $baruwa_path/baruwa/static/js
 
-**Setup Web server**
+**Configure the Web server**
 
-    **Apache/mod_wsgi**
+**Apache/mod_wsgi**
 
-    Make sure mod_wsgi is enabled, uncomment the following line in
-    /etc/httpd/conf.d/wsgi.conf::
+Make sure mod_wsgi is enabled, uncomment the following line in
+/etc/httpd/conf.d/wsgi.conf::
 
-        LoadModule wsgi_module modules/mod_wsgi.so
-    
-    Use the sample configuration provided (extras/baruwa-mod_wsgi.conf) 
-    as a template. Copy to your apache configuration directory usually
-    /etc/httpd/conf.d
+    LoadModule wsgi_module modules/mod_wsgi.so
 
-    Make sure that your apache is configured for name based virtual
-    hosting such that you can run other sites on the same box if you
-    wish to.
+Use the sample configuration provided (extras/baruwa-mod_wsgi.conf) 
+as a template. Copy to your apache configuration directory usually
+/etc/httpd/conf.d
 
-    Edit /etc/httpd/conf.d/baruwa-mod_wsgi.conf and set ServerName to
-    the hostname you will use to access baruwa
+Make sure that your apache is configured for name based virtual
+hosting such that you can run other sites on the same box if you
+wish to.
 
-    Restart apache for the configuration to take effect.::
+Edit /etc/httpd/conf.d/baruwa-mod_wsgi.conf and set ServerName to
+the hostname you will use to access baruwa
 
-        # /etc/init.d/httpd reload
+Restart apache for the configuration to take effect.::
 
-    **Lighttpd**
+    # /etc/init.d/httpd reload
 
-    Use the generic django instructions at 
-    http://docs.djangoproject.com/en/1.1/howto/deployment/fastcgi/#lighttpd-setup
+**Lighttpd**
 
-    **Nginx**
+Use the generic django instructions at 
+http://docs.djangoproject.com/en/1.1/howto/deployment/fastcgi/#lighttpd-setup
 
-    Use the nginx instructions at http://wiki.nginx.org/NginxDjangoFastCGI
+**Nginx**
 
-    **Cherokee**
+Use the nginx instructions at http://wiki.nginx.org/NginxDjangoFastCGI
 
-    Use the cherokee cookbook instructions at http://www.cherokee-project.com/doc/cookbook_django.html
+**Cherokee**
 
-.. _setupmailscanner:
+Use the cherokee cookbook instructions at http://www.cherokee-project.com/doc/cookbook_django.html
 
+Configure MailScanner
+=====================
 
-**Thats it**
+**Edit and install BaruwaSQL.pm**
+
+Edit extras/BaruwaSQL.pm and set the variables::
+
+	my ($db_name)   = 'baruwa';
+	my ($db_host)   = 'localhost';
+	my ($db_user)   = 'baruwa';
+	my ($db_pass)   = '<password>';
+	my ($sqlite_db) = "/var/spool/MailScanner/incoming/baruwa.db";
+
+Copy it to the MailScanner custom functions directory::
+
+	# confdir=$(/usr/sbin/Quick.Peek 'Custom Functions Dir' /etc/MailScanner/MailScanner.conf)
+	# cp extras/BaruwaSQL.pm $confdir/
+
+Next edit the MailScanner config file /etc/MailScanner/MailScanner.conf,
+you need to make sure that the following options are set::
+
+    Quarantine User = exim (Or what ever your "Run As User" is set to)
+    Quarantine Group = apache (or your webserver user if not apache)
+    Quarantine Permissions = 0660
+    Quarantine Whole Message = yes
+    Quarantine Whole Message As Queue Files = no
+    Detailed Spam Report = yes
+    Include Scores In SpamAssassin Report = yes
+    Always Looked Up Last = &BaruwaSQL
+
+To actually quarantine and later process messages with in baruwa, set
+'store' as one of your keywords for the "Spam Actions" and
+"High Scoring Spam Actions" MailScanner options
+
+**Integrate SQL Blacklists/Whitelists**
+
+Edit extras/BaruwaLists.pm and set the variables::
+
+	my ($db_name) = 'baruwa';
+	my ($db_host) = 'localhost';
+	my ($db_user) = 'baruwa';
+	my ($db_pass) = '<password>';
+
+Copy it to the MailScanner custom functions directory::
+
+	# confdir=$(/usr/sbin/Quick.Peek 'Custom Functions Dir' /etc/MailScanner/MailScanner.conf)
+	# cp extras/BaruwaLists.pm $confdir/
+
+Next edit the MailScanner config file /etc/MailScanner/MailScanner.conf, and
+set the following options::
+
+    Is Definitely Not Spam = &BaruwaWhitelist
+    Is Definitely Spam = &BaruwaBlacklist
+
+**Integrate per user settings**
+
+Edit extras/BaruwaUserSettings.pm and set the variables::
+
+    my ($db_name) = 'baruwa';
+    my ($db_host) = 'localhost';
+    my ($db_user) = 'baruwa';
+    my ($db_pass) = '<password>';
+
+Copy it to the MailScanner custom functions directory::
+
+	# confdir=$(/usr/sbin/Quick.Peek 'Custom Functions Dir' /etc/MailScanner/MailScanner.conf)
+	# cp extras/BaruwaUserSettings.pm $confdir
+
+Edit the MailScanner config file /etc/MailScanner/MailScanner.conf, and
+set the following options::
+
+    Required SpamAssassin Score = &BaruwaLowScore
+    High SpamAssassin Score = &BaruwaHighScore
+
+If you want users to be able to turn off spam checks for their own profiles,
+set the following options::
+
+    Spam Checks = &BaruwaShouldScan
+
+**Apply configuration changes**
+
+Restart up MailScanner::
+
+    # /etc/init.d/MailScanner restart
+
+Testing
+=======
+
+**Verify that is working**
+
+Check your log files you should see
+
+Baruwa SQL logger::
+
+	Aug  9 18:58:27 localhost MailScanner[8470]: Logging message 1OiVg7-0003zS-9s to Baruwa SQL 
+	Aug  9 18:58:27 localhost MailScanner[11052]: 1OiVg7-0003zS-9s: Logged to Baruwa SQL
+
+Baruwa Lists::
+
+	Aug 9 18:32:42 localhost MailScanner[27260]: Starting Baruwa whitelists 
+	Aug 9 18:32:42 localhost MailScanner[27260]: Read 6 whitelist items 
+	Aug 9 18:32:42 localhost MailScanner[27260]: Ip blocks whitelisted 192.168.1.0/24 192.168.2.0/24 xxx.xx.xxx.0/26
 
 Point your browser to http://hostname_used login with admin user and password
 and start working. You can now use the interface to add users, domains and 
