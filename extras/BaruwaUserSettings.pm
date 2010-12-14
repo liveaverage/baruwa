@@ -41,7 +41,7 @@ sa_high_score > 0 AND a.user_id = b.user_id
 END
 
 my $low_query = <<END;
-SELECT DISTINCT(email),sa_low_score,is_superuser AS score FROM 
+SELECT DISTINCT(email),sa_low_score AS score, is_superuser FROM 
 auth_user, profiles WHERE auth_user.id = profiles.user_id AND 
 sa_low_score > 0 UNION SELECT address AS email,sa_low_score,0 
 FROM user_addresses AS a, profiles AS b WHERE enabled=1 AND 
