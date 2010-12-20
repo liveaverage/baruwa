@@ -168,7 +168,7 @@ sub BaruwaHighScore {
 }
 
 sub PopulateScanList {
-    my $list = @_;
+    my ($list) = @_;
 
     my ( $conn, $sth, $count, $shouldscan, $isadmin, $email );
 
