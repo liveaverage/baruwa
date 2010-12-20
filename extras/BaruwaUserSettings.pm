@@ -168,7 +168,7 @@ sub BaruwaHighScore {
 }
 
 sub PopulateScanList {
-    my $list = @_;
+    my ($list) = @_;
 
     my ( $conn, $sth, $count, $shouldscan, $isadmin, $email );
 
@@ -224,7 +224,7 @@ sub EndBaruwaShouldScan {
 }
 
 sub BaruwaShouldScan {
-    my $message = @_;
+    my ($message) = @_;
     return CheckShouldScan( $message, \%ScanList );
 }
 
