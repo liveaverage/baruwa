@@ -1,1 +1,1 @@
-INSERT INTO lists (list_type, to_address, from_address, user_id) VALUES(1, 'all', '127.0.0.1', 1);
+INSERT INTO lists (list_type, to_address, from_address, user_id) VALUES(1, 'any', '127.0.0.1', 1);
