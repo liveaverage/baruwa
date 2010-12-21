@@ -26,6 +26,7 @@ The install asks you for the following info
 
 Install Baruwa::
 
+    # apt-get install gdebi-core
     # gdebi baruwa_<version>_all.deb
 
 Configure MailScanner
