@@ -7,7 +7,9 @@ How do I do X? Why doesn't Y work? Where can I go to get help?
 If the documentation does not contain an answer to your issue
 try the Baruwa mailing list, Feel free to ask any questions
 on installing, configuring, integrating and troubleshooting
-Baruwa. You can subscribe to the list at http://lists.baruwa.org/
+Baruwa. Please subscribe to the list at http://lists.baruwa.org/
+or if you prefer to use a forum like interface subscribe at
+http://baruwa-users-list.963389.n3.nabble.com/
 
 I think I've found a security problem! What should I do?
 ---------------------------------------------------------
