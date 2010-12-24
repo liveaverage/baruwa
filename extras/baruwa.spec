@@ -1,7 +1,7 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 Name:           baruwa
 Version:        1.0.0
-Release:        1%{?dist}
+Release:        4%{?dist}
 Summary:        Ajax enabled MailScanner web frontend      
 Group:          Development/Languages
 License:        GPLv2
@@ -10,8 +10,7 @@ Source0:        http://www.topdog-software.com/oss/files/%{name}-%{version}.tar.
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel, python-setuptools, python-sphinx
-Requires:       Django >= 1.1.1, python-GeoIP, python-IPy, httpd, dojo, mailscanner, python-reportlab, python-lxml, python-uuid
-# fedora MySQL-python
+Requires:       Django >= 1.1.1, python-GeoIP, python-IPy, httpd, dojo, mailscanner, python-reportlab, python-lxml, python-uuid, MySQL-python >= 1.2.2
 
 %description
 Baruwa (swahili for letter or mail) is a web 2.0 MailScanner
@@ -23,15 +22,17 @@ quarantined messages, spam learning, whitelisting and
 blacklisting addresses, monitoring the health of the services etc. 
 Baruwa is implemented using web 2.0 features (AJAX) where deemed 
 fit, graphing is also implemented on the client side using SVG, 
-Silverlight or VML.
+Silverlight or VML. Baruwa has full support for i18n, letting you
+support any language of your choosing.
 
 It includes reporting functionality with an easy to use query 
 builder, results can be displayed as message lists or graphed
 as colorful and pretty interactive graphs.
 
-Custom MailScanner modules are provided to allow for logging of
-messages to the mysql database with SQLite as backup and for 
-managing whitelists and blacklists.
+Custom MailScanner modules are provided to allow for logging of 
+messages to the mysql database with SQLite as backup, managing 
+whitelists and blacklists and managing per user spam check 
+settings.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -85,6 +86,7 @@ popd
 pushd $RPM_BUILD_ROOT%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions
 ln -s ../../../baruwa/BaruwaSQL.pm .
 ln -s ../../../baruwa/BaruwaLists.pm .
+ln -s ../../../baruwa/BaruwaUserSettings.pm .
 popd  
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -99,9 +101,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/%{name}/
 %{_prefix}/lib/MailScanner/MailScanner/CustomFunctions/BaruwaSQL.pm
 %{_prefix}/lib/MailScanner/MailScanner/CustomFunctions/BaruwaLists.pm
+%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions/BaruwaUserSettings.pm
 
 
 %changelog
+* Sun Nov 21 2010 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.0-3
+- Various bug fixes
+
+* Fri Oct 29 2010 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.0-2
+- remove MySQL-python as dependency as installing from source
+
 * Tue Oct 26 2010 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.0-1
 - Upgrade to latest version
 
