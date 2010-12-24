@@ -24,6 +24,7 @@ from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, AdminPasswordChangeForm
 from django.db.models import Q
+from django.db import IntegrityError
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -31,7 +32,7 @@ from django.contrib.auth import login, REDIRECT_FIELD_NAME
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.utils import simplejson
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from baruwa.accounts.forms import UserProfileForm, UserCreateForm, \
 UserAddressForm, OrdUserProfileForm, UserUpdateForm, AdminUserUpdateForm, \
 EditAddressForm, DeleteAddressForm, DeleteUserForm
@@ -205,9 +206,12 @@ def add_address(request, user_id, is_domain=False, template_name='accounts/add_a
     if request.method == 'POST':
         form = UserAddressForm(request.POST)
         if form.is_valid():
-            address = form.save()
-            msg = _('The address %(addr)s has been added to %(account)s account') % {
-            'addr':address.address, 'account':address.user.username}
+            try:
+                address = form.save()
+                msg = _('The address %(addr)s has been added to %(account)s account') % {
+                'addr':address.address, 'account':address.user.username}
+            except IntegrityError:
+                msg = _('The address already exists')
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
@@ -265,7 +269,7 @@ def delete_address(request, address_id, template_name='accounts/delete_address.h
 
 @login_required
 @onlysuperusers
-def change_password(request, user_id, template_name='accounts/change_pw.html'):
+def change_password(request, user_id, template_name='accounts/admin_change_pw.html'):
     """
     Admin change users password
     """

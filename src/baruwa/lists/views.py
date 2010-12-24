@@ -31,7 +31,7 @@ from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.db.models import Q
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from baruwa.lists.forms import ListAddForm, AdminListAddForm
 from baruwa.lists.forms import FilterForm, ListDeleteForm
 from baruwa.lists.models import List

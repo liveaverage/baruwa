@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block headers %}{% endblock headers %}
+{% block submenu %}
+{% ifnotequal user.get_profile.account_type 3  %}
+<ul>
+	<li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
+</ul>
+{% endifnotequal %}
+{% endblock submenu %}
+{% block title %}{% trans "Change Password" %}{% endblock title %}
+{% block heading %}{% trans "Change Password" %}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">{% trans "Change Password" %}</div>
+</div>
+<form action="{% url baruwa.accounts.views.change_password user_id=user_id %}" method="post">
+	{% for hidden in form.hidden_fields %}
+		{{ hidden }}
+	{% endfor %}
+    {% for field in form.visible_fields %}
+        <div class="LightBlue_div">
+			<div class="form_label">{{ field.label }}</div>
+			<div class="form_value">{{ field }}</div>
+			<div class="form_error">{{ field.errors }}</div>
+        </div>
+    {% endfor %}
+    <div class="LightBlue_div">
+        <div class="form_label">&nbsp;</div>
+        <div class="form_value">
+            <input id="submit-button" type="submit" value="{% trans "Change" %}" />
+        </div>
+        <div class="form_error">{{form.errors}}</div>
+    </div>
+</form>
+{% endblock content %}

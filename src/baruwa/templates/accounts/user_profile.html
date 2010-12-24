@@ -2,19 +2,21 @@
 {% load i18n %}
 {% block headers %}{% endblock headers %}
 {% block submenu %}
-{% ifnotequal user.get_profile.account_type 3  %}
 <ul>
+{% ifnotequal user.get_profile.account_type 3  %}
 	<li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
-{% ifequal user.id account_info.id %}
-{% if not user.is_superuser %}
-  	<li><a id="change-pw" href="{% url change-password %}">{% trans "Change your password" %}</a></li>	
-{% endif %}
-{% endifequal %}
-{% if user.is_superuser %}
-	<li><a href="{% url change-pw account_info.id %}">{% trans "Change users password" %}</a></li>
-{% endif %}
-</ul>	
+	{% ifequal user.id account_info.id %}
+		{% if not user.is_superuser %}
+		  	<li><a id="change-pw" href="{% url change-password %}">{% trans "Change your password" %}</a></li>	
+		{% endif %}
+	{% endifequal %}
+	{% if user.is_superuser %}
+		<li><a href="{% url change-pw account_info.id %}">{% trans "Change users password" %}</a></li>
+	{% endif %}
+{% else %}
+<li><a id="change-pw" href="{% url change-password %}">{% trans "Change your password" %}</a></li>
 {% endifnotequal %}
+</ul>
 {% endblock submenu %}
 {% block title %}{% trans "Account Profile" %}{% endblock title %}
 {% block heading %}{% trans "Account Profile" %}{% endblock heading %}

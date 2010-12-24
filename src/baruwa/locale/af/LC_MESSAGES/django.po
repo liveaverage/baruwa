@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-08 12:48+0200\n"
+"POT-Creation-Date: 2010-12-24 09:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,42 +50,46 @@ msgstr ""
 msgid "provide a valid email address"
 msgstr ""
 
-#: accounts/views.py:121
+#: accounts/views.py:122
 #, python-format
 msgid "The user account %(account)s was created successfully"
 msgstr ""
 
-#: accounts/views.py:146
+#: accounts/views.py:147
 #, python-format
 msgid "The user account %(account)s has been updated"
 msgstr ""
 
-#: accounts/views.py:176
+#: accounts/views.py:177
 #, python-format
 msgid "The user account %(account)s has been deleted"
 msgstr ""
 
-#: accounts/views.py:185
+#: accounts/views.py:186
 #, python-format
 msgid "The deletion of user account %(account)s failed"
 msgstr ""
 
-#: accounts/views.py:209
+#: accounts/views.py:211
 #, python-format
 msgid "The address %(addr)s has been added to %(account)s account"
 msgstr ""
 
-#: accounts/views.py:234 accounts/views.py:253
+#: accounts/views.py:214
+msgid "The address already exists"
+msgstr ""
+
+#: accounts/views.py:238 accounts/views.py:257
 #, python-format
 msgid "The address %(addr)s has been updated"
 msgstr ""
 
-#: accounts/views.py:277
+#: accounts/views.py:281
 #, python-format
 msgid "The password for user %(account)s has been updated"
 msgstr ""
 
-#: accounts/views.py:330
+#: accounts/views.py:334
 #, python-format
 msgid "The user profile for %(account)s has been updated"
 msgstr ""
@@ -575,53 +579,58 @@ msgstr ""
 msgid "Total messages [ After SMTP ]"
 msgstr ""
 
-#: reports/management/commands/sendpdfreports.py:119
-msgid "=================== Processing reports ======================"
-msgstr ""
-
-#: reports/management/commands/sendpdfreports.py:128
-msgid "Baruwa mail report"
-msgstr ""
-
-#: reports/management/commands/sendpdfreports.py:154
+#: reports/management/commands/sendpdfreports.py:141
 #: templates/accounts/edit_address.html:11
 #: templates/accounts/edit_address.html:12
 #: templates/accounts/edit_address.html:15 templates/reports/piereport.html:28
 msgid "Address"
 msgstr ""
 
-#: reports/management/commands/sendpdfreports.py:154
+#: reports/management/commands/sendpdfreports.py:141
 #: templates/reports/barreport.html:35 templates/reports/piereport.html:29
 msgid "Count"
 msgstr ""
 
-#: reports/management/commands/sendpdfreports.py:154
+#: reports/management/commands/sendpdfreports.py:141
 #: templates/reports/listing.html:56 templates/reports/piereport.html:30
 #: templates/reports/relays.html:32
 msgid "Volume"
 msgstr ""
 
-#: reports/management/commands/sendpdfreports.py:192
+#: reports/management/commands/sendpdfreports.py:209
 #: templates/reports/index.html:58 templates/status/index.html:16
 msgid "Message Totals"
 msgstr ""
 
-#: reports/management/commands/sendpdfreports.py:232
+#: reports/management/commands/sendpdfreports.py:251
+msgid "Baruwa mail report"
+msgstr ""
+
+#: reports/management/commands/sendpdfreports.py:270
 #, python-format
 msgid "Baruwa usage report for: %(user)s"
 msgstr ""
 
-#: reports/management/commands/sendpdfreports.py:243
+#: reports/management/commands/sendpdfreports.py:283
 #, python-format
 msgid "* Queue %(user)s's report to: %(addr)s"
 msgstr ""
 
-#: reports/management/commands/sendpdfreports.py:250
+#: reports/management/commands/sendpdfreports.py:288
+msgid "=================== Processing reports ======================"
+msgstr ""
+
+#: reports/management/commands/sendpdfreports.py:296
+#, python-format
+msgid "========== domain name %(dom)s does not exist =========="
+msgstr ""
+
+#: reports/management/commands/sendpdfreports.py:322
 #, python-format
 msgid "====== sending %(num)s messages ======="
 msgstr ""
 
-#: reports/management/commands/sendpdfreports.py:253
+#: reports/management/commands/sendpdfreports.py:325
 #, python-format
 msgid "Sending failed ERROR: %(error)s"
 msgstr ""
@@ -702,6 +711,7 @@ msgid "Settings"
 msgstr ""
 
 #: templates/base.html:88 templates/accounts/add_address.html:9
+#: templates/accounts/admin_change_pw.html:7
 #: templates/accounts/change_pw.html:7
 #: templates/accounts/create_account.html:6
 #: templates/accounts/delete_account.html:6
@@ -768,23 +778,28 @@ msgstr ""
 msgid "Add Address"
 msgstr ""
 
-#: templates/accounts/add_address.html:36 templates/lists/add.form.html:30
+#: templates/accounts/add_address.html:36
+#: templates/accounts/create_account.html:26 templates/lists/add.form.html:30
 msgid "Reset"
 msgstr ""
 
 #: templates/accounts/add_address.html:37
-#: templates/accounts/user_profile.html:150
+#: templates/accounts/user_profile.html:152
 #: templates/config/add_auth_host.html:37 templates/config/add_host.html:35
 #: templates/config/domain.html:67 templates/config/domain.html.py:96
 #: templates/lists/add.form.html:31 templates/reports/filter.form.html:10
 msgid "Add"
 msgstr ""
 
+#: templates/accounts/admin_change_pw.html:11
+#: templates/accounts/admin_change_pw.html:12
+#: templates/accounts/admin_change_pw.html:15
 #: templates/accounts/change_pw.html:11 templates/accounts/change_pw.html:12
 #: templates/accounts/change_pw.html:15
 msgid "Change Password"
 msgstr ""
 
+#: templates/accounts/admin_change_pw.html:31
 #: templates/accounts/change_pw.html:31
 msgid "Change"
 msgstr ""
@@ -798,9 +813,8 @@ msgstr ""
 msgid "User account creation"
 msgstr ""
 
-#: templates/accounts/create_account.html:26
 #: templates/accounts/create_account.html:27
-msgid "{% trans "
+msgid "Create"
 msgstr ""
 
 #: templates/accounts/delete_account.html:9
@@ -840,8 +854,8 @@ msgstr ""
 #: templates/accounts/edit_address.html:11
 #: templates/accounts/edit_address.html:12
 #: templates/accounts/edit_address.html:15
-#: templates/accounts/user_profile.html:25
-#: templates/accounts/user_profile.html:79
+#: templates/accounts/user_profile.html:27
+#: templates/accounts/user_profile.html:81
 msgid "Edit"
 msgstr ""
 
@@ -898,6 +912,7 @@ msgid "Update Profile"
 msgstr ""
 
 #: templates/accounts/user_profile.html:10
+#: templates/accounts/user_profile.html:17
 msgid "Change your password"
 msgstr ""
 
@@ -905,111 +920,111 @@ msgstr ""
 msgid "Change users password"
 msgstr ""
 
-#: templates/accounts/user_profile.html:19
-#: templates/accounts/user_profile.html:20
+#: templates/accounts/user_profile.html:21
+#: templates/accounts/user_profile.html:22
 msgid "Account Profile"
 msgstr ""
 
-#: templates/accounts/user_profile.html:24
+#: templates/accounts/user_profile.html:26
 #, python-format
 msgid "Viewing %(account)s's Profile"
 msgstr ""
 
-#: templates/accounts/user_profile.html:30
+#: templates/accounts/user_profile.html:32
 msgid "Username:"
 msgstr ""
 
-#: templates/accounts/user_profile.html:38
+#: templates/accounts/user_profile.html:40
 msgid "Full names:"
 msgstr ""
 
-#: templates/accounts/user_profile.html:46
+#: templates/accounts/user_profile.html:48
 msgid "Email Address:"
 msgstr ""
 
-#: templates/accounts/user_profile.html:54
+#: templates/accounts/user_profile.html:56
 msgid "Account status:"
 msgstr ""
 
-#: templates/accounts/user_profile.html:57
+#: templates/accounts/user_profile.html:59
 msgid "Active"
 msgstr ""
 
-#: templates/accounts/user_profile.html:57
-#: templates/accounts/user_profile.html:173 templates/config/domain.html:60
+#: templates/accounts/user_profile.html:59
+#: templates/accounts/user_profile.html:175 templates/config/domain.html:60
 #: templates/config/domain.html.py:79 templates/config/domain.html:108
 msgid "Disabled"
 msgstr ""
 
-#: templates/accounts/user_profile.html:62
+#: templates/accounts/user_profile.html:64
 msgid "Last login:"
 msgstr ""
 
-#: templates/accounts/user_profile.html:70
+#: templates/accounts/user_profile.html:72
 msgid "Account created on:"
 msgstr ""
 
-#: templates/accounts/user_profile.html:78
+#: templates/accounts/user_profile.html:80
 msgid "Profile Settings"
 msgstr ""
 
-#: templates/accounts/user_profile.html:84
+#: templates/accounts/user_profile.html:86
 msgid "Account type:"
 msgstr ""
 
-#: templates/accounts/user_profile.html:88
+#: templates/accounts/user_profile.html:90
 msgid "Administrator"
 msgstr ""
 
-#: templates/accounts/user_profile.html:91
+#: templates/accounts/user_profile.html:93
 msgid "Domain Administrator"
 msgstr ""
 
-#: templates/accounts/user_profile.html:94
+#: templates/accounts/user_profile.html:96
 msgid "User account"
 msgstr ""
 
-#: templates/accounts/user_profile.html:101
+#: templates/accounts/user_profile.html:103
 msgid "Scan email:"
-msgstr ""
-
-#: templates/accounts/user_profile.html:105
-#: templates/accounts/user_profile.html:117
-msgid "Yes"
 msgstr ""
 
 #: templates/accounts/user_profile.html:107
 #: templates/accounts/user_profile.html:119
+msgid "Yes"
+msgstr ""
+
+#: templates/accounts/user_profile.html:109
+#: templates/accounts/user_profile.html:121
 msgid "No"
 msgstr ""
 
-#: templates/accounts/user_profile.html:113
+#: templates/accounts/user_profile.html:115
 msgid "Send quarantine report:"
 msgstr ""
 
-#: templates/accounts/user_profile.html:125
+#: templates/accounts/user_profile.html:127
 msgid "Spam High Score:"
 msgstr ""
 
-#: templates/accounts/user_profile.html:133
+#: templates/accounts/user_profile.html:135
 msgid "Spam Low Score:"
 msgstr ""
 
-#: templates/accounts/user_profile.html:143
+#: templates/accounts/user_profile.html:145
 msgid "Domains managed"
 msgstr ""
 
-#: templates/accounts/user_profile.html:145
+#: templates/accounts/user_profile.html:147
 msgid "Associated Addresses"
 msgstr ""
 
-#: templates/accounts/user_profile.html:171 templates/config/domain.html:38
+#: templates/accounts/user_profile.html:173 templates/config/domain.html:38
 #: templates/config/domain.html.py:58 templates/config/domain.html:77
 #: templates/config/domain.html.py:106
 msgid "Enabled"
 msgstr ""
 
-#: templates/accounts/user_profile.html:188
+#: templates/accounts/user_profile.html:190
 msgid "No addresses stored at the moment."
 msgstr ""
 
@@ -1465,11 +1480,11 @@ msgstr ""
 msgid "Alt recipients"
 msgstr ""
 
-#: templates/messages/detail.html:240
+#: templates/messages/detail.html:245
 msgid "Submit"
 msgstr ""
 
-#: templates/messages/detail.html:248
+#: templates/messages/detail.html:253
 msgid "The message details for the requested message id could not be retrieved"
 msgstr ""
 

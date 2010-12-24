@@ -28,7 +28,7 @@ from django.db import IntegrityError
 from django.utils import simplejson
 from django.template import RequestContext
 from django.template.defaultfilters import force_escape
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from baruwa.reports.forms import FilterForm, FILTER_ITEMS, FILTER_BY
 from baruwa.reports.models import SavedFilter
 from baruwa.reports.utils import pack_json_data, run_query, run_hosts_query
