@@ -54,6 +54,12 @@ def jsonify_domains_list(element):
     element['user__id'] = str(element['user__id'])
     return element
 
+def jsonify_status(element):
+    "Jsonify status dict"
+    for key in ['baruwa_spam_total', 'baruwa_virus_total', 'baruwa_mail_total']:
+        element[key] = str(element[key])
+    return element
+
 def to_dict(tuple_list):
     "convert a tuple to a dictionary"
     dic = {}

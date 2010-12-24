@@ -82,6 +82,20 @@ function json2html(data){
         len = data.items.length;
         len --;
         count = 0;
+        //status
+        $('#smailtotal').empty().append(data.status.baruwa_mail_total);
+        $('#sspamtotal').empty().append(data.status.baruwa_spam_total);
+        $('#svirustotal').empty().append(data.status.baruwa_virus_total);
+        if(data.status.baruwa_status){
+            simg = 'active.png';
+            alt = 'OK';
+        }else{
+            simg = 'inactive.png';
+            alt = 'FAULTY';
+        }
+        var statusimg = media_url + 'imgs/' + simg;
+        $('#statusimg').attr('src', statusimg).attr('alt', alt);
+        //build records table
         $.each(data.items,function(i,n){
             //build html rows
             to = '';

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-24 09:58+0200\n"
+"POT-Creation-Date: 2010-12-24 11:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -232,19 +232,19 @@ msgstr ""
 msgid "%(email)s is not a valid e-mail address."
 msgstr ""
 
-#: messages/views.py:151 messages/views.py:259
+#: messages/views.py:155 messages/views.py:263
 msgid "You are not authorized to access this page"
 msgstr ""
 
-#: messages/views.py:179
+#: messages/views.py:183
 msgid "Error: Empty server response"
 msgstr ""
 
-#: messages/views.py:214
+#: messages/views.py:218
 msgid "Invalid salearn options supplied"
 msgstr ""
 
-#: messages/views.py:229
+#: messages/views.py:233
 msgid "The quarantined file could not be processed"
 msgstr ""
 
@@ -328,7 +328,7 @@ msgstr ""
 msgid "Message ID"
 msgstr ""
 
-#: reports/forms.py:39 templates/messages/index.html:73
+#: reports/forms.py:39 templates/messages/index.html:74
 msgid "Size"
 msgstr ""
 
@@ -349,7 +349,7 @@ msgid "To Domain"
 msgstr ""
 
 #: reports/forms.py:44 templates/messages/detail.html:62
-#: templates/messages/index.html:72
+#: templates/messages/index.html:73
 #: templates/messages/quarantine_report.html:36
 #: templates/messages/quarantine_report.html:77
 #: templates/messages/quarantine_report_text.html:10
@@ -664,53 +664,57 @@ msgid "Msgs: "
 msgstr ""
 
 #: templates/base.html:52
-#, python-format
-msgid ""
-"\n"
-"\t\t\t\t\t\t\t\t\tTotal %(baruwa_mail_total)s, Spam %(baruwa_spam_total)s, "
-"Virus %(baruwa_virus_total)s\n"
-"\t\t\t\t\t\t\t\t"
+msgid "Total"
 msgstr ""
 
-#: templates/base.html:58
+#: templates/base.html:52 templates/messages/index.html:34
+#: templates/reports/listing.html:50
+msgid "Spam"
+msgstr ""
+
+#: templates/base.html:52
+msgid "Virus"
+msgstr ""
+
+#: templates/base.html:56
 msgid "Signed in as "
 msgstr ""
 
-#: templates/base.html:59
+#: templates/base.html:57
 msgid "Logout"
 msgstr ""
 
-#: templates/base.html:61
+#: templates/base.html:59
 msgid "Not logged in :: "
 msgstr ""
 
-#: templates/base.html:61 templates/accounts/login.html:45
+#: templates/base.html:59 templates/accounts/login.html:45
 msgid "Login"
 msgstr ""
 
-#: templates/base.html:80
+#: templates/base.html:78
 msgid "Messages"
 msgstr ""
 
-#: templates/base.html:81
+#: templates/base.html:79
 msgid "Lists"
 msgstr ""
 
-#: templates/base.html:82 templates/reports/index.html:14
+#: templates/base.html:80 templates/reports/index.html:14
 #: templates/reports/index.html.py:15 templates/reports/index.html:39
 msgid "Reports"
 msgstr ""
 
-#: templates/base.html:84 templates/config/index.html:33
-#: templates/config/list_scanners.html:23 templates/messages/index.html:76
+#: templates/base.html:82 templates/config/index.html:33
+#: templates/config/list_scanners.html:23 templates/messages/index.html:77
 msgid "Status"
 msgstr ""
 
-#: templates/base.html:86 templates/config/index.html:20
+#: templates/base.html:84 templates/config/index.html:20
 msgid "Settings"
 msgstr ""
 
-#: templates/base.html:88 templates/accounts/add_address.html:9
+#: templates/base.html:86 templates/accounts/add_address.html:9
 #: templates/accounts/admin_change_pw.html:7
 #: templates/accounts/change_pw.html:7
 #: templates/accounts/create_account.html:6
@@ -724,31 +728,31 @@ msgstr ""
 msgid "Accounts"
 msgstr ""
 
-#: templates/base.html:91
+#: templates/base.html:89
 msgid "Account"
 msgstr ""
 
-#: templates/base.html:114
+#: templates/base.html:112
 msgid "Filtered by"
 msgstr ""
 
-#: templates/base.html:116
+#: templates/base.html:114
 msgid "To address"
 msgstr ""
 
-#: templates/base.html:118
+#: templates/base.html:116
 msgid "From address"
 msgstr ""
 
-#: templates/base.html:121 templates/lists/index.html:69
+#: templates/base.html:119 templates/lists/index.html:69
 msgid "containing"
 msgstr ""
 
-#: templates/base.html:123
+#: templates/base.html:121
 msgid "NOT containing"
 msgstr ""
 
-#: templates/base.html:126 templates/reports/index.html:75
+#: templates/base.html:124 templates/reports/index.html:75
 msgid "Remove"
 msgstr ""
 
@@ -1310,7 +1314,7 @@ msgstr ""
 msgid "=builtin="
 msgstr ""
 
-#: templates/lists/index.html:59 templates/messages/index.html:104
+#: templates/lists/index.html:59 templates/messages/index.html:105
 msgid "No records returned"
 msgstr ""
 
@@ -1360,11 +1364,11 @@ msgid "Full message list"
 msgstr ""
 
 #: templates/messages/detail.html:17 templates/messages/detail.html.py:194
-#: templates/messages/index.html:29
+#: templates/messages/index.html:30
 msgid "Quarantine"
 msgstr ""
 
-#: templates/messages/detail.html:18 templates/messages/index.html:30
+#: templates/messages/detail.html:18 templates/messages/index.html:31
 msgid "Archive"
 msgstr ""
 
@@ -1488,39 +1492,35 @@ msgstr ""
 msgid "The message details for the requested message id could not be retrieved"
 msgstr ""
 
-#: templates/messages/index.html:28
+#: templates/messages/index.html:29
 msgid "Full message"
 msgstr ""
 
-#: templates/messages/index.html:32
+#: templates/messages/index.html:33
 msgid "Full Quarantine"
 msgstr ""
 
-#: templates/messages/index.html:33 templates/reports/listing.html:50
-msgid "Spam"
-msgstr ""
-
-#: templates/messages/index.html:34
+#: templates/messages/index.html:35
 msgid "Non Spam"
 msgstr ""
 
-#: templates/messages/index.html:42 templates/messages/index.html.py:52
+#: templates/messages/index.html:43 templates/messages/index.html.py:53
 msgid "Showing the 50 most recent messages"
 msgstr ""
 
-#: templates/messages/index.html:49
+#: templates/messages/index.html:50
 msgid "Filters"
 msgstr ""
 
-#: templates/messages/index.html:49
+#: templates/messages/index.html:50
 msgid "have been applied"
 msgstr ""
 
-#: templates/messages/index.html:54
+#: templates/messages/index.html:55
 msgid "Enable javascript for updates"
 msgstr ""
 
-#: templates/messages/index.html:69
+#: templates/messages/index.html:70
 #: templates/messages/quarantine_report.html:27
 #: templates/messages/quarantine_report.html:68
 #: templates/messages/quarantine_report_text.html:10
@@ -1528,7 +1528,7 @@ msgstr ""
 msgid "Date/Time"
 msgstr ""
 
-#: templates/messages/index.html:70
+#: templates/messages/index.html:71
 #: templates/messages/quarantine_report.html:30
 #: templates/messages/quarantine_report.html:71
 #: templates/messages/quarantine_report_text.html:10
@@ -1536,7 +1536,7 @@ msgstr ""
 msgid "From"
 msgstr ""
 
-#: templates/messages/index.html:71
+#: templates/messages/index.html:72
 #: templates/messages/quarantine_report.html:33
 #: templates/messages/quarantine_report.html:74
 #: templates/messages/quarantine_report_text.html:10
@@ -1544,12 +1544,12 @@ msgstr ""
 msgid "To"
 msgstr ""
 
-#: templates/messages/index.html:74 templates/reports/barreport.html:32
+#: templates/messages/index.html:75 templates/reports/barreport.html:32
 #: templates/tags/spamreport.html:4
 msgid "Score"
 msgstr ""
 
-#: templates/messages/index.html:112 templates/reports/barreport.html:56
+#: templates/messages/index.html:113 templates/reports/barreport.html:56
 #: templates/reports/listing.html:115 templates/reports/piereport.html:59
 #: templates/reports/relays.html:59
 msgid "Filters have been applied :"

@@ -19,6 +19,8 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import re, urllib
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
@@ -36,9 +38,9 @@ from baruwa.utils.process_mail import search_quarantine, host_is_local
 from baruwa.utils.process_mail import release_mail, remote_release
 from baruwa.utils.process_mail import remote_attachment_download, \
 remote_preview, remote_process, sa_learn
-from baruwa.utils.misc import jsonify_msg_list, apply_filter
+from baruwa.utils.misc import jsonify_msg_list, apply_filter, jsonify_status
 from baruwa.utils.mail import EmailParser
-import re, urllib
+from baruwa.utils.context_processors import status
 
 @login_required
 def index(request, list_all=0, page=1, view_type='full', direction='dsc',
@@ -94,8 +96,9 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             'otherinfected', 'whitelisted', 'blacklisted', 'nameinfected',
             'scaned').order_by(order_by)
         message_list = apply_filter(message_list, request, active_filters)
-
+    
     if request.is_ajax():
+        sys_status = jsonify_status(status(request))
         if not list_all:
             message_list = map(jsonify_msg_list, message_list)
             pg = None
@@ -119,7 +122,8 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             'show_first':1 not in pn, 'show_last':p.num_pages not in pn,
             'view_type':view_type, 'direction':direction, 'order_by':ordering,
             'quarantine_type':quarantine_type}
-        json = simplejson.dumps({'items':message_list, 'paginator':pg})
+        json = simplejson.dumps({'items':message_list, 'paginator':pg, 
+                                'status':sys_status})
         return HttpResponse(json, mimetype='application/javascript')
 
     if list_all:

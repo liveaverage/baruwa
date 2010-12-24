@@ -41,17 +41,15 @@
 					<li>
 						{% trans "System status " %}<a href="{% url status-index %}">
 						{% if baruwa_status %}
-						<img src="{{ MEDIA_URL }}imgs/active.png" alt="OK" />
+						<img id="statusimg" src="{{ MEDIA_URL }}imgs/active.png" alt="OK" />
 						{% else %}
-						<img src="{{ MEDIA_URL }}imgs/inactive.png" alt="FAULTY" />
+						<img id="statusimg" src="{{ MEDIA_URL }}imgs/inactive.png" alt="FAULTY" />
 						{% endif %}
 						</a>
 					</li>
 					<li>
 						{% trans "Msgs: " %}<a href="{% url status-index %}">
-								{% blocktrans %}
-									Total {{baruwa_mail_total}}, Spam {{baruwa_spam_total}}, Virus {{baruwa_virus_total}}
-								{% endblocktrans %}
+								{% trans "Total" %} <span id="smailtotal">{{baruwa_mail_total}}</span>, {% trans "Spam" %} <span id="sspamtotal">{{baruwa_spam_total}}</span>, {% trans "Virus" %} <span id="svirustotal">{{baruwa_virus_total}}</span>
 							</a>
 					</li>
 					{% if user.is_authenticated %}

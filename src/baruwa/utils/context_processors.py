@@ -22,6 +22,7 @@
 def status(request):
     "Set status variables"
     from baruwa.utils.misc import get_sys_status
+    from django.utils import simplejson
     
     status = {'baruwa_status':'', 'baruwa_mail_total':'', 
             'baruwa_spam_total':'', 'baruwa_virus_total':''}
@@ -32,7 +33,9 @@ def status(request):
     if not request.user.is_authenticated():
         return status
         
-    if request.is_ajax():
+    if request.is_ajax() and not request.path.startswith('/messages/'):
         return status
     
-    return get_sys_status(request)
+    status = get_sys_status(request)
+    
+    return status 
