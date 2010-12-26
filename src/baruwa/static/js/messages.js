@@ -153,7 +153,7 @@ function paginate(){
     pf = $('#heading small').html();
     fmt = gettext('Showing page %(page)s of %(pages)s pages.');
     transdata = {'page':rj.page, 'pages':rj.pages}
-    translted = interpolate(fmt, transdata);
+    translted = interpolate(fmt, transdata, true);
     if(pf){
         $('#heading').html(translted+' (<small>'+pf+'</small>)');
     }else{

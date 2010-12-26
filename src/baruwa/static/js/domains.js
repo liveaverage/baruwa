@@ -56,7 +56,7 @@ function navigate(){
 function paginate(){
     fmt = gettext('Showing page %(page)s of %(pages)s pages.');
     data = {'page':rj.page, 'pages':rj.pages}
-    tmp = interpolate(fmt, data);
+    tmp = interpolate(fmt, data, true);
     $('#heading').empty().append(tmp);
     $.address.title(tmp);
     count = 0;

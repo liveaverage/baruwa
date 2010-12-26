@@ -63,7 +63,7 @@ function paginate(){
     }
     fmt = gettext('Showing page %(page)s of %(pages)s pages.');
     data = {'page':rj.page, 'pages':rj.pages}
-    tmp = interpolate(fmt, data);
+    tmp = interpolate(fmt, data, true);
     $('#heading').empty().append(lt+tmp);
     $.address.title('Baruwa :: '+gettext('List management ')+tmp);
     li = '';

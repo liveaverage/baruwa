@@ -25,15 +25,11 @@ import os
 CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8')).replace('\\', '/')
 
 js_info_dict = {
-    'packages': ('baruwa.messages',
-                'baruwa.lists',
-                'baruwa.reports',
-                'baruwa.status',
-                'baruwa.config',
-                'baruwa.accounts',),
+    'packages': ('baruwa',),
 }
 
 urlpatterns = patterns('',
+    (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
     (r'^$', 'baruwa.messages.views.index', {}, 'index-page'),
     (r'^messages/', include('baruwa.messages.urls')),
     (r'^lists/', include('baruwa.lists.urls')),
@@ -42,5 +38,4 @@ urlpatterns = patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root' : os.path.join(CURRENT_PATH, 'static') }),
     (r'^accounts/', include('baruwa.accounts.urls')),
     (r'^settings/', include('baruwa.config.urls')),
-    (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
 )
