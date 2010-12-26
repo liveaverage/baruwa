@@ -152,7 +152,11 @@ function do_quarantine_release(event){
         message_id:     $("#id_message_id").val() 
     };
     ajax_target = 1;
-    $.post($('#qform').attr('action'),quarantine_process_request,
+    //fix for IE, it does not handle #q properly
+    var url = $('#qform').attr('action');
+    var hash = url.indexOf("#");
+    url = url.slice(0, hash);
+    $.post(url,quarantine_process_request,
         function(response){
             $('#filter-ajax').remove();
             if(response.success){
