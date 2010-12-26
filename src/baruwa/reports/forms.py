@@ -23,7 +23,7 @@ import re
 
 from django import forms
 from django.template.defaultfilters import force_escape
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from baruwa.utils.regex import DOM_RE
 import datetime, time
 try:
@@ -98,13 +98,6 @@ def isnumeric(value):
     "Validate numeric values"
     return str(value).replace(".", "").replace("-", "").isdigit()
 
-def to_dict(tuple_list):
-    "Convert tuple to dictionary"
-    dic = {}
-    for val in tuple_list:
-        dic[val[0]] = val[1]
-    return dic
-
 class FilterForm(forms.Form):
     "Filters form"
     filtered_field = forms.ChoiceField(choices=FILTER_ITEMS)
@@ -124,13 +117,13 @@ class FilterForm(forms.Form):
 
         if submited_field in BOOL_FIELDS:
             if not submited_by in BOOL_FILTER:
-                filter_items = to_dict(list(FILTER_ITEMS))
+                filter_items = dict(FILTER_ITEMS)
                 error_msg = _("%(field)s does not support the %(filt)s filter") % {
                 'field':filter_items[submited_field], 'filt':FILTER_BY[sbi][1]}
                 raise forms.ValidationError(error_msg)
         if submited_field in NUM_FIELDS:
             if not submited_by in NUM_FILTER:
-                filter_items = to_dict(list(FILTER_ITEMS))
+                filter_items = dict(FILTER_ITEMS)
                 error_msg = _("%(field)s does not support the %(filt)s filter") % {
                 'field':filter_items[submited_field], 'filt':FILTER_BY[sbi][1]}
                 raise forms.ValidationError(error_msg)
@@ -140,7 +133,7 @@ class FilterForm(forms.Form):
                 raise forms.ValidationError(_("The value has to be numeric"))
         if submited_field in TEXT_FIELDS:
             if not submited_by in TEXT_FILTER:
-                filter_items = to_dict(list(FILTER_ITEMS))
+                filter_items = dict(FILTER_ITEMS)
                 error_msg = _("%(field)s does not support the %(filt)s filter") % {
                 'field':filter_items[submited_field], 'filt':FILTER_BY[sbi][1]}
                 raise forms.ValidationError(error_msg)
@@ -187,7 +180,7 @@ class FilterForm(forms.Form):
                     )
         if submited_field in TIME_FIELDS:
             if not submited_by in TIME_FILTER:
-                filter_items = to_dict(list(FILTER_ITEMS))
+                filter_items = dict(FILTER_ITEMS)
                 error_msg = _("%(field)s does not support the %(filt)s filter") % {
                 'field':filter_items[submited_field], 'filt':FILTER_BY[sbi][1]}
                 raise forms.ValidationError(error_msg)

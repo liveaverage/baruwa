@@ -33,7 +33,7 @@ from baruwa.reports.forms import FilterForm, FILTER_ITEMS, FILTER_BY
 from baruwa.reports.models import SavedFilter
 from baruwa.reports.utils import pack_json_data, run_query, run_hosts_query
 from baruwa.messages.models import Message
-from baruwa.utils.misc import gen_dynamic_query, get_active_filters, to_dict
+from baruwa.utils.misc import gen_dynamic_query, get_active_filters
 
 @login_required
 def index(request):
@@ -140,8 +140,8 @@ def save_filter(request, index_num):
     "saves filter"
     error_msg = ''
     if request.session.get('filter_by', False):
-        filter_items = to_dict(list(FILTER_ITEMS))
-        filter_by = to_dict(list(FILTER_BY))
+        filter_items = dict(FILTER_ITEMS)
+        filter_by = dict(FILTER_BY)
 
         filters = request.session.get('filter_by')
         filt = filters[int(index_num)]

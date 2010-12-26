@@ -27,7 +27,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from baruwa.utils.decorators import onlysuperusers
 from baruwa.accounts.models import UserAddresses
 from baruwa.config.models import MailHost

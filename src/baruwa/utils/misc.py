@@ -60,13 +60,6 @@ def jsonify_status(element):
         element[key] = str(element[key])
     return element
 
-def to_dict(tuple_list):
-    "convert a tuple to a dictionary"
-    dic = {}
-    for i in tuple_list:
-        dic[i[0]] = i[1]
-    return dic
-
 def apply_filter(model, request, active_filters):
     "apply filters to a model"
     if request.session.get('filter_by', False):
@@ -116,8 +109,8 @@ def gen_dynamic_query(model, filter_list, active_filters=None):
     nargs = []
     largs = []
     
-    filter_items = to_dict(list(FILTER_ITEMS))
-    filter_by = to_dict(list(FILTER_BY))
+    filter_items = dict(FILTER_ITEMS)
+    filter_by = dict(FILTER_BY)
 
     for filter_item in filter_list:
         value = str(filter_item['value'])
@@ -208,8 +201,8 @@ def get_active_filters(filter_list, active_filters):
     "generates a dictionary of active filters"
     from baruwa.reports.forms import FILTER_ITEMS, FILTER_BY
     if not active_filters is None:
-        filter_items = to_dict(list(FILTER_ITEMS))
-        filter_by = to_dict(list(FILTER_BY))
+        filter_items = dict(FILTER_ITEMS)
+        filter_by = dict(FILTER_BY)
 
         for filter_item in filter_list:
             active_filters.append(

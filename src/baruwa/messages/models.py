@@ -199,6 +199,20 @@ class ReportMessageManager(models.Manager):
 
 class TotalsMessageManager(models.Manager):
     "totals manager"
+    def makevals(self, val):
+        "map function to build a row"
+        index = val[0]
+        index += 1
+        row = val[1]
+        vpct = "%.1f" % ((1.0 * int(row[2])/int(row[1]))*100)
+        spct = "%.1f" % ((1.0 * int(row[3])/int(row[1]))*100)
+        obj = self.model(id=index, date=str(row[0]),
+            mail_total=int(row[1]), virus_total=int(row[2]),
+            virus_percent=vpct, spam_total=int(row[3]),
+            spam_percent=spct, size_total=int(row[4]))
+        obj.total = row[1]
+        return obj
+
     def doms(self, domain):
         "domain message totals"
         from django.db import connection
@@ -213,19 +227,9 @@ class TotalsMessageManager(models.Manager):
             date ORDER BY date DESC
             """
         conn.execute(query, [domain, domain])
-        result_list = []
-        for i, row in enumerate(conn.fetchall()):
-            index = i
-            index += 1
-            vpct = "%.1f" % ((1.0 * int(row[2])/int(row[1]))*100)
-            spct = "%.1f" % ((1.0 * int(row[3])/int(row[1]))*100)
-            obj = self.model(id=index, date=str(row[0]),
-                mail_total=int(row[1]), virus_total=int(row[2]),
-                virus_percent=vpct, spam_total=int(row[3]),
-                spam_percent=spct, size_total=int(row[4]))
-            obj.total = row[1]
-            result_list.append(obj)
-        return result_list
+        
+        result_list = map(self.makevals, enumerate(conn.fetchall()))
+        return result_listt
         
     def all(self, user, filters_list=None, addrs=None, act=3):
         "message totals"
@@ -258,18 +262,8 @@ class TotalsMessageManager(models.Manager):
                 query = """%s WHERE %s GROUP BY date ORDER BY date
                 DESC""" % (query, sql)
                 conn.execute(query)
-        result_list = []
-        for i, row in enumerate(conn.fetchall()):
-            index = i
-            index += 1
-            vpct = "%.1f" % ((1.0 * int(row[2])/int(row[1]))*100)
-            spct = "%.1f" % ((1.0 * int(row[3])/int(row[1]))*100)
-            obj = self.model(id=index, date=str(row[0]),
-                mail_total=int(row[1]), virus_total=int(row[2]),
-                virus_percent=vpct, spam_total=int(row[3]),
-                spam_percent=spct, size_total=int(row[4]))
-            obj.total = row[1]
-            result_list.append(obj)
+
+        result_list = map(self.makevals, enumerate(conn.fetchall()))
         return result_list
 
 class SpamScoresManager(models.Manager):
@@ -308,14 +302,8 @@ class SpamScoresManager(models.Manager):
                     BY score ORDER BY score""" % sql
                 query = "%s %s" % (query, gql)
                 conn.execute(query)
-        #rows = c.fetchall()
-        result_list = []
-        for i, row in enumerate(conn.fetchall()):
-            index = i
-            index += 1
-            obj = self.model(id=index, score=row[0], count=int(row[1]))
-            result_list.append(obj)
-
+        result_list = [self.model(id=i + 1, score=row[0], count=int(row[1])) 
+                        for i, row in enumerate(conn.fetchall())]
         return result_list
 
 class MessageStatsManager(models.Manager):
@@ -384,15 +372,9 @@ class SpamScores(models.Model):
 
     def obj_to_dict(self):
         " object to dict"
-        fields = []
-        for field in self._meta.fields:
-            fields.append(field.name)
-
-        dic = {}
-        for attr in fields:
-            dic[attr] = getattr(self, attr)
-
-        return dic
+        vals = [(field.name, getattr(self, field.name)) 
+                for field in self._meta.fields]
+        return dict(vals)
 
     class Meta:
         managed = False
@@ -412,15 +394,9 @@ class MessageTotals(models.Model):
 
     def obj_to_dict(self):
         "convert object to dict"
-        fields = []
-        for field in self._meta.fields:
-            fields.append(field.name)
-
-        dic = {}
-        for attr in fields:
-            dic[attr] = getattr(self, attr)
-
-        return dic
+        vals = [(field.name, getattr(self, field.name)) 
+                for field in self._meta.fields]
+        return dict(vals)
 
     class Meta:
         managed = False

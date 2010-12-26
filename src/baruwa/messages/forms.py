@@ -29,9 +29,9 @@ except ImportError:
 
 
 SALEARN_OPTIONS = (
-  ('1', 'Spam'),
-  ('2', 'Ham'),
-  ('3', 'Forget'),
+  ('1', _('Spam')),
+  ('2', _('Ham')),
+  ('3', _('Forget')),
 )
 
 EMPTY_VALUES = (None, '')
