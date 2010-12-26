@@ -229,7 +229,7 @@ class TotalsMessageManager(models.Manager):
         conn.execute(query, [domain, domain])
         
         result_list = map(self.makevals, enumerate(conn.fetchall()))
-        return result_listt
+        return result_list
         
     def all(self, user, filters_list=None, addrs=None, act=3):
         "message totals"
