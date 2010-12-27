@@ -19,6 +19,8 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import re, datetime
+
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.translation import ugettext as _
 from optparse import make_option
@@ -38,12 +40,16 @@ def draw_square(color):
 class Command(BaseCommand):
     "Generate and email PDF reports"
     option_list = BaseCommand.option_list + (
-        make_option('--bydomain', action='store_true', dest='by_domain', default=False,
-            help='Generate reports per domain'),
+        make_option('--bydomain', action='store_true', dest='by_domain',
+            default=False, help='Generate reports per domain'),
         make_option('--domain', dest='domain_name', default='all',
             help='Specify the domain to report on, use "all" for all the domains'),
-        make_option('--copyadmin', action='store_true', dest='copy_admin', default=False,
-            help='Send a copy of the report to the admin'),
+        make_option('--copyadmin', action='store_true', dest='copy_admin', 
+            default=False, help='Send a copy of the report to the admin'),
+        make_option('--period', dest='period', default=None, 
+            help='Period to report on: valid options are '
+                '"day(s)","week(s)","month(s)" Examples: '
+                '--period="1 day" --period="2 weeks" --period="5 months"'),
     )
     
     def handle(self, *args, **options):
@@ -53,7 +59,21 @@ class Command(BaseCommand):
         by_domain = options.get('by_domain')
         domain_name = options.get('domain_name')
         copy_admin = options.get('copy_admin')
-            
+        period = options.get('period')
+        enddate = None
+        
+        period_re = re.compile(r"(?P<num>(\d+))\s+(?P<period>(day|week|month))(?:s)?")
+        if period:
+            match = period_re.match(period)
+            if not match:
+                raise CommandError("The period you specified is invalid")
+            num = match.group('num')
+            ptype = match.group('period')
+            if not ptype.endswith('s'):
+                ptype = ptype + 's'
+            delta = datetime.timedelta(**{ptype:int(num)})
+            enddate = datetime.date.today() - delta
+        
         from django.db.models import Count, Sum, Q
         from django.template.defaultfilters import filesizeformat
         from django.core.mail import EmailMessage, SMTPConnection
@@ -173,7 +193,7 @@ class Command(BaseCommand):
             return [paragraph, table_with_style]
             
             
-        def build_parts(account, isdom=None):
+        def build_parts(account, enddate, isdom=None):
             "build parts"
             parts = []
             sentry = 0
@@ -191,13 +211,17 @@ class Command(BaseCommand):
                     Q(to_domain=account.address)).\
                     exclude(**exclude_kwargs).annotate(
                         num_count=Count(column), size=Sum('size')
-                    ).order_by(order_by)[:10]
+                    ).order_by(order_by)
+                    if enddate:
+                        data.filter(date__gt=enddate)
+                    data = data[:10]
                 else:
                     #all users
-                    data = Message.report.all(user).values(column).\
+                    data = Message.report.all(user, enddate).values(column).\
                     exclude(**exclude_kwargs).annotate(
                         num_count=Count(column), size=Sum('size')
-                    ).order_by(order_by)[:10]
+                    ).order_by(order_by)
+                    data = data[:10]
                 
                 if data:
                     sentry += 1
@@ -209,16 +233,23 @@ class Command(BaseCommand):
             parts.append(Paragraph(_('Message Totals'), styles['Heading1']))
             if isdom:
                 #doms
-                msg_totals = MessageTotals.objects.doms(account.address)
+                msg_totals = MessageTotals.objects.doms(account.address, enddate)
             else:
                 #norm
+                filters = []
                 addrs = [
                     addr.address for addr in UserAddresses.objects.filter(
                         user=account
                     ).exclude(enabled__exact=0)]
-
+                if enddate:
+                    efilter = {
+                                'filter': 3, 
+                                'field': 'date', 
+                                'value': str(enddate)
+                               }
+                    filters.append(efilter)
                 msg_totals = MessageTotals.objects.all(
-                    account, [], addrs, profile.account_type)
+                    account, filters, addrs, profile.account_type)
             
             mail_total = []
             spam_total = []
@@ -298,7 +329,7 @@ class Command(BaseCommand):
                     }
             for domain in domains:
                 if email_re.match(domain.user.email) or email_re.match(domain.user.username):
-                    parts = build_parts(domain, True)
+                    parts = build_parts(domain, enddate, True)
                     if parts:
                         pdf = build_pdf(parts)
                         email = gen_email(pdf, domain.user, domain.address)
@@ -309,7 +340,7 @@ class Command(BaseCommand):
             for profile in profiles:
                 user = profile.user
                 if email_re.match(user.email) or email_re.match(user.username):
-                    parts = build_parts(user, False)
+                    parts = build_parts(user, enddate, False)
                     if parts:
                         pdf = build_pdf(parts)
                         email = gen_email(pdf, user, user.username)

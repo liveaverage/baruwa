@@ -177,25 +177,32 @@ class EmailReportMessageManager(models.Manager):
 
 class ReportMessageManager(models.Manager):
 
-    def all(self, user):
+    def all(self, user, enddate=None):
         "reporting messages"
         from baruwa.accounts.models import UserProfile, UserAddresses
-        addresses = UserAddresses.objects.values('address').\
-        filter(user=user).exclude(enabled=0)
-        account_type = UserProfile.objects.values('account_type')\
-        .get(user=user)
+        addresses = (UserAddresses.objects.values('address').
+        filter(user=user).exclude(enabled=0).all()[:])
+        account_type = (UserProfile.objects.values('account_type')
+        .get(user=user))
         if user.is_superuser:
-            return super(ReportMessageManager, self).get_query_set()
+            query = super(ReportMessageManager, self).get_query_set()
+            if enddate:
+                query = query.filter(date__gt=enddate)
         else:
             if account_type['account_type'] == 2:
-                return super(ReportMessageManager, self).get_query_set()\
+                query = super(ReportMessageManager, self).get_query_set()\
                 .filter(Q(from_domain__in=addresses) | \
                 Q(to_domain__in=addresses))
+                if enddate:
+                    query = query.filter(date__gt=enddate)
             else:
-                return super(ReportMessageManager, self).get_query_set()\
+                query = super(ReportMessageManager, self).get_query_set()\
                 .filter(Q(from_address__in=addresses) | \
                 Q(to_address__in=addresses) | Q(to_address=user.username)\
                  | Q(from_address=user.username))
+                if enddate:
+                    query = query.filter(date__gt=enddate)
+        return query
 
 class TotalsMessageManager(models.Manager):
     "totals manager"
@@ -213,21 +220,32 @@ class TotalsMessageManager(models.Manager):
         obj.total = row[1]
         return obj
 
-    def doms(self, domain):
+    def doms(self, domain, enddate=None):
         "domain message totals"
         from django.db import connection
         conn = connection.cursor()
-        query = """
-            SELECT date, count(*) AS mail_total,
-            SUM(CASE WHEN virusinfected>0 THEN 1 ELSE 0 END)
-            AS virus_total, SUM(CASE WHEN (virusinfected=0)
-            AND spam>0 THEN 1 ELSE 0 END) AS spam_total,
-            SUM(size) AS size_total FROM messages WHERE 
-            from_domain = %s OR to_domain = %s GROUP BY 
-            date ORDER BY date DESC
-            """
-        conn.execute(query, [domain, domain])
-        
+        if enddate:
+            query = """
+                SELECT date, count(*) AS mail_total,
+                SUM(CASE WHEN virusinfected>0 THEN 1 ELSE 0 END)
+                AS virus_total, SUM(CASE WHEN (virusinfected=0)
+                AND spam>0 THEN 1 ELSE 0 END) AS spam_total,
+                SUM(size) AS size_total FROM messages WHERE 
+                from_domain = %s OR to_domain = %s AND date > %s
+                 GROUP BY date ORDER BY date DESC
+                """
+            conn.execute(query, [domain, domain, enddate])
+        else:
+            query = """
+                SELECT date, count(*) AS mail_total,
+                SUM(CASE WHEN virusinfected>0 THEN 1 ELSE 0 END)
+                AS virus_total, SUM(CASE WHEN (virusinfected=0)
+                AND spam>0 THEN 1 ELSE 0 END) AS spam_total,
+                SUM(size) AS size_total FROM messages WHERE 
+                from_domain = %s OR to_domain = %s GROUP BY 
+                date ORDER BY date DESC
+                """
+            conn.execute(query, [domain, domain])
         result_list = map(self.makevals, enumerate(conn.fetchall()))
         return result_list
         
