@@ -81,10 +81,9 @@ Baruwa User settings::
 Configure Baruwa
 ================
 
-Edit the settings.py file and make the baruwa specific changes to suit
-your install::
+Edit the settings.py file and make configuration changes to suit your site.::
 
-	# baruwa_path=$(python2.4 -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
+	# baruwa_path=$(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
 	# vi $baruwa_path/baruwa/settings.py
 
 Thats it point your browser to the apache virtualhost url.

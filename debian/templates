@@ -1,11 +1,11 @@
 
 Template: baruwa/webserver_type
 Type: multiselect
-__Choices: apache2
+__Choices: apache2, lighttpd, nginx
 Default: apache2
 _Description: Web server to reconfigure automatically:
- Please choose the web server that should be automatically configured
- to run baruwa.
+ Please choose the web server that should be configured
+ to run baruwa. Only apache2 if fully configured.
 
 Template: baruwa/webserver/vhost
 Type: string

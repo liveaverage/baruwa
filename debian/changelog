@@ -1,3 +1,15 @@
+baruwa (1.0.0-3) maverick; urgency=low
+
+  * bug fixes
+
+ -- andrew <andrew@ubuntu.home.topdog-software.com>  Sun, 21 Nov 2010 14:05:29 +0200
+
+baruwa (1.0.0-2) maverick; urgency=low
+
+  * 1.0.0 release
+
+ -- andrew <andrew@topdog.za.net>  Tue, 26 Oct 2010 11:24:16 +0200
+
 baruwa (1.0.0a-1) unstable; urgency=low
 
   * New upstream release

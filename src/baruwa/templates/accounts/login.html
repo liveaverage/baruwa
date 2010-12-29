@@ -14,7 +14,7 @@
 //<![CDATA[
 $(document).ready(function(){
     if(!$('#loginform :hidden[name="csrfmiddlewaretoken"]').length){
-       location.href = '{% url please-login %}';
+       location.href = '{% url please-login %}?next=/';
     }
 	if(!$('#resetform :hidden[name="csrfmiddlewaretoken"]').length){
        location.href = '{% url reset-pwform %}';
@@ -69,7 +69,7 @@ $(document).ready(function(){
 		<label>{% trans "Email address" %}</label>
 		<input type="text" name="email" class="field" id="email" />
 		{{ form.email.errors }}
-		<a id="cancelrset" href="{% url please-login %}">Cancel</a>
+		<a id="cancelrset" href="{% url please-login %}?next=/">Cancel</a>
 		<input type="submit" class="button" id="pwreset" value="{% trans "Reset my password" %}" />
 	</form>
 	</div>
