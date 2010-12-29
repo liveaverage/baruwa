@@ -1,0 +1,11 @@
+=========
+Upgrading
+=========
+
+1.0.1
+-----
+
+This is a minor upgrade with no schema changes. 
+
+   - Backup your settings.py then upgrade. 
+   - Restore the settings.py.

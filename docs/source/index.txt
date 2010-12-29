@@ -36,5 +36,6 @@ MySQL for storage, it is released under the GPLv2 and is available for free down
     users.txt
     support.txt
     contribute.txt
+    upgrade.txt
     old.txt
 
