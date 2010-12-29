@@ -22,6 +22,7 @@
 from django import forms
 from django.forms.util import ErrorList
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordResetForm
 from django.utils.translation import ugettext_lazy as _
 from baruwa.accounts.models import UserProfile, UserAddresses
 from baruwa.utils.regex import DOM_RE
@@ -31,7 +32,34 @@ except ImportError:
     from django.core.validators import email_re
 from baruwa.utils.regex import ADDRESS_RE
 
-
+class PwResetForm(PasswordResetForm):
+    """
+        Overload the password reset form to prevent admin and
+        external accounts from being reset via the interface
+    """
+    def clean_email(self):
+        """
+        Validates that a user exists with the given e-mail address.
+        and the user is not an external auth user or admin user
+        """
+        email = self.cleaned_data["email"]
+        self.users_cache = User.objects.filter(email__iexact=email)
+        if len(self.users_cache) == 0:
+            raise forms.ValidationError(_("That e-mail address doesn't have"
+            " an associated user account. Are you sure you've registered?"))
+        for user in self.users_cache:
+            if not user.has_usable_password():
+                raise forms.ValidationError(_("That e-mail address belongs to"
+                " an externally authenticated account. Please change the"
+                " password on that external system."))
+                break
+            if user.is_superuser:
+                raise forms.ValidationError(_("That e-mail address belongs to"
+                " an admin account. Please use the manage.py command to reset"))
+                break
+        return email
+    
+    
 class UserProfileForm(forms.ModelForm):
     id = forms.CharField(widget=forms.HiddenInput)
     user_id = forms.CharField(widget=forms.HiddenInput)

@@ -20,6 +20,8 @@
 #
 
 from django.conf.urls.defaults import *
+from baruwa.accounts.forms import PwResetForm
+from django.core.urlresolvers import reverse
 
 urlpatterns = patterns('',
     (r'^$','baruwa.accounts.views.index', {}, 'accounts'), 
@@ -40,4 +42,11 @@ urlpatterns = patterns('',
     (r'^logout$','django.contrib.auth.views.logout',{'next_page': '/'},'logout'),
     (r'^pwchange/$', 'django.contrib.auth.views.password_change', 
     {'template_name': 'accounts/change_pw.html', 'post_change_redirect': '/accounts/profile/'}, 'change-password'),
+    (r'^pwconfirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', 
+    {'post_reset_redirect': '/accounts/resetcomplete/', 'template_name': 'accounts/reset_pw.html'}, 'reset-confirm'),
+    (r'^mailsent/$', 'django.contrib.auth.views.password_reset_done', {'template_name': 'accounts/reset_done.html'}, 'reset-done'),
+    (r'^resetcomplete/$', 'django.contrib.auth.views.password_reset_complete', {'template_name': 'accounts/reset_done.html'}),
+    (r'^pwreset/$', 'django.contrib.auth.views.password_reset', 
+    {'template_name': 'accounts/login.html', 'password_reset_form': PwResetForm, 
+    'email_template_name': 'accounts/pw_reset_email.txt', 'post_reset_redirect': '/accounts/mailsent/'}, 'reset-pwform'),
 )

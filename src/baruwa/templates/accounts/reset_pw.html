@@ -1,0 +1,43 @@
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>{% trans "Baruwa :: Password reset" %}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/login.css" />
+<link rel="icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" />
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+</head>
+<body>
+<div id="login-wrapper">
+<div id="box">
+    <div id="login_head">
+        <h1 id="logo">
+        <img src="{{ MEDIA_URL }}imgs/css/logo.jpg" alt="Baruwa" />
+        </h1>
+    </div>
+    <div id="login_part">
+	{% if validlink %}
+	<p>{% trans "Please enter your new password twice so we can verify you typed it in correctly." %}</p>
+	<br />
+	    <form action="" method="post">
+	        <input type="hidden" name="next" value="{{ next }}" />
+	        <label>{% trans "New password:" %}</label>
+	        <input type="password" name="new_password1" class="field" id="id_password1" />
+	        {{ form.new_password1.errors }}
+	        <label>{% trans "Confirm password:" %}</label>
+	        <input type="password" name="new_password2" class="field" id="id_password2" />
+	        {{ form.new_password2.errors }}
+	        <input type="submit" class="button" id="login" value="{% trans "Change my password" %}" />
+	    </form>
+	{% else %}
+	<br />
+	<p class="error">{% trans "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset." %}</p>
+	{% endif %}
+    </div>
+</div>
+</div>
+</body>
+</html>

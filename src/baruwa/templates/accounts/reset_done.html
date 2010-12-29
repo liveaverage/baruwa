@@ -1,0 +1,38 @@
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>
+	{% ifequal request.path '/accounts/mailsent/' %}
+	{% trans "Baruwa :: Password reset successful" %}
+	{% else %}
+	{% trans "Baruwa :: Password reset complete" %}
+	{% endifequal %}
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/login.css" />
+<link rel="icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" />
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+</head>
+<body>
+<div id="login-wrapper">
+<div id="box">
+    <div id="login_head">
+        <h1 id="logo">
+        <img src="{{ MEDIA_URL }}imgs/css/logo.jpg" alt="Baruwa" />
+        </h1>
+    </div>
+    <div id="login_part">
+	<br />
+	{% ifequal request.path '/accounts/mailsent/' %}
+	<p>{% trans "We've e-mailed you instructions for setting your password to the e-mail address you submitted. You should be receiving it shortly." %}</p>
+	{% else %}
+    <p>{% trans "Your Password was successfully reset " %}<a href="{% url please-login %}">Please login</a></p>
+    {% endifequal %}
+    </div>
+</div>
+</div>
+</body>
+</html>

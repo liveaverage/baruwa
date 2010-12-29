@@ -3,21 +3,37 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title>{% trans "Baruwa :: Login" %}</title>
+<title>{% trans "Baruwa ::" %}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/login.css" />
 <link rel="icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" />
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+{% ifequal request.path '/accounts/login/'%}
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function(){
-    if(!$('#csrfmiddlewaretoken').length){
-       location.href = '/accounts/login/?next=/'; 
+    if(!$('#loginform :hidden[name="csrfmiddlewaretoken"]').length){
+       location.href = '{% url please-login %}';
     }
+	if(!$('#resetform :hidden[name="csrfmiddlewaretoken"]').length){
+       location.href = '{% url reset-pwform %}';
+       alert('hooo');
+    }
+    $('#resetlnk').bind('click', function(event){
+		event.preventDefault();
+		$('#login_part').hide();
+		$('#forgottenpw').show();
+    });
+	$('#cancelrset').bind('click', function(event){
+		event.preventDefault();
+		$('#forgottenpw').hide();
+		$('#login_part').show();
+	})
 });
 //]]>
 </script>
+{% endifequal %}
 </head>
 <body>
 <div id="login-wrapper">
@@ -27,7 +43,7 @@ $(document).ready(function(){
         <img src="{{ MEDIA_URL }}imgs/css/logo.jpg" alt="Baruwa" />
         </h1>
     </div>
-    <div id="login_part">
+    <div id="login_part"{% ifequal request.path '/accounts/pwreset/'%} style="display:none;"{% endifequal %}>
     {% if form.errors %}
     <p class="error">{% trans "Your username and password didn't match. Please try again." %}</p>
     {% endif %}
@@ -36,15 +52,27 @@ $(document).ready(function(){
 	<p class="error">{{ message }}</p>
 	{% endfor %}
 	{% endif %}
-    <form action="{% url please-login %}" method="post">
+    <form id="loginform" action="{% url please-login %}" method="post">
         <input type="hidden" name="next" value="{{ next }}" />
         <label>{% trans "Username" %}</label>
         <input type="text" name="username" class="field" id="id_username" maxlength="30" />
         <label>{% trans "Password" %}</label>
         <input type="password" name="password" class="field" id="id_password" />
+        <a id="resetlnk" href="{% url reset-pwform %}">Forgotten Password ?</a>
         <input type="submit" class="button" id="login" value="{% trans "Login" %}" />
     </form>
     </div>
+    <div id="forgottenpw" {% ifequal request.path '/accounts/pwreset/'%}style="display:;"{%else%}style="display:none;"{% endifequal %}>
+	<p>{% trans "Forgotten your password? Enter your e-mail address below, and we'll e-mail instructions for setting a new one." %}</p>
+	<br />
+	<form id="resetform" action="{% url reset-pwform %}" method="post">
+		<label>{% trans "Email address" %}</label>
+		<input type="text" name="email" class="field" id="email" />
+		{{ form.email.errors }}
+		<a id="cancelrset" href="{% url please-login %}">Cancel</a>
+		<input type="submit" class="button" id="pwreset" value="{% trans "Reset my password" %}" />
+	</form>
+	</div>
 </div>
 </div>
 </body>

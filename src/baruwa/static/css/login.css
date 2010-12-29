@@ -108,7 +108,7 @@ body {
     width:340px;
 }
 
-#login_part {
+#login_part, #forgottenpw {
     float:left;
     width:360px;
 }
@@ -119,7 +119,7 @@ body {
     margin-top:12px;
 }
 
-#login {
+#login, #pwreset {
     clear:right;
     float:right;
 }
@@ -158,6 +158,6 @@ p {
     width:354px;
 }
 
-.error {
+.error, .errorlist {
     color:red;
 }
