@@ -1,8 +1,14 @@
+baruwa (1.0.1-1) unstable; urgency=low
+
+  * 1.0.1 release
+
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Wed, 29 Dec 2010 18:16:44 +0200
+
 baruwa (1.0.0-3) maverick; urgency=low
 
   * bug fixes
 
- -- andrew <andrew@ubuntu.home.topdog-software.com>  Sun, 21 Nov 2010 14:05:29 +0200
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Sun, 21 Nov 2010 14:05:29 +0200
 
 baruwa (1.0.0-2) maverick; urgency=low
 
@@ -18,19 +24,19 @@ baruwa (1.0.0a-1) unstable; urgency=low
 
 baruwa (0.0.1rc2-1) unstable; urgency=low
 
-  * New upstream release* 
+  * New upstream release*
 
  -- Andrew Colin Kissa <andrew@topdog.za.net>  Tue, 25 May 2010 12:23:21 +0200
 
 baruwa (0.0.1rc1-2) unstable; urgency=low
 
-  * Fix packaging bugs* 
+  * Fix packaging bugs*
 
  -- Andrew Colin Kissa <andrew@topdog.za.net>  Mon, 24 May 2010 14:40:06 +0200
 
 baruwa (0.0.1rc1-1) unstable; urgency=low
 
-  * Initial release (Closes: #9999)  
+  * Initial release (Closes: #9999)
   * Switch to dpkg-source 3.0 (quilt) format
 
  -- Andrew Colin Kissa <andrew@topdog.za.net>  Mon, 24 May 2010 14:37:36 +0200

@@ -5,7 +5,6 @@ Milestone 1.0.1
 --
 + <strike>Internationalization & Localization</strike>
 + <strike>Per domain PDF reports</strike>
-+ Create packages for FreeBSD, OpenBSD and NetBSD
 
 Milestone 2.0.0
 --
@@ -24,6 +23,7 @@ Milestone 2.0.0
 + External authentication (LDAP, OAUTH, YUBIKEY)
 + Archiving to message store (CouchDB)
 + Download reports as PDF via the interface
++ Create packages for FreeBSD, OpenBSD and NetBSD
 
 Milestone 2.1.0
 --
