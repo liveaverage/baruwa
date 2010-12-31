@@ -45,14 +45,14 @@ The settings tab provides access to the following::
 
 Reports
 -------
-The settings tab provides access to the following::
+The reports tab provides access to the following::
 	* Running of reports
 	* Management of filters
 	* Construction of custom queries
 
 Status
 ------
-The settings tab provides access to the following::
+The status tab provides access to the following::
 	* System status
 		* Message totals (daily)
 		* Service status
@@ -61,6 +61,6 @@ The settings tab provides access to the following::
 	
 Account
 -------
-The settings tab provides access to the following::
+The accounts tab provides access to the following::
 	* Account management
 	* Profile management
