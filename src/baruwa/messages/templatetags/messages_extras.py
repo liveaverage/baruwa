@@ -25,7 +25,7 @@ from django import template
 from django.template.defaultfilters import stringfilter, wordwrap, linebreaksbr
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from baruwa.messages.models import SaRules
 from baruwa.utils.process_mail import clean_regex
 from baruwa.utils.misc import get_config_option

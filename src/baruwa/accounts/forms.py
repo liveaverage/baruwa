@@ -23,7 +23,7 @@ from django import forms
 from django.forms.util import ErrorList
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from baruwa.accounts.models import UserProfile, UserAddresses
 from baruwa.utils.regex import DOM_RE
 try:
