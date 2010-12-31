@@ -10,7 +10,7 @@ _Description: Web server to reconfigure automatically:
 Template: baruwa/webserver/vhost
 Type: string
 Default: localhost.localdomain
-_Description: Apache Virtual Host name:
+_Description: Virtual Host name:
  Please enter the name of the virtualhost to serve baruwa.
 
 Template: baruwa/mysql/configure

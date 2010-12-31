@@ -13,7 +13,8 @@ db_version 2.0 || [ 0 -lt 30 ]
   db_input critical baruwa/webserver/vhost || true
   db_go || true
 
-db_set baruwa/mysql/configure true
+db_reset baruwa/mysql/configure
+db_set baruwa/mysql/configure false
 db_input critical baruwa/mysql/configure || true
 db_go || true
 

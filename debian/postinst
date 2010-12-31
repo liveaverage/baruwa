@@ -6,7 +6,6 @@ set -e
 db_version 2.0 || [ $? -lt 30 ]
 
 if [ "$1" = "configure" ]; then
-
     db_get baruwa/webserver_type
     webservers="$RET"
     restart=""
@@ -42,68 +41,77 @@ if [ "$1" = "configure" ]; then
 
 
     db_get baruwa/mysql/configure
-    if [ "$RET" = true ]; then
+    if [ "$RET" = "true" ]; then
 
-	# get the answers to our questions
-	db_get baruwa/mysql/dbserver
-	dbserver=$RET
-	db_get baruwa/mysql/dbadmin
-	dbadmin=$RET
-	db_get baruwa/mysql/dbadmpass
-	dbadmpass=$RET
-	db_get baruwa/mysql/dbname
-	dbname=$RET
-	db_get baruwa/mysql/dbuser
-	dbuser=$RET
-	db_get baruwa/mysql/dbpass
-	dbpass=$RET
-	db_get baruwa/django/baruwauser
-	baruwauser=$RET
-	db_get baruwa/django/baruwapass
-	baruwapass=$RET
-	db_get baruwa/django/baruwaemail
-	baruwaemail=$RET
+    	# get the answers to our questions
+    	db_get baruwa/mysql/dbserver
+    	dbserver=$RET
+    	db_get baruwa/mysql/dbadmin
+    	dbadmin=$RET
+    	db_get baruwa/mysql/dbadmpass
+    	dbadmpass=$RET
+    	db_get baruwa/mysql/dbname
+    	dbname=$RET
+    	db_get baruwa/mysql/dbuser
+    	dbuser=$RET
+    	db_get baruwa/mysql/dbpass
+    	dbpass=$RET
+    	db_get baruwa/django/baruwauser
+    	baruwauser=$RET
+    	db_get baruwa/django/baruwapass
+    	baruwapass=$RET
+    	db_get baruwa/django/baruwaemail
+    	baruwaemail=$RET
 
-	# create the database
-	. /usr/share/wwwconfig-common/mysql-createdb.sh
-	# create user
-	. /usr/share/wwwconfig-common/mysql-createuser.sh
-	# grant rights to db
-	TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX`
-	echo "GRANT ALL ON $dbname.* TO $dbuser@$dbserver IDENTIFIED BY '$dbpass';" > "$TMPDEST.sql"
-	sqlfile="$TMPDEST.sql"
-	# run the grants
-	. /usr/share/wwwconfig-common/mysql-exec.sh
-	# remove credentials
-	rm -f $TMPDEST
+    	# create the database
+    	. /usr/share/wwwconfig-common/mysql-createdb.sh
+    	# create user
+    	. /usr/share/wwwconfig-common/mysql-createuser.sh
+    	# grant rights to db
+    	TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX`
+    	echo "GRANT ALL ON $dbname.* TO $dbuser@$dbserver IDENTIFIED BY '$dbpass';" > "$TMPDEST.sql"
+    	sqlfile="$TMPDEST.sql"
+    	# run the grants
+    	. /usr/share/wwwconfig-common/mysql-exec.sh
+    	# remove credentials
+    	rm -f $TMPDEST
+
+        sed -i -e \
+        "
+        s/DATABASE_NAME = 'baruwa'/DATABASE_NAME = '$dbname'/;
+        s/DATABASE_USER = ''/DATABASE_USER = '$dbuser'/;
+        s/DATABASE_PASSWORD = ''/DATABASE_PASSWORD = '$dbpass'/;
+        s/DATABASE_HOST = ''/DATABASE_HOST = '$dbserver'/;
+        " \
+        /usr/share/pyshared/baruwa/settings.py
+        sed -i \
+        "
+        s/) = 'baruwa'/) = '$dbname'/;
+        s/) = 'localhost'/) = '$dbserver'/;
+        s/) = 'baruwa'/) = '$dbuser'/;
+        s/) = ''/) = '$dbpass'/;
+        " \
+        /etc/MailScanner/CustomFunctions/Baruwa*.pm 
+        # populate the database
+        /usr/share/pyshared/baruwa/manage.py syncdb --noinput
+        # create the admin user
+        /usr/share/pyshared/baruwa/manage.py createsuperuser --username $baruwauser --email $baruwaemail --noinput
+        # set the password
+        export DJANGO_SETTINGS_MODULE=baruwa.settings
+        python -c "import sys;sys.path.append('/usr/share/pyshared');from django.contrib.auth.models import User;\
+        user = User.objects.get(username__exact='$baruwauser');user.set_password('$baruwapass');user.save()" > /dev/null
+        db_reset baruwa/mysql/dbserver
+    	db_reset baruwa/mysql/dbadmin
+    	db_reset baruwa/mysql/dbadmpass
+    	db_reset baruwa/mysql/dbname
+    	db_reset baruwa/mysql/dbuser
+    	db_reset baruwa/mysql/dbpass
+    	db_reset baruwa/django/baruwauser
+    	db_reset baruwa/django/baruwapass
+    	db_reset baruwa/django/baruwaemail
     fi
-
+    db_reset baruwa/mysql/configure
     db_stop
-
-    sed -i -e \
-    "
-    s/DATABASE_NAME = 'baruwa'/DATABASE_NAME = '$dbname'/;
-    s/DATABASE_USER = ''/DATABASE_USER = '$dbuser'/;
-    s/DATABASE_PASSWORD = ''/DATABASE_PASSWORD = '$dbpass'/;
-    s/DATABASE_HOST = ''/DATABASE_HOST = '$dbserver'/;
-    " \
-    /usr/share/pyshared/baruwa/settings.py
-    sed -i \
-    "
-    s/) = 'baruwa'/) = '$dbname'/;
-    s/) = 'localhost'/) = '$dbserver'/;
-    s/) = 'baruwa'/) = '$dbuser'/;
-    s/) = ''/) = '$dbpass'/;
-    " \
-    /etc/MailScanner/CustomFunctions/Baruwa*.pm 
-    # populate the database
-    /usr/share/pyshared/baruwa/manage.py syncdb --noinput
-    # create the admin user
-    /usr/share/pyshared/baruwa/manage.py createsuperuser --username $baruwauser --email $baruwaemail --noinput
-    # set the password
-    export DJANGO_SETTINGS_MODULE=baruwa.settings
-    python -c "import sys;sys.path.append('/usr/share/pyshared');from django.contrib.auth.models import User;\
-    user = User.objects.get(username__exact='$baruwauser');user.set_password('$baruwapass');user.save()" > /dev/null
     # restart webserver
     for webserver in $restart; do
 	webserver=${webserver%,}
