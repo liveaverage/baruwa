@@ -35,12 +35,12 @@ from django.utils.translation import ugettext as _
 from baruwa.messages.models import Message, Release, Archive
 from baruwa.messages.forms import QuarantineProcessForm
 from baruwa.utils.process_mail import search_quarantine, host_is_local
-from baruwa.utils.process_mail import release_mail, remote_release
-from baruwa.utils.process_mail import remote_attachment_download, \
-remote_preview, remote_process, sa_learn
+from baruwa.utils.process_mail import release_mail
+from baruwa.utils.process_mail import sa_learn
 from baruwa.utils.misc import jsonify_msg_list, apply_filter, jsonify_status
 from baruwa.utils.mail import EmailParser
 from baruwa.utils.context_processors import status
+from baruwa.utils.http import ProcessRemote
 
 @login_required
 def index(request, list_all=0, page=1, view_type='full', direction='dsc',
@@ -165,9 +165,18 @@ def detail(request, message_id, archive=False):
         if quarantine_form.is_valid():
             if not host_is_local(message_details.hostname):
                 params = urllib.urlencode(request.POST)
-                remote_response = remote_process(message_details.hostname,
-                    request.META['HTTP_COOKIE'], message_id, params)
-                response = remote_response['response']
+                rurl = reverse('message-detail', args=[message_id])
+                cookie = request.META['HTTP_COOKIE']
+                hostname = message_details.hostname
+                response = {'success': False}
+                try:
+                    remote_request = ProcessRemote(hostname, rurl, cookie, params)
+                    remote_request.post()
+                    if remote_request.response.status == 200:
+                        response = remote_request.response.read()
+                except:
+                    pass
+
                 if request.is_ajax():
                     return HttpResponse(response,
                         content_type='application/javascript; charset=utf-8')
@@ -309,41 +318,55 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
             raise Http404
     else:
         #remote
+        cookie = request.META['HTTP_COOKIE']
+        hostname = message_details.hostname
         if is_attach:
-            remote_response = remote_attachment_download(
-                message_details.hostname, request.META['HTTP_COOKIE'], 
-                message_id, attachment_id, archive)
-            if remote_response['success']:
-                import base64
-                data = remote_response['response']
-                attach = simplejson.loads(data)
-                if attach['success']:
-                    attachment_data = base64.decodestring(attach['attachment'])
-                    mimetype = attach['mimetype']
-                    response = HttpResponse(attachment_data, mimetype=mimetype)
-                    response['Content-Disposition'] = (
-                        'attachment; filename=%s' % attach['name'])
-                    return response
+            if archive:
+                rurl = reverse('archive-download-attachment', 
+                        args=[message_id, attachment_id])
+            else:
+                rurl = reverse('download-attachment', 
+                        args=[message_id, attachment_id])
+            try:
+                remote_request = ProcessRemote(hostname, rurl, cookie)
+                remote_request.get()
+                if remote_request.response.status == 200:
+                    import base64
+                    attach = simplejson.loads(remote_request.response.read())
+                    if attach['success']:
+                        attachment_data = base64.decodestring(attach['attachment'])
+                        mimetype = attach['mimetype']
+                        response = HttpResponse(attachment_data, mimetype=mimetype)
+                        response['Content-Disposition'] = (
+                            'attachment; filename=%s' % attach['name'])
+                        return response
+            except:
+                pass
             raise Http404
         else:
-            remote_response = remote_preview(message_details.hostname,
-                request.META['HTTP_COOKIE'], message_id, archive)
-            if remote_response['success']:
-                data = remote_response['response']
-                items = simplejson.loads(data)
-                message = items['message']
-
-                if request.is_ajax():
-                    response = simplejson.dumps({'message':message,
-                        'message_id':message_id})
-                    return HttpResponse(response,
-                        content_type='application/javascript; charset=utf-8')
-                else:
-                    return render_to_response('messages/preview.html',
-                        {'message':message, 'message_id':message_id},
-                        context_instance=RequestContext(request))
+            if archive:
+                rurl = reverse('archive-preview-message', args=[message_id])
             else:
-                raise Http404
+                rurl = reverse('preview-message', args=[message_id])
+            try:
+                remote_request = ProcessRemote(hostname, rurl, cookie)
+                remote_request.get()
+                if remote_request.response.status == 200:
+                    items = simplejson.loads(remote_request.response.read())
+                    message = items['message']
+                    
+                    if request.is_ajax():
+                        response = simplejson.dumps({'message':message,
+                            'message_id':message_id})
+                        return HttpResponse(response,
+                            content_type='application/javascript; charset=utf-8')
+                    else:
+                        return render_to_response('messages/preview.html',
+                            {'message':message, 'message_id':message_id},
+                            context_instance=RequestContext(request))
+            except:
+                pass
+            raise Http404
 
 @login_required
 def search(request):
@@ -364,9 +387,16 @@ def auto_release(request, message_uuid, template='messages/release.html'):
     message_details = get_object_or_404(Message, id=release_record.message_id)
 
     if not host_is_local(message_details.hostname):
-        remote_response = remote_release(message_details.hostname,
-            release_record.uuid)
-        response = remote_response['response']
+        rurl = reverse('auto-release', args=[release_record.uuid])
+        hostname = message_details.hostname
+        response = {'success':False}
+        try:
+            remote_release = ProcessRemote(hostname, rurl)
+            remote_release.get()
+            response = remote_release.response.read()
+        except:
+            pass
+
         if request.is_ajax():
             return HttpResponse(response,
                 content_type='application/javascript; charset=utf-8')

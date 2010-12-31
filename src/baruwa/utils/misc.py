@@ -203,7 +203,7 @@ def get_active_filters(filter_list, active_filters):
     if not active_filters is None:
         filter_items = dict(FILTER_ITEMS)
         filter_by = dict(FILTER_BY)
-
+        
         for filter_item in filter_list:
             active_filters.append(
                 {'filter_field': filter_items[filter_item['field']],
@@ -236,23 +236,8 @@ def get_config_option(search_option):
     config = getattr(
                 settings, 'MS_CONFIG', '/etc/MailScanner/MailScanner.conf')
     quickpeek = getattr(settings, 'MS_QUICKPEEK', '/usr/sbin/Quick.Peek')
-    # comment_char = '#'
-    # option_char =  '='
-    # value = ''
-    # if os.path.exists(config):
-    #     config_file = open(config, 'r')
-    #     for line in config_file:
-    #         if comment_char in line:
-    #             line, comment = line.split(comment_char, 1)
-    #         if option_char in line:
-    #             option, value = line.split(option_char, 1)
-    #             option = option.strip()
-    #             value = value.strip()
-    #             if search_option == option:
-    #                 break
-    #     config_file.close()
-    # return value
     cmd = "%s '%s' %s" % (quickpeek, search_option, config)
+    
     pipe1 = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
     return pipe1.stdout.read().strip()
@@ -282,21 +267,15 @@ def get_sys_status(request):
         status = False
     else:
         status = True
-    
-    # if data.spam_mail is None:
-    #         spam = 0
-    #     else:
-    #         spam = data.spam_mail
-    #         
-    #     if data.high_spam is None:
-    #         high_spam = 0
-    #     else:
-    #         high_spam = data.high_spam
+
     try:
         spam = data.spam_mail + data.high_spam
     except:
         spam = 0
         
-    return {'baruwa_status':status, 'baruwa_mail_total':data.total, 
+    return {
+            'baruwa_status':status, 
+            'baruwa_mail_total':data.total, 
             'baruwa_spam_total':spam, 
-            'baruwa_virus_total':data.virii}    
+            'baruwa_virus_total':data.virii
+            }    

@@ -19,10 +19,9 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-import smtplib, os, re, socket, httplib
+import smtplib, os, re, socket
 from subprocess import Popen, PIPE
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from baruwa.utils.misc import get_config_option
 
 
@@ -121,79 +120,6 @@ def host_is_local(host):
     else:
         return False
 
-def rest_request(host, resource, method, headers, params=None):
-    """
-    Performs a REST request and returns a JSON representation
-    of the result.
-    """
-    data = ''
-
-    if not resource.startswith('/'):
-        resource = '/' + resource
-    if not resource.endswith('/'):
-        resource = resource + '/'
-
-    try:
-        conn = httplib.HTTPConnection(host)
-        conn.request(method, resource, params, headers)
-        response = conn.getresponse()
-        data = response.read()
-        conn.close()
-    except:
-        return {'success': False, 'response': 'an error occured'}
-
-    if response.status == 200:
-        return {'success': True, 'response': data}
-    elif response.status == 302:
-        return {'success': False, 
-        'response': 'redirection - possible auth sync failure'}
-    else:
-        return {'success': False, 'response': data}
-
-#TODO
-# Use a Class for DRY
-def remote_attachment_download(host, cookie, message_id, 
-                                attachment_id, archived):
-    """
-    Returns a email attachment from a remote node using a RESTFUL request
-    """
-    headers = {'Cookie': cookie, 'X-Requested-With': 'XMLHttpRequest'}
-    if archived:
-        resource = reverse('archive-download-attachment', 
-                        args=[message_id, attachment_id])
-    else:
-        resource = reverse('download-attachment', 
-                        args=[message_id, attachment_id])
-    return rest_request(host, resource, 'GET', headers)
-
-def remote_preview(host, cookie, message_id, archived):
-    """
-    Returns the message preview of a message on a
-    remote node using a RESTFUL request
-    """
-    headers = {'Cookie':cookie, 'X-Requested-With':'XMLHttpRequest'}
-    if archived:
-        resource = reverse('archive-preview-message', args=[message_id])
-    else:
-        resource = reverse('preview-message', args=[message_id])
-    return rest_request(host, resource, 'GET', headers)
-
-def remote_process(host, cookie, message_id, params):
-    """
-    Processes a message quarantined on a remote
-    node
-    """
-    headers = {'Cookie':cookie, 'X-Requested-With':'XMLHttpRequest'}
-    resource = reverse('message-detail', args=[message_id])
-    return rest_request(host, resource, 'POST', headers, params)
-
-def remote_release(host, message_uuid):
-    "Release a message quarantined on a remote host"
-    headers = {'X-Requested-With':'XMLHttpRequest'}
-    resource = reverse('auto-release', args=[message_uuid])
-    return rest_request(host, resource, 'GET', headers)
-
-
 def test_smtp_server(server, port, test_address):
     "Test smtp server delivery"
     try:
@@ -204,7 +130,8 @@ def test_smtp_server(server, port, test_address):
             conn = smtplib.SMTP(server)
         else:
             conn = smtplib.SMTP(server, port)
-        #conn.set_debuglevel(5)
+        if settings.DEBUG:
+            conn.set_debuglevel(5)
         conn.ehlo()
         if conn.has_extn('STARTTLS') and port != 465:
             conn.starttls()
