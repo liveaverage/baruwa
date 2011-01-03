@@ -44,7 +44,7 @@
             <div class="row_hostname">{{ item.clientip|tds_hostname|tds_trunc:42 }}</div>
             <div class="row_country">{{ item.clientip|tds_geoip }}</div>
             <div class="row_count">{{ item.num_count}}/{{item.spam_total}}/{{item.virus_total }}</div>
-            <div class="row_volume">{{ item.size|filesizeformat }}</div>
+            <div class="row_volume">{{ item.total_size|filesizeformat }}</div>
         </div>
         {% endfor %}
     </div>

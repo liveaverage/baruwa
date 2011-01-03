@@ -239,8 +239,8 @@ def report(request, report_kind):
         report_title = _("Top senders by quantity")
     elif report_kind == 2:
         data = run_query('from_address', {'from_address__exact':""}, 
-            '-size', request, active_filters)
-        pie_data = pack_json_data(data, 'from_address', 'size')
+            '-total_size', request, active_filters)
+        pie_data = pack_json_data(data, 'from_address', 'total_size')
         report_title = _("Top senders by volume")
     elif report_kind == 3:
         data = run_query('from_domain', {'from_domain__exact':""}, 
@@ -249,8 +249,8 @@ def report(request, report_kind):
         report_title = _("Top sender domains by quantity")
     elif report_kind == 4:
         data = run_query('from_domain', {'from_domain__exact':""}, 
-            '-size', request, active_filters)
-        pie_data = pack_json_data(data, 'from_domain', 'size')
+            '-total_size', request, active_filters)
+        pie_data = pack_json_data(data, 'from_domain', 'total_size')
         report_title = _("Top sender domains by volume")
     elif report_kind == 5:
         data = run_query('to_address', {'to_address__exact':""}, 
@@ -259,8 +259,8 @@ def report(request, report_kind):
         report_title = _("Top recipients by quantity")
     elif report_kind == 6:
         data = run_query('to_address', {'to_address__exact':""}, 
-            '-size', request, active_filters)
-        pie_data = pack_json_data(data, 'to_address', 'size')
+            '-total_size', request, active_filters)
+        pie_data = pack_json_data(data, 'to_address', 'total_size')
         report_title = _("Top recipients by volume")
     elif report_kind == 7:
         data = run_query('to_domain', {'to_domain__exact':"", 
@@ -269,8 +269,8 @@ def report(request, report_kind):
         report_title = _("Top recipient domains by quantity")
     elif report_kind == 8:
         data = run_query('to_domain', {'to_domain__exact':"", 
-            'to_domain__isnull':False}, '-size', request, active_filters)
-        pie_data = pack_json_data(data, 'to_domain', 'size')
+            'to_domain__isnull':False}, '-total_size', request, active_filters)
+        pie_data = pack_json_data(data, 'to_domain', 'total_size')
         report_title = _("Top recipient domains by volume")
     elif report_kind == 9:
         from baruwa.messages.models import SpamScores

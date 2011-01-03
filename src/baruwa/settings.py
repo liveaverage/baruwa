@@ -110,6 +110,7 @@ AUTH_PROFILE_MODULE = 'accounts.userprofile'
 INTERNAL_IPS = ('127.0.0.1',)
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 28800
+#SESSION_COOKIE_SECURE = True
 #EMAIL_HOST = 'smtp.example.net'
 #DEFAULT_FROM_EMAIL = 'postmaster@baruwa.org'
 # Baruwa only setting

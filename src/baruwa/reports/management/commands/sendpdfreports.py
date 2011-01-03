@@ -120,19 +120,19 @@ class Command(BaseCommand):
                 'from_address', {'from_address__exact':""}, 'num_count', 
                 'Top senders by quantity'],
             [
-                'from_address', {'from_address__exact':""}, 'size', 
+                'from_address', {'from_address__exact':""}, 'total_size', 
                 'Top senders by volume'],
             [   
                 'from_domain', {'from_domain__exact':""}, 'num_count', 
                 'Top sender domains by quantity'],
             [   
-                'from_domain', {'from_domain__exact':""}, 'size', 
+                'from_domain', {'from_domain__exact':""}, 'total_size', 
                 'Top sender domains by volume'],
             [   
                 'to_address', {'to_address__exact':""}, 'num_count', 
                 'Top recipients by quantity'],
             [
-                'to_address', {'to_address__exact':""}, 'size', 
+                'to_address', {'to_address__exact':""}, 'total_size', 
                 'Top recipients by volume'],
             [
                 'to_domain', {'to_domain__exact':"", 
@@ -140,7 +140,7 @@ class Command(BaseCommand):
                 'Top recipient domains by quantity'],
             [
                 'to_domain', {'to_domain__exact':"", 
-                'to_domain__isnull':False}, 'size', 
+                'to_domain__isnull':False}, 'total_size', 
                 'Top recipient domains by volume'],
         ]
         
@@ -161,7 +161,7 @@ class Command(BaseCommand):
             headings = [('', _('Address'), _('Count'), _('Volume'), '')]
             rows = [[draw_square(PIE_CHART_COLORS[index]), 
             tds_trunc(row[column], 45), row['num_count'], 
-            filesizeformat(row['size']),''] 
+            filesizeformat(row['total_size']),''] 
             for index,row in enumerate(data)]
         
             if len(rows) != 10:
@@ -210,7 +210,7 @@ class Command(BaseCommand):
                     filter(Q(from_domain=account.address) | \
                     Q(to_domain=account.address)).\
                     exclude(**exclude_kwargs).annotate(
-                        num_count=Count(column), size=Sum('size')
+                        num_count=Count(column), total_size=Sum('size')
                     ).order_by(order_by)
                     if enddate:
                         data.filter(date__gt=enddate)
@@ -219,7 +219,7 @@ class Command(BaseCommand):
                     #all users
                     data = Message.report.all(user, enddate).values(column).\
                     exclude(**exclude_kwargs).annotate(
-                        num_count=Count(column), size=Sum('size')
+                        num_count=Count(column), total_size=Sum('size')
                     ).order_by(order_by)
                     data = data[:10]
                 
