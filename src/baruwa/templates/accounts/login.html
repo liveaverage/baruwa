@@ -18,7 +18,6 @@ $(document).ready(function(){
     }
 	if(!$('#resetform :hidden[name="csrfmiddlewaretoken"]').length){
        location.href = '{% url reset-pwform %}';
-       alert('hooo');
     }
     $('#resetlnk').bind('click', function(event){
 		event.preventDefault();
