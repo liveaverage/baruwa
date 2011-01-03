@@ -6,7 +6,7 @@ The PRIMARY AUTHORS are :
 A big THANK YOU goes to:
     Steve Freegard (smf@f2s.com) for creating mailwatch.
 
-    Baruwa is inspired by mailwatch although Baruwa has
-    been written from scatch in python.
+    Baruwa is inspired by Mailwatch although Baruwa has
+    been written from scratch in python.
 
-    Django Foundation for creating the wonderful framework
+    Django Foundation for creating a great framework

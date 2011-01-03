@@ -20,7 +20,10 @@
 #
 
 "HTTP class to make remote requests"
+from django.conf import settings
 from httplib import HTTPConnection
+if settings.SESSION_COOKIE_SECURE:
+    from httplib import HTTPSConnection as HTTPConnection
 
 class ProcessRemote(HTTPConnection):
     "Inherit from httplib"
