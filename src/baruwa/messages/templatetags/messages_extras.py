@@ -1,6 +1,6 @@
 #
 # Baruwa - Web 2.0 MailScanner front-end.
-# Copyright (C) 2010  Andrew Colin Kissa <andrew@topdog.za.net>
+# Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -265,9 +265,9 @@ def tds_action(value, from_address, to_address):
     return_value = ''
     srules = []
     if value == 1:
-        option = _('Spam Actions')
+        option = 'Spam Actions'
     else:
-        option = _('High Scoring Spam Actions')
+        option = 'High Scoring Spam Actions'
     return_value = get_config_option(option)
     if re.match(
         r'^/.*[^/]$', return_value) or re.match(r'(^%[a-z-]+%)(.*)', 

@@ -19,15 +19,17 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-from django.conf.urls.defaults import patterns
+"Queue stats generator"
+from django.core.management.base import BaseCommand, CommandError
+from optparse import make_option
 
-urlpatterns = patterns('baruwa.lists.views',
-    (r'^$', 'index', {}, 'lists-index'),
-    (r'^(?P<list_kind>([1-2]))/$', 'index', {}, 'lists-start'),
-    (r'^(?P<list_kind>([1-2]))/(?P<page>([0-9]+|last))/$', 'index'),
-    (r'^(?P<list_kind>([1-2]))/(?P<direction>(dsc|asc))/(?P<order_by>(id|to_address|from_address))/$', 'index', {}, 'lists-full-sort'),
-    (r'^(?P<list_kind>([1-2]))/(?P<page>([0-9]+|last))/(?P<direction>(dsc|asc))/(?P<order_by>(id|to_address|from_address))/$', 'index'),
-    (r'^add/$', 'add_to_list', {}, 'add-to-list'),
-    (r'^delete/(?P<item_id>(\d+))/$', 'delete_from_list', {}, 'list-del'),
-    (r'^rmfilter/$', 'rem_filter', {}, 'rem-filter'),
-) 
+class Command(BaseCommand):
+    "Read the items in the queue and populate DB"
+    option_list = BaseCommand.option_list + (
+        make_option('--mta', dest='mta', default='exim', help='MTA'),
+    )
+    
+    def handle(self, *args, **options):
+        if len(args) != 0:
+            raise CommandError("Command doesn't accept any arguments")
+        pass

@@ -1,6 +1,6 @@
 # 
 # Baruwa - Web 2.0 MailScanner front-end.
-# Copyright (C) 2010  Andrew Colin Kissa <andrew@topdog.za.net>
+# Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -338,13 +338,16 @@ class Command(BaseCommand):
             #do normal query
             profiles = UserProfile.objects.filter(send_report=1)
             for profile in profiles:
-                user = profile.user
-                if email_re.match(user.email) or email_re.match(user.username):
-                    parts = build_parts(user, enddate, False)
-                    if parts:
-                        pdf = build_pdf(parts)
-                        email = gen_email(pdf, user, user.username)
-                        emails.append(email)
+                try:
+                    user = profile.user
+                    if email_re.match(user.email) or email_re.match(user.username):
+                        parts = build_parts(user, enddate, False)
+                        if parts:
+                            pdf = build_pdf(parts)
+                            email = gen_email(pdf, user, user.username)
+                            emails.append(email)
+                except User.DoesNotExist:
+                    pass
                     
         if emails:
             try:
