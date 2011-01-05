@@ -21,6 +21,7 @@
 
 "Queue stats generator"
 from django.core.management.base import BaseCommand, CommandError
+from django.utils.translation import ugettext as _
 from optparse import make_option
 
 class Command(BaseCommand):
@@ -31,5 +32,12 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         if len(args) != 0:
-            raise CommandError("Command doesn't accept any arguments")
+            raise CommandError(_("Command doesn't accept any arguments"))
+        
+        mtas = ['exim', 'sendmail', 'postfix']
+        mta = options.get('mta')
+        if not mta in mtas:
+            raise CommandError(_("Only the following %(mta)s "
+                                "MTA's are supported", 
+                                {mta: ' '.join(mtas)}))
         pass

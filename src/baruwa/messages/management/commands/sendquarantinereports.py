@@ -65,7 +65,7 @@ def add_uuids(query_list):
     
 class Command(NoArgsCommand):
     "sends quarantine report email"
-    help = "Generates an email report of the quarantined messages for the past 24 hours"
+    help = _("Generates an email report of the quarantined messages for the past 24 hours")
 
     def handle_noargs(self, **options):
         from django.template.loader import render_to_string

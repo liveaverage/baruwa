@@ -39,6 +39,7 @@ def draw_square(color):
     
 class Command(BaseCommand):
     "Generate and email PDF reports"
+    help = _("Generates and sends PDF summary reports via email")
     option_list = BaseCommand.option_list + (
         make_option('--bydomain', action='store_true', dest='by_domain',
             default=False, help='Generate reports per domain'),
@@ -54,7 +55,7 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         if len(args) != 0:
-            raise CommandError("Command doesn't accept any arguments")
+            raise CommandError(_("Command doesn't accept any arguments"))
         
         by_domain = options.get('by_domain')
         domain_name = options.get('domain_name')
@@ -66,7 +67,7 @@ class Command(BaseCommand):
         if period:
             match = period_re.match(period)
             if not match:
-                raise CommandError("The period you specified is invalid")
+                raise CommandError(_("The period you specified is invalid"))
             num = match.group('num')
             ptype = match.group('period')
             if not ptype.endswith('s'):

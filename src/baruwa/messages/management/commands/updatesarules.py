@@ -20,10 +20,11 @@
 #
 
 from django.core.management.base import NoArgsCommand
+from django.utils.translation import ugettext as _
 
 class Command(NoArgsCommand):
     "update the rules table"
-    help = "Updates the database with the spam descriptions"
+    help = _("Updates the database with the spam descriptions")
 
     def handle_noargs(self, **options):
         import re, glob, os
