@@ -19,25 +19,19 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-"Status models"
-from django.db import models
+"Read mailq"
+import os
 
-class MailQueueItem(models.Model):
-    "MailQ item"
-    id = models.AutoField(primary_key=True)
-    messageid = models.CharField(max_length=255)
-    timestamp = models.DateTimeField()
-    from_address = models.CharField(blank=True, db_index=True, max_length=255)
-    to_address = models.CharField(db_index=True, max_length=255)
-    subject = models.TextField(blank=True)
-    hostname = models.TextField()
-    size = models.IntegerField()
-    attempts = models.IntegerField()
-    lastattempt = models.DateTimeField()
-    direction = models.IntegerField(default=1)
+class Mailq(list):
+    "Mailq"
     
-    class Meta:
-        db_table = u'mailq'
-        get_latest_by = 'timestamp'
-        ordering = ['-timestamp']
-
+    def __init__(self, mta, queue):
+        "init"
+        assert mta in ['exim', 'sendmail', 'postfix'], "MTA not supported"
+        assert os.path.isdir(queue), "Queue directory is not valid"
+        list.__init__([])
+        self.mta = mta
+        self.queue = queue
+        path = "baruwa.utils.mail.mta.%s" % mta
+        module = __import__(path, None, None, ['QueueParser'])
+        self.extend(module.QueueParser(queue).process())

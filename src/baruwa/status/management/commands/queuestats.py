@@ -23,6 +23,9 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.translation import ugettext as _
 from optparse import make_option
+from baruwa.utils.mail.mailq import Mailq
+from baruwa.status.models import MailQueueItem
+from baruwa.utils.misc import get_config_option
 
 class Command(BaseCommand):
     "Read the items in the queue and populate DB"
@@ -38,6 +41,65 @@ class Command(BaseCommand):
         mta = options.get('mta')
         if not mta in mtas:
             raise CommandError(_("Only the following %(mta)s "
-                                "MTA's are supported", 
-                                {mta: ' '.join(mtas)}))
-        pass
+                                "MTA's are supported") % 
+                                {mta: ' '.join(mtas)})
+
+        def runquery(queue, direction, ids):
+            "run querys"
+            for item in queue:
+                item['direction'] = direction
+                if len(item['to_address']) == 1:
+                    if item['messageid'] in ids:
+                        mqitem = MailQueueItem.objects.get(
+                                messageid=item['messageid'])
+                        for key in ['attempts', 'lastattempt']:
+                            setattr(mqitem, key, item[key])
+                    else:
+                        item['to_address'] = item['to_address'][0]
+                        mqitem = MailQueueItem(**item)
+                    mqitem.save()
+                else:
+                    addrs = item['to_address']
+                    for addr in addrs:
+                        item['to_address'] = addr
+                        if item['messageid'] in ids:
+                            mqitem = MailQueueItem.objects.filter(
+                                    messageid=item['messageid'],
+                                    to_address=item['to_address']).all()[0]
+                            for key in ['attempts', 'lastattempt']:
+                                setattr(mqitem, key, item[key])
+                        else:
+                            mqitem = MailQueueItem(**item)
+                        mqitem.save()
+                        
+        inqdir = get_config_option('IncomingQueueDir')
+        outqdir = get_config_option('OutgoingQueueDir')
+        inqueue = Mailq(mta, inqdir)
+        outqueue = Mailq(mta, outqdir)
+        
+        allids = [item['messageid'] for item in inqueue]
+        allids.extend([item['messageid'] for item in outqueue])
+        dbids = [item['messageid'] 
+                for item in MailQueueItem.objects.values('messageid').all()]
+        remids = [item for item in dbids if not item in allids]
+        preids = [item for item in dbids if not item in remids]
+        
+        if remids:
+            print (_("== Deleting %(items)d queue items from DB ==") % 
+                    {'items': len(remids)})
+            MailQueueItem.objects.filter(messageid__in=remids).delete()
+        
+        if inqueue:
+            print (_("== Processing the inbound queue: %(queue)s with %(items)d items ==") % 
+                    {'queue':inqdir, 'items':len(inqueue)})
+            runquery(inqueue, 1, preids)
+        else:
+            print _("== Skipping the inbound queue 0 items found ==")
+        if outqueue:
+            print (_("== Processing the outbound queue: %(queue)s with %(items)d items ==") % 
+                    {'queue':outqdir, 'items':len(outqueue)})
+            runquery(outqueue, 2, preids)
+        else:
+            print _("== Skipping the outbound queue 0 items found ==")
+        
+        

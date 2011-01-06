@@ -38,7 +38,7 @@ from baruwa.utils.process_mail import search_quarantine, host_is_local
 from baruwa.utils.process_mail import release_mail
 from baruwa.utils.process_mail import sa_learn
 from baruwa.utils.misc import jsonify_msg_list, apply_filter, jsonify_status
-from baruwa.utils.mail import EmailParser
+from baruwa.utils.mail.message import EmailParser
 from baruwa.utils.context_processors import status
 from baruwa.utils.http import ProcessRemote
 

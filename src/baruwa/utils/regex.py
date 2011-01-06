@@ -53,3 +53,7 @@ IPV4_NET_OR_RANGE_RE = re.compile(
     r'^[.:\da-f]+\s*-\s*[.:\da-f]+$|'
     r'^([.:\da-f]+)\s*\/\s*([.:\da-f]+)$'
 )
+
+SUBJECT_RE = re.compile(r'(?:\d+\s+Subject):(.+)')
+
+MSGLOG_RE = re.compile(r'^(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})\s+(?:.+\s(?:defer|failed)\s.+)$')
