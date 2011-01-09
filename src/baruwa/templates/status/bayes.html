@@ -3,12 +3,13 @@
 {% block headers %}
 {% endblock headers %}
 {% block submenu %}
-{% if user.is_superuser %}
 <ul>
+	<li><a href="{% url mailq %}">{% trans "Mail Queues" %}</a></li>
+{% if user.is_superuser %}
     <li>{% trans "Bayes information" %}</li>
     <li><a href="{% url sa-lint %}">{% trans "Spamassassin lint" %}</a></li>
-</ul>
 {% endif %}
+</ul>
 {% endblock submenu %}
 {% block title %}
 {% trans "Bayes information" %}

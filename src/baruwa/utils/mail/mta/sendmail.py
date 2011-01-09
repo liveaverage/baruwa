@@ -20,6 +20,16 @@
 #
 
 "Sendmail queue parser"
+import codecs
+#import fcntl
+import re
+import os
+import subprocess
+
+from datetime import datetime
+from email.Header import decode_header
+
+SUBJECT_RE = re.compile(r'(?:.+)Subject:(.+)')
 
 class QueueParser(object):
     "Sendmail queue parser"
@@ -31,4 +41,81 @@ class QueueParser(object):
     
     def process(self):
         "process"
+        def getqfs(matched, dirname, files):
+            "utility to get qf files"
+            matched.extend([os.path.join(dirname, filename) 
+                            for filename in files 
+                            if filename.startswith('qf')])
+            
+        def extractinfo(qf):
+            "extract attribs from qf file"
+            try:
+                qfile = codecs.open(qf, 'r', 'utf-8', 'replace')
+                #fcntl.flock(qfile, fcntl.LOCK_EX)
+                lines = qfile.readlines()
+                #fcntl.flock(qfile, fcntl.LOCK_UN)
+                qfile.close()
+                attribs = {}
+                attribs['to_address'] = []
+                pipe1 = subprocess.Popen('hostname', shell=True, 
+                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                attribs['hostname'] = pipe1.stdout.read().strip()
+                qid = os.path.basename(qf)
+                attribs['messageid'] = qid[2:]
+                attribs['size'] = 1
+                dirpath = os.path.dirname(qf)
+                possibles = []
+                possibles.append(os.path.join(dirpath, 
+                                'df' + attribs['messageid']))
+                possibles.append(os.path.join(dirpath.replace('qf','df'), 
+                                'df' + attribs['messageid']))
+                for path in possibles:
+                    if os.path.exists(path):
+                        attribs['size'] = (os.path.getsize(path) + 
+                                            os.path.getsize(qf))
+                        break
+                attribs['subject'] = ''
+                for line in lines:
+                    if line.startswith('T'):
+                        timestamp = str(datetime.fromtimestamp(float(line[1:])))
+                        attribs['timestamp'] = timestamp
+                        attribs['lastattempt'] = timestamp
+                        continue
+                    if line.startswith('S'):
+                        attribs['from_address'] = line[1:-1].strip()
+                        if not '@' in attribs['from_address']:
+                            addr = "%s@%s" % (attribs['from_address'], 
+                                                attribs['hostname'])
+                            attribs['from_address'] = addr
+                        continue
+                    if line.startswith('R'):
+                        attribs['to_address'].append(
+                        line[line.index(':') + 1:].strip())
+                        continue
+                    if line.startswith('N'):
+                        attribs['attempts'] = line[1:].strip()
+                        continue
+                    if line.startswith('K'):
+                        if float(line[1:]) > 0:
+                            attempt = str(datetime.fromtimestamp(float(line[1:])))
+                            attribs['lastattempt'] = attempt
+                        continue
+                    match = SUBJECT_RE.match(line)
+                    if match:
+                        subj = match.groups()[0].strip()
+                        if subj.startswith('?='):
+                            text, charset = decode_header(subj)[0]
+                            subj = unicode(text, charset or 'ascii', 'replace')
+                        attribs['subject'] = subj
+                        break
+                if attribs['from_address'] == '':
+                    attribs['from_address'] = '<>'
+                return attribs
+            except:
+                return None
+
+        queuefiles = []
+        os.path.walk(self.qdir, getqfs, queuefiles)
+        results = [extractinfo(path) for path in queuefiles]
+        self.items = [result for result in results if not result is None]
         return self.items

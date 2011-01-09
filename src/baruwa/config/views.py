@@ -239,8 +239,10 @@ def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
         if form.is_valid():
             try:
                 host = form.save()
-                msg = _('External authentication %(auth)s: on host %(host)s for domain %(dom)s was added successfully') % {
-                    'auth':AUTH_TYPES[host.protocol], 'host':host.address, 'dom':host.useraddress.address}
+                msg = _('External authentication %(auth)s: on host %(host)s'
+                        ' for domain %(dom)s was added successfully') % {
+                    'auth':AUTH_TYPES[host.protocol], 'host':host.address, 
+                    'dom':host.useraddress.address}
                 if request.is_ajax():
                     response = simplejson.dumps({'success':True, 'html':msg})
                     return HttpResponse(response, 
@@ -377,9 +379,8 @@ def view_scanner(request, scanner_id, template='config/view_scanner.html'):
     scanner = get_object_or_404(ScannerHost, id=scanner_id)
     configs = ScannerConfig.objects.values('value')
     if not configs:
-        msg = _('The node %(node)s is not been initialized, Please initialize') % {
-            'node':scanner.address
-        }
+        msg = _('The node %(node)s is not been initialized,'
+                ' Please initialize') % {'node':scanner.address}
         request.user.message_set.create(message=msg)
         return HttpResponseRedirect(reverse('init-scanner', 
                                     args=[scanner.id]))

@@ -21,12 +21,16 @@
 
 "Exim queue parser"
 import os
+import re
 import subprocess
 import codecs
+#import fcntl
 
 from datetime import datetime
-from baruwa.utils.regex import SUBJECT_RE, MSGLOG_RE
-import fcntl
+from email.Header import decode_header
+
+SUBJECT_RE = re.compile(r'(?:\d+\s+Subject):(.+)')
+MSGLOG_RE = re.compile(r'^(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})\s+(?:.+\s(?:defer|failed|error)\s.+)$')
 
 class QueueParser(object):
     "Exim queue parser"
@@ -52,6 +56,9 @@ class QueueParser(object):
                 match = SUBJECT_RE.match(val)
                 if match:
                     line = match.groups()[0].strip()
+                    if line.startswith('=?'):
+                        text, charset = decode_header(line)[0]
+                        line = unicode(text, charset or 'ascii', 'replace')
                     break
             if line:
                 subject = line
@@ -70,10 +77,10 @@ class QueueParser(object):
         def extractinfo(path):
             "extract attributes from queue file"
             try:
-                headerfile = codecs.open(path, 'r', 'utf-8')
-                fcntl.flock(headerfile, fcntl.LOCK_EX)
+                headerfile = codecs.open(path, 'r', 'utf-8', 'replace')
+                #fcntl.flock(headerfile, fcntl.LOCK_EX)
                 lines = headerfile.readlines()
-                fcntl.flock(headerfile, fcntl.LOCK_UN)
+                #fcntl.flock(headerfile, fcntl.LOCK_UN)
                 headerfile.close()
                 index = lines.index('\n')
                 attribs = {}
@@ -88,17 +95,17 @@ class QueueParser(object):
                 pipe1 = subprocess.Popen('hostname', shell=True, 
                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 attribs['hostname'] = pipe1.stdout.read().strip()
-                dpath = os.path.join(os.path.dirname(path), 
-                        os.path.basename(path).replace('-H', '-D'))
+                datafile = "%s-D" % os.path.basename(path)[:-2]
+                dpath = os.path.join(os.path.dirname(path), datafile)
                 replace = path.split(os.sep)[-2]
                 mpath = os.path.join(
                         os.path.dirname(path.replace(replace, 'msglog')), 
-                        os.path.basename(path).rstrip('-H'))
+                        os.path.basename(path)[:-2])
                 attribs['size'] = (os.path.getsize(path) + 
                                     os.path.getsize(dpath))
                 attribs['attempts'] = 0
                 try:
-                    msglog = codecs.open(mpath, 'r', 'utf-8')
+                    msglog = codecs.open(mpath, 'r', 'utf-8', 'replace')
                     for msg in msglog:
                         match = MSGLOG_RE.match(msg)
                         if match:
@@ -107,6 +114,8 @@ class QueueParser(object):
                     msglog.close()
                 except:
                     pass
+                if attribs['from_address'] == '':
+                    attribs['from_address'] = '<>'
                 return attribs
             except:
                 return None

@@ -23,6 +23,16 @@ from django.conf.urls.defaults import patterns
 
 urlpatterns = patterns('baruwa.status.views',
     (r'^$', 'index', {}, 'status-index'),
-    (r'^bayes/$','bayes_info',{},'bayes-info'),
-    (r'^lint/$','sa_lint',{},'sa-lint'),
+    (r'^bayes/$', 'bayes_info', {}, 'bayes-info'),
+    (r'^lint/$', 'sa_lint', {}, 'sa-lint'),
+    (r'^mailq/$', 'mailq', {'queue':1}, 'mailq'),
+    (r'^mailq/inbound/$', 'mailq', {'queue':1}, 'mailq-inbound'),
+    (r'^mailq/outbound/$', 'mailq', {'queue':2}, 'mailq-outbound'),
+    (r'^mailq/inbound/(?P<order_by>(timestamp|from_address|to_address|subject|size|attempts))/$', 'mailq', {'queue':1}),
+    (r'^mailq/outbound/(?P<order_by>(timestamp|from_address|to_address|subject|size|attempts))/$', 'mailq', {'queue':2}),
+    (r'^mailq/inbound/(?P<direction>(dsc|asc))/(?P<order_by>(timestamp|from_address|to_address|subject|size|attempts))/$', 'mailq', {'queue':1}),
+    (r'^mailq/outbound/(?P<direction>(dsc|asc))/(?P<order_by>(timestamp|from_address|to_address|subject|size|attempts))/$', 'mailq', {'queue':2}),
+    (r'^mailq/inbound/(?P<page>([0-9]+|last))/(?P<direction>(dsc|asc))/(?P<order_by>(timestamp|from_address|to_address|subject|size|attempts))/$', 'mailq', {'queue':1}, 'mailq-inbound-paged'),
+    (r'^mailq/outbound/(?P<page>([0-9]+|last))/(?P<direction>(dsc|asc))/(?P<order_by>(timestamp|from_address|to_address|subject|size|attempts))/$', 'mailq', {'queue':2}, 'mailq-outbound-paged'),
+    (r'^mailq/view/(?P<itemid>(([A-Za-z0-9]){6}-([A-Za-z0-9]){6}-([A-Za-z0-9]){2})|.+)/$', 'detail', {}, 'mailq-detail')
 )

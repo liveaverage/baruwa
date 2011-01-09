@@ -69,14 +69,6 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
             else:
                 listing = listing.filter(user=request.user.id)
         if account_type == 3:
-            # if addresses:
-            #     for email in addresses:
-            #        kw = {'to_address__exact':email}
-            #        q = q | Q(**kw)
-            #     kw = {'to_address__exact':request.user.username}
-            #     q = q | Q(**kw)
-            #     listing = listing.filter(q)
-            # else:
             listing = listing.filter(user=request.user.id)
                 
     if request.method == 'POST':

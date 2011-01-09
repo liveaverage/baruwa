@@ -19,10 +19,11 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import subprocess
+
 from django.template.defaultfilters import force_escape
 from django.conf import settings
-from django.db.models import Q
-import subprocess
+from django.db.models import Q, Count
 
 def jsonify_msg_list(element):
     """
@@ -246,15 +247,36 @@ def get_sys_status(request):
     "Returns system status"
     import os
     from baruwa.messages.models import MessageStats
+    from baruwa.status.models import MailQueueItem
 
     addrs = []
     act = 3
 
+    inq = MailQueueItem.objects.filter(direction=1)
+    outq = MailQueueItem.objects.filter(direction=2)
     if not request.user.is_superuser:
         addrs = request.session['user_filter']['addresses']
         act = request.session['user_filter']['account_type']
+        if act == 2:
+            query = Q()
+            for addr in addrs:
+                atdomain = "@%s" % addr
+                query = query | Q(Q(**{'from_address__iendswith':atdomain}) | 
+                                Q(**{'to_address__iendswith':atdomain}))
+            inq = inq.filter(query)
+            outq = outq.filter(query)
+        if act == 3:
+            inq = inq.filter(Q(from_address__in=addrs) | 
+                                Q(to_address__in=addrs))
+            outq = outq.filter(Q(from_address__in=addrs) | 
+                                Q(to_address__in=addrs))
 
     data = MessageStats.objects.get(request.user, addrs, act)
+    
+    inq = inq.aggregate(count=Count('messageid'))
+    outq = outq.aggregate(count=Count('messageid'))
+    #icount = inq['count']
+    #ocount = outq['count']
 
     val1, val2, val3 = os.getloadavg()
 
@@ -277,5 +299,7 @@ def get_sys_status(request):
             'baruwa_status':status, 
             'baruwa_mail_total':data.total, 
             'baruwa_spam_total':spam, 
-            'baruwa_virus_total':data.virii
+            'baruwa_virus_total':data.virii,
+            'baruwa_in_queue':inq['count'],
+            'baruwa_out_queue':outq['count']
             }    

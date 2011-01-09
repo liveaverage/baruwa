@@ -86,6 +86,8 @@ function json2html(data){
         $('#smailtotal').empty().append(data.status.baruwa_mail_total);
         $('#sspamtotal').empty().append(data.status.baruwa_spam_total);
         $('#svirustotal').empty().append(data.status.baruwa_virus_total);
+        $('#inq').empty().append(data.status.baruwa_in_queue);
+        $('#outq').empty().append(data.status.baruwa_out_queue);
         if(data.status.baruwa_status){
             simg = 'active.png';
             alt = 'OK';

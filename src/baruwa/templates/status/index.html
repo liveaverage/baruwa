@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block submenu %}
-{% if user.is_superuser %}
 <ul>
+	<li><a href="{% url mailq %}">{% trans "Mail Queues" %}</a></li>
+{% if user.is_superuser %}
     <li><a href="{% url bayes-info %}">{% trans "Bayes information" %}</a></li>
     <li><a href="{% url sa-lint %}">{% trans "Spamassassin lint" %}</a></li>
-</ul>
 {% endif %}
+</ul>
 {% endblock submenu %}
 {% block title %}{% trans "System Status" %}{% endblock title %}
 {% block heading %}{% trans "System Status" %}{% endblock heading %}
@@ -69,9 +70,10 @@
     <div class="Status_col">{{ data.virii }}</div>
 </div>
 <div class="LightBlue_div">
-    <div class="Status_col">{% trans "System restart" %}</div>
-    <div class="Status_col"></div>
+    <div class="Status_col">{% trans "Mail Queues" %}</div>
+    <div class="Status_col">Inbound:{{inq}} Outbound:{{outq}}</div>
     <div class="Status_col">{% trans "Blocked files" %}</div>
     <div class="Status_col">{{ data.otherinfected }}</div>
 </div>
 {% endblock content %}
+

@@ -39,7 +39,7 @@
         	<div class="Link">
                 <ul>
 					<li>
-						{% trans "System status " %}<a href="{% url status-index %}">
+						{% trans "Status " %}<a href="{% url status-index %}">
 						{% if baruwa_status %}
 						<img id="statusimg" src="{{ MEDIA_URL }}imgs/active.png" alt="OK" />
 						{% else %}
@@ -51,6 +51,9 @@
 						{% trans "Msgs: " %}<a href="{% url status-index %}">
 								{% trans "Total" %} <span id="smailtotal">{{baruwa_mail_total}}</span>, {% trans "Spam" %} <span id="sspamtotal">{{baruwa_spam_total}}</span>, {% trans "Virus" %} <span id="svirustotal">{{baruwa_virus_total}}</span>
 							</a>
+					</li>
+					<li>
+						{% trans "In: " %}<a href="{% url mailq-inbound %}"><span id="inq">{{baruwa_in_queue}}</span></a> {% trans "Out: " %}<a href="{% url mailq-outbound %}"><span id="outq">{{baruwa_out_queue}}</span></a>
 					</li>
 					{% if user.is_authenticated %}
 					<li>{% trans "Signed in as " %}<a href="{% url user-profile user.id %}">{{user.username}}</a></li>

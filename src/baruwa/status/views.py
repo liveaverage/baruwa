@@ -19,15 +19,22 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-from django.shortcuts import render_to_response
+import os
+import subprocess
+import re
+
+from django.shortcuts import render_to_response, get_object_or_404
+from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from django.db.models import Q, Count
+from django.core.urlresolvers import reverse
 
 from django.conf import settings
 from baruwa.utils.misc import get_processes, get_config_option
 from baruwa.utils.decorators import onlysuperusers
 from baruwa.messages.models import MessageStats
-import os, subprocess, re
+from baruwa.status.models import MailQueueItem
 
 
 @login_required
@@ -36,11 +43,29 @@ def index(request):
     addrs = []
     act = 3
 
+    inq = MailQueueItem.objects.filter(direction=1)
+    outq = MailQueueItem.objects.filter(direction=2)
+    
     if not request.user.is_superuser:
         addrs = request.session['user_filter']['addresses']
         act = request.session['user_filter']['account_type']
+        if act == 2:
+            query = Q()
+            for addr in addrs:
+                atdomain = "@%s" % addr
+                query = query | Q(Q(**{'from_address__iendswith':atdomain}) | 
+                                Q(**{'to_address__iendswith':atdomain}))
+            inq = inq.filter(query)
+            outq = outq.filter(query)
+        if act == 3:
+            inq = inq.filter(Q(from_address__in=addrs) | 
+                                Q(to_address__in=addrs))
+            outq = outq.filter(Q(from_address__in=addrs) | 
+                                Q(to_address__in=addrs))
 
     data = MessageStats.objects.get(request.user, addrs, act)
+    inq = inq.aggregate(count=Count('messageid'))
+    outq = outq.aggregate(count=Count('messageid'))
 
     val1, val2, val3 = os.getloadavg()
     load = "%.2f %.2f %.2f" % (val1, val2, val3)
@@ -57,7 +82,8 @@ def index(request):
     uptime = upt[2] + ' ' + upt[3].rstrip(',')
 
     return render_to_response('status/index.html', {'data':data, 'load':load,
-        'scanners':scanners, 'mta':mta, 'av':clamd, 'uptime':uptime}, 
+        'scanners':scanners, 'mta':mta, 'av':clamd, 'uptime':uptime, 
+        'outq':outq['count'], 'inq':inq['count']}, 
         context_instance=RequestContext(request))
 
 @onlysuperusers
@@ -123,4 +149,44 @@ def sa_lint(request):
         lint.append(line)
 
     return render_to_response('status/lint.html', {'data':lint}, 
+        context_instance=RequestContext(request))
+    
+def mailq(request, queue, page=1, direction='dsc', order_by='timestamp'):
+    "Display the items in the mailq"
+    items = MailQueueItem.objects.filter(direction=queue)
+    
+    if not request.user.is_superuser:
+        addrs = request.session['user_filter']['addresses']
+        act = request.session['user_filter']['account_type']
+        if act == 2:
+            query = Q()
+            for addr in addrs:
+                atdomain = "@%s" % addr
+                query = query | Q(Q(**{'from_address__iendswith':atdomain}) | 
+                                Q(**{'to_address__iendswith':atdomain}))
+            items = items.filter(query)
+        if act == 3:
+            items = items.filter(Q(from_address__in=addrs) | 
+                                Q(to_address__in=addrs))
+
+    ordering = order_by
+    if direction == 'dsc':
+        ordering = order_by
+        order_by = '-%s' % order_by
+
+    items = items.order_by(order_by)
+    if queue == 1:
+        urlstring = 'mailq-inbound'
+    else:
+        urlstring = 'mailq-outbound'
+    app = reverse(urlstring)
+    
+    return object_list(request, template_name='status/mailq.html',
+    queryset=items, paginate_by=50, page=page,
+    extra_context={'list_all':True, 'app':app.strip('/'), 'direction':direction,
+    'order_by':ordering}, allow_empty=True)
+
+def detail(request, itemid):
+    itemdetails = get_object_or_404(MailQueueItem, id=itemid)
+    return render_to_response('status/detail.html', locals(), 
         context_instance=RequestContext(request))

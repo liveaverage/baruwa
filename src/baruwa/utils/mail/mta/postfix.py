@@ -20,6 +20,17 @@
 #
 
 "Postfix queue parser"
+import os
+import re
+import time
+import datetime
+import glob
+import subprocess
+
+from stat import ST_MTIME, ST_CTIME
+from email.Header import decode_header
+
+SUBJECT_RE = re.compile(r'^Subject:(.+)')
 
 class QueueParser(object):
     "Postfix queue parser"
@@ -31,4 +42,77 @@ class QueueParser(object):
         
     def process(self):
         "process"
+        postqdir = subprocess.Popen('postconf -d queue_directory', shell=True, 
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        try:
+            postqueuedir = postqdir.stdout.read().split()[2]
+        except IndexError:
+            postqueuedir = '/var/spool/postfix'
+        
+        def getqfs(matched, dirname, files):
+            "process qf"
+            matched.extend([os.path.join(dirname, filename) 
+                            for filename in files])
+        
+        def extractinfo(qf):
+            "extract info from qf"
+            try:
+                cmd = "postcat %s" % qf
+                postcat = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, 
+                            stderr=subprocess.PIPE)
+                lines = postcat.stdout.readlines()
+                attribs = {}
+                pipe1 = subprocess.Popen('hostname', shell=True, 
+                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                attribs['hostname'] = pipe1.stdout.read().strip()
+                attribs['messageid'] = os.path.basename(qf)
+                attribs['to_address'] = []
+                attribs['attempts'] = 1
+                for line in lines:
+                    if line.startswith('message_size:'):
+                        attribs['size'] = line.split()[1]
+                        continue
+                    if line.startswith('message_arrival_time:'):
+                        arrival = line[line.index(' '):]
+                        attribs['timestamp'] = time.strftime("%Y-%m-%d %H:%M:%S", 
+                        time.strptime(arrival.strip(), "%a %b %d %H:%M:%S %Y"))
+                        continue
+                    if line.startswith('sender:'):
+                        attribs['from_address'] = line.split()[1]
+                        continue
+                    if line.startswith('recipient:'):
+                        attribs['to_address'].append(line.split()[1])
+                        continue
+                    if line.startswith('Subject:'):
+                        match = SUBJECT_RE.match(line)
+                        subj = match.groups()[0].strip()
+                        if subj.startswith('?='):
+                            text, charset = decode_header(subj)[0]
+                            subj = unicode(text, charset or 'ascii', 'replace')
+                        attribs['subject'] = subj
+                        break
+                # try and get time message was defered using the timestamp on the
+                # defered log file 
+                searchpath = "%s/defer/*" % postqueuedir
+                possibles = glob.glob(searchpath)
+                for path in possibles:
+                    if os.path.isfile(os.path.join(path, attribs['messageid'])):
+                        ts = os.stat(os.path.join(path, attribs['messageid']))[ST_MTIME]
+                        cs = os.stat(os.path.join(path, attribs['messageid']))[ST_CTIME]
+                        if ts > cs:
+                            attribs['attempts'] += 1
+                        attribs['lastattempt'] = str(datetime.datetime.fromtimestamp(ts))
+                        break
+                if not attribs.has_key('lastattempt'):
+                    attribs['lastattempt'] = attribs['timestamp']
+                if attribs['from_address'] == '':
+                    attribs['from_address'] = '<>'
+                return attribs
+            except:
+                return None
+        
+        queuefiles = []
+        os.path.walk(self.qdir, getqfs, queuefiles)
+        results = [extractinfo(path) for path in queuefiles]
+        self.items = [result for result in results if not result is None]
         return self.items

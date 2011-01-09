@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-08 13:59+0200\n"
+"POT-Creation-Date: 2011-01-09 13:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,8 +83,8 @@ msgid " has been added to your "
 msgstr ""
 
 #: static/js/details.js:70 static/js/details.js.py:78 static/js/details.js:102
-#: static/js/details.js.py:115 static/js/details.js:161
-#: static/js/details.js.py:167 static/js/domain.js:50 static/js/domains.js:130
+#: static/js/details.js.py:115 static/js/details.js:165
+#: static/js/details.js.py:171 static/js/domain.js:50 static/js/domains.js:130
 #: static/js/domains.js.py:134 static/js/lists.add.js:50
 #: static/js/lists.add.js.py:67 static/js/lists.add.js:90
 #: static/js/lists.js:257 static/js/lists.js.py:261
@@ -110,11 +110,11 @@ msgstr ""
 msgid "Processing request............."
 msgstr ""
 
-#: static/js/details.js:180 static/js/details.js.py:185
+#: static/js/details.js:184 static/js/details.js.py:189
 msgid "Show headers"
 msgstr ""
 
-#: static/js/details.js:189
+#: static/js/details.js:193
 msgid "Hide headers"
 msgstr ""
 
@@ -130,19 +130,19 @@ msgstr ""
 msgid "No domains at the moment"
 msgstr ""
 
-#: static/js/lib.js:120
+#: static/js/lib.js:136
 msgid "Infected"
 msgstr ""
 
-#: static/js/lib.js:124
+#: static/js/lib.js:140
 msgid "Clean"
 msgstr ""
 
-#: static/js/lib.js:159
+#: static/js/lib.js:175
 msgid "No records returned"
 msgstr ""
 
-#: static/js/lib.js:179
+#: static/js/lib.js:195
 msgid "Empty response from server. check network!"
 msgstr ""
 

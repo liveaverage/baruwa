@@ -8,6 +8,13 @@ Baruwa provides custom `django manage.py <http://docs.djangoproject.com/en/1.1/r
 commands to enable scripting of house keeping tasks such as quarantine management and Database
 maintenance.
 
+Command options and help
+========================
+
+These commands may take options to get details on the supported options run::
+
+  manage.py help command_name
+
 Quarantine management
 =====================
 ::
@@ -50,3 +57,11 @@ PDF reports
 	manage.py sendpdfreports
 	
 Sends PDF reports by email.
+
+Mailq Stats updates
+===================
+::
+
+    manage.py queuestats
+
+Query the inbound and outbound queues and write stats to the database.
