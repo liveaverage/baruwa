@@ -291,8 +291,8 @@ def report(request, report_kind):
 
         data = SpamScores.objects.all(request.user, filter_list, addrs, act)
         for row in data:
-            scores.append(int(row.score))
-            counts.append(int(row.count))
+            scores.append({'value':int(row.score), 'text':str(row.score)})
+            counts.append({'y':int(row.count), 'tooltip':'Score '+str(row.score)+': '+str(row.count)})
 
         if request.is_ajax():
             data = [obj.obj_to_dict() for obj in data]
@@ -340,10 +340,17 @@ def report(request, report_kind):
             virus_total.append(int(row.virus_total))
             size_total.append(int(row.size_total))
 
-        pie_data = {'dates':dates, 
-                    'mail':mail_total, 
-                    'spam':spam_total, 
-                    'virii':virus_total, 
+        pie_data = {'dates':[{'value':index+1, 'text':date} 
+                    for index, date in enumerate(dates)], 
+                    'mail':[{'y':total, 
+                    'tooltip':'Mail totals on '+dates[index]+': '+str(total)} 
+                    for index, total in enumerate(mail_total)], 
+                    'spam':[{'y':total, 
+                    'tooltip':'Spam totals on '+dates[index]+': '+str(total)} 
+                    for index, total in enumerate(spam_total)], 
+                    'virii':[{'y':total, 
+                    'tooltip':'Virus totals on '+dates[index]+': '+str(total)} 
+                    for index, total in enumerate(virus_total)], 
                     'mail_total':sum(mail_total), 
                     'spam_total':sum(spam_total), 
                     'virus_total':sum(virus_total), 

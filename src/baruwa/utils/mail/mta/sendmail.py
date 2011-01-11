@@ -95,6 +95,9 @@ class QueueParser(object):
                     if line.startswith('N'):
                         attribs['attempts'] = line[1:].strip()
                         continue
+                    if line.startswith('M'):
+                        attribs['reason'] = line[1:].strip()
+                        continue
                     if line.startswith('K'):
                         if float(line[1:]) > 0:
                             attempt = str(datetime.fromtimestamp(float(line[1:])))

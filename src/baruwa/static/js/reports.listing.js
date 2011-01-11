@@ -126,7 +126,7 @@ dojo.addOnLoad(function(){
 	duration: dur,
 	easing:   dojo.fx.easing.sineOut
 	});
-	var anim6b = new dc.action2d.Shake(chart, "default");
+	//var anim6b = new dc.action2d.Shake(chart, "default");
 	var anim6c = new dc.action2d.Tooltip(chart, "default");
 	chart.render();
 	var mail_legend = new dojox.charting.widget.Legend({chart: chart}, "mail_legend");

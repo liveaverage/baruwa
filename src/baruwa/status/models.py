@@ -35,6 +35,7 @@ class MailQueueItem(models.Model):
     attempts = models.IntegerField()
     lastattempt = models.DateTimeField()
     direction = models.IntegerField(default=1)
+    reason = models.TextField(blank=True)
     
     class Meta:
         db_table = u'mailq'

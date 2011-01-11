@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />
 <script type="text/javascript">
 	var djConfig = { parseOnLoad:true, isDebug:false };
-	var labels = [{% for i in pie_data.scores%}{% if not forloop.last %}{value:{{forloop.counter}}, text:"{{i}}"},{% else %}{value:{{forloop.counter}},text:"{{i}}"}{% endif %}{%endfor%}];
+	var labels = {{pie_data.scores|safe}};
 	var sa_scores = {{pie_data.count|safe}};
 </script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/dojo/dojo.js"></script>

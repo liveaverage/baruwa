@@ -58,6 +58,10 @@
     <div class="mailitem">{% trans "Size:" %}</div>
     <div class="maildetail">{{ itemdetails.size|filesizeformat }}</div>
 </div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Reasons for queuing:" %}</div>
+    <div class="maildetail">{{ itemdetails.reason|linebreaksbr }}</div>
+</div>
 {% else %}
 <div class="LightBlue_div">
     <div class="spanrow">{% trans "The message details for the requested queue id could not be retrieved" %}</div>

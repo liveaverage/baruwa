@@ -5,7 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />
 <script type="text/javascript">
 	var djConfig = { parseOnLoad:true, isDebug:false };
-	var labels = [{% for i in pie_data.dates%}{% if not forloop.last %}{value:{{forloop.counter}}, text:"{{i}}"},{% else %}{value:{{forloop.counter}},text:"{{i}}"}{% endif %}{%endfor%}];
+	var labels = {{pie_data.dates|safe}};
 	var mail_data = {{pie_data.mail|safe}};
 	var spam_data = {{pie_data.spam|safe}};
 	var virii_data = {{pie_data.virii|safe}};

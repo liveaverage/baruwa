@@ -4,7 +4,7 @@ User Documentation
 
 Interface primer
 ================
-The interface is a simplified and AJAX is supported for most operations
+The interface is simplified and AJAX is supported for most operations
 
 The following have full AJAX support::
 	* Messages
@@ -58,6 +58,9 @@ The status tab provides access to the following::
 		* Service status
 	* Bayesian status
 	* Spamassassin lint check
+	* Mail Queues status
+	    * Inbound queue
+	    * Outbound queue
 	
 Account
 -------

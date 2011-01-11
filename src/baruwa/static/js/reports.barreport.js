@@ -19,6 +19,7 @@
 // vim: ai ts=4 sts=4 et sw=4
 //
 dojo.require("dojox.charting.Chart2D");
+dojo.require("dojox.charting.action2d.Tooltip");
 
 //functions
 function build_rows(build_array){
@@ -108,11 +109,13 @@ dojo.addOnLoad(function(){
     dojo.query("#fhl a").onclick(function(e){
         remove_filter(e,this);
     });
+    var dc = dojox.charting;
     //init chart and render
 	chart = new dojox.charting.Chart2D("chart");
 	chart.addPlot("default", {type: "ClusteredColumns",gap:1});
 	chart.addAxis("x",{labels: labels,majorTickStep:10});
 	chart.addAxis("y", {vertical: true});
 	chart.addSeries("SA scores", sa_scores,{stroke: {color: "black"}, fill: "blue"});
+	var anim6c = new dc.action2d.Tooltip(chart, "default");
 	chart.render();	
 });

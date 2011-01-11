@@ -188,5 +188,5 @@ def mailq(request, queue, page=1, direction='dsc', order_by='timestamp'):
 
 def detail(request, itemid):
     itemdetails = get_object_or_404(MailQueueItem, id=itemid)
-    return render_to_response('status/detail.html', locals(), 
+    return render_to_response('status/detail.html', {'itemdetails':itemdetails}, 
         context_instance=RequestContext(request))

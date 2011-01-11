@@ -23,8 +23,9 @@
 import os
 import re
 import time
-import datetime
 import glob
+import codecs
+import datetime
 import subprocess
 
 from stat import ST_MTIME, ST_CTIME
@@ -95,6 +96,7 @@ class QueueParser(object):
                 # defered log file 
                 searchpath = "%s/defer/*" % postqueuedir
                 possibles = glob.glob(searchpath)
+                reasons = []
                 for path in possibles:
                     if os.path.isfile(os.path.join(path, attribs['messageid'])):
                         ts = os.stat(os.path.join(path, attribs['messageid']))[ST_MTIME]
@@ -102,11 +104,16 @@ class QueueParser(object):
                         if ts > cs:
                             attribs['attempts'] += 1
                         attribs['lastattempt'] = str(datetime.datetime.fromtimestamp(ts))
+                        logfile = codecs.open(os.path.join(path, attribs['messageid']), 
+                                    'r', 'utf-8', 'replace')
+                        reasons = logfile.readlines()
+                        logfile.close()
                         break
                 if not attribs.has_key('lastattempt'):
                     attribs['lastattempt'] = attribs['timestamp']
                 if attribs['from_address'] == '':
                     attribs['from_address'] = '<>'
+                attribs['reason'] = '\n'.join(reasons)
                 return attribs
             except:
                 return None

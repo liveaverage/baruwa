@@ -104,6 +104,7 @@ class QueueParser(object):
                 attribs['size'] = (os.path.getsize(path) + 
                                     os.path.getsize(dpath))
                 attribs['attempts'] = 0
+                reasons = []
                 try:
                     msglog = codecs.open(mpath, 'r', 'utf-8', 'replace')
                     for msg in msglog:
@@ -111,11 +112,13 @@ class QueueParser(object):
                         if match:
                             attribs['attempts'] += 1
                             attribs['lastattempt'] = match.groups()[0]
+                            reasons.append(msg)
                     msglog.close()
                 except:
                     pass
                 if attribs['from_address'] == '':
                     attribs['from_address'] = '<>'
+                attribs['reason'] = '\n'.join(reasons)
                 return attribs
             except:
                 return None
