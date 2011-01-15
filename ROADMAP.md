@@ -6,6 +6,11 @@ Milestone 1.0.1
 + <strike>Internationalization & Localization</strike>
 + <strike>Per domain PDF reports</strike>
 
+Milestone 1.1.0
+--
++ <strike>Mail queue status Exim, Postfix, Sendmail</strike>
++ Bulk processing
+
 Milestone 2.0.0
 --
 + <strike>Support Postgresql and SQLite in addition to MySQL</strike>
