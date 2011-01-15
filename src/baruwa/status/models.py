@@ -22,6 +22,7 @@
 "Status models"
 from django.db import models
 
+
 class MailQueueItem(models.Model):
     "MailQ item"
     id = models.AutoField(primary_key=True)
@@ -36,9 +37,8 @@ class MailQueueItem(models.Model):
     lastattempt = models.DateTimeField()
     direction = models.IntegerField(default=1)
     reason = models.TextField(blank=True)
-    
+
     class Meta:
         db_table = u'mailq'
         get_latest_by = 'timestamp'
         ordering = ['-timestamp']
-

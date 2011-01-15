@@ -32,9 +32,10 @@ from email.Header import decode_header
 SUBJECT_RE = re.compile(r'(?:\d+\s+Subject):(.+)')
 MSGLOG_RE = re.compile(r'^(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})\s+(?:.+\s(?:defer|failed|error)\s.+)$')
 
+
 class QueueParser(object):
     "Exim queue parser"
-    
+
     def __init__(self, queue):
         "init"
         self.qdir = queue
@@ -47,7 +48,7 @@ class QueueParser(object):
             matched.extend([os.path.join(dirname, filename) 
                             for filename in files 
                             if filename.endswith('-H')])
-        
+
         def getsubject(lines):
             "Get the subject"
             subject = ''
@@ -63,7 +64,7 @@ class QueueParser(object):
             if line:
                 subject = line
             return subject
-        
+
         def getrecipients(lines):
             "Get the recipients"
             lines.reverse()
@@ -73,7 +74,7 @@ class QueueParser(object):
                     break
                 recipients.append(line.strip())
             return recipients 
-                            
+
         def extractinfo(path):
             "extract attributes from queue file"
             try:
@@ -122,7 +123,7 @@ class QueueParser(object):
                 return attribs
             except:
                 return None
-            
+
         queuefiles = []
         os.path.walk(self.qdir, getheaders, queuefiles)
         results = [extractinfo(path) for path in queuefiles]

@@ -23,9 +23,10 @@ from django import template
 
 register = template.Library()
 
+
 def pagination_heading(context):
     "Displays pagination info"
-    if context.has_key('page'):
+    if 'page' in context:
         return {'page': context['page'], 'pages': context['pages']}
     else:
         return {'page': 1, 'pages': 1}

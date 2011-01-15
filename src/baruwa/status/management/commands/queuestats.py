@@ -27,16 +27,17 @@ from baruwa.utils.mail.mailq import Mailq
 from baruwa.status.models import MailQueueItem
 from baruwa.utils.misc import get_config_option
 
+
 class Command(BaseCommand):
     "Read the items in the queue and populate DB"
     option_list = BaseCommand.option_list + (
         make_option('--mta', dest='mta', default='exim', help='MTA'),
     )
-    
+
     def handle(self, *args, **options):
         if len(args) != 0:
             raise CommandError(_("Command doesn't accept any arguments"))
-        
+
         mtas = ['exim', 'sendmail', 'postfix']
         mta = options.get('mta')
         if not mta in mtas:
@@ -71,35 +72,33 @@ class Command(BaseCommand):
                         else:
                             mqitem = MailQueueItem(**item)
                         mqitem.save()
-                        
+
         inqdir = get_config_option('IncomingQueueDir')
         outqdir = get_config_option('OutgoingQueueDir')
         inqueue = Mailq(mta, inqdir)
         outqueue = Mailq(mta, outqdir)
-        
+
         allids = [item['messageid'] for item in inqueue]
         allids.extend([item['messageid'] for item in outqueue])
         dbids = [item['messageid'] 
                 for item in MailQueueItem.objects.values('messageid').all()]
         remids = [item for item in dbids if not item in allids]
         preids = [item for item in dbids if not item in remids]
-        
+
         if remids:
             print (_("== Deleting %(items)d queue items from DB ==") % 
                     {'items': len(remids)})
             MailQueueItem.objects.filter(messageid__in=remids).delete()
-        
+
         if inqueue:
             print (_("== Processing the inbound queue: %(queue)s with %(items)d items ==") % 
-                    {'queue':inqdir, 'items':len(inqueue)})
+                    {'queue': inqdir, 'items': len(inqueue)})
             runquery(inqueue, 1, preids)
         else:
             print _("== Skipping the inbound queue 0 items found ==")
         if outqueue:
             print (_("== Processing the outbound queue: %(queue)s with %(items)d items ==") % 
-                    {'queue':outqdir, 'items':len(outqueue)})
+                    {'queue': outqdir, 'items': len(outqueue)})
             runquery(outqueue, 2, preids)
         else:
             print _("== Skipping the outbound queue 0 items found ==")
-        
-        

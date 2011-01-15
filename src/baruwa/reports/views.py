@@ -35,6 +35,7 @@ from baruwa.reports.utils import pack_json_data, run_query, run_hosts_query
 from baruwa.messages.models import Message
 from baruwa.utils.misc import gen_dynamic_query, get_active_filters
 
+
 @login_required
 def index(request):
     """index"""
@@ -55,11 +56,11 @@ def index(request):
             if not request.session.get('filter_by', False):
                 request.session['filter_by'] = []
                 request.session['filter_by'].append(
-                    {'field':in_field, 'filter':in_filtered_by,
-                    'value':in_value})
+                    {'field': in_field, 'filter': in_filtered_by,
+                    'value': in_value})
             else:
-                fitem = {'field':in_field, 'filter':in_filtered_by,
-                    'value':in_value}
+                fitem = {'field': in_field, 'filter': in_filtered_by,
+                    'value': in_value}
                 if not fitem in request.session['filter_by']:
                     request.session['filter_by'].append(fitem)
                     request.session.modified = True
@@ -71,7 +72,7 @@ def index(request):
         else:
             success = False
             error_list = filter_form.errors.values()[0]
-            errors = error_list[0] #errorlist(error_list).as_ul()
+            errors = error_list[0]
             if request.session.get('filter_by', False):
                 filter_list = request.session.get('filter_by')
                 data = gen_dynamic_query(data, filter_list, active_filters)
@@ -99,8 +100,8 @@ def index(request):
                         loaded = 1
                         break
             saved_filters.append(
-                {'filter_id':filt.id, 'filter_name':force_escape(filt.name),
-                'is_loaded':loaded})
+                {'filter_id': filt.id, 'filter_name': force_escape(filt.name),
+                'is_loaded': loaded})
 
     if request.is_ajax():
         if not data['newest'] is None and not data['oldest'] is None:
@@ -109,16 +110,17 @@ def index(request):
         else:
             data['newest'] = ''
             data['oldest'] = ''
-        response = simplejson.dumps({'success':success, 'data':data, 
-            'errors':errors, 'active_filters':active_filters, 
-            'saved_filters':saved_filters})
+        response = simplejson.dumps({'success': success, 'data': data, 
+            'errors': errors, 'active_filters': active_filters, 
+            'saved_filters': saved_filters})
         return HttpResponse(response, 
             content_type='application/javascript; charset=utf-8')
 
-    return render_to_response('reports/index.html', {'form':filter_form,
-        'data':data, 'errors':errors, 'active_filters':active_filters,
-        'saved_filters':saved_filters}, 
+    return render_to_response('reports/index.html', {'form': filter_form,
+        'data': data, 'errors': errors, 'active_filters': active_filters,
+        'saved_filters': saved_filters}, 
         context_instance=RequestContext(request))
+
 
 @login_required
 def rem_filter(request, index_num):
@@ -145,8 +147,8 @@ def save_filter(request, index_num):
 
         filters = request.session.get('filter_by')
         filt = filters[int(index_num)]
-        name = filter_items[filt["field"]]+" "
-        +filter_by[int(filt["filter"])]+" "+filt["value"]
+        name = filter_items[filt["field"]] + " "
+        + filter_by[int(filt["filter"])] + " " + filt["value"]
         fil = SavedFilter(name=name, field=filt["field"], 
         op_field=filt["filter"], value=filt["value"], 
         user=request.user)
@@ -159,11 +161,12 @@ def save_filter(request, index_num):
                 return index(request)
             else:
                 response = simplejson.dumps(
-                    {'success':False, 'data':[], 'errors':error_msg, 
-                    'active_filters':[], 'saved_filters':[]})
+                    {'success': False, 'data': [], 'errors': error_msg, 
+                    'active_filters': [], 'saved_filters': []})
                 return HttpResponse(response, 
                     content_type='application/javascript; charset=utf-8')
     return HttpResponseRedirect(reverse('reports-index'))
+
 
 @login_required
 def load_filter(request, index_num):
@@ -173,11 +176,11 @@ def load_filter(request, index_num):
         if not request.session.get('filter_by', False):
             request.session['filter_by'] = []
             request.session['filter_by'].append(
-                {'field':filt.field, 'filter':filt.op_field, 
-                'value':filt.value})
+                {'field': filt.field, 'filter': filt.op_field, 
+                'value': filt.value})
         else:
-            fitem = {'field':filt.field, 'filter':filt.op_field, 
-                'value':filt.value}
+            fitem = {'field': filt.field, 'filter': filt.op_field, 
+                'value': filt.value}
             if not fitem in request.session['filter_by']:
                 request.session['filter_by'].append(fitem)
                 request.session.modified = True
@@ -188,12 +191,13 @@ def load_filter(request, index_num):
     except:
         error_msg = _('This filter you attempted to load does not exist')
         if request.is_ajax():
-            response = simplejson.dumps({'success':False, 'data':[], 
-                'errors':error_msg, 'active_filters':[], 'saved_filters':[]})
+            response = simplejson.dumps({'success': False, 'data': [], 
+                'errors': error_msg, 'active_filters': [], 'saved_filters': []})
             return HttpResponse(response, 
                 content_type='application/javascript; charset=utf-8')
         else:
             return HttpResponseRedirect(reverse('reports-index'))
+
 
 @login_required
 def del_filter(request, index_num):
@@ -203,9 +207,9 @@ def del_filter(request, index_num):
     except:
         error_msg = _('This filter you attempted to delete does not exist')
         if request.is_ajax():
-            response = simplejson.dumps({'success':False, 
-                'data':[], 'errors':error_msg, 'active_filters':[], 
-                'saved_filters':[]})
+            response = simplejson.dumps({'success': False, 
+                'data': [], 'errors': error_msg, 'active_filters': [], 
+                'saved_filters': []})
             return HttpResponse(response, 
                 content_type='application/javascript; charset=utf-8')
         else:
@@ -216,15 +220,16 @@ def del_filter(request, index_num):
         except:
             error_msg = _('Deletion of the filter failed, Try again')
             if request.is_ajax():
-                response = simplejson.dumps({'success':False, 'data':[], 
-                    'errors':error_msg, 'active_filters':[], 
-                    'saved_filters':[]})
+                response = simplejson.dumps({'success': False, 'data': [], 
+                    'errors': error_msg, 'active_filters': [], 
+                    'saved_filters': []})
                 return HttpResponse(response, 
                     content_type='application/javascript; charset=utf-8')
         if request.is_ajax():
             return index(request)
         else:
             return HttpResponseRedirect(reverse('reports-index'))
+
 
 @login_required
 def report(request, report_kind):
@@ -233,43 +238,43 @@ def report(request, report_kind):
     template = "reports/piereport.html"
     active_filters = []
     if report_kind == 1:
-        data = run_query('from_address', {'from_address__exact':""}, 
+        data = run_query('from_address', {'from_address__exact': ""}, 
             '-num_count', request, active_filters)
         pie_data = pack_json_data(data, 'from_address', 'num_count')
         report_title = _("Top senders by quantity")
     elif report_kind == 2:
-        data = run_query('from_address', {'from_address__exact':""}, 
+        data = run_query('from_address', {'from_address__exact': ""}, 
             '-total_size', request, active_filters)
         pie_data = pack_json_data(data, 'from_address', 'total_size')
         report_title = _("Top senders by volume")
     elif report_kind == 3:
-        data = run_query('from_domain', {'from_domain__exact':""}, 
+        data = run_query('from_domain', {'from_domain__exact': ""}, 
             '-num_count', request, active_filters)
         pie_data = pack_json_data(data, 'from_domain', 'num_count')
         report_title = _("Top sender domains by quantity")
     elif report_kind == 4:
-        data = run_query('from_domain', {'from_domain__exact':""}, 
+        data = run_query('from_domain', {'from_domain__exact': ""}, 
             '-total_size', request, active_filters)
         pie_data = pack_json_data(data, 'from_domain', 'total_size')
         report_title = _("Top sender domains by volume")
     elif report_kind == 5:
-        data = run_query('to_address', {'to_address__exact':""}, 
+        data = run_query('to_address', {'to_address__exact': ""}, 
             '-num_count', request, active_filters)
         pie_data = pack_json_data(data, 'to_address', 'num_count')
         report_title = _("Top recipients by quantity")
     elif report_kind == 6:
-        data = run_query('to_address', {'to_address__exact':""}, 
+        data = run_query('to_address', {'to_address__exact': ""}, 
             '-total_size', request, active_filters)
         pie_data = pack_json_data(data, 'to_address', 'total_size')
         report_title = _("Top recipients by volume")
     elif report_kind == 7:
-        data = run_query('to_domain', {'to_domain__exact':"", 
-            'to_domain__isnull':False}, '-num_count', request, active_filters)
+        data = run_query('to_domain', {'to_domain__exact': "", 
+            'to_domain__isnull': False}, '-num_count', request, active_filters)
         pie_data = pack_json_data(data, 'to_domain', 'num_count')
         report_title = _("Top recipient domains by quantity")
     elif report_kind == 8:
-        data = run_query('to_domain', {'to_domain__exact':"", 
-            'to_domain__isnull':False}, '-total_size', request, active_filters)
+        data = run_query('to_domain', {'to_domain__exact': "", 
+            'to_domain__isnull': False}, '-total_size', request, active_filters)
         pie_data = pack_json_data(data, 'to_domain', 'total_size')
         report_title = _("Top recipient domains by volume")
     elif report_kind == 9:
@@ -291,13 +296,14 @@ def report(request, report_kind):
 
         data = SpamScores.objects.all(request.user, filter_list, addrs, act)
         for row in data:
-            scores.append({'value':int(row.score), 'text':str(row.score)})
-            counts.append({'y':int(row.count), 'tooltip':'Score '+str(row.score)+': '+str(row.count)})
+            scores.append({'value': int(row.score), 'text': str(row.score)})
+            counts.append({'y': int(row.count), 
+            'tooltip': 'Score ' + str(row.score) + ': ' + str(row.count)})
 
         if request.is_ajax():
             data = [obj.obj_to_dict() for obj in data]
 
-        pie_data = {'scores':scores, 'count':counts}
+        pie_data = {'scores': scores, 'count': counts}
         template = "reports/barreport.html"
         report_title = _("Spam Score distribution")
     elif report_kind == 10:
@@ -340,24 +346,24 @@ def report(request, report_kind):
             virus_total.append(int(row.virus_total))
             size_total.append(int(row.size_total))
 
-        pie_data = {'dates':[{'value':index+1, 'text':date} 
+        pie_data = {'dates': [{'value': index + 1, 'text': date} 
                     for index, date in enumerate(dates)], 
-                    'mail':[{'y':total, 
-                    'tooltip':'Mail totals on '+dates[index]+': '+str(total)} 
+                    'mail': [{'y': total, 
+                    'tooltip': 'Mail totals on ' + dates[index] + ': ' + str(total)} 
                     for index, total in enumerate(mail_total)], 
-                    'spam':[{'y':total, 
-                    'tooltip':'Spam totals on '+dates[index]+': '+str(total)} 
+                    'spam': [{'y': total, 
+                    'tooltip': 'Spam totals on ' + dates[index] + ': ' + str(total)} 
                     for index, total in enumerate(spam_total)], 
-                    'virii':[{'y':total, 
-                    'tooltip':'Virus totals on '+dates[index]+': '+str(total)} 
+                    'virii': [{'y': total, 
+                    'tooltip': 'Virus totals on ' + dates[index] + ': ' + str(total)} 
                     for index, total in enumerate(virus_total)], 
-                    'mail_total':sum(mail_total), 
-                    'spam_total':sum(spam_total), 
-                    'virus_total':sum(virus_total), 
-                    'volume_total':sum(size_total)}
+                    'mail_total': sum(mail_total), 
+                    'spam_total': sum(spam_total), 
+                    'virus_total': sum(virus_total), 
+                    'volume_total': sum(size_total)}
         try:
-            vpct = "%.1f" % ((1.0 * sum(virus_total)/sum(mail_total))*100)
-            spct = "%.1f" % ((1.0 * sum(spam_total)/sum(mail_total))*100)
+            vpct = "%.1f" % ((1.0 * sum(virus_total) / sum(mail_total)) * 100)
+            spct = "%.1f" % ((1.0 * sum(spam_total) / sum(mail_total)) * 100)
         except ZeroDivisionError:
             vpct = "0.0"
             spct = "0.0"
@@ -372,13 +378,13 @@ def report(request, report_kind):
     filter_form = FilterForm()
 
     if request.is_ajax():
-        response = simplejson.dumps({'items':list(data), 'pie_data':pie_data})
+        response = simplejson.dumps({'items': list(data), 'pie_data': pie_data})
         return HttpResponse(response, 
             content_type='application/javascript; charset=utf-8')
     else:
         if not report_kind in [9, 11]:
             pie_data = simplejson.dumps(pie_data)
-        return render_to_response(template, {'pie_data':pie_data, 
-            'top_items':data, 'report_title':report_title, 
-            'report_kind':report_kind, 'active_filters':active_filters, 
-            'form':filter_form}, context_instance=RequestContext(request))
+        return render_to_response(template, {'pie_data': pie_data, 
+            'top_items': data, 'report_title': report_title, 
+            'report_kind': report_kind, 'active_filters': active_filters, 
+            'form': filter_form}, context_instance=RequestContext(request))

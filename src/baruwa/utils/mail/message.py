@@ -26,6 +26,7 @@ import re, codecs
 NOTFOUND = object()
 UNCLEANTAGS = ['html', 'head', 'link', 'img', 'a', 'body']
 
+
 class EmailParser(object):
     """
     Parses a email message
@@ -49,8 +50,8 @@ class EmailParser(object):
         header_sections = []
         try:
             headers = decode_header(header_text)
-            header_sections = [ unicode(text, charset or default)
-                                for text, charset in headers ]
+            header_sections = [unicode(text, charset or default)
+                                for text, charset in headers]
         except:
             pass
         return u"".join(header_sections)
@@ -74,13 +75,13 @@ class EmailParser(object):
 
     def process_msg(self, message, parts, attachments):
         "Recursive message processing"
-        
+
         content_type = message.get_content_type()
         attachment = message.get_param('attachment',
                     NOTFOUND, 'Content-Disposition')
         if content_type == 'message/rfc822':
-            [ attachments.append(self.parse_attached_msg(msg))
-                for msg in message.get_payload() ]
+            [attachments.append(self.parse_attached_msg(msg))
+                for msg in message.get_payload()]
             return True
 
         if message.is_multipart():
@@ -89,20 +90,20 @@ class EmailParser(object):
                     if self.process_msg(par, parts, attachments):
                         return True
             else:
-                [ self.process_msg(par, parts, attachments)
-                    for par in message.get_payload() ]
+                [self.process_msg(par, parts, attachments)
+                    for par in message.get_payload()]
             return True
         success = False
 
         if (content_type == 'text/html'
             and attachment is NOTFOUND):
-            parts.append({'type':'html',
-                'content':self.return_html_part(message)})
+            parts.append({'type': 'html',
+                'content': self.return_html_part(message)})
             success = True
         elif (content_type.startswith('text/')
                 and attachment is NOTFOUND):
-            parts.append({'type':'text',
-                'content':self.return_text_part(message)})
+            parts.append({'type': 'text',
+                'content': self.return_text_part(message)})
             success = True
         filename = message.get_filename(None)
         if filename and not attachment is NOTFOUND:
@@ -111,7 +112,6 @@ class EmailParser(object):
             success = True
         return success
 
-        
     def return_text_part(self, part):
         "Encodes the message as utf8"
         body = part.get_payload(decode=True)
@@ -151,16 +151,14 @@ class EmailParser(object):
                         data = part.as_string()
                     else:
                         data = part.get_payload(decode=True)
-                    attachment  = StringIO(data)
-                    attachment.content_type =  part.get_content_type()
+                    attachment = StringIO(data)
+                    attachment.content_type = part.get_content_type()
                     attachment.size = len(data)
                     attachment.name = filename
                     return attachment
         return None
-        
+
     def sanitize_html(self, msg):
         "Clean up html"
         cleaner = Cleaner(remove_tags=UNCLEANTAGS)
         return cleaner.clean_html(msg)
-
-        

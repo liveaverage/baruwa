@@ -40,6 +40,7 @@ def get_message_path(qdir, date, message_id):
             return file_path
     return None
 
+
 def search_quarantine(date, message_id):
     """search_quarantine"""
     qdir = get_config_option('Quarantine Dir')
@@ -47,6 +48,7 @@ def search_quarantine(date, message_id):
     date = date.replace('-', '')
     file_name = get_message_path(qdir, date, message_id)
     return file_name
+
 
 def release_mail(mail_path, to_addr, from_addr):
     """
@@ -67,6 +69,7 @@ def release_mail(mail_path, to_addr, from_addr):
     else:
         return False
     return True
+
 
 def sa_learn(mail_path, learn_as):
     """
@@ -89,6 +92,7 @@ def sa_learn(mail_path, learn_as):
     else:
         return {'success': False, 'output': 'mail file could not be read'}
 
+
 def clean_regex(rule):
     """
     Formats a regex for parsing MailScanner
@@ -109,6 +113,7 @@ def clean_regex(rule):
     rule = "^%s\.?$" % rule
     return rule
 
+
 def host_is_local(host):
     """
     Checks if host is local to host running the function
@@ -119,6 +124,7 @@ def host_is_local(host):
         return True
     else:
         return False
+
 
 def test_smtp_server(server, port, test_address):
     "Test smtp server delivery"

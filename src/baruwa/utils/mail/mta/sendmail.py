@@ -31,14 +31,15 @@ from email.Header import decode_header
 
 SUBJECT_RE = re.compile(r'(?:.+)Subject:(.+)')
 
+
 class QueueParser(object):
     "Sendmail queue parser"
-    
+
     def __init__(self, queue):
         "init"
         self.qdir = queue
         self.items = []
-    
+
     def process(self):
         "process"
         def getqfs(matched, dirname, files):
@@ -46,7 +47,7 @@ class QueueParser(object):
             matched.extend([os.path.join(dirname, filename) 
                             for filename in files 
                             if filename.startswith('qf')])
-            
+
         def extractinfo(qf):
             "extract attribs from qf file"
             try:
@@ -67,7 +68,7 @@ class QueueParser(object):
                 possibles = []
                 possibles.append(os.path.join(dirpath, 
                                 'df' + attribs['messageid']))
-                possibles.append(os.path.join(dirpath.replace('qf','df'), 
+                possibles.append(os.path.join(dirpath.replace('qf', 'df'), 
                                 'df' + attribs['messageid']))
                 for path in possibles:
                     if os.path.exists(path):

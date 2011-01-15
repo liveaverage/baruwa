@@ -26,11 +26,12 @@ if settings.SESSION_COOKIE_SECURE:
 else:
     from httplib import HTTPConnection
 
+
 class ProcessRemote(HTTPConnection):
     "Inherit from httplib"
-    
+
     headers = {'X-Requested-With': 'XMLHttpRequest'}
-    
+
     def __init__(self, host, url, cookie=None, params=None):
         "init"
         self.url = url
@@ -42,16 +43,15 @@ class ProcessRemote(HTTPConnection):
             self.headers['Cookie'] = cookie
         self.params = params
         HTTPConnection.__init__(self, host)
-    
+
     def post(self):
         "POST"
         self.request('POST', self.url, self.params, self.headers)
         self.response = self.getresponse()
         self.close()
-        
+
     def get(self):
         "GET"
         self.request('GET', self.url, self.params, self.headers)
         self.response = self.getresponse()
         self.close()
-    

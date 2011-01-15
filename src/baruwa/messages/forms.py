@@ -33,8 +33,8 @@ SALEARN_OPTIONS = (
   ('2', _('Ham')),
   ('3', _('Forget')),
 )
-
 EMPTY_VALUES = (None, '')
+
 
 class QuarantineProcessForm(forms.Form):
     """
@@ -74,5 +74,5 @@ class QuarantineProcessForm(forms.Form):
                         if not email_re.match(email.strip()):
                             raise forms.ValidationError(
                             _('%(email)s is not a valid e-mail address.') 
-                            % {'email':force_escape(email)})
+                            % {'email': force_escape(email)})
         return cleaned_data

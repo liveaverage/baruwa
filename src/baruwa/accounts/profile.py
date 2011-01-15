@@ -26,6 +26,7 @@ try:
 except ImportError:
     from django.core.validators import email_re
 
+
 def retrieve_profile(user):
     "get or create a profile"
     try:
@@ -38,25 +39,25 @@ def retrieve_profile(user):
         profile = UserProfile(user=user, account_type=account_type)
         profile.save()
     return profile
-    
+
+
 def set_profile(request):
     "save a profile"
     profile = retrieve_profile(request.user)
     profile_form = UserProfileForm(request.POST, instance=profile)
     profile_form.save()
-    
+
+
 def set_user_addresses(request):
     """
     set addresses in the session
     """
     if not request.user.is_superuser:
         profile = retrieve_profile(request.user)
-        addresses = [ addr.address for addr in UserAddresses.objects.filter(
+        addresses = [addr.address for addr in UserAddresses.objects.filter(
             user=request.user).exclude(enabled__exact=0)]
         if profile.account_type == 3:
             if email_re.match(request.user.username):
                 addresses.append(request.user.username)
-        request.session['user_filter'] = {'account_type':profile.account_type, 
-            'addresses':addresses}
-        
-        
+        request.session['user_filter'] = {'account_type': profile.account_type, 
+            'addresses': addresses}

@@ -42,6 +42,7 @@ from baruwa.config.forms import MailAuthHostForm, EditMailAuthHostForm, \
 
 AUTH_TYPES = ['', 'pop3', 'imap', 'smtp']
 
+
 @login_required
 @onlysuperusers
 def index(request, page=1, direction='dsc', order_by='id', 
@@ -58,7 +59,7 @@ def index(request, page=1, direction='dsc', order_by='id',
         'id', 'enabled', 'address', 'user__id', 'user__username', 
         'user__first_name', 'user__last_name').filter(
         address_type=1).filter(user=request.user)
-        
+
     if request.is_ajax():
         p = Paginator(domains, 15)
         if page == 'last':
@@ -72,47 +73,49 @@ def index(request, page=1, direction='dsc', order_by='id',
             sp = 1
         ep = page + ap + 1
         pn = [n for n in range(sp, ep) if n > 0 and n <= p.num_pages]
-        pg = {'page':page, 'pages':p.num_pages, 'page_numbers':pn, 
-        'next':po.next_page_number(), 'previous':po.previous_page_number(), 
-        'has_next':po.has_next(), 'has_previous':po.has_previous(), 
-        'show_first':1 not in pn, 'show_last':p.num_pages not in pn, 
-        'app': 'settings', 'list_all':1, 'direction':direction, 
-        'order_by':order_by}
-        json = simplejson.dumps({'items':domains, 'paginator':pg})
+        pg = {'page': page, 'pages': p.num_pages, 'page_numbers': pn, 
+        'next': po.next_page_number(), 'previous': po.previous_page_number(), 
+        'has_next': po.has_next(), 'has_previous': po.has_previous(), 
+        'show_first': 1 not in pn, 'show_last': p.num_pages not in pn, 
+        'app': 'settings', 'list_all': 1, 'direction': direction, 
+        'order_by': order_by}
+        json = simplejson.dumps({'items': domains, 'paginator': pg})
         return HttpResponse(json, mimetype='application/javascript')    
     return  object_list(request, template_name=template, queryset=domains, 
-        paginate_by=15, page=page, extra_context={'app':'settings', 
-        'direction':direction, 'order_by':order_by, 'list_all':1})
-    
+        paginate_by=15, page=page, extra_context={'app': 'settings', 
+        'direction': direction, 'order_by': order_by, 'list_all': 1})
+
+
 @login_required
 @onlysuperusers    
 def view_domain(request, domain_id, template='config/domain.html'):
     "Displays a domain"
-    
+
     domain = get_object_or_404(UserAddresses, id=domain_id, 
         address_type=1)
-    
+
     servers = MailHost.objects.filter(useraddress=domain)
     authservers = MailAuthHost.objects.filter(useraddress=domain)
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
 
+
 @login_required
 @onlysuperusers    
 def add_host(request, domain_id, template='config/add_host.html'):
     "Adds Mail host"
-    
+
     domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
-    
+
     if request.method == 'POST':
         form = MailHostForm(request.POST)
         if form.is_valid():
             try:
                 host = form.save()
                 msg = _('Delivery SMTP server: %(server)s was'
-                        ' added successfully') % {'server':host.address}
+                        ' added successfully') % {'server': host.address}
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True, 'html':msg})
+                    response = simplejson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -121,31 +124,32 @@ def add_host(request, domain_id, template='config/add_host.html'):
             except:
                 msg = _('Adding of Delivery SMTP server failed')
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True, 'html':msg})
+                    response = simplejson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
     else:
-        form =  MailHostForm(initial = {'useraddress': domain.id})
+        form = MailHostForm(initial = {'useraddress': domain.id})
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
-    
+
+
 @login_required
 @onlysuperusers
 def edit_host(request, host_id, template='config/edit_host.html'):
     "Edists Mail host"
-    
+
     host = get_object_or_404(MailHost, id=host_id)
-    
+
     if request.method == 'POST':
         form = EditMailHost(request.POST, instance=host)
         if form.is_valid():
             try:
                 form.save()
                 msg = _('Delivery SMTP server: %(server)s has '
-                        'been updated successfully') % {'server':host.address}
+                        'been updated successfully') % {'server': host.address}
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True, 'html':msg})
+                    response = simplejson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -153,9 +157,9 @@ def edit_host(request, host_id, template='config/edit_host.html'):
                     args=[host.useraddress.id]))
             except:
                 msg = _('Delivery SMTP server: %(server)s update failed') % {
-                'server':host.address}
+                'server': host.address}
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True, 'html':msg})
+                    response = simplejson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -163,24 +167,25 @@ def edit_host(request, host_id, template='config/edit_host.html'):
         form = EditMailHost(instance=host)
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
-    
+
+
 @login_required
 @onlysuperusers
 def delete_host(request, host_id, template='config/delete_host.html'):
     'Deletes Mail host'
-    
+
     host = get_object_or_404(MailHost, id=host_id)
-    
+
     if request.method == 'POST':
         form = DeleteMailHost(request.POST, instance=host)
         if form.is_valid():
             try:
                 go_id = host.useraddress.id
                 msg = _('Delivery SMTP server: %(server)s has been deleted') % {
-                'server':host.address}
+                'server': host.address}
                 host.delete()
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True, 'html':msg})
+                    response = simplejson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -188,9 +193,9 @@ def delete_host(request, host_id, template='config/delete_host.html'):
                                             args=[go_id]))
             except:
                 msg = _('Delivery SMTP server: %(server)s could not be deleted') % {
-                'server':host.address}
+                'server': host.address}
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':False, 'html':msg})
+                    response = simplejson.dumps({'success': False, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -198,37 +203,39 @@ def delete_host(request, host_id, template='config/delete_host.html'):
         form = DeleteMailHost(instance=host)
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
-    
+
+
 @login_required
 @onlysuperusers
 def test_host(request, host_id):
     'Tests SMTP delivery to mail host'
-    
+
     host = get_object_or_404(MailHost, id=host_id)
-    
+
     test_address = "postmaster@%s" % host.useraddress.address
     from baruwa.utils.process_mail import test_smtp_server
-    
+
     if test_smtp_server(host.address, host.port, test_address):
         msg = _('Server %(server)s is operational and'
                 ' accepting mail for: %(dom)s') % {
-                'server':host.address, 
-                'dom':host.useraddress.address}
+                'server': host.address, 
+                'dom': host.useraddress.address}
         success = True
     else:
         success = False
         msg = _('Server %(server)s is NOT accepting mail for : %(dom)s') % {
-        'server':host.address, 'dom':host.useraddress.address}
-        
+        'server': host.address, 'dom': host.useraddress.address}
+
     if request.is_ajax():
-        response = simplejson.dumps({'success':success, 'html':msg})
+        response = simplejson.dumps({'success': success, 'html': msg})
         return HttpResponse(response, 
             content_type='application/javascript; charset=utf-8')
-        
+
     request.user.message_set.create(message=msg)
     return HttpResponseRedirect(reverse('view-domain', 
         args=[host.useraddress.id]))
-    
+
+
 @login_required
 @onlysuperusers
 def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
@@ -241,10 +248,10 @@ def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
                 host = form.save()
                 msg = _('External authentication %(auth)s: on host %(host)s'
                         ' for domain %(dom)s was added successfully') % {
-                    'auth':AUTH_TYPES[host.protocol], 'host':host.address, 
-                    'dom':host.useraddress.address}
+                    'auth': AUTH_TYPES[host.protocol], 'host': host.address, 
+                    'dom': host.useraddress.address}
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True, 'html':msg})
+                    response = simplejson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -253,7 +260,7 @@ def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
             except:
                 msg = _('Addition of external authentication failed')
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True, 'html':msg})
+                    response = simplejson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -262,13 +269,14 @@ def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
 
+
 @login_required
 @onlysuperusers
 def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
     'Edits an external auth host'
-    
+
     host = get_object_or_404(MailAuthHost, id=host_id)
-    
+
     if request.method == 'POST':
         form = EditMailAuthHostForm(request.POST, instance=host)
         if form.is_valid():
@@ -276,11 +284,11 @@ def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
                 saved_host = form.save()
                 msg = _('External authentication %(auth)s: on host %(host)s for'
                         ' domain %(dom)s has been updated successfully') % {
-                    'auth':AUTH_TYPES[saved_host.protocol], 
-                    'host':saved_host.address, 
-                    'dom':saved_host.useraddress.address}
+                    'auth': AUTH_TYPES[saved_host.protocol], 
+                    'host': saved_host.address, 
+                    'dom': saved_host.useraddress.address}
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True, 'html':msg})
+                    response = simplejson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -289,7 +297,7 @@ def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
             except:
                 msg = _('Update of external authentication failed')
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True, 'html':msg})
+                    response = simplejson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -298,13 +306,14 @@ def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
 
+
 @login_required
 @onlysuperusers
 def delete_auth_host(request, host_id, 
                     template='config/delete_auth_host.html'):
     'Deletes an external auth host'
     host = get_object_or_404(MailAuthHost, id=host_id)
-    
+
     if request.method == 'POST':
         form = DeleteMailAuthHostForm(request.POST, instance=host)
         if form.is_valid():
@@ -312,13 +321,13 @@ def delete_auth_host(request, host_id,
                 go_id = host.useraddress.id
                 msg = _('External authentication %(auth)s: on host %(host)s'
                         ' for domain %(dom)s has been deleted') % {
-                            'auth':AUTH_TYPES[host.protocol], 
-                            'host':host.address, 
-                            'dom':host.useraddress.address
+                            'auth': AUTH_TYPES[host.protocol], 
+                            'host': host.address, 
+                            'dom': host.useraddress.address
                         }
                 host.delete()
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':True, 'html':msg})
+                    response = simplejson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -326,12 +335,12 @@ def delete_auth_host(request, host_id,
             except:
                 msg = _('External authentication %(auth)s: on host %(host)s'
                         ' for domain %(dom)s could not be deleted') % {
-                        'auth':AUTH_TYPES[host.protocol], 
-                        'host':host.address, 
-                        'dom':host.useraddress.address
+                        'auth': AUTH_TYPES[host.protocol], 
+                        'host': host.address, 
+                        'dom': host.useraddress.address
                         }
                 if request.is_ajax():
-                    response = simplejson.dumps({'success':False, 'html':msg})
+                    response = simplejson.dumps({'success': False, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -340,6 +349,7 @@ def delete_auth_host(request, host_id,
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
 
+
 @login_required
 @onlysuperusers
 def list_scanners(request, page=1, direction='dsc', order_by='id', 
@@ -347,7 +357,7 @@ def list_scanners(request, page=1, direction='dsc', order_by='id',
     'lists the scanning nodes'
     scanners = ScannerHost.objects.values('id', 'address')
     configs = ScannerConfig.objects.values('value')[:1]
-    
+
     if request.is_ajax():
         p = Paginator(scanners, 15)
         if page == 'last':
@@ -360,18 +370,19 @@ def list_scanners(request, page=1, direction='dsc', order_by='id',
             sp = 1
         ep = page + ap + 1
         pn = [n for n in range(sp, ep) if n > 0 and n <= p.num_pages]
-        pg = {'page':page, 'pages':p.num_pages, 'page_numbers':pn, 
-        'next':po.next_page_number(), 'previous':po.previous_page_number(), 
-        'has_next':po.has_next(), 'has_previous':po.has_previous(), 
-        'show_first':1 not in pn, 'show_last':p.num_pages not in pn, 
-        'app': 'settings', 'list_all':1, 'direction':direction, 
-        'order_by':order_by}
-        json = simplejson.dumps({'items':scanners, 'paginator':pg})
+        pg = {'page': page, 'pages': p.num_pages, 'page_numbers': pn, 
+        'next': po.next_page_number(), 'previous': po.previous_page_number(), 
+        'has_next': po.has_next(), 'has_previous': po.has_previous(), 
+        'show_first': 1 not in pn, 'show_last': p.num_pages not in pn, 
+        'app': 'settings', 'list_all': 1, 'direction': direction, 
+        'order_by': order_by}
+        json = simplejson.dumps({'items': scanners, 'paginator': pg})
         return HttpResponse(json, mimetype='application/javascript')    
     return  object_list(request, template_name=template, queryset=scanners, 
-        paginate_by=15, page=page, extra_context={'app':'settings', 
-        'direction':direction, 'order_by':order_by, 'list_all':1})
-        
+        paginate_by=15, page=page, extra_context={'app': 'settings', 
+        'direction': direction, 'order_by': order_by, 'list_all': 1})
+
+
 @login_required
 @onlysuperusers
 def view_scanner(request, scanner_id, template='config/view_scanner.html'):
@@ -380,7 +391,7 @@ def view_scanner(request, scanner_id, template='config/view_scanner.html'):
     configs = ScannerConfig.objects.values('value')
     if not configs:
         msg = _('The node %(node)s is not been initialized,'
-                ' Please initialize') % {'node':scanner.address}
+                ' Please initialize') % {'node': scanner.address}
         request.user.message_set.create(message=msg)
         return HttpResponseRedirect(reverse('init-scanner', 
                                     args=[scanner.id]))
@@ -388,10 +399,11 @@ def view_scanner(request, scanner_id, template='config/view_scanner.html'):
     sections = ConfigSection.objects.values('id', 'name')
     side1 = sections[:14]
     side2 = sections[14:]
-    
+
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
-    
+
+
 @login_required
 @onlysuperusers
 def init_scanner(request, scanner_id, template='config/init_scanner.html'):
@@ -405,14 +417,14 @@ def init_scanner(request, scanner_id, template='config/init_scanner.html'):
                 from django.db import connection
                 import re
                 path = getattr(
-                settings,'TEMPLATE_DIRS', ('/tmp'))[0] + '/config/scanner-init.sql'
+                settings, 'TEMPLATE_DIRS', ('/tmp'))[0] + '/config/scanner-init.sql'
                 sql_file = open(path, 'r')
                 sql = sql_file.read()
                 sql_file.close()
                 sql = re.sub(r'scanner_id', str(scanner.id), sql)
                 conn = connection.cursor()
                 conn.execute(sql)
-                msg = _('The node %(node)s has been initialized') % {'node':scanner.address}
+                msg = _('The node %(node)s has been initialized') % {'node': scanner.address}
                 request.user.message_set.create(message=msg)
                 return HttpResponseRedirect(reverse('view-scanner', 
                                             args=[scanner.id]))
@@ -424,6 +436,7 @@ def init_scanner(request, scanner_id, template='config/init_scanner.html'):
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
 
+
 @login_required
 @onlysuperusers
 def view_settings(request, scanner_id, section_id, 
@@ -431,4 +444,3 @@ def view_settings(request, scanner_id, section_id,
     'Displays settings on a section basis'
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
-   

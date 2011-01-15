@@ -44,7 +44,7 @@ class UserAddresses(models.Model):
 
     def __unicode__(self):
         return u'%d' % self.user.id
-        
+
     def save(self):
         ""
         account = UserProfile.objects.get(user=self.user)
@@ -64,7 +64,7 @@ class UserProfile(models.Model):
         (2, 'Domain Admin'),
         (3, 'User'),
     )
-    
+
     id = models.AutoField(primary_key=True)
     send_report = models.BooleanField(default=True)
     scan_mail = models.BooleanField(default=True)
@@ -72,12 +72,13 @@ class UserProfile(models.Model):
     sa_low_score = models.IntegerField(default=0)
     account_type = models.IntegerField(choices=ACCOUNT_TYPES, default=3)
     user = models.ForeignKey(User, unique=True)
-    
+
     class Meta:
         db_table = 'profiles'
-            
+
     def __unicode__(self):
-        return u"User profile for: "+ self.user.username
+        return u"User profile for: " + self.user.username
+
 
 def create_user_profile(sender, **kwargs):
     """
@@ -91,10 +92,10 @@ def create_user_profile(sender, **kwargs):
         if user.is_superuser:
             profile.account_type = 1
             profile.save()
-        
+
 #def delete_user_profile(sender, **kwargs):
 #    """delete_user_profile"""
 #    user = kwargs['instance']
-    
+
 
 post_save.connect(create_user_profile, sender=User)

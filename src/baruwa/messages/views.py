@@ -42,6 +42,7 @@ from baruwa.utils.mail.message import EmailParser
 from baruwa.utils.context_processors import status
 from baruwa.utils.http import ProcessRemote
 
+
 @login_required
 def index(request, list_all=0, page=1, view_type='full', direction='dsc',
         order_by='timestamp', quarantine_type=None):
@@ -96,7 +97,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             'otherinfected', 'whitelisted', 'blacklisted', 'nameinfected',
             'scaned').order_by(order_by)
         message_list = apply_filter(message_list, request, active_filters)
-    
+
     if request.is_ajax():
         sys_status = jsonify_status(status(request))
         if not list_all:
@@ -116,29 +117,30 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
                 startp = 1
             endp = page + ap + 1
             pn = [n for n in range(startp, endp) if n > 0 and n <= p.num_pages]
-            pg = {'page':page, 'pages':p.num_pages, 'page_numbers':pn,
-            'next':po.next_page_number(), 'previous':po.previous_page_number(),
-            'has_next':po.has_next(), 'has_previous':po.has_previous(),
-            'show_first':1 not in pn, 'show_last':p.num_pages not in pn,
-            'view_type':view_type, 'direction':direction, 'order_by':ordering,
-            'quarantine_type':quarantine_type}
-        json = simplejson.dumps({'items':message_list, 'paginator':pg, 
-                                'status':sys_status})
+            pg = {'page': page, 'pages': p.num_pages, 'page_numbers': pn,
+            'next': po.next_page_number(), 'previous': po.previous_page_number(),
+            'has_next': po.has_next(), 'has_previous': po.has_previous(),
+            'show_first': 1 not in pn, 'show_last': p.num_pages not in pn,
+            'view_type': view_type, 'direction': direction, 'order_by': ordering,
+            'quarantine_type': quarantine_type}
+        json = simplejson.dumps({'items': message_list, 'paginator': pg, 
+                                'status': sys_status})
         return HttpResponse(json, mimetype='application/javascript')
 
     if list_all:
         return object_list(request, template_name='messages/index.html',
         queryset=message_list, paginate_by=50, page=page,
         extra_context={'view_type': view_type, 'direction': direction,
-        'order_by': ordering, 'active_filters':active_filters,
-        'list_all':list_all, 'quarantine_type': quarantine_type},
+        'order_by': ordering, 'active_filters': active_filters,
+        'list_all': list_all, 'quarantine_type': quarantine_type},
         allow_empty=True)
     else:
         return object_list(request, template_name='messages/index.html',
-        queryset=message_list, extra_context={'view_type':view_type,
-        'direction':direction, 'order_by':ordering,
-        'active_filters':active_filters, 'list_all':list_all,
-        'quarantine_type':quarantine_type})
+        queryset=message_list, extra_context={'view_type': view_type,
+        'direction': direction, 'order_by': ordering,
+        'active_filters': active_filters, 'list_all': list_all,
+        'quarantine_type': quarantine_type})
+
 
 @login_required
 def detail(request, message_id, archive=False):
@@ -206,8 +208,8 @@ def detail(request, message_id, archive=False):
                             success = False
                         template = 'messages/released.html'
                         html = render_to_string(template, 
-                            {'id': message_details.id, 'addrs':to_addr, 
-                            'success':success})
+                            {'id': message_details.id, 'addrs': to_addr, 
+                            'success': success})
                     if quarantine_form.cleaned_data['salearn']:
                         #salean
                         salearn_opts = ('spam', 'ham', 'forget')
@@ -221,7 +223,7 @@ def detail(request, message_id, archive=False):
                                 success = False
                             html = render_to_string(template,
                                 {'id': message_details.id,
-                                'msg':status['output'], 'success':success})
+                                'msg': status['output'], 'success': success})
                         else:
                             success = False
                             html = _('Invalid salearn options supplied')
@@ -237,7 +239,7 @@ def detail(request, message_id, archive=False):
                                 success = False
                         template = "messages/delete.html"
                         html = render_to_string(template,
-                            {'id': message_details.id, 'success':success})
+                            {'id': message_details.id, 'success': success})
                 else:
                     html = _('The quarantined file could not be processed')
                     success = False
@@ -247,13 +249,14 @@ def detail(request, message_id, archive=False):
             html = error_list
             success = False
         if request.is_ajax():
-            response = simplejson.dumps({'success':success, 'html': html})
+            response = simplejson.dumps({'success': success, 'html': html})
             return HttpResponse(response,
                 content_type='application/javascript; charset=utf-8')
 
     quarantine_form.fields['altrecipients'].widget.attrs['size'] = '55'
     return render_to_response('messages/detail.html', locals(),
         context_instance=RequestContext(request))
+
 
 @login_required
 def preview(request, message_id, is_attach=False, attachment_id=0, 
@@ -287,9 +290,9 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                         attachment_data = message.getvalue()
                         mimetype = message.content_type
                         if request.is_ajax():
-                            json = simplejson.dumps({'success':True,
-                            'attachment':base64.encodestring(attachment_data),
-                            'mimetype':mimetype, 'name':message.name})
+                            json = simplejson.dumps({'success': True,
+                            'attachment': base64.encodestring(attachment_data),
+                            'mimetype': mimetype, 'name': message.name})
                             response = HttpResponse(json,
                             content_type='application/javascript; charset=utf-8')
                             message.close()
@@ -305,12 +308,12 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                 else:
                     message = email_parser.parse_msg(msg)
                 if request.is_ajax():
-                    response = simplejson.dumps({'message':message,
-                        'message_id':message_details.id})
+                    response = simplejson.dumps({'message': message,
+                        'message_id': message_details.id})
                     return HttpResponse(response,
                         content_type='application/javascript; charset=utf-8')
                 return render_to_response('messages/preview.html', 
-                    {'message':message, 'message_id':message_details.id},
+                    {'message': message, 'message_id': message_details.id},
                  context_instance=RequestContext(request))
             except:
                 raise Http404
@@ -354,19 +357,20 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                 if remote_request.response.status == 200:
                     items = simplejson.loads(remote_request.response.read())
                     message = items['message']
-                    
+
                     if request.is_ajax():
-                        response = simplejson.dumps({'message':message,
-                            'message_id':message_id})
+                        response = simplejson.dumps({'message': message,
+                            'message_id': message_id})
                         return HttpResponse(response,
                             content_type='application/javascript; charset=utf-8')
                     else:
                         return render_to_response('messages/preview.html',
-                            {'message':message, 'message_id':message_id},
+                            {'message': message, 'message_id': message_id},
                             context_instance=RequestContext(request))
             except:
                 pass
             raise Http404
+
 
 @login_required
 def search(request):
@@ -377,6 +381,7 @@ def search(request):
         return HttpResponseRedirect(reverse('message-detail',
             args=[message_details.id]))
     return HttpResponseRedirect(reverse('main-index'))
+
 
 def auto_release(request, message_uuid, template='messages/release.html'):
     "Releases message from the quarantine without need to login"
@@ -389,7 +394,7 @@ def auto_release(request, message_uuid, template='messages/release.html'):
     if not host_is_local(message_details.hostname):
         rurl = reverse('auto-release', args=[release_record.uuid])
         hostname = message_details.hostname
-        response = {'success':False}
+        response = {'success': False}
         try:
             remote_release = ProcessRemote(hostname, rurl)
             remote_release.get()
@@ -421,14 +426,14 @@ def auto_release(request, message_uuid, template='messages/release.html'):
             raise Http404
 
     html = render_to_string('messages/released.html',
-        {'id': message_details.id, 'addrs':message_details.to_address,
-        'success':success})
+        {'id': message_details.id, 'addrs': message_details.to_address,
+        'success': success})
 
     if request.is_ajax():
-        response = simplejson.dumps({'success':success, 'html': html})
+        response = simplejson.dumps({'success': success, 'html': html})
         return HttpResponse(response,
             content_type='application/javascript; charset=utf-8')
     return render_to_response(template,
-        {'message_id':release_record.message_id,
-        'release_address':message_details.to_address, 'success':success},
+        {'message_id': release_record.message_id,
+        'release_address': message_details.to_address, 'success': success},
         context_instance=RequestContext(request))

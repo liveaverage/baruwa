@@ -22,6 +22,7 @@
 from django.db import models
 from django.db.models import Q
 
+
 class MessageManager(models.Manager):
     "message manager"
     def for_user(self, request):
@@ -103,14 +104,14 @@ class QuarantineMessageManager(models.Manager):
             isquarantined__exact=1
             )
 
+
 class EmailReportMessageManager(models.Manager):
-    "Used in processing the quarantine email reports"
-    
+    "Used in processing the quarantine email reports"    
 
     def for_user(self, user):
         "users messages"
         from baruwa.accounts.models import UserProfile, UserAddresses
-        
+
         addresses = UserAddresses.objects.values('address').filter(
                 user=user).exclude(enabled=0)
         account_type = UserProfile.objects.values('account_type').get(user=user)
@@ -136,7 +137,7 @@ class EmailReportMessageManager(models.Manager):
     def to_user(self, user):
         "messages to user"
         from baruwa.accounts.models import UserProfile, UserAddresses
-        
+
         addresses = UserAddresses.objects.values('address').filter(
             user=user
         ).exclude(enabled=0)
@@ -157,7 +158,7 @@ class EmailReportMessageManager(models.Manager):
     def from_user(self, user):
         "messages from user"
         from baruwa.accounts.models import UserProfile, UserAddresses
-        
+
         addresses = UserAddresses.objects.values('address').filter(
             user=user
         ).exclude(enabled=0)
@@ -174,6 +175,7 @@ class EmailReportMessageManager(models.Manager):
                 return super(EmailReportMessageManager, self).get_query_set().\
                 filter(Q(from_address__in=addresses) | 
                 Q(from_address=user.username)).filter(isquarantined__exact=1)
+
 
 class ReportMessageManager(models.Manager):
 
@@ -204,6 +206,7 @@ class ReportMessageManager(models.Manager):
                     query = query.filter(date__gt=enddate)
         return query
 
+
 class TotalsMessageManager(models.Manager):
     "totals manager"
     def makevals(self, val):
@@ -211,8 +214,8 @@ class TotalsMessageManager(models.Manager):
         index = val[0]
         index += 1
         row = val[1]
-        vpct = "%.1f" % ((1.0 * int(row[2])/int(row[1]))*100)
-        spct = "%.1f" % ((1.0 * int(row[3])/int(row[1]))*100)
+        vpct = "%.1f" % ((1.0 * int(row[2]) / int(row[1])) * 100)
+        spct = "%.1f" % ((1.0 * int(row[3]) / int(row[1])) * 100)
         obj = self.model(id=index, date=str(row[0]),
             mail_total=int(row[1]), virus_total=int(row[2]),
             virus_percent=vpct, spam_total=int(row[3]),
@@ -248,7 +251,7 @@ class TotalsMessageManager(models.Manager):
             conn.execute(query, [domain, domain])
         result_list = map(self.makevals, enumerate(conn.fetchall()))
         return result_list
-        
+
     def all(self, user, filters_list=None, addrs=None, act=3):
         "message totals"
         from django.db import connection
@@ -266,10 +269,10 @@ class TotalsMessageManager(models.Manager):
             sub = gen_dynamic_raw_query(filters_list)
             if user.is_superuser:
                 conn.execute(query + " WHERE " + sub[0] +
-                " GROUP BY date ORDER BY date DESC",sub[1])
+                " GROUP BY date ORDER BY date DESC", sub[1])
             else:
                 sql = raw_user_filter(user, addrs, act)
-                conn.execute(query + " WHERE " + sql +" AND "+ sub[0] +
+                conn.execute(query + " WHERE " + sql + " AND " + sub[0] +
                 " GROUP BY date ORDER BY date DESC", sub[1])
         else:
             if user.is_superuser:
@@ -283,6 +286,7 @@ class TotalsMessageManager(models.Manager):
 
         result_list = map(self.makevals, enumerate(conn.fetchall()))
         return result_list
+
 
 class SpamScoresManager(models.Manager):
     "spam scores manager"
@@ -301,12 +305,12 @@ class SpamScoresManager(models.Manager):
         if filters_list:
             sub = gen_dynamic_raw_query(filters_list)
             if user.is_superuser:
-                conn.execute(query + " WHERE " +  sub[0] +
+                conn.execute(query + " WHERE " + sub[0] +
                 " AND whitelisted=0 AND scaned = 1 GROUP" +
                 " BY score ORDER BY score", sub[1])
             else:
                 sql = raw_user_filter(user, addrs, act)
-                conn.execute(query + " WHERE " + sql + " AND "+ sub[0] +
+                conn.execute(query + " WHERE " + sql + " AND " + sub[0] +
                 " AND whitelisted=0 AND scaned = 1 GROUP BY" +
                 " score ORDER BY score", sub[1])
         else:
@@ -323,6 +327,7 @@ class SpamScoresManager(models.Manager):
         result_list = [self.model(id=i + 1, score=row[0], count=int(row[1])) 
                         for i, row in enumerate(conn.fetchall())]
         return result_list
+
 
 class MessageStatsManager(models.Manager):
     "message stats manager"
@@ -381,6 +386,7 @@ class MessageStats(models.Model):
     class Meta:
         managed = False
 
+
 class SpamScores(models.Model):
     "spam scores"
     score = models.FloatField()
@@ -418,6 +424,7 @@ class MessageTotals(models.Model):
 
     class Meta:
         managed = False
+
 
 class Message(models.Model):
     """
@@ -465,7 +472,7 @@ class Message(models.Model):
         ordering = ['-timestamp']
 
     def __unicode__(self):
-        return u"Message id: "+ self.id
+        return u"Message id: " + self.id
 
     def can_access(self, request):
         """can_access"""
@@ -494,18 +501,19 @@ class Message(models.Model):
                     return False
         return True
 
+
 class Recipient(models.Model):
     "message recipients"
     message = models.ForeignKey(Message)
     to_address = models.CharField(db_index=True, max_length=255)
     to_domain = models.CharField(db_index=True, max_length=255)
-    
+
     objects = models.Manager()
     messages = RecipientManager()
-    
+
     class Meta:
         db_table = u'message_recipients'
-    
+
 
 class SaRules(models.Model):
     "spamassassin rules"
@@ -523,6 +531,7 @@ class Release(models.Model):
     uuid = models.CharField(max_length=36)
     timestamp = models.DateTimeField()
     released = models.IntegerField(default=0)
+
     class Meta:
         db_table = u'quarantine_releases'
 
@@ -562,11 +571,12 @@ class Archive(models.Model):
     report = ReportMessageManager()
     quarantine = QuarantineMessageManager()
     quarantine_report = EmailReportMessageManager()
+
     class Meta:
         db_table = u'archive'
         get_latest_by = 'timestamp'
         ordering = ['-timestamp']
-    
+
     #not ideal to duplicate will work on it later    
     def can_access(self, request):
         """can_access"""

@@ -24,6 +24,7 @@ from django.core.urlresolvers import reverse
 
 register = template.Library()
 
+
 def sorter(context, field_name, field_text):
     "sort the fields"
     rlink = None
@@ -55,4 +56,3 @@ def sorter(context, field_name, field_text):
     }
 
 register.inclusion_tag('tags/sorter.html', takes_context=True)(sorter)
-

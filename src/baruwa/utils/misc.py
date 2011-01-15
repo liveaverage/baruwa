@@ -25,6 +25,7 @@ from django.template.defaultfilters import force_escape
 from django.conf import settings
 from django.db.models import Q, Count
 
+
 def jsonify_msg_list(element):
     """
     Fixes the converting error in converting
@@ -37,6 +38,7 @@ def jsonify_msg_list(element):
     element['from_address'] = force_escape(element['from_address'])
     return element
 
+
 def jsonify_list(element):
     """jsonify_list"""
     element['id'] = str(element['id'])
@@ -44,10 +46,12 @@ def jsonify_list(element):
     element['to_address'] = force_escape(element['to_address'])
     return element
 
+
 def jsonify_accounts_list(element):
     "Jsonify accounts list"
     element['id'] = str(element['id'])
     return element
+
 
 def jsonify_domains_list(element):
     "Jsonify domains list"
@@ -55,11 +59,13 @@ def jsonify_domains_list(element):
     element['user__id'] = str(element['user__id'])
     return element
 
+
 def jsonify_status(element):
     "Jsonify status dict"
     for key in ['baruwa_spam_total', 'baruwa_virus_total', 'baruwa_mail_total']:
         element[key] = str(element[key])
     return element
+
 
 def apply_filter(model, request, active_filters):
     "apply filters to a model"
@@ -68,37 +74,40 @@ def apply_filter(model, request, active_filters):
         model = gen_dynamic_query(model, filter_list, active_filters)
     return model
 
+
 def place_positive_vars(key, largs, kwargs, lkwargs, value):
     "utility function"
-    if kwargs.has_key(key):
-        kwords = {str(key):value}
+    if key in kwargs:
+        kwords = {str(key): value}
         largs.append(Q(**kwords))
-        kwords = {str(key):str(kwargs[key])}
+        kwords = {str(key): str(kwargs[key])}
         largs.append(Q(**kwords))
         lkwargs.update(kwords)
         del kwargs[key]
     else:
-        kwords = {str(key):value}
-        if lkwargs.has_key(key):
+        kwords = {str(key): value}
+        if key in lkwargs:
             largs.append(Q(**kwords))
         else:
             kwargs.update(kwords)
-            
+
+
 def place_negative_vars(key, nargs, nkwargs, lnkwargs, value):
     "utility function"
-    if nkwargs.has_key(key):
-        kwords = {str(key):value}
+    if key in nkwargs:
+        kwords = {str(key): value}
         nargs.append(Q(**kwords))
-        kwords = {str(key):str(nkwargs[key])}
+        kwords = {str(key): str(nkwargs[key])}
         nargs.append(Q(**kwords))
         lnkwargs.update(kwords)
         del nkwargs[key]
     else:
-        kwords = {str(key):value}
-        if lnkwargs.has_key(key):
+        kwords = {str(key): value}
+        if key in lnkwargs:
             nargs.append(Q(**kwords))
         else:
             nkwargs.update(kwords)
+
 
 def gen_dynamic_query(model, filter_list, active_filters=None):
     "build a dynamic query"
@@ -109,7 +118,7 @@ def gen_dynamic_query(model, filter_list, active_filters=None):
     lnkwargs = {}
     nargs = []
     largs = []
-    
+
     filter_items = dict(FILTER_ITEMS)
     filter_by = dict(FILTER_BY)
 
@@ -174,29 +183,31 @@ def gen_dynamic_query(model, filter_list, active_filters=None):
         model = model.filter(query)
     return model
 
+
 def raw_user_filter(user, addresses, account_type):
     "builds user filter"
     dsql = []
     esql = []
     sql = '1 != 1'
-    
+
     if not user.is_superuser:
         if account_type == 2:
             if addresses:
                 for domain in addresses:
-                    dsql.append('to_domain="'+domain+'"')
-                    dsql.append('from_domain="'+domain+'"')
+                    dsql.append('to_domain="' + domain + '"')
+                    dsql.append('from_domain="' + domain + '"')
                 sql = ' OR '.join(dsql)
         if account_type == 3:
             if addresses:
                 for email in addresses:
-                    esql.append('to_address="'+email+'"')
-                    esql.append('from_address="'+email+'"')
-                esql.append('to_address="'+user.username+'"')
+                    esql.append('to_address="' + email + '"')
+                    esql.append('from_address="' + email + '"')
+                esql.append('to_address="' + user.username + '"')
                 sql = ' OR '.join(esql)
             else:
                 sql = 'to_address="%s"' % user.username
-        return '(' + sql +')'
+        return '(' + sql + ')'
+
 
 def get_active_filters(filter_list, active_filters):
     "generates a dictionary of active filters"
@@ -204,30 +215,32 @@ def get_active_filters(filter_list, active_filters):
     if not active_filters is None:
         filter_items = dict(FILTER_ITEMS)
         filter_by = dict(FILTER_BY)
-        
+
         for filter_item in filter_list:
             active_filters.append(
                 {'filter_field': filter_items[filter_item['field']],
                 'filter_by': filter_by[int(filter_item['filter'])],
                 'filter_value': filter_item['value']}
                 )
-                            
+
+
 def get_processes(process_name):
     "Gets running processes by process name"
     pipe1 = subprocess.Popen(
-        'ps ax',shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        'ps ax', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     pipe2 = subprocess.Popen(
-        'grep -i '+process_name, shell=True, stdin=pipe1.stdout,
+        'grep -i ' + process_name, shell=True, stdin=pipe1.stdout,
         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     pipe3 = subprocess.Popen(
-        'grep -v grep',shell=True, stdin=pipe2.stdout, stdout=subprocess.PIPE, 
+        'grep -v grep', shell=True, stdin=pipe2.stdout, stdout=subprocess.PIPE, 
         stderr=subprocess.PIPE)
     pipe4 = subprocess.Popen(
-        'wc -l',shell=True, stdin=pipe3.stdout, stdout=subprocess.PIPE, 
+        'wc -l', shell=True, stdin=pipe3.stdout, stdout=subprocess.PIPE, 
         stderr=subprocess.PIPE)
     processes = pipe4.stdout.read()
     processes = int(processes.strip())
     return processes
+
 
 def get_config_option(search_option):
     """
@@ -238,10 +251,11 @@ def get_config_option(search_option):
                 settings, 'MS_CONFIG', '/etc/MailScanner/MailScanner.conf')
     quickpeek = getattr(settings, 'MS_QUICKPEEK', '/usr/sbin/Quick.Peek')
     cmd = "%s '%s' %s" % (quickpeek, search_option, config)
-    
+
     pipe1 = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
     return pipe1.stdout.read().strip()
+
 
 def get_sys_status(request):
     "Returns system status"
@@ -261,8 +275,8 @@ def get_sys_status(request):
             query = Q()
             for addr in addrs:
                 atdomain = "@%s" % addr
-                query = query | Q(Q(**{'from_address__iendswith':atdomain}) | 
-                                Q(**{'to_address__iendswith':atdomain}))
+                query = query | Q(Q(**{'from_address__iendswith': atdomain}) | 
+                                Q(**{'to_address__iendswith': atdomain}))
             inq = inq.filter(query)
             outq = outq.filter(query)
         if act == 3:
@@ -272,7 +286,7 @@ def get_sys_status(request):
                                 Q(to_address__in=addrs))
 
     data = MessageStats.objects.get(request.user, addrs, act)
-    
+
     inq = inq.aggregate(count=Count('messageid'))
     outq = outq.aggregate(count=Count('messageid'))
     #icount = inq['count']
@@ -294,12 +308,12 @@ def get_sys_status(request):
         spam = data.spam_mail + data.high_spam
     except:
         spam = 0
-        
+
     return {
-            'baruwa_status':status, 
-            'baruwa_mail_total':data.total, 
-            'baruwa_spam_total':spam, 
-            'baruwa_virus_total':data.virii,
-            'baruwa_in_queue':inq['count'],
-            'baruwa_out_queue':outq['count']
-            }    
+            'baruwa_status': status, 
+            'baruwa_mail_total': data.total, 
+            'baruwa_spam_total': spam, 
+            'baruwa_virus_total': data.virii,
+            'baruwa_in_queue': inq['count'],
+            'baruwa_out_queue': outq['count']
+            }

@@ -32,6 +32,7 @@ except ImportError:
     from django.core.validators import email_re
 from baruwa.utils.regex import ADDRESS_RE
 
+
 class PwResetForm(PasswordResetForm):
     """
         Overload the password reset form to prevent admin and
@@ -58,24 +59,26 @@ class PwResetForm(PasswordResetForm):
                 " an admin account. Please use the manage.py command to reset"))
                 break
         return email
-    
-    
+
+
 class UserProfileForm(forms.ModelForm):
     id = forms.CharField(widget=forms.HiddenInput)
     user_id = forms.CharField(widget=forms.HiddenInput)
+
     class Meta:
         model = UserProfile
         exclude = ('user',)
 
-        
+
 class OrdUserProfileForm(forms.ModelForm):
     id = forms.CharField(widget=forms.HiddenInput)
     user_id = forms.CharField(widget=forms.HiddenInput)
+
     class Meta:
         model = UserProfile
         exclude = ('user', 'account_type')
 
-        
+
 class UserCreateForm(forms.ModelForm):
     username = forms.RegexField(
         label=_("Username"), max_length=30, regex=r'^[\w.@+-]+$',
@@ -84,7 +87,7 @@ class UserCreateForm(forms.ModelForm):
             error_messages = {'invalid': _(
             "This value may contain only letters, numbers and @/./+/-/_ characters.")})
     password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
-            
+
     def clean_username(self):
         username = self.cleaned_data["username"]
         try:
@@ -100,25 +103,25 @@ class UserCreateForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-        
+
     class Meta:
         model = User
         exclude = ('is_staff', 'last_login', 'date_joined', 
             'groups', 'user_permissions',)
 
-        
+
 class UserAddressForm(forms.ModelForm):
     """
     Used by admin to associate addresses or domains.
     """
     address = forms.RegexField(regex=ADDRESS_RE, 
-        widget=forms.TextInput(attrs={'size':'50'}))
-    
+        widget=forms.TextInput(attrs={'size': '50'}))
+
     def clean(self):
         """clean_address"""
         if self._errors: 
             return
-            
+
         cleaned_data = self.cleaned_data   
         address = cleaned_data['address']
         user = cleaned_data['user']
@@ -138,22 +141,22 @@ class UserAddressForm(forms.ModelForm):
                 self._errors["address"] = ErrorList([error_msg])
                 del cleaned_data['address']
         return cleaned_data
-        
+
     class Meta:
         model = UserAddresses
         exclude = ('id', 'address_type')
 
-        
+
 class EditAddressForm(forms.ModelForm):
     "Edit address"
     address = forms.RegexField(
-        regex=ADDRESS_RE, widget=forms.TextInput(attrs={'size':'50'}))
-    
+        regex=ADDRESS_RE, widget=forms.TextInput(attrs={'size': '50'}))
+
     def clean(self):
         """clean_address"""
         if self._errors: 
             return
-            
+
         cleaned_data = self.cleaned_data   
         address = cleaned_data['address']
         user = cleaned_data['user']
@@ -173,31 +176,33 @@ class EditAddressForm(forms.ModelForm):
                 self._errors["address"] = ErrorList([error_msg])
                 del cleaned_data['address']
         return cleaned_data    
-           
+
     class Meta:
         model = UserAddresses
         exclude = ('id', 'address_type')
 
-        
+
 class DeleteAddressForm(forms.ModelForm):
     "Delete address"
     id = forms.CharField(widget=forms.HiddenInput)
+
     class Meta:
         model = UserAddresses
         exclude = ('address', 'enabled', 'user')
 
-        
+
 class UserUpdateForm(forms.ModelForm):
     """
     Allows users to update thier account info. 
     """
     id = forms.CharField(widget=forms.HiddenInput)
+
     class Meta:
         model = User
         exclude = ('last_login', 'date_joined', 'username', 
             'groups', 'is_superuser', 'user_permissions', 
             'is_staff', 'password', 'is_active')
-            
+
 
 class AdminUserUpdateForm(forms.ModelForm):
     """
@@ -210,15 +215,17 @@ class AdminUserUpdateForm(forms.ModelForm):
             error_messages = {'invalid': _(
             "This value may contain only letters, numbers and @/./+/-/_ characters.")})
     id = forms.CharField(widget=forms.HiddenInput)
+
     class Meta:
         model = User
         fields = ('id', 'username', 'first_name', 
             'last_name', 'email', 'is_superuser', 'is_active')
 
-        
+
 class DeleteUserForm(forms.ModelForm):
     """DeleteUserForm"""
     id = forms.CharField(widget=forms.HiddenInput)
+
     class Meta:
         model = User
         exclude = ('last_login', 'date_joined', 'username', 
@@ -226,4 +233,3 @@ class DeleteUserForm(forms.ModelForm):
             'is_staff', 'password', 'is_active', 'first_name', 
             'last_name', 'email')
         #fields = ('id')
-        

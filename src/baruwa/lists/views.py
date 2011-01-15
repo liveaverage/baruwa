@@ -37,40 +37,41 @@ from baruwa.lists.forms import FilterForm, ListDeleteForm
 from baruwa.lists.models import List
 from baruwa.utils.misc import jsonify_list
 
+
 @login_required
 def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
     """index"""
-    
+
     if request.user.is_superuser:
         account_type = 1
     else:
         account_type = request.session['user_filter']['account_type']
-    
+
     list_kind = int(list_kind)
     ordering = order_by
     filter_active = False
-    
+
     if direction == 'dsc':
         ordering = order_by
         order_by = "-%s" % order_by
 
     listing = List.objects.values('id', 'to_address', 'from_address').filter(
         list_type=list_kind).order_by(order_by)
-    
+
     if not request.user.is_superuser:
         query = Q()
         addresses = request.session['user_filter']['addresses']
         if account_type == 2:
             if addresses:
                 for domain in addresses:
-                    kwarg = {'to_address__iendswith':domain}
+                    kwarg = {'to_address__iendswith': domain}
                     query = query | Q(**kwarg)
                 listing = listing.filter(query)
             else:
                 listing = listing.filter(user=request.user.id)
         if account_type == 3:
             listing = listing.filter(user=request.user.id)
-                
+
     if request.method == 'POST':
         filter_form = FilterForm(request.POST)
         if filter_form.is_valid():
@@ -79,10 +80,10 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
             request.session['search_for'] = (
                 filter_form.cleaned_data['search_for'])
             request.session.modified = True
-            
+
     search_for = request.session.get('search_for', '')
     query_type = request.session.get('query_type', 1)
-    
+
     if search_for != "":
         filter_active = True
         if query_type == 1:
@@ -95,7 +96,7 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
                 listing = listing.exclude(to_address__icontains=search_for)
             elif ordering == 'from_address':
                 listing = listing.exclude(from_address__icontains=search_for)
-    
+
     if request.is_ajax():
         p = Paginator(listing, 15)
         if page == 'last':
@@ -110,32 +111,33 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
             sp = 1
         ep = page + ap + 1
         pn = [n for n in range(sp, ep) if n > 0 and n <= p.num_pages]
-        pg = {'page':page, 'pages':p.num_pages, 'page_numbers':pn, 
-        'next':po.next_page_number(), 'previous':po.previous_page_number(),
-        'has_next':po.has_next(), 'has_previous':po.has_previous(), 
-        'show_first':1 not in pn, 'show_last':p.num_pages not in pn,
-        'app': 'lists', 'list_kind':list_kind, 'direction':direction, 
-        'order_by':ordering, 'filter_active':filter_active}
-        json = simplejson.dumps({'items':listing, 'paginator':pg})
+        pg = {'page': page, 'pages': p.num_pages, 'page_numbers': pn, 
+        'next': po.next_page_number(), 'previous': po.previous_page_number(),
+        'has_next': po.has_next(), 'has_previous': po.has_previous(), 
+        'show_first': 1 not in pn, 'show_last': p.num_pages not in pn,
+        'app': 'lists', 'list_kind': list_kind, 'direction': direction, 
+        'order_by': ordering, 'filter_active': filter_active}
+        json = simplejson.dumps({'items': listing, 'paginator': pg})
         return HttpResponse(json, mimetype='application/javascript')
-            
+
     return object_list(request, template_name='lists/index.html', 
         queryset=listing, paginate_by=15, page=page, 
-        extra_context={'app': 'lists', 'list_kind':list_kind, 
-        'direction':direction, 'order_by':ordering, 
-        'filter_active':filter_active, 'list_all':0})
+        extra_context={'app': 'lists', 'list_kind': list_kind, 
+        'direction': direction, 'order_by': ordering, 
+        'filter_active': filter_active, 'list_all': 0})
+
 
 @login_required
 def add_to_list(request, template = 'lists/add.html'):
     """add_to_list"""
     error_msg = ''
     is_saved = False
-    
+
     if not request.user.is_superuser:
         account_type = request.session['user_filter']['account_type']
     else:
         account_type = 1
-    
+
     if request.method == 'GET':
         if account_type == 1 or account_type == 2:
             form = AdminListAddForm(request)
@@ -155,7 +157,7 @@ def add_to_list(request, template = 'lists/add.html'):
                     user_part = 'any'
                 if to_address is None or to_address == '':
                     to_address = 'any'
-                    
+
                 if user_part != 'any' and to_address != 'any':
                     toaddr = "%s@%s" % (
                         force_escape(user_part), force_escape(to_address))
@@ -165,7 +167,7 @@ def add_to_list(request, template = 'lists/add.html'):
                     toaddr = to_address
             else:
                 toaddr = clean_data['to_address']
-            
+
             try:
                 l = List(list_type=clean_data['list_type'], 
                     from_address=clean_data['from_address'], to_address=toaddr, 
@@ -180,26 +182,27 @@ def add_to_list(request, template = 'lists/add.html'):
                 error_msg = _('The list item already exists')
             except:
                 error_msg = _('Error occured saving the list item')
-                
+
             if request.is_ajax():
-                response = simplejson.dumps({'success':is_saved, 
-                    'error_msg':error_msg})
+                response = simplejson.dumps({'success': is_saved, 
+                    'error_msg': error_msg})
                 return HttpResponse(response, 
                     content_type='application/javascript; charset=utf-8')
         else:
             if request.is_ajax():
                 error_list = form.errors.values()[0]
                 html = dict([(k, [unicode(e) for e in v]) 
-                    for k, v in form.errors.items()]) #form.errors
-                response = simplejson.dumps({'success':False, 
+                    for k, v in form.errors.items()])
+                response = simplejson.dumps({'success': False, 
                     'error_msg': unicode(error_list[0]), 
-                    'form_field':html.keys()[0]})
+                    'form_field': html.keys()[0]})
                 return HttpResponse(response, 
                     content_type='application/javascript; charset=utf-8')
-                    
-    return render_to_response(template, {'form':form}, 
+
+    return render_to_response(template, {'form': form}, 
         context_instance=RequestContext(request))
-    
+
+
 @login_required
 def delete_from_list(request, item_id):
     "delete filter"
@@ -212,14 +215,14 @@ def delete_from_list(request, item_id):
             list_type = list_item.list_type
             list_item.delete()
             if request.is_ajax():
-                response = simplejson.dumps({'success':True})
+                response = simplejson.dumps({'success': True})
                 return HttpResponse(response, 
                     content_type='application/javascript; charset=utf-8')
             return HttpResponseRedirect(reverse('lists-start', 
                 args=[list_type]))
         else:
             if request.is_ajax():
-                response = simplejson.dumps({'success':False})
+                response = simplejson.dumps({'success': False})
                 return HttpResponse(response, 
                     content_type='application/javascript; charset=utf-8')
     else:
@@ -227,7 +230,8 @@ def delete_from_list(request, item_id):
         form.fields['list_item'].widget.attrs['value'] = item_id
     return render_to_response('lists/delete.html', locals(), 
         context_instance=RequestContext(request))
-    
+
+
 @login_required
 def rem_filter(request):
     "remove filter"
@@ -238,4 +242,3 @@ def rem_filter(request):
     except KeyError:
         pass
     return HttpResponseRedirect(reverse('lists-index'))
-    

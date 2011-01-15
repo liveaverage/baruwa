@@ -23,7 +23,9 @@ from django.core.management.base import NoArgsCommand
 from django.utils.translation import ugettext as _
 import re
 
+
 REGEX = re.compile(r"^\d{8}$")
+
 
 def should_be_pruned(direc, days_to_retain):
     """
@@ -47,6 +49,7 @@ def should_be_pruned(direc, days_to_retain):
     dir_date = datetime.date(year, mon, day)
 
     return dir_date < last_date
+
 
 class Command(NoArgsCommand):
     "cleans the quarantine directory"
@@ -82,29 +85,29 @@ class Command(NoArgsCommand):
         dirs.sort()
         for direc in dirs:
             process_path = os.path.join(quarantine_dir, direc)
-            print _("== Processing directory %(path)s ==") % {'path':process_path}
+            print _("== Processing directory %(path)s ==") % {'path': process_path}
             ids = [f for f in os.listdir(process_path) if f not in ignore_dirs]
-            
+
             if os.path.exists(os.path.join(process_path, 'spam')):
                 ids.extend(
                 [f for f in os.listdir(os.path.join(process_path, 'spam'))])
-                
+
             if os.path.exists(os.path.join(process_path, 'mcp')):
                 ids.extend(
                 [f for f in os.listdir(os.path.join(process_path, 'mcp'))])
-                
+
             if os.path.exists(os.path.join(process_path, 'nonspam')):
                 ids.extend(
                 [f for f in os.listdir(os.path.join(process_path, 'nonspam'))])
-                
+
             print ids
             Message.objects.filter(pk__in=ids).update(isquarantined=0)
             if (os.path.isabs(process_path) and 
                 (not os.path.islink(process_path))):
-                print _("== Removing directory  %(path)s ==") % {'path':process_path}
+                print _("== Removing directory  %(path)s ==") % {'path': process_path}
                 try:
                     shutil.rmtree(process_path)
                 except:
-                    print _("Failed to remove %(path)s") % {'path':process_path}
+                    print _("Failed to remove %(path)s") % {'path': process_path}
             else:
-                print _("The directory %(path)s is a sym link skipping") % {'path':process_path}
+                print _("The directory %(path)s is a sym link skipping") % {'path': process_path}

@@ -22,9 +22,10 @@
 "Read mailq"
 import os
 
+
 class Mailq(list):
     "Mailq"
-    
+
     def __init__(self, mta, queue):
         "init"
         assert mta in ['exim', 'sendmail', 'postfix'], "MTA not supported"

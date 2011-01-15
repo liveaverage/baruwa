@@ -31,7 +31,9 @@ from baruwa.utils.process_mail import clean_regex
 from baruwa.utils.misc import get_config_option
 from baruwa.utils.regex import RBL_RE, SARULE_RE, IP_RE, LEARN_RE
 
+
 register = template.Library()
+
 
 @register.filter(name='tds_msg_class')
 def tds_msg_class(message):
@@ -52,6 +54,7 @@ def tds_msg_class(message):
     if not message['scaned']:
         value = 'LightGray'
     return mark_safe(value)
+
 
 @register.filter(name='tds_msg_status')
 def tds_msg_status(message):
@@ -78,17 +81,20 @@ def tds_msg_status(message):
         value = 'NS'
     return value
 
+
 @register.filter(name='tds_nl_commas')
 @stringfilter
 def tds_nl_commas(value):
     "commas to newlines"
     return value.replace(',', '\n')
 
+
 @register.filter(name='tds_first')
 @stringfilter
 def tds_first(value):
     "get the first"
     return value.split(',')[0]
+
 
 @register.filter(name='tds_trunc')
 @stringfilter
@@ -107,6 +113,7 @@ def tds_trunc(value, arg):
             suffix = '...'
             return value[0:arg] + suffix
 
+
 @register.filter(name='tds_email_list')
 @stringfilter
 def tds_email_list(value):
@@ -114,6 +121,7 @@ def tds_email_list(value):
     if re.match("default", value):
         value = _("Any address")
     return value
+
 
 @register.filter(name='tds_geoip')
 @stringfilter
@@ -134,6 +142,7 @@ def tds_geoip(value):
             ccode, cname)
     return mark_safe(tag)
 
+
 @register.filter(name='tds_hostname')
 @stringfilter
 def tds_hostname(value):
@@ -149,6 +158,7 @@ def tds_hostname(value):
             except:
                 hostname = _('unknown')
     return mark_safe(hostname)
+
 
 @register.filter(name='tds_is_learned')
 @stringfilter
@@ -167,6 +177,7 @@ def tds_is_learned(value, autoescape=None):
     return mark_safe(status)
 tds_is_learned.needs_autoescape = True
 
+
 @register.filter(name='tds_rbl_name')
 @stringfilter
 def tds_rbl_name(value, autoescape=None):
@@ -181,6 +192,7 @@ def tds_rbl_name(value, autoescape=None):
         rbl = esc(match.group(1))
     return mark_safe(rbl)
 tds_rbl_name.needs_autoescape = True
+
 
 def tds_get_rules(rules):
     "get spamassassin rules"
@@ -201,10 +213,11 @@ def tds_get_rules(rules):
                 sa_rule_descp = rule_obj['rule_desc']
             except:
                 pass 
-            return_value.append({'rule':rule, 'score':match.groups()[3], 
-                'rule_descp':sa_rule_descp})
+            return_value.append({'rule': rule, 'score': match.groups()[3], 
+                'rule_descp': sa_rule_descp})
             sa_rule_descp = ""
     return return_value
+
 
 @register.inclusion_tag('tags/spamreport.html')
 def spam_report(value):
@@ -218,7 +231,8 @@ def spam_report(value):
         return_value = tds_get_rules(rules)
     else:
         return_value = []
-    return {'rules':return_value}
+    return {'rules': return_value}
+
 
 @register.filter(name='tds_wrap')
 @stringfilter
@@ -229,6 +243,7 @@ def tds_wrap(value, length=100):
         value = '\n'.join(wrap(value, length))
     return value
 
+
 @register.filter(name='tds_wrap_headers')
 @stringfilter
 def tds_wrap_headers(value):
@@ -237,9 +252,10 @@ def tds_wrap_headers(value):
     rstring = []
     for header in headers:
         if len(header) > 100:
-            header = tds_wrap(header, 100) #'\n'.join(wrap(header,100))
+            header = tds_wrap(header, 100)
         rstring.append(header)
     return ('\n'.join(rstring))
+
 
 def read_rules(filename):
     "read in rules"
@@ -252,6 +268,7 @@ def read_rules(filename):
             contents.append(line)
         rule_file.close()
     return contents
+
 
 @register.simple_tag
 def tds_action(value, from_address, to_address):
@@ -281,10 +298,10 @@ def tds_action(value, from_address, to_address):
                 if match2:
                     (direction2, rule2, throwaway, value2) = match2.groups()
                     throwaway = None
-                    sec = {'direction':direction2, 
-                        'rule':clean_regex(rule2), 'action':value2}
-                srules.append({'direction':direction, 
-                    'rule':clean_regex(rule), 'action':value, 'secondary':sec})
+                    sec = {'direction': direction2, 
+                        'rule': clean_regex(rule2), 'action': value2}
+                srules.append({'direction': direction, 
+                    'rule': clean_regex(rule), 'action': value, 'secondary': sec})
         for item in srules:
             if item["secondary"]:
                 to_regex = ''
@@ -304,7 +321,7 @@ def tds_action(value, from_address, to_address):
                     re.IGNORECASE):
                     to_regex = item['secondary']['rule']
                 if to_regex == '' or from_regex == '':
-                    return 'blank regex ' + to_regex + ' manoamano '+from_regex
+                    return 'blank regex ' + to_regex + ' manoamano ' + from_regex
                 if (re.match(to_regex, to_address, re.IGNORECASE) and 
                     re.match(from_regex, from_address, re.IGNORECASE)):
                     return item["secondary"]["action"]

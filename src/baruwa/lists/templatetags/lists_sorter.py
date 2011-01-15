@@ -22,7 +22,9 @@
 from django import template
 from django.core.urlresolvers import reverse
 
+
 register = template.Library()
+
 
 def lists_sorter(context, field_name, field_text):
     "sort by field"

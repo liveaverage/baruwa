@@ -29,7 +29,9 @@
 
 from django import template
 
+
 register = template.Library()
+
 
 def generic_paginator(context, adjacent_pages=2):
     """
@@ -51,12 +53,12 @@ def generic_paginator(context, adjacent_pages=2):
     page_obj = context['page_obj']
     paginator = context['paginator']
 
-    if not context.has_key('direction'):
+    if not 'direction' in context:
         context['direction'] = None
 
-    if not context.has_key('order_by'):
+    if not 'order_by' in context:
         context['order_by'] = None
-        
+
     if context['app'] == 'lists':
         app = "lists/%d" % context['list_kind']
     else:

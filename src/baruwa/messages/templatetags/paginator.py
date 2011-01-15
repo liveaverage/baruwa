@@ -30,6 +30,7 @@ from django import template
 
 register = template.Library()
 
+
 def paginator(context, adjacent_pages=2):
     """
     To be used in conjunction with the object_list generic view.
@@ -50,10 +51,10 @@ def paginator(context, adjacent_pages=2):
     page_obj = context['page_obj']
     local_paginator = context['paginator']
 
-    if not context.has_key('direction'):
+    if not 'direction' in context:
         context['direction'] = None
 
-    if not context.has_key('order_by'):
+    if not 'order_by' in context:
         context['order_by'] = None
 
     return {

@@ -23,6 +23,7 @@ from django import template
 
 register = template.Library()
 
+
 def status_sorter(context, field_name, field_text):
     "generic sorter"
     rlink = None
@@ -39,5 +40,5 @@ def status_sorter(context, field_name, field_text):
             'link': link, 'rlink': rlink,
             'dir': direc
             }
-            
+
 register.inclusion_tag('tags/sorter.html', takes_context=True)(status_sorter)

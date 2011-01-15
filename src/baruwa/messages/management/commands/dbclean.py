@@ -22,6 +22,7 @@
 from django.core.management.base import NoArgsCommand
 from django.utils.translation import ugettext as _
 
+
 class Command(NoArgsCommand):
     "Archive messages and delete from messages table"
     help = _("Deletes records older than 60 days from the messages table")

@@ -22,6 +22,7 @@
 from django.db import models
 from baruwa.accounts.models import UserAddresses
 
+
 class MailHost(models.Model):
     """Mail hosts"""
     id = models.AutoField(primary_key=True)
@@ -34,7 +35,8 @@ class MailHost(models.Model):
         db_table = 'mail_hosts'
 
     def __unicode__(self):
-        return u"Mail host "+ self.address
+        return u"Mail host " + self.address
+
 
 class MailAuthHost(models.Model):
     "Holds authentication hosts"
@@ -54,23 +56,26 @@ class MailAuthHost(models.Model):
 
     class Meta:
         db_table = 'auth_hosts'
-        
+
+
 class ScannerHost(models.Model):
     "Holds scanning nodes"
     id = models.AutoField(primary_key=True)
     address = models.CharField(max_length=255)
-    
+
     class Meta:
         db_table = 'scanners'
-        
+
+
 class ConfigSection(models.Model):
     "MailScanner configuration sections"
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    
+
     class Meta:
         db_table = 'scanner_config_sections'
-    
+
+
 class ScannerConfig(models.Model):
     "Configuration container"
     id = models.AutoField(primary_key=True)
@@ -81,7 +86,6 @@ class ScannerConfig(models.Model):
     value = models.TextField()
     section = models.ForeignKey(ConfigSection)
     host = models.ForeignKey(ScannerHost)
-    
+
     class Meta:
         db_table = 'scanner_config'
-  

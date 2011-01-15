@@ -22,6 +22,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class List(models.Model):
     """
     Spam Whitelist and Blacklist
@@ -31,7 +32,7 @@ class List(models.Model):
     from_address = models.CharField(default='any', max_length=255)
     to_address = models.CharField(default='any', max_length=255)
     user = models.ForeignKey(User)
-    
+
     class Meta:
         db_table = 'lists'
         #mysql utf8 bug prevents this being used.

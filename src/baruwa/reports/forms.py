@@ -86,7 +86,7 @@ BOOL_FIELDS = ["scaned", "spam", "highspam", "saspam", "rblspam",
 TEXT_FIELDS = ["id", "from_address", "from_domain", "to_address",
     "to_domain", "subject", "clientip", "spamreport", "headers",
     "hostname"]
-TIME_FIELDS = ["date","time"]
+TIME_FIELDS = ["date", "time"]
 NUM_FIELDS = ["size", "sascore"]
 
 BOOL_FILTER = [11, 12]
@@ -94,9 +94,11 @@ NUM_FILTER = [1, 2, 3, 4]
 TEXT_FILTER = [1, 2, 5, 6, 7, 8, 9, 10]
 TIME_FILTER = [1, 2, 3, 4]
 
+
 def isnumeric(value):
     "Validate numeric values"
     return str(value).replace(".", "").replace("-", "").isdigit()
+
 
 class FilterForm(forms.Form):
     "Filters form"
@@ -119,13 +121,13 @@ class FilterForm(forms.Form):
             if not submited_by in BOOL_FILTER:
                 filter_items = dict(FILTER_ITEMS)
                 error_msg = _("%(field)s does not support the %(filt)s filter") % {
-                'field':filter_items[submited_field], 'filt':FILTER_BY[sbi][1]}
+                'field': filter_items[submited_field], 'filt': FILTER_BY[sbi][1]}
                 raise forms.ValidationError(error_msg)
         if submited_field in NUM_FIELDS:
             if not submited_by in NUM_FILTER:
                 filter_items = dict(FILTER_ITEMS)
                 error_msg = _("%(field)s does not support the %(filt)s filter") % {
-                'field':filter_items[submited_field], 'filt':FILTER_BY[sbi][1]}
+                'field': filter_items[submited_field], 'filt': FILTER_BY[sbi][1]}
                 raise forms.ValidationError(error_msg)
             if submited_value in EMPTY_VALUES:
                 raise forms.ValidationError(_("Please supply a value to query"))
@@ -135,7 +137,7 @@ class FilterForm(forms.Form):
             if not submited_by in TEXT_FILTER:
                 filter_items = dict(FILTER_ITEMS)
                 error_msg = _("%(field)s does not support the %(filt)s filter") % {
-                'field':filter_items[submited_field], 'filt':FILTER_BY[sbi][1]}
+                'field': filter_items[submited_field], 'filt': FILTER_BY[sbi][1]}
                 raise forms.ValidationError(error_msg)
             if submited_value in EMPTY_VALUES and submited_by not in [9, 10]:
                 raise forms.ValidationError(_("Please supply a value to query"))
@@ -145,7 +147,7 @@ class FilterForm(forms.Form):
                 if not email_re.match(submited_value.strip()):
                     raise forms.ValidationError(
                         _('%(email)s is not a valid e-mail address.')
-                        % {'email':force_escape(submited_value)})
+                        % {'email': force_escape(submited_value)})
             else:
                 if submited_by in [7, 8]:
                     try:
@@ -182,7 +184,7 @@ class FilterForm(forms.Form):
             if not submited_by in TIME_FILTER:
                 filter_items = dict(FILTER_ITEMS)
                 error_msg = _("%(field)s does not support the %(filt)s filter") % {
-                'field':filter_items[submited_field], 'filt':FILTER_BY[sbi][1]}
+                'field': filter_items[submited_field], 'filt': FILTER_BY[sbi][1]}
                 raise forms.ValidationError(error_msg)
             if submited_value in EMPTY_VALUES:
                 raise forms.ValidationError(_("Please supply a value to query"))

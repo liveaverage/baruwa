@@ -25,18 +25,20 @@ from django.core.management.base import BaseCommand, CommandError
 from django.utils.translation import ugettext as _
 from optparse import make_option
 
+
 def draw_square(color):
     "draws a square"
     from reportlab.graphics.shapes import Rect
     from reportlab.graphics.shapes import Drawing
-    
+
     square = Drawing(5, 5)
     sqr = Rect(0, 2.5, 5, 5)
     sqr.fillColor = color
     sqr.strokeColor = color
     square.add(sqr)
     return square
-    
+
+
 class Command(BaseCommand):
     "Generate and email PDF reports"
     help = _("Generates and sends PDF summary reports via email")
@@ -52,17 +54,17 @@ class Command(BaseCommand):
                 '"day(s)","week(s)","month(s)" Examples: '
                 '--period="1 day" --period="2 weeks" --period="5 months"'),
     )
-    
+
     def handle(self, *args, **options):
         if len(args) != 0:
             raise CommandError(_("Command doesn't accept any arguments"))
-        
+
         by_domain = options.get('by_domain')
         domain_name = options.get('domain_name')
         copy_admin = options.get('copy_admin')
         period = options.get('period')
         enddate = None
-        
+
         period_re = re.compile(r"(?P<num>(\d+))\s+(?P<period>(day|week|month))(?:s)?")
         if period:
             match = period_re.match(period)
@@ -72,9 +74,9 @@ class Command(BaseCommand):
             ptype = match.group('period')
             if not ptype.endswith('s'):
                 ptype = ptype + 's'
-            delta = datetime.timedelta(**{ptype:int(num)})
+            delta = datetime.timedelta(**{ptype: int(num)})
             enddate = datetime.date.today() - delta
-        
+
         from django.db.models import Count, Sum, Q
         from django.template.defaultfilters import filesizeformat
         from django.core.mail import EmailMessage, SMTPConnection
@@ -91,17 +93,17 @@ class Command(BaseCommand):
         from reportlab.lib.units import inch
         from reportlab.platypus import SimpleDocTemplate, Spacer, Table, \
         TableStyle, Paragraph, Image, PageBreak
-        
+
         try:
             from django.forms.fields import email_re
         except ImportError:
             from django.core.validators import email_re
-        
+
         try:
             from cStringIO import StringIO
         except:
             from StringIO import StringIO
-        
+
         table_style = TableStyle([
             ('FONT', (0, 0), (-1, -1), 'Helvetica'),
             ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold'),
@@ -113,65 +115,65 @@ class Command(BaseCommand):
             ('VALIGN', (4, 1), (-1, -1), 'MIDDLE'),
             ('SPAN', (4, 1), (-1, -1)),
         ])
-        
+
         styles = getSampleStyleSheet()
-        
+
         reports = [
             [
-                'from_address', {'from_address__exact':""}, 'num_count', 
+                'from_address', {'from_address__exact': ""}, 'num_count', 
                 'Top senders by quantity'],
             [
-                'from_address', {'from_address__exact':""}, 'total_size', 
+                'from_address', {'from_address__exact': ""}, 'total_size', 
                 'Top senders by volume'],
             [   
-                'from_domain', {'from_domain__exact':""}, 'num_count', 
+                'from_domain', {'from_domain__exact': ""}, 'num_count', 
                 'Top sender domains by quantity'],
             [   
-                'from_domain', {'from_domain__exact':""}, 'total_size', 
+                'from_domain', {'from_domain__exact': ""}, 'total_size', 
                 'Top sender domains by volume'],
             [   
-                'to_address', {'to_address__exact':""}, 'num_count', 
+                'to_address', {'to_address__exact': ""}, 'num_count', 
                 'Top recipients by quantity'],
             [
-                'to_address', {'to_address__exact':""}, 'total_size', 
+                'to_address', {'to_address__exact': ""}, 'total_size', 
                 'Top recipients by volume'],
             [
-                'to_domain', {'to_domain__exact':"", 
-                'to_domain__isnull':False}, 'num_count', 
+                'to_domain', {'to_domain__exact': "", 
+                'to_domain__isnull': False}, 'num_count', 
                 'Top recipient domains by quantity'],
             [
-                'to_domain', {'to_domain__exact':"", 
-                'to_domain__isnull':False}, 'total_size', 
+                'to_domain', {'to_domain__exact': "", 
+                'to_domain__isnull': False}, 'total_size', 
                 'Top recipient domains by volume'],
         ]
-        
+
         emails = []
         admin_addrs = []
         if copy_admin:
             mails = User.objects.values('email').filter(is_superuser=True)
             admin_addrs = [mail['email'] for mail in mails]
-        
+
         from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 
             'postmaster@localhost')
-        url = getattr(settings, 'QUARANTINE_REPORT_HOSTURL','')
+        url = getattr(settings, 'QUARANTINE_REPORT_HOSTURL', '')
         logo_dir = getattr(settings, 'MEDIA_ROOT', '')
         img = Image(logo_dir + '/imgs/css/logo.jpg')
-        
+
         def build_chart(data, column, order, title):
             "build chart"
             headings = [('', _('Address'), _('Count'), _('Volume'), '')]
             rows = [[draw_square(PIE_CHART_COLORS[index]), 
             tds_trunc(row[column], 45), row['num_count'], 
-            filesizeformat(row['total_size']),''] 
-            for index,row in enumerate(data)]
-        
+            filesizeformat(row['total_size']), ''] 
+            for index, row in enumerate(data)]
+
             if len(rows) != 10:
                 missing = 10 - len(rows)
                 add_rows = [
                     ('', '', '', '', '') for ind in range(missing)
                     ]
                 rows.extend(add_rows)
-            
+
             headings.extend(rows)
             dat = [row[order] for row in data]
             total = sum(dat)
@@ -179,21 +181,20 @@ class Command(BaseCommand):
                     ("%.1f%%" % ((1.0 * row[order] / total) * 100)) 
                     for row in data
                 ]
-            
+
             pie = PieChart()
             pie.chart.labels = labels
             pie.chart.data = dat
             headings[1][4] = pie
-            
+
             table_with_style = Table(headings, [0.2 * inch, 
                 2.8 * inch, 0.5 * inch, 0.7 * inch, 3.2 * inch])
             table_with_style.setStyle(table_style)
-        
+
             paragraph = Paragraph(title, styles['Heading1'])
-            
+
             return [paragraph, table_with_style]
-            
-            
+
         def build_parts(account, enddate, isdom=None):
             "build parts"
             parts = []
@@ -204,7 +205,7 @@ class Command(BaseCommand):
                 order_by = "-%s" % report[2]
                 order = report[2]
                 title = report[3]
-                
+
                 if isdom:
                     #dom
                     data = Message.objects.values(column).\
@@ -223,7 +224,7 @@ class Command(BaseCommand):
                         num_count=Count(column), total_size=Sum('size')
                     ).order_by(order_by)
                     data = data[:10]
-                
+
                 if data:
                     sentry += 1
                     pgraphs = build_chart(data, column, order, title)
@@ -251,7 +252,7 @@ class Command(BaseCommand):
                     filters.append(efilter)
                 msg_totals = MessageTotals.objects.all(
                     account, filters, addrs, profile.account_type)
-            
+
             mail_total = []
             spam_total = []
             virus_total = []
@@ -272,10 +273,10 @@ class Command(BaseCommand):
                     tuple(virus_total)
                 ]
             graph.chart.categoryAxis.categoryNames = dates
-            graph_table = Table([[graph],], [7.4 * inch])
+            graph_table = Table([[graph]], [7.4 * inch])
             parts.append(graph_table)
             return parts
-            
+
         def build_pdf(charts):
             "Build a PDF"
             pdf = StringIO()
@@ -287,7 +288,7 @@ class Command(BaseCommand):
             ('ALIGN', (0, 0), (-1, 0), 'LEFT'),
             ('ALIGN', (1, 0), (-1, 0), 'RIGHT'),
             ('FONTSIZE', (1, 0), (-1, 0), 10),
-            ('LINEBELOW', (0, 0),(-1, -1), 0.15, colors.black),
+            ('LINEBELOW', (0, 0), (-1, -1), 0.15, colors.black),
             ]))
             parts = [logo_table]
             parts.append(Spacer(1, 20))
@@ -298,25 +299,24 @@ class Command(BaseCommand):
         def gen_email(pdf, user, owner):
             "generate and return email"
             text_content = render_to_string('reports/pdf_report.txt',
-                {'user':user, 'url':url})
+                {'user': user, 'url': url})
             subject = _('Baruwa usage report for: %(user)s') % {
-                        'user':owner}
+                        'user': owner}
             if email_re.match(user.username):
                 toaddr = user.username
             if email_re.match(user.email):
                 toaddr = user.email
-                
-            
+
             if admin_addrs:
                 msg = EmailMessage(subject, text_content, from_email, [toaddr], admin_addrs)
             else:
                 msg = EmailMessage(subject, text_content, from_email, [toaddr])
             msg.attach('baruwa.pdf', pdf.getvalue(), "application/pdf")
             print _("* Queue %(user)s's report to: %(addr)s") % {
-                'user':owner, 'addr':toaddr}
+                'user': owner, 'addr': toaddr}
             pdf.close()
             return msg
-            
+
         print _("=================== Processing reports ======================")
         if by_domain:
             #do domain query
@@ -326,7 +326,7 @@ class Command(BaseCommand):
                 domains = domains.filter(address=domain_name)
                 if not domains:
                     print _("========== domain name %(dom)s does not exist ==========") % {
-                    'dom':domain_name
+                    'dom': domain_name
                     }
             for domain in domains:
                 if email_re.match(domain.user.email) or email_re.match(domain.user.username):
@@ -349,15 +349,12 @@ class Command(BaseCommand):
                             emails.append(email)
                 except User.DoesNotExist:
                     pass
-                    
+
         if emails:
             try:
                 conn = SMTPConnection()
                 conn.send_messages(emails)
                 print _("====== sending %(num)s messages =======") % {
-                        'num':str(len(emails))}
+                        'num': str(len(emails))}
             except Exception, exception:
-                print _("Sending failed ERROR: %(error)s") % {'error':str(exception)}
-
-
-        
+                print _("Sending failed ERROR: %(error)s") % {'error': str(exception)}

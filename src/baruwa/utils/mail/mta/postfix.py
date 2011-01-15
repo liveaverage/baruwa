@@ -33,14 +33,15 @@ from email.Header import decode_header
 
 SUBJECT_RE = re.compile(r'^Subject:(.+)')
 
+
 class QueueParser(object):
     "Postfix queue parser"
-    
+
     def __init__(self, queue):
         "init"
         self.qdir = queue
         self.items = []
-        
+
     def process(self):
         "process"
         postqdir = subprocess.Popen('postconf -d queue_directory', shell=True, 
@@ -49,12 +50,12 @@ class QueueParser(object):
             postqueuedir = postqdir.stdout.read().split()[2]
         except IndexError:
             postqueuedir = '/var/spool/postfix'
-        
+
         def getqfs(matched, dirname, files):
             "process qf"
             matched.extend([os.path.join(dirname, filename) 
                             for filename in files])
-        
+
         def extractinfo(qf):
             "extract info from qf"
             try:
@@ -109,7 +110,7 @@ class QueueParser(object):
                         reasons = logfile.readlines()
                         logfile.close()
                         break
-                if not attribs.has_key('lastattempt'):
+                if not 'lastattempt' in attribs:
                     attribs['lastattempt'] = attribs['timestamp']
                 if attribs['from_address'] == '':
                     attribs['from_address'] = '<>'
@@ -117,7 +118,7 @@ class QueueParser(object):
                 return attribs
             except:
                 return None
-        
+
         queuefiles = []
         os.path.walk(self.qdir, getqfs, queuefiles)
         results = [extractinfo(path) for path in queuefiles]

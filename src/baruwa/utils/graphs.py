@@ -26,9 +26,11 @@ from reportlab.graphics.charts.piecharts import Pie
 from reportlab.lib.colors import HexColor
 from reportlab.lib import colors
 
+
 PIE_COLORS = ['#FF0000', '#ffa07a', '#deb887', '#d2691e', '#008b8b',
             '#006400', '#ff8c00', '#ffd700', '#f0e68c', '#000000']
-PIE_CHART_COLORS = [ HexColor(pie_color) for pie_color in PIE_COLORS ]
+PIE_CHART_COLORS = [HexColor(pie_color) for pie_color in PIE_COLORS]
+
 
 class MessageTotalsGraph(Drawing):
     "Draws a line graph"
@@ -53,6 +55,7 @@ class MessageTotalsGraph(Drawing):
         self.chart.lines[1].strokeColor = colors.pink
         self.chart.lines[2].strokeColor = colors.red
 
+
 class PieChart(Drawing):
     "Draws a pie chart"
     def __init__(self, width=100, height=100, *args, **kwargs):
@@ -64,6 +67,7 @@ class PieChart(Drawing):
             self.chart.slices[i].labelRadius = 1.4
             self.chart.slices[i].fontName = 'Helvetica'
             self.chart.slices[i].fontSize = 7
+
 
 class BarChart(Drawing):
     "Draws a bar chart"
@@ -79,9 +83,9 @@ class BarChart(Drawing):
         self.chart.valueAxis.valueMin = 0
         #self.chart.valueAxis.valueMax = 50
         #self.chart.valueAxis.valueStep = 10
-        self.chart.data = [(1, 2, 5),]
+        self.chart.data = [(1, 2, 5)]
         self.chart.categoryAxis.visible = 1
         self.chart.bars[0].fillColor = colors.green
         self.chart.bars[1].fillColor = colors.pink
         self.chart.bars[2].fillColor = colors.red
-        self.chart.categoryAxis.categoryNames = ['']#labels
+        self.chart.categoryAxis.categoryNames = ['']

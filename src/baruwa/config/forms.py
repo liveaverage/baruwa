@@ -25,62 +25,73 @@ from baruwa.config.models import MailHost
 from baruwa.utils.regex import HOST_OR_IPV4_RE
 from baruwa.config.models import MailAuthHost
 
+
 class MailHostForm(forms.ModelForm):
     "Mail host add form"
     address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
-        widget=forms.TextInput(attrs={'size':'40'}))
+        widget=forms.TextInput(attrs={'size': '40'}))
     port = forms.CharField(
-                    widget=forms.TextInput(attrs={'size':'5', 'value':'25'}))
+                    widget=forms.TextInput(attrs={'size': '5', 'value': '25'}))
     useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(), 
         widget=forms.HiddenInput())
-    
+
     class Meta:
         model = MailHost
         exclude = ('id')
 
+
 class EditMailHost(forms.ModelForm):
     "Edit Mail host form"
     address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
-        widget=forms.TextInput(attrs={'size':'40'}))
-    port = forms.CharField(widget=forms.TextInput(attrs={'size':'5'}))
+        widget=forms.TextInput(attrs={'size': '40'}))
+    port = forms.CharField(widget=forms.TextInput(attrs={'size': '5'}))
+
     class Meta:
         model = MailHost
         exclude = ('id', 'useraddress')
-        
+
+
 class DeleteMailHost(forms.ModelForm):
     "Delete a mail host form"
     id = forms.CharField(widget=forms.HiddenInput)
+
     class Meta:
         model = MailHost
         fields = ('id',)
-        
+
+
 class MailAuthHostForm(forms.ModelForm):
     "Mail auth host add form"
     address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
-        widget=forms.TextInput(attrs={'size':'40'}))
-    port = forms.CharField(widget=forms.TextInput(attrs={'size':'5'}))
+        widget=forms.TextInput(attrs={'size': '40'}))
+    port = forms.CharField(widget=forms.TextInput(attrs={'size': '5'}))
     useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(), 
         widget=forms.HiddenInput())
+
     class Meta:
         model = MailAuthHost
-        
+
+
 class EditMailAuthHostForm(forms.ModelForm):
     "Edit Mail auth host form"
     address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
-        widget=forms.TextInput(attrs={'size':'40'}))
-    port = forms.CharField(widget=forms.TextInput(attrs={'size':'5'}))
+        widget=forms.TextInput(attrs={'size': '40'}))
+    port = forms.CharField(widget=forms.TextInput(attrs={'size': '5'}))
+
     class Meta:
         model = MailAuthHost
         exclude = ('id', 'useraddress')
-        
+
+
 class DeleteMailAuthHostForm(forms.ModelForm):
     "Delete a mail auth form"
     id = forms.CharField(widget=forms.HiddenInput)
+
     class Meta:
         model = MailAuthHost
         fields = ('id')
-        
+
+
 class InitializeConfigsForm(forms.Form):
     "Initialize a scanning nodes configuration"
     id = forms.CharField(widget=forms.HiddenInput)
-        

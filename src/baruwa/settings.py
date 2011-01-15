@@ -128,7 +128,7 @@ QUARANTINE_DAYS_TO_KEEP = 60
 QUARANTINE_REPORT_HOSTURL = 'http://baruwa-alpha.local'
 
 # spam assassin rules directories
-SA_RULES_DIRS = ['/usr/share/spamassassin','/etc/mail/spamassassin']
+SA_RULES_DIRS = ['/usr/share/spamassassin', '/etc/mail/spamassassin']
 # End Baruwa only settings
 
 try:

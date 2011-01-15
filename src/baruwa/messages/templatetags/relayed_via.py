@@ -29,6 +29,7 @@ from IPy import IP
 
 register = template.Library()
 
+
 @register.inclusion_tag('tags/relayed_via.html')
 def relayed_via(headers):
     "display relayed via"
@@ -73,8 +74,8 @@ def relayed_via(headers):
                             except:
                                 pass
                         return_value.append(
-                            {'ip_address':ipaddr, 
-                            'hostname':hostname, 
-                            'country_code':country_code, 
-                            'country_name':country_name})
-    return {'hosts':return_value}
+                            {'ip_address': ipaddr, 
+                            'hostname': hostname, 
+                            'country_code': country_code, 
+                            'country_name': country_name})
+    return {'hosts': return_value}

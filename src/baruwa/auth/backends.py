@@ -19,10 +19,16 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import re
+import poplib
+import smtplib
+import imaplib
+
 from django.contrib.auth.models import User
 from baruwa.accounts.models import UserProfile
 from baruwa.config.models import MailAuthHost
 from baruwa.accounts.models import UserAddresses
+
 
 class MailBackend:
     "Authenticates users using pop3 imap and smtp auth"
@@ -30,7 +36,6 @@ class MailBackend:
     def mail_auth(self, protocol, username, password, server, port=None):
         "Authenticates to pop3,imap,smtp servers"
         if protocol == 1:
-            import poplib, re
             regex = re.compile(r"^.+\<\d+\.\d+\@.+\>$")
             try:
                 if port == 995:
@@ -49,7 +54,6 @@ class MailBackend:
             except:
                 return False
         elif protocol == 2:
-            import imaplib
             try:
                 if port == 993:
                     conn = imaplib.IMAP4_SSL(server)
@@ -63,7 +67,6 @@ class MailBackend:
             except:
                 return False
         elif protocol == 3:
-            import smtplib
             try:
                 if port == 465:
                     conn = smtplib.SMTP_SSL(server)
@@ -127,10 +130,8 @@ class MailBackend:
                 return user
         return None
 
-
     def get_user(self, user_id):
         try:
             return User.objects.get(pk=user_id)
         except:
             return None
-

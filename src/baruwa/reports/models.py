@@ -22,6 +22,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class SavedFilter(models.Model):
     """SavedFilter"""
     id = models.AutoField(primary_key=True)
@@ -30,11 +31,9 @@ class SavedFilter(models.Model):
     op_field = models.IntegerField()
     value = models.CharField(max_length=100)
     user = models.ForeignKey(User)
-    
+
     class Meta:
         db_table = 'report_filters'
 
     def __unicode__(self):
         return u"Saved Filter id: " + self.id
-
-

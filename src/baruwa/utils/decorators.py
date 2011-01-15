@@ -23,6 +23,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 
+
 def onlysuperusers(function):
     """
     Allow access only to super users
@@ -33,13 +34,14 @@ def onlysuperusers(function):
             raise PermissionDenied
         return function(request, *args, **kwargs)
     return _inner
-    
+
+
 def authorized_users_only(function):
     """
     This checks if a user is allowed access to a 
     user account
     """
-    
+
     def _inner(request, *args, **kwargs):
         "check if super user"
         if not request.user.is_superuser:
@@ -62,6 +64,7 @@ def authorized_users_only(function):
                 raise PermissionDenied
         return function(request, *args, **kwargs)
     return _inner
+
 
 def only_admins(function):
     """

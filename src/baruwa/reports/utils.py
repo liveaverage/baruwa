@@ -38,6 +38,7 @@ def pack_json_data(data, arg1, arg2):
         ret.append(pie_data)
     return ret
 
+
 def run_hosts_query(request, active_filters):
     "run the top hosts query"
     data = Message.messages.for_user(request).values('clientip').exclude(
@@ -48,6 +49,7 @@ def run_hosts_query(request, active_filters):
     data = apply_filter(data, request, active_filters)
     data = data[:10]
     return data
+
 
 def run_query(query_field, exclude_kwargs, order_by, request, active_filters):
     "run a query"
@@ -174,7 +176,7 @@ def gen_dynamic_raw_query(filter_list):
                     ovals.append(filter_item['value'])
                 else:
                     asql.append(tmp)
-                    avals.append('%'+filter_item['value']+'%')
+                    avals.append('%' + filter_item['value'] + '%')
         if filter_item['filter'] == 6:
             tmp = "%s NOT LIKE %%s" % filter_item['field']
             if tmp in asql:
@@ -195,7 +197,7 @@ def gen_dynamic_raw_query(filter_list):
                     novals.append(filter_item['value'])
                 else:
                     asql.append(tmp)
-                    avals.append('%'+filter_item['value']+'%')
+                    avals.append('%' + filter_item['value'] + '%')
         if filter_item['filter'] == 7:
             tmp = "%s REGEXP %%s" % filter_item['field']
             if tmp in asql:
@@ -266,23 +268,23 @@ def gen_dynamic_raw_query(filter_list):
     if andsql != '':
         if orsql != '':
             if nsql != '':
-                sql = andsql + ' AND ( '+orsql+' ) AND ( '+nsql+' )'
+                sql = andsql + ' AND ( ' + orsql + ' ) AND ( ' + nsql + ' )'
             else:
-                sql = andsql + ' AND ( '+orsql+' )'
+                sql = andsql + ' AND ( ' + orsql + ' )'
         else:
             if nsql != '':
-                sql = andsql + ' AND ( '+nsql+' )'
+                sql = andsql + ' AND ( ' + nsql + ' )'
             else:
                 sql = andsql
     else:
         if orsql != '':
             if nsql != '':
-                sql = '( '+orsql+' ) AND ( '+nsql+' )'
+                sql = '( ' + orsql + ' ) AND ( ' + nsql + ' )'
             else:
-                sql = '( '+orsql+' )'
+                sql = '( ' + orsql + ' )'
         else:
             if nsql != '':
-                sql = '( '+nsql+' )'
+                sql = '( ' + nsql + ' )'
             else:
                 sql = ' 1=1 '
     return (sql, avals)
