@@ -778,6 +778,25 @@ div.blacklist {
 	padding:15px 0 0 10px;
 }
 
+.Attempts_heading{
+    width:67px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:15px 0 0 5px;
+}
+
+.Queue_hash_heading{
+    width:15px;
+    color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+	float:left;margin:0px;
+	padding:10px 0 10px 0;
+}
+
 .totals_date, .totals_mail, .totals_spam, .totals_spamp, .totals_virii, .totals_viriip, .totals_volume{
     width:119px;
     font-size:12px;
@@ -866,6 +885,26 @@ div.blacklist {
 .Status_row{
 	width:45px;
 	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+}
+
+.Attempts_row{
+	width:64px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+	float:left;margin:0px;
+	padding:7px 0 7px 0;
+}
+
+.Queue_hash_row{
+    width:15px;
+    font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
 	font-weight:normal;

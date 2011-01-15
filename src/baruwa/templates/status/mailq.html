@@ -22,7 +22,7 @@
 	<div class="To_heading">{% status_sorter "to_address" "To" %}</div>
 	<div class="Subject_heading">{% status_sorter "subject" "Subject" %}</div>
 	<div class="Size_heading">{% status_sorter "size" "Size" %}</div>
-	<div class="Score_heading">{% status_sorter "attempts" "Attempts" %}</div>
+	<div class="Attempts_heading">{% status_sorter "attempts" "Attempts" %}</div>
 </div>
 {% load messages_extras %}
 {% for item in object_list %}
@@ -32,7 +32,7 @@
 	<div class="To_row"><a href="{% url mailq-detail item.id %}">{{item.to_address|tds_nl_commas|linebreaksbr}}</a></div>
 	<div class="Subject_row"><a href="{% url mailq-detail item.id %}">{{item.subject|striptags|escape|tds_trunc:45}}</a></div>
 	<div class="Size_row"><a href="{% url mailq-detail item.id %}">{{item.size|filesizeformat}}</a></div>
-	<div class="Score_row"><a href="{% url mailq-detail item.id %}">{{item.attempts}}</a></div>
+	<div class="Attempts_row"><a href="{% url mailq-detail item.id %}">{{item.attempts}}</a></div>
 </div>
 {% empty %}
 <div class="spanrow">{% trans "No queue items found" %}</div>
