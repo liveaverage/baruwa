@@ -67,7 +67,7 @@ function process_response(data){
 				var l = [];
 				var c = 1;
 				for (var i=0; i < response.pie_data.scores.length; i++) {
-				    l[i] =  {value:c,text:response.pie_data.scores[i]};
+				    l[i] =  {value:c,text:response.pie_data.scores[i].text};
 				    c++;
 				};
 				chart.addAxis("x",{labels: l,majorTickStep:10});
