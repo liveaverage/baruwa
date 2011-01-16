@@ -20,12 +20,13 @@
 #
 
 import re
+import time
+import datetime
 
 from django import forms
 from django.template.defaultfilters import force_escape
 from django.utils.translation import ugettext as _
 from baruwa.utils.regex import DOM_RE
-import datetime, time
 try:
     from django.forms.fields import email_re
     from django.forms.fields import ipv4_re
@@ -152,7 +153,7 @@ class FilterForm(forms.Form):
                 if submited_by in [7, 8]:
                     try:
                         re.compile(submited_value)
-                    except:
+                    except re.error:
                         raise forms.ValidationError(
                             _("Please provide a valid regex")
                         )
@@ -166,7 +167,7 @@ class FilterForm(forms.Form):
                 if submited_by in [7, 8]:
                     try:
                         re.compile(submited_value)
-                    except:
+                    except re.error:
                         raise forms.ValidationError(
                             _("Please provide a valid regex")
                         )

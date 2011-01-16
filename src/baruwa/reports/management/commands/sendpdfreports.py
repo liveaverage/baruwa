@@ -19,7 +19,8 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-import re, datetime
+import re
+import datetime
 
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.translation import ugettext as _
@@ -101,7 +102,7 @@ class Command(BaseCommand):
 
         try:
             from cStringIO import StringIO
-        except:
+        except ImportError:
             from StringIO import StringIO
 
         table_style = TableStyle([

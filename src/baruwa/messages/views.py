@@ -19,14 +19,17 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-import re, urllib
+import re
+import urllib
 
+from httplib import HTTPException
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponse, Http404
 from django.http import HttpResponseRedirect
 from django.utils import simplejson
+from django.db import IntegrityError
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
@@ -176,7 +179,7 @@ def detail(request, message_id, archive=False):
                     remote_request.post()
                     if remote_request.response.status == 200:
                         response = remote_request.response.read()
-                except:
+                except HTTPException:
                     pass
 
                 if request.is_ajax():
@@ -189,7 +192,7 @@ def detail(request, message_id, archive=False):
                     else:
                         success = False
                     error_list = resp['response']
-                except:
+                except ValueError:
                     success = False
                     error_list = _('Error: Empty server response')
             else:
@@ -235,7 +238,7 @@ def detail(request, message_id, archive=False):
                                 os.remove(file_name)
                                 message_details.quarantined = 0
                                 message_details.save()
-                            except:
+                            except (os.error, IntegrityError):
                                 success = False
                         template = "messages/delete.html"
                         html = render_to_string(template,
@@ -343,7 +346,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                         response['Content-Disposition'] = (
                             'attachment; filename=%s' % attach['name'])
                         return response
-            except:
+            except (HTTPException, ValueError):
                 pass
             raise Http404
         else:
@@ -367,7 +370,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                         return render_to_response('messages/preview.html',
                             {'message': message, 'message_id': message_id},
                             context_instance=RequestContext(request))
-            except:
+            except (HTTPException, ValueError):
                 pass
             raise Http404
 
@@ -399,7 +402,7 @@ def auto_release(request, message_uuid, template='messages/release.html'):
             remote_release = ProcessRemote(hostname, rurl)
             remote_release.get()
             response = remote_release.response.read()
-        except:
+        except HTTPException:
             pass
 
         if request.is_ajax():
@@ -411,7 +414,7 @@ def auto_release(request, message_uuid, template='messages/release.html'):
                 success = True
                 release_record.released = 1
                 release_record.save()
-        except:
+        except ValueError:
             pass
     else:
         file_name = search_quarantine(message_details.date,

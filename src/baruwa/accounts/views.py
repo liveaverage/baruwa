@@ -24,7 +24,7 @@ from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, AdminPasswordChangeForm
 from django.db.models import Q
-from django.db import IntegrityError
+from django.db import IntegrityError, DatabaseError
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -186,7 +186,7 @@ def delete_account(request, user_id, template_name='accounts/delete_account.html
                             content_type='application/javascript; charset=utf-8')
                     request.user.message_set.create(message=msg)
                     return HttpResponseRedirect(reverse('accounts'))
-                except:
+                except DatabaseError:
                     msg = _('The deletion of user account %(account)s failed') % {
                     'account': user_account.username}
                     if request.is_ajax():

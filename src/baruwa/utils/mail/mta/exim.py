@@ -115,13 +115,13 @@ class QueueParser(object):
                             attribs['lastattempt'] = match.groups()[0]
                             reasons.append(msg)
                     msglog.close()
-                except:
+                except UnicodeEncodeError:
                     pass
                 if attribs['from_address'] == '':
                     attribs['from_address'] = '<>'
                 attribs['reason'] = '\n'.join(reasons)
                 return attribs
-            except:
+            except os.error:
                 return None
 
         queuefiles = []

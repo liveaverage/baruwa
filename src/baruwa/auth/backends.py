@@ -44,14 +44,15 @@ class MailBackend:
                     conn = poplib.POP3(server)
                 else:
                     conn = poplib.POP3(server, port)
+
                 if regex.match(conn.getwelcome()):
                     conn.apop(username, password)
                 else:
-                    dump = conn.user(username)
+                    conn.user(username)
                     conn.pass_(password)
                 conn.quit()
                 return True
-            except:
+            except poplib.error_proto:
                 return False
         elif protocol == 2:
             try:
@@ -61,10 +62,11 @@ class MailBackend:
                     conn = imaplib.IMAP4(server)
                 else:
                     conn = imaplib.IMAP4(server, port)
-                dump = conn.login(username, password)
-                dump = conn.logout()
+
+                conn.login(username, password)
+                conn.logout()
                 return True
-            except:
+            except imaplib.IMAP4.error:
                 return False
         elif protocol == 3:
             try:
@@ -74,6 +76,7 @@ class MailBackend:
                     conn = smtplib.SMTP(server)
                 else:
                     conn = smtplib.SMTP(server, port)
+
                 conn.ehlo()
                 if conn.has_extn('STARTTLS') and port != 465:
                     conn.starttls()
@@ -81,7 +84,7 @@ class MailBackend:
                 conn.login(username, password)
                 conn.quit()
                 return True
-            except:
+            except smtplib.SMTPException:
                 return False
         else:
             return False
@@ -133,5 +136,5 @@ class MailBackend:
     def get_user(self, user_id):
         try:
             return User.objects.get(pk=user_id)
-        except:
+        except User.DoesNotExist:
             return None

@@ -19,8 +19,13 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import re
+import os
+import glob
+
 from django.core.management.base import NoArgsCommand
 from django.utils.translation import ugettext as _
+from django.db import IntegrityError
 
 
 class Command(NoArgsCommand):
@@ -28,7 +33,6 @@ class Command(NoArgsCommand):
     help = _("Updates the database with the spam descriptions")
 
     def handle_noargs(self, **options):
-        import re, glob, os
         from django.conf import settings
         from baruwa.messages.models import SaRules
 
@@ -47,6 +51,6 @@ class Command(NoArgsCommand):
                         rule_desc = match.groups()[1])
                         try:
                             rule.save()
-                        except:
+                        except IntegrityError:
                             pass
                 rule_file.close()

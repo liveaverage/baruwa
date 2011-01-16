@@ -19,8 +19,10 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+from smtplib import SMTPException
 from django.core.management.base import NoArgsCommand
 from django.utils.translation import ugettext as _
+from django.db import IntegrityError
 try:
     from django.forms.fields import email_re
 except ImportError:
@@ -45,14 +47,10 @@ def generate_release_records(query_list):
     from baruwa.messages.models import Release
     for record in query_list:
         try:
-            # if not email_re.match(user.email):
-            #     release_address = user.username
-            # else:
-            #     release_address = user.email
             rec = Release(uuid=record['uuid'], timestamp=record['timestamp'], 
             message_id=record['id'])
             rec.save()
-        except:
+        except IntegrityError:
             pass
 
 
@@ -134,7 +132,7 @@ class Command(NoArgsCommand):
                             generate_release_records(query_list)
 
                         print _("sent quarantine report to %(addr)s") % {'addr': to_addr}
-                    except:
+                    except SMTPException:
                         print _("failed to send to: %(addr)s") % {'addr': to_addr}
                 else:
                     print _("skipping report to %(addr)s no messages") % {'addr': to_addr}

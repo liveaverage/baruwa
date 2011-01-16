@@ -21,7 +21,8 @@
 
 from email.Header import decode_header
 from lxml.html.clean import Cleaner
-import re, codecs
+import re
+import codecs
 
 NOTFOUND = object()
 UNCLEANTAGS = ['html', 'head', 'link', 'img', 'a', 'body']
@@ -52,7 +53,7 @@ class EmailParser(object):
             headers = decode_header(header_text)
             header_sections = [unicode(text, charset or default)
                                 for text, charset in headers]
-        except:
+        except UnicodeEncodeError:
             pass
         return u"".join(header_sections)
 

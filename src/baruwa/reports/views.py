@@ -24,7 +24,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db.models import Count, Max, Min
-from django.db import IntegrityError
+from django.db import IntegrityError, DatabaseError
 from django.utils import simplejson
 from django.template import RequestContext
 from django.template.defaultfilters import force_escape
@@ -130,7 +130,7 @@ def rem_filter(request, index_num):
             fil = request.session.get('filter_by')
             fil.remove(fil[int(index_num)])
             request.session.modified = True
-        except:
+        except AttributeError:
             pass
         if request.is_ajax():
             return index(request)
@@ -188,7 +188,7 @@ def load_filter(request, index_num):
             return index(request)
         else:
             return HttpResponseRedirect(reverse('reports-index'))
-    except:
+    except SavedFilter.DoesNotExist:
         error_msg = _('This filter you attempted to load does not exist')
         if request.is_ajax():
             response = simplejson.dumps({'success': False, 'data': [], 
@@ -204,7 +204,7 @@ def del_filter(request, index_num):
     "deletes a filter"
     try:
         filt = SavedFilter.objects.get(id=int(index_num))
-    except:
+    except SavedFilter.DoesNotExist:
         error_msg = _('This filter you attempted to delete does not exist')
         if request.is_ajax():
             response = simplejson.dumps({'success': False, 
@@ -217,7 +217,7 @@ def del_filter(request, index_num):
     else:
         try:
             filt.delete()
-        except:
+        except DatabaseError:
             error_msg = _('Deletion of the filter failed, Try again')
             if request.is_ajax():
                 response = simplejson.dumps({'success': False, 'data': [], 

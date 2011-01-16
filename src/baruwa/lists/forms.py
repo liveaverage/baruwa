@@ -110,7 +110,7 @@ class AdminListAddForm(ListAddForm):
         to_address = self.cleaned_data['to_address']
         try:
             to_address = to_address.strip()
-        except:
+        except AttributeError:
             pass
         if not self.request.user.is_superuser:
             addresses = self.request.session['user_filter']['addresses']

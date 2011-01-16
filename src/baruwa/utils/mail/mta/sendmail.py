@@ -115,7 +115,7 @@ class QueueParser(object):
                 if attribs['from_address'] == '':
                     attribs['from_address'] = '<>'
                 return attribs
-            except:
+            except os.error:
                 return None
 
         queuefiles = []

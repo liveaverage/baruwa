@@ -47,7 +47,7 @@ def relayed_via(headers):
                 for addr in match:
                     try:
                         iptype = IP(addr).iptype()
-                    except:
+                    except ValueError:
                         # psuedo work around if IPy not installed
                         if addr == '127.0.0.1':
                             iptype = 'LOOPBACK'
@@ -60,8 +60,9 @@ def relayed_via(headers):
                         and addr != '127.0.0.1'):
                         ipaddr = addr
                         try:
+                            socket.setdefaulttimeout(60)
                             hostname = socket.gethostbyaddr(ipaddr)[0]
-                        except:
+                        except (socket.error, socket.gaierror, socket.timeout):
                             if iptype == "PRIVATE":
                                 hostname = _("RFC1918 Private address")
                             else:
@@ -71,7 +72,7 @@ def relayed_via(headers):
                             try:
                                 country_code = gip.country_code_by_addr(ipaddr).lower()
                                 country_name = gip.country_name_by_addr(ipaddr)
-                            except:
+                            except GeoIP.error:
                                 pass
                         return_value.append(
                             {'ip_address': ipaddr, 

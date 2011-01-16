@@ -116,7 +116,7 @@ class QueueParser(object):
                     attribs['from_address'] = '<>'
                 attribs['reason'] = '\n'.join(reasons)
                 return attribs
-            except:
+            except os.error:
                 return None
 
         queuefiles = []

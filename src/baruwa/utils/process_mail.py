@@ -19,7 +19,11 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-import smtplib, os, re, socket
+import os
+import re
+import smtplib
+import socket
+
 from subprocess import Popen, PIPE
 from django.conf import settings
 from baruwa.utils.misc import get_config_option
@@ -62,9 +66,11 @@ def release_mail(mail_path, to_addr, from_addr):
         mail_file.close()
         try:
             server = smtplib.SMTP(host)
+            if settings.DEBUG:
+                server.set_debuglevel(5)
             server.sendmail(from_addr, to_addr, msg)
             server.quit()
-        except:
+        except smtplib.SMTPException:
             return False
     else:
         return False
@@ -150,5 +156,5 @@ def test_smtp_server(server, port, test_address):
             return True
         else:
             return False
-    except:
+    except smtplib.SMTPException:
         return False

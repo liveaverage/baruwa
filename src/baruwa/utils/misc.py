@@ -306,7 +306,7 @@ def get_sys_status(request):
 
     try:
         spam = data.spam_mail + data.high_spam
-    except:
+    except TypeError:
         spam = 0
 
     return {

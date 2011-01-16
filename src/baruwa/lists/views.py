@@ -180,8 +180,6 @@ def add_to_list(request, template = 'lists/add.html'):
                     form = ListAddForm(request)
             except IntegrityError:
                 error_msg = _('The list item already exists')
-            except:
-                error_msg = _('Error occured saving the list item')
 
             if request.is_ajax():
                 response = simplejson.dumps({'success': is_saved, 

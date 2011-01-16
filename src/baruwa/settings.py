@@ -133,5 +133,5 @@ SA_RULES_DIRS = ['/usr/share/spamassassin', '/etc/mail/spamassassin']
 
 try:
     from baruwa.dev_settings import *
-except:
+except ImportError:
     pass

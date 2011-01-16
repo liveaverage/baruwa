@@ -22,6 +22,9 @@
 from django.core.management.base import NoArgsCommand
 from django.utils.translation import ugettext as _
 import re
+import os
+import shutil
+import datetime
 
 
 REGEX = re.compile(r"^\d{8}$")
@@ -35,8 +38,6 @@ def should_be_pruned(direc, days_to_retain):
     else
         returns false
     """
-
-    import datetime
 
     if (not days_to_retain) or (not REGEX.match(direc)):
         return False
@@ -56,7 +57,6 @@ class Command(NoArgsCommand):
     help = "Deletes quarantined files older than QUARANTINE_DAYS_TO_KEEP"
 
     def handle_noargs(self, **options):
-        import os, shutil
         from django.conf import settings
         from baruwa.utils.misc import get_config_option
         from baruwa.messages.models import Message
@@ -107,7 +107,7 @@ class Command(NoArgsCommand):
                 print _("== Removing directory  %(path)s ==") % {'path': process_path}
                 try:
                     shutil.rmtree(process_path)
-                except:
+                except shutil.Error:
                     print _("Failed to remove %(path)s") % {'path': process_path}
             else:
                 print _("The directory %(path)s is a sym link skipping") % {'path': process_path}

@@ -19,7 +19,11 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-import os, re, GeoIP, socket
+import os
+import re
+import GeoIP
+import socket
+
 from textwrap import wrap
 from django import template
 from django.template.defaultfilters import stringfilter, wordwrap, linebreaksbr
@@ -134,7 +138,7 @@ def tds_geoip(value):
         try:
             ccode = gip.country_code_by_addr(value).lower()
             cname = gip.country_name_by_addr(value)
-        except:
+        except GeoIP.error:
             ccode = None
             cname = None
         if ccode and cname:
@@ -154,8 +158,9 @@ def tds_hostname(value):
             hostname = 'localhost'
         else:
             try:
+                socket.setdefaulttimeout(60)
                 hostname = socket.gethostbyaddr(match.groups()[0])[0]
-            except:
+            except (socket.error, socket.gaierror, socket.timeout):
                 hostname = _('unknown')
     return mark_safe(hostname)
 
@@ -211,7 +216,7 @@ def tds_get_rules(rules):
                 rule_obj = SaRules.objects.values(
                     'rule_desc').get(rule__exact=rule)
                 sa_rule_descp = rule_obj['rule_desc']
-            except:
+            except SaRules.DoesNotExist:
                 pass 
             return_value.append({'rule': rule, 'score': match.groups()[3], 
                 'rule_descp': sa_rule_descp})
