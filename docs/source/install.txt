@@ -1,20 +1,49 @@
 .. _install:
 
-============
-Installation
-============
+====================
+Generic Installation
+====================
 
 Install Baruwa
 ==============
 
-Download the `Baruwa <http://pypi.python.org/pypi/baruwa>`_ source
-and untar it::
+You can install Baruwa either via the Python Package Index (PyPI)
+or from source.
 
-    # tar xzvf baruwa-<version>.tar.gz
+Install via the Python Package Index (PyPI)
+-------------------------------------------
+
+To install using `pip`::
+
+    # pip install baruwa
+
+To install using `easy_install`::
+
+    # easy_install baruwa
+
+Downloading and installing from source
+--------------------------------------
+
+Download the latest version of Baruwa from
+http://pypi.python.org/pypi/baruwa/
+
+You can install it by doing the following,::
+
+    # tar xvfz baruwa-<version>.tar.gz
     # cd baruwa-<version>
+    # python setup.py install
 
-Make sure you have the required packages installed then proceed. 
-The following commands should be run as a privileged user.
+Using the development version
+-----------------------------
+
+You can clone the repository by doing the following::
+
+    # git clone git://github.com/akissa/baruwa.git
+    # cd baruwa
+    # python setup.py install
+
+Configure Baruwa
+================
 
 **Create the database**::
 
@@ -26,15 +55,6 @@ Run the command from the mysql prompt::
 
     mysql> GRANT ALL ON baruwa.* TO baruwa@localhost IDENTIFIED BY '<password>';
     mysql> flush privileges;
-
-**Install Baruwa**
-
-Run::
-
-    # python setup.py install
-
-Configure Baruwa
-================
 
 **Configure the Baruwa settings**
 
