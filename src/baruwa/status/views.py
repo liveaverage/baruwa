@@ -154,6 +154,7 @@ def sa_lint(request):
         context_instance=RequestContext(request))
 
 
+@login_required
 def mailq(request, queue, page=1, direction='dsc', order_by='timestamp'):
     "Display the items in the mailq"
     items = MailQueueItem.objects.filter(direction=queue)
@@ -190,6 +191,7 @@ def mailq(request, queue, page=1, direction='dsc', order_by='timestamp'):
     'order_by': ordering}, allow_empty=True)
 
 
+@login_required
 def detail(request, itemid):
     itemdetails = get_object_or_404(MailQueueItem, id=itemid)
     return render_to_response('status/detail.html', {'itemdetails': itemdetails}, 

@@ -19,13 +19,76 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-from email.Header import decode_header
-from lxml.html.clean import Cleaner
+"Baruwa email message related modules"
+import os
 import re
 import codecs
+import smtplib
+import shutil
+
+from email.Header import decode_header
+from subprocess import Popen, PIPE
+from lxml.html.clean import Cleaner
+from django.utils.translation import ugettext as _
+from django.conf import settings
+from baruwa.utils.misc import get_config_option
 
 NOTFOUND = object()
 UNCLEANTAGS = ['html', 'head', 'link', 'img', 'a', 'body']
+
+
+def test_smtp_server(server, port, test_address):
+    "Test smtp server delivery"
+    try:
+        port = int(port)
+        if port == 465:
+            conn = smtplib.SMTP_SSL(server)
+        elif port == 25:
+            conn = smtplib.SMTP(server)
+        else:
+            conn = smtplib.SMTP(server, port)
+        if settings.DEBUG:
+            conn.set_debuglevel(5)
+        conn.ehlo()
+        if conn.has_extn('STARTTLS') and port != 465:
+            conn.starttls()
+            conn.ehlo()
+        conn.docmd('MAIL FROM:', 'postmaster@baruwa.org')
+        result = conn.docmd('RCPT TO:', test_address)
+        if conn:
+            conn.quit()
+        if result[0] == 250:
+            return True
+        else:
+            return False
+    except smtplib.SMTPException:
+        return False
+
+
+def get_message_path(qdir, date, message_id):
+    """
+    Returns the on disk path of a message
+    or None if path does not exist
+    """
+    file_path = os.path.join(qdir, date, message_id, 'message')
+    if os.path.exists(file_path):
+        return file_path, True
+
+    qdirs = ["spam", "nonspam", "mcp"]
+    for message_kind in qdirs:
+        file_path = os.path.join(qdir, date, message_kind, message_id)
+        if os.path.exists(file_path):
+            return file_path, False
+    return None, None
+
+
+def search_quarantine(date, message_id):
+    """search_quarantine"""
+    qdir = get_config_option('Quarantine Dir')
+    date = "%s" % date
+    date = date.replace('-', '')
+    file_name = get_message_path(qdir, date, message_id)
+    return file_name
 
 
 class EmailParser(object):
@@ -163,3 +226,83 @@ class EmailParser(object):
         "Clean up html"
         cleaner = Cleaner(remove_tags=UNCLEANTAGS)
         return cleaner.clean_html(msg)
+
+
+class ProcessQuarantinedMessage(object):
+    """
+    Process a quarantined message
+    """
+    def __init__(self, messageid, date, host=None):
+        "init"
+        self.messageid = messageid
+        self.date = date
+        path, isdir = search_quarantine(date, messageid)
+        assert path, _("Message not found in the quarantine")
+        self.path = path
+        self.isdir = isdir
+        self.host = settings.EMAIL_HOST
+        self.errors = []
+        self.output = ''
+        if host:
+            self.host = host
+
+    def release(self, from_addr, to_addrs):
+        "Release message from quarantine"
+        try:
+            messagefile = open(self.path, 'r')
+            message = messagefile.read()
+            messagefile.close()
+
+            smtp = smtplib.SMTP(self.host)
+            if settings.DEBUG:
+                smtp.set_debuglevel(5)
+            smtp.sendmail(from_addr, to_addrs, message)
+            smtp.quit()
+        except IOError:
+            self.errors.append(_('The quarantined message not found'))
+            return False
+        except smtplib.SMTPException, exception:
+            self.errors.append(str(exception))
+            return False
+        return True
+
+    def learn(self, learnas):
+        "Bayesian learn the message"
+        learnopts = ('spam', 'ham', 'forget')
+        if not learnas in learnopts:
+            self.errors.append(_('Unsupported learn option supplied'))
+            return False
+        if not os.path.exists(self.path):
+            self.errors.append(_('The quarantined message not found'))
+            return False
+
+        learn = "--%s" % learnas
+        sa_learn_cmd = ['/usr/bin/sa-learn', learn, self.path]
+        pipe = Popen(sa_learn_cmd, stdout=PIPE, stderr=PIPE)
+        stdout, stderr = pipe.communicate()
+        if pipe.returncode == 0:
+            self.output = stdout
+            return True
+        else:
+            self.errors.append(stderr)
+            self.output = stderr
+            return False
+
+    def delete(self):
+        "Delete quarantined file"
+        try:
+            if '..' in self.path:
+                raise OSError('Attempted directory traversal')
+            if self.isdir:
+                path = os.path.dirname(self.path)
+                shutil.rmtree(path)
+            else:
+                os.remove(self.path)
+        except OSError, exception:
+            self.errors.append(str(exception))
+            return False
+        return True
+
+    def reset_errors(self):
+        "Resets errors"
+        self.errors[:] = []

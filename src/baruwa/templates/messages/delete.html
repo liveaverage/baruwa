@@ -2,5 +2,5 @@
 {% if success %}
 {% blocktrans %}The message id: {{id}} has been deleted{% endblocktrans %}
 {% else %}
-{% blocktrans %}The message id: {{id}} could not be deleted{% endblocktrans %}
+{% blocktrans %}The message id: {{id}} could not be deleted, Error: {{error_msg}}{% endblocktrans %}
 {% endif %}

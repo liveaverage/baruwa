@@ -1,6 +1,9 @@
 # Django settings for baruwa project.
 # vim: ai ts=4 sts=4 et sw=4
 
+import djcelery
+djcelery.setup_loader()
+
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
@@ -97,6 +100,7 @@ INSTALLED_APPS = (
     'baruwa.reports',
     'baruwa.status',
     'baruwa.config',
+    'djcelery',
     #'debug_toolbar',
 )
 
@@ -113,6 +117,15 @@ SESSION_COOKIE_AGE = 28800
 #SESSION_COOKIE_SECURE = True
 #EMAIL_HOST = 'smtp.example.net'
 #DEFAULT_FROM_EMAIL = 'postmaster@baruwa.org'
+
+#celery
+CELERY_CONCURRENCY = 20
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_USER = "baruwa"
+BROKER_PASSWORD = "password"
+BROKER_VHOST = "baruwa"
+
 # Baruwa only setting
 
 # mailscanner configuration file

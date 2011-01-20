@@ -43,11 +43,11 @@ function paginate(){
     row = [];
     row[count++] = tmp;
     if(rj.show_first){
-       row[count++] = '<span><a href="/'+rj.app+'/1/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/first_pager.png" alt="First"/></a></span>';
+       row[count++] = '<span><a href="/'+rj.app+'/1/'+rj.direction+'/'+rj.order_by+'/"><img src="'+media_url+'imgs/first_pager.png" alt="First"/></a></span>';
        row[count++] = '<span>.....</span>';
     }
     if(rj.has_previous){
-       row[count++] = '<span><a href="/'+rj.app+'/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/previous_pager.png" alt="Previous"/></a></span>';
+       row[count++] = '<span><a href="/'+rj.app+'/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/"><img src="'+media_url+'imgs/previous_pager.png" alt="Previous"/></a></span>';
     }
     $.each(rj.page_numbers,function(itr,lnk){
        li = '/'+rj.app+'/'+lnk+'/'+rj.direction+'/'+rj.order_by+'/';
@@ -58,11 +58,11 @@ function paginate(){
        }
     });
     if(rj.has_next){
-       row[count++] = '<span><a href="/'+rj.app+'/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/next_pager.png" alt="Next"/></a></span>';
+       row[count++] = '<span><a href="/'+rj.app+'/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/"><img src="'+media_url+'imgs/next_pager.png" alt="Next"/></a></span>';
     }
     if(rj.show_last){
        row[count++] = '<span>......</span>';
-       row[count++] = '<a href="/'+rj.app+'/last/'+rj.direction+'/'+rj.order_by+'/"><img src="/static/imgs/last_pager.png" alt="Last"/></a></span>';
+       row[count++] = '<a href="/'+rj.app+'/last/'+rj.direction+'/'+rj.order_by+'/"><img src="'+media_url+'imgs/last_pager.png" alt="Last"/></a></span>';
     }
     $('#paginator').html(row.join(''));
     $('#paginator span a').bind('click',navigate);
@@ -129,9 +129,9 @@ function page_from_json(data){
                 css = 'LightBlue';
             }
             if (n.is_superuser) {
-                img = '<img src="/static/imgs/user_red.png" alt="x" title="View account" />';
+                img = '<img src="'+media_url+'imgs/user_red.png" alt="x" title="View account" />';
             }else{
-                img = '<img src="/static/imgs/user.png" alt="x" title="View account" />';
+                img = '<img src="'+media_url+'imgs/user.png" alt="x" title="View account" />';
             };
             row[count++] = '<div id="account-id-'+n.id+'" class="'+css+'_div">';
             row[count++] = '<div class="hash"><a href="/accounts/user/'+n.id+'/">'+img+'</a></div>';
@@ -139,7 +139,7 @@ function page_from_json(data){
             row[count++] = '<div class="Users_fullname">'+n.first_name+' '+n.last_name+'</div>';
             row[count++] = '<div class="Users_email">'+n.email+'</div>';
             row[count++] = '<div class="Users_del"><a href="/accounts/user/delete/'+n.id+'/">';
-            row[count++] = '<img src="/static/imgs/action_delete.png" alt="Delete" title="Delete" />';
+            row[count++] = '<img src="'+media_url+'imgs/action_delete.png" alt="Delete" title="Delete" />';
             row[count++] = '</a></div></div>';
         });
         if(row.length){
@@ -177,5 +177,5 @@ function jsize_page(){
     $.address.externalChange(handlextern);
     $('div.Users_del a').bind('click',confirm_delete);
 }
-var loading_msg = '<div id="loading_message"><div id="loading"><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/><b>'+gettext('Processing')+'</b></div></div>';
+var loading_msg = '<div id="loading_message"><div id="loading"><img src="'+media_url+'imgs/ajax-loader.gif" alt="loading"/><br/><b>'+gettext('Processing')+'</b></div></div>';
 $(document).ready(jsize_page);

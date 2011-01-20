@@ -64,12 +64,12 @@ function paginate(){
     row[count++] = tmp;
     if(rj.show_first){
        row[count++] = '<span><a href="/'+rj.app+'/1/'+rj.direction+'/'+rj.order_by+'/">';
-       row[count++] = '<img src="/static/imgs/first_pager.png" alt="First"/></a></span>';
+       row[count++] = '<img src="'+media_url+'imgs/first_pager.png" alt="First"/></a></span>';
        row[count++] = '<span>.....</span>';
     }
     if(rj.has_previous){
        row[count++] = '<span><a href="/'+rj.app+'/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/">';
-       row[count++] = '<img src="/static/imgs/previous_pager.png" alt="Previous"/></a></span>';
+       row[count++] = '<img src="'+media_url+'imgs/previous_pager.png" alt="Previous"/></a></span>';
     }
     $.each(rj.page_numbers,function(itr,lnk){
        li = '/'+rj.app+'/'+lnk+'/'+rj.direction+'/'+rj.order_by+'/';
@@ -81,12 +81,12 @@ function paginate(){
     });
     if(rj.has_next){
        row[count++] = '<span><a href="/'+rj.app+'/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/">';
-       row[count++] = '<img src="/static/imgs/next_pager.png" alt="Next"/></a></span>';
+       row[count++] = '<img src="'+media_url+'imgs/next_pager.png" alt="Next"/></a></span>';
     }
     if(rj.show_last){
        row[count++] = '<span>......</span>';
        row[count++] = '<a href="/'+rj.app+'/last/'+rj.direction+'/'+rj.order_by+'/">';
-       row[count++] = '<img src="/static/imgs/last_pager.png" alt="Last"/></a></span>';
+       row[count++] = '<img src="'+media_url+'imgs/last_pager.png" alt="Last"/></a></span>';
     }
     $('#paginator').html(row.join(''));
     $('#paginator span a').bind('click',navigate);
@@ -152,11 +152,11 @@ function page_from_json(data){
                 css = 'LightBlue';
             }
             if (n.enabled) {
-                img = '<img src="/static/imgs/active.png" alt="" />';
-                eimg = '<img src="/static/imgs/tick.png" alt="" />';
+                img = '<img src="'+media_url+'imgs/active.png" alt="" />';
+                eimg = '<img src="'+media_url+'imgs/tick.png" alt="" />';
             }else{
-                img = '<img src="/static/imgs/inactive.png" alt="" />';
-                eimg = '<img src="/static/imgs/minus.png" alt="" />';
+                img = '<img src="'+media_url+'imgs/inactive.png" alt="" />';
+                eimg = '<img src="'+media_url+'imgs/minus.png" alt="" />';
             };
             row[count++] = '<div id="domain-id-'+n.id+'" class="'+css+'_div">';
             row[count++] = '<div class="Domains_hash">'+img+'</div>';
@@ -167,10 +167,10 @@ function page_from_json(data){
             row[count++] = '</div><div class="Domains_status">'+eimg+'</div>';
             row[count++] = '<div class="Domains_action"><div class="Domains_action_edit">';
             row[count++] = '<a href="/accounts/edit/address/'+n.id+'/">';
-            row[count++] = '<img src="/static/imgs/edit.png" alt="Edit" title="Edit" /></a></div>';
+            row[count++] = '<img src="'+media_url+'imgs/edit.png" alt="Edit" title="Edit" /></a></div>';
             row[count++] = '<div class="Domains_action_delete">';
             row[count++] = '<a href="/accounts/delete/address/'+n.id+'/">';
-            row[count++] = '<img src="/static/imgs/action_delete.png" alt="Delete" title="Delete" /></a>';
+            row[count++] = '<img src="'+media_url+'imgs/action_delete.png" alt="Delete" title="Delete" /></a>';
             row[count++] = '</div></div></div>';
         });
         if(row.length){
@@ -208,5 +208,5 @@ function jsize_page(){
     $.address.externalChange(handlextern);
     $('div.Domains_action_delete a').bind('click',confirm_delete);
 }
-var loading_msg = '<div id="loading_message"><div id="loading"><img src="/static/imgs/ajax-loader.gif" alt="loading"/><br/><b>'+gettext('Processing')+'</b></div></div>';
+var loading_msg = '<div id="loading_message"><div id="loading"><img src="'+media_url+'imgs/ajax-loader.gif" alt="loading"/><br/><b>'+gettext('Processing')+'</b></div></div>';
 $(document).ready(jsize_page);

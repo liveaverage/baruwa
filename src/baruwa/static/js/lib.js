@@ -115,7 +115,7 @@ function json2html(data){
             if(s.length > 38){
                 re = /\s/g;
                 if(re.test(s)){
-                   subject = wordwrap(s,45); 
+                   subject = wordwrap(s,55); 
                 }else{
                     subject = s.substring(0,44) + '...';
                 }
@@ -172,16 +172,16 @@ function json2html(data){
         if(!rows.length){
             if(full_messages_listing){
                 rows = '<div class="spanrow">'+gettext('No records returned')+'</div>';
-                $("div.Grid_heading").siblings('div').remove();
+                $("div.Grid_heading ~ div").remove();
                 $("div.Grid_heading").after(rows);
             }
         }else{
             if(full_messages_listing){
-                $("div.Grid_heading").siblings('div').remove();
+                $("div.Grid_heading ~ div").remove();
                 $("div.Grid_heading").after(rows.join(''));
             }else{
                 if(len == 49){
-                    $("div.Grid_heading").siblings('div').remove();
+                    $("div.Grid_heading ~ div").remove();
                     $("div.Grid_heading").after(rows.join(''));
                 }else{
                     remove_rows = (48 - len);

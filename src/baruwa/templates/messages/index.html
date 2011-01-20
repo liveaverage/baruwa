@@ -24,16 +24,9 @@ var media_url = '{{MEDIA_URL}}';
 {% endblock headers %}
 {% block submenu %}
 <ul>
-	<!--<li><a href="{% url main-messages-index %}">Recent messages</a></li>-->
-{% ifnotequal view_type 'quarantine' %}
-	<li><a href="{% url all-messages-index 'full' %}">{% trans "Full message" %}</a></li>
+	<li class="ajfy"><a href="{% url all-messages-index 'full' %}">{% trans "Full message" %}</a></li>
 	<li><a href="{% url all-messages-index 'quarantine' %}">{% trans "Quarantine" %}</a></li>
-	<li><a href="{% url all-messages-index 'archive' %}">{% trans "Archive" %}</a></li>
-{% else %}
-	<li><a href="{% url all-messages-index 'quarantine' %}">{% trans "Full Quarantine" %}</a></li>
-	<li><a href="{% url quarantine-bytype-index 'quarantine', 'spam' %}">{% trans "Spam" %}</a></li>
-	<li><a href="{% url quarantine-bytype-index 'quarantine', 'policyblocked' %}">{% trans "Non Spam" %}</a></li>
-{% endifnotequal %}
+	<li class="ajfy"><a href="{% url all-messages-index 'archive' %}">{% trans "Archive" %}</a></li>
 </ul>
 {% endblock submenu %}
 {% block title %}

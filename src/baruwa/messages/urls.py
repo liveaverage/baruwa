@@ -40,6 +40,7 @@ urlpatterns = patterns('baruwa.messages.views',
     (r'^dlattachment/(?P<message_id>([A-Za-z0-9]){6}-([A-Za-z0-9]){6}-([A-Za-z0-9]){2}|.+)/(?P<attachment_id>(\d+))/$',
     'preview', {'is_attach': True}, 'download-attachment'),
     (r'^search/$', 'search', {}, 'message-search'),
+    (r'^process/$', 'bulk_process', {}, 'message-bulk-process'),
     (r'^release/(?P<message_uuid>([A-Fa-f0-9]){8}-([A-Fa-f0-9]){4}-([A-Fa-f0-9]){4}-([A-Fa-f0-9]){4}-([A-Fa-f0-9]){12})/$', 'auto_release', {}, 'auto-release'),
     # some message-id's supporting the however using the wildcard regex
     (r'^archive/(?P<message_id>(([A-Za-z0-9]){6}-([A-Za-z0-9]){6}-([A-Za-z0-9]){2})|.+)/$', 'detail', {'archive': True}, 'archive-message-detail'),

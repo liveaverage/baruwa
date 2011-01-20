@@ -17,7 +17,7 @@
 		{% endblocktrans %}
 	{% else %}
 	    {% blocktrans %}
-	    	The release of message: {{ message_id }} to {{ release_address }} failed, contact your email admin for assistance.
+	    	The release of message: {{ message_id }} to {{ release_address }} failed with error: {{error_msg}}, contact your email admin for assistance.
 	    {% endblocktrans %}
 	{% endif %}
 	</div>

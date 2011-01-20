@@ -33,10 +33,10 @@ function build_active_filters(active_filters){
         rows[count++] = '<div class="LightBlue_div">';
         rows[count++] = '<div class="Active_filters">';
         rows[count++] = '<div class="Filter_remove">';
-        rows[count++] = '<a href="/reports/fd/'+itr+'/"><img src="/static/imgs/action_remove.png" alt="x" title="Remove" /></a>';
+        rows[count++] = '<a href="/reports/fd/'+itr+'/"><img src="'+media_url+'imgs/action_remove.png" alt="x" title="Remove" /></a>';
         rows[count++] = '</div>';
         rows[count++] = '<div class="Filter_save">';
-        rows[count++] = '<a href="/reports/fs/'+itr+'/"><img src="/static/imgs/save.png" alt="Save" title="Save" /></a>';
+        rows[count++] = '<a href="/reports/fs/'+itr+'/"><img src="'+media_url+'imgs/save.png" alt="Save" title="Save" /></a>';
         rows[count++] = '</div>';
         rows[count++] = '<div class="Filter_detail">';
         rows[count++] = filter.filter_field+' '+filter.filter_by+' '+filter.filter_value;
@@ -61,13 +61,13 @@ function build_saved_filters(saved_filters){
         rows[count++] = '<div class="LightBlue_div">';
         rows[count++] = '<div class="Active_filters">';
         rows[count++] = '<div class="Filter_remove">';
-        rows[count++] = '<a href="/reports/sfd/'+filter.filter_id+'/"><img src="/static/imgs/action_delete.png" alt="x" title="Delete" /></a>';
+        rows[count++] = '<a href="/reports/sfd/'+filter.filter_id+'/"><img src="'+media_url+'imgs/action_delete.png" alt="x" title="Delete" /></a>';
         rows[count++] = '</div>';
         rows[count++] = '<div class="Filter_save">';
         if(!filter.is_loaded){
-            rows[count++] = '<a href="/reports/sfl/'+filter.filter_id+'/"><img src="/static/imgs/action_add.png" alt="Load" title="Load" /></a>';
+            rows[count++] = '<a href="/reports/sfl/'+filter.filter_id+'/"><img src="'+media_url+'imgs/action_add.png" alt="Load" title="Load" /></a>';
         }else{
-            rows[count++] = '<img src="/static/imgs/action_add.png" alt="Load" />';
+            rows[count++] = '<img src="'+media_url+'imgs/action_add.png" alt="Load" />';
         }
         rows[count++] = '</div>';
         rows[count++] = '<div class="Filter_detail">';
@@ -112,10 +112,10 @@ function build_elements(response){
                 row[count++] = '<div class="whitelisted_div">';
                 row[count++] = '<div class="Active_filters">';
                 row[count++] = '<div class="Filter_remove">';
-                row[count++] = '<a href="/reports/fd/'+i+'/"><img src="/static/imgs/action_remove.png" alt="x" title="Remove" /></a>';
+                row[count++] = '<a href="/reports/fd/'+i+'/"><img src="'+media_url+'imgs/action_remove.png" alt="x" title="Remove" /></a>';
                 row[count++] = '</div>';
                 row[count++] = '<div class="Filter_save">';
-                row[count++] = '<a href="/reports/fs/'+i+'/"><img src="/static/imgs/save.png" alt="Save" title="Save" /></a>';
+                row[count++] = '<a href="/reports/fs/'+i+'/"><img src="'+media_url+'imgs/save.png" alt="Save" title="Save" /></a>';
                 row[count++] = '</div>';
                 row[count++] = '<div class="Filter_detail">';
                 row[count++] = n.filter_field+' '+n.filter_by+' '+n.filter_value;
@@ -133,10 +133,10 @@ function build_elements(response){
                     row[count++] = '<div class="whitelisted_div">';
                     row[count++] = '<div class="Active_filters">';
                     row[count++] = '<div class="Filter_remove">';
-                    row[count++] = '<a href="/reports/fd/'+i+'/"><img src="/static/imgs/action_remove.png" alt="x" title="Remove" /></a>';
+                    row[count++] = '<a href="/reports/fd/'+i+'/"><img src="'+media_url+'imgs/action_remove.png" alt="x" title="Remove" /></a>';
                     row[count++] = '</div>';
                     row[count++] = '<div class="Filter_save">';
-                    row[count++] = '<a href="/reports/fs/'+i+'/"><img src="/static/imgs/save.png" alt="Save" title="Save" /></a>';
+                    row[count++] = '<a href="/reports/fs/'+i+'/"><img src="'+media_url+'imgs/save.png" alt="Save" title="Save" /></a>';
                     row[count++] = '</div>';
                     row[count++] = '<div class="Filter_detail">';
                     row[count++] = n.filter_field+' '+n.filter_by+' '+n.filter_value;

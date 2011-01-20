@@ -29,9 +29,9 @@ except ImportError:
 
 
 SALEARN_OPTIONS = (
-  ('1', _('Spam')),
-  ('2', _('Ham')),
-  ('3', _('Forget')),
+  ('spam', _('Spam')),
+  ('ham', _('Ham')),
+  ('forget', _('Forget')),
 )
 EMPTY_VALUES = (None, '')
 
@@ -76,3 +76,12 @@ class QuarantineProcessForm(forms.Form):
                             _('%(email)s is not a valid e-mail address.') 
                             % {'email': force_escape(email)})
         return cleaned_data
+
+
+class BulkQuarantineProcessForm(QuarantineProcessForm):
+    """
+    Generates a quarantine process form to bulk release,
+    learn or delete messages from the quarantine
+    """
+    message_id = forms.MultipleChoiceField(required=False, choices=[], 
+                widget=forms.CheckboxSelectMultiple())

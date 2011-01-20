@@ -72,7 +72,7 @@ def relayed_via(headers):
                             try:
                                 country_code = gip.country_code_by_addr(ipaddr).lower()
                                 country_name = gip.country_name_by_addr(ipaddr)
-                            except GeoIP.error:
+                            except (GeoIP.error, AttributeError):
                                 pass
                         return_value.append(
                             {'ip_address': ipaddr, 

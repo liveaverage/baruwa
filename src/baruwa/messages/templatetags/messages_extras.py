@@ -31,7 +31,7 @@ from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 from baruwa.messages.models import SaRules
-from baruwa.utils.process_mail import clean_regex
+from baruwa.utils.regex import clean_regex
 from baruwa.utils.misc import get_config_option
 from baruwa.utils.regex import RBL_RE, SARULE_RE, IP_RE, LEARN_RE
 
@@ -138,7 +138,7 @@ def tds_geoip(value):
         try:
             ccode = gip.country_code_by_addr(value).lower()
             cname = gip.country_name_by_addr(value)
-        except GeoIP.error:
+        except (GeoIP.error, AttributeError):
             ccode = None
             cname = None
         if ccode and cname:

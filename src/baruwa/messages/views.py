@@ -36,12 +36,10 @@ from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from baruwa.messages.models import Message, Release, Archive
-from baruwa.messages.forms import QuarantineProcessForm
-from baruwa.utils.process_mail import search_quarantine, host_is_local
-from baruwa.utils.process_mail import release_mail
-from baruwa.utils.process_mail import sa_learn
+from baruwa.messages.forms import QuarantineProcessForm, BulkQuarantineProcessForm
+from baruwa.utils.misc import host_is_local
 from baruwa.utils.misc import jsonify_msg_list, apply_filter, jsonify_status
-from baruwa.utils.mail.message import EmailParser
+from baruwa.utils.mail.message import EmailParser, ProcessQuarantinedMessage, search_quarantine
 from baruwa.utils.context_processors import status
 from baruwa.utils.http import ProcessRemote
 
@@ -52,6 +50,8 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
     """index"""
     active_filters = []
     ordering = order_by
+    form = None
+    template_name = 'messages/index.html'
     if direction == 'dsc':
         ordering = order_by
         order_by = '-%s' % order_by
@@ -84,6 +84,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             'otherinfected', 'whitelisted', 'blacklisted', 'nameinfected',
             'scaned').order_by(order_by)
         elif view_type == 'quarantine':
+            template_name = 'messages/quarantine.html'
             message_list = Message.quarantine.for_user(request).values(
             'id', 'timestamp', 'from_address', 'to_address', 'subject',
             'size', 'sascore', 'highspam', 'spam', 'virusinfected',
@@ -92,7 +93,14 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             if quarantine_type == 'spam':
                 message_list = message_list.filter(spam=1)
             if quarantine_type == 'policyblocked':
-                message_list = message_list.filter(spam=0) 
+                message_list = message_list.filter(spam=0)
+            form = BulkQuarantineProcessForm()
+            form.fields['altrecipients'].widget.attrs['size'] = '55'
+            choices = [(message['id'], message['id']) for message in message_list[:50]]
+            form.fields['message_id']._choices = choices
+            form.fields['message_id'].widget.choices = choices
+            request.session['quarantine_choices'] = choices
+            request.session.modified = True
         else:
             message_list = Message.messages.for_user(request).values(
             'id', 'timestamp', 'from_address', 'to_address', 'subject',
@@ -131,14 +139,15 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
         return HttpResponse(json, mimetype='application/javascript')
 
     if list_all:
-        return object_list(request, template_name='messages/index.html',
+        return object_list(request, template_name=template_name,
         queryset=message_list, paginate_by=50, page=page,
         extra_context={'view_type': view_type, 'direction': direction,
         'order_by': ordering, 'active_filters': active_filters,
-        'list_all': list_all, 'quarantine_type': quarantine_type},
+        'list_all': list_all, 'quarantine_type': quarantine_type,
+        'quarantine_form': form},
         allow_empty=True)
     else:
-        return object_list(request, template_name='messages/index.html',
+        return object_list(request, template_name=template_name,
         queryset=message_list, extra_context={'view_type': view_type,
         'direction': direction, 'order_by': ordering,
         'active_filters': active_filters, 'list_all': list_all,
@@ -196,56 +205,57 @@ def detail(request, message_id, archive=False):
                     success = False
                     error_list = _('Error: Empty server response')
             else:
-                file_name = search_quarantine(message_details.date, message_id)
-                if not file_name is None:
-                    if quarantine_form.cleaned_data['release']:
-                        # release
-                        if quarantine_form.cleaned_data['use_alt']:
-                            to_addr = quarantine_form.cleaned_data[
-                            'altrecipients']
-                        else:
-                            to_addr = message_details.to_address
-                        to_addr = to_addr.split(',')
-                        if not release_mail(file_name, to_addr,
-                            message_details.from_address):
-                            success = False
-                        template = 'messages/released.html'
-                        html = render_to_string(template, 
-                            {'id': message_details.id, 'addrs': to_addr, 
-                            'success': success})
-                    if quarantine_form.cleaned_data['salearn']:
-                        #salean
-                        salearn_opts = ('spam', 'ham', 'forget')
-                        template = "messages/salearn.html"
-                        salearn = int(
-                                    quarantine_form.cleaned_data['salearn_as'])
-                        salearn = salearn - 1 
-                        if salearn <= 2:
-                            status = sa_learn(file_name, salearn_opts[salearn])
-                            if not status['success']:
-                                success = False
-                            html = render_to_string(template,
-                                {'id': message_details.id,
-                                'msg': status['output'], 'success': success})
-                        else:
-                            success = False
-                            html = _('Invalid salearn options supplied')
-                    if quarantine_form.cleaned_data['todelete']:
-                        #delete
-                        import os
-                        if os.path.exists(file_name):
-                            try:
-                                os.remove(file_name)
-                                message_details.quarantined = 0
-                                message_details.save()
-                            except (os.error, IntegrityError):
-                                success = False
-                        template = "messages/delete.html"
-                        html = render_to_string(template,
-                            {'id': message_details.id, 'success': success})
-                else:
-                    html = _('The quarantined file could not be processed')
+                try:
+                    process = ProcessQuarantinedMessage(message_id,
+                                message_details.date)
+                except AssertionError, exception:
+                    html = str(exception)
                     success = False
+                if quarantine_form.cleaned_data['release']:
+                    #release
+                    if quarantine_form.cleaned_data['use_alt']:
+                        to_addr = quarantine_form.cleaned_data[
+                        'altrecipients']
+                    else:
+                        to_addr = message_details.to_address
+                    to_addr = to_addr.split(',')
+                    error_msg = ''
+                    if not process.release(message_details.from_address,
+                        to_addr):
+                        success = False
+                        error_msg = ' '.join(process.errors)
+                    template = 'messages/released.html'
+                    html = render_to_string(template, 
+                        {'id': message_details.id, 'addrs': to_addr, 
+                        'success': success, 'error_msg': error_msg})
+                    process.reset_errors()
+                if quarantine_form.cleaned_data['salearn']:
+                    #salean
+                    template = "messages/salearn.html"
+                    if not process.learn(
+                        quarantine_form.cleaned_data['salearn_as']):
+                        success = False
+                    html = render_to_string(template,
+                        {'id': message_details.id, 'msg': process.output, 
+                        'success': success})
+                    process.reset_errors()
+                if quarantine_form.cleaned_data['todelete']:
+                    #delete
+                    error_msg = ''
+                    try:
+                        if process.delete():
+                            message_details.quarantined = 0
+                            message_details.save()
+                        else:
+                            error_msg = ' '.join(process.errors)
+                            success = False
+                    except IntegrityError:
+                        pass
+                    template = "messages/delete.html"
+                    html = render_to_string(template, 
+                    {'id': message_details.id, 'success': success,
+                    'error_msg': error_msg})
+                    process.reset_errors()
         else:
             error_list = quarantine_form.errors.values()[0]
             error_list = error_list[0]
@@ -390,6 +400,7 @@ def auto_release(request, message_uuid, template='messages/release.html'):
     "Releases message from the quarantine without need to login"
 
     success = False
+    error_msg = ''
 
     release_record = get_object_or_404(Release, uuid=message_uuid, released=0)
     message_details = get_object_or_404(Message, id=release_record.message_id)
@@ -417,20 +428,19 @@ def auto_release(request, message_uuid, template='messages/release.html'):
         except ValueError:
             pass
     else:
-        file_name = search_quarantine(message_details.date,
-            release_record.message_id)
-        if not file_name is None:
-            if release_mail(file_name, message_details.to_address,
-                message_details.from_address):
-                success = True
-                release_record.released = 1
-                release_record.save()
+        process = ProcessQuarantinedMessage(release_record.message_id, 
+                    message_details.date)
+        if process.release(message_details.from_address, 
+            message_details.to_address.split(',')):
+            success = True
+            release_record.released = 1
+            release_record.save()
         else:
-            raise Http404
+            error_msg = ' '.join(process.errors)
 
     html = render_to_string('messages/released.html',
         {'id': message_details.id, 'addrs': message_details.to_address,
-        'success': success})
+        'success': success, 'error_msg': error_msg})
 
     if request.is_ajax():
         response = simplejson.dumps({'success': success, 'html': html})
@@ -438,5 +448,20 @@ def auto_release(request, message_uuid, template='messages/release.html'):
             content_type='application/javascript; charset=utf-8')
     return render_to_response(template,
         {'message_id': release_record.message_id,
-        'release_address': message_details.to_address, 'success': success},
+        'release_address': message_details.to_address, 'success': success,
+        'error_msg': error_msg},
         context_instance=RequestContext(request))
+
+
+@login_required
+def bulk_process(request):
+    "Process a bulk form"
+    if request.method == 'POST':
+        form = BulkQuarantineProcessForm(request.POST)
+        choices = request.session['quarantine_choices']
+        form.fields['message_id']._choices = choices
+        if form.is_valid():
+            return HttpResponse(str(form.cleaned_data))
+        else:
+            return HttpResponse(form.errors.values()[0])
+        

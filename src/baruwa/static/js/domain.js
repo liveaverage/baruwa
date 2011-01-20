@@ -54,7 +54,7 @@ function test_conn(event){
 }
 
 var loading_msg = '<div id="loading_message"><div id="loading">';
-loading_msg += '<img src="/static/imgs/ajax-loader.gif" alt="loading"/>';
+loading_msg += '<img src="'+media_url+'imgs/ajax-loader.gif" alt="loading"/>';
 loading_msg += '<br/><b>'+gettext('Testing connection')+'</b></div></div>';
 $(document).ready(function(){
     $('body').ajaxStart(ajax_start).ajaxStop(ajax_stop).ajaxError(ajax_error);

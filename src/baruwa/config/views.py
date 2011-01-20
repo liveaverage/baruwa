@@ -19,6 +19,8 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import re
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
@@ -26,10 +28,12 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator
 from django.utils import simplejson
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
-from django.db import IntegrityError, DatabaseError
+from django.db import connection, IntegrityError, DatabaseError
 from baruwa.utils.decorators import onlysuperusers
+from baruwa.utils.mail.message import test_smtp_server
 from baruwa.accounts.models import UserAddresses
 from baruwa.config.models import MailHost
 from baruwa.config.forms import  MailHostForm, EditMailHost, DeleteMailHost, \
@@ -214,7 +218,6 @@ def test_host(request, host_id):
     host = get_object_or_404(MailHost, id=host_id)
 
     test_address = "postmaster@%s" % host.useraddress.address
-    from baruwa.utils.process_mail import test_smtp_server
 
     if test_smtp_server(host.address, host.port, test_address):
         msg = _('Server %(server)s is operational and'
@@ -414,9 +417,6 @@ def init_scanner(request, scanner_id, template='config/init_scanner.html'):
         form = InitializeConfigsForm(request.POST)
         if form.is_valid():
             try:
-                from django.conf import settings
-                from django.db import connection
-                import re
                 path = getattr(
                 settings, 'TEMPLATE_DIRS', ('/tmp'))[0] + '/config/scanner-init.sql'
                 sql_file = open(path, 'r')

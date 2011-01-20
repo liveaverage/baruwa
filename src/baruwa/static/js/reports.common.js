@@ -82,7 +82,7 @@ function build_filters(filter_array){
 	var links = [];
 	var count = 0;
 	dojo.forEach(filter_array, function(item, i){
-		links[count++] = '<a href="/reports/fd/'+i+'/"><img src="/static/imgs/sm-del.png" alt="[x]"/></a>';
+		links[count++] = '<a href="/reports/fd/'+i+'/"><img src="'+media_url+'imgs/sm-del.png" alt="[x]"/></a>';
 		links[count++] = '&nbsp;"'+item.filter_field+' '+item.filter_by+' '+item.filter_value+'"';
 	});
 	return links.join('');

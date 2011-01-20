@@ -20,6 +20,7 @@
 #
 
 import subprocess
+import socket
 
 from django.template.defaultfilters import force_escape
 from django.conf import settings
@@ -255,6 +256,18 @@ def get_config_option(search_option):
     pipe1 = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
     return pipe1.stdout.read().strip()
+
+
+def host_is_local(host):
+    """
+    Checks if host is local to host running the function
+    """
+    host_name = socket.gethostbyname(host)
+    ip_addr = socket.gethostbyname(socket.gethostname())
+    if host_name in [ip_addr, '127.0.0.1']:
+        return True
+    else:
+        return False
 
 
 def get_sys_status(request):

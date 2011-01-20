@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block headers %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/mailq.js"></script>
 {% endblock headers %}
 {% block submenu %}
 <ul>
@@ -9,14 +11,15 @@
 </ul>
 {% endblock submenu %}
 {% block title %}
-{% trans "Mail Queue" %} ::{% ifequal request.path '/status/mailq/outbound/' %} {% trans "Outbound" %}{% else %} {% trans "Inbound" %}{% endifequal %}
+{% trans "Mail Queue" %} ::{% ifequal request.path '/status/mailq/outbound/' %} {% trans "Outbound" %}{% else %} {% trans "Inbound" %}{% endifequal %} - {% load pagination_heading %}{% pagination_heading %}
 {% endblock title %}
 {% block heading %}
-{% trans "Mail Queue" %} ::{% ifequal request.path '/status/mailq/outbound/' %} {% trans "Outbound" %}{% else %} {% trans "Inbound" %}{% endifequal %}
+{% trans "Mail Queue" %} ::{% ifequal request.path '/status/mailq/outbound/' %} {% trans "Outbound" %}{% else %} {% trans "Inbound" %}{% endifequal %} - {% load pagination_heading %}{% pagination_heading %}
 {% endblock heading %}
 {% block content %}
 {% load status_sorter %}
 <div class="Grid_heading">
+	<div class="Select_heading"><input type="checkbox" name="selector" id="allchecker" /></div>
 	<div class="Date_Time_heading">{% status_sorter "timestamp" "Received" %}</div>
 	<div class="From_heading">{% status_sorter "from_address" "From" %}</div>
 	<div class="To_heading">{% status_sorter "to_address" "To" %}</div>
@@ -27,6 +30,7 @@
 {% load messages_extras %}
 {% for item in object_list %}
 <div class="LightBlue_div">
+	<div class="Select_row"><input class="selector" type="checkbox" name="queueid" value="{{item.id}}" /></div>
 	<div class="Date_Time"><a href="{% url mailq-detail item.id %}">{{item.timestamp|date:"Y-m-d H:i:s" }}</a></div>
 	<div class="From_row"><a href="{% url mailq-detail item.id %}">{{item.from_address|tds_trunc:30}}</a></div>
 	<div class="To_row"><a href="{% url mailq-detail item.id %}">{{item.to_address|tds_nl_commas|linebreaksbr}}</a></div>

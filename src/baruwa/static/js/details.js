@@ -181,16 +181,16 @@ $(document).ready(function() {
     handle_ajax();
     mh = $('#mail-headers');
     mh.hide();
-    mh.after($("<a/>").attr({href:'#',id:'header-toggle',innerHTML:'<img src="/static/imgs/maximize.png" alt="&darr;">&nbsp;'+gettext('Show headers')}));
+    mh.after($("<a/>").attr({href:'#',id:'header-toggle',innerHTML:'<img src="'+media_url+'imgs/maximize.png" alt="&darr;">&nbsp;'+gettext('Show headers')}));
     $("#header-toggle").bind('click',function(event){
         event.preventDefault();
         if($("#mail-headers").css("display") == 'block'){
             $("#mail-headers").css({display:'none'})
-            $(this).blur().html('<img src="/static/imgs/maximize.png" alt="&darr;">&nbsp;'+gettext('Show headers'));
+            $(this).blur().html('<img src="'+media_url+'imgs/maximize.png" alt="&darr;">&nbsp;'+gettext('Show headers'));
             window.scroll(0,50);
         }else{
             $("#mail-headers").css({display:'block'})
-            $(this).blur().html('<img src="/static/imgs/minimize.png" alt="&uarr;">&nbsp;'+gettext('Hide headers'));
+            $(this).blur().html('<img src="'+media_url+'imgs/minimize.png" alt="&uarr;">&nbsp;'+gettext('Hide headers'));
         }
     });
     $("#qform").submit(do_quarantine_release);
