@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block headers %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+{% if list_all %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.address.js"></script>
+{% endif %}
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var last_ts = '';
+var full_messages_listing = false;
+var rj;
+var ax_error = false;
+var ax_in_progress = false;
+var media_url = '{{MEDIA_URL}}';
+//]]>
+</script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/lib.js"></script>
+{% if not list_all %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/recent_messages.js"></script>
+{% else %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/messages.js"></script>
+{% endif %}
+{% endblock headers %}
+{% block submenu %}
+<ul>
+	<!--<li><a href="{% url main-messages-index %}">Recent messages</a></li>-->
+{% ifnotequal view_type 'quarantine' %}
+	<li><a href="{% url all-messages-index 'full' %}">{% trans "Full message" %}</a></li>
+	<li><a href="{% url all-messages-index 'quarantine' %}">{% trans "Quarantine" %}</a></li>
+	<li><a href="{% url all-messages-index 'archive' %}">{% trans "Archive" %}</a></li>
+{% else %}
+	<li><a href="{% url all-messages-index 'quarantine' %}">{% trans "Full Quarantine" %}</a></li>
+	<li><a href="{% url quarantine-bytype-index 'quarantine', 'spam' %}">{% trans "Spam" %}</a></li>
+	<li><a href="{% url quarantine-bytype-index 'quarantine', 'policyblocked' %}">{% trans "Non Spam" %}</a></li>
+{% endifnotequal %}
+</ul>
+{% endblock submenu %}
+{% block title %}
+{% if list_all %}
+	{% load pagination_heading %}{% pagination_heading %}
+{% else %}
+	{% trans "Showing the 50 most recent messages" %}
+{% endif %}
+{% endblock title %}
+{% block heading %}
+{% if list_all %}
+	{% load pagination_heading %}{% pagination_heading %}
+	{%if active_filters %}
+		(<small><a href="{% url reports-index %}#active_filters">{% trans "Filters" %}</a> {% trans "have been applied" %}</small>)
+	{%endif%}
+{% else %}
+	{% trans "Showing the 50 most recent messages" %}
+	<small>
+	    [{% trans "Enable javascript for updates" %}]
+	</small>
+{% endif %}
+{% endblock heading %}
+{% block content %}
+<div class="Grid_heading"> <!--Heading Start Here-->
+	{% if list_all %}
+	{% load sorter %}
+	<div class="Date_Time_heading">{% sorter "timestamp" "Date/Time" %}</div>
+	<div class="From_heading">{% sorter "from_address" "From" %}</div>
+	<div class="To_heading">{% sorter "to_address" "To" %}</div>
+	<div class="Subject_heading">{% sorter "subject" "Subject" %}</div>
+	<div class="Size_heading">{% sorter "size" "Size" %}</div>
+	<div class="Score_heading">{% sorter "sascore" "Score" %}</div>
+	{% else %}
+	<div class="Date_Time_heading">{% trans "Date/Time" %}</div>
+	<div class="From_heading">{% trans "From" %}</div>
+	<div class="To_heading">{% trans "To" %}</div>
+	<div class="Subject_heading">{% trans "Subject" %}</div>
+	<div class="Size_heading">{% trans "Size" %}</div>
+	<div class="Score_heading">{% trans "Score" %}</div>
+	{% endif %}
+	<div class="Status_heading">{% trans "Status" %}</div>
+</div>	<!--Heading End Here-->
+{% load messages_extras %}
+{% for message in object_list %}
+<div class="{{ message|tds_msg_class }}_div">
+	<div class="Date_Time">
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message.timestamp|date:"Y-m-d H:i:s"  }}</a>
+	</div>
+	<div class="From_row">
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message.from_address|tds_trunc:30 }}</a>
+	</div>
+	<div class="To_row">
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message.to_address|tds_nl_commas|linebreaksbr }}</a>
+	</div>
+	<div class="Subject_row">
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message.subject|striptags|escape|tds_trunc:45 }}</a>
+	</div>
+	<div class="Size_row">
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message.size|filesizeformat }}</a>
+	</div>
+	<div class="Score_row">
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message.sascore }}</a>
+	</div>
+	<div class="Status_row">
+		<a href="{% ifnotequal view_type 'archive' %}{% url message-detail message.id %}{% else %}{% url archive-message-detail message.id %}{% endifnotequal %}">{{ message|tds_msg_status }}</a>
+	</div>                        
+</div>
+{% empty %}
+<div class="spanrow">{% trans "No records returned" %}</div>
+{% endfor %}
+{% endblock content %}
+{% block paging %}
+{% if list_all %}
+<div class="content_footer">
+	<div id="filters">
+		{% if active_filters %}
+		<b>{% trans "Filters have been applied :" %}</b>
+		<span id="fhl" style="display:inline;">
+		{% for f in active_filters %}
+		"<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
+		{% endfor %}
+		</span>
+		{% endif %}
+	</div>
+	<div id="paginator">
+		{% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+	</div>
+</div>
+{% endif %}
+{% endblock paging %}

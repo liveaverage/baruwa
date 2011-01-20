@@ -1,8 +1,7 @@
 ============
 Introduction
 ============
-Baruwa (swahili for letter or mail) is a web 2.0 `MailScanner <http://www.mailscanner.info/>`_
-front-end. 
+Baruwa (swahili for letter or mail) is a web 2.0 `MailScanner`_ front-end. 
 
 It provides an easy to use interface for managing a MailScanner installation. It is used to
 perform operations such as releasing quarantined messages, bayesian learning, whitelisting and 
@@ -26,7 +25,8 @@ Features
 ========
 	+ AJAX support for most operations
 	+ Reporting with AJAX enabled query builder
-	+ I18n support, allows use of multiple languages 
+	+ I18n support, allows use of multiple languages
+	+ Mail queue management and reporting
 	+ Interactive SVG graphs and PDF reports
 	+ Archiving of old message logs
 	+ SQLite backup prevents data loss when MySQL is down
@@ -36,9 +36,13 @@ Features
 	+ Ip / network addresses supported in white/blacklist manager
 	+ Easy plug-in authentication to external authentication systems (POP3, IMAP and SMTP supported out of the box)
 	+ Tools for housekeeping tasks (quarantine management, rule updates, quarantine notifications, etc)
+	+ Easy clustering of multiple servers
 	+ Works both with and without Javascript enabled (graphs require Javascript)
 
 ===========
 Screenshots
 ===========
-`Screenshots <http://www.flickr.com/photos/baruwa/>`_ are on our Flickr page.
+Screenshots are on our `Flickr page`_.
+
+.. _`Flickr Page`: http://www.flickr.com/photos/baruwa/
+.. _`MailScanner`: http://www.mailscanner.info/

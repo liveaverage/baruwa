@@ -28,6 +28,7 @@ Features
 + AJAX support for most operations
 + Reporting with AJAX enabled query builder
 + I18n support, allows use of multiple languages
++ Mail queue management and reporting
 + Interactive SVG graphs and PDF reports
 + Archiving of old message logs
 + SQLite backup prevents data loss when MySQL is down
@@ -37,6 +38,7 @@ Features
 + Ip / network addresses supported in white/blacklist manager
 + Easy plug-in authentication to external authentication systems (POP3, IMAP and SMTP supported out of the box)
 + Tools for housekeeping tasks (quarantine management, rule updates, quarantine notifications, etc)
++ Easy clustering of multiple servers
 + Works both with and without Javascript enabled (graphs require Javascript)
 
 
@@ -49,6 +51,7 @@ Requirements
 ==
 + Python >= 2.4
 + Django >= 1.1.1
++ django-celery
 + MySQLdb >= 1.2.1p2
 + GeoIP
 + iPy
@@ -57,6 +60,7 @@ Requirements
 + Dojo toolkit
 + Reportlab
 + Lxml
++ A message broker (RabbitMQ recommended)
 + UUID (python 2.4 only)
 + Sphinx (optional for building docs)
 

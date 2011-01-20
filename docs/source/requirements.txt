@@ -5,22 +5,42 @@ Requirements
 Baruwa requirements
 ===================
 
-	+ `Python <http://www.python.org/>`_ >= 2.4
-	+ `Django <http://www.djangoproject.com/>`_ >= 1.1.1
-	+ `MySQLdb <http://mysql-python.sourceforge.net/>`_ >= 1.2.1p2
-	+ `GeoIP <http://www.maxmind.com/app/python>`_
-	+ `iPy <http://software.inl.fr/trac/wiki/IPy>`_
-	+ Any Web server that can run Django (`Apache <http://httpd.apache.org/>`_/`mod_wsgi <http://code.google.com/p/modwsgi/>`_ recommended)
-	+ `MySQL <http://www.mysql.com>`_
-	+ `Dojo toolkit <http://dojotoolkit.org/>`_
-	+ `Reportlab <http://www.reportlab.org/>`_
-	+ `Lxml <http://codespeak.net/lxml/>`_
-	+ `UUID <http://pypi.python.org/pypi/uuid/>`_ (Only for python 2.4)
-	+ `Sphinx <http://sphinx.pocoo.org/>`_ (Optional - to build documentation)
+	+ `Python`_ >= 2.4
+	+ `Django`_ >= 1.1.1
+	+ `MySQL-Python`_ >= 1.2.1p2
+	+ `GeoIP-Python`_
+	+ `iPy`_
+	+ Any Web server that can run Django (`Apache`_/`mod_wsgi`_ recommended)
+	+ `MySQL`_
+	+ `Dojo toolkit`_
+	+ `Reportlab`_
+	+ `Lxml`_
+	+ `UUID`_ (Only for python 2.4)
+	+ A supported Message broker (`RabbitMQ`_ recommended)
+	+ `Sphinx`_ (Optional - to build documentation)
 
 MailScanner requirements
 ========================
     
-	+ `DBI <http://dbi.perl.org/>`_
-	+ `DBD-MySQL <http://search.cpan.org/dist/DBD-mysql/>`_
-	+ `DBD-SQLite <http://search.cpan.org/~msergeant/DBD-SQLite-0.31/>`_
+	+ `DBI`_
+	+ `DBD-MySQL`_
+	+ `DBD-SQLite`_
+	
+
+.. _`Python`: http://www.python.org/
+.. _`Django`: http://www.djangoproject.com/
+.. _`MySQL-Python`: http://mysql-python.sourceforge.net/
+.. _`GeoIP-Python`: http://www.maxmind.com/app/python
+.. _`iPy`: https://github.com/haypo/python-ipy/wiki
+.. _`Apache`: http://httpd.apache.org/
+.. _`mod_wsgi`: http://code.google.com/p/modwsgi/
+.. _`MySQL`: http://www.mysql.com
+.. _`Dojo toolkit`: http://dojotoolkit.org/
+.. _`Reportlab`: http://www.reportlab.org/
+.. _`Lxml`: http://codespeak.net/lxml/
+.. _`UUID`: http://pypi.python.org/pypi/uuid/
+.. _`RabbitMQ`: http://www.rabbitmq.com/
+.. _`Sphinx`: http://sphinx.pocoo.org/
+.. _`DBI`: http://dbi.perl.org/
+.. _`DBD-MySQL`: http://search.cpan.org/dist/DBD-mysql/
+.. _`DBD-SQLite`: http://search.cpan.org/~msergeant/DBD-SQLite-0.31/

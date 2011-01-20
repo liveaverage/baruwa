@@ -24,8 +24,7 @@ To install using `easy_install`::
 Downloading and installing from source
 --------------------------------------
 
-Download the latest version of Baruwa from
-http://pypi.python.org/pypi/baruwa/
+Download the latest version of Baruwa from `PyPI`_
 
 You can install it by doing the following,::
 
@@ -113,16 +112,15 @@ Restart apache for the configuration to take effect.::
 
 **Lighttpd**
 
-Use the generic django instructions at 
-http://docs.djangoproject.com/en/1.1/howto/deployment/fastcgi/#lighttpd-setup
+Use the generic `Lighttpd`_ django instructions.
 
 **Nginx**
 
-Use the nginx instructions at http://wiki.nginx.org/NginxDjangoFastCGI
+Use the nginx instructions from the `nginx wiki`_
 
 **Cherokee**
 
-Use the cherokee cookbook instructions at http://www.cherokee-project.com/doc/cookbook_django.html
+Use the `cherokee cookbook`_ instructions.
 
 Configure MailScanner
 =====================
@@ -245,3 +243,7 @@ Distribution / OS installation
     + :ref:`installfedora`.
     + :ref:`installdeb`.
 
+.. _`PyPI`: http://pypi.python.org/pypi/baruwa/
+.. _`Lighttpd`: http://docs.djangoproject.com/en/1.1/howto/deployment/fastcgi/#lighttpd-setup
+.. _`nginx wiki`: http://wiki.nginx.org/NginxDjangoFastCGI
+.. _`cherokee cookbook`: http://www.cherokee-project.com/doc/cookbook_django.html

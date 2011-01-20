@@ -4,43 +4,54 @@ Contributing to Baruwa
 
 There are so many ways to help Baruwa's development,
 
-	* Blog about it.
-	* Report bugs and request features
-	* Submit patches for new and fixed behaviour
-	* Join the mailing lists and share ideas
-	* Donate to the project
-	* Documentation
-	* Translation
+* Blog about it.
+* Report bugs and request features
+* Submit patches for new and fixed behaviour
+* Join the mailing lists and share ideas
+* Donate to the project
+* Documentation
+* Translation
 	
 Reporting bugs
 --------------
-Please use the Github issue tracking system to report
-bugs and request new features at https://github.com/akissa/baruwa/issues
+Please use the Github `issue tracking system`_ to report
+bugs and request new features.
 
 Submitting patches
 ------------------
 Baruwa source code is maintained in a git repository
-at Github http://github.com/akissa/baruwa Please submit 
-your patches to the mailing list and send me a pull 
-request on Github.
+at `Github`_  
+
+You can either:
+
+* Send me a pull request on `Github`_
+* Submit old style patches to the `mailing-list`_
 
 Documentation
 -------------
 The documentation is part of the source, clone the
-repo make the changes and submit the patches to the
-mailing list and send me a pull request on Github.
+repo make the changes then either:
 
-You can also contribute tips and sightings on the baruwa
-wiki at Github https://github.com/akissa/baruwa/wiki
+* Send me a pull request on `Github`_
+* Submit old style patches to the `mailing-list`_
+
+You can also contribute tips and sightings on the 
+`baruwa wiki`_ at Github.
 
 Donations
 ---------
-Donations are appreciated please use the Pledge 
+Donations are appreciated please use the `Pledge`_ 
 system which accepts paypal payments 
-http://pledgie.com/campaigns/12056
 
 Translation
 -----------
-Clone the source code from Github, create a new language
+Clone the source code from `Github`_, `create`_ a new language
 if it does not exist, translate and test then send me
-a pull request on Github
+a pull request on `Github`_
+
+.. _`Github`: http://github.com/akissa/baruwa
+.. _`issue tracking system`: https://github.com/akissa/baruwa/issues
+.. _`baruwa wiki`: https://github.com/akissa/baruwa/wiki
+.. _`Pledge`: http://pledgie.com/campaigns/12056
+.. _`mailing-list`: http://lists.baruwa.org/
+.. _`create`: http://docs.djangoproject.com/en/1.1/topics/i18n/localization/#topics-i18n-localization

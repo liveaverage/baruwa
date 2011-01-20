@@ -2,8 +2,7 @@
 ======
 Baruwa
 ======
-Baruwa (swahili for letter or mail) is a web 2.0 `MailScanner <http://www.mailscanner.info/>`_
-front-end. 
+Baruwa (swahili for letter or mail) is a web 2.0 `MailScanner`_ front-end. 
 
 It provides an easy to use interface for managing a MailScanner installation. It is used to
 perform operations such as releasing quarantined messages, spam learning, whitelisting and 
@@ -28,6 +27,7 @@ Features
 	+ AJAX support for most operations
 	+ Reporting with AJAX enabled query builder
 	+ I18n support, allows use of multiple languages
+	+ Mail queue management and reporting
 	+ Interactive SVG graphs and PDF reports
 	+ Archiving of old message logs
 	+ SQLite backup prevents data loss when MySQL is down
@@ -37,18 +37,20 @@ Features
 	+ Ip / network addresses supported in white/blacklist manager
 	+ Easy plug-in authentication to external authentication systems (POP3, IMAP and SMTP supported out of the box)
 	+ Tools for housekeeping tasks (quarantine management, rule updates, quarantine notifications, etc)
+	+ Easy clustering of multiple servers
 	+ Works both with and without Javascript enabled (graphs require Javascript)
 
 ===========
 Screenshots
 ===========
-`Screenshots <http://www.flickr.com/photos/baruwa/>`_ are on our Flickr page.
+Screenshots are on our `Flickr page`_.
 
 ============
 Requirements
 ============
     + Python >= 2.4
     + Django >= 1.1.1
+    + django-celery
     + MySQLdb >= 1.2.1p2
     + GeoIP
     + iPy
@@ -58,6 +60,7 @@ Requirements
     + Reportlab
     + UUID (python 2.4 only)
     + Lxml
+    + A supported message broker (RabbitMQ recommended)
     + Sphinx (optional for building docs)
 	
 ====
@@ -76,15 +79,21 @@ Baruwa is installed in the usual way::
 ========
 Packages
 ========
-Binary packages for Ubuntu/Debian, Fedora and RHEL/CENTOS can be downloaded from http://topdog-software.com/oss/baruwa/
+Binary packages for Ubuntu/Debian, Fedora and RHEL/CENTOS are also available
+for `download`_
 
 =============
 Documentation
 =============
-Documentation is included in the docs directory of the tar ball and can also be accessed on line at
-http://www.baruwa.org/
+Documentation is included in the docs directory of the tar ball and can also be accessed `online`_
 
 =======
 Support
 =======
-Subscribe to the Baruwa mailing list at http://lists.baruwa.org/mailman/listinfo/baruwa
+Subscribe to the Baruwa `mailing list`_
+
+.. _`mailing list`: http://lists.baruwa.org/mailman/listinfo/baruwa
+.. _`online`: http://www.baruwa.org/
+.. _`download`: http://topdog-software.com/oss/baruwa/
+.. _`Flickr page`: http://www.flickr.com/photos/baruwa/
+.. _`MailScanner`: http://www.mailscanner.info/

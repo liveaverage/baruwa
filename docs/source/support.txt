@@ -7,11 +7,25 @@ How do I do X? Why doesn't Y work? Where can I go to get help?
 If the documentation does not contain an answer to your issue
 try the Baruwa mailing list, Feel free to ask any questions
 on installing, configuring, integrating and troubleshooting
-Baruwa. Please subscribe to the list at http://lists.baruwa.org/
-or if you prefer to use a forum like interface subscribe at
-http://baruwa-users-list.963389.n3.nabble.com/
+Baruwa. Please subscribe to the `mailing-list`_ or if you 
+prefer to use a `forum`_ interface
 
 I think I've found a security problem! What should I do?
 ---------------------------------------------------------
 If you think you've found a security problem with Baruwa, 
 please send a message to andrew@topdog.za.net
+
+Can i get Commercial Support or pay for an installation
+-------------------------------------------------------
+The `author`_ of Baruwa provides commercial support on both an
+ad-hoc and contract basis for Baruwa and all the associated
+applications. Any issues big or small from custom features
+to running entire clusters on a day to day basis.
+
+All commercial support is offered via the `Elance`_ escrow 
+system.
+
+.. _`Elance`: http://www.elance.com/s/datopdog/
+.. _`mailing-list`: http://lists.baruwa.org/
+.. _`forum`: http://baruwa-users-list.963389.n3.nabble.com/
+.. _`author`: http://www.topdog.za.net/
