@@ -35,7 +35,9 @@ from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
+from celery.backends import default_backend
 from baruwa.messages.models import Message, Release, Archive
+from baruwa.messages.tasks import ProcessQuarantine
 from baruwa.messages.forms import QuarantineProcessForm, BulkQuarantineProcessForm
 from baruwa.utils.misc import host_is_local
 from baruwa.utils.misc import jsonify_msg_list, apply_filter, jsonify_status
@@ -229,7 +231,7 @@ def detail(request, message_id, archive=False):
                         {'id': message_details.id, 'addrs': to_addr, 
                         'success': success, 'error_msg': error_msg})
                     process.reset_errors()
-                if quarantine_form.cleaned_data['salearn']:
+                if quarantine_form.cleaned_data['learn']:
                     #salean
                     template = "messages/salearn.html"
                     if not process.learn(
@@ -461,7 +463,33 @@ def bulk_process(request):
         choices = request.session['quarantine_choices']
         form.fields['message_id']._choices = choices
         if form.is_valid():
-            return HttpResponse(str(form.cleaned_data))
-        else:
-            return HttpResponse(form.errors.values()[0])
-        
+            task = ProcessQuarantine.delay(form.cleaned_data)
+            return HttpResponseRedirect(reverse('task-status',
+            args=[task.task_id]))
+
+    msg = _('System was unable to process your request')
+    request.user.message_set.create(message=msg)
+    return HttpResponseRedirect(reverse('all-messages-index',
+    args=['quarantine']))
+
+
+@login_required
+def task_status(request, taskid):
+    """
+    Return task status based on:
+    djcelery.views.task_status
+    """
+    status = default_backend.get_status(taskid)
+    results = default_backend.get_result(taskid)
+    percent = "0.0"
+    if status in ['SUCCESS', 'FAILURE']:
+        finished = True
+    else:
+        finished = False
+        if results:
+            percent = "%.1f" % ((1.0 * int(results['current']) /
+            int(results['total'])) * 100)
+    return render_to_response('messages/task_status.html', 
+    {'taskid': taskid, 'finished': finished, 'results': results,
+    'status': status, 'completed': percent},
+    context_instance=RequestContext(request))

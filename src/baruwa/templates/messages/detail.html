@@ -231,11 +231,11 @@ var media_url = '{{MEDIA_URL}}';
         <div class="Release_col">
 			{% ifequal user.get_profile.account_type 3  %}
 	           {% if not message_details.virusinfected and not message_details.namedinfected and not message_details.otherinfected %}
-	           {{ quarantine_form.salearn }}&nbsp;
+	           {{ quarantine_form.learn }}&nbsp;
 	           {{ quarantine_form.salearn_as }}
 	           {% endif %}
 			{% else %}
-				{{ quarantine_form.salearn }}&nbsp;
+				{{ quarantine_form.learn }}&nbsp;
 		        {{ quarantine_form.salearn_as }}
 			{% endifequal %}
         </div>

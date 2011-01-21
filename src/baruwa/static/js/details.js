@@ -125,7 +125,7 @@ function do_quarantine_release(event){
     $('#qheading').after('<div id="filter-ajax">'+gettext('Processing request.............')+'</div>');
     var release  = 0;
     var todelete = 0;
-    var salearn  = 0;
+    var learn  = 0;
     var use_alt  = 0;
 
     event.preventDefault();
@@ -136,8 +136,8 @@ function do_quarantine_release(event){
     if($("#id_todelete").is(":checked")){
         todelete = 1;
     }
-    if($("#id_salearn").is(":checked")){
-        salearn = 1;
+    if($("#id_learn").is(":checked")){
+        learn = 1;
     }
     if($("#id_use_alt").is(":checked")){
          use_alt = 1;
@@ -145,7 +145,7 @@ function do_quarantine_release(event){
     var quarantine_process_request = {
         release:        release, 
         todelete:       todelete,
-        salearn:        salearn,
+        learn:          learn,
         salearn_as:     $("#id_salearn_as").val(),
         use_alt:        use_alt,
         altrecipients:  $("#id_altrecipients").val(),

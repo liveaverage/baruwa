@@ -20,6 +20,8 @@
 #
 
 from django.conf.urls.defaults import patterns
+from djcelery import views as celery_views
+from baruwa.messages.views import task_status
 
 urlpatterns = patterns('baruwa.status.views',
     (r'^$', 'index', {}, 'status-index'),
@@ -34,5 +36,7 @@ urlpatterns = patterns('baruwa.status.views',
     (r'^mailq/outbound/(?P<direction>(dsc|asc))/(?P<order_by>(timestamp|from_address|to_address|subject|size|attempts))/$', 'mailq', {'queue': 2}),
     (r'^mailq/inbound/(?P<page>([0-9]+|last))/(?P<direction>(dsc|asc))/(?P<order_by>(timestamp|from_address|to_address|subject|size|attempts))/$', 'mailq', {'queue': 1}, 'mailq-inbound-paged'),
     (r'^mailq/outbound/(?P<page>([0-9]+|last))/(?P<direction>(dsc|asc))/(?P<order_by>(timestamp|from_address|to_address|subject|size|attempts))/$', 'mailq', {'queue': 2}, 'mailq-outbound-paged'),
-    (r'^mailq/view/(?P<itemid>(([A-Za-z0-9]){6}-([A-Za-z0-9]){6}-([A-Za-z0-9]){2})|.+)/$', 'detail', {}, 'mailq-detail')
+    (r'^mailq/view/(?P<itemid>(([A-Za-z0-9]){6}-([A-Za-z0-9]){6}-([A-Za-z0-9]){2})|.+)/$', 'detail', {}, 'mailq-detail'),
+    (r'^tasks/json/(?P<task_id>[\w\d\-]+)/$', celery_views.task_status, {}, 'ajax-task-status'),
+    (r'^tasks/(?P<taskid>[\w\d\-]+)/$', task_status, {}, 'task-status'),
 )

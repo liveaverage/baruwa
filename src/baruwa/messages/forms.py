@@ -42,7 +42,7 @@ class QuarantineProcessForm(forms.Form):
     it can be used to release, sa learn or
     delete a quarantined message
     """
-    salearn = forms.BooleanField(required=False)
+    learn = forms.BooleanField(required=False)
     salearn_as = forms.ChoiceField(choices=SALEARN_OPTIONS)
     release = forms.BooleanField(required=False)
     todelete = forms.BooleanField(required=False)
@@ -57,11 +57,11 @@ class QuarantineProcessForm(forms.Form):
         cleaned_data = self.cleaned_data
         use_alt = cleaned_data.get("use_alt")
         altrecipients = cleaned_data.get("altrecipients")
-        salearn = cleaned_data.get("salearn")
+        learn = cleaned_data.get("learn")
         release = cleaned_data.get("release")
         todelete = cleaned_data.get("todelete")
 
-        if not salearn and not release and not todelete:
+        if not learn and not release and not todelete:
             raise forms.ValidationError(_("Select atleast one action to perform"))
         else:
             if altrecipients in EMPTY_VALUES and use_alt and release:
