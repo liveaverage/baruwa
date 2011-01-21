@@ -121,12 +121,17 @@ def create_account(request, template_name='accounts/create_account.html'):
     if request.method == 'POST':
         form = UserCreateForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            msg = _('The user account %(account)s was created successfully') % {
-                'account': user.username}
-            request.user.message_set.create(message=msg)
-            return HttpResponseRedirect(reverse('user-profile',
-                args=[user.id]))
+            try:
+                user = form.save()
+                msg = _('The user account %(account)s was created successfully') % {
+                    'account': user.username}
+                request.user.message_set.create(message=msg)
+                return HttpResponseRedirect(reverse('user-profile',
+                    args=[user.id]))
+            except DatabaseError:
+                msg = _('The user account could not be created')
+                request.user.message_set.create(message=msg)
+                return HttpResponseRedirect(reverse('accounts'))
     else:
         form = UserCreateForm()
     for name in ['username', 'first_name', 'last_name', 'email', 'password']:
@@ -146,12 +151,16 @@ def update_account(request, user_id, template_name='accounts/update_account.html
         else:
             form = UserUpdateForm(request.POST, instance=user_account)
         if form.is_valid():
-            account = form.save()
-            msg = _('The user account %(account)s has been updated') % {
-            'account': account.username}
+            try:
+                account = form.save()
+                msg = _('The user account %(account)s has been updated') % {
+                'account': account.username}
+            except DatabaseError:
+                msg = _('The user account %(account)s could not be updated') % {
+                'account': user_account.username}
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile',
-                args=[user_id]))
+            args=[user_id]))
     else:
         if request.user.is_superuser:
             form = AdminUserUpdateForm(instance=user_account)
@@ -240,8 +249,13 @@ def edit_address(request, address_id, template_name='accounts/edit_address.html'
     if request.method == 'POST':
         form = EditAddressForm(request.POST, instance=addr)
         if form.is_valid():
-            address = form.save()
-            msg = _('The address %(addr)s has been updated') % {'address': address.address}
+            try:
+                address = form.save()
+                msg = _('The address %(addr)s has been updated') % {
+                'addr': address.address}
+            except DatabaseError:
+                msg = _('The address %(addr)s could not be updated') % {
+                'addr': address.address}
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile',
                 args=[addr.user.id]))
@@ -285,10 +299,12 @@ def change_password(request, user_id, template_name='accounts/admin_change_pw.ht
     if request.method == 'POST':
         form = AdminPasswordChangeForm(user_account, request.POST)
         if form.is_valid():
-            form.save()
-            msg = _('The password for user %(account)s has been updated') % {
-                'account': user_account.username
-            }
+            try:
+                form.save()
+                msg = _('The password for user %(account)s has been updated') % {
+                'account': user_account.username}
+            except DatabaseError:
+                msg = _('The password could not be updated')
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile',
                 args=[user_id]))
@@ -341,9 +357,13 @@ def update_profiles(request, user_id, template_name='accounts/update_profile.htm
             form = OrdUserProfileForm(request.POST, instance=user_profile)
 
         if form.is_valid():
-            user_profile = form.save()
-            msg = _('The user profile for %(account)s has been updated') % {
-                'account': user_profile.user.username}
+            try:
+                user_profile = form.save()
+                msg = _('The user profile for %(account)s has been updated') % {
+                    'account': user_profile.user.username}
+            except DatabaseError:
+                msg = _('The user profile for %(account)s'
+                ' could not be updated') % {'account': user_profile.user.username}
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(reverse('user-profile',
                 args=[user_id]))
