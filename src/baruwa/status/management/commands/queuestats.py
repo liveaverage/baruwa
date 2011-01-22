@@ -75,8 +75,28 @@ class Command(BaseCommand):
 
         inqdir = get_config_option('IncomingQueueDir')
         outqdir = get_config_option('OutgoingQueueDir')
+
         inqueue = Mailq(mta, inqdir)
+        print _("== Delete flaged queue items from the inbound queue ==")
+        ditems = MailQueueItem.objects.values('messageid').filter(
+        flag__gt=0, direction=1).all()
+        inrm = inqueue.delete([item['messageid'] for item in ditems])
+        MailQueueItem.objects.filter(messageid__in=[
+        item['msgid'] for item in inrm]).delete()
+        print _("== Deleted %(num)d items from the inbound queue ==") % {
+        'num': len(inrm)}
+        inqueue.process()
+
         outqueue = Mailq(mta, outqdir)
+        print _("== Delete flaged queue items from the outbound queue ==")
+        ditems = MailQueueItem.objects.values('messageid').filter(
+        flag__gt=0, direction=2).all()
+        outrm = outqueue.delete([item['messageid'] for item in ditems])
+        MailQueueItem.objects.filter(messageid__in=[
+        item['msgid'] for item in outrm]).delete()
+        print _("== Deleted %(num)d items from the outbound queue ==") % {
+        'num': len(outrm)}
+        outqueue.process()
 
         allids = [item['messageid'] for item in inqueue]
         allids.extend([item['messageid'] for item in outqueue])

@@ -17,6 +17,15 @@
 {% trans "Mail Queue" %} ::{% ifequal request.path '/status/mailq/outbound/' %} {% trans "Outbound" %}{% else %} {% trans "Inbound" %}{% endifequal %} - {% load pagination_heading %}{% pagination_heading %}
 {% endblock heading %}
 {% block content %}
+<form method="post" action="{% url process-mailq %}">
+<div id="form-submission">
+	<div class="quaran_lightblue_div">
+		<div class="quaran_mailq_info">&nbsp;</div>
+		<div class="quaran_mailq_form">
+			<input type="submit" value="{% trans "Delete from queue" %}" />
+		</div>
+	</div>
+</div>
 {% load status_sorter %}
 <div class="Grid_heading">
 	<div class="Select_heading"><input type="checkbox" name="selector" id="allchecker" /></div>
@@ -39,8 +48,11 @@
 	<div class="Attempts_row"><a href="{% url mailq-detail item.id %}">{{item.attempts}}</a></div>
 </div>
 {% empty %}
-<div class="spanrow">{% trans "No queue items found" %}</div>
+<div class="LightBlue_div">
+	<div class="spanrow">{% trans "No queue items found" %}</div>
+</div>
 {% endfor %}
+</form>
 {% endblock content %}
 {% block paging %}
 <div class="content_footer">

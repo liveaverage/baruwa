@@ -35,4 +35,12 @@ class Mailq(list):
         self.queue = queue
         path = "baruwa.utils.mail.mta.%s" % mta
         module = __import__(path, None, None, ['QueueParser'])
-        self.extend(module.QueueParser(queue).process())
+        self.module = module.QueueParser(self.queue)
+
+    def process(self):
+        "process the queue"
+        self.extend(self.module.process())
+
+    def delete(self, items):
+        "delete items"
+        return self.module.delete(items)

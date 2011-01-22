@@ -40,6 +40,25 @@ class QueueParser(object):
         self.qdir = queue
         self.items = []
 
+    def delete(self, items):
+        "delete queue items"
+        done = []
+        for item in items:
+            hdr = "qf%s" % item
+            dat = "df%s" % item
+            data = os.path.join(self.qdir, dat)
+            header = os.path.join(self.qdir, hdr)
+            if os.path.exists(header) and os.path.exists(data):
+                try:
+                    os.remove(header)
+                    os.remove(data)
+                    done.append({'msgid': item, 'done': True})
+                except OSError:
+                    done.append({'msgid': item, 'done': False})
+            else:
+                done.append({'msgid': item, 'done': False})
+        return done
+
     def process(self):
         "process"
         def getqfs(matched, dirname, files):

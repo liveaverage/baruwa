@@ -26,15 +26,17 @@ import re
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.db.models import Q, Count
 from django.core.urlresolvers import reverse
-
+from django.utils.translation import ugettext as _
 from django.conf import settings
 from baruwa.utils.misc import get_processes, get_config_option
 from baruwa.utils.decorators import onlysuperusers
 from baruwa.messages.models import MessageStats
 from baruwa.status.models import MailQueueItem
+from baruwa.status.forms import DeleteQueueItems
 
 
 @login_required
@@ -184,15 +186,46 @@ def mailq(request, queue, page=1, direction='dsc', order_by='timestamp'):
     else:
         urlstring = 'mailq-outbound'
     app = reverse(urlstring)
+    form = DeleteQueueItems()
+    choices = [(item.id, item.id) for item in items[:50]]
+    form.fields['queueid']._choices = choices
+    form.fields['queueid'].widget.choices = choices
+    request.session['queue_choices'] = choices
+    request.session.modified = True
 
     return object_list(request, template_name='status/mailq.html',
     queryset=items, paginate_by=50, page=page,
     extra_context={'list_all': True, 'app': app.strip('/'), 'direction': direction,
-    'order_by': ordering}, allow_empty=True)
+    'order_by': ordering, 'form': form}, allow_empty=True)
 
 
 @login_required
 def detail(request, itemid):
+    "show queued mail details"
     itemdetails = get_object_or_404(MailQueueItem, id=itemid)
     return render_to_response('status/detail.html', {'itemdetails': itemdetails}, 
         context_instance=RequestContext(request))
+
+
+@login_required
+def delete_from_queue(request):
+    "delete queue items"
+    sendto = reverse('mailq')
+    if request.method == 'POST':
+        form = DeleteQueueItems(request.POST)
+        choices = request.session['queue_choices']
+        form.fields['queueid']._choices = choices
+        if form.is_valid():
+            queueids = form.cleaned_data['queueid']
+            MailQueueItem.objects.filter(id__in=queueids).update(flag=1)
+            msg = _("The queue items (%(num)d) have "
+            "been flagged for deletion") % {'num': len(queueids)}
+            request.session['queue_choices'] = []
+            request.session.modified = True
+        else:
+            msg = _("The queue items could not be processed")
+        request.user.message_set.create(message=msg)
+        referer = request.META.get('HTTP_REFERER', None)
+        if referer and '/mailq' in referer:
+            sendto = referer
+    return HttpResponseRedirect(sendto)

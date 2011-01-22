@@ -2042,6 +2042,19 @@ div.blacklist {
 	padding:0px;
 }
 
+.quaran_mailq_info{
+    width:470px;
+    float:left;
+    padding: 7px 0 7px 10px;
+}
+
+.quaran_mailq_form{
+    width:470px;
+    float:right;
+    text-align:right;
+    padding: 7px 10px 7px 0;
+}
+
 .quaran_task_id_heading{
     width:300px;
 	font-family:Arial, Helvetica, sans-serif;

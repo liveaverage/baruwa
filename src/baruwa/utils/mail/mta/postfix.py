@@ -42,6 +42,21 @@ class QueueParser(object):
         self.qdir = queue
         self.items = []
 
+    def delete(self, items):
+        "delete from queue"
+        done = []
+        for item in items:
+            qfile = os.path.join(self.qdir, item)
+            if os.path.exists(qfile):
+                try:
+                    os.remove(qfile)
+                    done.append({'msgid': item, 'done': True})
+                except OSError:
+                    done.append({'msgid': item, 'done': False})
+            else:
+                done.append({'msgid': item, 'done': False})
+        return done
+
     def process(self):
         "process"
         postqdir = subprocess.Popen('postconf -d queue_directory', shell=True, 
