@@ -24,6 +24,8 @@ dojo.require("dojox.charting.action2d.Magnify");
 dojo.require("dojox.charting.action2d.Shake");
 dojo.require("dojox.charting.action2d.Tooltip");
 dojo.require("dojox.charting.widget.Legend");
+dojo.require("dojox.charting.axis2d.Invisible");
+dojo.require("dojox.charting.axis2d.Default");
 
 //functions
 function build_rows(build_array){
@@ -75,6 +77,7 @@ function process_response(data){
 				chart.updateSeries("mail", response.pie_data.mail);
 				chart.updateSeries("spam", response.pie_data.spam);
 				chart.updateSeries("virii", response.pie_data.virii);
+				chart.updateSeries("volume", response.pie_data.volume);
 				chart.render();
 				spinner.innerHTML = '';
             	dojo.style('my-spinner','display','none');
@@ -116,17 +119,22 @@ dojo.addOnLoad(function(){
 	var dc = dojox.charting;
 	var dur = 450;
 	chart = new dojox.charting.Chart2D("chart");
-	chart.addAxis("x",{labels: labels,majorTickStep:15});
+	chart.addAxis("x",{labels: labels,majorTickStep:10});
 	chart.addAxis("y",{vertical:true});
+	chart.addAxis("vol_x", {type: "Invisible", leftBottom: false});
+	chart.addAxis("vol_y", {type: "Invisible", vertical: true, leftBottom: false});
 	chart.addPlot("default",{type: "ClusteredColumns",gap:2});
+	chart.addPlot("other", {type: "Areas", hAxis: "vol_x", vAxis: "vol_y"});
 	chart.addSeries("mail", mail_data, {stroke: {color: "black"}, fill: "green"});
 	chart.addSeries("spam", spam_data, {stroke: {color: "black"}, fill: "pink"});
 	chart.addSeries("virii", virii_data, {stroke: {color: "black"}, fill: "red"});
+	chart.addSeries("volume", volume_data, {plot: "other", stroke: {color:"blue"}, fill: "lightblue"});
 	var anim6a = new dc.action2d.Highlight(chart, "default", {
 	duration: dur,
 	easing:   dojo.fx.easing.sineOut
 	});
 	//var anim6b = new dc.action2d.Shake(chart, "default");
+	//var anim6b = new dc.action2d.Tooltip(chart, "other");
 	var anim6c = new dc.action2d.Tooltip(chart, "default");
 	chart.render();
 	var mail_legend = new dojox.charting.widget.Legend({chart: chart}, "mail_legend");

@@ -57,7 +57,7 @@ Requirements
 + iPy
 + Any Web server that can run Django (Apache/mod_wsgi recommended)
 + MySQL
-+ Dojo toolkit
++ Dojo toolkit >= 1.5.0
 + Reportlab
 + Lxml
 + A message broker (RabbitMQ recommended)
