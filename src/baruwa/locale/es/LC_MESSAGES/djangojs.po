@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-09 13:52+0200\n"
+"POT-Creation-Date: 2011-01-22 10:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,7 +34,7 @@ msgid "Server error"
 msgstr ""
 
 #: static/js/accounts.js:37 static/js/domains.js:58 static/js/lists.js:65
-#: static/js/messages.js:155
+#: static/js/messages.js:124 static/js/quarantine.js:262
 msgid "Showing page %(page)s of %(pages)s pages."
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 #: static/js/domains.js.py:134 static/js/lists.add.js:50
 #: static/js/lists.add.js.py:67 static/js/lists.add.js:90
 #: static/js/lists.js:257 static/js/lists.js.py:261
-#: static/js/reports.barreport.js:84 static/js/reports.js:96
+#: static/js/reports.barreport.js:85 static/js/reports.js:96
 #: static/js/reports.js.py:162 static/js/reports.listing.js:88
 #: static/js/reports.pie.js:92 static/js/reports.relays.js:94
 msgid "Dismiss"
@@ -194,10 +194,11 @@ msgstr ""
 msgid "Blacklist :: "
 msgstr ""
 
-#: static/js/lists.js:206 static/js/messages.js:197
-#: static/js/reports.barreport.js:99 static/js/reports.js:172
-#: static/js/reports.js.py:177 static/js/reports.listing.js:103
-#: static/js/reports.pie.js:107 static/js/reports.relays.js:109
+#: static/js/lists.js:206 static/js/messages.js:166
+#: static/js/quarantine.js:308 static/js/reports.barreport.js:100
+#: static/js/reports.js:172 static/js/reports.js.py:177
+#: static/js/reports.listing.js:103 static/js/reports.pie.js:107
+#: static/js/reports.relays.js:109
 msgid "Loading"
 msgstr ""
 
@@ -221,48 +222,49 @@ msgstr ""
 msgid "List item could not be deleted"
 msgstr ""
 
-#: static/js/messages.js:43
-msgid "Full quarantine"
-msgstr ""
-
-#: static/js/messages.js:43
-msgid "Spam"
-msgstr ""
-
-#: static/js/messages.js:43
-msgid "Non Spam"
-msgstr ""
-
-#: static/js/messages.js:137
+#: static/js/messages.js:109 static/js/quarantine.js:242
 msgid "From"
 msgstr ""
 
-#: static/js/messages.js:137
+#: static/js/messages.js:109 static/js/quarantine.js:242
 msgid "To"
 msgstr ""
 
-#: static/js/messages.js:137
+#: static/js/messages.js:109 static/js/quarantine.js:242
 msgid "Subject"
 msgstr ""
 
-#: static/js/messages.js:137
+#: static/js/messages.js:109
 msgid "Size"
 msgstr ""
 
-#: static/js/messages.js:137
+#: static/js/messages.js:109 static/js/quarantine.js:242
 msgid "Score"
 msgstr ""
 
-#: static/js/messages.js:142
+#: static/js/messages.js:114 static/js/quarantine.js:242
 msgid "Date/Time"
 msgstr ""
 
-#: static/js/messages.js:174 static/js/messages.js.py:182
+#: static/js/messages.js:143 static/js/messages.js.py:151
+#: static/js/quarantine.js:281 static/js/quarantine.js.py:289
 msgid "Show filters"
 msgstr ""
 
-#: static/js/messages.js:180
+#: static/js/messages.js:149 static/js/quarantine.js:287
 msgid "Hide filters"
+msgstr ""
+
+#: static/js/quarantine.js:148
+msgid "Full quarantine"
+msgstr ""
+
+#: static/js/quarantine.js:148
+msgid "Spam"
+msgstr ""
+
+#: static/js/quarantine.js:148
+msgid "Non Spam"
 msgstr ""
 
 #: static/js/recent_messages.js:26
