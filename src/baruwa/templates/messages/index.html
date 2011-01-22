@@ -15,11 +15,11 @@ var ax_in_progress = false;
 var media_url = '{{MEDIA_URL}}';
 //]]>
 </script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/lib.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/lib.js"></script>
 {% if not list_all %}
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/recent_messages.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/recent_messages.js"></script>
 {% else %}
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/messages.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/messages.js"></script>
 {% endif %}
 {% endblock headers %}
 {% block submenu %}

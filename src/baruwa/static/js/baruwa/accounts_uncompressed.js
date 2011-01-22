@@ -103,11 +103,11 @@ function confirm_delete(event){
                 if (response.success) {
                     $('#account-id-'+m[1]).remove();
                     $('.Grid_content').before('<div id="in-progress">'+response.html+'</div>');
-                    $('#in-progress').append('<div id="dismiss"><a href="#">gettext('Dismiss')</a></div>')
+                    $('#in-progress').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>');
                     ip = setTimeout(function() {$('#in-progress').remove();}, 15050);
                 }else{
                     $('.Grid_content').before('<div id="in-progress">'+response.html+'</div>');
-                    $('#in-progress').append('<div id="dismiss"><a href="#">gettext('Dismiss')</a></div>')
+                    $('#in-progress').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>');
                     ip = setTimeout(function() {$('#in-progress').remove();}, 15050);
                 };
                 $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(ip);$('#in-progress').empty().remove();});
