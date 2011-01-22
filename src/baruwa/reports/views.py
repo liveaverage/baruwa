@@ -110,8 +110,8 @@ def index(request):
         else:
             data['newest'] = ''
             data['oldest'] = ''
-        response = simplejson.dumps({'success': success, 'data': data, 
-            'errors': errors, 'active_filters': active_filters, 
+        response = simplejson.dumps({'success': success, 'data': data,
+            'errors': errors, 'active_filters': active_filters,
             'saved_filters': saved_filters})
         return HttpResponse(response, 
             content_type='application/javascript; charset=utf-8')
@@ -192,7 +192,8 @@ def load_filter(request, index_num):
         error_msg = _('This filter you attempted to load does not exist')
         if request.is_ajax():
             response = simplejson.dumps({'success': False, 'data': [], 
-                'errors': error_msg, 'active_filters': [], 'saved_filters': []})
+                'errors': error_msg, 'active_filters': [],
+                'saved_filters': []})
             return HttpResponse(response, 
                 content_type='application/javascript; charset=utf-8')
         else:
@@ -269,12 +270,14 @@ def report(request, report_kind):
         report_title = _("Top recipients by volume")
     elif report_kind == 7:
         data = run_query('to_domain', {'to_domain__exact': "", 
-            'to_domain__isnull': False}, '-num_count', request, active_filters)
+            'to_domain__isnull': False}, '-num_count', request, 
+            active_filters)
         pie_data = pack_json_data(data, 'to_domain', 'num_count')
         report_title = _("Top recipient domains by quantity")
     elif report_kind == 8:
         data = run_query('to_domain', {'to_domain__exact': "", 
-            'to_domain__isnull': False}, '-total_size', request, active_filters)
+            'to_domain__isnull': False}, '-total_size', 
+            request, active_filters)
         pie_data = pack_json_data(data, 'to_domain', 'total_size')
         report_title = _("Top recipient domains by volume")
     elif report_kind == 9:
@@ -349,14 +352,17 @@ def report(request, report_kind):
         pie_data = {'dates': [{'value': index + 1, 'text': date} 
                     for index, date in enumerate(dates)], 
                     'mail': [{'y': total, 
-                    'tooltip': 'Mail totals on ' + dates[index] + ': ' + str(total)} 
+                    'tooltip': 'Mail totals on ' + dates[index] + ': ' + str(total)}
                     for index, total in enumerate(mail_total)], 
                     'spam': [{'y': total, 
-                    'tooltip': 'Spam totals on ' + dates[index] + ': ' + str(total)} 
+                    'tooltip': 'Spam totals on ' + dates[index] + ': ' + str(total)}
                     for index, total in enumerate(spam_total)], 
                     'virii': [{'y': total, 
-                    'tooltip': 'Virus totals on ' + dates[index] + ': ' + str(total)} 
-                    for index, total in enumerate(virus_total)], 
+                    'tooltip': 'Virus totals on ' + dates[index] + ': ' + str(total)}
+                    for index, total in enumerate(virus_total)],
+                    'volume': size_total,
+                    #'volume_labels': [{'value': total, 
+                    #'text': str(filesizeformat(total))} for total in size_total], 
                     'mail_total': sum(mail_total), 
                     'spam_total': sum(spam_total), 
                     'virus_total': sum(virus_total), 
