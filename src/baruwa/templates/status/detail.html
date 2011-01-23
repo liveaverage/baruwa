@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block headers %}
-{% endblock headers %}
+{% block scripts %}
+{% endblock scripts %}
 {% block title %}{% blocktrans with itemdetails.messageid as id %}Baruwa :: Showing queue item - {{ id }}{% endblocktrans %}{% endblock %}
 {% block heading %}{% blocktrans with itemdetails.messageid as id %}Baruwa :: Showing queue item - {{ id }}{% endblocktrans %}{% endblock %}
 {% block messaged %} value="{{ itemdetails.id }}" {%endblock %}

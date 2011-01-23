@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block headers %}
+{% block scripts %}
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/mailq.js"></script>
-{% endblock headers %}
+{% endblock scripts %}
 {% block submenu %}
 <ul>
 	<li><a href="{% url mailq-inbound %}">{% trans "Inbound Queue" %}</a></li>

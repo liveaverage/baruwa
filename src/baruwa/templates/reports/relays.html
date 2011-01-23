@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block body_class%}{%if pie_data%} class="tundra"{%endif%}{%endblock body_class%}
-{% block headers %}{%if pie_data%}
+{% block scripts %}{%if pie_data%}
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />
 <script type="text/javascript">
     var djConfig = { parseOnLoad:true, isDebug:false };
@@ -13,7 +13,7 @@
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/reports.common.js"></script>
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/reports.relays.js"></script>
 {%endif%}
-{% endblock headers %}
+{% endblock scripts %}
 {% block submenu %}
 &nbsp;
 {% endblock submenu %}

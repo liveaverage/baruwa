@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block headers %}
+{% block scripts %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
@@ -8,7 +8,7 @@ var media_url = '{{MEDIA_URL}}';
 //]]>
 </script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/details.js"></script>
-{% endblock headers %}
+{% endblock scripts %}
 {% block title %}{% blocktrans with message_details.id as id %}Baruwa :: Showing message - {{ id }}{% endblocktrans %}{% endblock %}
 {% block heading %}{% blocktrans with message_details.id as id %}Baruwa :: Showing message - {{ id }}{% endblocktrans %}{% endblock %}
 {% block messaged %} value="{{ message_details.id }}" {%endblock %}

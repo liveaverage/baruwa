@@ -27,7 +27,6 @@
 <link href="{{ MEDIA_URL }}css/style.css" rel="stylesheet" type="text/css" />
 <link rel="icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" /> 
-<script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
 {% block headers %}{% endblock headers %}
 </head>
 <body{%block body_class%}{%endblock body_class%}>
@@ -148,5 +147,7 @@
         <div class="Links_footer">
 		</div>
     </div>
+<script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
+{% block scripts %}{% endblock scripts %}
 </body>
 </html>

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% block headers %}
+{% block scripts %}
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.clearform.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -11,7 +11,7 @@ var media_url = '{{MEDIA_URL}}';
 //]]>
 </script>
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/reports.js"></script>
-{% endblock headers %}
+{% endblock scripts %}
 {% block title %}{% trans "Reports" %}{% endblock title %}
 {% block heading %}{% trans "Reports" %}{% endblock heading %}
 {% block content %}

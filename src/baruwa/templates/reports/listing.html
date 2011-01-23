@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block body_class%}{% if pie_data.mail and pie_data.spam and pie_data.virii and pie_data.dates%} class="tundra"{%endif%}{%endblock body_class%}
-{% block headers %}
+{% block scripts %}
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />
 <script type="text/javascript">
 	var djConfig = { parseOnLoad:true, isDebug:false };
@@ -16,7 +16,7 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/lib.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/reports.common.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/reports.listing.js"></script>
-{% endblock headers %}
+{% endblock scripts %}
 {% block submenu %}
 &nbsp;
 {% endblock submenu %}

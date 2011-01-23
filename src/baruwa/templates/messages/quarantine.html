@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block headers %}
+{% block scripts %}
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 {% if list_all %}
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.address.js"></script>
@@ -15,7 +15,7 @@ var media_url = '{{MEDIA_URL}}';
 </script>
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/lib.js"></script>
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/quarantine.js"></script>
-{% endblock headers %}
+{% endblock scripts %}
 {% block submenu %}
 <ul>
 	<li><a href="{% url all-messages-index 'quarantine' %}">{% trans "Full Quarantine" %}</a></li>
