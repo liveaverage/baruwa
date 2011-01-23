@@ -19,13 +19,14 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import anyjson
+
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db.models import Count, Max, Min
 from django.db import IntegrityError, DatabaseError
-from django.utils import simplejson
 from django.template import RequestContext
 from django.template.defaultfilters import force_escape
 from django.utils.translation import ugettext as _
@@ -110,7 +111,7 @@ def index(request):
         else:
             data['newest'] = ''
             data['oldest'] = ''
-        response = simplejson.dumps({'success': success, 'data': data,
+        response = anyjson.dumps({'success': success, 'data': data,
             'errors': errors, 'active_filters': active_filters,
             'saved_filters': saved_filters})
         return HttpResponse(response, 
@@ -160,7 +161,7 @@ def save_filter(request, index_num):
             if error_msg == '':
                 return index(request)
             else:
-                response = simplejson.dumps(
+                response = anyjson.dumps(
                     {'success': False, 'data': [], 'errors': error_msg, 
                     'active_filters': [], 'saved_filters': []})
                 return HttpResponse(response, 
@@ -191,7 +192,7 @@ def load_filter(request, index_num):
     except SavedFilter.DoesNotExist:
         error_msg = _('This filter you attempted to load does not exist')
         if request.is_ajax():
-            response = simplejson.dumps({'success': False, 'data': [], 
+            response = anyjson.dumps({'success': False, 'data': [], 
                 'errors': error_msg, 'active_filters': [],
                 'saved_filters': []})
             return HttpResponse(response, 
@@ -208,7 +209,7 @@ def del_filter(request, index_num):
     except SavedFilter.DoesNotExist:
         error_msg = _('This filter you attempted to delete does not exist')
         if request.is_ajax():
-            response = simplejson.dumps({'success': False, 
+            response = anyjson.dumps({'success': False, 
                 'data': [], 'errors': error_msg, 'active_filters': [], 
                 'saved_filters': []})
             return HttpResponse(response, 
@@ -221,7 +222,7 @@ def del_filter(request, index_num):
         except DatabaseError:
             error_msg = _('Deletion of the filter failed, Try again')
             if request.is_ajax():
-                response = simplejson.dumps({'success': False, 'data': [], 
+                response = anyjson.dumps({'success': False, 'data': [], 
                     'errors': error_msg, 'active_filters': [], 
                     'saved_filters': []})
                 return HttpResponse(response, 
@@ -384,12 +385,12 @@ def report(request, report_kind):
     filter_form = FilterForm()
 
     if request.is_ajax():
-        response = simplejson.dumps({'items': list(data), 'pie_data': pie_data})
+        response = anyjson.dumps({'items': list(data), 'pie_data': pie_data})
         return HttpResponse(response, 
             content_type='application/javascript; charset=utf-8')
     else:
         if not report_kind in [9, 11]:
-            pie_data = simplejson.dumps(pie_data)
+            pie_data = anyjson.dumps(pie_data)
         return render_to_response(template, {'pie_data': pie_data, 
             'top_items': data, 'report_title': report_title, 
             'report_kind': report_kind, 'active_filters': active_filters, 

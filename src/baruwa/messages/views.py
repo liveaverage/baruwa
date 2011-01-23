@@ -21,6 +21,7 @@
 
 import re
 import urllib
+import anyjson
 
 from httplib import HTTPException
 from django.shortcuts import render_to_response, get_object_or_404
@@ -28,7 +29,6 @@ from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponse, Http404
 from django.http import HttpResponseRedirect
-from django.utils import simplejson
 from django.db import IntegrityError
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
@@ -136,7 +136,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             'show_first': 1 not in pn, 'show_last': p.num_pages not in pn,
             'view_type': view_type, 'direction': direction, 'order_by': ordering,
             'quarantine_type': quarantine_type}
-        json = simplejson.dumps({'items': message_list, 'paginator': pg, 
+        json = anyjson.dumps({'items': message_list, 'paginator': pg, 
                                 'status': sys_status})
         return HttpResponse(json, mimetype='application/javascript')
 
@@ -197,7 +197,7 @@ def detail(request, message_id, archive=False):
                     return HttpResponse(response,
                         content_type='application/javascript; charset=utf-8')
                 try:
-                    resp = simplejson.loads(response)
+                    resp = anyjson.loads(response)
                     if resp['success']:
                         success = True
                     else:
@@ -264,7 +264,7 @@ def detail(request, message_id, archive=False):
             html = error_list
             success = False
         if request.is_ajax():
-            response = simplejson.dumps({'success': success, 'html': html})
+            response = anyjson.dumps({'success': success, 'html': html})
             return HttpResponse(response,
                 content_type='application/javascript; charset=utf-8')
 
@@ -305,7 +305,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                         attachment_data = message.getvalue()
                         mimetype = message.content_type
                         if request.is_ajax():
-                            json = simplejson.dumps({'success': True,
+                            json = anyjson.dumps({'success': True,
                             'attachment': base64.encodestring(attachment_data),
                             'mimetype': mimetype, 'name': message.name})
                             response = HttpResponse(json,
@@ -323,7 +323,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                 else:
                     message = email_parser.parse_msg(msg)
                 if request.is_ajax():
-                    response = simplejson.dumps({'message': message,
+                    response = anyjson.dumps({'message': message,
                         'message_id': message_details.id})
                     return HttpResponse(response,
                         content_type='application/javascript; charset=utf-8')
@@ -350,7 +350,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                 remote_request.get()
                 if remote_request.response.status == 200:
                     import base64
-                    attach = simplejson.loads(remote_request.response.read())
+                    attach = anyjson.loads(remote_request.response.read())
                     if attach['success']:
                         attachment_data = base64.decodestring(attach['attachment'])
                         mimetype = attach['mimetype']
@@ -370,11 +370,11 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
                 remote_request = ProcessRemote(hostname, rurl, cookie)
                 remote_request.get()
                 if remote_request.response.status == 200:
-                    items = simplejson.loads(remote_request.response.read())
+                    items = anyjson.loads(remote_request.response.read())
                     message = items['message']
 
                     if request.is_ajax():
-                        response = simplejson.dumps({'message': message,
+                        response = anyjson.dumps({'message': message,
                             'message_id': message_id})
                         return HttpResponse(response,
                             content_type='application/javascript; charset=utf-8')
@@ -422,7 +422,7 @@ def auto_release(request, message_uuid, template='messages/release.html'):
             return HttpResponse(response,
                 content_type='application/javascript; charset=utf-8')
         try:
-            json_response = simplejson.loads(response)
+            json_response = anyjson.loads(response)
             if json_response['success']:
                 success = True
                 release_record.released = 1
@@ -445,7 +445,7 @@ def auto_release(request, message_uuid, template='messages/release.html'):
         'success': success, 'error_msg': error_msg})
 
     if request.is_ajax():
-        response = simplejson.dumps({'success': success, 'html': html})
+        response = anyjson.dumps({'success': success, 'html': html})
         return HttpResponse(response,
             content_type='application/javascript; charset=utf-8')
     return render_to_response(template,

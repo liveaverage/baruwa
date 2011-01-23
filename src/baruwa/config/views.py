@@ -20,6 +20,7 @@
 #
 
 import re
+import anyjson
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
@@ -27,7 +28,6 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator
-from django.utils import simplejson
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
@@ -84,7 +84,7 @@ def index(request, page=1, direction='dsc', order_by='id',
         'show_first': 1 not in pn, 'show_last': p.num_pages not in pn, 
         'app': 'settings', 'list_all': 1, 'direction': direction, 
         'order_by': order_by}
-        json = simplejson.dumps({'items': domains, 'paginator': pg})
+        json = anyjson.dumps({'items': domains, 'paginator': pg})
         return HttpResponse(json, mimetype='application/javascript')    
     return  object_list(request, template_name=template, queryset=domains, 
         paginate_by=15, page=page, extra_context={'app': 'settings', 
@@ -120,7 +120,7 @@ def add_host(request, domain_id, template='config/add_host.html'):
                 msg = _('Delivery SMTP server: %(server)s was'
                         ' added successfully') % {'server': host.address}
                 if request.is_ajax():
-                    response = simplejson.dumps({'success': True, 'html': msg})
+                    response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -129,7 +129,7 @@ def add_host(request, domain_id, template='config/add_host.html'):
             except IntegrityError:
                 msg = _('Adding of Delivery SMTP server failed')
                 if request.is_ajax():
-                    response = simplejson.dumps({'success': True, 'html': msg})
+                    response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -154,7 +154,7 @@ def edit_host(request, host_id, template='config/edit_host.html'):
                 msg = _('Delivery SMTP server: %(server)s has '
                         'been updated successfully') % {'server': host.address}
                 if request.is_ajax():
-                    response = simplejson.dumps({'success': True, 'html': msg})
+                    response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -164,7 +164,7 @@ def edit_host(request, host_id, template='config/edit_host.html'):
                 msg = _('Delivery SMTP server: %(server)s update failed') % {
                 'server': host.address}
                 if request.is_ajax():
-                    response = simplejson.dumps({'success': True, 'html': msg})
+                    response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -190,7 +190,7 @@ def delete_host(request, host_id, template='config/delete_host.html'):
                 'server': host.address}
                 host.delete()
                 if request.is_ajax():
-                    response = simplejson.dumps({'success': True, 'html': msg})
+                    response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -200,7 +200,7 @@ def delete_host(request, host_id, template='config/delete_host.html'):
                 msg = _('Delivery SMTP server: %(server)s could not be deleted') % {
                 'server': host.address}
                 if request.is_ajax():
-                    response = simplejson.dumps({'success': False, 'html': msg})
+                    response = anyjson.dumps({'success': False, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -231,7 +231,7 @@ def test_host(request, host_id):
         'server': host.address, 'dom': host.useraddress.address}
 
     if request.is_ajax():
-        response = simplejson.dumps({'success': success, 'html': msg})
+        response = anyjson.dumps({'success': success, 'html': msg})
         return HttpResponse(response, 
             content_type='application/javascript; charset=utf-8')
 
@@ -255,7 +255,7 @@ def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
                     'auth': AUTH_TYPES[host.protocol], 'host': host.address, 
                     'dom': host.useraddress.address}
                 if request.is_ajax():
-                    response = simplejson.dumps({'success': True, 'html': msg})
+                    response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -264,7 +264,7 @@ def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
             except IntegrityError:
                 msg = _('Addition of external authentication failed')
                 if request.is_ajax():
-                    response = simplejson.dumps({'success': True, 'html': msg})
+                    response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -292,7 +292,7 @@ def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
                     'host': saved_host.address, 
                     'dom': saved_host.useraddress.address}
                 if request.is_ajax():
-                    response = simplejson.dumps({'success': True, 'html': msg})
+                    response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -301,7 +301,7 @@ def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
             except IntegrityError:
                 msg = _('Update of external authentication failed')
                 if request.is_ajax():
-                    response = simplejson.dumps({'success': True, 'html': msg})
+                    response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -331,7 +331,7 @@ def delete_auth_host(request, host_id,
                         }
                 host.delete()
                 if request.is_ajax():
-                    response = simplejson.dumps({'success': True, 'html': msg})
+                    response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -344,7 +344,7 @@ def delete_auth_host(request, host_id,
                         'dom': host.useraddress.address
                         }
                 if request.is_ajax():
-                    response = simplejson.dumps({'success': False, 'html': msg})
+                    response = anyjson.dumps({'success': False, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
                 request.user.message_set.create(message=msg)
@@ -380,7 +380,7 @@ def list_scanners(request, page=1, direction='dsc', order_by='id',
         'show_first': 1 not in pn, 'show_last': p.num_pages not in pn, 
         'app': 'settings', 'list_all': 1, 'direction': direction, 
         'order_by': order_by}
-        json = simplejson.dumps({'items': scanners, 'paginator': pg})
+        json = anyjson.dumps({'items': scanners, 'paginator': pg})
         return HttpResponse(json, mimetype='application/javascript')    
     return  object_list(request, template_name=template, queryset=scanners, 
         paginate_by=15, page=page, extra_context={'app': 'settings', 

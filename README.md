@@ -60,6 +60,7 @@ Requirements
 + Dojo toolkit >= 1.5.0
 + Reportlab
 + Lxml
++ Anyjson
 + A message broker (RabbitMQ recommended)
 + UUID (python 2.4 only)
 + Sphinx (optional for building docs)

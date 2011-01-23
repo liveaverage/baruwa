@@ -60,6 +60,7 @@ Requirements
     + Reportlab
     + UUID (python 2.4 only)
     + Lxml
+    + Anyjson
     + A supported message broker (RabbitMQ recommended)
     + Sphinx (optional for building docs)
 	

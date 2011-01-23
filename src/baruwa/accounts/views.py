@@ -19,6 +19,8 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import anyjson
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
@@ -31,7 +33,6 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import login, REDIRECT_FIELD_NAME
 from django.contrib.auth.models import User
 from django.template import RequestContext
-from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from baruwa.accounts.forms import UserProfileForm, UserCreateForm, \
 UserAddressForm, OrdUserProfileForm, UserUpdateForm, AdminUserUpdateForm, \
@@ -103,7 +104,7 @@ def index(request, page=1, direction='dsc', order_by='id'):
         'show_first': 1 not in pn, 'show_last': p.num_pages not in pn,
         'app': 'accounts', 'list_all': 1, 'direction': direction,
         'order_by': order_by}
-        json = simplejson.dumps({'items': users, 'paginator': pg})
+        json = anyjson.dumps({'items': users, 'paginator': pg})
         return HttpResponse(json, mimetype='application/javascript')
 
     return object_list(request, template_name='accounts/index.html',
@@ -190,7 +191,7 @@ def delete_account(request, user_id, template_name='accounts/delete_account.html
                     msg = _('The user account %(account)s has been deleted') % {
                         'account': user_account.username}
                     if request.is_ajax():
-                        response = simplejson.dumps({'success': True, 'html': msg})
+                        response = anyjson.dumps({'success': True, 'html': msg})
                         return HttpResponse(response,
                             content_type='application/javascript; charset=utf-8')
                     request.user.message_set.create(message=msg)
@@ -199,7 +200,7 @@ def delete_account(request, user_id, template_name='accounts/delete_account.html
                     msg = _('The deletion of user account %(account)s failed') % {
                     'account': user_account.username}
                     if request.is_ajax():
-                        response = simplejson.dumps({'success': True, 'html': msg})
+                        response = anyjson.dumps({'success': True, 'html': msg})
                         return HttpResponse(response,
                             content_type='application/javascript; charset=utf-8')
                     request.user.message_set.create(message=msg)
@@ -278,7 +279,7 @@ def delete_address(request, address_id, template_name='accounts/delete_address.h
         msg = _('The address %(addr)s has been updated') % {'addr': address.address}
         address.delete()
         if request.is_ajax():
-            response = simplejson.dumps({'success': True, 'html': msg})
+            response = anyjson.dumps({'success': True, 'html': msg})
             return HttpResponse(response,
                 content_type='application/javascript; charset=utf-8')
         request.user.message_set.create(message=msg)

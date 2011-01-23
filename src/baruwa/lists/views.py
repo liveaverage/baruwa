@@ -19,6 +19,8 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import anyjson
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
@@ -27,7 +29,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.http import HttpResponseForbidden
 from django.template.defaultfilters import force_escape
 from django.template import RequestContext
-from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.db.models import Q
@@ -117,7 +118,7 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
         'show_first': 1 not in pn, 'show_last': p.num_pages not in pn,
         'app': 'lists', 'list_kind': list_kind, 'direction': direction, 
         'order_by': ordering, 'filter_active': filter_active}
-        json = simplejson.dumps({'items': listing, 'paginator': pg})
+        json = anyjson.dumps({'items': listing, 'paginator': pg})
         return HttpResponse(json, mimetype='application/javascript')
 
     return object_list(request, template_name='lists/index.html', 
@@ -182,7 +183,7 @@ def add_to_list(request, template = 'lists/add.html'):
                 error_msg = _('The list item already exists')
 
             if request.is_ajax():
-                response = simplejson.dumps({'success': is_saved, 
+                response = anyjson.dumps({'success': is_saved, 
                     'error_msg': error_msg})
                 return HttpResponse(response, 
                     content_type='application/javascript; charset=utf-8')
@@ -191,7 +192,7 @@ def add_to_list(request, template = 'lists/add.html'):
                 error_list = form.errors.values()[0]
                 html = dict([(k, [unicode(e) for e in v]) 
                     for k, v in form.errors.items()])
-                response = simplejson.dumps({'success': False, 
+                response = anyjson.dumps({'success': False, 
                     'error_msg': unicode(error_list[0]), 
                     'form_field': html.keys()[0]})
                 return HttpResponse(response, 
@@ -213,14 +214,14 @@ def delete_from_list(request, item_id):
             list_type = list_item.list_type
             list_item.delete()
             if request.is_ajax():
-                response = simplejson.dumps({'success': True})
+                response = anyjson.dumps({'success': True})
                 return HttpResponse(response, 
                     content_type='application/javascript; charset=utf-8')
             return HttpResponseRedirect(reverse('lists-start', 
                 args=[list_type]))
         else:
             if request.is_ajax():
-                response = simplejson.dumps({'success': False})
+                response = anyjson.dumps({'success': False})
                 return HttpResponse(response, 
                     content_type='application/javascript; charset=utf-8')
     else:

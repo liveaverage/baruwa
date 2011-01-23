@@ -15,6 +15,7 @@ Baruwa requirements
 	+ `Dojo toolkit`_ >= 1.5.0
 	+ `Reportlab`_
 	+ `Lxml`_
+	+ `Anyjson`_
 	+ `UUID`_ (Only for python 2.4)
 	+ A supported Message broker (`RabbitMQ`_ recommended)
 	+ `Sphinx`_ (Optional - to build documentation)
@@ -39,6 +40,7 @@ MailScanner requirements
 .. _`Reportlab`: http://www.reportlab.org/
 .. _`Lxml`: http://codespeak.net/lxml/
 .. _`UUID`: http://pypi.python.org/pypi/uuid/
+.. _`Anyjson`: http://pypi.python.org/pypi/anyjson
 .. _`RabbitMQ`: http://www.rabbitmq.com/
 .. _`Sphinx`: http://sphinx.pocoo.org/
 .. _`DBI`: http://dbi.perl.org/
