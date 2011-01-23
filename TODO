@@ -1,6 +1,6 @@
 - Write a new paginator (split messages from other apps) DONE
 - Implement Caching
-- Queue management
+- Queue management DONE
 - PDF reports DONE
 - Blocked file report
 - Auto release (hashed url) DONE
@@ -15,6 +15,6 @@
 - Achieve to document store.
 - fix queries (scaned) DONE
 - Track false positives
-- Localization
+- Localization DONE
 - Group filters
 - Write Tests
