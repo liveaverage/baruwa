@@ -9,13 +9,13 @@ Milestone 1.0.1
 Milestone 1.1.0
 --
 + <strike>Mail queue status Exim, Postfix, Sendmail</strike>
-+ Bulk processing
++ <strike>Bulk processing</strike>
 
 Milestone 2.0.0
 --
 + <strike>Support Postgresql and SQLite in addition to MySQL</strike>
 + Account preferences (spam actions, scores, language, virus checks)
-+ Bulk processing
++ <strike>Bulk processing</strike>
 + Implement caching
 + <strike>Mailscanner SQL configuration</strike>
 + Use rulesets to replace white/black lists
@@ -32,7 +32,7 @@ Milestone 2.0.0
 
 Milestone 2.1.0
 --
-+ Queue management (others)
++ <strike>Queue management (others)</strike>
 + NOSQL - Map reduce
 + Pre SMTP stats in RRD or NOSQL
 + User documentation
