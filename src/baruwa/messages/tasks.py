@@ -29,7 +29,7 @@ from baruwa.utils.mail.message import ProcessQuarantinedMessage
 
 class ProcessQuarantine(Task):
     "Process quarantine"
-    name = 'bulk-process-quarantine'
+    name = 'process-quarantine'
     serializer = 'json'
 
     def run(self, job, **kwargs):
