@@ -32,10 +32,11 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.db import connection, IntegrityError, DatabaseError
+from celery.backends import default_backend
 from baruwa.utils.decorators import onlysuperusers
-from baruwa.utils.mail.message import test_smtp_server
 from baruwa.accounts.models import UserAddresses
 from baruwa.config.models import MailHost
+from baruwa.config.tasks import TestSMTPServer
 from baruwa.config.forms import  MailHostForm, EditMailHost, DeleteMailHost, \
 InitializeConfigsForm
 from baruwa.utils.misc import jsonify_domains_list
@@ -218,26 +219,40 @@ def test_host(request, host_id):
     host = get_object_or_404(MailHost, id=host_id)
 
     test_address = "postmaster@%s" % host.useraddress.address
-
-    if test_smtp_server(host.address, host.port, test_address):
-        msg = _('Server %(server)s is operational and'
-                ' accepting mail for: %(dom)s') % {
-                'server': host.address, 
-                'dom': host.useraddress.address}
-        success = True
-    else:
-        success = False
-        msg = _('Server %(server)s is NOT accepting mail for : %(dom)s') % {
-        'server': host.address, 'dom': host.useraddress.address}
-
+    from_addr = settings.DEFAULT_FROM_EMAIL
+    server = TestSMTPServer()
+    task = server.delay(host.address, host.port, 
+    from_addr, test_address, host.useraddress.id, 5)
     if request.is_ajax():
-        response = anyjson.dumps({'success': success, 'html': msg})
-        return HttpResponse(response, 
-            content_type='application/javascript; charset=utf-8')
+        return HttpResponseRedirect(reverse('task-status', args=[task.task_id]))
+    return HttpResponseRedirect(reverse('conn-status', args=[task.task_id]))
 
-    request.user.message_set.create(message=msg)
-    return HttpResponseRedirect(reverse('view-domain', 
-        args=[host.useraddress.id]))
+
+@login_required
+@onlysuperusers
+def test_status(request, taskid):
+    "Gets the task status"
+    status = default_backend.get_status(taskid)
+    results = default_backend.get_result(taskid)
+    if status in ['SUCCESS', 'FAILURE']:
+        if status == 'SUCCESS':
+            if results['smtp']:
+                msg = _('The server is contactable and accepting messages')
+            else:
+                if results['ping']:
+                    msg = (_('The server is contactable via ICMP but'
+                    ' is not accepting messages from me, Errors: %s') %
+                    results['errors']['smtp'])
+                else:
+                    msg = (_('The server is not accepting messages, Errors: %s') 
+                    % str(results['errors']))
+        else:
+            msg = _('The tests failed to run try again later')
+        request.user.message_set.create(message=msg)
+        return HttpResponseRedirect(reverse('view-domain', 
+            args=[results['host']]))
+    return render_to_response('config/task_status.html', {'status': status},
+    context_instance=RequestContext(request))
 
 
 @login_required

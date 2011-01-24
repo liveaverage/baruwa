@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block headers %}
-<meta http-equiv="refresh" content="5" />
+<meta http-equiv="refresh" content="10" />
 {% endblock headers %}
 {% block submenu %}
 <ul>
@@ -9,14 +9,14 @@
 </ul>
 {% endblock submenu %}
 {% block title %}
-Delivery server Tests jobid: {{taskid}}
+Running Delivery server Tests
 {% endblock title %}
 {% block heading %}
-Delivery server Tests jobid: {{taskid}}
+Running Delivery server Tests
 {% endblock heading %}
 {% block content %}
 <div class="Grid_heading">
-	<div class="spanrow">{% trans "Running server tests" %}</div>
+	<div>&nbsp;</div>
 </div>
 <div class="LightBlue_div">
 	<div class="spanrow">
@@ -24,5 +24,4 @@ Delivery server Tests jobid: {{taskid}}
 		{% trans "The request is being processed. Current status: " %}{{status}}
 	</div>
 </div>
-{% endif %}
 {% endblock content %}

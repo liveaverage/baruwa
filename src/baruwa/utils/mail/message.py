@@ -25,6 +25,7 @@ import re
 import codecs
 import smtplib
 import shutil
+import socket
 
 from email.Header import decode_header
 from subprocess import Popen, PIPE
@@ -61,7 +62,7 @@ def test_smtp_server(server, port, test_address):
             return True
         else:
             return False
-    except smtplib.SMTPException:
+    except (smtplib.SMTPException, socket.error):
         return False
 
 
@@ -92,9 +93,7 @@ def search_quarantine(date, message_id):
 
 
 class EmailParser(object):
-    """
-    Parses a email message
-    """
+    """Parses a email message"""
 
     def process_headers(self, msg):
         "Populate the headers"
@@ -132,8 +131,6 @@ class EmailParser(object):
 
     def parse_attached_msg(self, msg):
         "Parse and attached message"
-        #headers = self.process_headers(msg)
-        #filename = "%s.txt" % headers['message-id']
         content_type = msg.get_content_type()
         return dict(filename='rfc822.txt', content_type=content_type)
 
@@ -229,9 +226,7 @@ class EmailParser(object):
 
 
 class ProcessQuarantinedMessage(object):
-    """
-    Process a quarantined message
-    """
+    """Process a quarantined message"""
     def __init__(self, messageid, date, host=None):
         "init"
         self.messageid = messageid
@@ -305,4 +300,96 @@ class ProcessQuarantinedMessage(object):
 
     def reset_errors(self):
         "Resets errors"
+        self.errors[:] = []
+
+
+class TestDeliveryServers(object):
+    """Test deliverying mail to a server"""
+    def __init__(self, host, port, test_addr, from_addr):
+        "init"
+        self.host = host
+        self.port = int(port)
+        self.has_ssl = False
+        self.has_starttls = False
+        self.debug = False
+        self.errors = []
+        self.test_addr = test_addr
+        self.from_addr = from_addr
+
+    def smtp_test(self):
+        "run smtp test"
+        try:
+            if self.port == 465:
+                self.conn = smtplib.SMTP_SSL(self.host)
+                self.has_ssl = True
+            elif self.port == 25:
+                self.conn = smtplib.SMTP(self.host)
+            else:
+                self.conn = smtplib.SMTP(self.host, self.port)
+            if self.debug:
+                self.conn.set_debuglevel(5)
+            self.conn.ehlo()
+            if self.conn.has_extn('STARTTLS') and self.port != 465:
+                self.conn.starttls()
+                self.conn.ehlo()
+                self.has_starttls = True
+            self.conn.docmd('MAIL FROM:', self.from_addr)
+            result = self.conn.docmd('RCPT TO:', self.test_addr)
+            if self.conn:
+                self.conn.quit()
+            if result[0] == 250:
+                return True
+            else:
+                self.errors.append(
+                _('Expected response code 250 got %(code)s') % {
+                'code': str(result[0])})
+                return False
+        except socket.error:
+            self.errors.append(_('Connection timed out'))
+        except smtplib.SMTPServerDisconnected, exception:
+            self.errors.append(_('The server disconnected abruptly'))
+        except smtplib.SMTPSenderRefused, exception:
+            self.errors.append(_('The sender %(sender)s was rejected') % {
+            'sender': exception.sender})
+        except smtplib.SMTPRecipientsRefused, exception:
+            self.errors.append(_('Some recipients: %(recpts)s were'
+            ' rejected with errors: %(errors)s') % {'recpts': str(exception),
+            'errors': str(exception.recipients)})
+        except smtplib.SMTPConnectError:
+            self.errors.append(_('Error occured while establishing'
+            ' connection to the server'))
+        except smtplib.SMTPHeloError:
+            self.errors.append(_('Server rejected our HELO message'))
+        except smtplib.SMTPResponseException, exception:
+            self.errors.append(_('Error occured, CODE:'
+            ' %(code)s MESSAGE: %(msg)s') % {'code': exception.smtp_code})
+        return False
+    
+    def ping(self, count=None):
+        "ping host"
+        if count is None:
+            count = 5
+        #ping_cmd = "ping -c %d %s" % (count, self.host)
+        ping_cmd = ['ping', '-c', str(count), self.host]
+        print ping_cmd
+        pipe = Popen(ping_cmd, stdout=PIPE, stderr=PIPE)
+        stdout, stderr = pipe.communicate()
+        if pipe.returncode == 0:
+            return True
+        else:
+            self.errors.append(stderr)
+            return False
+
+    def setdebug(self):
+        "enable debug info"
+        self.debug = True
+    
+    def tests(self, pingcount=None):
+        "Run all tests"
+        if self.ping(pingcount) and self.smtp_test():
+            return True
+        return False
+
+    def reset_errors(self):
+        "reset errors"
         self.errors[:] = []

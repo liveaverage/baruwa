@@ -31,9 +31,10 @@ class TestSMTPServer(Task):
     name = 'test-server'
     serializer = 'json'
 
-    def run(self, host, port, from_addr, to_addr, count=None, **kwargs):
+    def run(self, host, port, from_addr, 
+        to_addr, host_id, count=None, **kwargs):
         "run"
-        result = {}
+        result = {'errors': {}, 'host': host_id}
         logger = self.get_logger(**kwargs)
         logger.info(_("Starting connection tests to: %(host)s") % {
         'host': host})
@@ -42,12 +43,12 @@ class TestSMTPServer(Task):
             result['ping'] = True
         else:
             result['ping'] = False
-            result['errors'].append({'ping': ' '.join(server.errors)})
+            result['errors']['ping'] = ' '.join(server.errors)
             server.reset_errors()
         if server.smtp_test():
             result['smtp'] = True
         else:
             result['smtp'] = False
-            result['errors'].append({'smtp': ' '.join(server.errors)})
+            result['errors']['smtp'] = ' '.join(server.errors)
         return result
         
