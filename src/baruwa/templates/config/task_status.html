@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block headers %}
+<meta http-equiv="refresh" content="5" />
+{% endblock headers %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url settings-index %}">{% trans "Domains" %}</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+Delivery server Tests jobid: {{taskid}}
+{% endblock title %}
+{% block heading %}
+Delivery server Tests jobid: {{taskid}}
+{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+	<div class="spanrow">{% trans "Running server tests" %}</div>
+</div>
+<div class="LightBlue_div">
+	<div class="spanrow">
+		<img src="{{MEDIA_URL}}imgs/ajax-pager.gif" alt="" /> 
+		{% trans "The request is being processed. Current status: " %}{{status}}
+	</div>
+</div>
+{% endif %}
+{% endblock content %}

@@ -276,7 +276,7 @@ def delete_address(request, address_id, template_name='accounts/delete_address.h
     address = get_object_or_404(UserAddresses, pk=address_id)
     if request.method == 'POST':
         addr_id = address.user.id
-        msg = _('The address %(addr)s has been updated') % {'addr': address.address}
+        msg = _('The address %(addr)s has been deleted') % {'addr': address.address}
         address.delete()
         if request.is_ajax():
             response = anyjson.dumps({'success': True, 'html': msg})
