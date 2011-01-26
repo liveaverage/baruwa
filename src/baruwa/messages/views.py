@@ -39,7 +39,7 @@ from baruwa.utils.process_mail import release_mail, remote_release
 from baruwa.utils.process_mail import remote_attachment_download, \
 remote_preview, remote_process, sa_learn
 from baruwa.utils.misc import jsonify_msg_list, apply_filter, jsonify_status
-from baruwa.utils.mail import EmailParser
+from baruwa.utils.mail.message import EmailParser
 from baruwa.utils.context_processors import status
 
 @login_required

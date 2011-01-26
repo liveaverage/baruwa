@@ -27,15 +27,15 @@ var ax_error = false;
 {% endblock heading %}
 {% block content %}
     <div class="Grid_heading">
-        {% load generic_sorter %}
+        {% load lists_sorter %}
         <div class="Lists_grid_hash">
-        {% generic_sorter "id" "#" %}
+        {% lists_sorter "id" "#" %}
         </div>
         <div class="Lists_grid_To">
-        {% generic_sorter "to_address" "To" %}
+        {% lists_sorter "to_address" "To" %}
         </div>
         <div class="Lists_grid_From">
-        {% generic_sorter "from_address" "From" %}
+        {% lists_sorter "from_address" "From" %}
         </div>
         <div class="Lists_grid_Action">{% trans "Action" %}</div>
     </div>

@@ -53,3 +53,12 @@ IPV4_NET_OR_RANGE_RE = re.compile(
     r'^[.:\da-f]+\s*-\s*[.:\da-f]+$|'
     r'^([.:\da-f]+)\s*\/\s*([.:\da-f]+)$'
 )
+
+RBL_RE = re.compile(r'^spam\,\s+(.+),\s+SpamAssassin \(')
+
+SARULE_RE = re.compile(r'((\w+)(\s)(\-?\d{1,2}\.\d{1,2}))')
+
+LEARN_RE = re.compile(r'autolearn=((\w+\s\w+)|(\w+))')
+
+IP_RE = re.compile(r'(([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3}))')
+

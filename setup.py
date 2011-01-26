@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-import sys, os, shutil
+import os
 
 
 def read(fname):

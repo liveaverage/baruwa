@@ -1,6 +1,6 @@
 # 
 # Baruwa - Web 2.0 MailScanner front-end.
-# Copyright (C) 2010  Andrew Colin Kissa <andrew@topdog.za.net>
+# Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,35 +24,21 @@ from django.core.urlresolvers import reverse
 
 register = template.Library()
 
-def sorter(context, field_name, field_text):
-    "sort the fields"
+def status_sorter(context, field_name, field_text):
+    "generic sorter"
     rlink = None
     direc = 'dsc'
-    if context['quarantine_type']:
-        link = reverse('quarantine-messages-list', args=[context['view_type'], 
-        context['quarantine_type'], context['direction'], field_name])
-    else:
-        link = reverse('all-messages-list', args=[context['view_type'], 
-        context['direction'], field_name])
+    link = '/%s/%s/' % (context['app'], field_name)
     if field_name == context['order_by']:
         if context['direction'] == 'dsc':
             direc = 'asc'
         else:
             direc = 'dsc'
-        if context['quarantine_type']:
-            rlink = reverse('quarantine-messages-list', 
-            args=[context['view_type'], context['quarantine_type'], 
-            direc, context['order_by']])
-        else:
-            rlink = reverse('all-messages-list', args=[context['view_type'], 
-            direc, context['order_by']])
-
-    return { 
-        'field_text': field_text,
-        'link': link,
-        'rlink': rlink,
-        'dir': direc,
-    }
-
-register.inclusion_tag('tags/sorter.html', takes_context=True)(sorter)
-
+        rlink = '/%s/%s/%s/' % (context['app'], direc, context['order_by'])
+    return {
+            'field_text': field_text,
+            'link': link, 'rlink': rlink,
+            'dir': direc
+            }
+            
+register.inclusion_tag('tags/sorter.html', takes_context=True)(status_sorter)

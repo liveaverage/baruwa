@@ -29,6 +29,7 @@ from django.utils.translation import ugettext_lazy as _
 from baruwa.messages.models import SaRules
 from baruwa.utils.process_mail import clean_regex
 from baruwa.utils.misc import get_config_option
+from baruwa.utils.regex import RBL_RE, SARULE_RE, IP_RE, LEARN_RE
 
 register = template.Library()
 
@@ -119,9 +120,7 @@ def tds_email_list(value):
 def tds_geoip(value):
     "return country flag"
     tag = ""
-    match = re.match(
-        r'(([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3}))',
-        value)
+    match = IP_RE.match(value)
     if match:
         gip = GeoIP.new(GeoIP.GEOIP_MEMORY_CACHE)
         try:
@@ -140,9 +139,7 @@ def tds_geoip(value):
 def tds_hostname(value):
     "display hostname"
     hostname = ''
-    match = re.match(
-        r'(([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3}))',
-        value)
+    match = IP_RE.match(value)
     if match:
         if match.groups()[0] == '127.0.0.1':
             hostname = 'localhost'
@@ -157,7 +154,7 @@ def tds_hostname(value):
 @stringfilter
 def tds_is_learned(value, autoescape=None):
     "indicate learning status"
-    match = re.search(r'autolearn=((\w+\s\w+)|(\w+))', value)
+    match = LEARN_RE.search(value)
     if match:
         if autoescape:
             esc = conditional_escape
@@ -175,10 +172,7 @@ tds_is_learned.needs_autoescape = True
 def tds_rbl_name(value, autoescape=None):
     "get the rbl name"
     rbl = ''
-    match = re.search(
-        r'^spam\,\s((?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}'
-        r'[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}\.?)',
-        value)
+    match = RBL_RE.search(value)
     if match:
         if autoescape:
             esc = conditional_escape
@@ -198,7 +192,7 @@ def tds_get_rules(rules):
 
     for rule in rules:
         rule = rule.strip()
-        match = re.match(r'((\w+)(\s)(\-?\d{1,2}\.\d{1,2}))', rule)
+        match = SARULE_RE.match(rule)
         if match:
             rule = match.groups()[1]
             try:
