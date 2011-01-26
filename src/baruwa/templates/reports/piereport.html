@@ -44,7 +44,7 @@
                 {% if item.to_domain %}{{item.to_domain}}{%endif%}
             </div>
             <div class="row_count">{{ item.num_count }}</div>
-            <div class="row_volume">{{ item.size|filesizeformat }}</div>
+            <div class="row_volume">{{ item.total_size|filesizeformat }}</div>
         </div>
         {% endfor %}
     </div>
