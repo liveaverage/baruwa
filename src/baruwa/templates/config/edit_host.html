@@ -11,9 +11,7 @@
 <form action="" method="post">
 <div class="Grid_heading">
     <div class="Bayes_heading">
-		{% blocktrans with forms.errors as forms_errors %}
-			Edit Mail Server {{forms.errors}}
-		{% endblocktrans %}
+		{% trans "Edit Mail Server" %}
 	</div>
 </div>
 {% for hidden in form.hidden_fields %}
