@@ -395,7 +395,9 @@ def search(request):
                                     id=request.REQUEST['message_id'])
         return HttpResponseRedirect(reverse('message-detail',
             args=[message_details.id]))
-    return HttpResponseRedirect(reverse('main-index'))
+    msg = _("No messages found with that message id")
+    request.user.message_set.create(message=msg)
+    return HttpResponseRedirect(reverse('main-messages-index'))
 
 
 def auto_release(request, message_uuid, template='messages/release.html'):
