@@ -58,7 +58,7 @@ def test_smtp_server(server, port, test_address):
         result = conn.docmd('RCPT TO:', test_address)
         if conn:
             conn.quit()
-        if result[0] == 250:
+        if result[0] in range(200, 299):
             return True
         else:
             return False
@@ -337,11 +337,11 @@ class TestDeliveryServers(object):
             result = self.conn.docmd('RCPT TO:', self.test_addr)
             if self.conn:
                 self.conn.quit()
-            if result[0] == 250:
+            if result[0] in range(200, 299):
                 return True
             else:
                 self.errors.append(
-                _('Expected response code 250 got %(code)s') % {
+                _('Expected response code 2xx got %(code)s') % {
                 'code': str(result[0])})
                 return False
         except socket.error:
