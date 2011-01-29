@@ -4,6 +4,21 @@
 Baruwa on Ubuntu/Debian
 =======================
 
+Install & Configure RabbitMQ
+============================
+
+Install RabbitMQ::
+
+	# yum install rabbitmq-server
+
+Create a user and virtual host for baruwa::
+
+    # rabbitmqctl add_user baruwa your_password
+    # rabbitmqctl add_vhost baruwa
+    # rabbitmqctl set_permissions -p baruwa baruwa ".*" ".*" ".*"
+
+See the RabbitMQ `Admin Guide`_ for more information.
+
 Baruwa deb install
 ==================
 
@@ -87,3 +102,5 @@ Edit the settings.py file and make configuration changes to suit your site.::
 	# vi $baruwa_path/baruwa/settings.py
 
 Thats it point your browser to the apache virtualhost url.
+
+.. _`Admin Guide`: http://www.rabbitmq.com/admin-guide.html

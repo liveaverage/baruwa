@@ -10,6 +10,9 @@ from source or rebuild the source rpm to support your web server.
 
 Baruwa rpm install
 ==================
+Install RabbitMQ::
+
+	# yum install rabbitmq-server
 
 Install the dojo rpm from http://topdog-software.com/oss/dojo/::
 
@@ -29,6 +32,17 @@ Create the database user::
 
     mysql> GRANT ALL ON baruwa.* TO baruwa@localhost IDENTIFIED BY '<password>';
     mysql> flush privileges;
+
+Configure RabbitMQ
+==================
+
+Create a user and virtual host for baruwa::
+
+    # rabbitmqctl add_user baruwa your_password
+    # rabbitmqctl add_vhost baruwa
+    # rabbitmqctl set_permissions -p baruwa baruwa ".*" ".*" ".*"
+
+See the RabbitMQ `Admin Guide`_ for more information.
 
 Configure MailScanner
 =====================
@@ -146,7 +160,16 @@ And set the mysql database details::
 
 Create the baruwa admin user and populate the database::
 
-	# $baruwa_path/baruwa/manage.py syncdb       
+	# $baruwa_path/baruwa/manage.py syncdb
+
+Set the rabbitMQ settings::
+
+	CELERY_CONCURRENCY = 20
+	BROKER_HOST = "localhost"
+	BROKER_PORT = 5672
+	BROKER_USER = "baruwa"
+	BROKER_PASSWORD = "your_password"
+	BROKER_VHOST = "baruwa"
 
 Edit the settings.py file and make configuration changes to suit your site.::
 
@@ -167,3 +190,5 @@ Make sure mod_wsgi is enabled, uncomment the following line in
     LoadModule wsgi_module modules/mod_wsgi.so
     
 Restart apache and point your browser to the hostname url.
+
+.. _`Admin Guide`: http://www.rabbitmq.com/admin-guide.html
