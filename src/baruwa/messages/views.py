@@ -20,16 +20,14 @@
 #
 
 import re
-import urllib
+import base64
 import anyjson
 
-from httplib import HTTPException
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden, HttpResponse, Http404
+from django.http import HttpResponseForbidden, HttpResponse
 from django.http import HttpResponseRedirect
-from django.db import IntegrityError
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
@@ -37,13 +35,11 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from celery.backends import default_backend
 from baruwa.messages.models import Message, Release, Archive
-from baruwa.messages.tasks import ProcessQuarantine
+from baruwa.messages.tasks import ProcessQuarantine, PreviewMessageTask,\
+ ReleaseMessage
 from baruwa.messages.forms import QuarantineProcessForm, BulkQuarantineProcessForm
-from baruwa.utils.misc import host_is_local
 from baruwa.utils.misc import jsonify_msg_list, apply_filter, jsonify_status
-from baruwa.utils.mail.message import EmailParser, ProcessQuarantinedMessage, search_quarantine
 from baruwa.utils.context_processors import status
-from baruwa.utils.http import ProcessRemote
 
 
 @login_required
@@ -167,8 +163,8 @@ def detail(request, message_id, archive=False):
         obj = Message
     message_details = get_object_or_404(obj, id=message_id)
     if not message_details.can_access(request):
-        return HttpResponseForbidden(
-            _('You are not authorized to access this page'))
+        return HttpResponseForbidden(_('You are not authorized'
+        ' to access this page'))
 
     error_list = ''
     quarantine_form = QuarantineProcessForm()
@@ -177,87 +173,54 @@ def detail(request, message_id, archive=False):
 
     if request.method == 'POST':
         quarantine_form = QuarantineProcessForm(request.POST)
-        success = True
         if quarantine_form.is_valid():
-            if not host_is_local(message_details.hostname):
-                params = urllib.urlencode(request.POST)
-                rurl = reverse('message-detail', args=[message_id])
-                cookie = request.META['HTTP_COOKIE']
-                hostname = message_details.hostname
-                response = {'success': False}
-                try:
-                    remote_request = ProcessRemote(hostname, rurl, cookie, params)
-                    remote_request.post()
-                    if remote_request.response.status == 200:
-                        response = remote_request.response.read()
-                except HTTPException:
-                    pass
-
-                if request.is_ajax():
-                    return HttpResponse(response,
-                        content_type='application/javascript; charset=utf-8')
-                try:
-                    resp = anyjson.loads(response)
-                    if resp['success']:
-                        success = True
-                    else:
-                        success = False
-                    error_list = resp['response']
-                except ValueError:
-                    success = False
-                    error_list = _('Error: Empty server response')
-            else:
-                try:
-                    process = ProcessQuarantinedMessage(message_id,
-                                message_details.date)
-                except AssertionError, exception:
-                    html = str(exception)
-                    success = False
-                if quarantine_form.cleaned_data['release']:
+            form_data = quarantine_form.cleaned_data
+            form_data['message_id'] = [form_data['message_id']]
+            task = ProcessQuarantine.delay(form_data)
+            html = []
+            task.wait()
+            result = task.result[0]
+            if task.status == 'SUCCESS':
+                success = True
+                if form_data['release']:
                     #release
-                    if quarantine_form.cleaned_data['use_alt']:
-                        to_addr = quarantine_form.cleaned_data[
-                        'altrecipients']
+                    if form_data['use_alt']:
+                        to_addr = form_data['altrecipients']
                     else:
                         to_addr = message_details.to_address
                     to_addr = to_addr.split(',')
                     error_msg = ''
-                    if not process.release(message_details.from_address,
-                        to_addr):
+                    if not result['release']:
                         success = False
-                        error_msg = ' '.join(process.errors)
+                        error_msg = dict(result['errors'])['release']
                     template = 'messages/released.html'
-                    html = render_to_string(template, 
+                    html.append(render_to_string(template, 
                         {'id': message_details.id, 'addrs': to_addr, 
-                        'success': success, 'error_msg': error_msg})
-                    process.reset_errors()
-                if quarantine_form.cleaned_data['learn']:
+                        'success': success, 'error_msg': error_msg}))
+                if form_data['learn']:
                     #salean
+                    error_msg = ''
                     template = "messages/salearn.html"
-                    if not process.learn(
-                        quarantine_form.cleaned_data['salearn_as']):
+                    if not result['learn']:
                         success = False
-                    html = render_to_string(template,
-                        {'id': message_details.id, 'msg': process.output, 
-                        'success': success})
-                    process.reset_errors()
-                if quarantine_form.cleaned_data['todelete']:
+                        error_msg = dict(result['errors'])['learn']
+                    html.append(render_to_string(template,
+                        {'id': message_details.id, 'msg': error_msg, 
+                        'success': success}))
+                if form_data['todelete']:
                     #delete
                     error_msg = ''
-                    try:
-                        if process.delete():
-                            message_details.quarantined = 0
-                            message_details.save()
-                        else:
-                            error_msg = ' '.join(process.errors)
-                            success = False
-                    except IntegrityError:
-                        pass
+                    if not result['delete']:
+                        success = False
+                        error_msg = dict(result['errors'])['delete']
                     template = "messages/delete.html"
-                    html = render_to_string(template, 
+                    html.append(render_to_string(template, 
                     {'id': message_details.id, 'success': success,
-                    'error_msg': error_msg})
-                    process.reset_errors()
+                    'error_msg': error_msg}))
+                html = '<br />'.join(html)
+            else:
+                success = False
+                html = _('Processing the request failed')
         else:
             error_list = quarantine_form.errors.values()[0]
             error_list = error_list[0]
@@ -266,7 +229,7 @@ def detail(request, message_id, archive=False):
         if request.is_ajax():
             response = anyjson.dumps({'success': success, 'html': html})
             return HttpResponse(response,
-                content_type='application/javascript; charset=utf-8')
+            content_type='application/javascript; charset=utf-8')
 
     quarantine_form.fields['altrecipients'].widget.attrs['size'] = '55'
     return render_to_response('messages/detail.html', locals(),
@@ -288,103 +251,31 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
     if not message_details.can_access(request):
         return HttpResponseForbidden(
             _('You are not authorized to access this page'))
-
-    if host_is_local(message_details.hostname):
-        file_name = search_quarantine(message_details.date, message_id)
-        if not file_name is None:
-            try:
-                import email
-                fip = open(file_name, 'r')
-                msg = email.message_from_file(fip)
-                fip.close()
-                email_parser = EmailParser()
-                if is_attach:
-                    message = email_parser.get_attachment(msg, attachment_id)
-                    if message:
-                        import base64
-                        attachment_data = message.getvalue()
-                        mimetype = message.content_type
-                        if request.is_ajax():
-                            json = anyjson.dumps({'success': True,
-                            'attachment': base64.encodestring(attachment_data),
-                            'mimetype': mimetype, 'name': message.name})
-                            response = HttpResponse(json,
-                            content_type='application/javascript; charset=utf-8')
-                            message.close()
-                            return response
-                        response = HttpResponse(
-                            attachment_data, mimetype=mimetype)
-                        response['Content-Disposition'] = (
-                            'attachment; filename=%s' % message.name)
-                        message.close()
-                        return response
-                    else:
-                        raise Http404
-                else:
-                    message = email_parser.parse_msg(msg)
-                if request.is_ajax():
-                    response = anyjson.dumps({'message': message,
-                        'message_id': message_details.id})
-                    return HttpResponse(response,
-                        content_type='application/javascript; charset=utf-8')
-                return render_to_response('messages/preview.html', 
-                    {'message': message, 'message_id': message_details.id},
-                 context_instance=RequestContext(request))
-            except:
-                raise Http404
-        else:
-            raise Http404
+    if is_attach:
+        preview_task = PreviewMessageTask.delay(message_id, 
+        str(message_details.date), attachment_id)
+        preview_task.wait()
+        if preview_task.result:
+            result = preview_task.result
+            response = HttpResponse(base64.decodestring(result['attachment']),
+            mimetype=result['mimetype'])
+            response['Content-Disposition'] = (
+            'attachment; filename=%s' % result['name'])
+            return response
+        msg = _("The requested attachment could not be downloaded")
     else:
-        #remote
-        cookie = request.META['HTTP_COOKIE']
-        hostname = message_details.hostname
-        if is_attach:
-            if archive:
-                rurl = reverse('archive-download-attachment', 
-                        args=[message_id, attachment_id])
-            else:
-                rurl = reverse('download-attachment', 
-                        args=[message_id, attachment_id])
-            try:
-                remote_request = ProcessRemote(hostname, rurl, cookie)
-                remote_request.get()
-                if remote_request.response.status == 200:
-                    import base64
-                    attach = anyjson.loads(remote_request.response.read())
-                    if attach['success']:
-                        attachment_data = base64.decodestring(attach['attachment'])
-                        mimetype = attach['mimetype']
-                        response = HttpResponse(attachment_data, mimetype=mimetype)
-                        response['Content-Disposition'] = (
-                            'attachment; filename=%s' % attach['name'])
-                        return response
-            except (HTTPException, ValueError):
-                pass
-            raise Http404
-        else:
-            if archive:
-                rurl = reverse('archive-preview-message', args=[message_id])
-            else:
-                rurl = reverse('preview-message', args=[message_id])
-            try:
-                remote_request = ProcessRemote(hostname, rurl, cookie)
-                remote_request.get()
-                if remote_request.response.status == 200:
-                    items = anyjson.loads(remote_request.response.read())
-                    message = items['message']
-
-                    if request.is_ajax():
-                        response = anyjson.dumps({'message': message,
-                            'message_id': message_id})
-                        return HttpResponse(response,
-                            content_type='application/javascript; charset=utf-8')
-                    else:
-                        return render_to_response('messages/preview.html',
-                            {'message': message, 'message_id': message_id},
-                            context_instance=RequestContext(request))
-            except (HTTPException, ValueError):
-                pass
-            raise Http404
+        preview_task = PreviewMessageTask.delay(message_id,
+        str(message_details.date))
+        preview_task.wait()
+        if preview_task.result:
+            result = preview_task.result
+            return render_to_response('messages/preview.html',
+            {'message': result, 'message_id': message_id},
+            context_instance=RequestContext(request))
+        msg = _("The requested message could not be previewed")
+    request.user.message_set.create(message=msg)
+    return HttpResponseRedirect(reverse('message-detail',
+    args=[message_id]))
 
 
 @login_required
@@ -402,59 +293,20 @@ def search(request):
 
 def auto_release(request, message_uuid, template='messages/release.html'):
     "Releases message from the quarantine without need to login"
-
-    success = False
-    error_msg = ''
-
     release_record = get_object_or_404(Release, uuid=message_uuid, released=0)
     message_details = get_object_or_404(Message, id=release_record.message_id)
-
-    if not host_is_local(message_details.hostname):
-        rurl = reverse('auto-release', args=[release_record.uuid])
-        hostname = message_details.hostname
-        response = {'success': False}
-        try:
-            remote_release = ProcessRemote(hostname, rurl)
-            remote_release.get()
-            response = remote_release.response.read()
-        except HTTPException:
-            pass
-
-        if request.is_ajax():
-            return HttpResponse(response,
-                content_type='application/javascript; charset=utf-8')
-        try:
-            json_response = anyjson.loads(response)
-            if json_response['success']:
-                success = True
-                release_record.released = 1
-                release_record.save()
-        except ValueError:
-            pass
+    task = ReleaseMessage.delay(message_details.id, str(message_details.date),
+    message_details.from_address, message_details.to_address.split(','))
+    task.wait()
+    if task.status == 'SUCCESS':
+        result = task.result
     else:
-        process = ProcessQuarantinedMessage(release_record.message_id, 
-                    message_details.date)
-        if process.release(message_details.from_address, 
-            message_details.to_address.split(',')):
-            success = True
-            release_record.released = 1
-            release_record.save()
-        else:
-            error_msg = ' '.join(process.errors)
-
-    html = render_to_string('messages/released.html',
-        {'id': message_details.id, 'addrs': message_details.to_address,
-        'success': success, 'error_msg': error_msg})
-
-    if request.is_ajax():
-        response = anyjson.dumps({'success': success, 'html': html})
-        return HttpResponse(response,
-            content_type='application/javascript; charset=utf-8')
+        result = {'success': False, 'error': 'Processing of message failed'}
     return render_to_response(template,
-        {'message_id': release_record.message_id,
-        'release_address': message_details.to_address, 'success': success,
-        'error_msg': error_msg},
-        context_instance=RequestContext(request))
+    {'message_id': release_record.message_id,
+    'release_address': message_details.to_address,
+    'success': result['success'], 'error_msg': result['error']},
+    context_instance=RequestContext(request))
 
 
 @login_required

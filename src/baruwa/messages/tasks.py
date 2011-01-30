@@ -24,7 +24,29 @@
 from celery.task import Task
 from django.utils.translation import ugettext as _
 from baruwa.messages.models import Message
-from baruwa.utils.mail.message import ProcessQuarantinedMessage
+from baruwa.utils.mail.message import ProcessQuarantinedMessage, PreviewMessage
+
+
+class ReleaseMessage(Task):
+    "Release message"
+    name = 'release-message'
+    serializer = 'json'
+
+    def run(self, messageid, date, from_addr, to_addr, **kwargs):
+        "run"
+        logger = self.get_logger(**kwargs)
+        try:
+            processor = ProcessQuarantinedMessage(messageid, date)
+        except AssertionError, error:
+            return {'success': False, 'error': error}
+        if processor.release(from_addr, to_addr):
+            logger.info(_("Message: %(id)s released to: %(addrs)s"),
+            {'id': messageid, 'addrs': ','.join(to_addr)})
+            return {'success': True, 'error': ''}
+        else:
+            logger.info(_("Message: %(id)s release failed"),
+            {'id': messageid})
+            return {'success': False, 'error': ' '.join(processor.errors)}
 
 
 class ProcessQuarantine(Task):
@@ -109,3 +131,26 @@ class ProcessQuarantine(Task):
                     logger.info(_("Message: %(msgid)s deleted from quarantine"))
             results.append(result)
         return results
+
+
+class PreviewMessageTask(Task):
+    "Preview message"
+    name = 'preview-message'
+    serializer = 'json'
+
+    def run(self, messageid, date, attachid=None, **kwargs):
+        "run"
+        logger = self.get_logger(**kwargs)
+        try:
+            previewer = PreviewMessage(messageid, date)
+        except AssertionError, error:
+            logger.info(_("Accessing message: %(id)s, Failed: %(error)s"),
+            {'id': messageid, 'error': error})
+            return None
+        if attachid:
+            logger.info(_("Download attachment: %(attachid)s of message: %(id)s "
+            "by user: %(user)s"), {'id': '', 'attachid': '', 'user': ''})
+            return previewer.attachment(attachid)
+        logger.info(_("Preview of message: %(id)s requested by user: %(user)s"),
+        {'id': '', 'user': ''})
+        return previewer.preview()

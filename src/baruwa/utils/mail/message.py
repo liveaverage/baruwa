@@ -22,10 +22,12 @@
 "Baruwa email message related modules"
 import os
 import re
+import email
+import base64
 import codecs
-import smtplib
 import shutil
 import socket
+import smtplib
 
 from email.Header import decode_header
 from subprocess import Popen, PIPE
@@ -301,6 +303,38 @@ class ProcessQuarantinedMessage(object):
     def reset_errors(self):
         "Resets errors"
         self.errors[:] = []
+
+
+class PreviewMessage(object):
+    """Preview message"""
+    def __init__(self, messageid, date):
+        "init"
+        self.messageid = messageid
+        self.date = date
+        path, isdir = search_quarantine(date, messageid)
+        assert path, _("Message not found in the quarantine")
+        self.path = path
+        self.isdir = isdir
+        self.parser = EmailParser()
+        fip = codecs.open(self.path, 'r', 'utf-8', 'replace')
+        self.msg = email.message_from_file(fip)
+        fip.close()
+
+    def preview(self):
+        "Return message"
+        return self.parser.parse_msg(self.msg)
+
+    def attachment(self, attachmentid):
+        "Return attachment"
+        attachment = self.parser.get_attachment(self.msg, attachmentid)
+        if attachment:
+            msgdict = {}
+            msgdict['mimtype'] = attachment.content_type
+            msgdict['attachment'] = base64.encodestring(attachment.getvalue())
+            msgdict['name'] = attachment.name
+            attachment.close()
+            return msgdict
+        return None
 
 
 class TestDeliveryServers(object):
