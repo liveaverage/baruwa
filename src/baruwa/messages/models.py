@@ -348,7 +348,7 @@ class MessageStatsManager(models.Manager):
          virusinfected>0 THEN 1 ELSE 0 END) AS virii, SUM(CASE WHEN
           nameinfected>0 AND virusinfected=0 AND otherinfected=0
         AND spam=0 AND highspam=0 THEN 1 ELSE 0 END) AS infected,
-        SUM(CASE WHEN otherinfected>0 AND nameinfected=0 AND
+        SUM(CASE WHEN otherinfected>0 OR nameinfected>0 AND
         virusinfected=0 AND spam=0 AND highspam=0 THEN 1 ELSE 0 END)
         AS otherinfected, SUM(CASE WHEN spam>0 AND virusinfected=0
         AND nameinfected=0 AND otherinfected=0 AND highspam=0 THEN

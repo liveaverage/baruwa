@@ -107,7 +107,7 @@ class ProcessQuarantine(Task):
                     error = _('The sender address is empty')
                     result['errors'].append(('release', error))
                     logger.info(_("Message: %(msgid)s release failed with "
-                    "error: %(error)s"), {'error': error})
+                    "error: %(error)s"), {'msgid': msgid, 'error': error})
             if job['learn']:
                 result['learn'] = processor.learn(job['salearn_as'])
                 if not result['learn']:
@@ -115,7 +115,7 @@ class ProcessQuarantine(Task):
                     result['errors'].append(('learn', error))
                     processor.reset_errors()
                     logger.info(_("Message: %(msgid)s learning failed with "
-                    "error: %(error)s"), {'error': error})
+                    "error: %(error)s"), {'msgid': msgid, 'error': error})
                 else:
                     logger.info(_("Message: %(msgid)s learnt as %(learn)s"),
                     {'msgid': msgid, 'learn': job['salearn_as']})
@@ -126,9 +126,10 @@ class ProcessQuarantine(Task):
                     result['errors'].append(('delete', error))
                     processor.reset_errors()
                     logger.info(_("Message: %(msgid)s deleting failed with "
-                    "error: %(error)s"), {'error': error})
+                    "error: %(error)s"), {'msgid': msgid, 'error': error})
                 else:
-                    logger.info(_("Message: %(msgid)s deleted from quarantine"))
+                    logger.info(_("Message: %(msgid)s deleted from quarantine"),
+                    {'msgid': msgid})
             results.append(result)
         return results
 
@@ -149,8 +150,8 @@ class PreviewMessageTask(Task):
             return None
         if attachid:
             logger.info(_("Download attachment: %(attachid)s of message: %(id)s "
-            "by user: %(user)s"), {'id': '', 'attachid': '', 'user': ''})
+            "by user: %(user)s"), {'id': messageid, 'attachid': '', 'user': ''})
             return previewer.attachment(attachid)
         logger.info(_("Preview of message: %(id)s requested by user: %(user)s"),
-        {'id': '', 'user': ''})
+        {'id': messageid, 'user': ''})
         return previewer.preview()
