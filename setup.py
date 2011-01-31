@@ -6,7 +6,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='baruwa',
-      version="1.0.1",
+      version="1.1.0",
       description="Ajax enabled MailScanner web frontend",
       long_description=read('README'),
       keywords='MailScanner Email Filters Quarantine Spam',
