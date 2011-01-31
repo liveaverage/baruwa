@@ -329,7 +329,7 @@ class PreviewMessage(object):
         attachment = self.parser.get_attachment(self.msg, attachmentid)
         if attachment:
             msgdict = {}
-            msgdict['mimtype'] = attachment.content_type
+            msgdict['mimetype'] = attachment.content_type
             msgdict['attachment'] = base64.encodestring(attachment.getvalue())
             msgdict['name'] = attachment.name
             attachment.close()
