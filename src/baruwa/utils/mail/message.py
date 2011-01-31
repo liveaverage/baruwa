@@ -104,7 +104,7 @@ class EmailParser(object):
         headers['to'] = self.get_header(msg['To'])
         headers['from'] = self.get_header(msg['From'])
         headers['date'] = self.get_header(msg['Date'])
-        #headers['message-id'] = self.get_header(msg['Message-ID'])
+        headers['message-id'] = self.get_header(msg['Message-ID'])
         return headers
 
     def get_header(self, header_text, default="ascii"):
@@ -316,7 +316,7 @@ class PreviewMessage(object):
         self.path = path
         self.isdir = isdir
         self.parser = EmailParser()
-        fip = codecs.open(self.path, 'r', 'utf-8', 'replace')
+        fip = open(self.path, 'r')
         self.msg = email.message_from_file(fip)
         fip.close()
 
@@ -403,7 +403,6 @@ class TestDeliveryServers(object):
         "ping host"
         if count is None:
             count = 5
-        #ping_cmd = "ping -c %d %s" % (count, self.host)
         ping_cmd = ['ping', '-c', str(count), self.host]
         print ping_cmd
         pipe = Popen(ping_cmd, stdout=PIPE, stderr=PIPE)
