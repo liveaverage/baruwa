@@ -291,7 +291,10 @@ class Command(BaseCommand):
             parts = [logo_table]
             parts.append(Spacer(1, 20))
             parts.extend(charts)
-            doc.build(parts)
+            try:
+                doc.build(parts)
+            except IndexError:
+                pass
             return pdf
 
         def gen_email(pdf, user, owner):
