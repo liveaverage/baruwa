@@ -28,7 +28,7 @@ from baruwa.utils.mail.message import TestDeliveryServers
 
 class TestSMTPServer(Task):
     "Tests a delivery server"
-    name = 'test-server'
+    name = 'test-smtp-server'
     serializer = 'json'
 
     def run(self, host, port, from_addr, 
