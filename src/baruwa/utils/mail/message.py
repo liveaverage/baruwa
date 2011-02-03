@@ -112,14 +112,9 @@ class EmailParser(object):
         if not header_text:
             return header_text
 
-        header_sections = []
-        try:
-            headers = decode_header(header_text)
-            header_sections = [unicode(text, charset or default)
-                                for text, charset in headers]
-        except UnicodeEncodeError:
-            pass
-        return u"".join(header_sections)
+        sections = decode_header(header_text)
+        return ' '.join(section.decode(enc or default, 'replace')
+        for section, enc in sections)
 
     def parse_msg(self, msg):
         "Parse a message and return a dict"
@@ -247,8 +242,13 @@ class ProcessQuarantinedMessage(object):
         "Release message from quarantine"
         try:
             messagefile = open(self.path, 'r')
-            message = messagefile.read()
+            message = messagefile.readlines()
             messagefile.close()
+            for index, line in enumerate(message):
+                if line.endswith(' ret-id none;\n'):
+                    message[index] = line.replace(' ret-id none;', '')
+                    break
+            message = ''.join(message)
 
             smtp = smtplib.SMTP(self.host)
             if settings.DEBUG:
