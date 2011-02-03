@@ -1,0 +1,117 @@
+.. _integration:
+
+===============
+MTA Integration
+===============
+
+Baruwa can be integrated with the MTA to enable configuring of some
+MTA features from with in Baruwa. Postfix and Exim are the only MTA's
+supported at the moment as Sendmail lacks native SQL support.
+	
+Postfix
+=======
+
+At the moment the following features can be integrated
+
++ Relay domains
++ Transports
++ Relay recipient maps
++ Global whitelists
+
+Relay domains
+-------------
+
+In your postfix main.cf file set::
+
+	relay_domains = mysql:/etc/postfix/mysql-relay_domains.cf
+	
+Then create the /etc/postfix/mysql-relay_domains.cf file with the following
+content::
+
+	user = baruwa
+	password = password
+	dbname = baruwa
+	query = SELECT address FROM user_addresses WHERE \
+	 address='%s' AND enabled=1 AND address_type=1;
+	hosts = 127.0.0.1
+
+Transports
+----------
+
+In your postfix main.cf file set::
+
+	transport_maps = mysql:/etc/postfix/mysql-transports.cf
+
+Then create the /etc/postfix/mysql-transports.cf file with the following
+content::
+
+	user = baruwa
+	password = password
+	dbname = baruwa
+	query = SELECT CONCAT('smtp:[', mail_hosts.address, ']:', port) \
+	FROM mail_hosts, user_addresses WHERE user_addresses.address = '%s' AND \
+	user_addresses.id = mail_hosts.useraddress_id;
+	hosts = 127.0.0.1
+
+Relay recipient maps
+--------------------
+
+In your postfix main.cf file set::
+
+	relay_recipient_maps = mysql:/etc/postfix/mysql-relay_recipients.cf
+
+Then create the /etc/postfix/mysql-relay_recipients.cf file with the 
+following content::
+
+	user = baruwa
+	password = password
+	dbname = baruwa
+	query = SELECT 1 FROM user_addresses WHERE address='%s' AND address_type=2 \
+	UNION SELECT 1 FROM auth_user WHERE username = '%s' OR email = '%s' \
+	hosts = 127.0.0.1
+	
+Global Whitelist
+----------------
+
+In your postfix main.cf file set::
+
+	whitelist_policy = check_client_access mysql:/etc/postfix/mysql-global_lists.cf
+	smtpd_recipient_restrictions = whitelist_policy
+
+Then create the /etc/postfix/mysql-global_lists.cf with the following
+content::
+
+	user = baruwa
+	password = password
+	dbname = baruwa
+	query = SELECT CONCAT('PERMIT') FROM lists WHERE from_address='%s' AND list_type=1 \
+	UNION SELECT CONCAT('REJECT') FROM lists WHERE from_address='%s' AND list_type=2;
+	hosts = 127.0.0.1
+
+Exim
+====
+
+At the moment the following features can be integrated.
+
++ Route Data
++ Relay domains
+	
+Route Data
+----------
+
+You can use the following route_data option in your routers used to deliver the cleaned
+mail::
+
+	route_data = ${lookup mysql {SELECT GROUP_CONCAT(CONCAT(mail_hosts.address,\
+	                '::',mail_hosts.port) SEPARATOR ':') a FROM mail_hosts, \
+	                user_addresses WHERE useraddress_id=user_addresses.id AND \
+	                user_addresses.address = '${quote_mysql:$domain}' AND \
+	                mail_hosts.enabled = 1 AND user_addresses.enabled = 1}}
+
+Relay domains
+-------------
+
+Use the following domain list in your acl's::
+
+	domainlist relay_sql_domains = mysql;SELECT address FROM user_addresses WHERE \
+	address_type=1 AND enabled=1 AND address='${quote_mysql:$domain}';

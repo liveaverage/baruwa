@@ -29,13 +29,14 @@ MySQL for storage, it is released under the GPLv2 and is available for free down
     install_centos.txt 
     install_fedora.txt 
     install_debian.txt
-    migration.txt
     authentication.txt
+    integration.txt
     distributed_setup.txt
     batteries_included.txt
     users.txt
     support.txt
     contribute.txt
     upgrade.txt
+    migration.txt
     old.txt
 

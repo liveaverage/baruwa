@@ -4,13 +4,16 @@
 External authentication
 =======================
 
+SMTP, POP3 and IMAP
+===================
+
 Baruwa supports authentication to external authentication systems. SMTP, POP3, IMAP are supported out of the box.
 TLS, APOP are also supported to ensure user authentication details are protected over the wire.
 
 Authentication is setup on a per domain basis.
 
 Configuration
-=============
+-------------
 
 As the administrator click on the domain name and add an authentication server. The options are
 	
@@ -20,5 +23,12 @@ As the administrator click on the domain name and add an authentication server. 
 	* Enabled
 	* Split address (usernames with @ split into user and domain parts user part used to authenticate)
 
+LDAP
+====
 
+Ldap authentication can be enabled by installing the `Django-auth-ldap`_ package. Please refer to
+their `documentation`_ on how to configure the package.
+
+.. _`Django-auth-ldap`: http://pypi.python.org/pypi/django-auth-ldap/
+.. _`documentation`: http://packages.python.org/django-auth-ldap/
 
