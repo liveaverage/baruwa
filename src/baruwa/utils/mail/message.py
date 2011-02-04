@@ -218,7 +218,7 @@ class EmailParser(object):
 
     def sanitize_html(self, msg):
         "Clean up html"
-        cleaner = Cleaner(remove_tags=UNCLEANTAGS)
+        cleaner = Cleaner(style = True, remove_tags=UNCLEANTAGS)
         return cleaner.clean_html(msg)
 
 
