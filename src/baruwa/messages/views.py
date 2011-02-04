@@ -94,6 +94,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
                 message_list = message_list.filter(spam=0)
             form = BulkQuarantineProcessForm()
             form.fields['altrecipients'].widget.attrs['size'] = '55'
+            message_list = apply_filter(message_list, request, active_filters)
             choices = [(message['id'], message['id']) for message in message_list[:50]]
             form.fields['message_id']._choices = choices
             form.fields['message_id'].widget.choices = choices

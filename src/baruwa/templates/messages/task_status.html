@@ -41,6 +41,8 @@ Quarantine processing jobid: {{taskid}}
 		<div class="quaran_task_msg_row">
 			{% for error in result.errors %}
 				<b>{{error.0}}: </b>{{error.1}}<br />
+			{% empty %}
+			{% trans "The task was completed successfully." %}
 			{% endfor %}
 		</div>
 	</div>
