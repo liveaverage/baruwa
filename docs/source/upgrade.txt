@@ -2,6 +2,16 @@
 Upgrading
 =========
 
+1.0.2
+-----
+
+This is a bug fix release with no schema changes.
+
+  - Backup your settings.py then upgrade. 
+  - Restore the settings.py.
+  - If using the debian package select no when asked
+    if you want to configure mysql
+
 1.0.1
 -----
 
