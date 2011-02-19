@@ -49,7 +49,7 @@ function build_rows(build_array){
 		rows[count++] = '<div class="pie_'+c+' pie"></div>&nbsp;';
 		rows[count++] = ' '+address+'</div>';
 		rows[count++] = '<div class="row_count">'+item.num_count+'</div>';
-		rows[count++] = '<div class="row_volume">'+filesizeformat(item.size)+'</div>';
+		rows[count++] = '<div class="row_volume">'+filesizeformat(item.total_size)+'</div>';
 		rows[count++] = '</div>';
 		c++;
 	});
@@ -110,7 +110,8 @@ dojo.addOnLoad(function() {
     	dojo.xhrPost({
     		form:"filter-form",
     		handleAs:"json",
-    		load:function(data){process_response(data);}
+    		load:function(data){process_response(data);},
+    		headers: {"X-CSRFToken": getCookie('csrftoken')}
     	});
     });
     dojo.query("#fhl a").onclick(function(e){

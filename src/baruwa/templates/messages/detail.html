@@ -2,6 +2,7 @@
 {% load i18n %}
 {% block headers %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/ajax-csrf-tokenize.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/details.js"></script>
 {% endblock headers %}
 {% block title %}{% blocktrans with message_details.id as id %}Baruwa :: Showing message - {{ id }}{% endblocktrans %}{% endblock %}
