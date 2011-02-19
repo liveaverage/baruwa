@@ -35,7 +35,7 @@ function handle_form(event){
         };
     };
 
-    $.post($('#list-form').attr('post'), list_post, function(response) {
+    $.post($('#list-form').attr('action'), list_post, function(response) {
         if (response.success) {
             if ($('#info-msg').length) {
                 clearTimeout(timeout);

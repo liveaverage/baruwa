@@ -110,7 +110,8 @@ dojo.addOnLoad(function() {
     	dojo.xhrPost({
     		form:"filter-form",
     		handleAs:"json",
-    		load:function(data){process_response(data);}
+    		load:function(data){process_response(data);},
+    		headers: {"X-CSRFToken": getCookie('csrftoken')}
     	});
     });
     dojo.query("#fhl a").onclick(function(e){
