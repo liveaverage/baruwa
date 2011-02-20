@@ -7,6 +7,7 @@ include ChangeLog
 include UPGRADE
 include MANIFEST.in
 include src/baruwa/baruwa.wsgi
+include src/baruwa/virtual.wsgi
 recursive-include docs *
 recursive-include extras *
 recursive-include src/baruwa/templates *
