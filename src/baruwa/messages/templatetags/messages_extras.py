@@ -178,7 +178,10 @@ def tds_rbl_name(value, autoescape=None):
             esc = conditional_escape
         else:
             esc = lambda x: x
-        rbl = esc(match.group(1))
+        if match.group(1):
+            rbl = esc(match.group(1))
+        else:
+            rbl = esc(match.group(2))
     return mark_safe(rbl)
 tds_rbl_name.needs_autoescape = True
 
