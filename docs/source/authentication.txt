@@ -4,11 +4,12 @@
 External authentication
 =======================
 
-SMTP, POP3 and IMAP
-===================
+SMTP, POP3, IMAP and RADIUS/RSA SECURID
+========================================
 
-Baruwa supports authentication to external authentication systems. SMTP, POP3, IMAP are supported out of the box.
-TLS, APOP are also supported to ensure user authentication details are protected over the wire.
+Baruwa supports authentication to external authentication systems. SMTP, POP3, IMAP, RADIUS/RSA SECURID
+are supported out of the box. TLS, APOP are also supported to ensure user authentication details are
+protected over the wire.
 
 Authentication is setup on a per domain basis.
 
@@ -18,7 +19,7 @@ Configuration
 As the administrator click on the domain name and add an authentication server. The options are
 	
 	* Address (Either a hostname or IP address)
-	* Protocol (POP3, IMAP, SMTP)
+	* Protocol (POP3, IMAP, SMTP, RADIUS/RSA SECURID)
 	* Port 
 	* Enabled
 	* Split address (usernames with @ split into user and domain parts user part used to authenticate)

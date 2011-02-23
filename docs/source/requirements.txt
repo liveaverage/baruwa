@@ -19,6 +19,7 @@ Baruwa requirements
 	+ `UUID`_ (Only for python 2.4)
 	+ A supported Message broker (`RabbitMQ`_ recommended)
 	+ `Sphinx`_ (Optional - to build documentation)
+	+ `Pyrad`_ (Optional for RADIUS/RSA SECURID authentication)
 
 MailScanner requirements
 ========================
@@ -43,6 +44,7 @@ MailScanner requirements
 .. _`Anyjson`: http://pypi.python.org/pypi/anyjson
 .. _`RabbitMQ`: http://www.rabbitmq.com/
 .. _`Sphinx`: http://sphinx.pocoo.org/
+.. -`Pyrad`: http://www.simplon.biz/software/pyrad
 .. _`DBI`: http://dbi.perl.org/
 .. _`DBD-MySQL`: http://search.cpan.org/dist/DBD-mysql/
 .. _`DBD-SQLite`: http://search.cpan.org/~msergeant/DBD-SQLite-0.31/
