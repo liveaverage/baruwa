@@ -57,8 +57,15 @@ def release_mail(mail_path, to_addr, from_addr):
     host = settings.EMAIL_HOST
     if os.path.exists(mail_path):
         mail_file = open(mail_path, 'r')
-        msg = mail_file.read()
+        msg = mail_file.readlines()
         mail_file.close()
+        for index, line in enumerate(msg):
+            if line.endswith(' ret-id none;\n'):
+                msg[index] = line.replace(' ret-id none;', '')
+            if line.startswith('Message-Id:'):
+                msg.pop(index)
+                break
+        msg = ''.join(msg)
         try:
             server = smtplib.SMTP(host)
             server.sendmail(from_addr, to_addr, msg)
