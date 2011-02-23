@@ -24,6 +24,14 @@ As the administrator click on the domain name and add an authentication server. 
 	* Enabled
 	* Split address (usernames with @ split into user and domain parts user part used to authenticate)
 
+RADIUS secret
+-------------
+
+The RADIUS secret need to be set in the settings file on a per Address basis::
+
+    RADIUS_SECRET['127.0.0.1'] = 'radius secret'
+
+
 LDAP
 ====
 
