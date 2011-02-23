@@ -46,7 +46,7 @@ from baruwa.config.forms import MailAuthHostForm, EditMailAuthHostForm, \
  DeleteMailAuthHostForm
 
 
-AUTH_TYPES = ['', 'pop3', 'imap', 'smtp']
+AUTH_TYPES = ['', 'pop3', 'imap', 'smtp', 'radius/RSA SECUREID']
 
 
 @login_required

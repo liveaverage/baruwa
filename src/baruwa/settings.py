@@ -108,6 +108,7 @@ INSTALLED_APPS = (
 AUTHENTICATION_BACKENDS = (
     'baruwa.auth.backends.MailBackend',
     'django.contrib.auth.backends.ModelBackend',
+    #'baruwa.auth.radius.RadiusAuth',
 )
 
 AUTH_PROFILE_MODULE = 'accounts.userprofile'
@@ -127,6 +128,10 @@ BROKER_PORT = 5672
 BROKER_USER = "baruwa"
 BROKER_PASSWORD = "password"
 BROKER_VHOST = "baruwa"
+
+# Radius auth settings
+RADIUS_SECRET = {}
+RADIUS_SECRET['127.0.0.1'] = 'secret'
 
 # Baruwa only setting
 

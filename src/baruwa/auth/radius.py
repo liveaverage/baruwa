@@ -45,7 +45,7 @@ class RadiusAuth:
 
     def authenticate(self, username=None, password=None):
         try:
-            import pyrad.packet
+            from pyrad import packet
             from pyrad.client import Client, Timeout
             from pyrad.dictionary import Dictionary
         except ImportError:
@@ -72,14 +72,14 @@ class RadiusAuth:
                 login_user = username
 
             try:
-                client = Client(server=settings.RADIUS_SERVER,
-                                authport=settings.RADIUS_PORT,
-                                secret=settings.RADIUS_SECRET.encode('utf-8'),
+                client = Client(server=host.address,
+                                authport=host.port,
+                                secret=settings.RADIUS_SECRET[host.address].encode('utf-8'),
                                 dict=Dictionary(StringIO(DICTIONARY)),)
             except AttributeError:
                 return None
 
-            request = client.CreateAuthPacket(code=pyrad.packet.Accessrequestuest,
+            request = client.CreateAuthPacket(code=packet.Accessrequestuest,
                 User_Name=login_user,)
             request["User-Password"] = request.PwCrypt(password)    
             try:
@@ -88,9 +88,9 @@ class RadiusAuth:
                 return None
             except Exception:
                 return None
-            if reply.code == pyrad.packet.AccessReject:
+            if reply.code == packet.AccessReject:
                 return None
-            if reply.code != pyrad.packet.AccessAccept:
+            if reply.code != packet.AccessAccept:
                 return None
             try:
                 user = User.objects.get(username=username)
