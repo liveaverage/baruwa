@@ -36,7 +36,7 @@ class MailHostForm(forms.ModelForm):
     
     class Meta:
         model = MailHost
-        exclude = ('id')
+        exclude = ('id',)
 
 class EditMailHost(forms.ModelForm):
     "Edit Mail host form"
@@ -78,7 +78,7 @@ class DeleteMailAuthHostForm(forms.ModelForm):
     id = forms.CharField(widget=forms.HiddenInput)
     class Meta:
         model = MailAuthHost
-        fields = ('id')
+        fields = ('id',)
         
 class InitializeConfigsForm(forms.Form):
     "Initialize a scanning nodes configuration"
