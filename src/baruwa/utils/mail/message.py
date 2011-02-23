@@ -29,6 +29,10 @@ import shutil
 import socket
 import smtplib
 
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
 from email.Header import decode_header
 from subprocess import Popen, PIPE
 from lxml.html.clean import Cleaner
@@ -204,7 +208,6 @@ class EmailParser(object):
                     filename = re.sub(r"\s", "_", filename)
                     num += 1
                 if attach_id == num:
-                    from StringIO import StringIO
                     if part.is_multipart():
                         data = part.as_string()
                     else:
