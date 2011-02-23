@@ -247,6 +247,8 @@ class ProcessQuarantinedMessage(object):
             for index, line in enumerate(message):
                 if line.endswith(' ret-id none;\n'):
                     message[index] = line.replace(' ret-id none;', '')
+                if line.startswith('Message-Id:'):
+                    message.pop(index)
                     break
             message = ''.join(message)
 
