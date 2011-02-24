@@ -24,6 +24,7 @@ from subprocess import Popen, PIPE
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from baruwa.utils.misc import get_config_option
+from baruwa.utils.regex import MSGID_RE
 
 
 def get_message_path(qdir, date, message_id):
@@ -62,7 +63,7 @@ def release_mail(mail_path, to_addr, from_addr):
         for index, line in enumerate(msg):
             if line.endswith(' ret-id none;\n'):
                 msg[index] = line.replace(' ret-id none;', '')
-            if line.startswith('Message-Id:'):
+            if MSGID_RE.match(line):
                 msg.pop(index)
                 break
         msg = ''.join(msg)
