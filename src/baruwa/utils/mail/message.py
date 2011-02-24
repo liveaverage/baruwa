@@ -21,7 +21,6 @@
 
 "Baruwa email message related modules"
 import os
-import re
 import email
 import base64
 import codecs
@@ -39,6 +38,7 @@ from lxml.html.clean import Cleaner
 from django.utils.translation import ugettext as _
 from django.conf import settings
 from baruwa.utils.misc import get_config_option
+from baruwa.utils.regex import MSGID_RE
 
 NOTFOUND = object()
 UNCLEANTAGS = ['html', 'head', 'link', 'img', 'a', 'body']
@@ -205,7 +205,7 @@ class EmailParser(object):
             if not attachment is NOTFOUND:
                 filename = part.get_filename(None)
                 if filename:
-                    filename = re.sub(r"\s", "_", filename)
+                    filename = filename.replace(' ', '_')
                     num += 1
                 if attach_id == num:
                     if part.is_multipart():
@@ -250,7 +250,7 @@ class ProcessQuarantinedMessage(object):
             for index, line in enumerate(message):
                 if line.endswith(' ret-id none;\n'):
                     message[index] = line.replace(' ret-id none;', '')
-                if line.startswith('Message-Id:'):
+                if MSGID_RE.match(line):
                     message.pop(index)
                     break
             message = ''.join(message)
