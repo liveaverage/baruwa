@@ -20,7 +20,7 @@
 #
 
 from djcelery import views as celery_views
-from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import handler404, handler500, patterns
 from django.contrib.auth.decorators import login_required
 from baruwa.messages.views import task_status
 

@@ -19,7 +19,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-from django.conf.urls.defaults import patterns, include
+from django.conf.urls.defaults import handler404, handler500, include, patterns
 import os
 
 CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8')).replace('\\', '/')
