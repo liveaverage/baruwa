@@ -54,6 +54,8 @@ class Command(BaseCommand):
             help='Period to report on: valid options are '
                 '"day(s)","week(s)","month(s)" Examples: '
                 '--period="1 day" --period="2 weeks" --period="5 months"'),
+        make_option('--full', action='store_true', dest='include_daily',
+            default=False, help='Include the daily totals table'),
     )
 
     def handle(self, *args, **options):
@@ -64,6 +66,7 @@ class Command(BaseCommand):
         domain_name = options.get('domain_name')
         copy_admin = options.get('copy_admin')
         period = options.get('period')
+        include_daily = options.get('include_daily')
         enddate = None
 
         period_re = re.compile(r"(?P<num>(\d+))\s+(?P<period>(day|week|month))(?:s)?")
@@ -258,6 +261,21 @@ class Command(BaseCommand):
             spam_total = []
             virus_total = []
             dates = []
+            if include_daily:
+                rows = [(
+                Table([[draw_square(colors.white),
+                Paragraph('Date', styles["Heading6"])]],
+                [0.35 * inch, 1.50 * inch,]),
+                Table([[draw_square(colors.green),
+                Paragraph('Mail totals', styles["Heading6"])]],
+                [0.35 * inch, 1.50 * inch,]),
+                Table([[draw_square(colors.pink),
+                Paragraph('Spam totals', styles["Heading6"])]],
+                [0.35 * inch, 1.50 * inch,]),
+                Table([[draw_square(colors.red),
+                Paragraph('Virus totals', styles["Heading6"])]],
+                [0.35 * inch, 1.50 * inch,]),
+                )]
             for ind, msgt in enumerate(msg_totals):
                 if ind % 10:
                     dates.append('')
@@ -267,6 +285,9 @@ class Command(BaseCommand):
                 mail_total.append(int(msgt.mail_total))
                 spam_total.append(int(msgt.spam_total))
                 virus_total.append(int(msgt.virus_total))
+                if include_daily:
+                    rows.append((str(msgt.date), msgt.mail_total,
+                    msgt.spam_total, msgt.virus_total))
 
             graph = BarChart()
             graph.chart.data = [
@@ -276,6 +297,21 @@ class Command(BaseCommand):
             graph.chart.categoryAxis.categoryNames = dates
             graph_table = Table([[graph]], [7.4 * inch])
             parts.append(graph_table)
+            if include_daily:
+                rows.append(('Totals', sum(mail_total), sum(spam_total),
+                sum(virus_total)))
+                parts.append(Spacer(1, 20))
+                graph_table = Table(rows, [1.85 * inch, 1.85 * inch,
+                1.85 * inch, 1.85 * inch,])
+                graph_table.setStyle(TableStyle([
+                ('FONTSIZE', (0, 0), (-1, -1), 8),
+                ('FONT', (0, 0), (-1, -1), 'Helvetica'),
+                ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('GRID', (0, 0), (-1, -1), 0.15, colors.black),
+                ('FONT', (0, -1), (-1, -1), 'Helvetica-Bold'),
+                #('BACKGROUND', (0, -1), (-1, -1), colors.green),
+                ]))
+                parts.append(graph_table)
             return parts
 
         def build_pdf(charts):
