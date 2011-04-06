@@ -35,13 +35,14 @@ except ImportError:
 from email.Header import decode_header
 from subprocess import Popen, PIPE
 from lxml.html.clean import Cleaner
+from lxml.html import tostring, fromstring, iterlinks
 from django.utils.translation import ugettext as _
 from django.conf import settings
 from baruwa.utils.misc import get_config_option
-from baruwa.utils.regex import MSGID_RE
+from baruwa.utils.regex import MSGID_RE, HTMLTITLE_RE
 
 NOTFOUND = object()
-UNCLEANTAGS = ['html', 'head', 'link', 'img', 'a', 'body']
+UNCLEANTAGS = ['html', 'head', 'link', 'a', 'body']
 
 
 def test_smtp_server(server, port, test_address):
@@ -222,7 +223,12 @@ class EmailParser(object):
     def sanitize_html(self, msg):
         "Clean up html"
         cleaner = Cleaner(style = True, remove_tags=UNCLEANTAGS)
-        return cleaner.clean_html(msg)
+        msg = HTMLTITLE_RE.sub('', msg)
+        html = cleaner.clean_html(msg)
+        html = fromstring(html)
+        for element, attribute, link, pos in iterlinks(html):
+            element.attrib['src'] = '/imgs/blocked.gif'
+        return tostring(html)
 
 
 class ProcessQuarantinedMessage(object):

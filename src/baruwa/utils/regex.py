@@ -64,6 +64,8 @@ IP_RE = re.compile(r'(([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3}))')
 
 MSGID_RE = re.compile(r'^(?:Message-Id\:\s+.+)$', re.IGNORECASE)
 
+HTMLTITLE_RE = re.compile(r'<title>.+</title>', re.IGNORECASE)
+
 
 def clean_regex(rule):
     """
