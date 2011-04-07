@@ -360,7 +360,7 @@ class Command(BaseCommand):
         print _("=================== Processing reports ======================")
         if by_domain:
             #do domain query
-            print "camacamlilone"
+            #print "camacamlilone"
             domains = UserAddresses.objects.filter(Q(enabled=1), Q(address_type=1))
             if domain_name != 'all':
                 domains = domains.filter(address=domain_name)
