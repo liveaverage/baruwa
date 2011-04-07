@@ -22,11 +22,9 @@ package MailScanner::CustomConfig;
 
 use strict;
 use DBI;
+use MailScanner::Config;
 
-my ($db_name) = 'baruwa';
-my ($db_host) = 'localhost';
-my ($db_user) = 'baruwa';
-my ($db_pass) = '';
+my ( $db_user, $db_pass, $baruwa_dsn );
 
 my ($refresh_time) = 60;
 my ( $ltime, $htime );
@@ -59,9 +57,16 @@ END
 sub PopulateScores {
     my ( $type, $list ) = @_;
     my ( $conn, $sth, $email, $spamscore, $query, $count, $isadmin );
+    $db_user = MailScanner::Config::Value('dbusername')
+      if ( !defined($db_user) );
+    $db_pass = MailScanner::Config::Value('dbpassword')
+      if ( !defined($db_pass) );
+    $baruwa_dsn = MailScanner::Config::Value('dbdsn')
+      if ( !defined($baruwa_dsn) );
 
-    $conn = DBI->connect( "DBI:mysql:database=$db_name;host=$db_host",
-        $db_user, $db_pass, { PrintError => 0, AutoCommit => 1 } );
+    $conn =
+      DBI->connect( $baruwa_dsn, $db_user, $db_pass,
+        { PrintError => 0, AutoCommit => 1 } );
     if ( !$conn ) {
         MailScanner::Log::WarnLog( "Baruwa Settings conn init failue: %s",
             $DBI::errstr );
@@ -171,9 +176,16 @@ sub PopulateScanList {
     my ($list) = @_;
 
     my ( $conn, $sth, $count, $shouldscan, $isadmin, $email );
+    $db_user = MailScanner::Config::Value('dbusername')
+      if ( !defined($db_user) );
+    $db_pass = MailScanner::Config::Value('dbpassword')
+      if ( !defined($db_pass) );
+    $baruwa_dsn = MailScanner::Config::Value('dbdsn')
+      if ( !defined($baruwa_dsn) );
 
-    $conn = DBI->connect( "DBI:mysql:database=$db_name;host=$db_host",
-        $db_user, $db_pass, { PrintError => 0, AutoCommit => 1 } );
+    $conn =
+      DBI->connect( $baruwa_dsn, $db_user, $db_pass,
+        { PrintError => 0, AutoCommit => 1 } );
     if ( !$conn ) {
         MailScanner::Log::WarnLog( "Baruwa Scan Settings conn init failue: %s",
             $DBI::errstr );

@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -25,21 +25,26 @@ use Storable(qw[freeze thaw]);
 use POSIX;
 use IO::Socket;
 use DBI;
+use MailScanner::Config;
 
 my ( $conn, $bconn, $sth, $bsth, $server );
 my ($hostname)  = hostname;
 my $server_port = 11553;
 my $timeout     = 3600;
 
-my ($db_name) = 'baruwa';
-my ($db_host) = 'localhost';
-my ($db_user) = 'baruwa';
-my ($db_pass) = '';
+my ( $db_user, $db_pass, $baruwa_dsn );
 my ($sqlite_db) = "/var/spool/MailScanner/incoming/baruwa2.db";
 
 #DBI->trace(2,'/tmp/dbitrace.log');
 
 sub InitBaruwaSQL {
+    $db_user = MailScanner::Config::Value('dbusername')
+      if ( !defined($db_user) );
+    $db_pass = MailScanner::Config::Value('dbpassword')
+      if ( !defined($db_pass) );
+    $baruwa_dsn = MailScanner::Config::Value('dbdsn')
+      if ( !defined($baruwa_dsn) );
+
     my $pid = fork();
     if ($pid) {
         waitpid $pid, 0;
@@ -79,7 +84,7 @@ sub RecoverFromSql {
     $st->execute();
     my @ids;
     while ( my $message = $st->fetchrow_hashref ) {
-        my $rv = $sth->execute(
+        $sth->execute(
             $$message{id},            $$message{actions},
             $$message{clientip},      $$message{date},
             $$message{from_address},  $$message{from_domain},
@@ -95,7 +100,8 @@ sub RecoverFromSql {
             $$message{to_address},    $$message{to_domain},
             $$message{virusinfected}
         );
-        if ($rv) {
+
+        if ( $sth->err == 1329 ) {
             MailScanner::Log::InfoLog(
                 "$$message{id}: Logged to Baruwa SQL from backup");
             push @ids, $$message{id};
@@ -114,9 +120,15 @@ sub RecoverFromSql {
 }
 
 sub PrepSqlite {
-    $bconn =
-      DBI->connect( "dbi:SQLite:$sqlite_db", "", "",
-        { PrintError => 0, AutoCommit => 1 } );
+    $bconn = DBI->connect_cached(
+        "dbi:SQLite:$sqlite_db",
+        "", "",
+        {
+            PrintError           => 0,
+            AutoCommit           => 1,
+            private_foo_cachekey => 'baruwa_backup'
+        }
+    );
     if ( !$bconn ) {
         MailScanner::Log::WarnLog( "Baruwa SQL Backup conn init failure: %s",
             $DBI::errstr );
@@ -155,11 +167,17 @@ sub InitSQLConnections {
         Listen    => SOMAXCONN,
         Reuse     => 1
     ) or exit;
-    eval {
-        $conn = DBI->connect( "DBI:mysql:database=$db_name;host=$db_host",
-            $db_user, $db_pass, { PrintError => 0, AutoCommit => 1 } );
-        $sth = $conn->prepare(
-            "INSERT INTO messages (
+    $conn = DBI->connect_cached(
+        $baruwa_dsn,
+        $db_user, $db_pass,
+        {
+            PrintError           => 0,
+            AutoCommit           => 1,
+            private_foo_cachekey => 'baruwa'
+        }
+    );
+    $sth = $conn->prepare(
+        "INSERT INTO messages (
             id,actions,clientip,date,from_address,from_domain,
             headers,hostname,highspam,rblspam,saspam,spam,
             nameinfected,otherinfected,isquarantined,sascore,
@@ -167,18 +185,17 @@ sub InitSQLConnections {
             subject,time,timestamp,to_address,to_domain,
             virusinfected
         ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-        );
-    };
-    if ($@) {
+    );
+    if ( !$sth ) {
         MailScanner::Log::WarnLog( "Baruwa SQL conn init failure: %s",
-            $DBI::errstr );
+            $conn->errstr );
 
     }
     PrepSqlite();
 }
 
 sub BaruwaListener {
-    my ($message, $client, $client_address);
+    my ( $message, $client, $client_address );
     while ( ( $client, $client_address ) = $server->accept() ) {
         my ( $port, $packed_ip ) = sockaddr_in($client_address);
         my $client_ip = inet_ntoa($packed_ip);
@@ -203,7 +220,7 @@ sub BaruwaListener {
         next unless defined $$message{id};
 
         InitSQLConnections unless $conn->ping;
-        my $rv = $sth->execute(
+        $sth->execute(
             $$message{id},            $$message{actions},
             $$message{clientip},      $$message{date},
             $$message{from_address},  $$message{from_domain},
@@ -219,13 +236,12 @@ sub BaruwaListener {
             $$message{to_address},    $$message{to_domain},
             $$message{virusinfected}
         );
-        if ($rv) {
+
+        if ( $sth->err == 1329 ) {
             MailScanner::Log::InfoLog("$$message{id}: Logged to Baruwa SQL");
         }
         else {
-            MailScanner::Log::InfoLog(
-                "$$message{id}: Baruwa SQL using backup"
-            );
+            MailScanner::Log::InfoLog("$$message{id}: Baruwa SQL using backup");
             $bsth->execute(
                 $$message{id},            $$message{actions},
                 $$message{clientip},      $$message{date},

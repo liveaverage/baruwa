@@ -22,26 +22,31 @@ package MailScanner::CustomConfig;
 use strict;
 use DBI;
 use Net::CIDR;
+use MailScanner::Config;
 
 my ( %Whitelist, %Blacklist );
 my @WhiteIPs = ();
 my @BlackIPs = ();
 my ( $wtime, $btime );
 my ($refresh_time) = 10;
+my ( $db_user, $db_pass, $baruwa_dsn );
 
 sub PopulateList {
     my ( $type, $list, $ips ) = @_;
     @$ips = ();
 
-    my ($db_name) = 'baruwa';
-    my ($db_host) = 'localhost';
-    my ($db_user) = 'baruwa';
-    my ($db_pass) = '';
+    $db_user = MailScanner::Config::Value('dbusername')
+      if ( !defined($db_user) );
+    $db_pass = MailScanner::Config::Value('dbpassword')
+      if ( !defined($db_pass) );
+    $baruwa_dsn = MailScanner::Config::Value('dbdsn')
+      if ( !defined($baruwa_dsn) );
 
     my ( $conn, $sth, $to_address, $from_address, $count );
 
-    $conn = DBI->connect( "DBI:mysql:database=$db_name;host=$db_host",
-        $db_user, $db_pass, { PrintError => 0, AutoCommit => 1 } );
+    $conn =
+      DBI->connect( $baruwa_dsn, $db_user, $db_pass,
+        { PrintError => 0, AutoCommit => 1 } );
     if ( !$conn ) {
         MailScanner::Log::WarnLog( "Baruwa Lists db conn init failue: %s",
             $DBI::errstr );
@@ -119,7 +124,7 @@ sub InitBaruwaWhitelist {
     MailScanner::Log::InfoLog("Starting Baruwa whitelists");
     my $total = PopulateList( 1, \%Whitelist, \@WhiteIPs );
     MailScanner::Log::InfoLog( "Read %d whitelist items", $total );
-    MailScanner::Log::InfoLog( "Ip blocks whitelisted: @WhiteIPs" );
+    MailScanner::Log::InfoLog("Ip blocks whitelisted: @WhiteIPs");
     $wtime = time();
 }
 
@@ -140,7 +145,7 @@ sub InitBaruwaBlacklist {
     MailScanner::Log::InfoLog("Starting Baruwa blacklists");
     my $total = PopulateList( 2, \%Blacklist, \@BlackIPs );
     MailScanner::Log::InfoLog( "Read %d blacklist items", $total );
-    MailScanner::Log::InfoLog( "Ip blocks blacklisted: @BlackIPs" );
+    MailScanner::Log::InfoLog("Ip blocks blacklisted: @BlackIPs");
     $btime = time();
 }
 
