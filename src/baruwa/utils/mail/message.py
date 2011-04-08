@@ -227,7 +227,7 @@ class EmailParser(object):
         html = cleaner.clean_html(msg)
         html = fromstring(html)
         for element, attribute, link, pos in iterlinks(html):
-            element.attrib['src'] = '/imgs/blocked.gif'
+            element.attrib['src'] = settings.MEDIA_URL + '/imgs/blocked.gif'
         return tostring(html)
 
 
