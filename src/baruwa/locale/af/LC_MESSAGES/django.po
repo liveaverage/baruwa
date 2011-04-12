@@ -1,4 +1,4 @@
-ï»¿# SOME DESCRIPTIVE TITLE.
+# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <stephencoxmail@gmail.com>, 15 Mtr 2011.
@@ -195,8 +195,8 @@ msgstr "Die byvoeg van eksterne bemagtiging is ongeslaagd"
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s has "
 "been updated successfully"
-msgstr "Eksterne bemagtiging, %(auth)s, op die bediener, %(host)s, is vir die "
-"domein, %(dom), suksesvol opgedateer"
+msgstr "Eksterne bemagtiging, %(auth)s: op die bediener, %(host)s, is vir die "
+"domein, %(dom)s, suksesvol opgedateer"
 
 #: config/views.py:302
 msgid "Update of external authentication failed"
@@ -394,7 +394,7 @@ msgstr "Kwarantyn verslag is gestuur na: %(addr)s"
 #: messages/management/commands/sendquarantinereports.py:136
 #, python-format
 msgid "failed to send to: %(addr)s"
-msgstr "Onsuksesvolle transmissie na: %(addr)"
+msgstr "Onsuksesvolle transmissie na: %(addr)s"
 
 #: messages/management/commands/sendquarantinereports.py:138
 #, python-format
@@ -1901,6 +1901,7 @@ msgid ""
 "\n"
 "The message id: %(id)s has been released\n"
 msgstr ""
+"\n"
 "Die boodskap met ID: %(id)s is vrygestel\n"
 
 #: templates/messages/released.html:7
