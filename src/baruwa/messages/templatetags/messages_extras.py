@@ -134,8 +134,8 @@ def tds_geoip(value):
     tag = ""
     match = IP_RE.match(value)
     if match:
-        gip = GeoIP.new(GeoIP.GEOIP_MEMORY_CACHE)
         try:
+            gip = GeoIP.new(GeoIP.GEOIP_MEMORY_CACHE)
             ccode = gip.country_code_by_addr(value).lower()
             cname = gip.country_name_by_addr(value)
         except (GeoIP.error, AttributeError):
