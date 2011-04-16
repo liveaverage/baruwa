@@ -27,6 +27,7 @@ from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib import messages as djmessages
 from django.core.paginator import Paginator
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -124,7 +125,7 @@ def add_host(request, domain_id, template='config/add_host.html'):
                     response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
                 return HttpResponseRedirect(reverse('view-domain', 
                     args=[domain.id]))
             except IntegrityError:
@@ -133,7 +134,7 @@ def add_host(request, domain_id, template='config/add_host.html'):
                     response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
     else:
         form = MailHostForm(initial = {'useraddress': domain.id})
     return render_to_response(template, locals(), 
@@ -158,7 +159,7 @@ def edit_host(request, host_id, template='config/edit_host.html'):
                     response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
                 return HttpResponseRedirect(reverse('view-domain', 
                     args=[host.useraddress.id]))
             except IntegrityError:
@@ -168,7 +169,7 @@ def edit_host(request, host_id, template='config/edit_host.html'):
                     response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
     else:
         form = EditMailHost(instance=host)
     return render_to_response(template, locals(), 
@@ -194,7 +195,7 @@ def delete_host(request, host_id, template='config/delete_host.html'):
                     response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
                 return HttpResponseRedirect(reverse('view-domain', 
                                             args=[go_id]))
             except DatabaseError:
@@ -204,7 +205,7 @@ def delete_host(request, host_id, template='config/delete_host.html'):
                     response = anyjson.dumps({'success': False, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
     else:
         form = DeleteMailHost(instance=host)
     return render_to_response(template, locals(), 
@@ -248,7 +249,7 @@ def test_status(request, taskid):
                     % str(results['errors']))
         else:
             msg = _('The tests failed to run try again later')
-        request.user.message_set.create(message=msg)
+        djmessages.info(request, msg)
         return HttpResponseRedirect(reverse('view-domain', 
             args=[results['host']]))
     return render_to_response('config/task_status.html', {'status': status},
@@ -273,7 +274,7 @@ def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
                     response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
                 return HttpResponseRedirect(reverse('view-domain', 
                     args=[domain.id]))
             except IntegrityError:
@@ -282,7 +283,7 @@ def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
                     response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
     else:
         form = MailAuthHostForm(initial = {'useraddress': domain.id})
     return render_to_response(template, locals(), 
@@ -310,7 +311,7 @@ def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
                     response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
                 return HttpResponseRedirect(reverse('view-domain', 
                     args=[saved_host.useraddress.id]))
             except IntegrityError:
@@ -319,7 +320,7 @@ def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
                     response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
     else:
         form = EditMailAuthHostForm(instance=host)
     return render_to_response(template, locals(), 
@@ -349,7 +350,7 @@ def delete_auth_host(request, host_id,
                     response = anyjson.dumps({'success': True, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
                 return HttpResponseRedirect(reverse('view-domain', args=[go_id]))
             except DatabaseError:
                 msg = _('External authentication %(auth)s: on host %(host)s'
@@ -362,7 +363,7 @@ def delete_auth_host(request, host_id,
                     response = anyjson.dumps({'success': False, 'html': msg})
                     return HttpResponse(response, 
                         content_type='application/javascript; charset=utf-8')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
     else:
         form = DeleteMailAuthHostForm(instance=host)
     return render_to_response(template, locals(), 
@@ -411,7 +412,7 @@ def view_scanner(request, scanner_id, template='config/view_scanner.html'):
     if not configs:
         msg = _('The node %(node)s is not been initialized,'
                 ' Please initialize') % {'node': scanner.address}
-        request.user.message_set.create(message=msg)
+        djmessages.info(request, msg)
         return HttpResponseRedirect(reverse('init-scanner', 
                                     args=[scanner.id]))
 
@@ -441,12 +442,12 @@ def init_scanner(request, scanner_id, template='config/init_scanner.html'):
                 conn = connection.cursor()
                 conn.execute(sql)
                 msg = _('The node %(node)s has been initialized') % {'node': scanner.address}
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
                 return HttpResponseRedirect(reverse('view-scanner', 
                                             args=[scanner.id]))
             except DatabaseError:
                 msg = 'Initialization of node %s failed' % scanner.address
-                request.user.message_set.create(message=msg)          
+                djmessages.info(request, msg)          
     else:
         form = InitializeConfigsForm(initial = {'id': scanner.id})
     return render_to_response(template, locals(), 

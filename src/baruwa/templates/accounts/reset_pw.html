@@ -22,6 +22,7 @@
 	<p>{% trans "Please enter your new password twice so we can verify you typed it in correctly." %}</p>
 	<br />
 	    <form action="" method="post">
+		{% csrf_token %}
 	        <input type="hidden" name="next" value="{{ next }}" />
 	        <label>{% trans "New password:" %}</label>
 	        <input type="password" name="new_password1" class="field" id="id_password1" />

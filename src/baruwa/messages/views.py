@@ -28,6 +28,7 @@ from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponse
 from django.http import HttpResponseRedirect
+from django.contrib import messages as djmessages
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
@@ -274,7 +275,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
             {'message': result, 'message_id': message_id},
             context_instance=RequestContext(request))
         msg = _("The requested message could not be previewed")
-    request.user.message_set.create(message=msg)
+    djmessages.info(request, msg)
     return HttpResponseRedirect(reverse('message-detail',
     args=[message_id]))
 
@@ -288,7 +289,7 @@ def search(request):
         return HttpResponseRedirect(reverse('message-detail',
             args=[message_details.id]))
     msg = _("No messages found with that message id")
-    request.user.message_set.create(message=msg)
+    djmessages.info(request, msg)
     return HttpResponseRedirect(reverse('main-messages-index'))
 
 
@@ -323,7 +324,7 @@ def bulk_process(request):
             args=[task.task_id]))
 
     msg = _('System was unable to process your request')
-    request.user.message_set.create(message=msg)
+    djmessages.info(request, msg)
     return HttpResponseRedirect(reverse('all-messages-index',
     args=['quarantine']))
 

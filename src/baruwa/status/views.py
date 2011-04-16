@@ -32,6 +32,7 @@ from django.db.models import Q, Count
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.conf import settings
+from django.contrib import messages as djmessages
 from baruwa.utils.misc import get_processes, get_config_option
 from baruwa.utils.decorators import onlysuperusers
 from baruwa.messages.models import MessageStats
@@ -224,7 +225,7 @@ def delete_from_queue(request):
             request.session.modified = True
         else:
             msg = _("The queue items could not be processed")
-        request.user.message_set.create(message=msg)
+        djmessages.info(request, msg)
         referer = request.META.get('HTTP_REFERER', None)
         if referer and '/mailq' in referer:
             sendto = referer

@@ -14,6 +14,7 @@
     <div class="Bayes_heading">{% trans "Change Password" %}</div>
 </div>
 <form action="{% url baruwa.accounts.views.change_password user_id=user_id %}" method="post">
+	{% csrf_token %}
 	{% for hidden in form.hidden_fields %}
 		{{ hidden }}
 	{% endfor %}

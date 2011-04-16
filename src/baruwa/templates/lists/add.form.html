@@ -1,5 +1,6 @@
 {% load i18n %}
     <form id="list-form" method="post" action="/lists/add/">
+	{% csrf_token %}
     <div class="LightBlue_div">
         <div class="form_label">{% trans "From address:" %}</div>
         <div class="form_value">

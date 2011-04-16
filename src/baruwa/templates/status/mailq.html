@@ -18,6 +18,7 @@
 {% endblock heading %}
 {% block content %}
 <form method="post" action="{% url process-mailq %}">
+{% csrf_token %}
 <div id="form-submission">
 	<div class="quaran_lightblue_div">
 		<div class="quaran_mailq_info">&nbsp;</div>

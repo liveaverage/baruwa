@@ -46,6 +46,7 @@ var media_url = '{{MEDIA_URL}}';
 {% endblock heading %}
 {% block content %}
 <form method="post" action="{% url message-bulk-process %}">
+{% csrf_token %}
 <div id="form-submission">
 	<div class="quaran_lightblue_div">
 		<div class="quaran_release_col">

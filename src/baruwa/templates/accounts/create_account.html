@@ -12,6 +12,7 @@
     <div class="Account_creation_heading">{% trans "User account creation" %}</div>
 </div>
 <form action="{% url create-account %}" method="post">
+	{% csrf_token %}
     {% for field in form %}
         <div class="LightBlue_div">
 			<div class="form_label">{{ field.label }}</div>

@@ -42,6 +42,9 @@ ATTRIBUTE User-Password	2 string encrypt=1
 
 class RadiusAuth:
     """Authenticate to a RADIUS server"""
+    supports_anonymous_user = False
+    supports_object_permissions = False
+    supports_inactive_user = False
 
     def authenticate(self, username=None, password=None):
         try:

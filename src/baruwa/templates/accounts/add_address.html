@@ -16,6 +16,7 @@
     <div class="Bayes_heading">{% if is_domain %}{% trans "Add Domain" %}{% else %}{% trans "Add Address" %}{% endif %}</div>
 </div>
 <form action="{% url add-address user_id %}" method="post">
+	{% csrf_token %}
 	{% for hidden in form.hidden_fields %}
 		{{ hidden }}
 	{% endfor %}

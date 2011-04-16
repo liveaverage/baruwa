@@ -32,6 +32,9 @@ from baruwa.accounts.models import UserAddresses
 
 class MailBackend:
     "Authenticates users using pop3 imap and smtp auth"
+    supports_anonymous_user = False
+    supports_object_permissions = False
+    supports_inactive_user = False
 
     def mail_auth(self, protocol, username, password, server, port=None):
         "Authenticates to pop3,imap,smtp servers"

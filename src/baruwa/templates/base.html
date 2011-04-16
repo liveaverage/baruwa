@@ -66,6 +66,7 @@
             <div class="search_box">
 				{% if user.is_authenticated %}
                 <form method="post" action="{% url message-search %}">
+					{% csrf_token %}
             	    <div class="text_box"><input name="message_id" type="text" /></div>
                     <div class="search_btn"><input name="submit" type="image" src="{{ MEDIA_URL }}imgs/css/search_btn.gif" /></div>
                 </form>

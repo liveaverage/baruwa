@@ -33,6 +33,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import login, REDIRECT_FIELD_NAME
 from django.contrib.auth.models import User
 from django.template import RequestContext
+from django.contrib import messages as djmessages
 from django.utils.translation import ugettext as _
 from baruwa.accounts.forms import UserProfileForm, UserCreateForm, \
 UserAddressForm, OrdUserProfileForm, UserUpdateForm, AdminUserUpdateForm, \
@@ -126,12 +127,12 @@ def create_account(request, template_name='accounts/create_account.html'):
                 user = form.save()
                 msg = _('The user account %(account)s was created successfully') % {
                     'account': user.username}
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
                 return HttpResponseRedirect(reverse('user-profile',
                     args=[user.id]))
             except DatabaseError:
                 msg = _('The user account could not be created')
-                request.user.message_set.create(message=msg)
+                djmessages.info(request, msg)
                 return HttpResponseRedirect(reverse('accounts'))
     else:
         form = UserCreateForm()
@@ -159,7 +160,7 @@ def update_account(request, user_id, template_name='accounts/update_account.html
             except DatabaseError:
                 msg = _('The user account %(account)s could not be updated') % {
                 'account': user_account.username}
-            request.user.message_set.create(message=msg)
+            djmessages.info(request, msg)
             return HttpResponseRedirect(reverse('user-profile',
             args=[user_id]))
     else:
@@ -194,7 +195,7 @@ def delete_account(request, user_id, template_name='accounts/delete_account.html
                         response = anyjson.dumps({'success': True, 'html': msg})
                         return HttpResponse(response,
                             content_type='application/javascript; charset=utf-8')
-                    request.user.message_set.create(message=msg)
+                    djmessages.info(request, msg)
                     return HttpResponseRedirect(reverse('accounts'))
                 except DatabaseError:
                     msg = _('The deletion of user account %(account)s failed') % {
@@ -203,7 +204,7 @@ def delete_account(request, user_id, template_name='accounts/delete_account.html
                         response = anyjson.dumps({'success': True, 'html': msg})
                         return HttpResponse(response,
                             content_type='application/javascript; charset=utf-8')
-                    request.user.message_set.create(message=msg)
+                    djmessages.info(request, msg)
                     return HttpResponseRedirect(reverse('user-profile',
                         args=[user_id]))
     else:
@@ -227,7 +228,7 @@ def add_address(request, user_id, is_domain=False, template_name='accounts/add_a
                 'addr': address.address, 'account': address.user.username}
             except IntegrityError:
                 msg = _('The address already exists')
-            request.user.message_set.create(message=msg)
+            djmessages.info(request, msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
     else:
         if is_domain:
@@ -257,7 +258,7 @@ def edit_address(request, address_id, template_name='accounts/edit_address.html'
             except DatabaseError:
                 msg = _('The address %(addr)s could not be updated') % {
                 'addr': address.address}
-            request.user.message_set.create(message=msg)
+            djmessages.info(request, msg)
             return HttpResponseRedirect(reverse('user-profile',
                 args=[addr.user.id]))
     else:
@@ -282,7 +283,7 @@ def delete_address(request, address_id, template_name='accounts/delete_address.h
             response = anyjson.dumps({'success': True, 'html': msg})
             return HttpResponse(response,
                 content_type='application/javascript; charset=utf-8')
-        request.user.message_set.create(message=msg)
+        djmessages.info(request, msg)
         return HttpResponseRedirect(reverse('user-profile', args=[addr_id]))
     else:
         form = DeleteAddressForm(instance=address)
@@ -306,7 +307,7 @@ def change_password(request, user_id, template_name='accounts/admin_change_pw.ht
                 'account': user_account.username}
             except DatabaseError:
                 msg = _('The password could not be updated')
-            request.user.message_set.create(message=msg)
+            djmessages.info(request, msg)
             return HttpResponseRedirect(reverse('user-profile',
                 args=[user_id]))
     else:
@@ -365,7 +366,7 @@ def update_profiles(request, user_id, template_name='accounts/update_profile.htm
             except DatabaseError:
                 msg = _('The user profile for %(account)s'
                 ' could not be updated') % {'account': user_profile.user.username}
-            request.user.message_set.create(message=msg)
+            djmessages.info(request, msg)
             return HttpResponseRedirect(reverse('user-profile',
                 args=[user_id]))
     else:

@@ -9,6 +9,7 @@
 {% block heading %}{% trans "Settings :: Edit authentication mail server" %}{% endblock heading %}
 {% block content %}
 <form action="" method="post">
+	{% csrf_token %}
 <div class="Grid_heading">
     <div class="Bayes_heading">
 		{% blocktrans with forms.errors as forms_errors %}

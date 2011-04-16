@@ -65,6 +65,7 @@ var media_url = '{{MEDIA_URL}}';
         <div class="content_footer">
             <div id="filterbox" style="display:{% ifnotequal order_by "id" %}block{%else%}none{%endifnotequal%};">
                 <form id="lists_filter_form" method="post" action="/{{ app }}/{{ list_kind }}/{{ direction }}/{{ order_by }}/">
+					{% csrf_token %}
                     {% trans "Filter " %}<span id="filterlabel">
                     {%ifequal order_by "to_address"%}<b>To:</b>{%endifequal%}{%ifequal order_by "from_address"%}<b>{% trans "From:" %}</b>{%endifequal%}</span>
                     <select id="id_query_type" name="query_type">

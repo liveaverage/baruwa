@@ -23,7 +23,7 @@
 {% load i18n %}
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title>{% trans "Baruwa ::" %}</title>
+<title>{% trans "Baruwa :: Login" %}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/login.css" />
 <link rel="icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" />
@@ -33,12 +33,6 @@
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function(){
-    if(!$('#loginform :hidden[name="csrfmiddlewaretoken"]').length){
-       location.href = '{% url please-login %}?next=/';
-    }
-    if(!$('#resetform :hidden[name="csrfmiddlewaretoken"]').length){
-       location.href = '{% url please-login %}?next=/';
-    }
     $('#resetlnk').bind('click', function(event){
         event.preventDefault();
         $('#login_part').hide();
@@ -72,6 +66,7 @@ $(document).ready(function(){
 	{% endfor %}
 	{% endif %}
     <form id="loginform" action="{% url please-login %}" method="post">
+        {% csrf_token %}
         <input type="hidden" name="next" value="{{ next }}" />
         <label>{% trans "Username" %}</label>
         <input type="text" name="username" class="field" id="id_username" maxlength="30" />
@@ -85,6 +80,7 @@ $(document).ready(function(){
 	<p>{% trans "Forgotten your password? Enter your e-mail address below, and we'll e-mail instructions for setting a new one." %}</p>
 	<br />
 	<form id="resetform" action="{% url reset-pwform %}" method="post">
+		{% csrf_token %}
 		<label>{% trans "Email address" %}</label>
 		<input type="text" name="email" class="field" id="email" />
 		{{ form.email.errors }}

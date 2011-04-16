@@ -11,6 +11,7 @@ Domains :: {{ domain_address }} - add destination mail server
 {% endblocktrans %}{% endblock heading %}
 {% block content %}
 <form action="" method="post">
+{% csrf_token %}
 <div class="Grid_heading">
     <div class="Bayes_heading">
 		{% trans "Add Mail Server" %} 
