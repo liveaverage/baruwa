@@ -45,7 +45,7 @@ function handle_form(event){
                 clearTimeout(timeout);
                 $('#filter-error').remove();
             };
-            $('.Bayes_heading').after('<div id="info-msg">'+gettext('The address has been added to the list')+'</div>');
+            $('#above-msgs').after('<div id="info-msg">'+gettext('The address has been added to the list')+'</div>');
             $('#info-msg').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>');
             timeout = setTimeout(function() {$('#info-msg').empty().remove();}, 15050);
             $('form').clearForm();
@@ -62,7 +62,7 @@ function handle_form(event){
                 clearTimeout(timeout);
                 $('#info-msg').remove();
             };
-            $('.Bayes_heading').after('<div id="filter-error">'+response.error_msg+'</div>');
+            $('#above-msgs').after('<div id="filter-error">'+response.error_msg+'</div>');
             $('#filter-error').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>');
             timeout = setTimeout(function() {
                 $('#filter-error').empty().remove(); 
