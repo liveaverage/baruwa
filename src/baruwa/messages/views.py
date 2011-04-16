@@ -108,7 +108,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             'otherinfected', 'whitelisted', 'blacklisted', 'nameinfected',
             'scaned').order_by(order_by)
         message_list = apply_filter(message_list, request, active_filters)
-
+    print request.LANGUAGE_CODE
     if request.is_ajax():
         sys_status = jsonify_status(status(request))
         if not list_all:

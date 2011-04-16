@@ -40,5 +40,6 @@ urlpatterns = patterns('baruwa.config.views',
     (r'^scanners/view/(?P<scanner_id>([0-9]+))/$', 'view_scanner', {}, 'view-scanner'),
     (r'^scanners/init/(?P<scanner_id>([0-9]+))/$', 'init_scanner', {}, 'init-scanner'),
     (r'^scanners/(?P<scanner_id>([0-9]+))/settings/(?P<section_id>([0-9]+))/$', 'view_settings', {}, 'view-section'),
-    (r'^conntests/(?P<taskid>[\w\d\-]+)/$', test_status, {}, 'conn-status')
+    (r'^conntests/(?P<taskid>[\w\d\-]+)/$', test_status, {}, 'conn-status'),
+    (r'^setlang/$', 'set_language', {}, 'lang-selector'),
 )

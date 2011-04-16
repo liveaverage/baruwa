@@ -33,6 +33,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.db import connection, IntegrityError, DatabaseError
+from django.utils.translation import check_for_language
 from celery.backends import default_backend
 from baruwa.utils.decorators import onlysuperusers
 from baruwa.accounts.models import UserAddresses
@@ -461,3 +462,20 @@ def view_settings(request, scanner_id, section_id,
     'Displays settings on a section basis'
     return render_to_response(template, locals(), 
         context_instance=RequestContext(request))
+
+
+def set_language(request):
+    next = request.REQUEST.get('next', None)
+    if not next:
+        next = request.META.get('HTTP_REFERER', None)
+    if not next:
+        next = '/'
+    response = HttpResponse('reset')
+    if request.method == 'POST':
+        lang_code = request.POST.get('language', None)
+        if lang_code and check_for_language(lang_code):
+            if hasattr(request, 'session'):
+                request.session['django_language'] = lang_code
+            else:
+                response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+    return response

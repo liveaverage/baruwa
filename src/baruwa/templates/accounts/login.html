@@ -43,6 +43,18 @@ $(document).ready(function(){
         $('#forgottenpw').hide();
         $('#login_part').show();
     });
+  $('#lang').change(function(){
+      var lang = $('#lang').val();
+      var post_data = {
+         language: lang,
+         next: '{% url please-login %}?next=' + $('#loginform [name=next]').val(),
+         csrfmiddlewaretoken: $('#loginform [name=csrfmiddlewaretoken]').val()
+      }
+      var url = '{% url lang-selector %}';
+      $.post(url, post_data, function(response){
+      location.href = '{% url please-login %}?next=' + $('#loginform [name=next]').val();
+      });
+  });
 });
 //]]>
 </script>
@@ -72,8 +84,14 @@ $(document).ready(function(){
         <input type="text" name="username" class="field" id="id_username" maxlength="30" />
         <label>{% trans "Password" %}</label>
         <input type="password" name="password" class="field" id="id_password" />
-        <a id="resetlnk" href="{% url reset-pwform %}">Forgotten Password ?</a>
+        <label>{% trans "Language" %}</label>
+        <select name="language" id="lang">
+		{% for lang in LANGUAGES %}
+		<option value="{{ lang.0 }}"{% if LANGUAGE_CODE == lang.0 %} selected="selected"{% endif %}>{{ lang.1 }}</option>
+		{% endfor %}
+		</select>
         <input type="submit" class="button" id="login" value="{% trans "Login" %}" />
+		<a id="resetlnk" href="{% url reset-pwform %}">Forgotten Password ?</a>
     </form>
     </div>
     <div id="forgottenpw" {% ifequal request.path '/accounts/pwreset/'%}style="display:;"{%else%}style="display:none;"{% endifequal %}>
