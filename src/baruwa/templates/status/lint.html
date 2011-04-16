@@ -26,8 +26,10 @@
     <div class="SA_row">{{ item }}</div>
 </div>
 {% empty %}
+<div class="LightBlue_div">
 <div class="spanrow">
 {% trans "Lint failed please verify if spamassassin is installed" %}
+</div>
 </div>
 {% endfor %}
 {% endblock content %}

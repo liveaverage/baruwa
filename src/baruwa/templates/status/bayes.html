@@ -59,8 +59,10 @@
     <div class="Bayes_value">{{ data.rcount }}</div>
 </div>
 {% else %}
+<div class="LightBlue_div">
 <div class="spanrow">
 {% trans "Bayes information could not be collected." %}
+</div>
 </div>
 {% endif %}
 {% endblock content %}

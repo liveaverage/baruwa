@@ -31,33 +31,10 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 {% ifequal request.path '/accounts/login/'%}
 <script type="text/javascript">
-//<![CDATA[
-$(document).ready(function(){
-    $('#resetlnk').bind('click', function(event){
-        event.preventDefault();
-        $('#login_part').hide();
-        $('#forgottenpw').show();
-    });
-    $('#cancelrset').bind('click', function(event){
-        event.preventDefault();
-        $('#forgottenpw').hide();
-        $('#login_part').show();
-    });
-  $('#lang').change(function(){
-      var lang = $('#lang').val();
-      var post_data = {
-         language: lang,
-         next: '{% url please-login %}?next=' + $('#loginform [name=next]').val(),
-         csrfmiddlewaretoken: $('#loginform [name=csrfmiddlewaretoken]').val()
-      }
-      var url = '{% url lang-selector %}';
-      $.post(url, post_data, function(response){
-      location.href = '{% url please-login %}?next=' + $('#loginform [name=next]').val();
-      });
-  });
-});
-//]]>
+var url = '{% url lang-selector %}';
+var next = '{% url please-login %}?next=';
 </script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/login.js"></script>
 {% endifequal %}
 </head>
 <body>
