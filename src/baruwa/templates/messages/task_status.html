@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block scripts %}
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var link_url = '{% url main-messages-index %}';
+var media_url = '{{MEDIA_URL}}';
+//]]>
+</script>
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.progressbar.js"></script>
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/task_status.js"></script>
 {% endblock scripts %}
 {% block headers %}
+<link href="{{ MEDIA_URL }}css/progressbar.css" rel="stylesheet" type="text/css" />
 {% if not finished  %}
 <!--<meta http-equiv="refresh" content="5" />-->
 {% endif %}
@@ -57,10 +65,21 @@ Quarantine processing jobid: {{taskid}}
 	{% endfor %}
 {% else %}
 <div class="LightBlue_div">
-	<div class="spanrow">
-		<img src="{{MEDIA_URL}}imgs/ajax-pager.gif" alt="" /> 
-		{% trans "The request is being processed. Current status: " %}{{status}} {{completed}}%
+	<div class="lightblue_div">
+		<div id="progstate">
+			<img src="{{MEDIA_URL}}imgs/ajax-pager.gif" alt="" /> 
+			{% trans "The request is being processed. Current status: " %}<span id="status">{{status}}</span> <span id="percent">{{completed}}</span>%
+		</div>
+		<div id="progbar">
+		</div>
 	</div>
 </div>
+<noscript>
+	<div class="LightBlue_div">
+		<div class="spanrow">
+			<a href="">{% trans "Update status" %}</a>
+		</div>
+	</div>
+</noscript>
 {% endif %}
 {% endblock content %}
