@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block scripts %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/task_status.js"></script>
+{% endblock scripts %}
 {% block headers %}
 {% if not finished  %}
-<meta http-equiv="refresh" content="5" />
+<!--<meta http-equiv="refresh" content="5" />-->
 {% endif %}
 {% endblock headers %}
 {% block submenu %}

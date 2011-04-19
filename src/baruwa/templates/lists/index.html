@@ -58,7 +58,9 @@ var media_url = '{{MEDIA_URL}}';
         </div>
         {% endfor %}
     {% else %}
+    <div class="LightBlue_div">
     <div class="spanrow">{% trans "No records returned" %}</div>
+    </div>
     {% endif %}
 {% endblock content %}
 {% block paging %}

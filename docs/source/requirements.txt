@@ -44,7 +44,7 @@ MailScanner requirements
 .. _`Anyjson`: http://pypi.python.org/pypi/anyjson
 .. _`RabbitMQ`: http://www.rabbitmq.com/
 .. _`Sphinx`: http://sphinx.pocoo.org/
-.. -`Pyrad`: http://www.simplon.biz/software/pyrad
+.. _`Pyrad`: http://www.simplon.biz/software/pyrad
 .. _`DBI`: http://dbi.perl.org/
 .. _`DBD-MySQL`: http://search.cpan.org/dist/DBD-mysql/
 .. _`DBD-SQLite`: http://search.cpan.org/~msergeant/DBD-SQLite-0.31/

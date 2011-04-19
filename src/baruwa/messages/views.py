@@ -344,7 +344,11 @@ def task_status(request, taskid):
         if results:
             percent = "%.1f" % ((1.0 * int(results['current']) /
             int(results['total'])) * 100)
-    return render_to_response('messages/task_status.html', 
-    {'taskid': taskid, 'finished': finished, 'results': results,
-    'status': status, 'completed': percent},
+    rdict = {'taskid': taskid, 'finished': finished, 'results': results,
+    'status': status, 'completed': percent}
+    if request.is_ajax():
+        response = anyjson.dumps(rdict)
+        return HttpResponse(response,
+        content_type='application/javascript; charset=utf-8')
+    return render_to_response('messages/task_status.html', rdict,
     context_instance=RequestContext(request))

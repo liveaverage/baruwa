@@ -67,22 +67,22 @@ def tds_msg_status(message):
         and (not message['virusinfected']) 
         and (not message['nameinfected']) 
         and (not message['otherinfected'])):
-        value = 'Spam'
+        value = _('Spam')
     if message['blacklisted']:
-        value = 'BL'
+        value = _('BL')
     if (message['virusinfected'] or 
         message['nameinfected'] or 
         message['otherinfected']):
-        value = 'Infected'
+        value = _('Infected')
     if ((not message['spam']) and (not message['virusinfected']) 
         and (not message['nameinfected']) 
         and (not message['otherinfected']) 
         and (not message['whitelisted'])):
-        value = 'Clean'
+        value = _('Clean')
     if message['whitelisted']:
-        value = 'WL'
+        value = _('WL')
     if not message['scaned']:
-        value = 'NS'
+        value = _('NS')
     return value
 
 
