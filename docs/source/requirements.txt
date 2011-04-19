@@ -6,7 +6,7 @@ Baruwa requirements
 ===================
 
 	+ `Python`_ >= 2.4
-	+ `Django`_ >= 1.1.1
+	+ `Django`_ >= 1.2
 	+ `MySQL-Python`_ >= 1.2.1p2
 	+ `GeoIP-Python`_
 	+ `iPy`_

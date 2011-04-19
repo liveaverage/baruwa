@@ -50,7 +50,7 @@ Screenshots
 Requirements
 ==
 + Python >= 2.4
-+ Django >= 1.1.1
++ Django >= 1.2
 + django-celery
 + MySQLdb >= 1.2.1p2
 + GeoIP
