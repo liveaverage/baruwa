@@ -1,12 +1,19 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%define mscustomfunctionsdir /usr/lib/MailScanner/MailScanner/CustomFunctions
+%define baruwalibdir /usr/lib/baruwa
 Name:           baruwa
-Version:        1.0.1
-Release:        1%{?dist}
+Version:        1.0.2
+Release:        4%{?dist}
 Summary:        Ajax enabled MailScanner web frontend      
-Group:          Development/Languages
+Group:          Applications/Internet
 License:        GPLv2
 URL:            http://www.topdog.za.net/baruwa
-Source0:        http://www.topdog-software.com/oss/files/%{name}-%{version}.tar.gz
+Source0:        http://pypi.python.org/packages/source/b/baruwa/%{name}-%{version}.tar.gz
+Patch1:         0001-support-ajax-csrf-protection-for-Django-1.x.x.patch
+Patch2:         0002-use-alternative-js-csrf-protection-4-dj1.1.x.patch
+Patch3:         fix-mailauth-exception.patch
+Patch4:         baruwa-fix-exchange-rejecting-released-msgs-as-duplicates.patch
+Patch5:         baruwa-fix-some-rbls-not-displaying.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel, python-setuptools, python-sphinx
@@ -36,6 +43,11 @@ settings.
 
 %prep
 %setup -q -n %{name}-%{version}
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 %{__sed} -i 's:/usr/lib/python2.4/site-packages:%{python_sitelib}:' extras/baruwa-mod_wsgi.conf
 
 %{__cat} <<'EOF' > %{name}.cron
@@ -73,9 +85,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__chmod} 0755 $RPM_BUILD_ROOT%{python_sitelib}/%{name}/manage.py
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily
-%{__install} -d -p $RPM_BUILD_ROOT%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions
-%{__install} -d -p $RPM_BUILD_ROOT%{_prefix}/lib/%{name}
-%{__install} -p -m0644 extras/*.pm $RPM_BUILD_ROOT%{_prefix}/lib/%{name}/
+%{__install} -d -p $RPM_BUILD_ROOT%{mscustomfunctionsdir}
+%{__install} -d -p $RPM_BUILD_ROOT%{baruwalibdir}
+%{__install} -p -m0644 extras/*.pm $RPM_BUILD_ROOT%{baruwalibdir}/
 %{__install} -p -m0644 extras/baruwa-mod_wsgi.conf $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
 %{__install} -p -m0755 %{name}.cron $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily/%{name}
 pushd $RPM_BUILD_ROOT%{python_sitelib}/%{name}/static/js
@@ -83,7 +95,7 @@ ln -s ../../../../../../share/dojo/dojo .
 ln -s ../../../../../../share/dojo/dojox .
 ln -s ../../../../../../share/dojo/dijit .
 popd
-pushd $RPM_BUILD_ROOT%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions
+pushd $RPM_BUILD_ROOT%{mscustomfunctionsdir}
 ln -s ../../../baruwa/BaruwaSQL.pm .
 ln -s ../../../baruwa/BaruwaLists.pm .
 ln -s ../../../baruwa/BaruwaUserSettings.pm .
@@ -98,13 +110,31 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 %{_sysconfdir}/cron.daily/%{name}
 %{python_sitelib}/*
-%{_prefix}/lib/%{name}/
-%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions/BaruwaSQL.pm
-%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions/BaruwaLists.pm
-%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions/BaruwaUserSettings.pm
+%{baruwalibdir}/
+%{mscustomfunctionsdir}/BaruwaSQL.pm
+%{mscustomfunctionsdir}/BaruwaLists.pm
+%{mscustomfunctionsdir}/BaruwaUserSettings.pm
 
 
 %changelog
+* Sat Apr 23 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.0.2-4
+ - FIX: exchange duplicate delivery suppression blocks releases
+ - FIX: some RBL names not being displayed
+
+* Thu Apr 14 2011 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.2-3
+- Fix mailauth exception
+
+* Sat Feb 22 2011 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.2-2
+- Fix CSRF protection issues preventing users of Django 1.x.x from
+  performing Ajax POST operations.
+
+* Sat Feb 19 2011 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.2-1
+- upgrade to the latest version
+
+* Mon Feb 06 2011 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.1-2
+- fix the annotation regression introduced by django 1.2.4
+- fix the js alert and redirection on the login page
+
 * Wed Dec 29 2010 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.1-1
 - upgrade to latest version
 
