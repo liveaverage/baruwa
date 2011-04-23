@@ -177,7 +177,8 @@ def detail(request, message_id, archive=False):
         if quarantine_form.is_valid():
             form_data = quarantine_form.cleaned_data
             form_data['message_id'] = [form_data['message_id']]
-            task = ProcessQuarantine.delay(form_data)
+            task = ProcessQuarantine.apply_async(args=[form_data],
+            queue=message_details.hostname)
             html = []
             task.wait()
             result = task.result[0]
@@ -253,8 +254,9 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
         return HttpResponseForbidden(
             _('You are not authorized to access this page'))
     if is_attach:
-        preview_task = PreviewMessageTask.delay(message_id, 
-        str(message_details.date), attachment_id)
+        preview_task = PreviewMessageTask.apply_async(args=[message_id,
+        str(message_details.date), attachment_id],
+        queue=message_details.hostname)
         preview_task.wait()
         if preview_task.result:
             result = preview_task.result
@@ -265,8 +267,8 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
             return response
         msg = _("The requested attachment could not be downloaded")
     else:
-        preview_task = PreviewMessageTask.delay(message_id,
-        str(message_details.date))
+        preview_task = PreviewMessageTask.apply_async(args=[message_id,
+        str(message_details.date)], queue=message_details.hostname)
         preview_task.wait()
         if preview_task.result:
             result = preview_task.result
@@ -296,8 +298,9 @@ def auto_release(request, message_uuid, template='messages/release.html'):
     "Releases message from the quarantine without need to login"
     release_record = get_object_or_404(Release, uuid=message_uuid, released=0)
     message_details = get_object_or_404(Message, id=release_record.message_id)
-    task = ReleaseMessage.delay(message_details.id, str(message_details.date),
-    message_details.from_address, message_details.to_address.split(','))
+    task = ReleaseMessage.apply_async(args=[message_details.id,
+    str(message_details.date), message_details.from_address,
+    message_details.to_address.split(',')], queue=message_details.hostname)
     task.wait()
     if task.status == 'SUCCESS':
         result = task.result
@@ -318,6 +321,10 @@ def bulk_process(request):
         choices = request.session['quarantine_choices']
         form.fields['message_id']._choices = choices
         if form.is_valid():
+            #
+            messages = Message.objects.values('id', 'date', 'from_address',
+            'to_address').filter(id__in=form.cleaned_data['message_id'])
+            
             task = ProcessQuarantine.delay(form.cleaned_data)
             return HttpResponseRedirect(reverse('task-status',
             args=[task.task_id]))

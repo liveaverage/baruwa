@@ -49,6 +49,81 @@ class ReleaseMessage(Task):
             return {'success': False, 'error': ' '.join(processor.errors)}
 
 
+class ProcessQuarantinedMsg(Task):
+    "Process quarantined message"
+    name = 'process-quarantined-msg'
+    serializer = 'json'
+
+    def run(self, job, *kwargs):
+        'run da ting'
+        logger = self.get_logger(**kwargs)
+        logger.info(_('Processing quarantined message: %(id)s',
+        dict(id=job['message_id'])))
+        result = dict(message_id=job['message_id'], release=None,
+        learn=None, delete=None, errors=[])
+
+        try:
+            processor = ProcessQuarantinedMessage(job['message_id'],
+                        job['date'])
+        except AssertionError, exception:
+            for task in ['release', 'learn', 'todelete']:
+                if job[task]:
+                    if task == 'todelete':
+                        task = 'delete'
+                    result[task] = False
+                    result['errors'].append((task, str(exception)))
+                    logger.info(_("Message: %(msgid)s %(task)s failed with "
+                    "error: %(error)s"), dict(msgid=job['message_id'],
+                    task=task, error=str(exception)))
+        if job['release']:
+            if job['from_address']:
+                if job['use_alt']:
+                    to_addrs = job['altrecipients'].split(',')
+                else:
+                    to_addrs = job['to_address'].split(',')
+                result['release'] = processor.release(job['from_address'],
+                to_addrs)
+                if not result['release']:
+                    error = ' '.join(processor.errors)
+                    result['errors'].append(('release', error))
+                    processor.reset_errors()
+                else:
+                    logger.info(_("Message: %(msgid)s released to: %(to)s"),
+                    dict(msgid=job['message_id'], to=', '.join(to_addrs)))
+            else:
+                result['release'] = False
+                error = _('The sender address is empty')
+                result['errors'].append(('release', error))
+                logger.info(_("Message: %(msgid)s release failed with "
+                "error: %(error)s"), dict(msgid=job['message_id'],
+                error=error))
+        if job['learn']:
+            result['learn'] = processor.learn(job['salearn_as'])
+            if not result['learn']:
+                error = ' '.join(processor.errors)
+                result['errors'].append(('learn', error))
+                processor.reset_errors()
+                logger.info(_("Message: %(msgid)s learning failed with "
+                "error: %(error)s"), dict(msgid=job['message_id'],
+                error=error))
+            else:
+                logger.info(_("Message: %(msgid)s learnt as %(learn)s"),
+                dict(msgid=job['message_id'], learn=job['salearn_as']))
+        if job['todelete']:
+            result['delete'] = processor.delete()
+            if not result['delete']:
+                error = ' '.join(processor.errors)
+                result['errors'].append(('delete', error))
+                processor.reset_errors()
+                logger.info(_("Message: %(msgid)s deleting failed with "
+                "error: %(error)s"), dict(msgid=job['message_id'],
+                error=error))
+            else:
+                logger.info(_("Message: %(msgid)s deleted from quarantine"),
+                dict(msgid=job['message_id']))
+        return result
+
+
 class ProcessQuarantine(Task):
     "Process quarantine"
     name = 'process-quarantine'
@@ -58,7 +133,7 @@ class ProcessQuarantine(Task):
         "run"
         logger = self.get_logger(**kwargs)
         logger.info(_("Bulk Processing %(len)d quarantined messages"),
-            {'len': len(job['message_id'])})
+        dict(len=len(job['message_id'])))
 
         query = Message.objects.values('id', 'date', 'from_address',
             'to_address').filter(id__in=job['message_id'])
