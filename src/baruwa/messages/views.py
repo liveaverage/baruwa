@@ -34,10 +34,11 @@ from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
-from celery.backends import default_backend
+from celery.task.sets import TaskSet
+from celery.result import TaskSetResult
 from baruwa.messages.models import Message, Release, Archive
 from baruwa.messages.tasks import ProcessQuarantine, PreviewMessageTask,\
- ReleaseMessage
+ ReleaseMessage, ProcessQuarantinedMsg
 from baruwa.messages.forms import QuarantineProcessForm, BulkQuarantineProcessForm
 from baruwa.utils.misc import jsonify_msg_list, apply_filter, jsonify_status
 from baruwa.utils.context_processors import status
@@ -96,7 +97,11 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             form = BulkQuarantineProcessForm()
             form.fields['altrecipients'].widget.attrs['size'] = '55'
             message_list = apply_filter(message_list, request, active_filters)
-            choices = [(message['id'], message['id']) for message in message_list[:50]]
+            p = Paginator(message_list, 50)
+            if page == 'last':
+                page = p.num_pages
+            po = p.page(page)
+            choices = [(message['id'], message['id']) for message in po.object_list]
             form.fields['message_id']._choices = choices
             form.fields['message_id'].widget.choices = choices
             request.session['quarantine_choices'] = choices
@@ -321,13 +326,23 @@ def bulk_process(request):
         choices = request.session['quarantine_choices']
         form.fields['message_id']._choices = choices
         if form.is_valid():
-            #
-            messages = Message.objects.values('id', 'date', 'from_address',
-            'to_address').filter(id__in=form.cleaned_data['message_id'])
-            
-            task = ProcessQuarantine.delay(form.cleaned_data)
+            messages = Message.objects.values('id', 'from_address', 'date',
+            'hostname', 'to_address').filter(id__in=form.cleaned_data['message_id'])
+            del form.cleaned_data['message_id']
+            formvals = []
+            for message in messages:
+                message.update(form.cleaned_data)
+                message['date'] = str(message['date'])
+                message['message_id'] = message['id']
+                del message['id']
+                formvals.append(message)
+            taskset = TaskSet(tasks=[ProcessQuarantinedMsg.subtask(
+            args=[formval], options=dict(queue=formval['hostname']))
+            for formval in formvals])
+            task = taskset.apply_async()
+            task.save()
             return HttpResponseRedirect(reverse('task-status',
-            args=[task.task_id]))
+            args=[task.taskset_id]))
 
     msg = _('System was unable to process your request')
     djmessages.info(request, msg)
@@ -341,16 +356,16 @@ def task_status(request, taskid):
     Return task status based on:
     djcelery.views.task_status
     """
-    status = default_backend.get_status(taskid)
-    results = default_backend.get_result(taskid)
+    result = TaskSetResult.restore(taskid)
     percent = "0.0"
-    if status in ['SUCCESS', 'FAILURE']:
+    status = 'PROGRESS'
+    results = []
+    if result.ready():
         finished = True
+        results = result.join()
     else:
         finished = False
-        if results:
-            percent = "%.1f" % ((1.0 * int(results['current']) /
-            int(results['total'])) * 100)
+        percent = "%.1f" % ((1.0 * int(result.completed_count())/ int(result.total)) * 100)
     rdict = {'taskid': taskid, 'finished': finished, 'results': results,
     'status': status, 'completed': percent}
     if request.is_ajax():

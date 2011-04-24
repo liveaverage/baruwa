@@ -54,11 +54,12 @@ class ProcessQuarantinedMsg(Task):
     name = 'process-quarantined-msg'
     serializer = 'json'
 
-    def run(self, job, *kwargs):
+    def run(self, *args, **kwargs):
         'run da ting'
+        job = args[0]
         logger = self.get_logger(**kwargs)
-        logger.info(_('Processing quarantined message: %(id)s',
-        dict(id=job['message_id'])))
+        logger.info(_('Processing quarantined message: %(id)s'),
+        dict(id=job['message_id']))
         result = dict(message_id=job['message_id'], release=None,
         learn=None, delete=None, errors=[])
 
