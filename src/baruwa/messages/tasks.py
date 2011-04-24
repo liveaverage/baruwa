@@ -76,6 +76,7 @@ class ProcessQuarantinedMsg(Task):
                     logger.info(_("Message: %(msgid)s %(task)s failed with "
                     "error: %(error)s"), dict(msgid=job['message_id'],
                     task=task, error=str(exception)))
+            return result
         if job['release']:
             if job['from_address']:
                 if job['use_alt']:
