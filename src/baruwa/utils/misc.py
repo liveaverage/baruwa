@@ -326,7 +326,7 @@ def get_sys_status(request):
             'baruwa_status': status, 
             'baruwa_mail_total': data.total, 
             'baruwa_spam_total': spam, 
-            'baruwa_virus_total': data.virii,
+            'baruwa_virus_total': data.virii or 0,
             'baruwa_in_queue': inq['count'],
             'baruwa_out_queue': outq['count']
             }
