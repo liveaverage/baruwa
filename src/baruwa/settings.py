@@ -1,6 +1,8 @@
 # Django settings for baruwa project.
 # vim: ai ts=4 sts=4 et sw=4
 
+import os
+import socket
 import djcelery
 djcelery.setup_loader()
 ugettext = lambda s: s
@@ -8,7 +10,6 @@ ugettext = lambda s: s
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-import os
 CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8')).replace('\\', '/')
 
 ADMINS = (
@@ -163,6 +164,20 @@ BROKER_PORT = 5672
 BROKER_USER = "baruwa"
 BROKER_PASSWORD = "password"
 BROKER_VHOST = "baruwa"
+CELERY_QUEUES = {
+    socket.gethostname(): {
+        "exchange_type": "direct",
+        "binding_key": socket.gethostname(),
+    },
+    "default": {
+        "exchange": "default",
+        "binding_key": "default"
+    },
+}
+CELERY_DEFAULT_QUEUE = "default"
+CELERY_DEFAULT_EXCHANGE = "default"
+CELERY_DEFAULT_EXCHANGE_TYPE = "direct"
+CELERY_DEFAULT_ROUTING_KEY = "default"
 
 # Radius auth settings
 RADIUS_SECRET = {}
