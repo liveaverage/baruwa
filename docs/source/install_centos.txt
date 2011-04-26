@@ -4,7 +4,7 @@
 Baruwa on Centos/RHEL
 =====================
 
-The Baruwa rpm that is provided only supports apache out of the
+The Baruwa rpm that is provided only supports Apache out of the
 box, if you are running a different web server, please install
 from source or rebuild the source rpm to support your web server.
 
@@ -12,202 +12,35 @@ Install EPEL
 ============
 
 The EPEL repo provides packages which are in Fedora but no yet
-included in RHEL/CENTOS. Django is shipped by the EPEL repo.
-Instructions on installing it can be found on `EPEL <http://fedoraproject.org/wiki/EPEL/FAQ#howtouse>`_
+included in RHEL/CENTOS. Instructions on installing it can be 
+found on `EPEL <http://fedoraproject.org/wiki/EPEL/FAQ#howtouse>`_
 
-Baruwa rpm install
-==================
+You need to install this repo in order to access certain packages
+that are required by Baruwa.
 
-Due to the fact that the shipped MySQLdb module shipped on 
-Centos/RHEL <= 5.x is too old, use the updated rpm that i supply
-from http://topdog-software.com/oss/MySQL-python/ 
-or install from source::
+Baruwa installation
+===================
 
-	# yum --nogpgcheck localinstall MySQL-python-<version>.rpm
+A Baruwa Centos/RHEL repo is now available at http://repo.baruwa.org/
+To install from this repo you need to enable the repo::
 
-Now proceed and install the other dependencies::
+	# rpm -Uvh http://repo.baruwa.org/el5/i386/baruwa-release-5-0.noarch.rpm
 
-    # yum install mysql-server python-IPy python-GeoIP Django mod_wsgi python-uuid python-lxml rabbitmq-server
+Install the dependencies::
 
-Install the python-reportlab rpm from  http://www.topdog-software.com/oss/python-reportlab/::
-
-    # yum --nogpgcheck localinstall python-reportlab-<version>.rpm
+	# yum install mysql-server python-IPy python-GeoIP Django mod_wsgi python-uuid python-lxml rabbitmq-server
 	
-Install the dojo rpm from http://topdog-software.com/oss/dojo/::
+Install Baruwa, all the required dependencies not in the other repo's will
+be resolved by packages shipped by the Baruwa repo::
 
-    # yum --nogpgcheck localinstall dojo-1.4.3-1.noarch.rpm
+	# yum install baruwa
 
-Download the Baruwa rpm from http://www.topdog-software.com/oss/baruwa/
-and install::
+.. include:: includes/rabbitmq.txt
 
-    # yum --nogpgcheck localinstall baruwa-<version>.noarch.rpm
+.. include:: includes/configure_ms_redhat.txt
 
-Create the database::
+.. include:: includes/configure_baruwa.txt
 
-    # mysqladmin -u root -p create baruwa
+.. include:: includes/redhat_apache.txt
 
-Create the database user::
-
-    mysql> GRANT ALL ON baruwa.* TO baruwa@localhost IDENTIFIED BY '<password>';
-    mysql> flush privileges;
-
-Configure RabbitMQ
-==================
-
-Create a user and virtual host for baruwa::
-
-    # rabbitmqctl add_user baruwa your_password
-    # rabbitmqctl add_vhost baruwa
-    # rabbitmqctl set_permissions -p baruwa baruwa ".*" ".*" ".*"
-
-See the RabbitMQ `Admin Guide`_ for more information.
-
-Configure MailScanner
-=====================
-
-It is assumed that you have a working MailScanner system already installed
-and configured, if you are installing from scratch please refer to their
-documentation on how to install and configure MailScanner. 
-
-Edit /usr/lib/baruwa/BaruwaSQL.pm and set the variables::
-
-    my ($db_name)   = 'baruwa';
-    my ($db_host)   = 'localhost';
-    my ($db_user)   = 'baruwa';
-    my ($db_pass)   = '<password>';
-    my ($sqlite_db) = "/var/spool/MailScanner/incoming/baruwa.db";
-
-Next edit the MailScanner config file /etc/MailScanner/MailScanner.conf,
-you need to make sure that the following options are set::
-
-    Quarantine User = exim (Or what ever your "Run As User" is set to)
-    Quarantine Group = apache (or your webserver user if not apache)
-    Quarantine Permissions = 0660
-    Quarantine Whole Message = yes
-    Quarantine Whole Message As Queue Files = no
-    Detailed Spam Report = yes
-    Include Scores In SpamAssassin Report = yes
-    Always Looked Up Last = &BaruwaSQL
-
-To actually quarantine and later process messages with in baruwa, set
-'store' as one of your keywords for the "Spam Actions" and
-"High Scoring Spam Actions" MailScanner options
-
-**Integrate SQL Blacklists/Whitelists**
-
-Edit /usr/lib/baruwa/BaruwaLists.pm and set the variables::
-
-    my ($db_name) = 'baruwa';
-    my ($db_host) = 'localhost';
-    my ($db_user) = 'baruwa';
-    my ($db_pass) = '<password>';
-
-Next edit the MailScanner config file /etc/MailScanner/MailScanner.conf, and
-set the following options::
-
-    Is Definitely Not Spam = &BaruwaWhitelist
-    Is Definitely Spam = &BaruwaBlacklist
-
-**Integrate per user settings**
-
-Edit /usr/lib/baruwa/BaruwaUserSettings.pm and set the variables::
-
-    my ($db_name) = 'baruwa';
-    my ($db_host) = 'localhost';
-    my ($db_user) = 'baruwa';
-    my ($db_pass) = '<password>';
-
-Link the BaruwaUserSettings module::
-
-    ln -s /usr/lib/baruwa/BaruwaUserSettings.pm /usr/lib/MailScanner/MailScanner/CustomFunctions/
-
-Edit the MailScanner config file /etc/MailScanner/MailScanner.conf, and
-set the following options::
-
-    Required SpamAssassin Score = &BaruwaLowScore
-    High SpamAssassin Score = &BaruwaHighScore
-
-If you want users to be able to turn off spam checks for their own profiles,
-set the following options::
-
-    Spam Checks = &BaruwaShouldScan
-
-**Apply configuration changes**
-
-Restart up MailScanner::
-
-    # /etc/init.d/MailScanner restart
-
-**Verify that is working**
-
-Check your log files you should see
-
-Baruwa SQL logger::
-
-	Aug  9 18:58:27 localhost MailScanner[8470]: Logging message 1OiVg7-0003zS-9s to Baruwa SQL 
-	Aug  9 18:58:27 localhost MailScanner[11052]: 1OiVg7-0003zS-9s: Logged to Baruwa SQL
-
-Baruwa Lists::
-
-	Aug 9 18:32:42 localhost MailScanner[27260]: Starting Baruwa whitelists 
-	Aug 9 18:32:42 localhost MailScanner[27260]: Read 6 whitelist items 
-	Aug 9 18:32:42 localhost MailScanner[27260]: Ip blocks whitelisted 192.168.1.0/24 192.168.2.0/24 xxx.xx.xxx.0/26
-	
-Baruwa User settings::
-
-    Aug 9 15:00:03 localhost MailScanner[25708]: Baruwa - Populating spam score settings
-    Aug 9 15:00:03 localhost MailScanner[25708]: Read 1 spam score settings
-    Aug 9 14:59:53 localhost MailScanner[25668]: Baruwa - Populating high spam score settings
-    Aug 9 14:59:53 localhost MailScanner[25668]: Read 1 high spam score settings
-
-
-Configure Baruwa
-================
-
-Edit the baruwa settings.py::
-
-	# baruwa_path=$(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
-	# vi $baruwa_path/baruwa/settings.py
-
-And set the mysql database details::
-
-    DATABASE_ENGINE = 'mysql'           
-    DATABASE_NAME = 'baruwa'             
-    DATABASE_USER = 'baruwa'             
-    DATABASE_PASSWORD = '<baruwa_password>'         
-    DATABASE_HOST = 'localhost'    
-
-Create the baruwa admin user and populate the database::
-
-	# $baruwa_path/baruwa/manage.py syncdb  
-	
-Set the rabbitMQ settings::
-
-	CELERY_CONCURRENCY = 20
-	BROKER_HOST = "localhost"
-	BROKER_PORT = 5672
-	BROKER_USER = "baruwa"
-	BROKER_PASSWORD = "your_password"
-	BROKER_VHOST = "baruwa"     
-
-Edit the settings.py file and make configuration changes to suit your site.::
-
-	# vi $baruwa_path/baruwa/settings.py
-
-**Setup Web server**
-
-Edit your apache configurations to enable virtual hosting if
-not enabled already. Then set the correct hostname in 
-/etc/httpd/conf.d/baruwa.conf::
-
-    # change to your hostname
-    ServerName baruwa-alpha.local
-
-Make sure mod_wsgi is enabled, uncomment the following line in
-/etc/httpd/conf.d/wsgi.conf::
-
-    LoadModule wsgi_module modules/mod_wsgi.so
-    
-Restart apache and point your browser to the hostname url.
-
-.. _`Admin Guide`: http://www.rabbitmq.com/admin-guide.html
+.. include:: includes/testing.txt

@@ -1,10 +1,25 @@
 .. _distributed:
 
-==================
-Distributed setups
-==================
+================
+Clustered setups
+================
 
-Baruwa is capable of running in a distributed setup, The only requirement is that the 
-nodes share session information. If you are running your nodes from the same database 
-backend or running multi master replication then this will work out of the box.
+Baruwa is capable of running in a cluster, The only requirement is that the 
+nodes share session information and have access to either the same MQ broker
+or use a MQ broker that is clustered with the other brokers serving the other
+nodes. 
+
+If you are running your nodes from the same database backend or running multi
+master replication and using a single MQ broker then this will work out of 
+the box.
+
+You will be able to run the same message management operations on any of the
+nodes within a cluster.
+
+.. note::
+
+	As of version 1.1.0 the status view will only show the status of the host
+	you are connected to, In future versions you will be able to view the
+	global cluster status as well as select a remote node in order to view its
+	status.
 
