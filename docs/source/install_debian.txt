@@ -15,7 +15,7 @@ Install & Configure RabbitMQ
 
 Install RabbitMQ::
 
-	# yum install rabbitmq-server
+	# apt-get install rabbitmq-server
 
 .. include:: includes/rabbitmq.txt
 
