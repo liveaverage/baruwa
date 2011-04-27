@@ -4,7 +4,7 @@
 Other batteries included
 ========================
 
-Baruwa provides custom `django # baruwa-admin <http://docs.djangoproject.com/en/1.1/ref/django-admin/>`_
+Baruwa provides custom `django manage.py <http://docs.djangoproject.com/en/1.1/ref/django-admin/>`_
 commands to enable scripting of house keeping tasks such as quarantine management and Database
 maintenance.
 

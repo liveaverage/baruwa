@@ -33,7 +33,7 @@ Set the following options::
 
 Populate the database and create admin user::
 
-	# $baruwa_path/baruwa/manage.py syncdb
+	# baruwa-admin syncdb
 	
 The syncdb command populates your SQL database and allows you 
 to create the admin user.
