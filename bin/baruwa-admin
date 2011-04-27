@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+from django.core.management import execute_manager
+try:
+    from baruwa import settings
+except ImportError:
+    import sys
+    sys.stderr.write("Baruwa may not be installed")\n")
+    sys.exit(1)
+
+if __name__ == "__main__":
+    execute_manager(settings)
