@@ -17,7 +17,7 @@ Install RabbitMQ::
 
 	# apt-get install rabbitmq-server
 
-.. include:: includes/rabbitmq.txt
+.. include:: includes/rabbitmq.inc
 
 Baruwa deb install
 ==================
@@ -65,7 +65,7 @@ The install asks you for the following info
  + baruwa admin password (The baruwa admin user password)
  + baruwa admin email (The baruwa admin user email address)
 
-.. include:: includes/configure_ms_redhat.txt
+.. include:: includes/configure_ms_redhat.inc
 
 Configure Baruwa
 ================
@@ -80,4 +80,4 @@ Edit the settings.py file and make configuration changes to suit your site.::
     Make sure you change the SECRET_KEY, DO NOT USE THE DEFAULT, If you have a cluster the key
     should be the same on all the machines in the cluster.
 
-.. include:: includes/testing.txt
+.. include:: includes/testing.inc

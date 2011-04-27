@@ -24,13 +24,13 @@ Then proceed and install the rpm::
 
     # yum --nogpgcheck localinstall baruwa-<version>.noarch.rpm
 
-.. include:: includes/rabbitmq.txt
+.. include:: includes/rabbitmq.inc
 
-.. include:: includes/configure_ms_redhat.txt
+.. include:: includes/configure_ms_redhat.inc
 
-.. include:: includes/configure_baruwa.txt
+.. include:: includes/configure_baruwa.inc
 
-.. include:: includes/redhat_apache.txt
+.. include:: includes/redhat_apache.inc
 
-.. include:: includes/testing.txt
+.. include:: includes/testing.inc
 

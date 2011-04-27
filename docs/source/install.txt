@@ -53,9 +53,9 @@ installation::
 	# cd GeoIP-Python-1.2.4
 	# python setup.py install
 
-.. include:: includes/rabbitmq.txt
+.. include:: includes/rabbitmq.inc
 
-.. include:: includes/configure_baruwa.txt
+.. include:: includes/configure_baruwa.inc
 
 Link to the dojo toolkit::
 
@@ -99,9 +99,9 @@ Use the nginx instructions from the `nginx wiki`_
 
 Use the `cherokee cookbook`_ instructions.
 
-.. include:: includes/configure_mailscanner.txt
+.. include:: includes/configure_mailscanner.inc
 
-.. include:: includes/testing.txt
+.. include:: includes/testing.inc
 
 Distribution / OS installation
 ==============================

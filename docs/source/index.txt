@@ -1,6 +1,6 @@
 Baruwa
 ======
-.. include:: includes/intro.txt
+.. include:: includes/intro.inc
 
 .. toctree::
     :maxdepth: 2
