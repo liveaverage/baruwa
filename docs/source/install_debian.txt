@@ -58,6 +58,7 @@ The install asks you for the following info
  + database user (The user baruwa will use to connect to the database)
  + database password (The password for the above)
  + database name (The name of the baruwa database)
+ + rabbitmq host (The rabbitMQ hostname or IP address)
  + rabbitmq vhost (The RabbitMQ vhost)
  + rabbitmq user (The RabbitMQ user)
  + rabbitmq password (The RabbitMQ password)

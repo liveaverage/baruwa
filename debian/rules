@@ -15,13 +15,15 @@
 override_dh_auto_clean:
 	rm -rf docs.debian
 	rm -f apache.conf
+	rm -f baruwa.conf
 	dh_auto_clean
 
 override_dh_auto_build:
 	dh_auto_build
 	cp -r docs docs.debian	
 	make -C docs.debian html
-	cp extras/baruwa-mod_wsgi.conf apache.conf	
+	cp extras/baruwa-mod_wsgi.conf apache.conf
+	cp extras/baruwa-mailscanner.conf baruwa.conf	
 	sed -i -e "s|/usr/lib/python2.4/site-packages|/usr/share/pyshared|;s|logs|/var/log/apache2|;" apache.conf
 	
 override_dh_compress:
@@ -29,12 +31,17 @@ override_dh_compress:
 
 override_dh_install:
 	cd debian/baruwa/
+	dh_install src/baruwa/settings.py /etc/baruwa/
 	dh_install
 	dh_install apache.conf /etc/baruwa/
+	dh_install baruwa.conf /etc/MailScanner/conf.d/
 	dh_install extras/*.pm /etc/MailScanner/CustomFunctions
 
 override_dh_pysupport:
 	dh_pysupport
+	rm -f debian/baruwa/usr/share/pyshared/baruwa/settings.py
+	cd debian/baruwa/usr/share/pyshared/baruwa \
+		&& ln -s ../../../../../etc/baruwa/settings.py .
 	cd debian/baruwa/usr/share/pyshared/baruwa/static/js \
 		&& ln -s ../../../../javascript/dijit \
 		&& ln -s ../../../../javascript/dojo \

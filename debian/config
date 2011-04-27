@@ -26,6 +26,10 @@ if [ "$RET" = "true" ]; then
    db_input critical baruwa/mysql/dbuser || true
    db_input critical baruwa/mysql/dbpass || true
    db_input critical baruwa/mysql/dbname || true
+   db_input critical baruwa/rabbitmq/mqhost || true
+   db_input critical baruwa/rabbitmq/mqvhost || true
+   db_input critical baruwa/rabbitmq/mquser || true
+   db_input critical baruwa/rabbitmq/mqpass || true
    db_input critical baruwa/django/baruwauser || true
    db_input critical baruwa/django/baruwapass || true
    db_input critical baruwa/django/baruwaemail || true

@@ -1,6 +1,6 @@
 
 Template: baruwa/webserver_type
-Type: multiselect
+Type: select
 __Choices: apache2, lighttpd, nginx
 Default: apache2
 _Description: Web server to reconfigure automatically:
@@ -81,3 +81,27 @@ Template: baruwa/django/baruwaemail
 Type: string
 _Description: Admin user's email address:
  Please supply and email address for the admin user.
+
+Template: baruwa/rabbitmq/mqhost
+Type: string
+Default: localhost
+_Description: RabbitMQ host:
+ Please enter the name or IP address of the RabbitMQ server
+
+Template: baruwa/rabbitmq/mqvhost
+Type: string
+Default: baruwa
+_Description: RabbitMQ vhost:
+ Please enter the name of the RabbitMQ vhost
+
+Template: baruwa/rabbitmq/mquser
+Type: string
+_Description: RabbitMQ user for Baruwa:
+ Please enter the RabbitMQ user that will be used by Baruwa to
+ access the RabbitMQ server
+
+Template: baruwa/rabbitmq/mqpass
+Type: password
+_Description: RabbitMQ user password:
+ Please enter the password for the account that will be used to
+ access the RabbitMQ server

@@ -3,14 +3,14 @@
 # Baruwa
 #
 # send quarantine reports
-/usr/share/pyshared/baruwa/manage.py sendquarantinereports
+baruwa-admin sendquarantinereports
 # clean quarantine 
-/usr/share/pyshared/baruwa/manage.py cleanquarantine
+baruwa-admin cleanquarantine
 # clean up the DB
-/usr/share/pyshared/baruwa/manage.py dbclean
+baruwa-admin dbclean
 # update sa rule definitions
-#/usr/share/pyshared/baruwa/manage.py update_sarules
+#baruwa-admin update_sarules
 # clean up stale sessions
-/usr/share/pyshared/baruwa/manage.py cleanup
+baruwa-admin cleanup
 # update geoip database
 /usr/share/doc/libgeoip1/examples/geolitecountryv4.sh

@@ -56,6 +56,14 @@ if [ "$1" = "configure" ]; then
     	dbuser=$RET
     	db_get baruwa/mysql/dbpass
     	dbpass=$RET
+    	db_get baruwa/rabbitmq/mqhost
+    	mqhost=$RET
+        db_get baruwa/rabbitmq/mqvhost
+        mqvhost=$RET
+        db_get baruwa/rabbitmq/mquser
+        mquser=$RET
+        db_get baruwa/rabbitmq/mqpass
+        mqpass=$RET
     	db_get baruwa/django/baruwauser
     	baruwauser=$RET
     	db_get baruwa/django/baruwapass
@@ -68,9 +76,9 @@ if [ "$1" = "configure" ]; then
     	# create user
     	. /usr/share/wwwconfig-common/mysql-createuser.sh
     	# grant rights to db
-    	TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX`
-    	echo "GRANT ALL ON $dbname.* TO $dbuser@$dbserver IDENTIFIED BY '$dbpass';" > "$TMPDEST.sql"
-    	sqlfile="$TMPDEST.sql"
+    	TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX.sql`
+    	echo "GRANT ALL ON $dbname.* TO $dbuser@$dbserver IDENTIFIED BY '$dbpass';" > "$TMPDEST"
+    	sqlfile="$TMPDEST"
     	# run the grants
     	. /usr/share/wwwconfig-common/mysql-exec.sh
     	# remove credentials
@@ -78,37 +86,47 @@ if [ "$1" = "configure" ]; then
 
         sed -i -e \
         "
-        s/DATABASE_NAME = 'baruwa'/DATABASE_NAME = '$dbname'/;
-        s/DATABASE_USER = ''/DATABASE_USER = '$dbuser'/;
-        s/DATABASE_PASSWORD = ''/DATABASE_PASSWORD = '$dbpass'/;
-        s/DATABASE_HOST = ''/DATABASE_HOST = '$dbserver'/;
-        " \
-        /usr/share/pyshared/baruwa/settings.py
-        sed -i \
-        "
-        s/) = 'baruwa'/) = '$dbname'/;
-        s/) = 'localhost'/) = '$dbserver'/;
-        s/) = 'baruwa'/) = '$dbuser'/;
-        s/) = ''/) = '$dbpass'/;
-        " \
-        /etc/MailScanner/CustomFunctions/Baruwa*.pm 
+        s/\('NAME': '\).*\(',\)/\1$dbname\2/;
+        s/\('USER': '\).*\(',\)/\1$dbuser\2/;
+        s/\('PASSWORD': '\).*\(',\)/\1$dbpass\2/;
+        s/\('HOST': '\).*\(',\)/\1$dbserver\2/;
+        s/\(BROKER_HOST = \"\).*\(\"\)/\1$mqhost\2/;
+        s/\(BROKER_USER = \"\).*\(\"\)/\1$mquser\2/;
+        s/\(BROKER_PASSWORD = \"\).*\(\"\)/\1$mqpass\2/;
+        s/\(BROKER_VHOST = \"\).*\(\"\)/\1$mqvhost\2/;
+        " /etc/baruwa/settings.py 
         # populate the database
         /usr/share/pyshared/baruwa/manage.py syncdb --noinput
-        # create the admin user
-        /usr/share/pyshared/baruwa/manage.py createsuperuser --username $baruwauser --email $baruwaemail --noinput
-        # set the password
+        # create admin user
         export DJANGO_SETTINGS_MODULE=baruwa.settings
-        python -c "import sys;sys.path.append('/usr/share/pyshared');from django.contrib.auth.models import User;\
-        user = User.objects.get(username__exact='$baruwauser');user.set_password('$baruwapass');user.save()" > /dev/null
-        db_reset baruwa/mysql/dbserver
+	    TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX.py`
+	    echo "import os" > "$TMPDEST"
+	    echo "import sys" >> "$TMPDEST"
+	    echo "os.environ['DJANGO_SETTINGS_MODULE'] = 'baruwa.settings'" >> "$TMPDEST"
+	    echo "sys.path.append('/usr/share/pyshared')" >> "$TMPDEST"
+	    echo "from django.contrib.auth.models import User" >> "$TMPDEST"
+	    echo "from baruwa.accounts.models import UserProfile" >> "$TMPDEST"
+	    echo "try:" >> "$TMPDEST"
+	    echo "  User.objects.create_superuser('$baruwauser', '$baruwaemail', '$baruwapass')" >> "$TMPDEST"
+	    echo "  user.save()" >> "$TMPDEST"
+	    echo "  profile = user.get_profile()" >> "$TMPDEST"
+	    echo "except UserProfile.DoesNotExist:" >> "$TMPDEST"
+	    echo "  profile = UserProfile(user=user, account_type=1)" >> "$TMPDEST"
+	    echo "  profile.save()" >> "$TMPDEST"
+	    echo "except: pass" >> "$TMPDEST"
+	    python "$TMPDEST"
+	    rm -f $TMPDEST
+        #db_reset baruwa/mysql/dbserver
     	db_reset baruwa/mysql/dbadmin
     	db_reset baruwa/mysql/dbadmpass
-    	db_reset baruwa/mysql/dbname
-    	db_reset baruwa/mysql/dbuser
-    	db_reset baruwa/mysql/dbpass
-    	db_reset baruwa/django/baruwauser
+    	#db_reset baruwa/mysql/dbname
+    	#db_reset baruwa/mysql/dbuser
+    	#db_reset baruwa/mysql/dbpass
+    	#db_reset baruwa/rabbitmq/mquser
+    	#db_reset baruwa/rabbitmq/mqpass
+    	#db_reset baruwa/django/baruwauser
     	db_reset baruwa/django/baruwapass
-    	db_reset baruwa/django/baruwaemail
+    	#db_reset baruwa/django/baruwaemail
     fi
     db_reset baruwa/mysql/configure
     db_stop
