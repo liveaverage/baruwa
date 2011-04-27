@@ -1,16 +1,36 @@
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
+%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
+%endif
+%{!?pyver: %global pyver %(%{__python} -c "import sys ; print sys.version[:3]")}
+
 Name:           baruwa
-Version:        1.0.1
+Version:        1.1.0
 Release:        1%{?dist}
 Summary:        Ajax enabled MailScanner web frontend      
-Group:          Development/Languages
+Group:          Applications/Internet
 License:        GPLv2
-URL:            http://www.topdog.za.net/baruwa
-Source0:        http://www.topdog-software.com/oss/files/%{name}-%{version}.tar.gz
+URL:            http://www.baruwa.org/
+Source0:        http://pypi.python.org/packages/source/b/baruwa/%{name}-%{version}.tar.gz
+Source1:        baruwa.httpd
+Source2:        baruwa.cron
+Source3:        baruwa.mailscanner
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
-BuildRequires:  python-devel, python-setuptools, python-sphinx
-Requires:       Django >= 1.1.1, python-GeoIP, python-IPy, httpd, dojo, mailscanner, python-reportlab, python-lxml, python-uuid, MySQL-python >= 1.2.2
+BuildRequires:  python-devel
+BuildRequires:  python-setuptools
+BuildRequires:  python-sphinx
+Requires:       Django >= 1.2
+Requires:       python-GeoIP
+Requires:       python-IPy
+Requires:       python-reportlab
+Requires:       python-lxml
+%if pyver < 2.5
+Requires:       python-uuid
+%endif
+Requires:       MySQL-python >= 1.2.2
+Requires:       httpd
+Requires:       dojo
+Requires:       mailscanner
 
 %description
 Baruwa (swahili for letter or mail) is a web 2.0 MailScanner
@@ -36,27 +56,6 @@ settings.
 
 %prep
 %setup -q -n %{name}-%{version}
-%{__sed} -i 's:/usr/lib/python2.4/site-packages:%{python_sitelib}:' extras/baruwa-mod_wsgi.conf
-
-%{__cat} <<'EOF' > %{name}.cron
-#!/bin/sh
-#
-# %{name} - %{version}
-#
-
-# send quarantine reports
-%{python_sitelib}/%{name}/manage.py sendquarantinereports
-# clean quarantine 
-%{python_sitelib}/%{name}/manage.py cleanquarantine
-# clean up the DB
-%{python_sitelib}/%{name}/manage.py dbclean
-# update sa rule definitions
-%{python_sitelib}/%{name}/manage.py updatesarules
-# clean up stale sessions
-%{python_sitelib}/%{name}/manage.py cleanup
-# update geoip database
-perl /usr/share/doc/GeoIP-*/fetch-geoipdata.pl
-EOF
 
 %build
 %{__python} setup.py build
@@ -73,38 +72,56 @@ rm -rf $RPM_BUILD_ROOT
 %{__chmod} 0755 $RPM_BUILD_ROOT%{python_sitelib}/%{name}/manage.py
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily
-%{__install} -d -p $RPM_BUILD_ROOT%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions
-%{__install} -d -p $RPM_BUILD_ROOT%{_prefix}/lib/%{name}
-%{__install} -p -m0644 extras/*.pm $RPM_BUILD_ROOT%{_prefix}/lib/%{name}/
-%{__install} -p -m0644 extras/baruwa-mod_wsgi.conf $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
-%{__install} -p -m0755 %{name}.cron $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily/%{name}
+%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
+%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/CustomFunctions
+%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/MailScanner/conf.d
+%{__install} -p -m0644 extras/*.pm $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/CustomFunctions
+%{__install} -p -m0644 %SOURCE1 $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
+%{__install} -p -m0644 %SOURCE3 $RPM_BUILD_ROOT%{_sysconfdir}/MailScanner/conf.d/%{name}.conf
+%{__install} -p -m0755 %SOURCE2 $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily/%{name}
+%{__install} -p -m0633 src/baruwa/settings.py $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/settings.py
 pushd $RPM_BUILD_ROOT%{python_sitelib}/%{name}/static/js
 ln -s ../../../../../../share/dojo/dojo .
 ln -s ../../../../../../share/dojo/dojox .
 ln -s ../../../../../../share/dojo/dijit .
-popd
-pushd $RPM_BUILD_ROOT%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions
-ln -s ../../../baruwa/BaruwaSQL.pm .
-ln -s ../../../baruwa/BaruwaLists.pm .
-ln -s ../../../baruwa/BaruwaUserSettings.pm .
-popd  
+popd 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS LICENSE README UPGRADE docs/build/html docs/source
+%doc AUTHORS LICENSE README ROADMAP.md UPGRADE docs/build/html docs/source
+%config(noreplace) %{_sysconfdir}/%{name}/settings.py
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
+%config(noreplace) %{_sysconfdir}/MailScanner/conf.d/%{name}.conf
 %{_sysconfdir}/cron.daily/%{name}
+%{_sysconfdir}/%{name}/
 %{python_sitelib}/*
-%{_prefix}/lib/%{name}/
-%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions/BaruwaSQL.pm
-%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions/BaruwaLists.pm
-%{_prefix}/lib/MailScanner/MailScanner/CustomFunctions/BaruwaUserSettings.pm
 
 
 %changelog
+* Wed Apr 27 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-1
+- upgrade to latest version
+
+* Sat Apr 23 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.0.2-4
+ - FIX: exchange duplicate delivery suppression blocks releases
+ - FIX: some RBL names not being displayed
+
+* Thu Apr 14 2011 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.2-3
+- Fix mailauth exception
+
+* Sat Feb 22 2011 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.2-2
+- Fix CSRF protection issues preventing users of Django 1.x.x from
+  performing Ajax POST operations.
+
+* Sat Feb 19 2011 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.2-1
+- upgrade to the latest version
+
+* Mon Feb 06 2011 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.1-2
+- fix the annotation regression introduced by django 1.2.4
+- fix the js alert and redirection on the login page
+
 * Wed Dec 29 2010 Andrew Colin Kissa <andrew@topdog.za.net> 1.0.1-1
 - upgrade to latest version
 
