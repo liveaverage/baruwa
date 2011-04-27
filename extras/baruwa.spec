@@ -97,6 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/MailScanner/conf.d/%{name}.conf
 %{_sysconfdir}/cron.daily/%{name}
 %{_sysconfdir}/%{name}/
+%{_bindir}/*
 %{python_sitelib}/*
 
 
