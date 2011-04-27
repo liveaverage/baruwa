@@ -10,7 +10,7 @@ Summary:        Ajax enabled MailScanner web frontend
 Group:          Applications/Internet
 License:        GPLv2
 URL:            http://www.baruwa.org/
-Source0:        http://pypi.python.org/packages/source/b/baruwa/%{name}-%{version}.tar.gz
+Source0:        http://pypi.python.org/packages/source/b/baruwa/%{name}-%{version}.tar.bz2
 Source1:        baruwa.httpd
 Source2:        baruwa.cron
 Source3:        baruwa.mailscanner
@@ -20,17 +20,18 @@ BuildRequires:  python-devel
 BuildRequires:  python-setuptools
 BuildRequires:  python-sphinx
 Requires:       Django >= 1.2
+Requires:       django-celery
 Requires:       python-GeoIP
 Requires:       python-IPy
 Requires:       python-reportlab
 Requires:       python-lxml
-%if pyver < 2.5
-Requires:       python-uuid
-%endif
 Requires:       MySQL-python >= 1.2.2
 Requires:       httpd
 Requires:       dojo
 Requires:       mailscanner
+%if "%{pyver}" == "2.4"
+Requires:       python-uuid
+%endif
 
 %description
 Baruwa (swahili for letter or mail) is a web 2.0 MailScanner
@@ -56,6 +57,14 @@ settings.
 
 %prep
 %setup -q -n %{name}-%{version}
+%{__cat} <<'EOF' > %{name}.cron.d
+#
+# %{name} - %{version}
+#
+
+# runs every 3 mins to update mailq stats
+*/3 * * * * root baruwa-admin queuestats >/dev/null
+EOF
 
 %build
 %{__python} setup.py build
@@ -68,35 +77,46 @@ mkdir -p source/_static
 
 %install
 rm -rf $RPM_BUILD_ROOT
+%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
+%{__install} -p -m0644 src/baruwa/settings.py $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/settings.py
 %{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
 %{__chmod} 0755 $RPM_BUILD_ROOT%{python_sitelib}/%{name}/manage.py
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
+%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/cron.d
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily
-%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
-%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/CustomFunctions
+%{__install} -d -p $RPM_BUILD_ROOT%{_datadir}/%{name}/CustomFunctions
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/MailScanner/conf.d
-%{__install} -p -m0644 extras/*.pm $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/CustomFunctions
+%{__install} -p -m0644 extras/*.pm $RPM_BUILD_ROOT%{_datadir}/%{name}/CustomFunctions
 %{__install} -p -m0644 %SOURCE1 $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
 %{__install} -p -m0644 %SOURCE3 $RPM_BUILD_ROOT%{_sysconfdir}/MailScanner/conf.d/%{name}.conf
 %{__install} -p -m0755 %SOURCE2 $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily/%{name}
-%{__install} -p -m0633 src/baruwa/settings.py $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/settings.py
+%{__install} -p -m0644 %{name}.cron.d $RPM_BUILD_ROOT%{_sysconfdir}/cron.d/%{name}
+%{__rm} -f $RPM_BUILD_ROOT%{python_sitelib}/%{name}/settings.py*
+pushd $RPM_BUILD_ROOT%{python_sitelib}/%{name}
+ln -s ../../../../../etc/baruwa/settings.py .
+popd
 pushd $RPM_BUILD_ROOT%{python_sitelib}/%{name}/static/js
 ln -s ../../../../../../share/dojo/dojo .
 ln -s ../../../../../../share/dojo/dojox .
 ln -s ../../../../../../share/dojo/dijit .
 popd 
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS LICENSE README ROADMAP.md UPGRADE docs/build/html docs/source
+%doc AUTHORS LICENSE README UPGRADE docs/build/html docs/source
 %config(noreplace) %{_sysconfdir}/%{name}/settings.py
+%config(noreplace) %{_sysconfdir}/cron.d/%{name}
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 %config(noreplace) %{_sysconfdir}/MailScanner/conf.d/%{name}.conf
 %{_sysconfdir}/cron.daily/%{name}
-%{_sysconfdir}/%{name}/
+%exclude %{_sysconfdir}/%{name}/settings.pyc
+%exclude %{_sysconfdir}/%{name}/settings.pyo
+%dir %{_sysconfdir}/%{name}
+%dir %{_datadir}/%{name}/
 %{_bindir}/*
 %{python_sitelib}/*
 
