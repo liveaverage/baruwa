@@ -4,8 +4,8 @@ Priority: optional
 Maintainer: Andrew Colin Kissa <andrew@topdog.za.net>
 Build-Depends: debhelper (>= 7.0.50~), python-support, python (>=2.4), po-debconf, python-setuptools
 Build-Depends-Indep: python-sphinx, libjs-jquery
-Standards-Version: 3.8.4
-Homepage: http://www.topdog.za.net/baruwa
+Standards-Version: 3.9.1
+Homepage: http://www.baruwa.org
 
 Package: baruwa
 Architecture: all

@@ -1,3 +1,34 @@
+baruwa (1.0.2-4ubuntu6) lucid; urgency=low
+
+  * FIX: exchange duplicate delivery suppression blocks releases
+  * FIX: some RBL names not being displayed
+
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Sat, 23 Apr 2011 07:59:39 +0200
+
+baruwa (1.0.2-4ubuntu5) lucid; urgency=low
+
+  * fixes 
+
+ -- andrew <andrew@topdog.za.net>  Wed, 13 Apr 2011 19:56:54 +0200
+
+baruwa (1.0.2-4ubuntu4) lucid; urgency=low
+
+  * build for lucid ppa
+
+ -- andrew <andrew@topdog.za.net>  Sun, 10 Apr 2011 15:16:22 +0200
+
+baruwa (1.0.2-3ubuntu2) lucid; urgency=low
+
+  * build for various distributions
+
+ -- andrew <andrew@topdog.za.net>  Sun, 10 Apr 2011 13:47:33 +0200
+
+baruwa (1.0.2-2ubuntu1) maverick; urgency=low
+
+  * ppa import* 
+
+ -- andrew <andrew@topdog.za.net>  Sun, 27 Mar 2011 21:53:02 +0200
+
 baruwa (1.0.2-1) unstable; urgency=low
 
   * update to 1.0.2
