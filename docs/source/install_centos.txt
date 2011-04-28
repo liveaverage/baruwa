@@ -41,6 +41,8 @@ be resolved by packages shipped by the Baruwa repo::
 
 .. include:: includes/configure_baruwa.inc
 
+.. include:: includes/redhat_celeryd_init.inc
+
 .. include:: includes/redhat_apache.inc
 
 .. include:: includes/testing.inc

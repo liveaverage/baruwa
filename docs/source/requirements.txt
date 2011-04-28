@@ -7,23 +7,25 @@ Baruwa requirements
 
 	+ `Python`_ >= 2.4
 	+ `Django`_ >= 1.2
+	+ `django-celery`_
 	+ `MySQL-Python`_ >= 1.2.1p2
 	+ `GeoIP-Python`_
 	+ `iPy`_
 	+ Any Web server that can run Django (`Apache`_/`mod_wsgi`_ recommended)
+	+ A supported Message broker (`RabbitMQ`_ recommended)
 	+ `MySQL`_
 	+ `Dojo toolkit`_ >= 1.5.0
 	+ `Reportlab`_
 	+ `Lxml`_
 	+ `Anyjson`_
 	+ `UUID`_ (Only for python 2.4)
-	+ A supported Message broker (`RabbitMQ`_ recommended)
 	+ `Sphinx`_ (Optional - to build documentation)
 	+ `Pyrad`_ (Optional for RADIUS/RSA SECURID authentication)
 
 MailScanner requirements
 ========================
-    
+
+	+ `MailScanner`_ >= 4.80.10-1
 	+ `DBI`_
 	+ `DBD-MySQL`_
 	+ `DBD-SQLite`_
@@ -31,6 +33,7 @@ MailScanner requirements
 
 .. _`Python`: http://www.python.org/
 .. _`Django`: http://www.djangoproject.com/
+.. _`django-celery`: http://pypi.python.org/pypi/django-celery/
 .. _`MySQL-Python`: http://mysql-python.sourceforge.net/
 .. _`GeoIP-Python`: http://www.maxmind.com/app/python
 .. _`iPy`: https://github.com/haypo/python-ipy/wiki
@@ -48,3 +51,4 @@ MailScanner requirements
 .. _`DBI`: http://dbi.perl.org/
 .. _`DBD-MySQL`: http://search.cpan.org/dist/DBD-mysql/
 .. _`DBD-SQLite`: http://search.cpan.org/~msergeant/DBD-SQLite-0.31/
+.. _`MailScanner`: http://www.mailscanner.info/

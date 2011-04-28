@@ -4,6 +4,22 @@
 Source Installation
 ===================
 
+.. note::
+
+	Packages are available for Debian/Ubuntu, Centos/RHEL and
+	Fedora if you are using one of those OS's rather install
+	using the packages.
+
+If you do not want to install to your global python directories
+or are just testing it is advised that you use a `virtualenv`_ 
+python install.
+
+Virtualenv allows you to run multiple python installs and is 
+easily managed as you do not need to be a privileged user to
+install packages.
+
+For more info on virtualenv please refer to its documentation.
+
 Install Baruwa
 ==============
 
@@ -63,25 +79,45 @@ Link to the dojo toolkit::
 	# ln -s /path/to/dojox $baruwa_path/baruwa/static/js
 	# ln -s /path/to/dijit $baruwa_path/baruwa/static/js
 
-**Configure the Web server**
+**Configure celeryd to run as a daemon**
+
+You need to run celeryd as a daemon in order to process tasks such as
+Bayesian learning and message releases from the quarantine etc etc.
+
+Download the appropriate init script for your OS from the
+`celery repository`_, then `read`_ the celery documentation
+on how to run celeryd as a daemon on your specific OS. Make
+sure you configure your system using the Django configuration
+examples.
+
+If you have any difficulties please refer to the Baruwa `mailing list`_
+for assistance.
+
+Configure the Web server
+------------------------
 
 **Apache/mod_wsgi**
 
-Make sure mod_wsgi is enabled, uncomment the following line in
-/etc/httpd/conf.d/wsgi.conf::
-
-    LoadModule wsgi_module modules/mod_wsgi.so
+Make sure you have mod_wsgi installed and enabled.
 
 Use the sample configuration provided (extras/baruwa-mod_wsgi.conf) 
 as a template. Copy to your apache configuration directory usually
-/etc/httpd/conf.d
+/etc/httpd/conf.d on Redhat and clones or /etc/apache2/conf.d/ on
+debian and clones. For others refer to your system docs for the
+location.
 
 Make sure that your apache is configured for name based virtual
 hosting such that you can run other sites on the same box if you
 wish to.
 
-Edit /etc/httpd/conf.d/baruwa-mod_wsgi.conf and set ServerName to
-the hostname you will use to access baruwa
+Edit baruwa-mod_wsgi.conf and set ServerName to the hostname you
+will use to access baruwa
+
+.. note::
+
+	If you installed using virtualenv, you need to customize and
+	use virtual.wsgi instead of baruwa.wsgi in your mod_wsgi
+	configuration.
 
 Restart apache for the configuration to take effect.::
 
@@ -114,4 +150,7 @@ Distribution / OS installation
 .. _`Lighttpd`: http://docs.djangoproject.com/en/1.1/howto/deployment/fastcgi/#lighttpd-setup
 .. _`nginx wiki`: http://wiki.nginx.org/NginxDjangoFastCGI
 .. _`cherokee cookbook`: http://www.cherokee-project.com/doc/cookbook_django.html
-.. _`Admin Guide`: http://www.rabbitmq.com/admin-guide.html
+.. _`virtualenv`: http://www.virtualenv.org/en/latest/
+.. _`read`: http://docs.celeryproject.org/en/v2.2.5/cookbook/daemonizing.html
+.. _`celery repository`: https://github.com/ask/celery/tree/master/contrib
+.. _`mailing list`: http://lists.baruwa.org/
