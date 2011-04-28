@@ -86,13 +86,14 @@
 			    <input type="hidden" name="cx" value="partner-pub-3001556624430247:g7zpfj4e9qx" />
 			    <input type="hidden" name="ie" value="ISO-8859-1" />
 			    <input type="text" name="q" size="18" />
-			    <input type="submit" name="sa" value="Search" />
+			    <input type="submit" name="sa" value="Go" />
 			  </div>
 			</form>
 			<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
           </div>
           <script type="text/javascript">$('#searchbox').show(0);</script>
           {%- endif %}
+		<h3>{{ _('On the web') }}</h3>
         <ul>
 	    <li><img src="_static/git.png" />&nbsp;<a href="http://github.com/akissa/baruwa">Github</a></li>
         <li><img src="_static/flickr_16.png" />&nbsp;<a href="http://www.flickr.com/photos/baruwa">Flickr</a></li>
@@ -104,8 +105,16 @@
         <li><script type="text/javascript" src="http://www.ohloh.net/p/482278/widgets/project_thin_badge.js"></script></li>
 		<li><img src="http://static.delicious.com/img/delicious.small.gif" height="10" width="10" alt="Delicious" />
 		<a href="http://delicious.com/save">Delicious</a></li>
-		<li><a href='http://www.pledgie.com/campaigns/12056'><img alt='make a donation at www.pledgie.com !' src='_static/paypal.gif' border='0' />&nbsp;Donate</a></li>
         </ul>
+		<h3>{{ _('Donate') }}</h3>
+		<ul>
+			<li>
+				<a href='http://www.pledgie.com/campaigns/12056'>
+					<img alt='make a donation at www.pledgie.com !' src='_static/paypal.gif' border='0' />&nbsp;Donate
+				</a>
+			</li>
+		</ul>
+		Your generous donations help fund future development.
           {%- endblock %}
         </div>
       </div>
