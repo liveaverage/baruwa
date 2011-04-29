@@ -1,7 +1,7 @@
 # Baruwa Celery worker daemon configuration
 #
-CELERYD_CHDIR="/usr/shared/pyshared/baruwa"
-CELERYD="/usr/shared/pyshared/baruwa/manage.py celeryd"
+CELERYD_CHDIR="/usr/share/pyshared/baruwa"
+CELERYD="/usr/share/pyshared/baruwa/manage.py celeryd"
 export DJANGO_SETTINGS_MODULE="settings"
 CELERYD_NODES=$(hostname -s)
 CELERYD_OPTS="--time-limit=300 -E --beat -s /var/run/celeryd/celerybeat-schedule"
