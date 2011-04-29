@@ -5,6 +5,21 @@ set -e
 . /usr/share/debconf/confmodule
 db_version 2.0 || [ $? -lt 30 ]
 
+# create celeryd group
+if ! getent group celeryd >/dev/null; then
+        addgroup --system celeryd
+fi
+
+# create celeryd user
+if ! getent passwd celeryd >/dev/null; then
+        adduser --system --ingroup celeryd --home /var/lib/baruwa \
+                --no-create-home --gecos "Baruwa Celery worker daemon" \
+                --disabled-login celeryd
+fi
+
+chown -R celeryd:celeryd /var/log/baruwa
+chown -R celeryd:celeryd /var/lib/baruwa
+
 if [ "$1" = "configure" ]; then
     db_get baruwa/webserver_type
     webservers="$RET"
@@ -135,10 +150,8 @@ if [ "$1" = "configure" ]; then
 	webserver=${webserver%,}
 	if [ -x /usr/sbin/invoke-rc.d ]; then
 	    invoke-rc.d $webserver reload 3>/dev/null || true
-	    invoke-rc.d baruwa restart 3>/dev/null || true
 	else
 	    /etc/init.d/$webserver reload 3>/dev/null || true
-	    /etc/init.d/baruwa restart 3>/dev/null || true
 	fi
     done
 fi

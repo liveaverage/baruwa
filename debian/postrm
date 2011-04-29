@@ -11,19 +11,30 @@ if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
     done
 
     if [ -f /etc/cron.daily/baruwa ]; then
-	rm -f /etc/cron.daily/baruwa
-    fi
-    
-    if which invoke-rc.d >/dev/null 2>&1; then
-        invoke-rc.d baruwa stop 3>/dev/null || true
-    else
-        /etc/init.d/baruwa stop 3>/dev/null || true
+	    rm -f /etc/cron.daily/baruwa
     fi
 
     if [ "$1" = "purge" ]; then
-	if [ -d /etc/baruwa ]; then
-	    rmdir --ignore-fail-on-non-empty /etc/baruwa || true
-	fi
+        if [ -d /etc/baruwa ]; then
+            rmdir --ignore-fail-on-non-empty /etc/baruwa || true
+        fi
+        if [ -d /var/log/baruwa ]; then
+                rm -r /var/log/baruwa || true
+        fi
+        if [ -d /var/lib/baruwa ]; then
+                rm -r /var/lib/baruwa || true
+        fi
+        if [ -f /var/run/celeryd.pid ]; then
+            rm /var/run/celeryd.pid || true
+        fi
+        if getent passwd celeryd >/dev/null; then
+                pkill -u celeryd || true
+                sleep 5
+                deluser celeryd || true
+        fi
+        if getent group celeryd >/dev/null; then
+                delgroup celeryd || true
+        fi
     fi
 
     if [ -f /usr/share/debconf/confmodule ]; then
@@ -83,10 +94,6 @@ if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
 		    ;;
 	    esac
 	done
-
-	if [ "$1" = "purge" ]; then
-		db_purge
-	fi
     fi
 fi
 

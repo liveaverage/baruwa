@@ -12,7 +12,7 @@ Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}, libapache2-mod-wsgi | nginx | lighttpd, wwwconfig-common,
  debconf (>= 0.2.26), libjs-jquery, libjs-dojo-dojox, libjs-dojo-dijit, libjs-dojo-dojox, python-mysqldb,
  python-django (>= 1.2), python-ipy, python-geoip, mysql-client, python-reportlab, mailscanner,
- python-lxml
+ python-lxml, adduser
 Description: Web 2.0 MailScanner front-end.
  .
  Baruwa provides an easy to use interface for 
