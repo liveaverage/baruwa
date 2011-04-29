@@ -28,14 +28,15 @@ Features
 	+ Reporting with AJAX enabled query builder
 	+ I18n support, allows use of multiple languages
 	+ Mail queue management and reporting
-	+ Interactive SVG graphs and PDF reports
+	+ Interactive SVG graphs
+	+ Emailed PDF reports
 	+ Archiving of old message logs
 	+ SQLite backup prevents data loss when MySQL is down
 	+ MTA integration for relay domains and transports configuration
 	+ Multi user profiles (No restrictions on username format)
 	+ User profile aware white/blacklist management
 	+ Ip / network addresses supported in white/blacklist manager
-	+ Easy plug-in authentication to external authentication systems (RADIUS/RSA SECURID, POP3, IMAP and SMTP supported out of the box)
+	+ Easy plug-in authentication to external authentication systems (POP3, IMAP, SMTP and RADIUS supported out of the box)
 	+ Tools for housekeeping tasks (quarantine management, rule updates, quarantine notifications, etc)
 	+ Easy clustering of multiple servers
 	+ Works both with and without Javascript enabled (graphs require Javascript)
