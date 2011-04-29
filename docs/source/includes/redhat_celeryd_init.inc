@@ -9,3 +9,4 @@ started at system boot by running::
 
 	# chkconfig --add baruwa
 	# chkconfig --level 35 baruwa on
+	# service baruwa start
