@@ -120,9 +120,9 @@ class UserAddressForm(forms.ModelForm):
     def clean(self):
         """clean_address"""
         if self._errors: 
-            return
+            return self.cleaned_data
 
-        cleaned_data = self.cleaned_data   
+        cleaned_data = self.cleaned_data
         address = cleaned_data['address']
         user = cleaned_data['user']
         if user.is_superuser:
@@ -155,7 +155,7 @@ class EditAddressForm(forms.ModelForm):
     def clean(self):
         """clean_address"""
         if self._errors: 
-            return
+            return self.cleaned_data
 
         cleaned_data = self.cleaned_data   
         address = cleaned_data['address']

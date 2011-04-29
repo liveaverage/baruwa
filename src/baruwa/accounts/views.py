@@ -26,6 +26,7 @@ from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, AdminPasswordChangeForm
 from django.db.models import Q
+from django import forms
 from django.db import IntegrityError, DatabaseError
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, HttpResponse
@@ -230,12 +231,13 @@ def add_address(request, user_id, is_domain=False, template_name='accounts/add_a
                 msg = _('The address already exists')
             djmessages.info(request, msg)
             return HttpResponseRedirect(reverse('user-profile', args=[user_id]))
+        if not is_domain:
+            form.fields['load_balance'].widget = forms.HiddenInput()
     else:
         if is_domain:
             form = UserAddressForm()
         else:
             form = UserAddressForm(initial = {'load_balance': False})
-            from django import forms
             form.fields['load_balance'].widget = forms.HiddenInput()
     return render_to_response(template_name, locals(),
         context_instance=RequestContext(request))
@@ -261,10 +263,11 @@ def edit_address(request, address_id, template_name='accounts/edit_address.html'
             djmessages.info(request, msg)
             return HttpResponseRedirect(reverse('user-profile',
                 args=[addr.user.id]))
+        if addr.address_type == 2:
+            form.fields['load_balance'].widget = forms.HiddenInput()
     else:
         form = EditAddressForm(instance=addr)
         if addr.address_type == 2:
-            from django import forms
             form.fields['load_balance'].widget = forms.HiddenInput()
     return render_to_response(template_name, locals(),
         context_instance=RequestContext(request))
