@@ -2,15 +2,15 @@ Source: baruwa
 Section: python
 Priority: optional
 Maintainer: Andrew Colin Kissa <andrew@topdog.za.net>
-Build-Depends: debhelper (>= 7.0.50~), python-support, python (>=2.4), po-debconf, python-setuptools
-Build-Depends-Indep: python-sphinx, libjs-jquery
+Build-Depends: debhelper (>= 7.0.50~), python (>=2.4), po-debconf, python-setuptools
+Build-Depends-Indep: python-support (>= 0.5.3), python-sphinx, libjs-jquery
 Standards-Version: 3.9.1
 Homepage: http://www.baruwa.org
 
 Package: baruwa
 Architecture: all
 Depends: ${misc:Depends}, ${python:Depends}, libapache2-mod-wsgi | nginx | lighttpd, wwwconfig-common,
- debconf (>= 0.2.26), libjs-dojo-dojox, libjs-dojo-dijit, libjs-dojo-dojox, python-mysqldb,
+ debconf (>= 0.2.26), libjs-jquery, libjs-dojo-dojox, libjs-dojo-dijit, libjs-dojo-dojox, python-mysqldb,
  python-django (>= 1.2), python-ipy, python-geoip, mysql-client, python-reportlab, mailscanner,
  python-lxml
 Description: Web 2.0 MailScanner front-end.

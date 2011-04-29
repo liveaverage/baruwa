@@ -13,6 +13,12 @@ if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
     if [ -f /etc/cron.daily/baruwa ]; then
 	rm -f /etc/cron.daily/baruwa
     fi
+    
+    if which invoke-rc.d >/dev/null 2>&1; then
+        invoke-rc.d baruwa stop 3>/dev/null || true
+    else
+        /etc/init.d/baruwa stop 3>/dev/null || true
+    fi
 
     if [ "$1" = "purge" ]; then
 	if [ -d /etc/baruwa ]; then

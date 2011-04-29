@@ -135,8 +135,10 @@ if [ "$1" = "configure" ]; then
 	webserver=${webserver%,}
 	if [ -x /usr/sbin/invoke-rc.d ]; then
 	    invoke-rc.d $webserver reload 3>/dev/null || true
+	    invoke-rc.d baruwa restart 3>/dev/null || true
 	else
 	    /etc/init.d/$webserver reload 3>/dev/null || true
+	    /etc/init.d/baruwa restart 3>/dev/null || true
 	fi
     done
 fi
