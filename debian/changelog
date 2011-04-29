@@ -1,33 +1,39 @@
-baruwa (1.0.2-4ubuntu6) lucid; urgency=low
+baruwa (1.1.0-1) unstable; urgency=low
+
+  * update to 1.1.0 
+
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Fri, 29 Apr 2011 15:04:00 +0200
+
+baruwa (1.0.2-6) unstable; urgency=low
 
   * FIX: exchange duplicate delivery suppression blocks releases
   * FIX: some RBL names not being displayed
 
  -- Andrew Colin Kissa <andrew@topdog.za.net>  Sat, 23 Apr 2011 07:59:39 +0200
 
-baruwa (1.0.2-4ubuntu5) lucid; urgency=low
+baruwa (1.0.2-5) unstable; urgency=low
 
   * fixes 
 
- -- andrew <andrew@topdog.za.net>  Wed, 13 Apr 2011 19:56:54 +0200
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Wed, 13 Apr 2011 19:56:54 +0200
 
-baruwa (1.0.2-4ubuntu4) lucid; urgency=low
+baruwa (1.0.2-4) unstable; urgency=low
 
-  * build for lucid ppa
+  * build for unstable ppa
 
- -- andrew <andrew@topdog.za.net>  Sun, 10 Apr 2011 15:16:22 +0200
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Sun, 10 Apr 2011 15:16:22 +0200
 
-baruwa (1.0.2-3ubuntu2) lucid; urgency=low
+baruwa (1.0.2-3) unstable; urgency=low
 
   * build for various distributions
 
- -- andrew <andrew@topdog.za.net>  Sun, 10 Apr 2011 13:47:33 +0200
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Sun, 10 Apr 2011 13:47:33 +0200
 
-baruwa (1.0.2-2ubuntu1) maverick; urgency=low
+baruwa (1.0.2-2) unstable; urgency=low
 
   * ppa import* 
 
- -- andrew <andrew@topdog.za.net>  Sun, 27 Mar 2011 21:53:02 +0200
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Sun, 27 Mar 2011 21:53:02 +0200
 
 baruwa (1.0.2-1) unstable; urgency=low
 
@@ -49,17 +55,17 @@ baruwa (1.0.1-1) unstable; urgency=low
 
  -- Andrew Colin Kissa <andrew@topdog.za.net>  Wed, 29 Dec 2010 18:16:44 +0200
 
-baruwa (1.0.0-3) maverick; urgency=low
+baruwa (1.0.0-3) unstable; urgency=low
 
   * bug fixes
 
  -- Andrew Colin Kissa <andrew@topdog.za.net>  Sun, 21 Nov 2010 14:05:29 +0200
 
-baruwa (1.0.0-2) maverick; urgency=low
+baruwa (1.0.0-2) unstable; urgency=low
 
   * 1.0.0 release
 
- -- andrew <andrew@topdog.za.net>  Tue, 26 Oct 2010 11:24:16 +0200
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Tue, 26 Oct 2010 11:24:16 +0200
 
 baruwa (1.0.0a-1) unstable; urgency=low
 
