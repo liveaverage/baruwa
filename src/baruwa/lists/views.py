@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -112,24 +112,24 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
             sp = 1
         ep = page + ap + 1
         pn = [n for n in range(sp, ep) if n > 0 and n <= p.num_pages]
-        pg = {'page': page, 'pages': p.num_pages, 'page_numbers': pn, 
+        pg = {'page': page, 'pages': p.num_pages, 'page_numbers': pn,
         'next': po.next_page_number(), 'previous': po.previous_page_number(),
-        'has_next': po.has_next(), 'has_previous': po.has_previous(), 
+        'has_next': po.has_next(), 'has_previous': po.has_previous(),
         'show_first': 1 not in pn, 'show_last': p.num_pages not in pn,
-        'app': 'lists', 'list_kind': list_kind, 'direction': direction, 
+        'app': 'lists', 'list_kind': list_kind, 'direction': direction,
         'order_by': ordering, 'filter_active': filter_active}
         json = anyjson.dumps({'items': listing, 'paginator': pg})
         return HttpResponse(json, mimetype='application/javascript')
 
-    return object_list(request, template_name='lists/index.html', 
-        queryset=listing, paginate_by=15, page=page, 
-        extra_context={'app': 'lists', 'list_kind': list_kind, 
-        'direction': direction, 'order_by': ordering, 
+    return object_list(request, template_name='lists/index.html',
+        queryset=listing, paginate_by=15, page=page,
+        extra_context={'app': 'lists', 'list_kind': list_kind,
+        'direction': direction, 'order_by': ordering,
         'filter_active': filter_active, 'list_all': 0})
 
 
 @login_required
-def add_to_list(request, template = 'lists/add.html'):
+def add_to_list(request, template='lists/add.html'):
     """add_to_list"""
     error_msg = ''
     is_saved = False
@@ -143,12 +143,12 @@ def add_to_list(request, template = 'lists/add.html'):
         if account_type == 1 or account_type == 2:
             form = AdminListAddForm(request)
         else:
-            form = ListAddForm(request) 
+            form = ListAddForm(request)
     elif request.method == 'POST':
         if account_type == 1 or account_type == 2:
             form = AdminListAddForm(request, request.POST)
         else:
-            form = ListAddForm(request, request.POST)  
+            form = ListAddForm(request, request.POST)
         if form.is_valid():
             clean_data = form.cleaned_data
             if account_type == 1 or account_type == 2:
@@ -170,8 +170,8 @@ def add_to_list(request, template = 'lists/add.html'):
                 toaddr = clean_data['to_address']
 
             try:
-                l = List(list_type=clean_data['list_type'], 
-                    from_address=clean_data['from_address'], to_address=toaddr, 
+                l = List(list_type=clean_data['list_type'],
+                    from_address=clean_data['from_address'], to_address=toaddr,
                     user=request.user)
                 l.save()
                 is_saved = True
@@ -183,22 +183,22 @@ def add_to_list(request, template = 'lists/add.html'):
                 error_msg = _('The list item already exists')
 
             if request.is_ajax():
-                response = anyjson.dumps({'success': is_saved, 
+                response = anyjson.dumps({'success': is_saved,
                     'error_msg': error_msg})
-                return HttpResponse(response, 
+                return HttpResponse(response,
                     content_type='application/javascript; charset=utf-8')
         else:
             if request.is_ajax():
                 error_list = form.errors.values()[0]
-                html = dict([(k, [unicode(e) for e in v]) 
+                html = dict([(k, [unicode(e) for e in v])
                     for k, v in form.errors.items()])
-                response = anyjson.dumps({'success': False, 
-                    'error_msg': unicode(error_list[0]), 
+                response = anyjson.dumps({'success': False,
+                    'error_msg': unicode(error_list[0]),
                     'form_field': html.keys()[0]})
-                return HttpResponse(response, 
+                return HttpResponse(response,
                     content_type='application/javascript; charset=utf-8')
 
-    return render_to_response(template, {'form': form}, 
+    return render_to_response(template, {'form': form},
         context_instance=RequestContext(request))
 
 
@@ -215,19 +215,19 @@ def delete_from_list(request, item_id):
             list_item.delete()
             if request.is_ajax():
                 response = anyjson.dumps({'success': True})
-                return HttpResponse(response, 
+                return HttpResponse(response,
                     content_type='application/javascript; charset=utf-8')
-            return HttpResponseRedirect(reverse('lists-start', 
+            return HttpResponseRedirect(reverse('lists-start',
                 args=[list_type]))
         else:
             if request.is_ajax():
                 response = anyjson.dumps({'success': False})
-                return HttpResponse(response, 
+                return HttpResponse(response,
                     content_type='application/javascript; charset=utf-8')
     else:
         form = ListDeleteForm()
         form.fields['list_item'].widget.attrs['value'] = item_id
-    return render_to_response('lists/delete.html', locals(), 
+    return render_to_response('lists/delete.html', locals(),
         context_instance=RequestContext(request))
 
 
@@ -237,7 +237,7 @@ def rem_filter(request):
     try:
         del request.session['search_for']
         del request.session['query_type']
-        request.session.modified = True  
+        request.session.modified = True
     except KeyError:
         pass
     return HttpResponseRedirect(reverse('lists-index'))

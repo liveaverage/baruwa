@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -40,7 +40,7 @@ def relayed_via(headers):
         match = re.match(r'(^Received:|X-Originating-IP:)', header)
         if match:
             match = re.findall(
-            r'((?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3}))', 
+            r'((?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3}))',
             header)
             if match:
                 match.reverse()
@@ -55,8 +55,8 @@ def relayed_via(headers):
                             iptype = 'unknown'
                     country_code = ""
                     country_name = ""
-                    if (not iptype == "LOOPBACK" 
-                        and addr != ipaddr 
+                    if (not iptype == "LOOPBACK"
+                        and addr != ipaddr
                         and addr != '127.0.0.1'):
                         ipaddr = addr
                         try:
@@ -75,8 +75,8 @@ def relayed_via(headers):
                             except (GeoIP.error, AttributeError):
                                 pass
                         return_value.append(
-                            {'ip_address': ipaddr, 
-                            'hostname': hostname, 
-                            'country_code': country_code, 
+                            {'ip_address': ipaddr,
+                            'hostname': hostname,
+                            'country_code': country_code,
                             'country_name': country_name})
     return {'hosts': return_value}

@@ -31,7 +31,7 @@ class TestSMTPServer(Task):
     name = 'test-smtp-server'
     serializer = 'json'
 
-    def run(self, host, port, from_addr, 
+    def run(self, host, port, from_addr,
         to_addr, host_id, count=None, **kwargs):
         "run"
         result = {'errors': {}, 'host': host_id}
@@ -51,4 +51,3 @@ class TestSMTPServer(Task):
             result['smtp'] = False
             result['errors']['smtp'] = ' '.join(server.errors)
         return result
-        

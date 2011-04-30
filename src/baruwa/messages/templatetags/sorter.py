@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -30,10 +30,10 @@ def sorter(context, field_name, field_text):
     rlink = None
     direc = 'dsc'
     if context['quarantine_type']:
-        link = reverse('quarantine-messages-list', args=[context['view_type'], 
+        link = reverse('quarantine-messages-list', args=[context['view_type'],
         context['quarantine_type'], context['direction'], field_name])
     else:
-        link = reverse('all-messages-list', args=[context['view_type'], 
+        link = reverse('all-messages-list', args=[context['view_type'],
         context['direction'], field_name])
     if field_name == context['order_by']:
         if context['direction'] == 'dsc':
@@ -41,14 +41,14 @@ def sorter(context, field_name, field_text):
         else:
             direc = 'dsc'
         if context['quarantine_type']:
-            rlink = reverse('quarantine-messages-list', 
-            args=[context['view_type'], context['quarantine_type'], 
+            rlink = reverse('quarantine-messages-list',
+            args=[context['view_type'], context['quarantine_type'],
             direc, context['order_by']])
         else:
-            rlink = reverse('all-messages-list', args=[context['view_type'], 
+            rlink = reverse('all-messages-list', args=[context['view_type'],
             direc, context['order_by']])
 
-    return { 
+    return {
         'field_text': field_text,
         'link': link,
         'rlink': rlink,

@@ -237,7 +237,7 @@ def add_address(request, user_id, is_domain=False, template_name='accounts/add_a
         if is_domain:
             form = UserAddressForm()
         else:
-            form = UserAddressForm(initial = {'load_balance': False})
+            form = UserAddressForm(initial={'load_balance': False})
             form.fields['load_balance'].widget = forms.HiddenInput()
     return render_to_response(template_name, locals(),
         context_instance=RequestContext(request))
@@ -332,7 +332,7 @@ def user_profile(request, user_id, template_name='accounts/user_profile.html'):
     account_info = get_object_or_404(User, pk=user_id)
     account_profile = account_info.get_profile()
     if not account_info.is_superuser:
-        addresses = UserAddresses.objects.filter(user = account_info)
+        addresses = UserAddresses.objects.filter(user=account_info)
     return render_to_response(template_name, locals(),
         context_instance=RequestContext(request))
 

@@ -56,7 +56,7 @@ class PwResetForm(PasswordResetForm):
                 break
             if user.is_superuser:
                 raise forms.ValidationError(_("That e-mail address belongs to"
-                " an admin account. Please use the manage.py command to reset"))
+                " an admin account Please use the manage.py command to reset"))
                 break
         return email
 
@@ -82,10 +82,12 @@ class OrdUserProfileForm(forms.ModelForm):
 class UserCreateForm(forms.ModelForm):
     username = forms.RegexField(
         label=_("Username"), max_length=30, regex=r'^[\w.@+-]+$',
-            help_text = _(
-            "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."),
-            error_messages = {'invalid': _(
-            "This value may contain only letters, numbers and @/./+/-/_ characters.")})
+            help_text=_(
+            "Required. 30 characters or fewer. Letters, "
+            "digits and @/./+/-/_ only."),
+            error_messages={'invalid': _(
+            "This value may contain only letters, numbers"
+            " and @/./+/-/_ characters.")})
     password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
 
     def clean_username(self):
@@ -119,7 +121,7 @@ class UserAddressForm(forms.ModelForm):
 
     def clean(self):
         """clean_address"""
-        if self._errors: 
+        if self._errors:
             return self.cleaned_data
 
         cleaned_data = self.cleaned_data
@@ -154,10 +156,10 @@ class EditAddressForm(forms.ModelForm):
 
     def clean(self):
         """clean_address"""
-        if self._errors: 
+        if self._errors:
             return self.cleaned_data
 
-        cleaned_data = self.cleaned_data   
+        cleaned_data = self.cleaned_data
         address = cleaned_data['address']
         user = cleaned_data['user']
         if user.is_superuser:
@@ -175,7 +177,7 @@ class EditAddressForm(forms.ModelForm):
                 error_msg = _('provide a valid email address')
                 self._errors["address"] = ErrorList([error_msg])
                 del cleaned_data['address']
-        return cleaned_data    
+        return cleaned_data
 
     class Meta:
         model = UserAddresses
@@ -193,14 +195,14 @@ class DeleteAddressForm(forms.ModelForm):
 
 class UserUpdateForm(forms.ModelForm):
     """
-    Allows users to update thier account info. 
+    Allows users to update thier account info.
     """
     id = forms.CharField(widget=forms.HiddenInput)
 
     class Meta:
         model = User
-        exclude = ('last_login', 'date_joined', 'username', 
-            'groups', 'is_superuser', 'user_permissions', 
+        exclude = ('last_login', 'date_joined', 'username',
+            'groups', 'is_superuser', 'user_permissions',
             'is_staff', 'password', 'is_active')
 
 
@@ -208,17 +210,19 @@ class AdminUserUpdateForm(forms.ModelForm):
     """
     Allows the admins to manage account info
     """
-    username = forms.RegexField(label=_("Username"), 
+    username = forms.RegexField(label=_("Username"),
         max_length=30, regex=r'^[\w.@+-]+$',
-            help_text = _(
-            "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."),
-            error_messages = {'invalid': _(
-            "This value may contain only letters, numbers and @/./+/-/_ characters.")})
+            help_text=_(
+            "Required. 30 characters or fewer. Letters,"
+            " digits and @/./+/-/_ only."),
+            error_messages={'invalid': _(
+            "This value may contain only letters, numbers"
+            " and @/./+/-/_ characters.")})
     id = forms.CharField(widget=forms.HiddenInput)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 
+        fields = ('id', 'username', 'first_name',
             'last_name', 'email', 'is_superuser', 'is_active')
 
 
@@ -228,8 +232,8 @@ class DeleteUserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        exclude = ('last_login', 'date_joined', 'username', 
-            'groups', 'is_superuser', 'user_permissions', 
-            'is_staff', 'password', 'is_active', 'first_name', 
+        exclude = ('last_login', 'date_joined', 'username',
+            'groups', 'is_superuser', 'user_permissions',
+            'is_staff', 'password', 'is_active', 'first_name',
             'last_name', 'email')
         #fields = ('id')

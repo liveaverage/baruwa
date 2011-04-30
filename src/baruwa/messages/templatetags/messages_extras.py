@@ -43,8 +43,8 @@ register = template.Library()
 def tds_msg_class(message):
     "set class"
     value = 'LightBlue'
-    if (message['spam'] and not message['highspam'] and 
-        not message['blacklisted'] and not message['nameinfected'] and 
+    if (message['spam'] and not message['highspam'] and
+        not message['blacklisted'] and not message['nameinfected'] and
         not message['otherinfected'] and not message['virusinfected']):
         value = 'spam'
     if message['highspam'] and (not message['blacklisted']):
@@ -63,20 +63,20 @@ def tds_msg_class(message):
 @register.filter(name='tds_msg_status')
 def tds_msg_status(message):
     "message status"
-    if (message['spam'] and (not message['blacklisted']) 
-        and (not message['virusinfected']) 
-        and (not message['nameinfected']) 
+    if (message['spam'] and (not message['blacklisted'])
+        and (not message['virusinfected'])
+        and (not message['nameinfected'])
         and (not message['otherinfected'])):
         value = _('Spam')
     if message['blacklisted']:
         value = _('BL')
-    if (message['virusinfected'] or 
-        message['nameinfected'] or 
+    if (message['virusinfected'] or
+        message['nameinfected'] or
         message['otherinfected']):
         value = _('Infected')
-    if ((not message['spam']) and (not message['virusinfected']) 
-        and (not message['nameinfected']) 
-        and (not message['otherinfected']) 
+    if ((not message['spam']) and (not message['virusinfected'])
+        and (not message['nameinfected'])
+        and (not message['otherinfected'])
         and (not message['whitelisted'])):
         value = _('Clean')
     if message['whitelisted']:
@@ -220,8 +220,8 @@ def tds_get_rules(rules):
                     'rule_desc').get(rule__exact=rule)
                 sa_rule_descp = rule_obj['rule_desc']
             except SaRules.DoesNotExist:
-                pass 
-            return_value.append({'rule': rule, 'score': match.groups()[3], 
+                pass
+            return_value.append({'rule': rule, 'score': match.groups()[3],
                 'rule_descp': sa_rule_descp})
             sa_rule_descp = ""
     return return_value
@@ -289,7 +289,7 @@ def tds_action(value, from_address, to_address):
         option = 'High Scoring Spam Actions'
     return_value = get_config_option(option)
     if re.match(
-        r'^/.*[^/]$', return_value) or re.match(r'(^%[a-z-]+%)(.*)', 
+        r'^/.*[^/]$', return_value) or re.match(r'(^%[a-z-]+%)(.*)',
         return_value):
         match = re.match(r'(^%[a-z-]+%)(.*)', return_value)
         if match:
@@ -306,9 +306,9 @@ def tds_action(value, from_address, to_address):
                 if match2:
                     (direction2, rule2, throwaway, value2) = match2.groups()
                     throwaway = None
-                    sec = {'direction': direction2, 
+                    sec = {'direction': direction2,
                         'rule': clean_regex(rule2), 'action': value2}
-                srules.append({'direction': direction, 
+                srules.append({'direction': direction,
                     'rule': clean_regex(rule), 'action': value, 'secondary': sec})
         for item in srules:
             if item["secondary"]:
@@ -318,19 +318,19 @@ def tds_action(value, from_address, to_address):
                     r'from\:|fromorto\:', item["direction"], re.IGNORECASE):
                     from_regex = item['rule']
                 if re.match(
-                    r'from\:|fromorto\:', item["secondary"]["direction"], 
+                    r'from\:|fromorto\:', item["secondary"]["direction"],
                     re.IGNORECASE):
                     from_regex = item['secondary']['rule']
                 if re.match(
                     r'to\:|fromorto\:', item["direction"], re.IGNORECASE):
                     to_regex = item['rule']
                 if re.match(
-                    r'to\:|fromorto\:', item["secondary"]["direction"], 
+                    r'to\:|fromorto\:', item["secondary"]["direction"],
                     re.IGNORECASE):
                     to_regex = item['secondary']['rule']
                 if to_regex == '' or from_regex == '':
                     return 'blank regex ' + to_regex + ' manoamano ' + from_regex
-                if (re.match(to_regex, to_address, re.IGNORECASE) and 
+                if (re.match(to_regex, to_address, re.IGNORECASE) and
                     re.match(from_regex, from_address, re.IGNORECASE)):
                     return item["secondary"]["action"]
             else:
@@ -340,10 +340,10 @@ def tds_action(value, from_address, to_address):
                     to_regex = item['rule']
                     if re.match(to_regex, to_address, re.IGNORECASE):
                         return item['action']
-                if re.match(r'from\:|fromorto\:', item["direction"], 
+                if re.match(r'from\:|fromorto\:', item["direction"],
                     re.IGNORECASE):
                     comb_regex = item['rule']
-                    if (re.match(comb_regex, from_address, re.IGNORECASE) or 
+                    if (re.match(comb_regex, from_address, re.IGNORECASE) or
                         re.match(comb_regex, to_address, re.IGNORECASE)):
                         return item["action"]
         return _('I do not know how to read it')

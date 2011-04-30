@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -59,7 +59,7 @@ class QueueParser(object):
 
     def process(self):
         "process"
-        postqdir = subprocess.Popen('postconf -d queue_directory', shell=True, 
+        postqdir = subprocess.Popen('postconf -d queue_directory', shell=True,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         try:
             postqueuedir = postqdir.stdout.read().split()[2]
@@ -68,18 +68,18 @@ class QueueParser(object):
 
         def getqfs(matched, dirname, files):
             "process qf"
-            matched.extend([os.path.join(dirname, filename) 
+            matched.extend([os.path.join(dirname, filename)
                             for filename in files])
 
         def extractinfo(qf):
             "extract info from qf"
             try:
                 cmd = "postcat %s" % qf
-                postcat = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, 
+                postcat = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
                 lines = postcat.stdout.readlines()
                 attribs = {}
-                pipe1 = subprocess.Popen('hostname', shell=True, 
+                pipe1 = subprocess.Popen('hostname', shell=True,
                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 attribs['hostname'] = pipe1.stdout.read().strip()
                 attribs['messageid'] = os.path.basename(qf)
@@ -91,7 +91,7 @@ class QueueParser(object):
                         continue
                     if line.startswith('message_arrival_time:'):
                         arrival = line[line.index(' '):]
-                        attribs['timestamp'] = time.strftime("%Y-%m-%d %H:%M:%S", 
+                        attribs['timestamp'] = time.strftime("%Y-%m-%d %H:%M:%S",
                         time.strptime(arrival.strip(), "%a %b %d %H:%M:%S %Y"))
                         continue
                     if line.startswith('sender:'):
@@ -109,7 +109,7 @@ class QueueParser(object):
                         attribs['subject'] = subj
                         break
                 # try and get time message was defered using the timestamp on the
-                # defered log file 
+                # defered log file
                 searchpath = "%s/defer/*" % postqueuedir
                 possibles = glob.glob(searchpath)
                 reasons = []
@@ -120,7 +120,7 @@ class QueueParser(object):
                         if ts > cs:
                             attribs['attempts'] += 1
                         attribs['lastattempt'] = str(datetime.datetime.fromtimestamp(ts))
-                        logfile = codecs.open(os.path.join(path, attribs['messageid']), 
+                        logfile = codecs.open(os.path.join(path, attribs['messageid']),
                                     'r', 'utf-8', 'replace')
                         reasons = logfile.readlines()
                         logfile.close()

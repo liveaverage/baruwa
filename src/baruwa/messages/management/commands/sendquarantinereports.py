@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -47,7 +47,7 @@ def generate_release_records(query_list):
     from baruwa.messages.models import Release
     for record in query_list:
         try:
-            rec = Release(uuid=record['uuid'], timestamp=record['timestamp'], 
+            rec = Release(uuid=record['uuid'], timestamp=record['timestamp'],
             message_id=record['id'])
             rec.save()
         except IntegrityError:
@@ -61,8 +61,8 @@ def add_uuids(query_list):
     import uuid
 
     for index, msg in enumerate(query_list):
-        query_list[index]['uuid'] = str(uuid.uuid5(uuid.NAMESPACE_OID, 
-            str(msg['id'])))  
+        query_list[index]['uuid'] = str(uuid.uuid5(uuid.NAMESPACE_OID,
+            str(msg['id'])))
 
 
 class Command(NoArgsCommand):
@@ -85,7 +85,7 @@ class Command(NoArgsCommand):
         url = getattr(settings, 'QUARANTINE_REPORT_HOSTURL', '')
         a_day = datetime.timedelta(days=1)
         yesterday = datetime.date.today() - a_day
-        from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 
+        from_email = getattr(settings, 'DEFAULT_FROM_EMAIL',
                             'postmaster@localhost')
         logo_path = getattr(settings, 'MEDIA_ROOT', '') + '/imgs/css/logo.jpg'
         logo = open(logo_path, 'rb').read()
@@ -98,7 +98,7 @@ class Command(NoArgsCommand):
                 spam=0).order_by('sascore')[:25]
                 policy_list = Message.quarantine_report.for_user(user).values(
                     'id', 'timestamp', 'from_address', 'to_address', 'subject'
-                ).exclude(timestamp__lt=yesterday).exclude(Q(spam=1) | 
+                ).exclude(timestamp__lt=yesterday).exclude(Q(spam=1) |
                 Q(nameinfected=0) | Q(otherinfected=0) | Q(virusinfected=0)
                 ).order_by('sascore')[:25]
                 subject = _('Baruwa quarantine report for %(user)s') % {
@@ -114,15 +114,15 @@ class Command(NoArgsCommand):
                         add_uuids(query_list)
 
                     html_content = render_to_string(
-                        'messages/quarantine_report.html', 
-                        {'spam_items': spam_list, 'policy_items': policy_list, 
+                        'messages/quarantine_report.html',
+                        {'spam_items': spam_list, 'policy_items': policy_list,
                         'host_url': url})
                     text_content = render_to_string(
                         'messages/quarantine_report_text.html',
-                        {'spam_items': spam_list, 'policy_items': policy_list, 
+                        {'spam_items': spam_list, 'policy_items': policy_list,
                         'host_url': url})
 
-                    msg = EmailMultiAlternatives(subject, text_content, 
+                    msg = EmailMultiAlternatives(subject, text_content,
                         from_email, [to_addr])
                     embed_img(msg, 'baruwalogo', logo)
                     msg.attach_alternative(html_content, "text/html")

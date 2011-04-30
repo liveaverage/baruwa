@@ -22,7 +22,8 @@
 from django.conf.urls.defaults import handler404, handler500, include, patterns
 import os
 
-CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8')).replace('\\', '/')
+CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8')
+).replace('\\', '/')
 
 js_info_dict = {
     'packages': ('baruwa',),
@@ -35,7 +36,8 @@ urlpatterns = patterns('',
     (r'^lists/', include('baruwa.lists.urls')),
     (r'^reports/', include('baruwa.reports.urls')),
     (r'^status/', include('baruwa.status.urls')),
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': os.path.join(CURRENT_PATH, 'static')}),
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
+    {'document_root': os.path.join(CURRENT_PATH, 'static')}),
     (r'^accounts/', include('baruwa.accounts.urls')),
     (r'^settings/', include('baruwa.config.urls')),
 )

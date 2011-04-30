@@ -64,8 +64,8 @@ class QueueParser(object):
         "process"
         def getheaders(matched, dirname, files):
             "utility to get queue header files"
-            matched.extend([os.path.join(dirname, filename) 
-                            for filename in files 
+            matched.extend([os.path.join(dirname, filename)
+                            for filename in files
                             if filename.endswith('-H')])
 
         def getsubject(lines):
@@ -92,7 +92,7 @@ class QueueParser(object):
                 if line.strip().isdigit():
                     break
                 recipients.append(line.strip())
-            return recipients 
+            return recipients
 
         def extractinfo(path):
             "extract attributes from queue file"
@@ -112,16 +112,16 @@ class QueueParser(object):
                 attribs['from_address'] = lines[2].lstrip('<').rstrip('>\n')
                 attribs['to_address'] = getrecipients(lines[:index])
                 attribs['subject'] = getsubject(lines[index:])
-                pipe1 = subprocess.Popen('hostname', shell=True, 
+                pipe1 = subprocess.Popen('hostname', shell=True,
                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 attribs['hostname'] = pipe1.stdout.read().strip()
                 datafile = "%s-D" % os.path.basename(path)[:-2]
                 dpath = os.path.join(os.path.dirname(path), datafile)
                 replace = path.split(os.sep)[-2]
                 mpath = os.path.join(
-                        os.path.dirname(path.replace(replace, 'msglog')), 
+                        os.path.dirname(path.replace(replace, 'msglog')),
                         os.path.basename(path)[:-2])
-                attribs['size'] = (os.path.getsize(path) + 
+                attribs['size'] = (os.path.getsize(path) +
                                     os.path.getsize(dpath))
                 attribs['attempts'] = 0
                 reasons = []

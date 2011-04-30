@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -28,11 +28,11 @@ from baruwa.config.models import MailAuthHost
 
 class MailHostForm(forms.ModelForm):
     "Mail host add form"
-    address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
+    address = forms.RegexField(regex=HOST_OR_IPV4_RE,
         widget=forms.TextInput(attrs={'size': '40'}))
     port = forms.CharField(
                     widget=forms.TextInput(attrs={'size': '5', 'value': '25'}))
-    useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(), 
+    useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(),
         widget=forms.HiddenInput())
 
     class Meta:
@@ -42,7 +42,7 @@ class MailHostForm(forms.ModelForm):
 
 class EditMailHost(forms.ModelForm):
     "Edit Mail host form"
-    address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
+    address = forms.RegexField(regex=HOST_OR_IPV4_RE,
         widget=forms.TextInput(attrs={'size': '40'}))
     port = forms.CharField(widget=forms.TextInput(attrs={'size': '5'}))
 
@@ -62,10 +62,10 @@ class DeleteMailHost(forms.ModelForm):
 
 class MailAuthHostForm(forms.ModelForm):
     "Mail auth host add form"
-    address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
+    address = forms.RegexField(regex=HOST_OR_IPV4_RE,
         widget=forms.TextInput(attrs={'size': '40'}))
     port = forms.CharField(widget=forms.TextInput(attrs={'size': '5'}))
-    useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(), 
+    useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(),
         widget=forms.HiddenInput())
 
     class Meta:
@@ -74,7 +74,7 @@ class MailAuthHostForm(forms.ModelForm):
 
 class EditMailAuthHostForm(forms.ModelForm):
     "Edit Mail auth host form"
-    address = forms.RegexField(regex=HOST_OR_IPV4_RE, 
+    address = forms.RegexField(regex=HOST_OR_IPV4_RE,
         widget=forms.TextInput(attrs={'size': '40'}))
     port = forms.CharField(widget=forms.TextInput(attrs={'size': '5'}))
 

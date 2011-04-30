@@ -56,14 +56,14 @@ def index(request):
             query = Q()
             for addr in addrs:
                 atdomain = "@%s" % addr
-                query = query | Q(Q(**{'from_address__iendswith': atdomain}) | 
+                query = query | Q(Q(**{'from_address__iendswith': atdomain}) |
                                 Q(**{'to_address__iendswith': atdomain}))
             inq = inq.filter(query)
             outq = outq.filter(query)
         if act == 3:
-            inq = inq.filter(Q(from_address__in=addrs) | 
+            inq = inq.filter(Q(from_address__in=addrs) |
                                 Q(to_address__in=addrs))
-            outq = outq.filter(Q(from_address__in=addrs) | 
+            outq = outq.filter(Q(from_address__in=addrs) |
                                 Q(to_address__in=addrs))
 
     data = MessageStats.objects.get(request.user, addrs, act)
@@ -85,8 +85,8 @@ def index(request):
     uptime = upt[2] + ' ' + upt[3].rstrip(',')
 
     return render_to_response('status/index.html', {'data': data, 'load': load,
-        'scanners': scanners, 'mta': mta, 'av': clamd, 'uptime': uptime, 
-        'outq': outq['count'], 'inq': inq['count']}, 
+        'scanners': scanners, 'mta': mta, 'av': clamd, 'uptime': uptime,
+        'outq': outq['count'], 'inq': inq['count']},
         context_instance=RequestContext(request))
 
 
@@ -97,15 +97,15 @@ def bayes_info(request):
 
     info = {}
     regex = re.compile(r'(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+non-token data: (.+)')
-    sa_prefs = getattr(settings, 'SA_PREFS', 
+    sa_prefs = getattr(settings, 'SA_PREFS',
         '/etc/MailScanner/spam.assassin.prefs.conf')
 
-    pipe1 = subprocess.Popen('sa-learn -p ' + sa_prefs + ' --dump magic', 
+    pipe1 = subprocess.Popen('sa-learn -p ' + sa_prefs + ' --dump magic',
     shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     import datetime
     while True:
         line = pipe1.stdout.readline()
-        if not line: 
+        if not line:
             break
         match = regex.match(line)
         if match:
@@ -132,7 +132,7 @@ def bayes_info(request):
             elif match.group(5) == 'last expire reduction count':
                 info['rcount'] = match.group(3)
 
-    return render_to_response('status/bayes.html', {'data': info}, 
+    return render_to_response('status/bayes.html', {'data': info},
         context_instance=RequestContext(request))
 
 
@@ -145,7 +145,7 @@ def sa_lint(request):
     sa_prefs = getattr(
         settings, 'SA_PREFS', '/etc/MailScanner/spam.assassin.prefs.conf')
 
-    pipe1 = subprocess.Popen('spamassassin -x -D -p ' + sa_prefs + ' --lint', 
+    pipe1 = subprocess.Popen('spamassassin -x -D -p ' + sa_prefs + ' --lint',
         shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     while True:
         line = pipe1.stderr.readline()
@@ -153,7 +153,7 @@ def sa_lint(request):
             break
         lint.append(line)
 
-    return render_to_response('status/lint.html', {'data': lint}, 
+    return render_to_response('status/lint.html', {'data': lint},
         context_instance=RequestContext(request))
 
 
@@ -169,11 +169,11 @@ def mailq(request, queue, page=1, direction='dsc', order_by='timestamp'):
             query = Q()
             for addr in addrs:
                 atdomain = "@%s" % addr
-                query = query | Q(Q(**{'from_address__iendswith': atdomain}) | 
+                query = query | Q(Q(**{'from_address__iendswith': atdomain}) |
                                 Q(**{'to_address__iendswith': atdomain}))
             items = items.filter(query)
         if act == 3:
-            items = items.filter(Q(from_address__in=addrs) | 
+            items = items.filter(Q(from_address__in=addrs) |
                                 Q(to_address__in=addrs))
 
     ordering = order_by
@@ -204,7 +204,7 @@ def mailq(request, queue, page=1, direction='dsc', order_by='timestamp'):
 def detail(request, itemid):
     "show queued mail details"
     itemdetails = get_object_or_404(MailQueueItem, id=itemid)
-    return render_to_response('status/detail.html', {'itemdetails': itemdetails}, 
+    return render_to_response('status/detail.html', {'itemdetails': itemdetails},
         context_instance=RequestContext(request))
 
 

@@ -38,9 +38,9 @@ LIST_TYPES = (
 class ListAddForm(forms.Form):
     """ListAddForm"""
 
-    list_type = forms.ChoiceField(choices = LIST_TYPES)
-    from_address = forms.CharField(widget = forms.TextInput(
-        attrs = {'size': '50'}))
+    list_type = forms.ChoiceField(choices=LIST_TYPES)
+    from_address = forms.CharField(widget=forms.TextInput(
+        attrs={'size': '50'}))
     to_address = forms.CharField(required=False)
 
     def __init__(self, request=None, *args, **kwargs):
@@ -56,12 +56,12 @@ class ListAddForm(forms.Form):
         to_address = self.cleaned_data['to_address']
         if not email_re.match(to_address):
             raise forms.ValidationError(
-                _('%(email)s provide a valid e-mail address') % 
+                _('%(email)s provide a valid e-mail address') %
                 {'email': force_escape(to_address)})
         if to_address not in self.request.session['user_filter']['addresses'] \
             and not self.request.user.is_superuser():
             raise forms.ValidationError(
-                _("The address: %(email)s does not belong to you.") % 
+                _("The address: %(email)s does not belong to you.") %
                 {'email': force_escape(to_address)})
         return to_address
 
@@ -82,8 +82,8 @@ class ListAddForm(forms.Form):
         from_address = cleaned_data.get("from_address")
         to_address = cleaned_data.get("to_address")
         from baruwa.lists.models import List
-        list_objs = List.objects.filter(from_address = from_address,
-        to_address = to_address)
+        list_objs = List.objects.filter(from_address=from_address,
+        to_address=to_address)
         if list_objs:
             raise forms.ValidationError(_("The list item already exists"))
         return cleaned_data
@@ -92,7 +92,7 @@ class ListAddForm(forms.Form):
 class AdminListAddForm(ListAddForm):
     """AdminListAddForm"""
 
-    user_part = forms.CharField(required = False)
+    user_part = forms.CharField(required=False)
 
     def __init__(self, *args, **kwargs):
         super(AdminListAddForm, self).__init__(*args, **kwargs)
@@ -100,10 +100,10 @@ class AdminListAddForm(ListAddForm):
             addresses = self.request.session['user_filter']['addresses']
             load_addresses = [(address, address) for address in addresses]
             self.fields['to_address'] = forms.ChoiceField(
-            choices = load_addresses)
+            choices=load_addresses)
         else:
             self.fields['to_address'].widget = forms.TextInput(
-            attrs = {'size': '24'})
+            attrs={'size': '24'})
 
     def clean_to_address(self):
         """clean_to_address"""
@@ -116,7 +116,7 @@ class AdminListAddForm(ListAddForm):
             addresses = self.request.session['user_filter']['addresses']
             if to_address not in addresses:
                 raise forms.ValidationError(
-                _("The address: %(addr)s does not belong to you.") 
+                _("The address: %(addr)s does not belong to you.")
                 % {'addr': force_escape(to_address)})
 
         if to_address != "" and not to_address is None:
@@ -143,9 +143,9 @@ class AdminListAddForm(ListAddForm):
 
 class FilterForm(forms.Form):
     query_type = forms.ChoiceField(
-        choices = ((1, 'containing'), (2, 'excluding')))
-    search_for = forms.CharField(required = False)
+        choices=((1, 'containing'), (2, 'excluding')))
+    search_for = forms.CharField(required=False)
 
 
 class ListDeleteForm(forms.Form):
-    list_item = forms.CharField(widget = forms.HiddenInput)
+    list_item = forms.CharField(widget=forms.HiddenInput)

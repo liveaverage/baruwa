@@ -142,8 +142,8 @@ class FilterForm(forms.Form):
                 raise forms.ValidationError(error_msg)
             if submited_value in EMPTY_VALUES and submited_by not in [9, 10]:
                 raise forms.ValidationError(_("Please supply a value to query"))
-            if ((submited_field == 'from_address' or 
-                submited_field == 'to_address') and 
+            if ((submited_field == 'from_address' or
+                submited_field == 'to_address') and
                 submited_by in [1, 2]):
                 if not email_re.match(submited_value.strip()):
                     raise forms.ValidationError(
@@ -157,7 +157,7 @@ class FilterForm(forms.Form):
                         raise forms.ValidationError(
                             _("Please provide a valid regex")
                         )
-            if ((submited_field == 'from_domain' or 
+            if ((submited_field == 'from_domain' or
                 submited_field == 'to_domain') and
                 submited_by in [1, 2]):
                 if not DOM_RE.match(submited_value.strip()):
@@ -176,7 +176,7 @@ class FilterForm(forms.Form):
                     raise forms.ValidationError(
                         _('Please provide a valid ipv4 address'))
             if submited_field == 'hostname':
-                if ((not ipv4_re.match(submited_value.strip())) and 
+                if ((not ipv4_re.match(submited_value.strip())) and
                 (not DOM_RE.match(submited_value.strip()))):
                     raise forms.ValidationError(
                     _("Please provide a valid hostname or ipv4 address")

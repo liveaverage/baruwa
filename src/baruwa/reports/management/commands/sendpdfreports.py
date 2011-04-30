@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -48,9 +48,9 @@ class Command(BaseCommand):
             default=False, help='Generate reports per domain'),
         make_option('--domain', dest='domain_name', default='all',
             help='Specify the domain to report on, use "all" for all the domains'),
-        make_option('--copyadmin', action='store_true', dest='copy_admin', 
+        make_option('--copyadmin', action='store_true', dest='copy_admin',
             default=False, help='Send a copy of the report to the admin'),
-        make_option('--period', dest='period', default=None, 
+        make_option('--period', dest='period', default=None,
             help='Period to report on: valid options are '
                 '"day(s)","week(s)","month(s)" Examples: '
                 '--period="1 day" --period="2 weeks" --period="5 months"'),
@@ -124,30 +124,30 @@ class Command(BaseCommand):
 
         reports = [
             [
-                'from_address', {'from_address__exact': ""}, 'num_count', 
+                'from_address', {'from_address__exact': ""}, 'num_count',
                 'Top senders by quantity'],
             [
-                'from_address', {'from_address__exact': ""}, 'total_size', 
+                'from_address', {'from_address__exact': ""}, 'total_size',
                 'Top senders by volume'],
-            [   
-                'from_domain', {'from_domain__exact': ""}, 'num_count', 
+            [
+                'from_domain', {'from_domain__exact': ""}, 'num_count',
                 'Top sender domains by quantity'],
-            [   
-                'from_domain', {'from_domain__exact': ""}, 'total_size', 
+            [
+                'from_domain', {'from_domain__exact': ""}, 'total_size',
                 'Top sender domains by volume'],
-            [   
-                'to_address', {'to_address__exact': ""}, 'num_count', 
+            [
+                'to_address', {'to_address__exact': ""}, 'num_count',
                 'Top recipients by quantity'],
             [
-                'to_address', {'to_address__exact': ""}, 'total_size', 
+                'to_address', {'to_address__exact': ""}, 'total_size',
                 'Top recipients by volume'],
             [
-                'to_domain', {'to_domain__exact': "", 
-                'to_domain__isnull': False}, 'num_count', 
+                'to_domain', {'to_domain__exact': "",
+                'to_domain__isnull': False}, 'num_count',
                 'Top recipient domains by quantity'],
             [
-                'to_domain', {'to_domain__exact': "", 
-                'to_domain__isnull': False}, 'total_size', 
+                'to_domain', {'to_domain__exact': "",
+                'to_domain__isnull': False}, 'total_size',
                 'Top recipient domains by volume'],
         ]
 
@@ -157,7 +157,7 @@ class Command(BaseCommand):
             mails = User.objects.values('email').filter(is_superuser=True)
             admin_addrs = [mail['email'] for mail in mails]
 
-        from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 
+        from_email = getattr(settings, 'DEFAULT_FROM_EMAIL',
             'postmaster@localhost')
         url = getattr(settings, 'QUARANTINE_REPORT_HOSTURL', '')
         logo_dir = getattr(settings, 'MEDIA_ROOT', '')
@@ -166,9 +166,9 @@ class Command(BaseCommand):
         def build_chart(data, column, order, title):
             "build chart"
             headings = [('', _('Address'), _('Count'), _('Volume'), '')]
-            rows = [[draw_square(PIE_CHART_COLORS[index]), 
-            tds_trunc(row[column], 45), row['num_count'], 
-            filesizeformat(row['total_size']), ''] 
+            rows = [[draw_square(PIE_CHART_COLORS[index]),
+            tds_trunc(row[column], 45), row['num_count'],
+            filesizeformat(row['total_size']), '']
             for index, row in enumerate(data)]
 
             if len(rows) != 10:
@@ -182,7 +182,7 @@ class Command(BaseCommand):
             dat = [row[order] for row in data]
             total = sum(dat)
             labels = [
-                    ("%.1f%%" % ((1.0 * row[order] / total) * 100)) 
+                    ("%.1f%%" % ((1.0 * row[order] / total) * 100))
                     for row in data
                 ]
 
@@ -191,7 +191,7 @@ class Command(BaseCommand):
             pie.chart.data = dat
             headings[1][4] = pie
 
-            table_with_style = Table(headings, [0.2 * inch, 
+            table_with_style = Table(headings, [0.2 * inch,
                 2.8 * inch, 0.5 * inch, 0.7 * inch, 3.2 * inch])
             table_with_style.setStyle(table_style)
 
@@ -249,8 +249,8 @@ class Command(BaseCommand):
                     ).exclude(enabled__exact=0)]
                 if enddate:
                     efilter = {
-                                'filter': 3, 
-                                'field': 'date', 
+                                'filter': 3,
+                                'field': 'date',
                                 'value': str(enddate)
                                }
                     filters.append(efilter)
@@ -265,16 +265,16 @@ class Command(BaseCommand):
                 rows = [(
                 Table([[draw_square(colors.white),
                 Paragraph('Date', styles["Heading6"])]],
-                [0.35 * inch, 1.50 * inch,]),
+                [0.35 * inch, 1.50 * inch, ]),
                 Table([[draw_square(colors.green),
                 Paragraph('Mail totals', styles["Heading6"])]],
-                [0.35 * inch, 1.50 * inch,]),
+                [0.35 * inch, 1.50 * inch, ]),
                 Table([[draw_square(colors.pink),
                 Paragraph('Spam totals', styles["Heading6"])]],
-                [0.35 * inch, 1.50 * inch,]),
+                [0.35 * inch, 1.50 * inch, ]),
                 Table([[draw_square(colors.red),
                 Paragraph('Virus totals', styles["Heading6"])]],
-                [0.35 * inch, 1.50 * inch,]),
+                [0.35 * inch, 1.50 * inch, ]),
                 )]
             for ind, msgt in enumerate(msg_totals):
                 if ind % 10:
@@ -291,7 +291,7 @@ class Command(BaseCommand):
 
             graph = BarChart()
             graph.chart.data = [
-                    tuple(mail_total), tuple(spam_total), 
+                    tuple(mail_total), tuple(spam_total),
                     tuple(virus_total)
                 ]
             graph.chart.categoryAxis.categoryNames = dates
@@ -302,7 +302,7 @@ class Command(BaseCommand):
                 sum(virus_total)))
                 parts.append(Spacer(1, 20))
                 graph_table = Table(rows, [1.85 * inch, 1.85 * inch,
-                1.85 * inch, 1.85 * inch,])
+                1.85 * inch, 1.85 * inch, ])
                 graph_table.setStyle(TableStyle([
                 ('FONTSIZE', (0, 0), (-1, -1), 8),
                 ('FONT', (0, 0), (-1, -1), 'Helvetica'),

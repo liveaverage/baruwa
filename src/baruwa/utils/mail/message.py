@@ -222,7 +222,7 @@ class EmailParser(object):
 
     def sanitize_html(self, msg):
         "Clean up html"
-        cleaner = Cleaner(style = True, remove_tags=UNCLEANTAGS)
+        cleaner = Cleaner(style=True, remove_tags=UNCLEANTAGS)
         msg = HTMLTITLE_RE.sub('', msg)
         html = cleaner.clean_html(msg)
         html = fromstring(html)
@@ -409,7 +409,7 @@ class TestDeliveryServers(object):
             self.errors.append(_('Error occured, CODE:'
             ' %(code)s MESSAGE: %(msg)s') % {'code': exception.smtp_code})
         return False
-    
+
     def ping(self, count=None):
         "ping host"
         if count is None:
@@ -427,7 +427,7 @@ class TestDeliveryServers(object):
     def setdebug(self):
         "enable debug info"
         self.debug = True
-    
+
     def tests(self, pingcount=None):
         "Run all tests"
         if self.ping(pingcount) and self.smtp_test():

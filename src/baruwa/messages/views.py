@@ -138,7 +138,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             'show_first': 1 not in pn, 'show_last': p.num_pages not in pn,
             'view_type': view_type, 'direction': direction, 'order_by': ordering,
             'quarantine_type': quarantine_type}
-        json = anyjson.dumps({'items': message_list, 'paginator': pg, 
+        json = anyjson.dumps({'items': message_list, 'paginator': pg,
                                 'status': sys_status})
         return HttpResponse(json, mimetype='application/javascript')
 
@@ -201,8 +201,8 @@ def detail(request, message_id, archive=False):
                         success = False
                         error_msg = dict(result['errors'])['release']
                     template = 'messages/released.html'
-                    html.append(render_to_string(template, 
-                        {'id': message_details.id, 'addrs': to_addr, 
+                    html.append(render_to_string(template,
+                        {'id': message_details.id, 'addrs': to_addr,
                         'success': success, 'error_msg': error_msg}))
                 if form_data['learn']:
                     #salean
@@ -212,7 +212,7 @@ def detail(request, message_id, archive=False):
                         success = False
                         error_msg = dict(result['errors'])['learn']
                     html.append(render_to_string(template,
-                        {'id': message_details.id, 'msg': error_msg, 
+                        {'id': message_details.id, 'msg': error_msg,
                         'success': success}))
                 if form_data['todelete']:
                     #delete
@@ -221,7 +221,7 @@ def detail(request, message_id, archive=False):
                         success = False
                         error_msg = dict(result['errors'])['delete']
                     template = "messages/delete.html"
-                    html.append(render_to_string(template, 
+                    html.append(render_to_string(template,
                     {'id': message_details.id, 'success': success,
                     'error_msg': error_msg}))
                 html = '<br />'.join(html)
@@ -244,7 +244,7 @@ def detail(request, message_id, archive=False):
 
 
 @login_required
-def preview(request, message_id, is_attach=False, attachment_id=0, 
+def preview(request, message_id, is_attach=False, attachment_id=0,
         archive=False):
     """
     Returns a message preview of a quarantined message, depending on
@@ -290,7 +290,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
 def search(request):
     "Redirect to message details"
     if (request.method == 'POST') and request.REQUEST['message_id']:
-        message_details = get_object_or_404(Message, 
+        message_details = get_object_or_404(Message,
                                     id=request.REQUEST['message_id'])
         return HttpResponseRedirect(reverse('message-detail',
             args=[message_details.id]))
@@ -365,7 +365,7 @@ def task_status(request, taskid):
         results = result.join()
     else:
         finished = False
-        percent = "%.1f" % ((1.0 * int(result.completed_count())/ int(result.total)) * 100)
+        percent = "%.1f" % ((1.0 * int(result.completed_count()) / int(result.total)) * 100)
     rdict = {'taskid': taskid, 'finished': finished, 'results': results,
     'status': status, 'completed': percent}
     if request.is_ajax():

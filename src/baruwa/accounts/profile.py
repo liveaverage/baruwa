@@ -59,5 +59,5 @@ def set_user_addresses(request):
         if profile.account_type == 3:
             if email_re.match(request.user.username):
                 addresses.append(request.user.username)
-        request.session['user_filter'] = {'account_type': profile.account_type, 
+        request.session['user_filter'] = {'account_type': profile.account_type,
             'addresses': addresses}

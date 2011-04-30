@@ -106,7 +106,7 @@ class QuarantineMessageManager(models.Manager):
 
 
 class EmailReportMessageManager(models.Manager):
-    "Used in processing the quarantine email reports"    
+    "Used in processing the quarantine email reports"
 
     def for_user(self, user):
         "users messages"
@@ -130,7 +130,7 @@ class EmailReportMessageManager(models.Manager):
                 return super(EmailReportMessageManager, self).get_query_set().\
                 filter(
                     Q(from_address__in=addresses) | Q(to_address__in=addresses)
-                     | Q(to_address=user.username) | 
+                     | Q(to_address=user.username) |
                      Q(from_address=user.username)
                 ).filter(isquarantined__exact=1)
 
@@ -152,7 +152,7 @@ class EmailReportMessageManager(models.Manager):
                     Q(to_domain__in=addresses)).filter(isquarantined__exact=1)
             else:
                 return super(EmailReportMessageManager, self).get_query_set().\
-                filter(Q(to_address__in=addresses) | 
+                filter(Q(to_address__in=addresses) |
                 Q(to_address=user.username)).filter(isquarantined__exact=1)
 
     def from_user(self, user):
@@ -173,7 +173,7 @@ class EmailReportMessageManager(models.Manager):
                 ).filter(isquarantined__exact=1)
             else:
                 return super(EmailReportMessageManager, self).get_query_set().\
-                filter(Q(from_address__in=addresses) | 
+                filter(Q(from_address__in=addresses) |
                 Q(from_address=user.username)).filter(isquarantined__exact=1)
 
 
@@ -233,7 +233,7 @@ class TotalsMessageManager(models.Manager):
                 SUM(CASE WHEN virusinfected>0 THEN 1 ELSE 0 END)
                 AS virus_total, SUM(CASE WHEN (virusinfected=0)
                 AND spam>0 THEN 1 ELSE 0 END) AS spam_total,
-                SUM(size) AS size_total FROM messages WHERE 
+                SUM(size) AS size_total FROM messages WHERE
                 from_domain = %s OR to_domain = %s AND date > %s
                  GROUP BY date ORDER BY date DESC
                 """
@@ -244,8 +244,8 @@ class TotalsMessageManager(models.Manager):
                 SUM(CASE WHEN virusinfected>0 THEN 1 ELSE 0 END)
                 AS virus_total, SUM(CASE WHEN (virusinfected=0)
                 AND spam>0 THEN 1 ELSE 0 END) AS spam_total,
-                SUM(size) AS size_total FROM messages WHERE 
-                from_domain = %s OR to_domain = %s GROUP BY 
+                SUM(size) AS size_total FROM messages WHERE
+                from_domain = %s OR to_domain = %s GROUP BY
                 date ORDER BY date DESC
                 """
             conn.execute(query, [domain, domain])
@@ -324,7 +324,7 @@ class SpamScoresManager(models.Manager):
                     BY score ORDER BY score""" % sql
                 query = "%s %s" % (query, gql)
                 conn.execute(query)
-        result_list = [self.model(id=i + 1, score=row[0], count=int(row[1])) 
+        result_list = [self.model(id=i + 1, score=row[0], count=int(row[1]))
                         for i, row in enumerate(conn.fetchall())]
         return result_list
 
@@ -396,7 +396,7 @@ class SpamScores(models.Model):
 
     def obj_to_dict(self):
         " object to dict"
-        vals = [(field.name, getattr(self, field.name)) 
+        vals = [(field.name, getattr(self, field.name))
                 for field in self._meta.fields]
         return dict(vals)
 
@@ -418,7 +418,7 @@ class MessageTotals(models.Model):
 
     def obj_to_dict(self):
         "convert object to dict"
-        vals = [(field.name, getattr(self, field.name)) 
+        vals = [(field.name, getattr(self, field.name))
                 for field in self._meta.fields]
         return dict(vals)
 
@@ -577,7 +577,7 @@ class Archive(models.Model):
         get_latest_by = 'timestamp'
         ordering = ['-timestamp']
 
-    #not ideal to duplicate will work on it later    
+    #not ideal to duplicate will work on it later
     def can_access(self, request):
         """can_access"""
         if not request.user.is_superuser:

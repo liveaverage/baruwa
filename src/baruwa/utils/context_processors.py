@@ -24,7 +24,7 @@ def status(request):
     "Set status variables"
     from baruwa.utils.misc import get_sys_status
 
-    status = {'baruwa_status': '', 'baruwa_mail_total': '', 
+    status = {'baruwa_status': '', 'baruwa_mail_total': '',
             'baruwa_spam_total': '', 'baruwa_virus_total': ''}
 
     if not hasattr(request, 'user'):

@@ -102,7 +102,7 @@ class Command(NoArgsCommand):
 
             print ids
             Message.objects.filter(pk__in=ids).update(isquarantined=0)
-            if (os.path.isabs(process_path) and 
+            if (os.path.isabs(process_path) and
                 (not os.path.islink(process_path))):
                 print _("== Removing directory  %(path)s ==") % {'path': process_path}
                 try:

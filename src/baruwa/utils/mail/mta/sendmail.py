@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -63,8 +63,8 @@ class QueueParser(object):
         "process"
         def getqfs(matched, dirname, files):
             "utility to get qf files"
-            matched.extend([os.path.join(dirname, filename) 
-                            for filename in files 
+            matched.extend([os.path.join(dirname, filename)
+                            for filename in files
                             if filename.startswith('qf')])
 
         def extractinfo(qf):
@@ -77,7 +77,7 @@ class QueueParser(object):
                 qfile.close()
                 attribs = {}
                 attribs['to_address'] = []
-                pipe1 = subprocess.Popen('hostname', shell=True, 
+                pipe1 = subprocess.Popen('hostname', shell=True,
                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 attribs['hostname'] = pipe1.stdout.read().strip()
                 qid = os.path.basename(qf)
@@ -85,13 +85,13 @@ class QueueParser(object):
                 attribs['size'] = 1
                 dirpath = os.path.dirname(qf)
                 possibles = []
-                possibles.append(os.path.join(dirpath, 
+                possibles.append(os.path.join(dirpath,
                                 'df' + attribs['messageid']))
-                possibles.append(os.path.join(dirpath.replace('qf', 'df'), 
+                possibles.append(os.path.join(dirpath.replace('qf', 'df'),
                                 'df' + attribs['messageid']))
                 for path in possibles:
                     if os.path.exists(path):
-                        attribs['size'] = (os.path.getsize(path) + 
+                        attribs['size'] = (os.path.getsize(path) +
                                             os.path.getsize(qf))
                         break
                 attribs['subject'] = ''
@@ -104,7 +104,7 @@ class QueueParser(object):
                     if line.startswith('S'):
                         attribs['from_address'] = line[1:-1].strip()
                         if not '@' in attribs['from_address']:
-                            addr = "%s@%s" % (attribs['from_address'], 
+                            addr = "%s@%s" % (attribs['from_address'],
                                                 attribs['hostname'])
                             attribs['from_address'] = addr
                         continue

@@ -233,10 +233,10 @@ def get_processes(process_name):
         'grep -i ' + process_name, shell=True, stdin=pipe1.stdout,
         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     pipe3 = subprocess.Popen(
-        'grep -v grep', shell=True, stdin=pipe2.stdout, stdout=subprocess.PIPE, 
+        'grep -v grep', shell=True, stdin=pipe2.stdout, stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
     pipe4 = subprocess.Popen(
-        'wc -l', shell=True, stdin=pipe3.stdout, stdout=subprocess.PIPE, 
+        'wc -l', shell=True, stdin=pipe3.stdout, stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
     processes = pipe4.stdout.read()
     processes = int(processes.strip())
@@ -288,14 +288,14 @@ def get_sys_status(request):
             query = Q()
             for addr in addrs:
                 atdomain = "@%s" % addr
-                query = query | Q(Q(**{'from_address__iendswith': atdomain}) | 
+                query = query | Q(Q(**{'from_address__iendswith': atdomain}) |
                                 Q(**{'to_address__iendswith': atdomain}))
             inq = inq.filter(query)
             outq = outq.filter(query)
         if act == 3:
-            inq = inq.filter(Q(from_address__in=addrs) | 
+            inq = inq.filter(Q(from_address__in=addrs) |
                                 Q(to_address__in=addrs))
-            outq = outq.filter(Q(from_address__in=addrs) | 
+            outq = outq.filter(Q(from_address__in=addrs) |
                                 Q(to_address__in=addrs))
 
     data = MessageStats.objects.get(request.user, addrs, act)
@@ -323,9 +323,9 @@ def get_sys_status(request):
         spam = 0
 
     return {
-            'baruwa_status': status, 
-            'baruwa_mail_total': data.total, 
-            'baruwa_spam_total': spam, 
+            'baruwa_status': status,
+            'baruwa_mail_total': data.total,
+            'baruwa_spam_total': spam,
             'baruwa_virus_total': data.virii or 0,
             'baruwa_in_queue': inq['count'],
             'baruwa_out_queue': outq['count']

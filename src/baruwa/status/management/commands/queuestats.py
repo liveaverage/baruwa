@@ -1,17 +1,17 @@
-# 
+#
 # Baruwa - Web 2.0 MailScanner front-end.
 # Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -42,7 +42,7 @@ class Command(BaseCommand):
         mta = options.get('mta')
         if not mta in mtas:
             raise CommandError(_("Only the following %(mta)s "
-                                "MTA's are supported") % 
+                                "MTA's are supported") %
                                 {mta: ' '.join(mtas)})
 
         def runquery(queue, direction, ids):
@@ -100,24 +100,24 @@ class Command(BaseCommand):
 
         allids = [item['messageid'] for item in inqueue]
         allids.extend([item['messageid'] for item in outqueue])
-        dbids = [item['messageid'] 
+        dbids = [item['messageid']
                 for item in MailQueueItem.objects.values('messageid').all()]
         remids = [item for item in dbids if not item in allids]
         preids = [item for item in dbids if not item in remids]
 
         if remids:
-            print (_("== Deleting %(items)d queue items from DB ==") % 
+            print (_("== Deleting %(items)d queue items from DB ==") %
                     {'items': len(remids)})
             MailQueueItem.objects.filter(messageid__in=remids).delete()
 
         if inqueue:
-            print (_("== Processing the inbound queue: %(queue)s with %(items)d items ==") % 
+            print (_("== Processing the inbound queue: %(queue)s with %(items)d items ==") %
                     {'queue': inqdir, 'items': len(inqueue)})
             runquery(inqueue, 1, preids)
         else:
             print _("== Skipping the inbound queue 0 items found ==")
         if outqueue:
-            print (_("== Processing the outbound queue: %(queue)s with %(items)d items ==") % 
+            print (_("== Processing the outbound queue: %(queue)s with %(items)d items ==") %
                     {'queue': outqdir, 'items': len(outqueue)})
             runquery(outqueue, 2, preids)
         else:

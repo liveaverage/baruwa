@@ -35,8 +35,8 @@ from baruwa.accounts.models import UserAddresses
 
 
 DICTIONARY = u"""
-ATTRIBUTE User-Name	1 string
-ATTRIBUTE User-Password	2 string encrypt=1
+ATTRIBUTE User-Name     1 string
+ATTRIBUTE User-Password 2 string encrypt=1
 """
 
 
@@ -84,7 +84,7 @@ class RadiusAuth:
 
             request = client.CreateAuthPacket(code=packet.Accessrequestuest,
                 User_Name=login_user,)
-            request["User-Password"] = request.PwCrypt(password)    
+            request["User-Password"] = request.PwCrypt(password)
             try:
                 reply = client.SendPacket(request)
             except Timeout:
@@ -118,4 +118,3 @@ class RadiusAuth:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
-    

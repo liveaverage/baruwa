@@ -42,7 +42,7 @@ def pack_json_data(data, arg1, arg2):
 def run_hosts_query(request, active_filters):
     "run the top hosts query"
     data = Message.messages.for_user(request).values('clientip').exclude(
-        Q(clientip__exact = '') | Q(clientip__exact = '127.0.0.1') |
+        Q(clientip__exact='') | Q(clientip__exact='127.0.0.1') |
         Q(clientip__isnull=True)).annotate(num_count=Count('clientip'),
         total_size=Sum('size'), virus_total=Sum('virusinfected'),
         spam_total=Sum('spam')).order_by('-num_count')
@@ -69,7 +69,7 @@ def gen_dynamic_raw_query(filter_list):
     osql = []
     ovals = []
     nosql = []
-    novals = [] 
+    novals = []
 
     for filter_item in filter_list:
         if filter_item['filter'] == 1:
