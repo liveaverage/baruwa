@@ -1,0 +1,75 @@
+.. _faq:
+
+.. contents::
+    :local:
+
+=====
+FAQ's
+=====
+
+General
+=======
+
+What is the default admin password ?
+------------------------------------
+
+**Answer:** None, There is no default admin password, you need
+to run baruwa-admin syncdb or baruwa-admin createsuperuser to
+create an initial admin user.
+
+Admin tasks
+===========
+
+How do i add domains ?
+----------------------
+
+**Answer:** Domains can be added to accounts of type "Domain admin"
+You need to create an account, edit the account profile and set
+account type to "Domain admin", then add the domain under the
+accounts managed domains.
+
+Can i add domains to the Administrator account ?
+------------------------------------------------
+
+**Answer:** No, Domains can only be added to accounts of
+"Domain admin" type, the administrator account is for
+managing all other aspects of the system.
+
+Can a user have multiple email addresses on a single account ?
+--------------------------------------------------------------
+
+**Answer:** Yes
+You can add associated addresses to a users account. All emails
+to these addresses will undergo the same lists checks as the
+primary address and will be viewable by the user.
+
+Can users use their current mail password to login to Baruwa ?
+--------------------------------------------------------------
+
+**Answer:** Yes
+Setup external authentication with either POP3, IMAP, SMTP, LDAP
+and RADIUS / RSA SecurID.
+
+How do i route mail to the final destination ?
+----------------------------------------------
+
+**Answer:** You can add multiple final destinations to a domain.
+Go to the domain in Baruwa and add "Delivery SMTP server".
+
+The servers can either be load balanced or fail over, this is
+dependent on what MTA you are using.
+
+Refer to MTA integration for details.
+
+Are there any restrictions on username format ?
+-----------------------------------------------
+
+**Answer:** No, However users that authenticate to external systems
+will have their email address automatically configured as their
+username locally.
+
+Interface usage
+===============
+
+
+

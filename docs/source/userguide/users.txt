@@ -1,9 +1,7 @@
-==================
-User Documentation
-==================
-
+================
 Interface primer
 ================
+
 The interface is simplified and AJAX is supported for most operations
 
 The following have full AJAX support::

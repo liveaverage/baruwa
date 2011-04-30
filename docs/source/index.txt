@@ -1,5 +1,9 @@
 Baruwa
 ======
+
+:Release: |version|
+:Date: |today|
+
 .. include:: includes/intro.inc
 
 .. toctree::
@@ -15,10 +19,10 @@ Baruwa
     integration.txt
     distributed_setup.txt
     batteries_included.txt
-    users.txt
     support.txt
     contribute.txt
     upgrade.txt
     migration.txt
+    userguide/index.txt
     old.txt
 
