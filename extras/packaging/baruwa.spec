@@ -16,6 +16,7 @@ Source2:        baruwa.cron
 Source3:        baruwa.mailscanner
 Source4:        baruwa.init
 Source5:        baruwa.sysconfig
+Source6:        baruwa.cron.monthly
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel
@@ -103,6 +104,7 @@ mkdir -p source/_static
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/cron.d
 %{__install} -d -p $RPM_BUILD_ROOT%{_initrddir}
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily
+%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/cron.monthly
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d
 %{__install} -d -p $RPM_BUILD_ROOT%{_datadir}/%{name}/CustomFunctions
@@ -114,6 +116,7 @@ mkdir -p source/_static
 %{__install} -p -m0644 %SOURCE3 $RPM_BUILD_ROOT%{_sysconfdir}/MailScanner/conf.d/%{name}.conf
 %{__install} -p -m0755 %SOURCE2 $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily/%{name}
 %{__install} -p -m0755 %SOURCE4 $RPM_BUILD_ROOT%{_initrddir}/%{name}
+%{__install} -p -m0755 %SOURCE6 $RPM_BUILD_ROOT%{_sysconfdir}/cron.monthly/%{name}
 %{__install} -p -m0644 %SOURCE5 $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
 %{__install} -p -m0644 %{name}.cron.d $RPM_BUILD_ROOT%{_sysconfdir}/cron.d/%{name}
 %{__install} -p -m0644 %{name}.logrotate $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/%{name}
@@ -133,8 +136,8 @@ popd
 %pre
 getent group celeryd >/dev/null || groupadd -r celeryd
 getent passwd celeryd >/dev/null || \
-	useradd -r -g celeryd -d %{_localstatedir}/lib/%{name} \
-	-s /sbin/nologin -c "Celeryd user" celeryd
+        useradd -r -g celeryd -d %{_localstatedir}/lib/%{name} \
+        -s /sbin/nologin -c "Celeryd user" celeryd
 exit 0
 
 %post
@@ -166,6 +169,7 @@ fi
 %{_datadir}/%{name}/
 %dir %{_sysconfdir}/%{name}
 %{_sysconfdir}/cron.daily/%{name}
+%{_sysconfdir}/cron.monthly/%{name}
 %exclude %{_sysconfdir}/%{name}/settings.pyc
 %exclude %{_sysconfdir}/%{name}/settings.pyo
 %attr(0700,celeryd,celeryd) %{_localstatedir}/lib/%{name}

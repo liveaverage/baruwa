@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Baruwa
+#
+# Send PDF reports
+baruwa-admin sendpdfreports
