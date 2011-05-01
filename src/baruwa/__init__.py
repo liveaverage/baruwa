@@ -51,3 +51,5 @@ Baruwa is installed in the usual way::
 
 .. _`MailScanner`: http://www.mailscanner.info/
 """
+
+__version__ = 1.1.0
