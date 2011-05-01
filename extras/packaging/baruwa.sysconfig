@@ -1,0 +1,11 @@
+# Baruwa Celery worker daemon configuration
+#
+CELERYD_CHDIR="/usr/lib/python2.4/site-packages/baruwa"
+CELERYD="/usr/lib/python2.4/site-packages/baruwa/manage.py celeryd"
+export DJANGO_SETTINGS_MODULE="settings"
+CELERYD_NODES=$(hostname -s)
+CELERYD_OPTS="--time-limit=300 -E --beat -s /var/lib/baruwa/celerybeat-schedule"
+CELERYD_LOG_FILE=/var/log/baruwa/celeryd.log
+CELERYD_PID_FILE=/var/run/celeryd.pid
+CELERYD_USER="celeryd"
+CELERYD_GROUP="celeryd"

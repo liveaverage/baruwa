@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# baruwa - 1.1.0
+#
+
+# send quarantine reports
+baruwa-admin sendquarantinereports >/dev/null
+# clean quarantine 
+baruwa-admin cleanquarantine >/dev/null
+# clean up the DB
+baruwa-admin dbclean >/dev/null
+# update sa rule definitions
+baruwa-admin updatesarules >/dev/null
+# clean up stale sessions
+baruwa-admin cleanup >/dev/null
+# update geoip database
+perl /usr/share/doc/GeoIP-*/fetch-geoipdata.pl

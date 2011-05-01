@@ -1,0 +1,25 @@
+#Quarantine User = exim
+Quarantine Group = celeryd
+Quarantine Permissions = 0660
+Quarantine Whole Message = yes
+Quarantine Whole Messages As Queue Files = no
+Detailed Spam Report = yes
+Include Scores In SpamAssassin Report = yes
+Always Looked Up Last = &BaruwaSQL
+Is Definitely Not Spam = &BaruwaWhitelist
+Is Definitely Spam = &BaruwaBlacklist
+Required SpamAssassin Score = &BaruwaLowScore
+High SpamAssassin Score = &BaruwaHighScore
+Spam Checks = &BaruwaShouldScan
+DB DSN = DBI:mysql:database=baruwa;host=localhost;port=3306
+DB Username = 
+DB Password = 
+SQL Serial Number =
+SQL Quick Peek =
+SQL Config =
+SQL Ruleset =
+SQL SpamAssassin Config =
+SQL Debug = no
+#Spam Actions = store
+#High Scoring Spam Actions = store
+Custom Functions Dir = /usr/share/baruwa/CustomFunctions
