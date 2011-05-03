@@ -33,6 +33,7 @@ from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.db.models import Q
 from django.utils.translation import ugettext as _
+from django.contrib import messages as djmessages
 from baruwa.lists.forms import ListAddForm, AdminListAddForm
 from baruwa.lists.forms import FilterForm, ListDeleteForm
 from baruwa.lists.models import List
@@ -187,6 +188,11 @@ def add_to_list(request, template='lists/add.html'):
                     'error_msg': error_msg})
                 return HttpResponse(response,
                     content_type='application/javascript; charset=utf-8')
+            if error_msg:
+                msg = erro_msg
+            else:
+                msg = _('The address has been added to the list')
+            djmessages.info(request, msg)
         else:
             if request.is_ajax():
                 error_list = form.errors.values()[0]
@@ -217,6 +223,8 @@ def delete_from_list(request, item_id):
                 response = anyjson.dumps({'success': True})
                 return HttpResponse(response,
                     content_type='application/javascript; charset=utf-8')
+            msg = _('List item deleted')
+            djmessages.info(request, msg)
             return HttpResponseRedirect(reverse('lists-start',
                 args=[list_type]))
         else:
@@ -224,6 +232,8 @@ def delete_from_list(request, item_id):
                 response = anyjson.dumps({'success': False})
                 return HttpResponse(response,
                     content_type='application/javascript; charset=utf-8')
+            msg = _('List item could not be deleted')
+            djmessages.info(request, msg)
     else:
         form = ListDeleteForm()
         form.fields['list_item'].widget.attrs['value'] = item_id
