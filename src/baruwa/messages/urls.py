@@ -19,7 +19,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-from django.conf.urls.defaults import handler404, handler500, patterns
+from django.conf.urls.defaults import patterns, include, handler500, handler404
 
 urlpatterns = patterns('baruwa.messages.views',
     (r'^$', 'index', {}, 'main-messages-index'),
