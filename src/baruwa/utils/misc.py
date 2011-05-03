@@ -235,12 +235,12 @@ def get_processes(process_name):
     pipe3 = subprocess.Popen(
         'grep -v grep', shell=True, stdin=pipe2.stdout, stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
-    pipe4 = subprocess.Popen(
-        'wc -l', shell=True, stdin=pipe3.stdout, stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE)
-    processes = pipe4.stdout.read()
-    processes = int(processes.strip())
-    return processes
+    # pipe4 = subprocess.Popen(
+    #     'wc -l', shell=True, stdin=pipe3.stdout, stdout=subprocess.PIPE,
+    #     stderr=subprocess.PIPE)
+    processes = pipe3.stdout.readlines()
+    #processes = len(processes)
+    return len(processes)
 
 
 def get_config_option(search_option):
