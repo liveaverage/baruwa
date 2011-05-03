@@ -20,10 +20,7 @@
 #
 
 """
-======
-Baruwa
-======
-Baruwa (swahili for letter or mail) is a web 2.0 `MailScanner`_ front-end. 
+Baruwa (swahili for letter or mail) is a web 2.0 MailScanner front-end. 
 
 It provides an easy to use interface for managing a MailScanner installation. It is used to
 perform operations such as releasing quarantined messages, spam learning, whitelisting and 
@@ -42,14 +39,10 @@ user spam check settings.
 Baruwa is open source software, written in Python/Perl using the Django Framework and 
 MySQL for storage, it is released under the GPLv2 and is available for free download.
 
-============
-Installation
-============
-Baruwa is installed in the usual way::
-
-    python setup.py install
-
-.. _`MailScanner`: http://www.mailscanner.info/
 """
 
+__author__ = "Andrew Colin Kissa"
+__copyright__ = "Copyright 2010-2011 Andrew Colin Kissa"
+__license__ = "GPLv2"
+__email__ = "andrew@topdog.za.net"
 __version__ = "1.1.0"
