@@ -78,9 +78,8 @@ def index(request):
     mta = get_processes(mas)
     clamd = get_processes('clamd')
 
-    pipe1 = subprocess.Popen(
-        'uptime', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-        )
+    pipe1 = subprocess.Popen(['uptime'], stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE)
     upt = pipe1.stdout.read().split()
     uptime = upt[2] + ' ' + upt[3].rstrip(',')
 
@@ -100,8 +99,8 @@ def bayes_info(request):
     sa_prefs = getattr(settings, 'SA_PREFS',
         '/etc/MailScanner/spam.assassin.prefs.conf')
 
-    pipe1 = subprocess.Popen('sa-learn -p ' + sa_prefs + ' --dump magic',
-    shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    pipe1 = subprocess.Popen(['sa-learn', '-p', sa_prefs, '--dump', 'magic'],
+    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     import datetime
     while True:
         line = pipe1.stdout.readline()
@@ -145,8 +144,8 @@ def sa_lint(request):
     sa_prefs = getattr(
         settings, 'SA_PREFS', '/etc/MailScanner/spam.assassin.prefs.conf')
 
-    pipe1 = subprocess.Popen('spamassassin -x -D -p ' + sa_prefs + ' --lint',
-        shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    pipe1 = subprocess.Popen(['spamassassin', '-x', '-D', '-p', sa_prefs,
+    '--lint'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     while True:
         line = pipe1.stderr.readline()
         if not line:
@@ -196,16 +195,17 @@ def mailq(request, queue, page=1, direction='dsc', order_by='timestamp'):
 
     return object_list(request, template_name='status/mailq.html',
     queryset=items, paginate_by=50, page=page,
-    extra_context={'list_all': True, 'app': app.strip('/'), 'direction': direction,
-    'order_by': ordering, 'form': form}, allow_empty=True)
+    extra_context={'list_all': True, 'app': app.strip('/'),
+    'direction': direction, 'order_by': ordering, 'form': form},
+    allow_empty=True)
 
 
 @login_required
 def detail(request, itemid):
     "show queued mail details"
     itemdetails = get_object_or_404(MailQueueItem, id=itemid)
-    return render_to_response('status/detail.html', {'itemdetails': itemdetails},
-        context_instance=RequestContext(request))
+    return render_to_response('status/detail.html',
+    {'itemdetails': itemdetails}, context_instance=RequestContext(request))
 
 
 @login_required

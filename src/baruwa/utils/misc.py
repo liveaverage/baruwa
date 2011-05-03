@@ -19,8 +19,8 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-import subprocess
 import socket
+import subprocess
 
 from django.template.defaultfilters import force_escape
 from django.conf import settings
@@ -63,7 +63,8 @@ def jsonify_domains_list(element):
 
 def jsonify_status(element):
     "Jsonify status dict"
-    for key in ['baruwa_spam_total', 'baruwa_virus_total', 'baruwa_mail_total']:
+    for key in ['baruwa_spam_total', 'baruwa_virus_total',
+    'baruwa_mail_total']:
         element[key] = str(element[key])
     return element
 
@@ -227,20 +228,13 @@ def get_active_filters(filter_list, active_filters):
 
 def get_processes(process_name):
     "Gets running processes by process name"
-    pipe1 = subprocess.Popen(
-        'ps ax', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    pipe2 = subprocess.Popen(
-        'grep -i ' + process_name, shell=True, stdin=pipe1.stdout,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    pipe3 = subprocess.Popen(
-        'grep -v grep', shell=True, stdin=pipe2.stdout, stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE)
-    # pipe4 = subprocess.Popen(
-    #     'wc -l', shell=True, stdin=pipe3.stdout, stdout=subprocess.PIPE,
-    #     stderr=subprocess.PIPE)
-    processes = pipe3.stdout.readlines()
-    #processes = len(processes)
-    return len(processes)
+    pipe1 = subprocess.Popen(['ps', 'ax'], stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE)
+    pipe2 = subprocess.Popen(['grep', '-i', process_name], stdin=pipe1.stdout,
+    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    pipe1.stdout.close()
+    processes = pipe2.communicate()[0]
+    return len(processes.split('\n')[:-1])
 
 
 def get_config_option(search_option):
@@ -248,14 +242,15 @@ def get_config_option(search_option):
     Returns a MailScanner config setting from the
     config file
     """
-    config = getattr(
-                settings, 'MS_CONFIG', '/etc/MailScanner/MailScanner.conf')
+    config = getattr(settings, 'MS_CONFIG',
+    '/etc/MailScanner/MailScanner.conf')
     quickpeek = getattr(settings, 'MS_QUICKPEEK', '/usr/sbin/Quick.Peek')
     cmd = "%s '%s' %s" % (quickpeek, search_option, config)
 
     pipe1 = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
-    return pipe1.stdout.read().strip()
+    val = pipe1.communicate()[0]
+    return val.strip()
 
 
 def host_is_local(host):
