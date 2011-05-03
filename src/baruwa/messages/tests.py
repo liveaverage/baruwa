@@ -29,7 +29,8 @@ from django.contrib.auth.models import User
 class MessagesTestCase(TestCase):
     def setUp(self):
         self.client = Client(enforce_csrf_checks=True)
-        self.user = User.objects.create_user('andrew', 'andrew@topdog.za.net', 'password')
+        self.user = User.objects.create_user('andrew',
+        'andrew@topdog.za.net', 'password')
         self.user.is_superuser = True
         self.user.save()
 
@@ -37,7 +38,8 @@ class MessagesTestCase(TestCase):
         homepage = urlresolvers.reverse('index-page')
         response = self.client.get(homepage)
         self.failUnless(response)
-        self.assertEqual(response.status_code, httplib.FOUND)
+        self.assertRedirects(response,
+        urlresolvers.reverse('please-login') + '?next=/')
 
     def test_loggedin_view_homepage(self):
         homepage = urlresolvers.reverse('index-page')
@@ -49,7 +51,8 @@ class MessagesTestCase(TestCase):
     def test_ajax_homepage(self):
         homepage = urlresolvers.reverse('index-page')
         self.client.login(username='andrew', password='password')
-        response = self.client.get(homepage, {}, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.get(homepage, {},
+        HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.failUnless(response)
         self.assertEqual(response.status_code, httplib.OK)
 
