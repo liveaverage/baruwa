@@ -66,8 +66,13 @@ sub PopulateList {
             my @mcount = split( /\./, $bits );
             $mcount = @mcount;
             if ( $mcount == 4 ) {
-                my $range = Net::CIDR::addrandmask2cidr( $network, $bits );
-                push( @$ips, $range );
+                eval{
+                    my $range = Net::CIDR::addrandmask2cidr( $network, $bits );
+                    push( @$ips, $range );
+                };
+                if ($@){
+                    MailScanner::Log::WarnLog("Invalid network range: %s/%s", $network, $bits);
+                }
             }
             else {
                 push( @$ips, "$network/$bits" );
@@ -75,9 +80,14 @@ sub PopulateList {
         }
         elsif ( $from_address =~ /^[.:\da-f]+\s*-\s*[.:\da-f]+$/ ) {
             $from_address =~ s/\s*//g;
-            my @cidr = Net::CIDR::range2cidr($from_address);
-            foreach my $cidr (@cidr) {
-                push( @$ips, $cidr );
+            eval{
+                my @cidr = Net::CIDR::range2cidr($from_address);
+                foreach my $cidr (@cidr) {
+                    push( @$ips, $cidr );
+                }
+            };
+            if ($@){
+                MailScanner::Log::WarnLog("Invalid network range: %s", $from_address);
             }
         }
         else {
