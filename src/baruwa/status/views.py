@@ -80,7 +80,7 @@ def index(request):
 
     pipe1 = subprocess.Popen(['uptime'], stdout=subprocess.PIPE,
     stderr=subprocess.PIPE)
-    upt = pipe1.stdout.read().split()
+    upt = pipe1.communicate()[0].split()
     uptime = upt[2] + ' ' + upt[3].rstrip(',')
 
     return render_to_response('status/index.html', {'data': data, 'load': load,
