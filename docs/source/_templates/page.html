@@ -1,18 +1,18 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="deck">
-
+	Baruwa 1.1.0 Release candidate 3 has been released, Release notes:
+	<a href="http://lists.baruwa.org/pipermail/baruwa/2011-May/000921.html">
+		http://lists.baruwa.org/pipermail/baruwa/2011-May/000921.html
+	</a>
+	<br/>
     {% if version == "1.1.0" %}
-        <p class="developmentversion">
         This document is for Baruwa's development version, may be significantly different
         from released versions and is a work in progress. View the current released docs here:
         <a href="http://www.baruwa.org/docs/{{ pagename }}{{ file_suffix }}">1.0.2</a>.
-        </p>
         {% else %}
-        <p>
         This document describes Baruwa {{ version }}. For development docs,
         <a href="http://www.baruwa.org/docs/dev/{{ pagename }}{{ file_suffix }}">go here</a>.
-        </p>
     {% endif %}
 
 </div>
