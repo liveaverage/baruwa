@@ -51,7 +51,8 @@ LANGUAGE_CODE = 'en'
 LANGUAGES = (
   ('en', ugettext('English')),
   ('af', ugettext('Afrikaans')),
-  ('it', ugettext('Italian'))
+  ('it', ugettext('Italian')),
+  ('cs', ugettext('Czech')),
 )
 
 SITE_ID = 1
