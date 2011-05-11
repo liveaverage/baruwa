@@ -4,6 +4,7 @@
     Alias /favicon.ico /usr/lib/python2.4/site-packages/baruwa/static/imgs/favicon.ico
     Alias /static/ /usr/lib/python2.4/site-packages/baruwa/static/
     <Directory /usr/lib/python2.4/site-packages/baruwa/static>
+        Options +FollowSymLinks
         Order deny,allow
         Allow from all
     </Directory>
