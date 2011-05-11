@@ -91,7 +91,7 @@ if [ "$1" = "configure" ]; then
     	# create user
     	. /usr/share/wwwconfig-common/mysql-createuser.sh
     	# grant rights to db
-    	TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX.sql`
+    	TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX`
     	echo "GRANT ALL ON $dbname.* TO $dbuser@$dbserver IDENTIFIED BY '$dbpass';" > "$TMPDEST"
     	sqlfile="$TMPDEST"
     	# run the grants
@@ -114,7 +114,7 @@ if [ "$1" = "configure" ]; then
         /usr/share/pyshared/baruwa/manage.py syncdb --noinput
         # create admin user
         export DJANGO_SETTINGS_MODULE=baruwa.settings
-	    TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX.py`
+	    TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX`
 	    echo "import os" > "$TMPDEST"
 	    echo "import sys" >> "$TMPDEST"
 	    echo "os.environ['DJANGO_SETTINGS_MODULE'] = 'baruwa.settings'" >> "$TMPDEST"
