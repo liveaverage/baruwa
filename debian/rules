@@ -25,6 +25,7 @@ override_dh_auto_build:
 	cp extras/baruwa-mod_wsgi.conf apache.conf
 	cp extras/baruwa-mailscanner.conf baruwa.conf	
 	sed -i -e "s|/usr/lib/python2.4/site-packages|/usr/share/pyshared|;s|logs|/var/log/apache2|;" apache.conf
+	sed -i -e "s|/usr/share/baruwa/CustomFunctions|/etc/MailScanner/CustomFunctions|;" baruwa.conf
 	
 override_dh_compress:
 	dh_compress -X.sql -X.js -X.pm
