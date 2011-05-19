@@ -221,11 +221,10 @@ def get_active_filters(filter_list, active_filters):
         filter_by = dict(FILTER_BY)
 
         for filter_item in filter_list:
-            active_filters.append(
-                {'filter_field': filter_items[filter_item['field']],
-                'filter_by': filter_by[int(filter_item['filter'])],
-                'filter_value': filter_item['value']}
-                )
+            active_filters.append(dict(
+            filter_field=filter_items[filter_item['field']],
+            filter_by=filter_by[int(filter_item['filter'])],
+            filter_value=filter_item['value']))
 
 
 def get_processes(process_name):
@@ -319,14 +318,9 @@ def get_sys_status(request):
     except TypeError:
         spam = 0
 
-    return {
-            'baruwa_status': status,
-            'baruwa_mail_total': data.total,
-            'baruwa_spam_total': spam,
-            'baruwa_virus_total': data.virii or 0,
-            'baruwa_in_queue': inq['count'],
-            'baruwa_out_queue': outq['count']
-            }
+    return dict(baruwa_status=status, baruwa_mail_total=data.total,
+    baruwa_spam_total=spam, baruwa_virus_total=data.virii or 0,
+    baruwa_in_queue=inq['count'], baruwa_out_queue=outq['count'])
 
 
 def geoip_lookup(ipaddr):
