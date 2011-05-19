@@ -66,6 +66,10 @@ MSGID_RE = re.compile(r'^(?:Message-Id\:\s+.+)$', re.IGNORECASE)
 
 HTMLTITLE_RE = re.compile(r'<title>.+</title>', re.IGNORECASE)
 
+RELAY_HOSTS_RE = re.compile(r'((?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3}))|(?:(?:\[IPv6\:)([^]]*)(?:\]))')
+
+RECIEVED_RE = re.compile(r'(^Received:|X-Originating-IP:)')
+
 
 def clean_regex(rule):
     """

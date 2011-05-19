@@ -19,13 +19,14 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-import re
 import socket
-import GeoIP
 
 from django import template
 from django.utils.translation import ugettext as _
 from IPy import IP
+
+from baruwa.utils.misc import geoip_lookup
+from baruwa.utils.regex import RELAY_HOSTS_RE, RECIEVED_RE
 
 register = template.Library()
 
@@ -37,18 +38,16 @@ def relayed_via(headers):
     return_value = []
     ipaddr = ""
     for header in header_list:
-        match = re.match(r'(^Received:|X-Originating-IP:)', header)
+        match = RECIEVED_RE.match(header)
         if match:
-            match = re.findall(
-            r'((?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3}))',
-            header)
+            match = RELAY_HOSTS_RE.findall(header)
             if match:
                 match.reverse()
-                for addr in match:
+                for address in match:
+                    addr = address[0] or address[1]
                     try:
                         iptype = IP(addr).iptype()
                     except ValueError:
-                        # psuedo work around if IPy not installed
                         if addr == '127.0.0.1':
                             iptype = 'LOOPBACK'
                         else:
@@ -68,15 +67,8 @@ def relayed_via(headers):
                             else:
                                 hostname = _("Reverse lookup failed")
                         if iptype != "PRIVATE":
-                            gip = GeoIP.new(GeoIP.GEOIP_MEMORY_CACHE)
-                            try:
-                                country_code = gip.country_code_by_addr(ipaddr).lower()
-                                country_name = gip.country_name_by_addr(ipaddr)
-                            except (GeoIP.error, AttributeError):
-                                pass
-                        return_value.append(
-                            {'ip_address': ipaddr,
-                            'hostname': hostname,
-                            'country_code': country_code,
-                            'country_name': country_name})
-    return {'hosts': return_value}
+                            country_name, country_code = geoip_lookup(ipaddr)
+                        return_value.append(dict(ip_address=ipaddr,
+                        hostname=hostname, country_code=country_code,
+                        country_name=country_name))
+    return dict(hosts=return_value)

@@ -20,11 +20,13 @@
 #
 
 import socket
+import GeoIP
 import subprocess
 
-from django.template.defaultfilters import force_escape
+from IPy import IP
 from django.conf import settings
 from django.db.models import Q, Count
+from django.template.defaultfilters import force_escape
 
 
 def jsonify_msg_list(element):
@@ -325,3 +327,18 @@ def get_sys_status(request):
             'baruwa_in_queue': inq['count'],
             'baruwa_out_queue': outq['count']
             }
+
+
+def geoip_lookup(ipaddr):
+    try:
+        if IP(ipaddr).version() == 6:
+            gip = GeoIP.open(settings.GEOIP_IPV6_DB, GeoIP.GEOIP_MEMORY_CACHE)
+            country_code = gip.country_code_by_addr_v6(ipaddr).lower()
+            country_name = gip.country_name_by_name_v6(ipaddr)
+        else:
+            gip = GeoIP.new(GeoIP.GEOIP_MEMORY_CACHE)
+            country_code = gip.country_code_by_addr(ipaddr).lower()
+            country_name = gip.country_name_by_addr(ipaddr)
+        return country_name, country_code
+    except (GeoIP.error, AttributeError):
+        return ('', '')

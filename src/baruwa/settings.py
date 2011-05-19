@@ -195,6 +195,9 @@ RADIUS_SECRET['127.0.0.1'] = 'secret'
 
 # Baruwa only setting
 
+# location of GeoIP IPv6 DB
+GEOIP_IPV6_DB = '/usr/local/share/GeoIP/GeoIPv6.dat'
+
 # mailscanner configuration file
 MS_CONFIG = '/etc/MailScanner/MailScanner.conf'
 

@@ -21,19 +21,21 @@
 
 import os
 import re
-import GeoIP
 import socket
 
+from IPy import IP
 from textwrap import wrap
 from django import template
 from django.template.defaultfilters import stringfilter, wordwrap, linebreaksbr
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
+
+from baruwa.utils.misc import geoip_lookup
 from baruwa.messages.models import SaRules
 from baruwa.utils.regex import clean_regex
 from baruwa.utils.misc import get_config_option
-from baruwa.utils.regex import RBL_RE, SARULE_RE, IP_RE, LEARN_RE
+from baruwa.utils.regex import RBL_RE, SARULE_RE, LEARN_RE
 
 
 register = template.Library()
@@ -131,19 +133,14 @@ def tds_email_list(value):
 @stringfilter
 def tds_geoip(value):
     "return country flag"
-    tag = ""
-    match = IP_RE.match(value)
-    if match:
-        try:
-            gip = GeoIP.new(GeoIP.GEOIP_MEMORY_CACHE)
-            ccode = gip.country_code_by_addr(value).lower()
-            cname = gip.country_name_by_addr(value)
-        except (GeoIP.error, AttributeError):
-            ccode = None
-            cname = None
+    try:
+        IP(value).version()
+        cname, ccode = geoip_lookup(value)
         if ccode and cname:
-            tag = '<img src="/static/imgs/flags/%s.png" alt="%s"/>' % (
-            ccode, cname)
+            tag = '<img src="/static/imgs/flags/%s.png" alt="%s"/>' % (ccode,
+            cname)
+    except ValueError:
+        tag = ''
     return mark_safe(tag)
 
 
@@ -152,16 +149,15 @@ def tds_geoip(value):
 def tds_hostname(value):
     "display hostname"
     hostname = ''
-    match = IP_RE.match(value)
-    if match:
-        if match.groups()[0] == '127.0.0.1':
+    try:
+        IP(value).version()
+        if value == '127.0.0.1' or value == '::1':
             hostname = 'localhost'
         else:
-            try:
-                socket.setdefaulttimeout(60)
-                hostname = socket.gethostbyaddr(match.groups()[0])[0]
-            except (socket.error, socket.gaierror, socket.timeout):
-                hostname = _('unknown')
+            socket.setdefaulttimeout(60)
+            hostname = socket.gethostbyaddr(value)[0]
+    except (ValueError, socket.error, socket.gaierror, socket.timeout):
+        hostname = _('unknown')
     return mark_safe(hostname)
 
 
