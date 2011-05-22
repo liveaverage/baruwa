@@ -123,6 +123,9 @@ class ProcessQuarantinedMsg(Task):
             else:
                 logger.info(_("Message: %(msgid)s deleted from quarantine"),
                 dict(msgid=job['message_id']))
+                msg = Message.objects.get(pk=job['message_id'])
+                msg.isquarantined = 0
+                msg.save()
         return result
 
 
@@ -207,6 +210,9 @@ class ProcessQuarantine(Task):
                 else:
                     logger.info(_("Message: %(msgid)s deleted from quarantine"),
                     {'msgid': msgid})
+                    msg = Message.objects.get(pk=msgid)
+                    msg.isquarantined = 0
+                    msg.save()
             results.append(result)
         return results
 
