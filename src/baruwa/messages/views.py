@@ -220,6 +220,9 @@ def detail(request, message_id, archive=False):
                     if not result['delete']:
                         success = False
                         error_msg = dict(result['errors'])['delete']
+                    else:
+                        message_details.isquarantined = 0
+                        message_details.save()
                     template = "messages/delete.html"
                     html.append(render_to_string(template,
                     {'id': message_details.id, 'success': success,
