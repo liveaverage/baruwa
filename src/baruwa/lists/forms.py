@@ -26,6 +26,8 @@ try:
     from django.forms.fields import email_re
 except ImportError:
     from django.core.validators import email_re
+
+from baruwa.utils.misc import ipaddr_is_valid
 from baruwa.utils.regex import DOM_RE, IPV4_RE, USER_RE, IPV4_NET_OR_RANGE_RE
 
 
@@ -71,9 +73,10 @@ class ListAddForm(forms.Form):
 
         if (not email_re.match(from_address) and not DOM_RE.match(from_address)
                 and not IPV4_RE.match(from_address) and not
-                IPV4_NET_OR_RANGE_RE.match(from_address)):
-            raise forms.ValidationError(_("Provide either a valid IPv4, email,"
-            " Domain address, or IPv4 network or range"))
+                IPV4_NET_OR_RANGE_RE.match(from_address) and not
+                ipaddr_is_valid(from_address)):
+            raise forms.ValidationError(_("Provide either a valid IPv4/IPv6, email,"
+            " Domain address, or IPv4/IPv6 network or range"))
         return from_address
 
     def clean(self):

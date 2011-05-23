@@ -336,3 +336,14 @@ def geoip_lookup(ipaddr):
         return country_name, country_code
     except (GeoIP.error, AttributeError):
         return ('', '')
+
+
+def ipaddr_is_valid(ip):
+    """
+    Checks the validity of an IP address
+    """
+    try:
+        IP(ip)
+        return True
+    except ValueError:
+        return False
