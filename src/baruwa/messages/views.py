@@ -222,7 +222,7 @@ def detail(request, message_id, archive=False):
                         if os.path.exists(file_name):
                             try:
                                 os.remove(file_name)
-                                message_details.quarantined = 0
+                                message_details.isquarantined = 0
                                 message_details.save()
                             except:
                                 success = False
