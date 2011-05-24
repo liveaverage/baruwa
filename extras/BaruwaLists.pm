@@ -61,8 +61,14 @@ sub PopulateList {
             my @mcount = split( /\./, $bits );
             $mcount = @mcount;
             if ( $mcount == 4 ) {
-                my $range = Net::CIDR::addrandmask2cidr( $network, $bits );
-                push( @$ips, $range );
+                eval {
+                    my $range = Net::CIDR::addrandmask2cidr( $network, $bits );
+                    push( @$ips, $range );
+                };
+                if ($@) {
+                    MailScanner::Log::WarnLog( "Invalid network range: %s/%s",
+                        $network, $bits );
+                }
             }
             else {
                 push( @$ips, "$network/$bits" );
@@ -70,9 +76,15 @@ sub PopulateList {
         }
         elsif ( $from_address =~ /^[.:\da-f]+\s*-\s*[.:\da-f]+$/ ) {
             $from_address =~ s/\s*//g;
-            my @cidr = Net::CIDR::range2cidr($from_address);
-            foreach my $cidr (@cidr) {
-                push( @$ips, $cidr );
+            eval {
+                my @cidr = Net::CIDR::range2cidr($from_address);
+                foreach my $cidr (@cidr) {
+                    push( @$ips, $cidr );
+                }
+            };
+            if ($@) {
+                MailScanner::Log::WarnLog( "Invalid network range: %s",
+                    $from_address );
             }
         }
         else {
@@ -119,7 +131,7 @@ sub InitBaruwaWhitelist {
     MailScanner::Log::InfoLog("Starting Baruwa whitelists");
     my $total = PopulateList( 1, \%Whitelist, \@WhiteIPs );
     MailScanner::Log::InfoLog( "Read %d whitelist items", $total );
-    MailScanner::Log::InfoLog( "Ip blocks whitelisted: @WhiteIPs" );
+    MailScanner::Log::InfoLog("Ip blocks whitelisted: @WhiteIPs");
     $wtime = time();
 }
 
@@ -140,7 +152,7 @@ sub InitBaruwaBlacklist {
     MailScanner::Log::InfoLog("Starting Baruwa blacklists");
     my $total = PopulateList( 2, \%Blacklist, \@BlackIPs );
     MailScanner::Log::InfoLog( "Read %d blacklist items", $total );
-    MailScanner::Log::InfoLog( "Ip blocks blacklisted: @BlackIPs" );
+    MailScanner::Log::InfoLog("Ip blocks blacklisted: @BlackIPs");
     $btime = time();
 }
 
