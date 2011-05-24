@@ -20,20 +20,37 @@
 #
 
 from django import forms
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext as _
+
 from baruwa.accounts.models import UserAddresses
 from baruwa.config.models import MailHost
-from baruwa.utils.regex import HOST_OR_IPV4_RE
+from baruwa.utils.misc import ipaddr_is_valid
+from baruwa.utils.regex import DOM_RE
 from baruwa.config.models import MailAuthHost
+
+
+def validate_host(value):
+    if not ipaddr_is_valid(value) and not DOM_RE.match(value):
+        raise ValidationError(
+        _(u'%s is not a valid hostname or IPv4/IPv6 address') % value)
+
+
+class HostField(forms.CharField):
+    widget = forms.TextInput(attrs={'size': '40'})
+    default_error_messages = {
+        'invalid': _(u'Enter a valid IPv4/IPv6 address or hostname.'),
+    }
+    default_validators = [validate_host]
 
 
 class MailHostForm(forms.ModelForm):
     "Mail host add form"
-    address = forms.RegexField(regex=HOST_OR_IPV4_RE,
-        widget=forms.TextInput(attrs={'size': '40'}))
-    port = forms.CharField(
-                    widget=forms.TextInput(attrs={'size': '5', 'value': '25'}))
+    address = HostField()
+    port = forms.CharField(widget=forms.TextInput(
+    attrs={'size': '5', 'value': '25'}))
     useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(),
-        widget=forms.HiddenInput())
+    widget=forms.HiddenInput())
 
     class Meta:
         model = MailHost
@@ -42,8 +59,7 @@ class MailHostForm(forms.ModelForm):
 
 class EditMailHost(forms.ModelForm):
     "Edit Mail host form"
-    address = forms.RegexField(regex=HOST_OR_IPV4_RE,
-        widget=forms.TextInput(attrs={'size': '40'}))
+    address = HostField()
     port = forms.CharField(widget=forms.TextInput(attrs={'size': '5'}))
 
     class Meta:
@@ -62,8 +78,7 @@ class DeleteMailHost(forms.ModelForm):
 
 class MailAuthHostForm(forms.ModelForm):
     "Mail auth host add form"
-    address = forms.RegexField(regex=HOST_OR_IPV4_RE,
-        widget=forms.TextInput(attrs={'size': '40'}))
+    address = HostField()
     port = forms.CharField(widget=forms.TextInput(attrs={'size': '5'}))
     useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.all(),
         widget=forms.HiddenInput())
@@ -74,8 +89,7 @@ class MailAuthHostForm(forms.ModelForm):
 
 class EditMailAuthHostForm(forms.ModelForm):
     "Edit Mail auth host form"
-    address = forms.RegexField(regex=HOST_OR_IPV4_RE,
-        widget=forms.TextInput(attrs={'size': '40'}))
+    address = HostField()
     port = forms.CharField(widget=forms.TextInput(attrs={'size': '5'}))
 
     class Meta:
