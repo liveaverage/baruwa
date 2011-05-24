@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block scripts %}
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var media_url = '{{MEDIA_URL}}';
+//]]>
+</script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/domain.js"></script>
 {% endblock scripts %}
