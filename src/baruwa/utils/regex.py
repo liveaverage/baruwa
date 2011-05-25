@@ -66,7 +66,10 @@ MSGID_RE = re.compile(r'^(?:Message-Id\:\s+.+)$', re.IGNORECASE)
 
 HTMLTITLE_RE = re.compile(r'<title>.+</title>', re.IGNORECASE)
 
-RELAY_HOSTS_RE = re.compile(r'((?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3}))|(?:(?:\[IPv6\:)([^]]*)(?:\]))')
+RELAY_HOSTS_RE = re.compile(
+    r'[^=]\[((?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3})\.(?:[0-9]{1,3}))\]'
+    r'|(?:(?:\[IPv6\:)([^]]*)(?:\]))|(?:\[([.:\da-f]+)\])'
+)
 
 RECIEVED_RE = re.compile(r'(^Received:|X-Originating-IP:)')
 

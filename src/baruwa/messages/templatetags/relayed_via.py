@@ -44,7 +44,7 @@ def relayed_via(headers):
             if match:
                 match.reverse()
                 for address in match:
-                    addr = address[0] or address[1]
+                    addr = address[0] or address[1] or address[2]
                     try:
                         iptype = IP(addr).iptype()
                     except ValueError:
@@ -52,7 +52,7 @@ def relayed_via(headers):
                             iptype = 'LOOPBACK'
                         else:
                             iptype = 'unknown'
-                    country_code = ""
+                    country_code = "unknown"
                     country_name = ""
                     if (not iptype == "LOOPBACK"
                         and addr != ipaddr
@@ -69,6 +69,7 @@ def relayed_via(headers):
                         if iptype != "PRIVATE":
                             country_name, country_code = geoip_lookup(ipaddr)
                         return_value.append(dict(ip_address=ipaddr,
-                        hostname=hostname, country_code=country_code,
-                        country_name=country_name))
+                        hostname=hostname or '&nbsp;',
+                        country_code=country_code or 'unknown',
+                        country_name=country_name or ''))
     return dict(hosts=return_value)
