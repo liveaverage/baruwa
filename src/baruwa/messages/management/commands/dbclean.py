@@ -19,13 +19,15 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.utils.translation import ugettext as _
 
 
 class Command(NoArgsCommand):
     "Archive messages and delete from messages table"
-    help = _("Deletes records older than 60 days from the messages table")
+    help = _("Deletes records older than QUARANTINE_DAYS_TO_KEEP"
+    " days from the messages table")
 
     def handle_noargs(self, **options):
         from django.db import connection
@@ -34,17 +36,27 @@ class Command(NoArgsCommand):
         #interval = datetime.timedelta(days=60)
         #last_date = datetime.datetime.now() - interval
         #Message.objects.filter(timestamp__lt=last_date).delete()
+        days = getattr(settings, 'QUARANTINE_DAYS_TO_KEEP', 60)
 
         conn = connection.cursor()
         conn.execute(
+            """DELETE FROM messages WHERE id in 
+            (SELECT id FROM archive WHERE timestamp <
+            DATE_SUB(CURDATE(), INTERVAL %s DAY))
+            """ % str(days)
+        )
+        conn.execute(
             """INSERT LOW_PRIORITY INTO archive
             SELECT * FROM messages WHERE timestamp <
-            DATE_SUB(CURDATE(), INTERVAL 60 DAY)"""
+            DATE_SUB(CURDATE(), INTERVAL %s DAY)
+            """ % str(days)
+            
         )
         conn.execute(
             """DELETE LOW_PRIORITY FROM messages
             WHERE timestamp < DATE_SUB(CURDATE(),
-            INTERVAL 60 DAY)"""
+            INTERVAL %s DAY)
+            """ % str(days)
         )
         conn.execute('OPTIMIZE TABLE messages')
         conn.execute('OPTIMIZE TABLE archive')
