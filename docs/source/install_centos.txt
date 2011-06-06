@@ -1,8 +1,8 @@
 .. _installcentos:
 
-=====================
-Baruwa on Centos/RHEL
-=====================
+========================
+Baruwa on RHEL/SL/Centos
+========================
 
 The Baruwa rpm that is provided only supports Apache out of the
 box, if you are running a different web server, please install
@@ -12,7 +12,7 @@ Install EPEL
 ============
 
 The EPEL repo provides packages which are in Fedora but no yet
-included in RHEL/CENTOS. Instructions on installing it can be 
+included in RHEL/SL/CENTOS. Instructions on installing it can be 
 found on `EPEL <http://fedoraproject.org/wiki/EPEL/FAQ#howtouse>`_
 
 You need to install this repo in order to access certain packages
@@ -21,7 +21,7 @@ that are required by Baruwa.
 Baruwa installation
 ===================
 
-A Baruwa Centos/RHEL repo is now available at http://repo.baruwa.org/
+A Baruwa RHEL/SL/Centos repo is now available at http://repo.baruwa.org/
 To install from this repo you need to enable the repo::
 
 	# rpm -Uvh http://repo.baruwa.org/el5/i386/baruwa-release-5-0.noarch.rpm
