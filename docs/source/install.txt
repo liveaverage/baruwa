@@ -6,7 +6,7 @@ Source Installation
 
 .. note::
 
-	Packages are available for Debian/Ubuntu, Centos/RHEL and
+	Packages are available for Debian/Ubuntu, RHEL/SL/Centos and
 	Fedora if you are using one of those OS's rather install
 	using the packages.
 

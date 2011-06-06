@@ -3,13 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-04-27 07:25+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2011-06-06 17:52+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,50 +17,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: dev_settings.py:44 settings.py:44
+#: dev_settings.py:44
+#: settings.py:44
 msgid "English"
 msgstr ""
 
-#: dev_settings.py:45 settings.py:45
+#: dev_settings.py:45
+#: settings.py:45
 msgid "Afrikaans"
 msgstr ""
 
-#: dev_settings.py:46 settings.py:46
+#: dev_settings.py:46
+#: settings.py:46
 msgid "Italian"
 msgstr ""
 
 #: accounts/forms.py:49
-msgid ""
-"That e-mail address doesn't have an associated user account. Are you sure "
-"you've registered?"
+msgid "That e-mail address doesn't have an associated user account. Are you sure you've registered?"
 msgstr ""
 
 #: accounts/forms.py:53
-msgid ""
-"That e-mail address belongs to an externally authenticated account. Please "
-"change the password on that external system."
+msgid "That e-mail address belongs to an externally authenticated account. Please change the password on that external system."
 msgstr ""
 
 #: accounts/forms.py:58
-msgid ""
-"That e-mail address belongs to an admin account. Please use the manage.py "
-"command to reset"
+msgid "That e-mail address belongs to an admin account. Please use the manage.py command to reset"
 msgstr ""
 
-#: accounts/forms.py:84 accounts/forms.py:211 templates/accounts/index.html:30
+#: accounts/forms.py:84
+#: accounts/forms.py:211
+#: templates/accounts/index.html:30
 #: templates/accounts/login.html:60
 msgid "Username"
 msgstr ""
 
-#: accounts/forms.py:86 accounts/forms.py:214
+#: accounts/forms.py:86
+#: accounts/forms.py:214
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr ""
 
-#: accounts/forms.py:88 accounts/forms.py:216
+#: accounts/forms.py:88
+#: accounts/forms.py:216
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
 
-#: accounts/forms.py:89 templates/accounts/login.html:62
+#: accounts/forms.py:89
+#: templates/accounts/login.html:62
 msgid "Password"
 msgstr ""
 
@@ -69,15 +70,18 @@ msgstr ""
 msgid "A user with that username already exists."
 msgstr ""
 
-#: accounts/forms.py:129 accounts/forms.py:164
+#: accounts/forms.py:129
+#: accounts/forms.py:164
 msgid "Super users do not use addresses"
 msgstr ""
 
-#: accounts/forms.py:135 accounts/forms.py:170
+#: accounts/forms.py:135
+#: accounts/forms.py:170
 msgid "provide a valid domain address"
 msgstr ""
 
-#: accounts/forms.py:140 accounts/forms.py:175
+#: accounts/forms.py:140
+#: accounts/forms.py:175
 msgid "provide a valid email address"
 msgstr ""
 
@@ -193,9 +197,7 @@ msgstr ""
 
 #: config/views.py:245
 #, python-format
-msgid ""
-"The server is contactable via ICMP but is not accepting messages from me, "
-"Errors: %s"
+msgid "The server is contactable via ICMP but is not accepting messages from me, Errors: %s"
 msgstr ""
 
 #: config/views.py:249
@@ -209,9 +211,7 @@ msgstr ""
 
 #: config/views.py:270
 #, python-format
-msgid ""
-"External authentication %(auth)s: on host %(host)s for domain %(dom)s was "
-"added successfully"
+msgid "External authentication %(auth)s: on host %(host)s for domain %(dom)s was added successfully"
 msgstr ""
 
 #: config/views.py:282
@@ -220,9 +220,7 @@ msgstr ""
 
 #: config/views.py:306
 #, python-format
-msgid ""
-"External authentication %(auth)s: on host %(host)s for domain %(dom)s has "
-"been updated successfully"
+msgid "External authentication %(auth)s: on host %(host)s for domain %(dom)s has been updated successfully"
 msgstr ""
 
 #: config/views.py:319
@@ -231,16 +229,12 @@ msgstr ""
 
 #: config/views.py:343
 #, python-format
-msgid ""
-"External authentication %(auth)s: on host %(host)s for domain %(dom)s has "
-"been deleted"
+msgid "External authentication %(auth)s: on host %(host)s for domain %(dom)s has been deleted"
 msgstr ""
 
 #: config/views.py:357
 #, python-format
-msgid ""
-"External authentication %(auth)s: on host %(host)s for domain %(dom)s could "
-"not be deleted"
+msgid "External authentication %(auth)s: on host %(host)s for domain %(dom)s could not be deleted"
 msgstr ""
 
 #: config/views.py:414
@@ -264,11 +258,11 @@ msgid "The address: %(email)s does not belong to you."
 msgstr ""
 
 #: lists/forms.py:75
-msgid ""
-"Provide either a valid IPv4, email, Domain address, or IPv4 network or range"
+msgid "Provide either a valid IPv4, email, Domain address, or IPv4 network or range"
 msgstr ""
 
-#: lists/forms.py:88 lists/views.py:183
+#: lists/forms.py:88
+#: lists/views.py:183
 msgid "The list item already exists"
 msgstr ""
 
@@ -289,9 +283,12 @@ msgstr ""
 msgid "You do not have authorization"
 msgstr ""
 
-#: messages/forms.py:32 messages/templatetags/messages_extras.py:70
-#: templates/base.html:51 templates/messages/quarantine.html:23
-#: templates/messages/task_status.html:23 templates/reports/listing.html:50
+#: messages/forms.py:32
+#: messages/templatetags/messages_extras.py:70
+#: templates/base.html:51
+#: templates/messages/quarantine.html:23
+#: templates/messages/task_status.html:23
+#: templates/reports/listing.html:50
 msgid "Spam"
 msgstr ""
 
@@ -311,7 +308,8 @@ msgstr ""
 msgid "Provide atleast one alternative recipient"
 msgstr ""
 
-#: messages/forms.py:76 reports/forms.py:150
+#: messages/forms.py:76
+#: reports/forms.py:150
 #, python-format
 msgid "%(email)s is not a valid e-mail address."
 msgstr ""
@@ -331,41 +329,49 @@ msgstr ""
 msgid "Processing quarantined message: %(id)s"
 msgstr ""
 
-#: messages/tasks.py:76 messages/tasks.py:162
+#: messages/tasks.py:76
+#: messages/tasks.py:162
 #, python-format
 msgid "Message: %(msgid)s %(task)s failed with error: %(error)s"
 msgstr ""
 
-#: messages/tasks.py:93 messages/tasks.py:180
+#: messages/tasks.py:93
+#: messages/tasks.py:180
 #, python-format
 msgid "Message: %(msgid)s released to: %(to)s"
 msgstr ""
 
-#: messages/tasks.py:97 messages/tasks.py:184
+#: messages/tasks.py:97
+#: messages/tasks.py:184
 msgid "The sender address is empty"
 msgstr ""
 
-#: messages/tasks.py:99 messages/tasks.py:186
+#: messages/tasks.py:99
+#: messages/tasks.py:186
 #, python-format
 msgid "Message: %(msgid)s release failed with error: %(error)s"
 msgstr ""
 
-#: messages/tasks.py:108 messages/tasks.py:194
+#: messages/tasks.py:108
+#: messages/tasks.py:194
 #, python-format
 msgid "Message: %(msgid)s learning failed with error: %(error)s"
 msgstr ""
 
-#: messages/tasks.py:112 messages/tasks.py:197
+#: messages/tasks.py:112
+#: messages/tasks.py:197
 #, python-format
 msgid "Message: %(msgid)s learnt as %(learn)s"
 msgstr ""
 
-#: messages/tasks.py:120 messages/tasks.py:205
+#: messages/tasks.py:120
+#: messages/tasks.py:205
 #, python-format
 msgid "Message: %(msgid)s deleting failed with error: %(error)s"
 msgstr ""
 
-#: messages/tasks.py:124 messages/tasks.py:208
+#: messages/tasks.py:124
+#: messages/tasks.py:208
 #, python-format
 msgid "Message: %(msgid)s deleted from quarantine"
 msgstr ""
@@ -390,7 +396,8 @@ msgstr ""
 msgid "Preview of message: %(id)s requested by user: %(user)s"
 msgstr ""
 
-#: messages/views.py:172 messages/views.py:260
+#: messages/views.py:172
+#: messages/views.py:260
 msgid "You are not authorized to access this page"
 msgstr ""
 
@@ -439,8 +446,7 @@ msgid "Deletes records older than 60 days from the messages table"
 msgstr ""
 
 #: messages/management/commands/sendquarantinereports.py:70
-msgid ""
-"Generates an email report of the quarantined messages for the past 24 hours"
+msgid "Generates an email report of the quarantined messages for the past 24 hours"
 msgstr ""
 
 #: messages/management/commands/sendquarantinereports.py:92
@@ -483,7 +489,8 @@ msgstr ""
 msgid "Infected"
 msgstr ""
 
-#: messages/templatetags/messages_extras.py:81 templates/status/index.html:42
+#: messages/templatetags/messages_extras.py:81
+#: templates/status/index.html:42
 msgid "Clean"
 msgstr ""
 
@@ -515,11 +522,13 @@ msgstr ""
 msgid "Reverse lookup failed"
 msgstr ""
 
-#: reports/forms.py:39 templates/messages/task_status.html:36
+#: reports/forms.py:39
+#: templates/messages/task_status.html:36
 msgid "Message ID"
 msgstr ""
 
-#: reports/forms.py:40 templates/messages/index.html:67
+#: reports/forms.py:40
+#: templates/messages/index.html:67
 msgid "Size"
 msgstr ""
 
@@ -539,8 +548,10 @@ msgstr ""
 msgid "To Domain"
 msgstr ""
 
-#: reports/forms.py:45 templates/messages/detail.html:68
-#: templates/messages/index.html:66 templates/messages/quarantine.html:99
+#: reports/forms.py:45
+#: templates/messages/detail.html:68
+#: templates/messages/index.html:66
+#: templates/messages/quarantine.html:99
 #: templates/messages/quarantine_report.html:36
 #: templates/messages/quarantine_report.html:77
 #: templates/messages/quarantine_report_text.html:10
@@ -600,7 +611,8 @@ msgstr ""
 msgid "Is other infected"
 msgstr ""
 
-#: reports/forms.py:60 templates/reports/listing.html:38
+#: reports/forms.py:60
+#: templates/reports/listing.html:38
 msgid "Date"
 msgstr ""
 
@@ -668,13 +680,17 @@ msgstr ""
 msgid "is false"
 msgstr ""
 
-#: reports/forms.py:124 reports/forms.py:130 reports/forms.py:140
+#: reports/forms.py:124
+#: reports/forms.py:130
+#: reports/forms.py:140
 #: reports/forms.py:187
 #, python-format
 msgid "%(field)s does not support the %(filt)s filter"
 msgstr ""
 
-#: reports/forms.py:134 reports/forms.py:144 reports/forms.py:191
+#: reports/forms.py:134
+#: reports/forms.py:144
+#: reports/forms.py:191
 msgid "Please supply a value to query"
 msgstr ""
 
@@ -682,7 +698,8 @@ msgstr ""
 msgid "The value has to be numeric"
 msgstr ""
 
-#: reports/forms.py:158 reports/forms.py:172
+#: reports/forms.py:158
+#: reports/forms.py:172
 msgid "Please provide a valid regex"
 msgstr ""
 
@@ -786,23 +803,27 @@ msgstr ""
 #: reports/management/commands/sendpdfreports.py:168
 #: templates/accounts/edit_address.html:10
 #: templates/accounts/edit_address.html:11
-#: templates/accounts/edit_address.html:14 templates/reports/piereport.html:27
+#: templates/accounts/edit_address.html:14
+#: templates/reports/piereport.html:27
 msgid "Address"
 msgstr ""
 
 #: reports/management/commands/sendpdfreports.py:168
-#: templates/reports/barreport.html:34 templates/reports/piereport.html:28
+#: templates/reports/barreport.html:34
+#: templates/reports/piereport.html:28
 msgid "Count"
 msgstr ""
 
 #: reports/management/commands/sendpdfreports.py:168
-#: templates/reports/listing.html:56 templates/reports/piereport.html:29
+#: templates/reports/listing.html:56
+#: templates/reports/piereport.html:29
 #: templates/reports/relays.html:31
 msgid "Volume"
 msgstr ""
 
 #: reports/management/commands/sendpdfreports.py:239
-#: templates/reports/index.html:60 templates/status/index.html:17
+#: templates/reports/index.html:60
+#: templates/status/index.html:17
 msgid "Message Totals"
 msgstr ""
 
@@ -906,7 +927,8 @@ msgstr ""
 msgid "Sorry the requested page could not be found please check the url."
 msgstr ""
 
-#: templates/500.html:25 templates/500.html.py:28
+#: templates/500.html:25
+#: templates/500.html.py:28
 msgid "Page unavailable"
 msgstr ""
 
@@ -950,7 +972,8 @@ msgstr ""
 msgid "Not logged in :: "
 msgstr ""
 
-#: templates/base.html:61 templates/accounts/login.html:70
+#: templates/base.html:61
+#: templates/accounts/login.html:70
 msgid "Login"
 msgstr ""
 
@@ -962,33 +985,42 @@ msgstr ""
 msgid "Lists"
 msgstr ""
 
-#: templates/base.html:83 templates/reports/index.html:16
-#: templates/reports/index.html.py:17 templates/reports/index.html:41
+#: templates/base.html:83
+#: templates/reports/index.html:16
+#: templates/reports/index.html.py:17
+#: templates/reports/index.html:41
 msgid "Reports"
 msgstr ""
 
-#: templates/base.html:85 templates/config/index.html:35
-#: templates/config/list_scanners.html:21 templates/messages/index.html:70
+#: templates/base.html:85
+#: templates/config/index.html:35
+#: templates/config/list_scanners.html:21
+#: templates/messages/index.html:70
 #: templates/messages/quarantine.html:102
 #: templates/messages/task_status.html:35
 msgid "Status"
 msgstr ""
 
-#: templates/base.html:87 templates/config/index.html:22
+#: templates/base.html:87
+#: templates/config/index.html:22
 msgid "Settings"
 msgstr ""
 
-#: templates/base.html:89 templates/accounts/add_address.html:8
+#: templates/base.html:89
+#: templates/accounts/add_address.html:8
 #: templates/accounts/admin_change_pw.html:6
 #: templates/accounts/change_pw.html:6
 #: templates/accounts/create_account.html:5
 #: templates/accounts/delete_account.html:5
 #: templates/accounts/delete_address.html:8
-#: templates/accounts/edit_address.html:6 templates/accounts/index.html:25
+#: templates/accounts/edit_address.html:6
+#: templates/accounts/index.html:25
 #: templates/accounts/update_account.html:6
 #: templates/accounts/update_profile.html:6
-#: templates/accounts/user_profile.html:6 templates/config/domain.html:10
-#: templates/config/index.html:18 templates/config/list_scanners.html:6
+#: templates/accounts/user_profile.html:6
+#: templates/config/domain.html:10
+#: templates/config/index.html:18
+#: templates/config/list_scanners.html:6
 msgid "Accounts"
 msgstr ""
 
@@ -1008,7 +1040,8 @@ msgstr ""
 msgid "From address"
 msgstr ""
 
-#: templates/base.html:122 templates/lists/index.html:74
+#: templates/base.html:122
+#: templates/lists/index.html:74
 msgid "containing"
 msgstr ""
 
@@ -1016,15 +1049,19 @@ msgstr ""
 msgid "NOT containing"
 msgstr ""
 
-#: templates/base.html:127 templates/reports/index.html:77
+#: templates/base.html:127
+#: templates/reports/index.html:77
 msgid "Remove"
 msgstr ""
 
 #: templates/accounts/add_address.html:6
 #: templates/accounts/delete_address.html:6
-#: templates/accounts/edit_address.html:5 templates/accounts/index.html:20
-#: templates/config/add_auth_host.html:5 templates/config/add_host.html:5
-#: templates/config/domain.html:9 templates/config/list_scanners.html:7
+#: templates/accounts/edit_address.html:5
+#: templates/accounts/index.html:20
+#: templates/config/add_auth_host.html:5
+#: templates/config/add_host.html:5
+#: templates/config/domain.html:9
+#: templates/config/list_scanners.html:7
 #: templates/config/task_status.html:8
 msgid "Domains"
 msgstr ""
@@ -1048,22 +1085,27 @@ msgid "Add Address"
 msgstr ""
 
 #: templates/accounts/add_address.html:36
-#: templates/accounts/create_account.html:26 templates/lists/add.form.html:31
+#: templates/accounts/create_account.html:26
+#: templates/lists/add.form.html:31
 msgid "Reset"
 msgstr ""
 
 #: templates/accounts/add_address.html:37
 #: templates/accounts/user_profile.html:151
-#: templates/config/add_auth_host.html:36 templates/config/add_host.html:34
-#: templates/config/domain.html:67 templates/config/domain.html.py:96
-#: templates/lists/add.form.html:32 templates/reports/filter.form.html:11
+#: templates/config/add_auth_host.html:36
+#: templates/config/add_host.html:34
+#: templates/config/domain.html:67
+#: templates/config/domain.html.py:96
+#: templates/lists/add.form.html:32
+#: templates/reports/filter.form.html:11
 msgid "Add"
 msgstr ""
 
 #: templates/accounts/admin_change_pw.html:10
 #: templates/accounts/admin_change_pw.html:11
 #: templates/accounts/admin_change_pw.html:14
-#: templates/accounts/change_pw.html:10 templates/accounts/change_pw.html:11
+#: templates/accounts/change_pw.html:10
+#: templates/accounts/change_pw.html:11
 #: templates/accounts/change_pw.html:14
 msgid "Change Password"
 msgstr ""
@@ -1074,7 +1116,8 @@ msgid "Change"
 msgstr ""
 
 #: templates/accounts/create_account.html:8
-#: templates/accounts/create_account.html:9 templates/accounts/index.html:19
+#: templates/accounts/create_account.html:9
+#: templates/accounts/index.html:19
 msgid "Create account"
 msgstr ""
 
@@ -1099,8 +1142,10 @@ msgstr ""
 #: templates/accounts/delete_account.html:22
 #: templates/accounts/delete_address.html:26
 #: templates/config/delete_auth_host.html:24
-#: templates/config/delete_host.html:24 templates/lists/delete.html:24
-#: templates/messages/detail.html:214 templates/messages/quarantine.html:56
+#: templates/config/delete_host.html:24
+#: templates/lists/delete.html:24
+#: templates/messages/detail.html:214
+#: templates/messages/quarantine.html:56
 msgid "Delete"
 msgstr ""
 
@@ -1114,8 +1159,10 @@ msgstr ""
 msgid "Delete the address:"
 msgstr ""
 
-#: templates/accounts/edit_address.html:7 templates/accounts/index.html:21
-#: templates/config/domain.html:11 templates/config/index.html:19
+#: templates/accounts/edit_address.html:7
+#: templates/accounts/index.html:21
+#: templates/config/domain.html:11
+#: templates/config/index.html:19
 #: templates/status/index.html:20
 msgid "Scanners"
 msgstr ""
@@ -1137,7 +1184,8 @@ msgstr ""
 #: templates/accounts/edit_address.html:35
 #: templates/accounts/update_account.html:31
 #: templates/accounts/update_profile.html:31
-#: templates/config/edit_auth_host.html:33 templates/config/edit_host.html:31
+#: templates/config/edit_auth_host.html:33
+#: templates/config/edit_host.html:31
 msgid "Update"
 msgstr ""
 
@@ -1149,11 +1197,13 @@ msgstr ""
 msgid "Full names"
 msgstr ""
 
-#: templates/accounts/index.html:32 templates/accounts/login.html:79
+#: templates/accounts/index.html:32
+#: templates/accounts/login.html:79
 msgid "Email address"
 msgstr ""
 
-#: templates/accounts/index.html:40 templates/accounts/index.html.py:42
+#: templates/accounts/index.html:40
+#: templates/accounts/index.html.py:42
 msgid "View account"
 msgstr ""
 
@@ -1170,9 +1220,7 @@ msgid "Language"
 msgstr ""
 
 #: templates/accounts/login.html:75
-msgid ""
-"Forgotten your password? Enter your e-mail address below, and we'll e-mail "
-"instructions for setting a new one."
+msgid "Forgotten your password? Enter your e-mail address below, and we'll e-mail instructions for setting a new one."
 msgstr ""
 
 #: templates/accounts/login.html:83
@@ -1188,9 +1236,7 @@ msgid "Baruwa :: Password reset complete"
 msgstr ""
 
 #: templates/accounts/reset_done.html:49
-msgid ""
-"We've e-mailed you instructions for setting your password to the e-mail "
-"address you submitted. You should be receiving it shortly."
+msgid "We've e-mailed you instructions for setting your password to the e-mail address you submitted. You should be receiving it shortly."
 msgstr ""
 
 #: templates/accounts/reset_done.html:51
@@ -1202,9 +1248,7 @@ msgid "Baruwa :: Password reset"
 msgstr ""
 
 #: templates/accounts/reset_pw.html:22
-msgid ""
-"Please enter your new password twice so we can verify you typed it in "
-"correctly."
+msgid "Please enter your new password twice so we can verify you typed it in correctly."
 msgstr ""
 
 #: templates/accounts/reset_pw.html:27
@@ -1220,9 +1264,7 @@ msgid "Change my password"
 msgstr ""
 
 #: templates/accounts/reset_pw.html:37
-msgid ""
-"The password reset link was invalid, possibly because it has already been "
-"used.  Please request a new password reset."
+msgid "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset."
 msgstr ""
 
 #: templates/accounts/update_account.html:10
@@ -1280,8 +1322,10 @@ msgid "Active"
 msgstr ""
 
 #: templates/accounts/user_profile.html:58
-#: templates/accounts/user_profile.html:174 templates/config/domain.html:60
-#: templates/config/domain.html.py:79 templates/config/domain.html:108
+#: templates/accounts/user_profile.html:174
+#: templates/config/domain.html:60
+#: templates/config/domain.html.py:79
+#: templates/config/domain.html:108
 msgid "Disabled"
 msgstr ""
 
@@ -1347,8 +1391,10 @@ msgstr ""
 msgid "Associated Addresses"
 msgstr ""
 
-#: templates/accounts/user_profile.html:172 templates/config/domain.html:38
-#: templates/config/domain.html.py:58 templates/config/domain.html:77
+#: templates/accounts/user_profile.html:172
+#: templates/config/domain.html:38
+#: templates/config/domain.html.py:58
+#: templates/config/domain.html:77
 #: templates/config/domain.html.py:106
 msgid "Enabled"
 msgstr ""
@@ -1376,7 +1422,8 @@ msgid ""
 "\t\t"
 msgstr ""
 
-#: templates/config/add_auth_host.html:35 templates/config/add_host.html:33
+#: templates/config/add_auth_host.html:35
+#: templates/config/add_host.html:33
 msgid "Clear"
 msgstr ""
 
@@ -1396,7 +1443,8 @@ msgid "Add Mail Server"
 msgstr ""
 
 #: templates/config/delete_auth_host.html:5
-#: templates/config/delete_host.html:5 templates/config/edit_auth_host.html:5
+#: templates/config/delete_host.html:5
+#: templates/config/edit_auth_host.html:5
 #: templates/config/edit_host.html:5
 msgid "Domain page"
 msgstr ""
@@ -1418,7 +1466,8 @@ msgid ""
 "        "
 msgstr ""
 
-#: templates/config/delete_host.html:8 templates/config/delete_host.html:9
+#: templates/config/delete_host.html:8
+#: templates/config/delete_host.html:9
 msgid "Delete Mail host"
 msgstr ""
 
@@ -1498,7 +1547,8 @@ msgid ""
 "\t\t"
 msgstr ""
 
-#: templates/config/edit_host.html:8 templates/config/edit_host.html.py:9
+#: templates/config/edit_host.html:8
+#: templates/config/edit_host.html.py:9
 msgid "Settings :: Edit destination mail server"
 msgstr ""
 
@@ -1518,7 +1568,8 @@ msgstr ""
 msgid "Owner"
 msgstr ""
 
-#: templates/config/index.html:38 templates/config/list_scanners.html:24
+#: templates/config/index.html:38
+#: templates/config/list_scanners.html:24
 msgid "Actions"
 msgstr ""
 
@@ -1547,11 +1598,13 @@ msgstr ""
 msgid "No scanning nodes found"
 msgstr ""
 
-#: templates/config/task_status.html:24 templates/messages/task_status.html:71
+#: templates/config/task_status.html:24
+#: templates/messages/task_status.html:71
 msgid "The request is being processed. Current status: "
 msgstr ""
 
-#: templates/config/view_scanner.html:5 templates/config/view_scanner.html:8
+#: templates/config/view_scanner.html:5
+#: templates/config/view_scanner.html:8
 #, python-format
 msgid ""
 "\n"
@@ -1586,21 +1639,30 @@ msgstr ""
 msgid "List type:"
 msgstr ""
 
-#: templates/lists/add.html:11 templates/lists/delete.html:5
-#: templates/lists/delete.html.py:13 templates/lists/delete.html:23
-#: templates/lists/index.html:21 templates/lists/index.html.py:28
-#: templates/messages/detail.html:46 templates/messages/detail.html.py:48
+#: templates/lists/add.html:11
+#: templates/lists/delete.html:5
+#: templates/lists/delete.html.py:13
+#: templates/lists/delete.html:23
+#: templates/lists/index.html:21
+#: templates/lists/index.html.py:28
+#: templates/messages/detail.html:46
+#: templates/messages/detail.html.py:48
 msgid "Whitelist"
 msgstr ""
 
-#: templates/lists/add.html:12 templates/lists/delete.html:6
-#: templates/lists/delete.html.py:13 templates/lists/delete.html:23
-#: templates/lists/index.html:19 templates/lists/index.html.py:28
-#: templates/messages/detail.html:53 templates/messages/detail.html.py:55
+#: templates/lists/add.html:12
+#: templates/lists/delete.html:6
+#: templates/lists/delete.html.py:13
+#: templates/lists/delete.html:23
+#: templates/lists/index.html:19
+#: templates/lists/index.html.py:28
+#: templates/messages/detail.html:53
+#: templates/messages/detail.html.py:55
 msgid "Blacklist"
 msgstr ""
 
-#: templates/lists/add.html:15 templates/lists/add.html.py:16
+#: templates/lists/add.html:15
+#: templates/lists/add.html.py:16
 msgid "Adding to list"
 msgstr ""
 
@@ -1608,7 +1670,8 @@ msgstr ""
 msgid "Add List Item"
 msgstr ""
 
-#: templates/lists/delete.html:9 templates/lists/delete.html.py:10
+#: templates/lists/delete.html:9
+#: templates/lists/delete.html.py:10
 msgid "Delete from List"
 msgstr ""
 
@@ -1639,7 +1702,8 @@ msgstr ""
 msgid "=builtin="
 msgstr ""
 
-#: templates/lists/index.html:62 templates/messages/index.html:99
+#: templates/lists/index.html:62
+#: templates/messages/index.html:99
 #: templates/messages/quarantine.html:129
 msgid "No records returned"
 msgstr ""
@@ -1648,8 +1712,10 @@ msgstr ""
 msgid "Filter "
 msgstr ""
 
-#: templates/lists/index.html:72 templates/messages/detail.html:40
-#: templates/messages/preview.html:20 templates/status/detail.html:26
+#: templates/lists/index.html:72
+#: templates/messages/detail.html:40
+#: templates/messages/preview.html:20
+#: templates/status/detail.html:26
 msgid "From:"
 msgstr ""
 
@@ -1671,7 +1737,8 @@ msgstr ""
 msgid "The message id: %(id)s could not be deleted: %(error_msg)s"
 msgstr ""
 
-#: templates/messages/detail.html:13 templates/messages/detail.html.py:14
+#: templates/messages/detail.html:13
+#: templates/messages/detail.html.py:14
 #, python-format
 msgid "Baruwa :: Showing message - %(id)s"
 msgstr ""
@@ -1680,8 +1747,10 @@ msgstr ""
 msgid "Preview message"
 msgstr ""
 
-#: templates/messages/detail.html:20 templates/messages/preview.html:8
-#: templates/messages/release.html:6 templates/messages/release.html.py:7
+#: templates/messages/detail.html:20
+#: templates/messages/preview.html:8
+#: templates/messages/release.html:6
+#: templates/messages/release.html.py:7
 msgid "Release message"
 msgstr ""
 
@@ -1689,33 +1758,40 @@ msgstr ""
 msgid "Full message list"
 msgstr ""
 
-#: templates/messages/detail.html:23 templates/messages/detail.html.py:200
+#: templates/messages/detail.html:23
+#: templates/messages/detail.html.py:200
 #: templates/messages/index.html:28
 msgid "Quarantine"
 msgstr ""
 
-#: templates/messages/detail.html:24 templates/messages/index.html:29
+#: templates/messages/detail.html:24
+#: templates/messages/index.html:29
 msgid "Archive"
 msgstr ""
 
-#: templates/messages/detail.html:33 templates/status/detail.html:19
+#: templates/messages/detail.html:33
+#: templates/status/detail.html:19
 msgid "Message Details"
 msgstr ""
 
-#: templates/messages/detail.html:36 templates/status/detail.html:22
+#: templates/messages/detail.html:36
+#: templates/status/detail.html:22
 msgid "Message ID:"
 msgstr ""
 
-#: templates/messages/detail.html:62 templates/messages/preview.html:24
+#: templates/messages/detail.html:62
+#: templates/messages/preview.html:24
 #: templates/status/detail.html:32
 msgid "To:"
 msgstr ""
 
-#: templates/messages/detail.html:72 templates/status/detail.html:46
+#: templates/messages/detail.html:72
+#: templates/status/detail.html:46
 msgid "Received on:"
 msgstr ""
 
-#: templates/messages/detail.html:76 templates/status/detail.html:42
+#: templates/messages/detail.html:76
+#: templates/status/detail.html:42
 msgid "Received by:"
 msgstr ""
 
@@ -1731,7 +1807,8 @@ msgstr ""
 msgid "Message Headers:"
 msgstr ""
 
-#: templates/messages/detail.html:92 templates/status/detail.html:58
+#: templates/messages/detail.html:92
+#: templates/status/detail.html:58
 msgid "Size:"
 msgstr ""
 
@@ -1755,7 +1832,8 @@ msgstr ""
 msgid "Spam:"
 msgstr ""
 
-#: templates/messages/detail.html:121 templates/messages/detail.html.py:131
+#: templates/messages/detail.html:121
+#: templates/messages/detail.html.py:131
 msgid "Action(s):"
 msgstr ""
 
@@ -1795,7 +1873,8 @@ msgstr ""
 msgid "Spamassassin Report:"
 msgstr ""
 
-#: templates/messages/detail.html:213 templates/messages/quarantine.html:53
+#: templates/messages/detail.html:213
+#: templates/messages/quarantine.html:53
 #: templates/messages/quarantine_report.html:39
 #: templates/messages/quarantine_report.html:57
 #: templates/messages/quarantine_report.html:80
@@ -1807,7 +1886,8 @@ msgstr ""
 msgid "SA Learn"
 msgstr ""
 
-#: templates/messages/detail.html:216 templates/messages/quarantine.html:62
+#: templates/messages/detail.html:216
+#: templates/messages/quarantine.html:62
 msgid "Alt recipients"
 msgstr ""
 
@@ -1823,24 +1903,30 @@ msgstr ""
 msgid "Full message"
 msgstr ""
 
-#: templates/messages/index.html:36 templates/messages/index.html.py:46
-#: templates/messages/quarantine.html:31 templates/messages/quarantine.html:41
+#: templates/messages/index.html:36
+#: templates/messages/index.html.py:46
+#: templates/messages/quarantine.html:31
+#: templates/messages/quarantine.html:41
 msgid "Showing the 50 most recent messages"
 msgstr ""
 
-#: templates/messages/index.html:43 templates/messages/quarantine.html:38
+#: templates/messages/index.html:43
+#: templates/messages/quarantine.html:38
 msgid "Filters"
 msgstr ""
 
-#: templates/messages/index.html:43 templates/messages/quarantine.html:38
+#: templates/messages/index.html:43
+#: templates/messages/quarantine.html:38
 msgid "have been applied"
 msgstr ""
 
-#: templates/messages/index.html:48 templates/messages/quarantine.html:43
+#: templates/messages/index.html:48
+#: templates/messages/quarantine.html:43
 msgid "Enable javascript for updates"
 msgstr ""
 
-#: templates/messages/index.html:63 templates/messages/quarantine.html:96
+#: templates/messages/index.html:63
+#: templates/messages/quarantine.html:96
 #: templates/messages/quarantine_report.html:27
 #: templates/messages/quarantine_report.html:68
 #: templates/messages/quarantine_report_text.html:10
@@ -1848,7 +1934,8 @@ msgstr ""
 msgid "Date/Time"
 msgstr ""
 
-#: templates/messages/index.html:64 templates/messages/quarantine.html:97
+#: templates/messages/index.html:64
+#: templates/messages/quarantine.html:97
 #: templates/messages/quarantine_report.html:30
 #: templates/messages/quarantine_report.html:71
 #: templates/messages/quarantine_report_text.html:10
@@ -1856,7 +1943,8 @@ msgstr ""
 msgid "From"
 msgstr ""
 
-#: templates/messages/index.html:65 templates/messages/quarantine.html:98
+#: templates/messages/index.html:65
+#: templates/messages/quarantine.html:98
 #: templates/messages/quarantine_report.html:33
 #: templates/messages/quarantine_report.html:74
 #: templates/messages/quarantine_report_text.html:10
@@ -1864,14 +1952,19 @@ msgstr ""
 msgid "To"
 msgstr ""
 
-#: templates/messages/index.html:68 templates/messages/quarantine.html:100
-#: templates/reports/barreport.html:31 templates/tags/spamreport.html:4
+#: templates/messages/index.html:68
+#: templates/messages/quarantine.html:100
+#: templates/reports/barreport.html:31
+#: templates/tags/spamreport.html:4
 msgid "Score"
 msgstr ""
 
-#: templates/messages/index.html:108 templates/messages/quarantine.html:139
-#: templates/reports/barreport.html:55 templates/reports/listing.html:115
-#: templates/reports/piereport.html:58 templates/reports/relays.html:58
+#: templates/messages/index.html:108
+#: templates/messages/quarantine.html:139
+#: templates/reports/barreport.html:55
+#: templates/reports/listing.html:115
+#: templates/reports/piereport.html:58
+#: templates/reports/relays.html:58
 msgid "Filters have been applied :"
 msgstr ""
 
@@ -1885,11 +1978,13 @@ msgstr ""
 msgid "Previewing message - %(message_id)s "
 msgstr ""
 
-#: templates/messages/preview.html:9 templates/messages/preview.html.py:11
+#: templates/messages/preview.html:9
+#: templates/messages/preview.html.py:11
 msgid "Return to message"
 msgstr ""
 
-#: templates/messages/preview.html:28 templates/status/detail.html:38
+#: templates/messages/preview.html:28
+#: templates/status/detail.html:38
 msgid "Subject:"
 msgstr ""
 
@@ -1969,8 +2064,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"\t    \tThe release of message: %(message_id)s to %(release_address)s failed "
-"with error: %(error_msg)s, contact your email admin for assistance.\n"
+"\t    \tThe release of message: %(message_id)s to %(release_address)s failed with error: %(error_msg)s, contact your email admin for assistance.\n"
 "\t    "
 msgstr ""
 
@@ -1985,8 +2079,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"The message id: %(id)s could not be released: %(error_msg)s, contact your "
-"email admin for assistance.\n"
+"The message id: %(id)s could not be released: %(error_msg)s, contact your email admin for assistance.\n"
 msgstr ""
 
 #: templates/messages/salearn.html:3
@@ -2019,10 +2112,14 @@ msgstr ""
 msgid "Update status"
 msgstr ""
 
-#: templates/reports/barreport.html:18 templates/reports/barreport.html:21
-#: templates/reports/listing.html:22 templates/reports/listing.html.py:25
-#: templates/reports/piereport.html:19 templates/reports/piereport.html:22
-#: templates/reports/relays.html:19 templates/reports/relays.html.py:22
+#: templates/reports/barreport.html:18
+#: templates/reports/barreport.html:21
+#: templates/reports/listing.html:22
+#: templates/reports/listing.html.py:25
+#: templates/reports/piereport.html:19
+#: templates/reports/piereport.html:22
+#: templates/reports/relays.html:19
+#: templates/reports/relays.html.py:22
 #, python-format
 msgid "Reports - %(report_title)s"
 msgstr ""
@@ -2127,7 +2224,8 @@ msgstr ""
 msgid "Mail"
 msgstr ""
 
-#: templates/reports/listing.html:44 templates/status/index.html:69
+#: templates/reports/listing.html:44
+#: templates/status/index.html:69
 msgid "Virii"
 msgstr ""
 
@@ -2147,19 +2245,23 @@ msgstr ""
 msgid "Totals"
 msgstr ""
 
-#: templates/reports/piereport.html:52 templates/reports/relays.html:52
+#: templates/reports/piereport.html:52
+#: templates/reports/relays.html:52
 msgid "Javascript required to view graphs"
 msgstr ""
 
-#: templates/reports/relays.html:27 templates/tags/relayed_via.html:5
+#: templates/reports/relays.html:27
+#: templates/tags/relayed_via.html:5
 msgid "IP address"
 msgstr ""
 
-#: templates/reports/relays.html:28 templates/tags/relayed_via.html:6
+#: templates/reports/relays.html:28
+#: templates/tags/relayed_via.html:6
 msgid "Hostname"
 msgstr ""
 
-#: templates/reports/relays.html:29 templates/tags/relayed_via.html:7
+#: templates/reports/relays.html:29
+#: templates/tags/relayed_via.html:7
 msgid "Country"
 msgstr ""
 
@@ -2167,18 +2269,23 @@ msgstr ""
 msgid "Total/S/V"
 msgstr ""
 
-#: templates/status/bayes.html:7 templates/status/index.html:5
-#: templates/status/index.html.py:73 templates/status/lint.html:7
+#: templates/status/bayes.html:7
+#: templates/status/index.html:5
+#: templates/status/index.html.py:73
+#: templates/status/lint.html:7
 msgid "Mail Queues"
 msgstr ""
 
-#: templates/status/bayes.html:9 templates/status/bayes.html.py:15
-#: templates/status/bayes.html:18 templates/status/index.html:7
+#: templates/status/bayes.html:9
+#: templates/status/bayes.html.py:15
+#: templates/status/bayes.html:18
+#: templates/status/index.html:7
 #: templates/status/lint.html:9
 msgid "Bayes information"
 msgstr ""
 
-#: templates/status/bayes.html:10 templates/status/index.html:8
+#: templates/status/bayes.html:10
+#: templates/status/index.html:8
 #: templates/status/lint.html:10
 msgid "Spamassassin lint"
 msgstr ""
@@ -2227,16 +2334,19 @@ msgstr ""
 msgid "Bayes information could not be collected."
 msgstr ""
 
-#: templates/status/detail.html:5 templates/status/detail.html.py:6
+#: templates/status/detail.html:5
+#: templates/status/detail.html.py:6
 #, python-format
 msgid "Baruwa :: Showing queue item - %(id)s"
 msgstr ""
 
-#: templates/status/detail.html:10 templates/status/mailq.html:9
+#: templates/status/detail.html:10
+#: templates/status/mailq.html:9
 msgid "Inbound Queue"
 msgstr ""
 
-#: templates/status/detail.html:11 templates/status/mailq.html:10
+#: templates/status/detail.html:11
+#: templates/status/mailq.html:10
 msgid "Outbound Queue"
 msgstr ""
 
@@ -2256,7 +2366,8 @@ msgstr ""
 msgid "The message details for the requested queue id could not be retrieved"
 msgstr ""
 
-#: templates/status/index.html:12 templates/status/index.html.py:13
+#: templates/status/index.html:12
+#: templates/status/index.html.py:13
 msgid "System Status"
 msgstr ""
 
@@ -2264,7 +2375,8 @@ msgstr ""
 msgid "Service Status"
 msgstr ""
 
-#: templates/status/index.html:27 templates/status/index.html.py:40
+#: templates/status/index.html:27
+#: templates/status/index.html.py:40
 #: templates/status/index.html:61
 msgid "processes"
 msgstr ""
@@ -2297,7 +2409,8 @@ msgstr ""
 msgid "Blocked files"
 msgstr ""
 
-#: templates/status/lint.html:15 templates/status/lint.html.py:18
+#: templates/status/lint.html:15
+#: templates/status/lint.html.py:18
 #: templates/status/lint.html:22
 msgid "Spamassassin Lint"
 msgstr ""
@@ -2306,15 +2419,18 @@ msgstr ""
 msgid "Lint failed please verify if spamassassin is installed"
 msgstr ""
 
-#: templates/status/mailq.html:14 templates/status/mailq.html.py:17
+#: templates/status/mailq.html:14
+#: templates/status/mailq.html.py:17
 msgid "Mail Queue"
 msgstr ""
 
-#: templates/status/mailq.html:14 templates/status/mailq.html.py:17
+#: templates/status/mailq.html:14
+#: templates/status/mailq.html.py:17
 msgid "Outbound"
 msgstr ""
 
-#: templates/status/mailq.html:14 templates/status/mailq.html.py:17
+#: templates/status/mailq.html:14
+#: templates/status/mailq.html.py:17
 msgid "Inbound"
 msgstr ""
 
@@ -2327,7 +2443,8 @@ msgid "No queue items found"
 msgstr ""
 
 #: templates/tags/generic_paginator.html:2
-#: templates/tags/pagination_heading.html:2 templates/tags/paginator.html:2
+#: templates/tags/pagination_heading.html:2
+#: templates/tags/paginator.html:2
 #, python-format
 msgid "Showing page %(page)s of %(pages)s pages."
 msgstr ""
@@ -2344,11 +2461,13 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: utils/mail/message.py:241 utils/mail/message.py:326
+#: utils/mail/message.py:241
+#: utils/mail/message.py:326
 msgid "Message not found in the quarantine"
 msgstr ""
 
-#: utils/mail/message.py:270 utils/mail/message.py:284
+#: utils/mail/message.py:270
+#: utils/mail/message.py:284
 msgid "The quarantined message not found"
 msgstr ""
 
@@ -2391,3 +2510,4 @@ msgstr ""
 #, python-format
 msgid "Error occured, CODE: %(code)s MESSAGE: %(msg)s"
 msgstr ""
+
