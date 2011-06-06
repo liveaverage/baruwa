@@ -1,8 +1,8 @@
 .. _installcentos:
 
-=====================
-Baruwa on Centos/RHEL
-=====================
+========================
+Baruwa on RHEL/SL/Centos
+========================
 
 The Baruwa rpm that is provided only supports apache out of the
 box, if you are running a different web server, please install
@@ -12,14 +12,14 @@ Install EPEL
 ============
 
 The EPEL repo provides packages which are in Fedora but no yet
-included in RHEL/CENTOS. Django is shipped by the EPEL repo.
+included in RHEL/SL/CENTOS. Django is shipped by the EPEL repo.
 Instructions on installing it can be found on `EPEL <http://fedoraproject.org/wiki/EPEL/FAQ#howtouse>`_
 
 Baruwa rpm install
 ==================
 
 Due to the fact that the shipped MySQLdb module shipped on 
-Centos/RHEL <= 5.x is too old, use the updated rpm that i supply
+RHEL/SL/Centos <= 5.x is too old, use the updated rpm that i supply
 from http://topdog-software.com/oss/MySQL-python/ 
 or install from source::
 
