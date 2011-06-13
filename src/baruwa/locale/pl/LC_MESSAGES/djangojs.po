@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-01-22 10:05+0200\n"
-"PO-Revision-Date: 2011-06-13 21:31+0100\n"
+"PO-Revision-Date: 2011-06-14 10:37+0100\n"
 "Last-Translator: Anis Jendoubi <anis.jendoubi@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -429,5 +429,5 @@ msgstr "Wystąpił błąd"
 #: static/js/reports.pie.js:61
 #: static/js/reports.relays.js:63
 msgid "Processing..........."
-msgstr "Przetwarzanie..........."
+msgstr "Przetwarzanie.........."
 
