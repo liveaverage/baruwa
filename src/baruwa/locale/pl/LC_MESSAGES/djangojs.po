@@ -8,17 +8,20 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-01-22 10:05+0200\n"
-"PO-Revision-Date: 2011-06-06 17:52+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2011-06-14 10:37+0100\n"
+"Last-Translator: Anis Jendoubi <anis.jendoubi@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: static/js/accounts.js:2
 msgid "&nbsp;Processing..."
-msgstr ""
+msgstr "&nbsp;Przetwarzanie..."
 
 #: static/js/accounts.js:18
 #: static/js/details.js:110
@@ -27,14 +30,14 @@ msgstr ""
 #: static/js/lists.js:41
 #: static/js/recent_messages.js:73
 msgid "Error connecting to server. check network!"
-msgstr ""
+msgstr "Błąd połączenia z serwerem. sprawdź sieć!"
 
 #: static/js/accounts.js:19
 #: static/js/domain.js:37
 #: static/js/domains.js:40
 #: static/js/lists.js:42
 msgid "Server error"
-msgstr ""
+msgstr "Błąd serwera"
 
 #: static/js/accounts.js:37
 #: static/js/domains.js:58
@@ -42,56 +45,56 @@ msgstr ""
 #: static/js/messages.js:124
 #: static/js/quarantine.js:262
 msgid "Showing page %(page)s of %(pages)s pages."
-msgstr ""
+msgstr "Wyświetlona jest strona %(page)s z %(pages)s stron."
 
 #: static/js/accounts.js:82
 msgid "This will delete the account "
-msgstr ""
+msgstr "To spowoduje usunięcie konta"
 
 #: static/js/accounts.js:83
 #: static/js/domains.js:108
 msgid "and all associated data. This action is not reversible"
-msgstr ""
+msgstr "i wszystkie związane z nim danych. Ta akcja nie jest odwracalna"
 
 #: static/js/accounts.js:86
 #: static/js/domains.js:110
 #: static/js/lists.js:237
 msgid "Do you wish to continue ?"
-msgstr ""
+msgstr "Czy chcesz kontynuować?"
 
 #: static/js/accounts.js:150
 msgid "No accounts at the moment"
-msgstr ""
+msgstr "Brak kont w tej chwili"
 
 #: static/js/accounts.js:180
 #: static/js/domains.js:212
 msgid "Processing"
-msgstr ""
+msgstr "Przetwarzanie"
 
 #: static/js/details.js:22
 msgid "List by IP address"
-msgstr ""
+msgstr "Lista według adresu IP"
 
 #: static/js/details.js:23
 msgid "Do you want to continue ?"
-msgstr ""
+msgstr "Czy chcesz kontynuować ?"
 
 #: static/js/details.js:24
 #: static/js/details.js.py:82
 msgid "Yes"
-msgstr ""
+msgstr "Tak"
 
 #: static/js/details.js:25
 msgid "No"
-msgstr ""
+msgstr "Nie"
 
 #: static/js/details.js:50
 msgid "Submitting"
-msgstr ""
+msgstr "Wysyłanie"
 
 #: static/js/details.js:69
 msgid " has been added to your "
-msgstr ""
+msgstr "został dodany do Twojego"
 
 #: static/js/details.js:70
 #: static/js/details.js.py:78
@@ -114,113 +117,113 @@ msgstr ""
 #: static/js/reports.pie.js:92
 #: static/js/reports.relays.js:94
 msgid "Dismiss"
-msgstr ""
+msgstr "Odwołać"
 
 #: static/js/details.js:77
 msgid "Error adding to "
-msgstr ""
+msgstr "Błąd przy dodawaniu do"
 
 #: static/js/details.js:89
 #: static/js/lists.js:23
 #: static/js/reports.js:241
 msgid "Processing..."
-msgstr ""
+msgstr "Przetwarzanie..."
 
 #: static/js/details.js:97
 #: static/js/details.js.py:100
 msgid "Empty server response"
-msgstr ""
+msgstr "Pusta Odpowiedź serwera"
 
 #: static/js/details.js:125
 #: static/js/reports.js:178
 msgid "Processing request............."
-msgstr ""
+msgstr "Przetwarzanie żądania............."
 
 #: static/js/details.js:184
 #: static/js/details.js.py:189
 msgid "Show headers"
-msgstr ""
+msgstr "Pokaż nagłówki"
 
 #: static/js/details.js:193
 msgid "Hide headers"
-msgstr ""
+msgstr "Ukryj nagłówki"
 
 #: static/js/domain.js:59
 msgid "Testing connection"
-msgstr ""
+msgstr "Testowanie połączenia"
 
 #: static/js/domains.js:107
 msgid "This will delete the domain "
-msgstr ""
+msgstr "Ta operacja usunie domene"
 
 #: static/js/domains.js:182
 msgid "No domains at the moment"
-msgstr ""
+msgstr "Brak domen w tej chwili"
 
 #: static/js/lib.js:136
 msgid "Infected"
-msgstr ""
+msgstr "Zainfekowane"
 
 #: static/js/lib.js:140
 msgid "Clean"
-msgstr ""
+msgstr "Czyste"
 
 #: static/js/lib.js:175
 msgid "No records returned"
-msgstr ""
+msgstr "Brak rekordów zwracanych"
 
 #: static/js/lib.js:195
 msgid "Empty response from server. check network!"
-msgstr ""
+msgstr "Pusta odpowiedź od serwera. sprawdź sieć!"
 
 #: static/js/lists.add.js:49
 msgid "The address has been added to the list"
-msgstr ""
+msgstr "adres został dodany do listy"
 
 #: static/js/lists.add.js:86
 msgid "Processing...."
-msgstr ""
+msgstr "Przetwarzanie...."
 
 #: static/js/lists.add.js:89
 msgid "Server Error occured"
-msgstr ""
+msgstr "Wystąpił błąd serwera"
 
 #: static/js/lists.js:69
 msgid "List management "
-msgstr ""
+msgstr "Zarządzanie Listą"
 
 #: static/js/lists.js:124
 #: static/js/lists.js.py:129
 msgid "Any address"
-msgstr ""
+msgstr "Dowolny adres"
 
 #: static/js/lists.js:158
 msgid "No items at the moment"
-msgstr ""
+msgstr "Brak elementów w tej chwili"
 
 #: static/js/lists.js:165
 msgid "To:"
-msgstr ""
+msgstr "Do:"
 
 #: static/js/lists.js:167
 msgid "From:"
-msgstr ""
+msgstr "Od:"
 
 #: static/js/lists.js:179
 msgid "Blacklist"
-msgstr ""
+msgstr "Czarna Lista"
 
 #: static/js/lists.js:181
 msgid "Whitelist :: "
-msgstr ""
+msgstr "Biała Lista :: "
 
 #: static/js/lists.js:183
 msgid "Whitelist"
-msgstr ""
+msgstr "Biała Lista"
 
 #: static/js/lists.js:185
 msgid "Blacklist :: "
-msgstr ""
+msgstr "Czarna Lista :: "
 
 #: static/js/lists.js:206
 #: static/js/messages.js:166
@@ -232,96 +235,96 @@ msgstr ""
 #: static/js/reports.pie.js:107
 #: static/js/reports.relays.js:109
 msgid "Loading"
-msgstr ""
+msgstr "Ładowanie"
 
 #: static/js/lists.js:220
 msgid "Go"
-msgstr ""
+msgstr "Go"
 
 #: static/js/lists.js:234
 msgid "This will delete the item "
-msgstr ""
+msgstr "To usunie element"
 
 #: static/js/lists.js:235
 msgid "from the list. This action is not reversible"
-msgstr ""
+msgstr "z listy. Ta akcja nie jest odwracalna"
 
 #: static/js/lists.js:256
 msgid "List item deleted"
-msgstr ""
+msgstr "Element listy usunięty"
 
 #: static/js/lists.js:260
 msgid "List item could not be deleted"
-msgstr ""
+msgstr "Element Listy nie został usunięty"
 
 #: static/js/messages.js:109
 #: static/js/quarantine.js:242
 msgid "From"
-msgstr ""
+msgstr "Od"
 
 #: static/js/messages.js:109
 #: static/js/quarantine.js:242
 msgid "To"
-msgstr ""
+msgstr "Do"
 
 #: static/js/messages.js:109
 #: static/js/quarantine.js:242
 msgid "Subject"
-msgstr ""
+msgstr "Temat"
 
 #: static/js/messages.js:109
 msgid "Size"
-msgstr ""
+msgstr "Rozmiar"
 
 #: static/js/messages.js:109
 #: static/js/quarantine.js:242
 msgid "Score"
-msgstr ""
+msgstr "Ocena"
 
 #: static/js/messages.js:114
 #: static/js/quarantine.js:242
 msgid "Date/Time"
-msgstr ""
+msgstr "Data/Czas"
 
 #: static/js/messages.js:143
 #: static/js/messages.js.py:151
 #: static/js/quarantine.js:281
 #: static/js/quarantine.js.py:289
 msgid "Show filters"
-msgstr ""
+msgstr "Pokaż filtry"
 
 #: static/js/messages.js:149
 #: static/js/quarantine.js:287
 msgid "Hide filters"
-msgstr ""
+msgstr "Ukryj filtry"
 
 #: static/js/quarantine.js:148
 msgid "Full quarantine"
-msgstr ""
+msgstr "Cała Kwarantanna"
 
 #: static/js/quarantine.js:148
 msgid "Spam"
-msgstr ""
+msgstr "Spam"
 
 #: static/js/quarantine.js:148
 msgid "Non Spam"
-msgstr ""
+msgstr "Nie Spam"
 
 #: static/js/recent_messages.js:26
 msgid "Content refresh in progress, please wait for it to complete"
-msgstr ""
+msgstr "Odświeżanie zawartości w toku, proszę czekać aż operacja się zakończy"
 
 #: static/js/recent_messages.js:52
 msgid "[updated every 60 sec's]"
-msgstr ""
+msgstr "[aktualizowane co 60 sekund]"
 
 #: static/js/recent_messages.js:54
 msgid "Refreshing..."
-msgstr ""
+msgstr "Odświeżanie..."
 
 #: static/js/recent_messages.js:61
 msgid "[last update at "
-msgstr ""
+msgstr "[ostatnia aktualizacja o "
 
 #: static/js/reports.common.js:28
 #: static/js/reports.common.js.py:30
@@ -330,7 +333,7 @@ msgstr ""
 #: static/js/reports.js.py:195
 #: static/js/reports.js:199
 msgid "is equal to"
-msgstr ""
+msgstr "jest równe"
 
 #: static/js/reports.common.js:28
 #: static/js/reports.common.js.py:30
@@ -339,73 +342,73 @@ msgstr ""
 #: static/js/reports.js.py:195
 #: static/js/reports.js:199
 msgid "is not equal to"
-msgstr ""
+msgstr "nie jest równe"
 
 #: static/js/reports.common.js:29
 #: static/js/reports.common.js.py:35
 #: static/js/reports.js:194
 #: static/js/reports.js.py:200
 msgid "is greater than"
-msgstr ""
+msgstr "jest większe niż"
 
 #: static/js/reports.common.js:29
 #: static/js/reports.common.js.py:35
 #: static/js/reports.js:194
 #: static/js/reports.js.py:200
 msgid "is less than"
-msgstr ""
+msgstr "jest mniejsze niż"
 
 #: static/js/reports.common.js:31
 #: static/js/reports.js:196
 msgid "is null"
-msgstr ""
+msgstr "jest null"
 
 #: static/js/reports.common.js:31
 #: static/js/reports.js:196
 msgid "is not null"
-msgstr ""
+msgstr "nie jest null"
 
 #: static/js/reports.common.js:32
 #: static/js/reports.js:197
 msgid "contains"
-msgstr ""
+msgstr "zawiera"
 
 #: static/js/reports.common.js:32
 #: static/js/reports.js:197
 msgid "does not contain"
-msgstr ""
+msgstr "nie zawiera"
 
 #: static/js/reports.common.js:33
 #: static/js/reports.js:198
 msgid "matches regex"
-msgstr ""
+msgstr "dopasowuje wyrażenia regularnego"
 
 #: static/js/reports.common.js:33
 #: static/js/reports.js:198
 msgid "does not match regex"
-msgstr ""
+msgstr "nie dopasowuje wyrażenia regularnego"
 
 #: static/js/reports.common.js:36
 msgid "is true"
-msgstr ""
+msgstr "jest prawdą"
 
 #: static/js/reports.common.js:36
 msgid "is false"
-msgstr ""
+msgstr "jest fałszem"
 
 #: static/js/reports.common.js:37
 #: static/js/reports.js:202
 msgid "Please select"
-msgstr ""
+msgstr "Proszę wybrać"
 
 #: static/js/reports.js:51
 msgid "No active filters at the moment"
-msgstr ""
+msgstr "Brak aktywnych filtrów w tej chwili"
 
 #: static/js/reports.js:83
 #: static/js/reports.js.py:149
 msgid "No saved filters at the moment"
-msgstr ""
+msgstr "Brak zapisanych filtrów w tej chwili"
 
 #: static/js/reports.js:100
 #: static/js/reports.js.py:166
@@ -416,15 +419,15 @@ msgstr ""
 #: static/js/reports.relays.js:88
 #: static/js/reports.relays.js.py:99
 msgid "Add"
-msgstr ""
+msgstr "Dodaj"
 
 #: static/js/reports.js:246
 msgid "Error occured"
-msgstr ""
+msgstr "Wystąpił błąd"
 
 #: static/js/reports.listing.js:54
 #: static/js/reports.pie.js:61
 #: static/js/reports.relays.js:63
 msgid "Processing..........."
-msgstr ""
+msgstr "Przetwarzanie.........."
 
