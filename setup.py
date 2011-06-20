@@ -1,5 +1,21 @@
-from setuptools import setup, find_packages
 import os
+import sys
+
+from setuptools import setup, find_packages
+
+
+install_requires = ['setuptools',
+    'Django>= 1.2',
+    'django-celery',
+    'MySQL-python>=1.2.1p2',
+    'reportlab',
+    'anyjson',
+    'iPy',
+    'lxml',
+]
+
+if sys.version_info < (2, 5):
+    install_requires.append('uuid')
 
 
 def read(fname):
@@ -14,22 +30,14 @@ setup(name='baruwa',
       author_email='andrew@topdog.za.net',
       url='http://www.topdog.za.net/baruwa',
       license='GPL',
+      platforms=["any"],
       packages=find_packages('src'),
       package_dir={'': 'src'},
       scripts=['bin/baruwa-admin'],
       include_package_data=True,
       zip_safe=False,
       dependency_links=[],
-      install_requires=['setuptools',
-        'Django>= 1.2',
-        'django-celery',
-        'MySQL-python>=1.2.1p2',
-        'reportlab',
-        'anyjson',
-        #'GeoIP',
-        'iPy',
-        'lxml',
-      ],
+      install_requires=install_requires,
       classifiers=[
             'Development Status :: 5 - Production/Stable',
             'Environment :: Web Environment',
