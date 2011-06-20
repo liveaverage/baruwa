@@ -54,6 +54,7 @@ LANGUAGES = (
   ('it', ugettext('Italian')),
   ('cs', ugettext('Czech')),
   ('fr', ugettext('French')),
+  ('pl', ugettext('Polish')),
 )
 
 LOCALE_PATHS = (os.path.join(CURRENT_PATH, 'locale'),)
