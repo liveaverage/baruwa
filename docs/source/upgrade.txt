@@ -2,6 +2,20 @@
 Upgrading
 =========
 
+1.1.0
+-----
+
+This is a major release, with a major code rewrite of
+the backend functionality, there are a few DB schema
+changes.
+
+  - Backup your current install then upgrade
+  - Configure the new settings.py
+  - run baruwa-admin syncdb
+  - run baruwa-admin compilemessages
+  - Install new perl modules
+  - Configure DB settings in MailScanner.conf
+
 1.0.2
 -----
 
