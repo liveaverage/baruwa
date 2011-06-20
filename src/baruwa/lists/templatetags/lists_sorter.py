@@ -21,6 +21,7 @@
 
 from django import template
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
 
 
 register = template.Library()
@@ -41,6 +42,6 @@ def lists_sorter(context, field_name, field_text):
                 direc = 'dsc'
             rlink = reverse('lists-full-sort', args=[context['list_kind'],
                 direc, context['order_by']])
-    return {'field_text': field_text, 'link': link,
+    return {'field_text': _(field_text), 'link': link,
         'rlink': rlink, 'dir': direc}
 register.inclusion_tag('tags/sorter.html', takes_context=True)(lists_sorter)

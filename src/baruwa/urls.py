@@ -27,8 +27,7 @@ CURRENT_PATH = os.path.abspath(os.path.dirname(__file__).decode('utf-8')
 ).replace('\\', '/')
 
 js_info_dict = {
-    'packages': ('baruwa.messages', 'baruwa.lists', 'baruwa.reports',
-    'baruwa.status', 'baruwa.accounts', 'baruwa.config',),
+    'packages': ('baruwa',),
 }
 
 urlpatterns = patterns('',

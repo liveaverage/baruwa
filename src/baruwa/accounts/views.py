@@ -36,6 +36,7 @@ from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.contrib import messages as djmessages
 from django.utils.translation import ugettext as _
+from django.utils.translation import check_for_language
 from baruwa.accounts.forms import UserProfileForm, UserCreateForm, \
 UserAddressForm, OrdUserProfileForm, UserUpdateForm, AdminUserUpdateForm, \
 EditAddressForm, DeleteAddressForm, DeleteUserForm
@@ -53,6 +54,7 @@ def local_login(request, redirect_field_name=REDIRECT_FIELD_NAME):
     from django.conf import settings
     redirect_to = request.REQUEST.get(redirect_field_name, '')
     if request.method == 'POST':
+        lang_code = request.POST.get('language', None)
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             if not redirect_to or '//' in redirect_to or ' ' in redirect_to:
@@ -61,6 +63,8 @@ def local_login(request, redirect_field_name=REDIRECT_FIELD_NAME):
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
             set_user_addresses(request)
+            if lang_code and check_for_language(lang_code):
+                request.session['django_language'] = lang_code
             return HttpResponseRedirect(redirect_to)
     else:
         form = AuthenticationForm(request)

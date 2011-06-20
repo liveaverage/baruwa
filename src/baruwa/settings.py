@@ -56,6 +56,8 @@ LANGUAGES = (
   ('fr', ugettext('French')),
 )
 
+LOCALE_PATHS = (os.path.join(CURRENT_PATH, 'locale'),)
+
 SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not

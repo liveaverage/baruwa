@@ -21,6 +21,7 @@
 
 from django import template
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
 
 register = template.Library()
 
@@ -49,7 +50,7 @@ def sorter(context, field_name, field_text):
             direc, context['order_by']])
 
     return {
-        'field_text': field_text,
+        'field_text': _(field_text),
         'link': link,
         'rlink': rlink,
         'dir': direc,

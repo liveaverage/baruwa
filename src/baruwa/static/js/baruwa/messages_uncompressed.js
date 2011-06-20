@@ -55,7 +55,9 @@ function handlextern(){
 }
 
 function paginate(){
-   tmp='Showing page '+rj.page+' of '+rj.pages+' pages. ';
+   fmt = gettext('Showing page %(page)s of %(pages)s pages.');
+   data = {'page':rj.page, 'pages':rj.pages}
+   tmp = interpolate(fmt, data, true);
    li='',col='',tmpl='';
 
    if(rj.show_first){
@@ -129,7 +131,7 @@ function paginate(){
         $('#heading').html(translted);
     }
     //$.address.title(translted);
-    $.address.title('Showing page '+rj.page+' of '+rj.pages+' pages.');
+    $.address.title('.:. Baruwa :: ' + translted);
     $(this).html(tmp);
     $('#paginator a').bind('click',en_history);
     $('.Grid_heading div a').bind('click',en_history);

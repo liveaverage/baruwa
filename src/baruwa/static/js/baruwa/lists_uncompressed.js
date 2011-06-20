@@ -98,10 +98,10 @@ function paginate(){
         if(larray[i] == 'hash'){h = '#';}else{h = larray[i];}
         if(rj.order_by == carray[i]){
             tmpl = toplinkize(rj.list_kind,rj.direction,carray[i]);
-            $('.Lists_grid_'+larray[i]).empty().html(h).append(tmpl);
+            $('.Lists_grid_'+larray[i]).empty().html(gettext(h)).append(tmpl);
             $('#lists_filter_form').attr('action','/lists/'+rj.list_kind+'/'+rj.direction+'/'+carray[i]+'/');
         }else{
-            ur = '<a href="/lists/'+rj.list_kind+'/'+rj.direction+'/'+carray[i]+'/">'+h+'</a>';
+            ur = '<a href="/lists/'+rj.list_kind+'/'+rj.direction+'/'+carray[i]+'/">'+gettext(h)+'</a>';
             $('.Lists_grid_'+larray[i]).empty().html(ur);
         }
     }

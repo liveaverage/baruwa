@@ -197,7 +197,7 @@ $(document).ready(function(){
                     {'value':7,'opt':gettext('matches regex')},{'value':8,'opt':gettext('does not match regex')}];
     time_values = [{'value':1,'opt':gettext('is equal to')},{'value':2,'opt':gettext('is not equal to')},
                     {'value':3,'opt':gettext('is greater than')},{'value':4,'opt':gettext('is less than')}];
-    bool_values = [{'value':11,'opt':'is true'},{'value':12,'opt':'is false'}];
+    bool_values = [{'value':11,'opt':gettext('is true')},{'value':12,'opt':gettext('is false')}];
     $('#id_filtered_field').prepend('<option value="0" selected="0">'+gettext('Please select')+'</option>');
     $('#id_filtered_value').attr({'disabled':'disabled'});
     $('#id_filtered_field').bind('change',function(){
