@@ -82,8 +82,11 @@ Baruwa is installed in the usual way::
 ========
 Packages
 ========
-Binary packages for Ubuntu/Debian, Fedora and RHEL/CENTOS are also available
-for `download`_
+Binary packages for Ubuntu/Debian, Fedora and RHEL/SL/CENTOS are available.
+
+   + RHEL/SL/CENTOS - http://repo.baruwa.org
+   + Debian - http://apt.baruwa.org
+   + Ubuntu - https://launchpad.net/~topdog/+archive/baruwa
 
 =============
 Documentation
@@ -97,6 +100,5 @@ Subscribe to the Baruwa `mailing list`_
 
 .. _`mailing list`: http://lists.baruwa.org/mailman/listinfo/baruwa
 .. _`online`: http://www.baruwa.org/
-.. _`download`: http://topdog-software.com/oss/baruwa/
 .. _`Flickr page`: http://www.flickr.com/photos/baruwa/
 .. _`MailScanner`: http://www.mailscanner.info/

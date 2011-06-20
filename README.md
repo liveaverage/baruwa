@@ -82,14 +82,17 @@ Baruwa is installed in the usual way
 
 Packages
 ==
-Binary packages for [Ubuntu/Debian, Fedora and RHEL/CENTOS](http://topdog-software.com/oss/baruwa/ "") 
-are available for download.
+Binary packages for Ubuntu/Debian, Fedora and RHEL/SL/CENTOS are available.
+
++ [RHEL/SL/CENTOS](http://repo.baruwa.org)
++ [Debian](http://apt.baruwa.org)
++ [Ubuntu](https://launchpad.net/~topdog/+archive/baruwa)
 
 
 Documentation
 ==
 Documentation is included in the docs directory of the tar ball and can also be accessed 
-[online](http://www.baruwa.org/)
+[online](http://www.baruwa.org/documentation.html)
 
 
 Support

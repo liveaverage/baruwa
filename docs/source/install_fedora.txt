@@ -14,10 +14,6 @@ Install RabbitMQ::
 
 	# yum install rabbitmq-server
 
-Install the dojo rpm from http://topdog-software.com/oss/dojo/::
-
-    # yum --nogpgcheck localinstall dojo-1.6.0-1.fc13.noarch.rpm
-
 Download the rpm from http://www.topdog-software.com/oss/baruwa/
 
 Then proceed and install the rpm::

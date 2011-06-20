@@ -44,6 +44,7 @@ div.body {
 
 div.related {
     font-size: 1em;
+    float:left;
 }
 
 div.related ul {
@@ -51,6 +52,7 @@ div.related ul {
     height: 2em;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
+    margin-bottom: 5px;
 }
 
 div.related ul li {
@@ -325,16 +327,21 @@ div.versioninfo {
 div.baruwa_header {
     width: 100%;
     font-size: 90%;
+    float:left;
     background-color: white;
 }
 
 div.baruwa_logo {
-    width: 90%;
+    width: 30%;
     text-align:left;
     background-color: white;
     padding: 5px 10px 5px 10px;
+    float:left;
 }
 
-div.baruwa_logo img {
-    padding-right:300px;
+div.baruwa_ads {
+    width:60%;
+    text-align:left;
+    padding: 5px 10px 5px 10px;
+    float:right;
 }
