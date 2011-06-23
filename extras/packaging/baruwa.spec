@@ -5,7 +5,7 @@
 
 Name:           baruwa
 Version:        1.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Ajax enabled MailScanner web frontend      
 Group:          Applications/Internet
 License:        GPLv2
@@ -22,6 +22,7 @@ BuildArch:      noarch
 BuildRequires:  python-devel
 BuildRequires:  python-setuptools
 BuildRequires:  python-sphinx
+BuildRequires:  gettext
 Requires:       Django >= 1.2
 Requires:       django-celery
 Requires:       python-GeoIP
@@ -84,6 +85,11 @@ EOF
        missingok
 }
 EOF
+for dir in $(find src/baruwa/locale -mindepth 1 -maxdepth 1 -type d); do
+locale=`basename ${dir}`;
+msgfmt -o "src/baruwa/locale/${locale}/LC_MESSAGES/django.mo" "src/baruwa/locale/${locale}/LC_MESSAGES/django.po";
+msgfmt -o "src/baruwa/locale/${locale}/LC_MESSAGES/djangojs.mo" "src/baruwa/locale/${locale}/LC_MESSAGES/djangojs.po";
+done
 
 %build
 %{__python} setup.py build
@@ -110,6 +116,7 @@ mkdir -p source/_static
 %{__install} -d -p $RPM_BUILD_ROOT%{_datadir}/%{name}/CustomFunctions
 %{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/MailScanner/conf.d
 %{__install} -d -p $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}
+%{__install} -d -p $RPM_BUILD_ROOT%{_localstatedir}/run/%{name}
 %{__install} -d -p $RPM_BUILD_ROOT%{_localstatedir}/log/%{name}
 %{__install} -p -m0644 extras/*.pm $RPM_BUILD_ROOT%{_datadir}/%{name}/CustomFunctions
 %{__install} -p -m0644 %SOURCE1 $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
@@ -129,6 +136,10 @@ ln -s ../../../../../../share/dojo/dojo .
 ln -s ../../../../../../share/dojo/dojox .
 ln -s ../../../../../../share/dojo/dijit .
 popd 
+(cd $RPM_BUILD_ROOT && find . -name 'django*.mo') | %{__sed} -e 's|^.||' | %{__sed} -e \
+  's:\(.*/locale/\)\([^/_]\+\)\(.*\.mo$\):%lang(\2) \1\2\3:' \
+  >> %{name}.lang
+find $RPM_BUILD_ROOT -name "*.po" | xargs rm -f
 
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
@@ -154,7 +165,7 @@ if [ "$1" -ge "1" ] ; then
     /sbin/service %{name} condrestart >/dev/null 2>&1 || :
 fi
 
-%files
+%files -f %{name}.lang
 %defattr(-,root,root,-)
 %doc AUTHORS LICENSE README UPGRADE docs/build/html docs/source
 %config(noreplace) %{_sysconfdir}/%{name}/settings.py
@@ -165,7 +176,20 @@ fi
 %config(noreplace) %{_sysconfdir}/MailScanner/conf.d/%{name}.conf
 %{_initrddir}/%{name}
 %{_bindir}/*
-%{python_sitelib}/*
+%dir %{python_sitelib}/%{name}
+%{python_sitelib}/%{name}*.egg-info
+%{python_sitelib}/%{name}/*.py*
+%{python_sitelib}/%{name}/*.wsgi
+%{python_sitelib}/%{name}/messages
+%{python_sitelib}/%{name}/lists
+%{python_sitelib}/%{name}/status
+%{python_sitelib}/%{name}/reports
+%{python_sitelib}/%{name}/config
+%{python_sitelib}/%{name}/static
+%{python_sitelib}/%{name}/utils
+%{python_sitelib}/%{name}/accounts
+%{python_sitelib}/%{name}/auth
+%{python_sitelib}/%{name}/templates
 %{_datadir}/%{name}/
 %dir %{_sysconfdir}/%{name}
 %{_sysconfdir}/cron.daily/%{name}
@@ -173,10 +197,14 @@ fi
 %exclude %{_sysconfdir}/%{name}/settings.pyc
 %exclude %{_sysconfdir}/%{name}/settings.pyo
 %attr(0700,celeryd,celeryd) %{_localstatedir}/lib/%{name}
+%attr(0700,celeryd,celeryd) %{_localstatedir}/run/%{name}
 %attr(0700,celeryd,celeryd) %{_localstatedir}/log/%{name}
 
 
 %changelog
+* Wed Jun 22 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-2
+- fix celery worker pid path
+
 * Wed Apr 27 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-1
 - upgrade to latest version
 
