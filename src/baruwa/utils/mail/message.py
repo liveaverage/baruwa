@@ -28,10 +28,8 @@ import shutil
 import socket
 import smtplib
 
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
+
+from StringIO import StringIO
 from email.Header import decode_header
 from subprocess import Popen, PIPE
 from lxml.html.clean import Cleaner
