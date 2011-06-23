@@ -334,7 +334,7 @@ def geoip_lookup(ipaddr):
             country_code = gip.country_code_by_addr(ipaddr).lower()
             country_name = gip.country_name_by_addr(ipaddr)
         return country_name, country_code
-    except (GeoIP.error, AttributeError):
+    except (GeoIP.error, AttributeError, ValueError):
         return ('', '')
 
 
