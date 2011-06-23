@@ -28,7 +28,7 @@ To install from this repo you need to enable the repo::
 
 Install the dependencies::
 
-	# yum install mysql-server python-IPy python-GeoIP Django mod_wsgi python-uuid python-lxml rabbitmq-server
+	# yum install mysql-server mod_wsgi rabbitmq-server
 	
 Install Baruwa, all the required dependencies not in the other repo's will
 be resolved by packages shipped by the Baruwa repo::
