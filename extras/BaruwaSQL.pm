@@ -176,6 +176,7 @@ sub InitSQLConnections {
             private_foo_cachekey => 'baruwa'
         }
     );
+    $conn->do("SET NAMES 'utf8'");
     $sth = $conn->prepare(
         "INSERT INTO messages (
             id,actions,clientip,date,from_address,from_domain,
@@ -374,7 +375,7 @@ sub BaruwaSQL {
     $msg{from_domain}   = $message->{fromdomain};
     $msg{to_address}    = join( ",", @{ $message->{to} } );
     $msg{to_domain}     = $todomain;
-    $msg{subject}       = $message->{subject};
+    $msg{subject}       = $message->{utf8subject};
     $msg{clientip}      = $clientip;
     $msg{spam}          = $message->{isspam};
     $msg{highspam}      = $message->{ishigh};
