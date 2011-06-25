@@ -15,6 +15,7 @@ changes.
   - run baruwa-admin compilemessages
   - Install new perl modules
   - Configure DB settings in MailScanner.conf
+  - Fix quarantine ownership "chgrp -R celery /var/spool/MailScanner/quarantine"
 
 1.0.2
 -----
