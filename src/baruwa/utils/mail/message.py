@@ -169,7 +169,8 @@ class EmailParser(object):
         filename = message.get_filename(None)
         if filename and not attachment is NOTFOUND:
             attachments.append(
-                dict(filename=filename, content_type=content_type))
+                dict(filename=self.get_header(filename),
+                content_type=content_type))
             success = True
         return success
 
@@ -191,7 +192,8 @@ class EmailParser(object):
             codecs.lookup(charset)
         except LookupError:
             charset = 'ascii'
-        return self.sanitize_html(body.decode(charset, 'replace'))
+        #return self.sanitize_html(body.decode(charset, 'replace'))
+        return self.sanitize_html(body)
 
     def get_attachment(self, msg, attach_id):
         "Get and return an attachment"
