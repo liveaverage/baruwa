@@ -1,11 +1,10 @@
 %if ! (0%{?fedora} > 12 || 0%{?rhel} > 5)
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %endif
-%{!?pyver: %global pyver %(%{__python} -c "import sys ; print sys.version[:3]")}
 
 Name:           baruwa
 Version:        1.1.0
-Release:        2%{?dist}
+Release:        4%{?dist}
 Summary:        Ajax enabled MailScanner web frontend      
 Group:          Applications/Internet
 License:        GPLv2
@@ -17,6 +16,7 @@ Source3:        baruwa.mailscanner
 Source4:        baruwa.init
 Source5:        baruwa.sysconfig
 Source6:        baruwa.cron.monthly
+Patch1:         baruwa-various-fixes.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel
@@ -32,8 +32,8 @@ Requires:       python-lxml
 Requires:       MySQL-python >= 1.2.2
 Requires:       httpd
 Requires:       dojo
-Requires:       mailscanner
-%if "%{pyver}" == "2.4"
+Requires:       mailscanner >= 4.80.10
+%if 0%{?rhel} < 6
 Requires:       python-uuid
 %endif
 Requires(pre): shadow-utils
@@ -65,6 +65,7 @@ settings.
 
 %prep
 %setup -q -n %{name}-%{version}
+%patch1 -p1
 %{__cat} <<'EOF' > %{name}.cron.d
 #
 # %{name} - %{version}
@@ -202,6 +203,18 @@ fi
 
 
 %changelog
+* Tue Jun 28 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-4
+- FIX: baruwa celeryd worker pid path
+
+* Sat Jun 25 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-3
+- Build for RHEL6
+- FIX: mailscanner requires version
+- FIX: mailq status localization
+- FIX: Exception handling ip's with ports in relayed_via
+- FIX: Decode internationalized attachment names
+- FIX: Handle XHTML with encodings
+- FIX: Log message subject in unicode
+
 * Wed Jun 22 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-2
 - fix celery worker pid path
 
