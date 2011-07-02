@@ -72,7 +72,7 @@ settings.
 #
 
 # runs every 3 mins to update mailq stats
-*/3 * * * * root baruwa-admin queuestats >/dev/null
+*/3 * * * * root baruwa-admin queuestats 2>/dev/null
 EOF
 
 %{__cat} <<'EOF' > %{name}.logrotate
