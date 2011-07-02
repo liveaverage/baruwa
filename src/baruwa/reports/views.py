@@ -148,8 +148,8 @@ def save_filter(request, index_num):
 
         filters = request.session.get('filter_by')
         filt = filters[int(index_num)]
-        name = filter_items[filt["field"]] + " "
-        + filter_by[int(filt["filter"])] + " " + filt["value"]
+        name = (filter_items[filt["field"]] + " " + 
+        filter_by[int(filt["filter"])] + " " + filt["value"])
         fil = SavedFilter(name=name, field=filt["field"],
         op_field=filt["filter"], value=filt["value"],
         user=request.user)
