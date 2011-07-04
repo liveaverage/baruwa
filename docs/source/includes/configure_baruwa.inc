@@ -24,12 +24,12 @@ Edit the Baruwa settings.py file::
 	# baruwa_path=$(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
 	# vi $baruwa_path/baruwa/settings.py
 	
-Set the following options::
+Set the following options under the default DATABASE option::
 
-    DATABASE_NAME = 'baruwa'
-    DATABASE_USER = 'baruwa'
-    DATABASE_PASSWORD = '<password>'
-    DATABASE_HOST = 'localhost'
+    NAME = 'baruwa'
+    USER = 'baruwa'
+    PASSWORD = '<password>'
+    HOST = 'localhost'
 
 Populate the database and create admin user::
 
