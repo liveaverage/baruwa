@@ -28,14 +28,15 @@ import shutil
 import socket
 import smtplib
 
-
 from StringIO import StringIO
 from email.Header import decode_header
 from subprocess import Popen, PIPE
+
 from lxml.html.clean import Cleaner
 from lxml.html import tostring, fromstring, iterlinks
 from django.utils.translation import ugettext as _
 from django.conf import settings
+
 from baruwa.utils.misc import get_config_option
 from baruwa.utils.regex import MSGID_RE, HTMLTITLE_RE
 

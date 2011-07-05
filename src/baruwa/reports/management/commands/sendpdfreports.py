@@ -22,15 +22,35 @@
 import re
 import datetime
 
-from django.core.management.base import BaseCommand, CommandError
-from django.utils.translation import ugettext as _
 from optparse import make_option
+from StringIO import StringIO
+
+from reportlab.lib import colors
+from reportlab.lib.units import inch
+from reportlab.graphics.shapes import Rect
+from reportlab.graphics.shapes import Drawing
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Spacer, Table, \
+TableStyle, Paragraph, Image, PageBreak
+from django.conf import settings
+from django.db.models import Count, Sum, Q
+from django.contrib.auth.models import User
+from django.core.validators import email_re
+from django.utils.translation import ugettext as _
+from django.template.loader import render_to_string
+from django.template.defaultfilters import filesizeformat
+from django.core.mail import EmailMessage, SMTPConnection
+from django.core.management.base import BaseCommand, CommandError
+
+from baruwa.messages.models import Message
+from baruwa.messages.models import MessageTotals
+from baruwa.accounts.models import UserProfile, UserAddresses
+from baruwa.messages.templatetags.messages_extras import tds_trunc
+from baruwa.utils.graphs import PieChart, PIE_CHART_COLORS, BarChart
 
 
 def draw_square(color):
     "draws a square"
-    from reportlab.graphics.shapes import Rect
-    from reportlab.graphics.shapes import Drawing
 
     square = Drawing(5, 5)
     sqr = Rect(0, 2.5, 5, 5)
@@ -80,33 +100,6 @@ class Command(BaseCommand):
                 ptype = ptype + 's'
             delta = datetime.timedelta(**{ptype: int(num)})
             enddate = datetime.date.today() - delta
-
-        from django.db.models import Count, Sum, Q
-        from django.template.defaultfilters import filesizeformat
-        from django.core.mail import EmailMessage, SMTPConnection
-        from django.contrib.auth.models import User
-        from django.conf import settings
-        from django.template.loader import render_to_string
-        from baruwa.accounts.models import UserProfile, UserAddresses
-        from baruwa.messages.models import Message
-        from baruwa.messages.templatetags.messages_extras import tds_trunc
-        from baruwa.messages.models import MessageTotals
-        from baruwa.utils.graphs import PieChart, PIE_CHART_COLORS, BarChart
-        from reportlab.lib import colors
-        from reportlab.lib.styles import getSampleStyleSheet
-        from reportlab.lib.units import inch
-        from reportlab.platypus import SimpleDocTemplate, Spacer, Table, \
-        TableStyle, Paragraph, Image, PageBreak
-
-        try:
-            from django.forms.fields import email_re
-        except ImportError:
-            from django.core.validators import email_re
-
-        try:
-            from cStringIO import StringIO
-        except ImportError:
-            from StringIO import StringIO
 
         table_style = TableStyle([
             ('FONT', (0, 0), (-1, -1), 'Helvetica'),

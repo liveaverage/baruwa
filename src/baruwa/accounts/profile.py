@@ -19,12 +19,10 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+from django.core.validators import email_re
+
 from baruwa.accounts.models import UserProfile, UserAddresses
 from baruwa.accounts.forms import UserProfileForm
-try:
-    from django.forms.fields import email_re
-except ImportError:
-    from django.core.validators import email_re
 
 
 def retrieve_profile(user):

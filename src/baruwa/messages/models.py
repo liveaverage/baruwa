@@ -19,8 +19,15 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import datetime
+
 from django.db import models
 from django.db.models import Q
+from django.db import connection
+
+from baruwa.utils.misc import raw_user_filter
+from baruwa.reports.utils import gen_dynamic_raw_query
+from baruwa.accounts.models import UserProfile, UserAddresses
 
 
 class MessageManager(models.Manager):
@@ -110,7 +117,6 @@ class EmailReportMessageManager(models.Manager):
 
     def for_user(self, user):
         "users messages"
-        from baruwa.accounts.models import UserProfile, UserAddresses
 
         addresses = UserAddresses.objects.values('address').filter(
                 user=user).exclude(enabled=0)
@@ -136,7 +142,6 @@ class EmailReportMessageManager(models.Manager):
 
     def to_user(self, user):
         "messages to user"
-        from baruwa.accounts.models import UserProfile, UserAddresses
 
         addresses = UserAddresses.objects.values('address').filter(
             user=user
@@ -157,7 +162,6 @@ class EmailReportMessageManager(models.Manager):
 
     def from_user(self, user):
         "messages from user"
-        from baruwa.accounts.models import UserProfile, UserAddresses
 
         addresses = UserAddresses.objects.values('address').filter(
             user=user
@@ -181,7 +185,6 @@ class ReportMessageManager(models.Manager):
 
     def all(self, user, enddate=None):
         "reporting messages"
-        from baruwa.accounts.models import UserProfile, UserAddresses
         addresses = (UserAddresses.objects.values('address').
         filter(user=user).exclude(enabled=0).all()[:])
         account_type = (UserProfile.objects.values('account_type')
@@ -225,7 +228,6 @@ class TotalsMessageManager(models.Manager):
 
     def doms(self, domain, enddate=None):
         "domain message totals"
-        from django.db import connection
         conn = connection.cursor()
         if enddate:
             query = """
@@ -254,9 +256,6 @@ class TotalsMessageManager(models.Manager):
 
     def all(self, user, filters_list=None, addrs=None, act=3):
         "message totals"
-        from django.db import connection
-        from baruwa.utils.misc import raw_user_filter
-        from baruwa.reports.utils import gen_dynamic_raw_query
         conn = connection.cursor()
         query = """
             SELECT date, count(*) AS mail_total,
@@ -293,9 +292,6 @@ class SpamScoresManager(models.Manager):
 
     def all(self, user, filters_list=None, addrs=None, act=3):
         "spam scores"
-        from django.db import connection
-        from baruwa.utils.misc import raw_user_filter
-        from baruwa.reports.utils import gen_dynamic_raw_query
 
         conn = connection.cursor()
         query = """
@@ -334,9 +330,6 @@ class MessageStatsManager(models.Manager):
 
     def get(self, user, addrs=None, act=3):
         "message stats"
-        from django.db import connection
-        import datetime
-        from baruwa.utils.misc import raw_user_filter
 
         conn = connection.cursor()
         today = datetime.date.today()

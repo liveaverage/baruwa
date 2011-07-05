@@ -20,6 +20,7 @@
 #
 
 from django.db import models
+
 from baruwa.accounts.models import UserAddresses
 
 

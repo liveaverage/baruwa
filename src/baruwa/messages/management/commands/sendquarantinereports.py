@@ -19,19 +19,29 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import uuid
+import datetime
+
 from smtplib import SMTPException
+from email.MIMEImage import MIMEImage
+
 from django.core.management.base import NoArgsCommand
 from django.utils.translation import ugettext as _
 from django.db import IntegrityError
-try:
-    from django.forms.fields import email_re
-except ImportError:
-    from django.core.validators import email_re
+from django.core.validators import email_re
+from django.template.loader import render_to_string
+from django.contrib.auth.models import User
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
+from django.db.models import Q
+
+from baruwa.messages.models import Message
+from baruwa.accounts.models import UserProfile
+from baruwa.messages.models import Release
 
 
 def embed_img(email, img_id, img_data):
     "Embeds an image in an html email"
-    from email.MIMEImage import MIMEImage
 
     img = MIMEImage(img_data)
     img.add_header('Content-ID', '<%s>' % img_id)
@@ -40,11 +50,9 @@ def embed_img(email, img_id, img_data):
 
 
 def generate_release_records(query_list):
-    """
-    Creates the DB records to be lookedup by the release
+    """Creates the DB records to be lookedup by the release
     mechanisim
     """
-    from baruwa.messages.models import Release
     for record in query_list:
         try:
             rec = Release(uuid=record['uuid'], timestamp=record['timestamp'],
@@ -55,11 +63,8 @@ def generate_release_records(query_list):
 
 
 def add_uuids(query_list):
+    """Adds uuids to the queryset for using in the template
     """
-    Adds uuids to the queryset for using in the template
-    """
-    import uuid
-
     for index, msg in enumerate(query_list):
         query_list[index]['uuid'] = str(uuid.uuid5(uuid.NAMESPACE_OID,
             str(msg['id'])))
@@ -70,15 +75,6 @@ class Command(NoArgsCommand):
     help = _("Generates an email report of the quarantined messages for the past 24 hours")
 
     def handle_noargs(self, **options):
-        from django.template.loader import render_to_string
-        from django.contrib.auth.models import User
-        from django.core.mail import EmailMultiAlternatives
-        from django.conf import settings
-        from django.db.models import Q
-        from baruwa.messages.models import Message
-        from baruwa.accounts.models import UserProfile
-        import datetime
-
         tmp = UserProfile.objects.values('user').filter(send_report=1)
         ids = [profile['user'] for profile in tmp]
         users = User.objects.filter(id__in=ids)

@@ -23,6 +23,7 @@
 
 from celery.task import Task
 from django.utils.translation import ugettext as _
+
 from baruwa.utils.mail.message import TestDeliveryServers
 
 

@@ -34,6 +34,7 @@ from django.db import IntegrityError
 from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.contrib import messages as djmessages
+
 from baruwa.lists.forms import ListAddForm, AdminListAddForm
 from baruwa.lists.forms import FilterForm, ListDeleteForm
 from baruwa.lists.models import List
@@ -189,7 +190,7 @@ def add_to_list(request, template='lists/add.html'):
                 return HttpResponse(response,
                     content_type='application/javascript; charset=utf-8')
             if error_msg:
-                msg = erro_msg
+                msg = error_msg
             else:
                 msg = _('The address has been added to the list')
             djmessages.info(request, msg)

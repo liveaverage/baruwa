@@ -19,14 +19,9 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
-try:
-    from django.forms.fields import email_re
-except ImportError:
-    from django.core.validators import email_re
+from StringIO import StringIO
+
+from django.core.validators import email_re
 from django.contrib.auth.models import User
 from django.conf import settings
 from baruwa.accounts.models import UserProfile
@@ -82,18 +77,15 @@ class RadiusAuth:
             except AttributeError:
                 return None
 
-            request = client.CreateAuthPacket(code=packet.Accessrequestuest,
+            request = client.CreateAuthPacket(code=packet.Accessrequest,
                 User_Name=login_user,)
             request["User-Password"] = request.PwCrypt(password)
             try:
                 reply = client.SendPacket(request)
-            except Timeout:
-                return None
-            except Exception:
-                return None
-            if reply.code == packet.AccessReject:
-                return None
-            if reply.code != packet.AccessAccept:
+                if (reply.code == packet.AccessReject or
+                    reply.code != packet.AccessAccept):
+                    return None
+            except (Timeout, Exception):
                 return None
             try:
                 user = User.objects.get(username=username)

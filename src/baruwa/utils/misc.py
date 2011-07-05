@@ -19,6 +19,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import os
 import socket
 import GeoIP
 import subprocess
@@ -27,6 +28,10 @@ from IPy import IP
 from django.conf import settings
 from django.db.models import Q, Count
 from django.template.defaultfilters import force_escape
+
+from baruwa.messages.models import MessageStats
+from baruwa.status.models import MailQueueItem
+from baruwa.reports.forms import FILTER_ITEMS, FILTER_BY
 
 
 def jsonify_msg_list(element):
@@ -115,7 +120,6 @@ def place_negative_vars(key, nargs, nkwargs, lnkwargs, value):
 
 def gen_dynamic_query(model, filter_list, active_filters=None):
     "build a dynamic query"
-    from baruwa.reports.forms import FILTER_ITEMS, FILTER_BY
     kwargs = {}
     lkwargs = {}
     nkwargs = {}
@@ -215,7 +219,6 @@ def raw_user_filter(user, addresses, account_type):
 
 def get_active_filters(filter_list, active_filters):
     "generates a dictionary of active filters"
-    from baruwa.reports.forms import FILTER_ITEMS, FILTER_BY
     if not active_filters is None:
         filter_items = dict(FILTER_ITEMS)
         filter_by = dict(FILTER_BY)
@@ -268,9 +271,6 @@ def host_is_local(host):
 
 def get_sys_status(request):
     "Returns system status"
-    import os
-    from baruwa.messages.models import MessageStats
-    from baruwa.status.models import MailQueueItem
 
     addrs = []
     act = 3

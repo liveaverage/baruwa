@@ -22,10 +22,7 @@
 from django import forms
 from django.template.defaultfilters import force_escape
 from django.utils.translation import ugettext as _
-try:
-    from django.forms.fields import email_re
-except ImportError:
-    from django.core.validators import email_re
+from django.core.validators import email_re
 
 
 SALEARN_OPTIONS = (

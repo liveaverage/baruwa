@@ -24,7 +24,9 @@ import poplib
 import smtplib
 import imaplib
 
+from django.core.validators import email_re
 from django.contrib.auth.models import User
+
 from baruwa.accounts.models import UserProfile
 from baruwa.config.models import MailAuthHost
 from baruwa.accounts.models import UserAddresses
@@ -121,10 +123,6 @@ class MailBackend:
                     user.set_unusable_password()
                     user.is_staff = False
                     user.is_superuser = False
-                    try:
-                        from django.forms.fields import email_re
-                    except ImportError:
-                        from django.core.validators import email_re
                     if email_re.match(username):
                         user.email = username
                     user.save()

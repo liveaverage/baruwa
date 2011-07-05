@@ -20,8 +20,9 @@
 #
 
 import os
-import subprocess
 import re
+import datetime
+import subprocess
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
@@ -33,6 +34,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.contrib import messages as djmessages
+
 from baruwa.utils.misc import get_processes, get_config_option
 from baruwa.utils.decorators import onlysuperusers
 from baruwa.messages.models import MessageStats
@@ -101,7 +103,6 @@ def bayes_info(request):
 
     pipe1 = subprocess.Popen(['sa-learn', '-p', sa_prefs, '--dump', 'magic'],
     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    import datetime
     while True:
         line = pipe1.stdout.readline()
         if not line:

@@ -20,6 +20,7 @@
 #
 
 from django.conf import settings
+from django.db import connection
 from django.core.management.base import NoArgsCommand
 from django.utils.translation import ugettext as _
 
@@ -30,7 +31,6 @@ class Command(NoArgsCommand):
     " days from the messages table")
 
     def handle_noargs(self, **options):
-        from django.db import connection
         #import datetime
         #from baruwa.messages.models import Message
         #interval = datetime.timedelta(days=60)

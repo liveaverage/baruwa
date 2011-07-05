@@ -26,13 +26,10 @@ import datetime
 from django import forms
 from django.template.defaultfilters import force_escape
 from django.utils.translation import ugettext as _
+from django.core.validators import email_re
+from django.core.validators import ipv4_re
+
 from baruwa.utils.regex import DOM_RE
-try:
-    from django.forms.fields import email_re
-    from django.forms.fields import ipv4_re
-except ImportError:
-    from django.core.validators import email_re
-    from django.core.validators import ipv4_re
 
 
 FILTER_ITEMS = (

@@ -24,13 +24,11 @@ from django.forms.util import ErrorList
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm
 from django.utils.translation import ugettext as _
+from django.core.validators import email_re
+
+from baruwa.utils.regex import ADDRESS_RE
 from baruwa.accounts.models import UserProfile, UserAddresses
 from baruwa.utils.regex import DOM_RE
-try:
-    from django.forms.fields import email_re
-except ImportError:
-    from django.core.validators import email_re
-from baruwa.utils.regex import ADDRESS_RE
 
 
 class PwResetForm(PasswordResetForm):

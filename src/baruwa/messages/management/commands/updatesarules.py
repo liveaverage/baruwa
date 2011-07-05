@@ -26,6 +26,9 @@ import glob
 from django.core.management.base import NoArgsCommand
 from django.utils.translation import ugettext as _
 from django.db import IntegrityError
+from django.conf import settings
+
+from baruwa.messages.models import SaRules
 
 
 class Command(NoArgsCommand):
@@ -33,8 +36,6 @@ class Command(NoArgsCommand):
     help = _("Updates the database with the spam descriptions")
 
     def handle_noargs(self, **options):
-        from django.conf import settings
-        from baruwa.messages.models import SaRules
 
         search_dirs = getattr(settings, 'SA_RULES_DIRS', [])
         regex = re.compile(r'^describe\s+(\S+)\s+(.+)$')

@@ -36,6 +36,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from celery.task.sets import TaskSet
 from celery.result import TaskSetResult
+
 from baruwa.messages.models import Message, Release, Archive
 from baruwa.messages.tasks import ProcessQuarantine, PreviewMessageTask,\
  ReleaseMessage, ProcessQuarantinedMsg

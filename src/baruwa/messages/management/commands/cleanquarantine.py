@@ -19,12 +19,17 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-from django.core.management.base import NoArgsCommand
-from django.utils.translation import ugettext as _
 import re
 import os
 import shutil
 import datetime
+
+from django.core.management.base import NoArgsCommand
+from django.utils.translation import ugettext as _
+from django.conf import settings
+
+from baruwa.utils.misc import get_config_option
+from baruwa.messages.models import Message
 
 
 REGEX = re.compile(r"^\d{8}$")
@@ -57,9 +62,6 @@ class Command(NoArgsCommand):
     help = "Deletes quarantined files older than QUARANTINE_DAYS_TO_KEEP"
 
     def handle_noargs(self, **options):
-        from django.conf import settings
-        from baruwa.utils.misc import get_config_option
-        from baruwa.messages.models import Message
 
         days_to_retain = getattr(settings, 'QUARANTINE_DAYS_TO_KEEP', 0)
         quarantine_dir = get_config_option('QuarantineDir')
