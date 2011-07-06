@@ -70,9 +70,12 @@ settings.
 #
 # %{name} - %{version}
 #
-
+if test -f /etc/sysconfig/MailScanner; then
+    . /etc/sysconfig/MailScanner
+fi
+MTA=${MTA:-${MTA:-"exim"}}
 # runs every 3 mins to update mailq stats
-*/3 * * * * root baruwa-admin queuestats 2>/dev/null
+*/3 * * * * root baruwa-admin queuestats --mta=$MTA 2>/dev/null
 EOF
 
 %{__cat} <<'EOF' > %{name}.logrotate
@@ -91,6 +94,8 @@ locale=`basename ${dir}`;
 msgfmt -o "src/baruwa/locale/${locale}/LC_MESSAGES/django.mo" "src/baruwa/locale/${locale}/LC_MESSAGES/django.po";
 msgfmt -o "src/baruwa/locale/${locale}/LC_MESSAGES/djangojs.mo" "src/baruwa/locale/${locale}/LC_MESSAGES/djangojs.po";
 done
+
+%{__sed} -i ':/usr/lib/python2.4:%{python_sitelib}:' %SOURCE5
 
 %build
 %{__python} setup.py build
