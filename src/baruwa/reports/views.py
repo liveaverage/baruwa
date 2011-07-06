@@ -35,7 +35,7 @@ from baruwa.reports.forms import FilterForm, FILTER_ITEMS, FILTER_BY
 from baruwa.reports.models import SavedFilter
 from baruwa.reports.utils import pack_json_data, run_query, run_hosts_query
 from baruwa.messages.models import Message
-from baruwa.utils.misc import gen_dynamic_query, get_active_filters
+from baruwa.utils.queryfilters import gen_dynamic_query, get_active_filters
 
 
 @login_required

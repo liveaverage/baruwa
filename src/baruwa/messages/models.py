@@ -25,9 +25,8 @@ from django.db import models
 from django.db.models import Q
 from django.db import connection
 
-from baruwa.utils.misc import raw_user_filter
-from baruwa.reports.utils import gen_dynamic_raw_query
 from baruwa.accounts.models import UserProfile, UserAddresses
+from baruwa.utils.queryfilters import raw_user_filter, gen_dynamic_raw_query
 
 
 class MessageManager(models.Manager):

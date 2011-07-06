@@ -41,7 +41,8 @@ from baruwa.messages.models import Message, Release, Archive
 from baruwa.messages.tasks import ProcessQuarantine, PreviewMessageTask,\
  ReleaseMessage, ProcessQuarantinedMsg
 from baruwa.messages.forms import QuarantineProcessForm, BulkQuarantineProcessForm
-from baruwa.utils.misc import jsonify_msg_list, apply_filter, jsonify_status
+from baruwa.utils.misc import jsonify_msg_list, jsonify_status
+from baruwa.utils.queryfilters import apply_filter
 from baruwa.utils.context_processors import status
 
 
