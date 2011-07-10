@@ -36,6 +36,15 @@ export CELERY_LOADER
 
 . /lib/lsb/init-functions
 
+CELERYD_USER=${CELERYD_USER:-${CELERYD_USER:-"celeryd"}}
+CELERYD_GROUP=${CELERYD_GROUP:-${CELERYD_GROUP:-"celeryd"}}
+
+if [ ! -d /var/run/baruwa ] ; then
+        mkdir /var/run/baruwa
+        chown $CELERYD_USER:$CELERYD_GROUP /var/run/baruwa
+        chmod 0760 /var/run/baruwa
+fi
+
 CELERYD_OPTS="$CELERYD_OPTS -f $CELERYD_LOG_FILE -l $CELERYD_LOG_LEVEL"
 
 if [ -n "$2" ]; then

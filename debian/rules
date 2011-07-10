@@ -10,7 +10,7 @@
 #export DH_VERBOSE=1
 
 %:
-	dh $@
+	dh $@ --with python2
 
 override_dh_auto_clean:
 	rm -rf docs.debian
@@ -38,8 +38,8 @@ override_dh_install:
 	dh_install baruwa.conf /etc/MailScanner/conf.d/
 	dh_install extras/*.pm /etc/MailScanner/CustomFunctions
 
-override_dh_pysupport:
-	dh_pysupport
+override_dh_python2:
+	dh_python2
 	rm -f debian/baruwa/usr/share/pyshared/baruwa/settings.py
 	cd debian/baruwa/usr/share/pyshared/baruwa \
 		&& ln -s ../../../../../etc/baruwa/settings.py .

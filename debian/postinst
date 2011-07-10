@@ -111,7 +111,7 @@ if [ "$1" = "configure" ]; then
         s/\(BROKER_VHOST = \"\).*\(\"\)/\1$mqvhost\2/;
         " /etc/baruwa/settings.py 
         # populate the database
-        /usr/share/pyshared/baruwa/manage.py syncdb --noinput
+        /usr/share/pyshared/baruwa/manage.py syncdb --noinput || true
         # create admin user
         export DJANGO_SETTINGS_MODULE=baruwa.settings
 	    TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX`
@@ -129,7 +129,7 @@ if [ "$1" = "configure" ]; then
 	    echo "  profile = UserProfile(user=user, account_type=1)" >> "$TMPDEST"
 	    echo "  profile.save()" >> "$TMPDEST"
 	    echo "except: pass" >> "$TMPDEST"
-	    python "$TMPDEST"
+	    python "$TMPDEST" || true
 	    rm -f $TMPDEST
         #db_reset baruwa/mysql/dbserver
     	db_reset baruwa/mysql/dbadmin

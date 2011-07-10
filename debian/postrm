@@ -24,8 +24,8 @@ if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
         if [ -d /var/lib/baruwa ]; then
                 rm -r /var/lib/baruwa || true
         fi
-        if [ -f /var/run/celeryd.pid ]; then
-            rm /var/run/celeryd.pid || true
+        if [ -d /var/run/baruwa ]; then
+            rm -f /var/run/baruwa || true
         fi
         if getent passwd celeryd >/dev/null; then
                 pkill -u celeryd || true
