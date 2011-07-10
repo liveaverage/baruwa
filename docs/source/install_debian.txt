@@ -4,11 +4,8 @@
 Baruwa on Ubuntu/Debian
 =======================
 
-There is two ways to install Baruwa on Ubuntu, you can download
-and install the deb package or you can use the Baruwa Ubuntu PPA.
-Both methods are described below.
-
-Debian users can only use the download method at the moment.
+As of Baruwa 1.1.0 an Apt repo is provided to able users of Ubuntu and
+Debian to install Baruwa using apt-get.
 
 Install & Configure RabbitMQ
 ============================
@@ -19,26 +16,27 @@ Install RabbitMQ::
 
 .. include:: includes/rabbitmq.inc
 
-Baruwa deb install
+Baruwa Apt install
 ==================
 
-Download the deb from http://www.topdog-software.com/oss/baruwa/
+The Baruwa Apt server is located at http://apt.baruwa.org/
 
-Install Baruwa::
+To install from this server you need to enable it by adding
+its gpg key and adding it to your /etc/apt/sources.list file::
 
-    # apt-get install gdebi-core
-    # gdebi baruwa_<version>_all.deb
+	# wget -O - http://apt.baruwa.org/baruwa-apt-keys.gpg | sudo apt-key add -
+	
+Then add the following to your sources file
 
-Baruwa Ubuntu PPA install
-=========================
+debian::
 
-The Baruwa Ubuntu PPA is located at https://launchpad.net/~topdog/+archive/baruwa
+	deb http://apt.baruwa.org/debian stable main
 
-To install from this PPA you need to enable it::
+ubuntu::
 
-	# sudo add-apt-repository ppa:topdog/baruwa
+	deb http://apt.baruwa.org/ubuntu natty main
 
-You can now install Baruwa from the PPA::
+You can now install Baruwa from the APT repo::
 
 	# sudo apt-get update
 	# sudo apt-get install baruwa
