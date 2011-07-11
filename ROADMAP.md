@@ -25,9 +25,9 @@ Milestone 2.0.0
 + Full AJAX support
 + Log viewer
 + Accounting and audit trail
-+ External authentication (LDAP, OAUTH, YUBIKEY)
++ External authentication (<strike>LDAP</strike>, OAUTH, YUBIKEY)
 + Archiving to message store (CouchDB)
-+ Download reports as PDF via the interface
++ <strike>Download reports as PDF via the interface</strike>
 + Create packages for FreeBSD, OpenBSD and NetBSD
 
 Milestone 2.1.0

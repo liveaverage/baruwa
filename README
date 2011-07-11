@@ -85,8 +85,7 @@ Packages
 Binary packages for Ubuntu/Debian, Fedora and RHEL/SL/CENTOS are available.
 
    + RHEL/SL/CENTOS - http://repo.baruwa.org
-   + Debian - http://apt.baruwa.org
-   + Ubuntu - https://launchpad.net/~topdog/+archive/baruwa
+   + Ubuntu/Debian - http://apt.baruwa.org
 
 =============
 Documentation
