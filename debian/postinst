@@ -32,7 +32,7 @@ if [ "$1" = "configure" ]; then
 	case "$webserver" in
 	    apache2)
 		if [ -d /etc/$webserver/mods-enabled ]; then
-			a2enmod wsgi >/dev/null
+			a2enmod wsgi >/dev/null || true
 		fi
 		;;
 	esac
