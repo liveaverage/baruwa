@@ -133,6 +133,7 @@ def tds_email_list(value):
 @stringfilter
 def tds_geoip(value):
     "return country flag"
+    tag = ''
     try:
         IP(value).version()
         cname, ccode = geoip_lookup(value)
