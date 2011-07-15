@@ -127,7 +127,7 @@ class QueueParser(object):
                         break
                 if not 'lastattempt' in attribs:
                     attribs['lastattempt'] = attribs['timestamp']
-                if attribs['from_address'] == '':
+                if 'from_address' not in attribs or attribs['from_address'] == '':
                     attribs['from_address'] = '<>'
                 attribs['reason'] = '\n'.join(reasons)
                 return attribs
