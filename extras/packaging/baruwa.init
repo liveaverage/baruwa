@@ -99,7 +99,7 @@ case "$1" in
     ;;
 
   status)
-    status celeryd
+    status -p $CELERYD_PID_FILE baruwa
     ;;
 
   *)

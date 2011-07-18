@@ -4,7 +4,7 @@
 
 Name:           baruwa
 Version:        1.1.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Ajax enabled MailScanner web frontend      
 Group:          Applications/Internet
 License:        GPLv2
@@ -31,9 +31,9 @@ Requires:       python-reportlab
 Requires:       python-lxml
 Requires:       MySQL-python >= 1.2.2
 Requires:       httpd
-Requires:       dojo
+Requires:       dojo >= 1.5.1
 Requires:       mailscanner >= 4.80.10
-%if 0%{?rhel} < 6
+%if ! (0%{?fedora} > 6 || 0%{?rhel} > 5)
 Requires:       python-uuid
 %endif
 Requires(pre): shadow-utils
@@ -70,12 +70,9 @@ settings.
 #
 # %{name} - %{version}
 #
-if test -f /etc/sysconfig/MailScanner; then
-    . /etc/sysconfig/MailScanner
-fi
-MTA=${MTA:-${MTA:-"exim"}}
+
 # runs every 3 mins to update mailq stats
-*/3 * * * * root baruwa-admin queuestats --mta=$MTA 2>/dev/null
+*/3 * * * * root baruwa-admin queuestats 2>/dev/null
 EOF
 
 %{__cat} <<'EOF' > %{name}.logrotate
@@ -94,8 +91,6 @@ locale=`basename ${dir}`;
 msgfmt -o "src/baruwa/locale/${locale}/LC_MESSAGES/django.mo" "src/baruwa/locale/${locale}/LC_MESSAGES/django.po";
 msgfmt -o "src/baruwa/locale/${locale}/LC_MESSAGES/djangojs.mo" "src/baruwa/locale/${locale}/LC_MESSAGES/djangojs.po";
 done
-
-%{__sed} -i ':/usr/lib/python2.4:%{python_sitelib}:' %SOURCE5
 
 %build
 %{__python} setup.py build
@@ -125,12 +120,15 @@ mkdir -p source/_static
 %{__install} -d -p $RPM_BUILD_ROOT%{_localstatedir}/run/%{name}
 %{__install} -d -p $RPM_BUILD_ROOT%{_localstatedir}/log/%{name}
 %{__install} -p -m0644 extras/*.pm $RPM_BUILD_ROOT%{_datadir}/%{name}/CustomFunctions
-%{__install} -p -m0644 %SOURCE1 $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
-%{__install} -p -m0644 %SOURCE3 $RPM_BUILD_ROOT%{_sysconfdir}/MailScanner/conf.d/%{name}.conf
-%{__install} -p -m0755 %SOURCE2 $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily/%{name}
-%{__install} -p -m0755 %SOURCE4 $RPM_BUILD_ROOT%{_initrddir}/%{name}
-%{__install} -p -m0755 %SOURCE6 $RPM_BUILD_ROOT%{_sysconfdir}/cron.monthly/%{name}
-%{__install} -p -m0644 %SOURCE5 $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
+%{__install} -p -m0644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
+%{__install} -p -m0644 %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/MailScanner/conf.d/%{name}.conf
+%{__install} -p -m0755 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily/%{name}
+%{__install} -p -m0755 %{SOURCE4} $RPM_BUILD_ROOT%{_initrddir}/%{name}
+%{__install} -p -m0755 %{SOURCE6} $RPM_BUILD_ROOT%{_sysconfdir}/cron.monthly/%{name}
+%{__install} -p -m0644 %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
+%{__sed} -i -e "s:/usr/lib/python2.4/site-packages:%{python_sitelib}:g" \
+$RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name} \
+$RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
 %{__install} -p -m0644 %{name}.cron.d $RPM_BUILD_ROOT%{_sysconfdir}/cron.d/%{name}
 %{__install} -p -m0644 %{name}.logrotate $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/%{name}
 %{__rm} -f $RPM_BUILD_ROOT%{python_sitelib}/%{name}/settings.py*
@@ -208,6 +206,10 @@ fi
 
 
 %changelog
+* Mon Jul 18 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-5
+- FIX: EL6 sysconfig python site lib path
+- FIX: Exception on viewing top hosts
+
 * Tue Jun 28 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-4
 - FIX: baruwa celeryd worker pid path
 
