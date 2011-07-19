@@ -4,7 +4,9 @@
 #
 
 # send quarantine reports
-baruwa-admin sendquarantinereports >/dev/null
+# moved to baruwa.cron.d
+# baruwa-admin sendquarantinereports >/dev/null
+
 # clean quarantine 
 baruwa-admin cleanquarantine >/dev/null
 # clean up the DB
