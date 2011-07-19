@@ -16,6 +16,7 @@ Source3:        baruwa.mailscanner
 Source4:        baruwa.init
 Source5:        baruwa.sysconfig
 Source6:        baruwa.cron.monthly
+Source7:        baruwa.cron.d
 Patch1:         baruwa-various-fixes.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
@@ -66,14 +67,6 @@ settings.
 %prep
 %setup -q -n %{name}-%{version}
 %patch1 -p1
-%{__cat} <<'EOF' > %{name}.cron.d
-#
-# %{name} - %{version}
-#
-
-# runs every 3 mins to update mailq stats
-*/3 * * * * root baruwa-admin queuestats 2>/dev/null
-EOF
 
 %{__cat} <<'EOF' > %{name}.logrotate
 /var/log/baruwa/*.log {
@@ -126,10 +119,10 @@ mkdir -p source/_static
 %{__install} -p -m0755 %{SOURCE4} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %{__install} -p -m0755 %{SOURCE6} $RPM_BUILD_ROOT%{_sysconfdir}/cron.monthly/%{name}
 %{__install} -p -m0644 %{SOURCE5} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
+%{__install} -p -m0644 %{SOURCE7} $RPM_BUILD_ROOT%{_sysconfdir}/cron.d/%{name}
 %{__sed} -i -e "s:/usr/lib/python2.4/site-packages:%{python_sitelib}:g" \
 $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name} \
 $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
-%{__install} -p -m0644 %{name}.cron.d $RPM_BUILD_ROOT%{_sysconfdir}/cron.d/%{name}
 %{__install} -p -m0644 %{name}.logrotate $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/%{name}
 %{__rm} -f $RPM_BUILD_ROOT%{python_sitelib}/%{name}/settings.py*
 pushd $RPM_BUILD_ROOT%{python_sitelib}/%{name}
