@@ -21,7 +21,7 @@
 function ajax_start(){
     if ($('#in-progress').length) {
         $('#in-progress').remove();
-    };
+    }
     $('#Footer_container').after(loading_msg);
 }
 
@@ -41,19 +41,31 @@ function ajax_error(event, request, settings){
     $('#loading_message').remove();
 }
 
-function test_conn(event){
-    event.preventDefault();
-    $.get($(this).attr('href'), function(response){
-        if($('#in-progress').length){$('#in-progress').remove();}
-        $('.Grid_content').before('<div id="in-progress">'+response.html+'</div>');
-        $('#in-progress').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>')
-        ip = setTimeout(function() {$('#in-progress').remove();}, 15050);
-        $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(ip);$('#in-progress').empty().remove();});
-        $('a.selector').bind('click', test_conn);
+function check_status(url){
+    $.get(url, function(response){
+        if (response.completed) {
+            if($('#in-progress').length){$('#in-progress').remove();}
+            $('.Grid_content').before('<div id="in-progress">'+response.html+'</div>');
+            $('#in-progress').append('<div id="dismiss"><a href="#">'+gettext('Dismiss')+'</a></div>');
+            var ip = setTimeout(function() {$('#in-progress').remove();}, 15050);
+            $('#dismiss a').click(function(event){event.preventDefault();clearTimeout(ip);$('#in-progress').empty().remove();});
+            $('a.selector').bind('click', test_conn);
+            clearInterval(auto_refresh);
+        }
     }, "json");
 }
 
-var loading_msg = '<div id="loading_message"><div id="loading">';
+function test_conn(event){
+    event.preventDefault();
+    if ($('#in-progress').length) {
+        return;
+    }
+    var url = $(this).attr('href');
+    auto_refresh = setInterval(check_status(url), 5000);
+}
+
+var auto_refresh, loading_msg;
+loading_msg = '<div id="loading_message"><div id="loading">';
 loading_msg += '<img src="'+media_url+'imgs/ajax-loader.gif" alt="loading"/>';
 loading_msg += '<br/><b>'+gettext('Testing connection')+'</b></div></div>';
 $(document).ready(function(){

@@ -226,8 +226,6 @@ def test_host(request, host_id):
     server = TestSMTPServer()
     task = server.delay(host.address, host.port,
     from_addr, test_address, host.useraddress.id, 5)
-    if request.is_ajax():
-        return HttpResponseRedirect(reverse('task-status', args=[task.task_id]))
     return HttpResponseRedirect(reverse('conn-status', args=[task.task_id]))
 
 
@@ -251,9 +249,18 @@ def test_status(request, taskid):
                     % str(results['errors']))
         else:
             msg = _('The tests failed to run try again later')
+        if request.is_ajax():
+            response = anyjson.dumps(dict(html=msg, completed=True))
+            return HttpResponse(response,
+                content_type='application/javascript; charset=utf-8')
         djmessages.info(request, msg)
         return HttpResponseRedirect(reverse('view-domain',
             args=[results['host']]))
+    else:
+        if request.is_ajax():
+            response = anyjson.dumps(dict(html='', completed=False))
+            return HttpResponse(response,
+                content_type='application/javascript; charset=utf-8')
     return render_to_response('config/task_status.html', {'status': status},
     context_instance=RequestContext(request))
 
