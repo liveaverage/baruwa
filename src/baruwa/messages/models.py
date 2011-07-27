@@ -509,8 +509,8 @@ class Recipient(models.Model):
 
 class SaRules(models.Model):
     "spamassassin rules"
-    rule = models.CharField(max_length=25, primary_key=True)
-    rule_desc = models.CharField(max_length=200)
+    rule = models.CharField(max_length=100, primary_key=True)
+    rule_desc = models.CharField(max_length=255)
 
     class Meta:
         db_table = u'sa_rules'
