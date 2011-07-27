@@ -286,7 +286,7 @@ class ProcessQuarantinedMessage(object):
             return False
 
         learn = "--%s" % learnas
-        sa_learn_cmd = ['/usr/bin/sa-learn', learn, self.path]
+        sa_learn_cmd = ['sa-learn', learn, self.path]
         pipe = Popen(sa_learn_cmd, stdout=PIPE, stderr=PIPE)
         stdout, stderr = pipe.communicate()
         if pipe.returncode == 0:
