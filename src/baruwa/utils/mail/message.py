@@ -41,7 +41,7 @@ from baruwa.utils.misc import get_config_option
 from baruwa.utils.regex import MSGID_RE, HTMLTITLE_RE
 
 NOTFOUND = object()
-UNCLEANTAGS = ['html', 'head', 'link', 'a', 'body']
+UNCLEANTAGS = ['html', 'head', 'link', 'a', 'body', 'base']
 
 
 def test_smtp_server(server, port, test_address):
