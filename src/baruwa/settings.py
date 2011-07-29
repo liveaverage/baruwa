@@ -215,6 +215,12 @@ QUARANTINE_REPORT_HOSTURL = 'http://baruwa-alpha.local'
 
 # spam assassin rules directories
 SA_RULES_DIRS = ['/usr/share/spamassassin', '/etc/mail/spamassassin']
+
+# alternative postfix configuration directory
+# use this to specify a non default postfix configuration for use
+# with the queue monitoring system
+#POSTFIX_ALT_CONF = '/etc/postfix-ms'
+
 # End Baruwa only settings
 
 try:

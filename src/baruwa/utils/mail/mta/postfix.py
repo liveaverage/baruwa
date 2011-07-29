@@ -31,6 +31,7 @@ import subprocess
 from stat import ST_MTIME, ST_CTIME
 from email.Header import decode_header
 
+
 SUBJECT_RE = re.compile(r'^Subject:(.+)')
 
 
@@ -59,7 +60,15 @@ class QueueParser(object):
 
     def process(self):
         "process"
-        postqdir = subprocess.Popen('postconf -d queue_directory', shell=True,
+        cmd = 'postconf -d queue_directory'
+        try:
+            from django.conf import settings
+            confdir = getattr(settings, 'POSTFIX_ALT_CONF', None)
+            if confdir and os.path.isdir(confdir):
+                cmd = 'postconf -c %s -d queue_directory' % confdir
+        except ImportError:
+            pass
+        postqdir = subprocess.Popen(cmd, shell=True,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         try:
             postqueuedir = postqdir.stdout.read().split()[2]
