@@ -10,7 +10,7 @@
 #export DH_VERBOSE=1
 
 %:
-	dh $@ --with python2
+	dh $@
 
 override_dh_auto_clean:
 	rm -rf docs.debian
@@ -38,17 +38,17 @@ override_dh_install:
 	dh_install baruwa.conf /etc/MailScanner/conf.d/
 	dh_install extras/*.pm /etc/MailScanner/CustomFunctions
 
-override_dh_python2:
-	dh_python2
+override_dh_pysupport:
+	dh_pysupport
 	rm -f debian/baruwa/usr/share/pyshared/baruwa/settings.py
-	cd debian/baruwa/usr/share/pyshared/baruwa \
-		&& ln -s ../../../../../etc/baruwa/settings.py .
 	cd debian/baruwa/usr/share/pyshared/baruwa/static/js \
 		&& rm jquery.js \
 		&& ln -s ../../../../javascript/jquery/jquery.js \
 		&& ln -s ../../../../javascript/dijit \
 		&& ln -s ../../../../javascript/dojo \
 		&& ln -s ../../../../javascript/dojox .
+	cd debian/baruwa/usr/share/pyshared/baruwa \
+		&& ln -s ../../../../etc/baruwa/settings.py .
 
 override_dh_installdocs:
 	dh_installdocs

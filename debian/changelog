@@ -1,4 +1,10 @@
-baruwa (1.1.0-1) unstable; urgency=low
+baruwa (1.1.0-2~wheezy) wheezy; urgency=low
+
+  * Fix dependency issue caused by using python2 packaging
+
+ -- Andrew Colin Kissa <andrew@topdog.za.net>  Thu, 28 Jul 2011 11:38:11 +0200
+
+baruwa (1.1.0-1~wheezy) wheezy; urgency=low
 
   * update to 1.1.0 
 
