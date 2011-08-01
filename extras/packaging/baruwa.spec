@@ -4,7 +4,7 @@
 
 Name:           baruwa
 Version:        1.1.0
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Ajax enabled MailScanner web frontend      
 Group:          Applications/Internet
 License:        GPLv2
@@ -32,6 +32,7 @@ Requires:       python-reportlab
 Requires:       python-lxml
 Requires:       MySQL-python >= 1.2.2
 Requires:       httpd
+Requires:       mod_wsgi
 Requires:       dojo >= 1.5.1
 Requires:       mailscanner >= 4.80.10
 %if ! (0%{?fedora} > 6 || 0%{?rhel} > 5)
@@ -199,6 +200,11 @@ fi
 
 
 %changelog
+* Mon Aug 01 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-6
+- Depend on mod_wsgi
+- move cron.d out of spec
+- build fro Fedora 15
+
 * Mon Jul 18 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-5
 - FIX: EL6 sysconfig python site lib path
 - FIX: Exception on viewing top hosts
