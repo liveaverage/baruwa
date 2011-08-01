@@ -31,7 +31,6 @@ import subprocess
 from stat import ST_MTIME, ST_CTIME
 from email.Header import decode_header
 
-
 SUBJECT_RE = re.compile(r'^Subject:(.+)')
 
 

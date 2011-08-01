@@ -78,7 +78,8 @@ class QueueParser(object):
                     line = match.groups()[0].strip()
                     if line.startswith('=?'):
                         text, charset = decode_header(line)[0]
-                        line = unicode(text, charset or 'ascii', 'replace')
+                        line = unicode(text, charset or 'ascii',
+                                        'replace')
                     break
             if line:
                 subject = line
