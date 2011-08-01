@@ -22,9 +22,15 @@ Baruwa installation
 ===================
 
 A Baruwa RHEL/SL/Centos repo is now available at http://repo.baruwa.org/
-To install from this repo you need to enable the repo::
+To install from this repo you need to enable the repo
+
+EL-5::
 
 	# rpm -Uvh http://repo.baruwa.org/el5/i386/baruwa-release-5-0.noarch.rpm
+	
+EL-6::
+
+	# rpm -Uvh http://repo.baruwa.org/el6/i386/baruwa-release-6-0.noarch.rpm
 
 Install the dependencies::
 
@@ -37,12 +43,12 @@ be resolved by packages shipped by the Baruwa repo::
 
 .. include:: includes/rabbitmq.inc
 
-.. include:: includes/configure_ms_redhat.inc
-
 .. include:: includes/configure_baruwa.inc
 
 .. include:: includes/redhat_celeryd_init.inc
 
 .. include:: includes/redhat_apache.inc
+
+.. include:: includes/configure_ms_redhat.inc
 
 .. include:: includes/testing.inc

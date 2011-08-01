@@ -12,7 +12,7 @@ prefer to use a `forum`_ interface
 
 I think I've found a security problem! What should I do?
 ---------------------------------------------------------
-If you think you've found a security problem with Baruwa, 
+If you think you've found a security vulnerability with Baruwa, 
 please send a message to andrew@topdog.za.net
 
 Can i get Commercial Support or pay for an installation

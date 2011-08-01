@@ -18,7 +18,7 @@ Virtualenv allows you to run multiple python installs and is
 easily managed as you do not need to be a privileged user to
 install packages.
 
-For more info on virtualenv please refer to its documentation.
+For more info on `virtualenv`_ please refer to its documentation.
 
 Install Baruwa
 ==============

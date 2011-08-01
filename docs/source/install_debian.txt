@@ -24,7 +24,7 @@ The Baruwa Apt server is located at http://apt.baruwa.org/
 To install from this server you need to enable it by adding
 its gpg key and adding it to your /etc/apt/sources.list file::
 
-	# wget -O - http://apt.baruwa.org/baruwa-apt-keys.gpg | sudo apt-key add -
+	# wget -O - http://apt.baruwa.org/baruwa-apt-keys.gpg | apt-key add -
 	
 Then add the following to your sources file
 

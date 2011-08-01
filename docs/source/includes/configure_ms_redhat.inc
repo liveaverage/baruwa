@@ -3,7 +3,8 @@ Configure MailScanner
 
 It is assumed that you have a working MailScanner system already configured, 
 if you are installing from scratch please refer to their documentation on how
-to configure MailScanner.
+to configure MailScanner. The Fedora repo includes mailscanner and it will be
+installed automatically when you install baruwa.
 
 .. note::
 
@@ -35,4 +36,4 @@ Test your configuration for any errors::
 
 Restart MailScanner::
 
-    # /etc/init.d/MailScanner restart
+    # /etc/init.d/mailscanner restart
