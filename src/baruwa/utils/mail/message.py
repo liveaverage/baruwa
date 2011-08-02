@@ -285,16 +285,20 @@ class ProcessQuarantinedMessage(object):
             self.errors.append(_('The quarantined message not found'))
             return False
 
-        learn = "--%s" % learnas
-        sa_learn_cmd = ['sa-learn', learn, self.path]
-        pipe = Popen(sa_learn_cmd, stdout=PIPE, stderr=PIPE)
-        stdout, stderr = pipe.communicate()
-        if pipe.returncode == 0:
-            self.output = stdout
-            return True
-        else:
-            self.errors.append(stderr)
-            self.output = stderr
+        try:
+            learn = "--%s" % learnas
+            sa_learn_cmd = ['sa-learn', learn, self.path]
+            pipe = Popen(sa_learn_cmd, stdout=PIPE, stderr=PIPE)
+            stdout, stderr = pipe.communicate()
+            if pipe.returncode == 0:
+                self.output = stdout
+                return True
+            else:
+                self.errors.append(stderr)
+                self.output = stderr
+                return False
+        except OSError, exception:
+            self.errors.append(str(exception))
             return False
 
     def delete(self):
