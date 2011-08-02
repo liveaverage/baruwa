@@ -23,7 +23,7 @@ To install from this repo you need to enable the repo::
 
 Install the dependencies::
 
-	# yum install mysql-server rabbitmq-server
+	# yum install mysql-server rabbitmq-server python-amqplib django-picklefield
 
 Install Baruwa::
 
