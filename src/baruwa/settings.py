@@ -221,6 +221,9 @@ SA_RULES_DIRS = ['/usr/share/spamassassin', '/etc/mail/spamassassin']
 # with the queue monitoring system
 #POSTFIX_ALT_CONF = '/etc/postfix-ms'
 
+#load default filter (only display todays messages)
+#LOAD_BARUWA_DEFAULT_FILTER = True
+
 # End Baruwa only settings
 
 try:

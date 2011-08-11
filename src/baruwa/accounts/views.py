@@ -20,6 +20,7 @@
 #
 
 import anyjson
+import datetime
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
@@ -27,6 +28,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, AdminPasswordChangeForm
 from django.db.models import Q
 from django import forms
+from django.conf import settings
 from django.db import IntegrityError, DatabaseError
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, HttpResponse
@@ -52,7 +54,6 @@ def local_login(request, redirect_field_name=REDIRECT_FIELD_NAME):
     """
     login
     """
-    from django.conf import settings
     redirect_to = request.REQUEST.get(redirect_field_name, '')
     if request.method == 'POST':
         lang_code = request.POST.get('language', None)
@@ -66,6 +67,16 @@ def local_login(request, redirect_field_name=REDIRECT_FIELD_NAME):
             set_user_addresses(request)
             if lang_code and check_for_language(lang_code):
                 request.session['django_language'] = lang_code
+            # load default filter
+            if getattr(settings, 'LOAD_BARUWA_DEFAULT_FILTER', None):
+                aday = datetime.timedelta(days=1)
+                yesterday = datetime.date.today() - aday
+                fitem = dict(field='date', filter=3, value=yesterday)
+                if not 'filter_by' in request.session:
+                    request.session['filter_by'] = []
+                if not fitem in request.session['filter_by']:
+                    request.session['filter_by'].append(fitem)
+                    request.session.modified = True
             return HttpResponseRedirect(redirect_to)
     else:
         form = AuthenticationForm(request)
