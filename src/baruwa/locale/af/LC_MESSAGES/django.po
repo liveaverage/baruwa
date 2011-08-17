@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-27 07:25+0200\n"
+"POT-Creation-Date: 2011-08-17 13:39+0200\n"
 "PO-Revision-Date: 2011-06-06 17:52+0100\n"
 "Last-Translator: Stephen Cox <stephencoxmail@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,52 +17,71 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: dev_settings.py:44
-#: settings.py:44
+#: dev_settings.py:46 settings.py:53
 msgid "English"
 msgstr ""
 
-#: dev_settings.py:45
-#: settings.py:45
+#: dev_settings.py:47 settings.py:54
 msgid "Afrikaans"
 msgstr ""
 
-#: dev_settings.py:46
-#: settings.py:46
+#: dev_settings.py:48 settings.py:55
 msgid "Italian"
 msgstr ""
 
-#: accounts/forms.py:49
-msgid "That e-mail address doesn't have an associated user account. Are you sure you've registered?"
-msgstr "Daardie e-pos adres is nie gebonde aan 'n gebruiker-rekening nie. Is jy geregistreer?"
+#: dev_settings.py:49 settings.py:56
+msgid "Czech"
+msgstr ""
 
-#: accounts/forms.py:53
-msgid "That e-mail address belongs to an externally authenticated account. Please change the password on that external system."
-msgstr "Daardie e-pos adres behoort aan 'n ekstern gemagtigde rekening. Verander asseblief die wagwoord op daardie sisteem"
+#: dev_settings.py:50 settings.py:57
+msgid "French"
+msgstr ""
 
-#: accounts/forms.py:58
-msgid "That e-mail address belongs to an admin account. Please use the manage.py command to reset"
-msgstr "Daardie e-pos adres behoort aan 'n adminstrateursrekening. Gebruik gerus die manage.py opdrag om dit terug te stel."
+#: dev_settings.py:51 settings.py:58
+msgid "Polish"
+msgstr ""
 
-#: accounts/forms.py:84
-#: accounts/forms.py:211
-#: templates/accounts/index.html:30
+#: accounts/forms.py:47
+msgid ""
+"That e-mail address doesn't have an associated user account. Are you sure "
+"you've registered?"
+msgstr ""
+"Daardie e-pos adres is nie gebonde aan 'n gebruiker-rekening nie. Is jy "
+"geregistreer?"
+
+#: accounts/forms.py:51
+msgid ""
+"That e-mail address belongs to an externally authenticated account. Please "
+"change the password on that external system."
+msgstr ""
+"Daardie e-pos adres behoort aan 'n ekstern gemagtigde rekening. Verander "
+"asseblief die wagwoord op daardie sisteem"
+
+#: accounts/forms.py:56
+#, fuzzy
+msgid ""
+"That e-mail address belongs to an admin account Please use the manage.py "
+"command to reset"
+msgstr ""
+"Daardie e-pos adres behoort aan 'n adminstrateursrekening. Gebruik gerus die "
+"manage.py opdrag om dit terug te stel."
+
+#: accounts/forms.py:82 accounts/forms.py:211 templates/accounts/index.html:30
 #: templates/accounts/login.html:60
 msgid "Username"
 msgstr "Gebruiker"
 
-#: accounts/forms.py:86
-#: accounts/forms.py:214
+#: accounts/forms.py:84 accounts/forms.py:214
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
-msgstr "Vereiste. 30 karakters of minder. Slegs letters, getalle en @/./+/-/_ alleenlik."
+msgstr ""
+"Vereiste. 30 karakters of minder. Slegs letters, getalle en @/./+/-/_ "
+"alleenlik."
 
-#: accounts/forms.py:88
-#: accounts/forms.py:216
+#: accounts/forms.py:87 accounts/forms.py:217
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr "Hierdie waarde mag slegs letters, syfers en @/./+/-/_  bevat."
 
-#: accounts/forms.py:89
-#: templates/accounts/login.html:62
+#: accounts/forms.py:89 templates/accounts/login.html:62
 msgid "Password"
 msgstr "Wagwoord"
 
@@ -70,200 +89,229 @@ msgstr "Wagwoord"
 msgid "A user with that username already exists."
 msgstr "Die gebruikernaam bestaan alreeds."
 
-#: accounts/forms.py:129
-#: accounts/forms.py:164
+#: accounts/forms.py:129 accounts/forms.py:164
 msgid "Super users do not use addresses"
 msgstr "Die super gebruikers maak nie gebruik van adresse nie"
 
-#: accounts/forms.py:135
-#: accounts/forms.py:170
+#: accounts/forms.py:135 accounts/forms.py:170
 msgid "provide a valid domain address"
 msgstr "verskaf 'n geldige domein adres"
 
-#: accounts/forms.py:140
-#: accounts/forms.py:175
+#: accounts/forms.py:140 accounts/forms.py:175
 msgid "provide a valid email address"
 msgstr "verskaf 'n geldige e-pos adres"
 
-#: accounts/views.py:128
+#: accounts/views.py:145
 #, python-format
 msgid "The user account %(account)s was created successfully"
 msgstr "Die gebruiker-rekening, %(account)s, is suksesvol geskep"
 
-#: accounts/views.py:134
+#: accounts/views.py:151
 msgid "The user account could not be created"
 msgstr "Die gebruiker-rekening kon nie geskep word nie"
 
-#: accounts/views.py:158
+#: accounts/views.py:175
 #, python-format
 msgid "The user account %(account)s has been updated"
 msgstr "Die gebruiker-rekening, %(account)s, is opgedateer"
 
-#: accounts/views.py:161
+#: accounts/views.py:178
 #, python-format
 msgid "The user account %(account)s could not be updated"
 msgstr "Die gebruiker-rekening, %(account)s, kon nie opgedateer word nie"
 
-#: accounts/views.py:192
+#: accounts/views.py:209
 #, python-format
 msgid "The user account %(account)s has been deleted"
 msgstr "Die gebruiker-rekening %(account)s is uitgewis"
 
-#: accounts/views.py:201
+#: accounts/views.py:218
 #, python-format
 msgid "The deletion of user account %(account)s failed"
 msgstr "Die uitwis van die gebruiker-rekening %(account)s is onsuksesvol"
 
-#: accounts/views.py:227
+#: accounts/views.py:244
 #, python-format
 msgid "The address %(addr)s has been added to %(account)s account"
 msgstr "Die adres, %(addr)s, is bygevoeg tot die rekening: %(account)s"
 
-#: accounts/views.py:230
+#: accounts/views.py:247
 msgid "The address already exists"
 msgstr "Die adres bestaan reeds"
 
-#: accounts/views.py:256
+#: accounts/views.py:274
 #, python-format
 msgid "The address %(addr)s has been updated"
 msgstr "Die adres %(addr)s is opgedateer"
 
-#: accounts/views.py:259
+#: accounts/views.py:277
 #, python-format
 msgid "The address %(addr)s could not be updated"
 msgstr "Die adres, %(addr)s, kon nie opgedateer word nie"
 
-#: accounts/views.py:280
+#: accounts/views.py:299
 #, fuzzy, python-format
 msgid "The address %(addr)s has been deleted"
 msgstr "Die adres %(addr)s is opgedateer"
 
-#: accounts/views.py:306
+#: accounts/views.py:325
 #, python-format
 msgid "The password for user %(account)s has been updated"
 msgstr "Die gebruiker, %(account)s, se wagwoord kon nie opgedateer word nie"
 
-#: accounts/views.py:309
+#: accounts/views.py:328
 msgid "The password could not be updated"
 msgstr "Die wagwoord kon nie opgedateer word nie"
 
-#: accounts/views.py:364
+#: accounts/views.py:383
 #, python-format
 msgid "The user profile for %(account)s has been updated"
 msgstr "Die gebruiker, %(account)s, se profiel is nou opgedateer"
 
-#: accounts/views.py:367
+#: accounts/views.py:386
 #, python-format
 msgid "The user profile for %(account)s could not be updated"
 msgstr "Die gebruiker, %(account)s, se profiel kon nie opgedateer word nie"
 
-#: config/tasks.py:39
+#: config/forms.py:36
+#, fuzzy, python-format
+msgid "%s is not a valid hostname or IPv4/IPv6 address"
+msgstr "Verskaf asseblief 'n geldige bediener naam of IPv4 adres"
+
+#: config/forms.py:42
+msgid "Enter a valid IPv4/IPv6 address or hostname."
+msgstr ""
+
+#: config/tasks.py:40
 #, python-format
 msgid "Starting connection tests to: %(host)s"
 msgstr ""
 
-#: config/views.py:123
+#: config/views.py:124
 #, python-format
 msgid "Delivery SMTP server: %(server)s was added successfully"
 msgstr "Aflewering SMTP bediener, %(server)s, is suksesvol bygevoeg"
 
-#: config/views.py:133
+#: config/views.py:134
 msgid "Adding of Delivery SMTP server failed"
 msgstr "Die byvoeg van die aflewering SMTP bediener is ongeslaagd"
 
-#: config/views.py:157
+#: config/views.py:158
 #, python-format
 msgid "Delivery SMTP server: %(server)s has been updated successfully"
 msgstr "Die aflewering SMTP bediener, %(server)s, se opdatering is suksesvol"
 
-#: config/views.py:167
+#: config/views.py:168
 #, python-format
 msgid "Delivery SMTP server: %(server)s update failed"
 msgstr "Die aflewering SMTP bediener, %(server)s, se opdatering is onsuksesvol"
 
-#: config/views.py:192
+#: config/views.py:193
 #, python-format
 msgid "Delivery SMTP server: %(server)s has been deleted"
 msgstr "Die aflewering SMTP bediener, %(server)s, is verwyder"
 
-#: config/views.py:203
+#: config/views.py:204
 #, python-format
 msgid "Delivery SMTP server: %(server)s could not be deleted"
 msgstr "Die aflewering SMTP bediener, %(server)s, kon nie verwyder word nie"
 
-#: config/views.py:242
+#: config/views.py:241
 #, fuzzy
 msgid "The server is contactable and accepting messages"
-msgstr "Die bediener, %(server)s, is operasioneel en ontvang e-posse namens: %(dom)s"
+msgstr ""
+"Die bediener, %(server)s, is operasioneel en ontvang e-posse namens: %(dom)s"
 
-#: config/views.py:245
+#: config/views.py:244
 #, python-format
-msgid "The server is contactable via ICMP but is not accepting messages from me, Errors: %s"
+msgid ""
+"The server is contactable via ICMP but is not accepting messages from me, "
+"Errors: %s"
 msgstr ""
 
-#: config/views.py:249
+#: config/views.py:248
 #, fuzzy, python-format
 msgid "The server is not accepting messages, Errors: %s"
 msgstr "Die bediener, %(server)s, ontvang NIE e-posse namens, %(dom)s, nie"
 
-#: config/views.py:252
+#: config/views.py:251
 msgid "The tests failed to run try again later"
 msgstr ""
 
-#: config/views.py:270
+#: config/views.py:278
 #, python-format
-msgid "External authentication %(auth)s: on host %(host)s for domain %(dom)s was added successfully"
-msgstr "Eksterne bemagtiging, %(auth)s, op die bediener, %(host)s, is vir die domein, %(dom)s, suksesvol bygevoeg"
+msgid ""
+"External authentication %(auth)s: on host %(host)s for domain %(dom)s was "
+"added successfully"
+msgstr ""
+"Eksterne bemagtiging, %(auth)s, op die bediener, %(host)s, is vir die "
+"domein, %(dom)s, suksesvol bygevoeg"
 
-#: config/views.py:282
+#: config/views.py:290
 msgid "Addition of external authentication failed"
 msgstr "Die byvoeg van eksterne bemagtiging is ongeslaagd"
 
-#: config/views.py:306
+#: config/views.py:314
 #, python-format
-msgid "External authentication %(auth)s: on host %(host)s for domain %(dom)s has been updated successfully"
-msgstr "Eksterne bemagtiging, %(auth)s: op die bediener, %(host)s, is vir die domein, %(dom)s, suksesvol opgedateer"
+msgid ""
+"External authentication %(auth)s: on host %(host)s for domain %(dom)s has "
+"been updated successfully"
+msgstr ""
+"Eksterne bemagtiging, %(auth)s: op die bediener, %(host)s, is vir die "
+"domein, %(dom)s, suksesvol opgedateer"
 
-#: config/views.py:319
+#: config/views.py:327
 msgid "Update of external authentication failed"
 msgstr "Die opdatering van die eksterne bemagtiging is ongeslaagd"
 
-#: config/views.py:343
+#: config/views.py:351
 #, python-format
-msgid "External authentication %(auth)s: on host %(host)s for domain %(dom)s has been deleted"
-msgstr "Eksterne bemagtiging, %(auth)s, op die bediener, %(host)s, is vir die domein, %(dom)s, verwyder"
+msgid ""
+"External authentication %(auth)s: on host %(host)s for domain %(dom)s has "
+"been deleted"
+msgstr ""
+"Eksterne bemagtiging, %(auth)s, op die bediener, %(host)s, is vir die "
+"domein, %(dom)s, verwyder"
 
-#: config/views.py:357
+#: config/views.py:365
 #, python-format
-msgid "External authentication %(auth)s: on host %(host)s for domain %(dom)s could not be deleted"
-msgstr "Eksterne bemagtiging, %(auth)s, op die bediener, %(host)s, kon nie vir die domein, %(dom)s, verwyder word nie"
+msgid ""
+"External authentication %(auth)s: on host %(host)s for domain %(dom)s could "
+"not be deleted"
+msgstr ""
+"Eksterne bemagtiging, %(auth)s, op die bediener, %(host)s, kon nie vir die "
+"domein, %(dom)s, verwyder word nie"
 
-#: config/views.py:414
+#: config/views.py:422
 #, python-format
 msgid "The node %(node)s is not been initialized, Please initialize"
-msgstr "Die node, %(node)s, is nie geïnisialiseer nie - inisialiseer dit asseblief"
+msgstr ""
+"Die node, %(node)s, is nie geïnisialiseer nie - inisialiseer dit asseblief"
 
-#: config/views.py:445
+#: config/views.py:453
 #, python-format
 msgid "The node %(node)s has been initialized"
 msgstr "Die node, %(node)s, is geïnisialiseer"
 
-#: lists/forms.py:59
+#: lists/forms.py:58
 #, python-format
 msgid "%(email)s provide a valid e-mail address"
 msgstr "%(email)s verskaf 'n geldige e-pos adres"
 
-#: lists/forms.py:64
+#: lists/forms.py:63
 #, python-format
 msgid "The address: %(email)s does not belong to you."
 msgstr "Die adres, %(email)s, behoort nie aan jou nie."
 
 #: lists/forms.py:75
-msgid "Provide either a valid IPv4, email, Domain address, or IPv4 network or range"
-msgstr "Verskaf 'n geldige IPv4, e-pos, domein, IPv4-netwerk of IPv4-reeks adres"
+#, fuzzy
+msgid ""
+"Provide either a valid IPv4/IPv6, email, Domain address, or IPv4/IPv6 "
+"network or range"
+msgstr ""
+"Verskaf 'n geldige IPv4, e-pos, domein, IPv4-netwerk of IPv4-reeks adres"
 
-#: lists/forms.py:88
-#: lists/views.py:183
+#: lists/forms.py:88 lists/views.py:185
 msgid "The list item already exists"
 msgstr "Die lys-item bestaan reeds"
 
@@ -280,282 +328,292 @@ msgstr "Verskaf 'n geldige domein"
 msgid "provide a valid user part of the email address"
 msgstr "verskaf 'n geldige gebruiker-deel van die e-pos adres"
 
-#: lists/views.py:213
+#: lists/views.py:195
+#, fuzzy
+msgid "The address has been added to the list"
+msgstr "Die adres, %(addr)s, is bygevoeg tot die rekening: %(account)s"
+
+#: lists/views.py:220
 msgid "You do not have authorization"
 msgstr "Jy het nie toestemming nie"
 
-#: messages/forms.py:32
-#: messages/templatetags/messages_extras.py:70
-#: templates/base.html:51
-#: templates/messages/quarantine.html:23
-#: templates/messages/task_status.html:23
-#: templates/reports/listing.html:50
+#: lists/views.py:227
+msgid "List item deleted"
+msgstr ""
+
+#: lists/views.py:236
+#, fuzzy
+msgid "List item could not be deleted"
+msgstr "Boodskap kon nie ge-voorskou word nie"
+
+#: messages/forms.py:29 messages/templatetags/messages_extras.py:72
+#: templates/base.html:51 templates/messages/quarantine.html:23
+#: templates/messages/task_status.html:23 templates/reports/listing.html:50
 msgid "Spam"
 msgstr "Gemorspos"
 
-#: messages/forms.py:33
+#: messages/forms.py:30
 msgid "Ham"
 msgstr "Rein pos"
 
-#: messages/forms.py:34
+#: messages/forms.py:31
 msgid "Forget"
 msgstr "Vergeet"
 
-#: messages/forms.py:65
+#: messages/forms.py:62
 msgid "Select atleast one action to perform"
 msgstr "Kies ten minste een aksie om uit te voer"
 
-#: messages/forms.py:69
+#: messages/forms.py:66
 msgid "Provide atleast one alternative recipient"
 msgstr "Verskaf ten minste een alternatiewe onvanger"
 
-#: messages/forms.py:76
-#: reports/forms.py:150
+#: messages/forms.py:73 reports/forms.py:147
 #, python-format
 msgid "%(email)s is not a valid e-mail address."
 msgstr "%(email)s is nie 'n geldige e-pos adres nie"
 
-#: messages/tasks.py:43
+#: messages/tasks.py:44
 #, fuzzy, python-format
 msgid "Message: %(id)s released to: %(addrs)s"
 msgstr "Die boodskap, %(msgid)s, is vrygestel na: %(to)s"
 
-#: messages/tasks.py:47
+#: messages/tasks.py:48
 #, fuzzy, python-format
 msgid "Message: %(id)s release failed"
-msgstr "Die boodskap, %(msgid)s, se vrystelling faal met foutboodskap: %(error)s"
+msgstr ""
+"Die boodskap, %(msgid)s, se vrystelling faal met foutboodskap: %(error)s"
 
-#: messages/tasks.py:61
+#: messages/tasks.py:62
 #, fuzzy, python-format
 msgid "Processing quarantined message: %(id)s"
 msgstr "Die grootmaat-verwerking van %(len)d kwarantyn boodskappe vind plaas"
 
-#: messages/tasks.py:76
-#: messages/tasks.py:162
+#: messages/tasks.py:77 messages/tasks.py:166
 #, python-format
 msgid "Message: %(msgid)s %(task)s failed with error: %(error)s"
-msgstr "Die boodskap, %(msgid)s, se %(task)s is ongeslaagd met foutboodskap: %(error)s"
+msgstr ""
+"Die boodskap, %(msgid)s, se %(task)s is ongeslaagd met foutboodskap: "
+"%(error)s"
 
-#: messages/tasks.py:93
-#: messages/tasks.py:180
+#: messages/tasks.py:94 messages/tasks.py:184
 #, python-format
 msgid "Message: %(msgid)s released to: %(to)s"
 msgstr "Die boodskap, %(msgid)s, is vrygestel na: %(to)s"
 
-#: messages/tasks.py:97
-#: messages/tasks.py:184
+#: messages/tasks.py:98 messages/tasks.py:188
 msgid "The sender address is empty"
 msgstr "Die sender se adres is leeg"
 
-#: messages/tasks.py:99
-#: messages/tasks.py:186
+#: messages/tasks.py:100 messages/tasks.py:190
 #, python-format
 msgid "Message: %(msgid)s release failed with error: %(error)s"
-msgstr "Die boodskap, %(msgid)s, se vrystelling faal met foutboodskap: %(error)s"
+msgstr ""
+"Die boodskap, %(msgid)s, se vrystelling faal met foutboodskap: %(error)s"
 
-#: messages/tasks.py:108
-#: messages/tasks.py:194
+#: messages/tasks.py:109 messages/tasks.py:198
 #, python-format
 msgid "Message: %(msgid)s learning failed with error: %(error)s"
-msgstr "Die aanleer van die boodskap, %(msgid)s, is ongeslaagd met foutboodskap: %(error)s"
+msgstr ""
+"Die aanleer van die boodskap, %(msgid)s, is ongeslaagd met foutboodskap: "
+"%(error)s"
 
-#: messages/tasks.py:112
-#: messages/tasks.py:197
+#: messages/tasks.py:113 messages/tasks.py:201
 #, python-format
 msgid "Message: %(msgid)s learnt as %(learn)s"
 msgstr "Die boodskap, %(msgid)s, is suksesvol aangeleer as: %(learn)s"
 
-#: messages/tasks.py:120
-#: messages/tasks.py:205
+#: messages/tasks.py:121 messages/tasks.py:209
 #, python-format
 msgid "Message: %(msgid)s deleting failed with error: %(error)s"
-msgstr "Die verwydering van die boodskap, %(msgid)s, is ongeslaagd met foutboodskap: %(error)s"
+msgstr ""
+"Die verwydering van die boodskap, %(msgid)s, is ongeslaagd met foutboodskap: "
+"%(error)s"
 
-#: messages/tasks.py:124
-#: messages/tasks.py:208
+#: messages/tasks.py:125 messages/tasks.py:212
 #, python-format
 msgid "Message: %(msgid)s deleted from quarantine"
 msgstr "Die boodskap, %(msgid)s, is verwyder van kwarantyn"
 
-#: messages/tasks.py:137
+#: messages/tasks.py:141
 #, python-format
 msgid "Bulk Processing %(len)d quarantined messages"
 msgstr "Die grootmaat-verwerking van %(len)d kwarantyn boodskappe vind plaas"
 
-#: messages/tasks.py:225
+#: messages/tasks.py:232
 #, fuzzy, python-format
 msgid "Accessing message: %(id)s, Failed: %(error)s"
-msgstr "Die boodskap, %(msgid)s, se vrystelling faal met foutboodskap: %(error)s"
+msgstr ""
+"Die boodskap, %(msgid)s, se vrystelling faal met foutboodskap: %(error)s"
 
-#: messages/tasks.py:229
+#: messages/tasks.py:236
 #, python-format
 msgid "Download attachment: %(attachid)s of message: %(id)s by user: %(user)s"
 msgstr ""
 
-#: messages/tasks.py:232
+#: messages/tasks.py:239
 #, fuzzy, python-format
 msgid "Preview of message: %(id)s requested by user: %(user)s"
 msgstr "Die boodskap, %(msgid)s, is vrygestel na: %(to)s"
 
-#: messages/views.py:172
-#: messages/views.py:260
+#: messages/views.py:174 messages/views.py:262
 msgid "You are not authorized to access this page"
 msgstr "Jy is nie gemagtig om hierdie bladsy te besoek nie"
 
-#: messages/views.py:230
+#: messages/views.py:232
 msgid "Processing the request failed"
 msgstr ""
 
-#: messages/views.py:273
+#: messages/views.py:275
 #, fuzzy
 msgid "The requested attachment could not be downloaded"
 msgstr "Die gebruiker-rekening kon nie geskep word nie"
 
-#: messages/views.py:283
+#: messages/views.py:285
 #, fuzzy
 msgid "The requested message could not be previewed"
 msgstr "Boodskap kon nie ge-voorskou word nie"
 
-#: messages/views.py:297
+#: messages/views.py:299
 msgid "No messages found with that message id"
 msgstr ""
 
-#: messages/views.py:347
+#: messages/views.py:349
 msgid "System was unable to process your request"
 msgstr "Die stelsel kon nie jou versoek verwerk nie"
 
-#: messages/management/commands/cleanquarantine.py:88
+#: messages/management/commands/cleanquarantine.py:90
 #, python-format
 msgid "== Processing directory %(path)s =="
 msgstr "== Verwerk lêergids %(path)s =="
 
-#: messages/management/commands/cleanquarantine.py:107
+#: messages/management/commands/cleanquarantine.py:109
 #, python-format
 msgid "== Removing directory  %(path)s =="
 msgstr "== Verwyder lêergids %(path)s =="
 
-#: messages/management/commands/cleanquarantine.py:111
+#: messages/management/commands/cleanquarantine.py:113
 #, python-format
 msgid "Failed to remove %(path)s"
 msgstr "Die verwydering van %(path)s is onsuksesvol"
 
-#: messages/management/commands/cleanquarantine.py:113
+#: messages/management/commands/cleanquarantine.py:115
 #, python-format
 msgid "The directory %(path)s is a sym link skipping"
 msgstr "Die lêergids, %(path)s, is 'n simboliese skakel - dit word oorgesien"
 
-#: messages/management/commands/dbclean.py:28
-msgid "Deletes records older than 60 days from the messages table"
+#: messages/management/commands/dbclean.py:30
+#, fuzzy
+msgid ""
+"Deletes records older than QUARANTINE_DAYS_TO_KEEP days from the messages "
+"table"
 msgstr "Verwyder rekords wat ouer is as 60 dae van die boodskap tabel"
 
-#: messages/management/commands/sendquarantinereports.py:70
-msgid "Generates an email report of the quarantined messages for the past 24 hours"
-msgstr "Genereer 'n e-pos verslag van die kwarantyn boodskappe vir die vorige 24 uur"
+#: messages/management/commands/sendquarantinereports.py:75
+msgid ""
+"Generates an email report of the quarantined messages for the past 24 hours"
+msgstr ""
+"Genereer 'n e-pos verslag van die kwarantyn boodskappe vir die vorige 24 uur"
 
-#: messages/management/commands/sendquarantinereports.py:92
+#: messages/management/commands/sendquarantinereports.py:88
 msgid "=== Processing quarantine notifications ==="
 msgstr "=== Verwerk kwarantyn kennisgewings ==="
 
-#: messages/management/commands/sendquarantinereports.py:104
+#: messages/management/commands/sendquarantinereports.py:100
 #, python-format
 msgid "Baruwa quarantine report for %(user)s"
 msgstr "Baruwa kwarantyn verslag vir: %(user)s"
 
-#: messages/management/commands/sendquarantinereports.py:134
+#: messages/management/commands/sendquarantinereports.py:130
 #, python-format
 msgid "sent quarantine report to %(addr)s"
 msgstr "Kwarantyn verslag is gestuur na: %(addr)s"
 
-#: messages/management/commands/sendquarantinereports.py:136
+#: messages/management/commands/sendquarantinereports.py:132
 #, python-format
 msgid "failed to send to: %(addr)s"
 msgstr "Onsuksesvolle transmissie na: %(addr)s"
 
-#: messages/management/commands/sendquarantinereports.py:138
+#: messages/management/commands/sendquarantinereports.py:134
 #, python-format
 msgid "skipping report to %(addr)s no messages"
 msgstr "Verslag na %(addr)s word oorgesien - daar is geen boodskappe nie"
 
-#: messages/management/commands/sendquarantinereports.py:139
+#: messages/management/commands/sendquarantinereports.py:135
 msgid "=== completed quarantine notifications ==="
 msgstr "=== Kwarantyn kennisgewings is voltooid ==="
 
-#: messages/management/commands/updatesarules.py:33
+#: messages/management/commands/updatesarules.py:36
 msgid "Updates the database with the spam descriptions"
 msgstr "Dateer die databasis op met die gemorspos beskrywings"
 
-#: messages/templatetags/messages_extras.py:72
+#: messages/templatetags/messages_extras.py:74
 msgid "BL"
 msgstr ""
 
-#: messages/templatetags/messages_extras.py:76
+#: messages/templatetags/messages_extras.py:78
 #, fuzzy
 msgid "Infected"
 msgstr "Naam is geïnfekteer"
 
-#: messages/templatetags/messages_extras.py:81
-#: templates/status/index.html:42
+#: messages/templatetags/messages_extras.py:83 templates/status/index.html:42
 msgid "Clean"
 msgstr "Rein"
 
-#: messages/templatetags/messages_extras.py:83
+#: messages/templatetags/messages_extras.py:85
 msgid "WL"
 msgstr ""
 
-#: messages/templatetags/messages_extras.py:85
+#: messages/templatetags/messages_extras.py:87
 msgid "NS"
 msgstr ""
 
-#: messages/templatetags/messages_extras.py:126
+#: messages/templatetags/messages_extras.py:128
 msgid "Any address"
 msgstr "Enige adres"
 
-#: messages/templatetags/messages_extras.py:164
+#: messages/templatetags/messages_extras.py:161
 msgid "unknown"
 msgstr "onbekend"
 
-#: messages/templatetags/messages_extras.py:349
+#: messages/templatetags/messages_extras.py:346
 msgid "I do not know how to read it"
 msgstr "Ek weet nie hoe om dit te lees nie"
 
-#: messages/templatetags/relayed_via.py:67
+#: messages/templatetags/relayed_via.py:66
 msgid "RFC1918 Private address"
 msgstr "RFC1918 Private adres"
 
-#: messages/templatetags/relayed_via.py:69
+#: messages/templatetags/relayed_via.py:68
 msgid "Reverse lookup failed"
 msgstr "Omgekeerde verwysing faal"
 
-#: reports/forms.py:39
-#: templates/messages/task_status.html:36
+#: reports/forms.py:36 templates/messages/task_status.html:36
 msgid "Message ID"
 msgstr "Boodskap ID"
 
-#: reports/forms.py:40
-#: templates/messages/index.html:67
+#: reports/forms.py:37 templates/messages/index.html:67
 msgid "Size"
 msgstr "Grootte"
 
-#: reports/forms.py:41
+#: reports/forms.py:38
 msgid "From Address"
 msgstr "Sender Adres"
 
-#: reports/forms.py:42
+#: reports/forms.py:39
 msgid "From Domain"
 msgstr "Sender Domein"
 
-#: reports/forms.py:43
+#: reports/forms.py:40
 msgid "To Address"
 msgstr "Aan adres"
 
-#: reports/forms.py:44
+#: reports/forms.py:41
 msgid "To Domain"
 msgstr "Aan Domein"
 
-#: reports/forms.py:45
-#: templates/messages/detail.html:68
-#: templates/messages/index.html:66
-#: templates/messages/quarantine.html:99
+#: reports/forms.py:42 templates/messages/detail.html:68
+#: templates/messages/index.html:66 templates/messages/quarantine.html:99
 #: templates/messages/quarantine_report.html:36
 #: templates/messages/quarantine_report.html:77
 #: templates/messages/quarantine_report_text.html:10
@@ -563,362 +621,352 @@ msgstr "Aan Domein"
 msgid "Subject"
 msgstr "Onderwerp"
 
-#: reports/forms.py:46
+#: reports/forms.py:43
 msgid "Received from"
 msgstr "Ontvang van"
 
-#: reports/forms.py:48
+#: reports/forms.py:45
 msgid "Was scanned"
 msgstr "Is nagegaan"
 
-#: reports/forms.py:49
+#: reports/forms.py:46
 msgid "Is spam"
 msgstr "Is gemorspos"
 
-#: reports/forms.py:50
+#: reports/forms.py:47
 msgid "Is high spam"
 msgstr "Is sieklike gemorspos"
 
-#: reports/forms.py:51
+#: reports/forms.py:48
 msgid "Is SA spam"
 msgstr "Is SA gemorspos"
 
-#: reports/forms.py:52
+#: reports/forms.py:49
 msgid "Is RBL listed"
 msgstr "Is gelys op 'n swartlys"
 
-#: reports/forms.py:53
+#: reports/forms.py:50
 msgid "Is whitelisted"
 msgstr "Is gewitlys"
 
-#: reports/forms.py:54
+#: reports/forms.py:51
 msgid "Is blacklisted"
 msgstr "Is geswartlys"
 
-#: reports/forms.py:55
+#: reports/forms.py:52
 msgid "SA score"
 msgstr "SA telling"
 
-#: reports/forms.py:56
+#: reports/forms.py:53
 msgid "Spam report"
 msgstr "Gemorspos verslag"
 
-#: reports/forms.py:57
+#: reports/forms.py:54
 msgid "Is virus infected"
 msgstr "Is geïnfekteer met 'n virus"
 
-#: reports/forms.py:58
+#: reports/forms.py:55
 msgid "Is name infected"
 msgstr "Naam is geïnfekteer"
 
-#: reports/forms.py:59
+#: reports/forms.py:56
 msgid "Is other infected"
 msgstr "Is andersins geïnfekteer"
 
-#: reports/forms.py:60
-#: templates/reports/listing.html:38
+#: reports/forms.py:57 templates/reports/listing.html:38
 msgid "Date"
 msgstr "Datum"
 
-#: reports/forms.py:61
+#: reports/forms.py:58
 msgid "Time"
 msgstr "Tyd"
 
-#: reports/forms.py:62
+#: reports/forms.py:59
 msgid "Headers"
 msgstr "Hoofde"
 
-#: reports/forms.py:63
+#: reports/forms.py:60
 msgid "Is quarantined"
 msgstr "Is onder kwarantyn"
 
-#: reports/forms.py:64
+#: reports/forms.py:61
 msgid "Processed by host"
 msgstr "Is verwerk deur bediener"
 
-#: reports/forms.py:68
+#: reports/forms.py:65
 msgid "is equal to"
 msgstr "is gelyk aan"
 
-#: reports/forms.py:69
+#: reports/forms.py:66
 msgid "is not equal to"
 msgstr "is ongelyk aan"
 
-#: reports/forms.py:70
+#: reports/forms.py:67
 msgid "is greater than"
 msgstr "is groter as"
 
-#: reports/forms.py:71
+#: reports/forms.py:68
 msgid "is less than"
 msgstr "is kleiner as"
 
-#: reports/forms.py:72
+#: reports/forms.py:69
 msgid "contains"
 msgstr "bevat"
 
-#: reports/forms.py:73
+#: reports/forms.py:70
 msgid "does not contain"
 msgstr "bevat nie"
 
-#: reports/forms.py:74
+#: reports/forms.py:71
 msgid "matches regex"
 msgstr "pas regex"
 
-#: reports/forms.py:75
+#: reports/forms.py:72
 msgid "does not match regex"
 msgstr "pas nie regex nie"
 
-#: reports/forms.py:76
+#: reports/forms.py:73
 msgid "is null"
 msgstr "is nul"
 
-#: reports/forms.py:77
+#: reports/forms.py:74
 msgid "is not null"
 msgstr "is nie nul nie"
 
-#: reports/forms.py:78
+#: reports/forms.py:75
 msgid "is true"
 msgstr "is waar"
 
-#: reports/forms.py:79
+#: reports/forms.py:76
 msgid "is false"
 msgstr "is vals"
 
-#: reports/forms.py:124
-#: reports/forms.py:130
-#: reports/forms.py:140
-#: reports/forms.py:187
+#: reports/forms.py:121 reports/forms.py:127 reports/forms.py:137
+#: reports/forms.py:184
 #, python-format
 msgid "%(field)s does not support the %(filt)s filter"
 msgstr "%(field)s ondersteun nie die filter, %(filt)s, nie"
 
-#: reports/forms.py:134
-#: reports/forms.py:144
-#: reports/forms.py:191
+#: reports/forms.py:131 reports/forms.py:141 reports/forms.py:188
 msgid "Please supply a value to query"
 msgstr "Gee asseblief n waarde om aan te vra"
 
-#: reports/forms.py:136
+#: reports/forms.py:133
 msgid "The value has to be numeric"
 msgstr "Die waarde moet numeries wees"
 
-#: reports/forms.py:158
-#: reports/forms.py:172
+#: reports/forms.py:155 reports/forms.py:169
 msgid "Please provide a valid regex"
 msgstr "Verskaf asseblief 'n geldige regex"
 
-#: reports/forms.py:165
+#: reports/forms.py:162
 msgid "Please provide a valid domain name"
 msgstr "Verskaf asseblief 'n geldige domein"
 
-#: reports/forms.py:177
+#: reports/forms.py:174
 msgid "Please provide a valid ipv4 address"
 msgstr "Verskaf asseblief 'n geldige IPv4 adres"
 
-#: reports/forms.py:182
+#: reports/forms.py:179
 msgid "Please provide a valid hostname or ipv4 address"
 msgstr "Verskaf asseblief 'n geldige bediener naam of IPv4 adres"
 
-#: reports/forms.py:198
+#: reports/forms.py:195
 msgid "Please provide a valid date in YYYY-MM-DD format"
 msgstr "Verskaf asseblief 'n geldige datum in die formaat: YYYY-MM-DD"
 
-#: reports/forms.py:204
+#: reports/forms.py:201
 msgid "Please provide valid time in HH:MM format"
 msgstr "Verskaf asseblief 'n geldige tyd in die formaat: HH:MM"
 
-#: reports/views.py:70
+#: reports/views.py:71
 msgid "The requested filter is already being used"
 msgstr "Die versoekte filter is alreeds in gebruik"
 
-#: reports/views.py:159
+#: reports/views.py:160
 msgid "This filter already exists"
 msgstr "Die filter bestaan reeds"
 
-#: reports/views.py:193
+#: reports/views.py:194
 msgid "This filter you attempted to load does not exist"
 msgstr "Die filter wat jy probeer laai bestaan nie"
 
-#: reports/views.py:210
+#: reports/views.py:211
 msgid "This filter you attempted to delete does not exist"
 msgstr "Die filter wat jy probeer verwyder bestaan nie"
 
-#: reports/views.py:223
+#: reports/views.py:224
 msgid "Deletion of the filter failed, Try again"
 msgstr "Die verwydering van die filter het nie geslaag nie"
 
-#: reports/views.py:246
+#: reports/views.py:247
 msgid "Top senders by quantity"
 msgstr "Top versenders na gelang van hoeveelheid"
 
-#: reports/views.py:251
+#: reports/views.py:252
 msgid "Top senders by volume"
 msgstr "Top versenders na gelang van volume"
 
-#: reports/views.py:256
+#: reports/views.py:257
 msgid "Top sender domains by quantity"
 msgstr "Top versender domeine na gelang van hoeveelheid"
 
-#: reports/views.py:261
+#: reports/views.py:262
 msgid "Top sender domains by volume"
 msgstr "Top versender domeine na gelang van volume"
 
-#: reports/views.py:266
+#: reports/views.py:267
 msgid "Top recipients by quantity"
 msgstr "Top ontvangers na gelang van hoeveelheid"
 
-#: reports/views.py:271
+#: reports/views.py:272
 msgid "Top recipients by volume"
 msgstr "Top ontvangers na gelang van volume"
 
-#: reports/views.py:277
+#: reports/views.py:278
 msgid "Top recipient domains by quantity"
 msgstr "Top ontvanger domeine na gelang van hoeveelheid"
 
-#: reports/views.py:283
+#: reports/views.py:284
 msgid "Top recipient domains by volume"
 msgstr "Top ontvanger domeine na gelang van volume"
 
-#: reports/views.py:312
+#: reports/views.py:313
 msgid "Spam Score distribution"
 msgstr "Gemorspos telling verspreiding"
 
-#: reports/views.py:322
+#: reports/views.py:323
 msgid "Top mail hosts by quantity"
 msgstr "Top e-pos bedieners na gelang van hoeveelheid"
 
-#: reports/views.py:383
+#: reports/views.py:384
 msgid "Total messages [ After SMTP ]"
 msgstr "Totale boodskappe [ Na SMTP ]"
 
-#: reports/management/commands/sendpdfreports.py:45
+#: reports/management/commands/sendpdfreports.py:65
 msgid "Generates and sends PDF summary reports via email"
 msgstr "Genereer en stuur opsommende PDF-verslae deur e-pos"
 
-#: reports/management/commands/sendpdfreports.py:63
-#: status/management/commands/queuestats.py:39
+#: reports/management/commands/sendpdfreports.py:83
+#: status/management/commands/queuestats.py:41
 msgid "Command doesn't accept any arguments"
 msgstr "Die bevel bevat geen argumente nie"
 
-#: reports/management/commands/sendpdfreports.py:76
+#: reports/management/commands/sendpdfreports.py:96
 msgid "The period you specified is invalid"
 msgstr "Die periode wat u gespesifiseer het, is nie geldig nie"
 
-#: reports/management/commands/sendpdfreports.py:168
+#: reports/management/commands/sendpdfreports.py:161
 #: templates/accounts/edit_address.html:10
 #: templates/accounts/edit_address.html:11
-#: templates/accounts/edit_address.html:14
-#: templates/reports/piereport.html:27
+#: templates/accounts/edit_address.html:14 templates/reports/piereport.html:27
 msgid "Address"
 msgstr "Adres"
 
-#: reports/management/commands/sendpdfreports.py:168
-#: templates/reports/barreport.html:34
-#: templates/reports/piereport.html:28
+#: reports/management/commands/sendpdfreports.py:161
+#: templates/reports/barreport.html:34 templates/reports/piereport.html:28
 msgid "Count"
 msgstr "Hoeveelheid"
 
-#: reports/management/commands/sendpdfreports.py:168
-#: templates/reports/listing.html:56
-#: templates/reports/piereport.html:29
+#: reports/management/commands/sendpdfreports.py:161
+#: templates/reports/listing.html:56 templates/reports/piereport.html:29
 #: templates/reports/relays.html:31
 msgid "Volume"
 msgstr "Volume"
 
-#: reports/management/commands/sendpdfreports.py:239
-#: templates/reports/index.html:60
-#: templates/status/index.html:17
+#: reports/management/commands/sendpdfreports.py:232
+#: templates/reports/index.html:60 templates/status/index.html:17
 msgid "Message Totals"
 msgstr "Boodskap Totale"
 
-#: reports/management/commands/sendpdfreports.py:321
+#: reports/management/commands/sendpdfreports.py:314
 msgid "Baruwa mail report"
 msgstr "Baruwa e-pos verslag"
 
-#: reports/management/commands/sendpdfreports.py:343
+#: reports/management/commands/sendpdfreports.py:336
 #, python-format
 msgid "Baruwa usage report for: %(user)s"
 msgstr "Baruwa verbruiksverslag vir: %(user)s"
 
-#: reports/management/commands/sendpdfreports.py:355
+#: reports/management/commands/sendpdfreports.py:348
 #, python-format
 msgid "* Queue %(user)s's report to: %(addr)s"
 msgstr "* Die verslag vir %(user)s na: %(addr)s is in die pyplyn"
 
-#: reports/management/commands/sendpdfreports.py:360
+#: reports/management/commands/sendpdfreports.py:353
 msgid "=================== Processing reports ======================"
 msgstr "=================== Verslae word verwerk ======================"
 
-#: reports/management/commands/sendpdfreports.py:368
+#: reports/management/commands/sendpdfreports.py:361
 #, python-format
 msgid "========== domain name %(dom)s does not exist =========="
 msgstr "========== domein naam, %(dom)s, bestaan nie =========="
 
-#: reports/management/commands/sendpdfreports.py:397
+#: reports/management/commands/sendpdfreports.py:390
 #, python-format
 msgid "====== sending %(num)s messages ======="
 msgstr "====== stuur tans %(num)s boodskappe ======="
 
-#: reports/management/commands/sendpdfreports.py:400
+#: reports/management/commands/sendpdfreports.py:393
 #, python-format
 msgid "Sending failed ERROR: %(error)s"
 msgstr "Versending onsuksesvol, FOUT: %(error)s"
 
-#: status/views.py:222
+#: status/views.py:223
 #, python-format
 msgid "The queue items (%(num)d) have been flagged for deletion"
 msgstr ""
 
-#: status/views.py:227
+#: status/views.py:228
 #, fuzzy
 msgid "The queue items could not be processed"
 msgstr "Die gebruiker-rekening kon nie geskep word nie"
 
-#: status/management/commands/queuestats.py:44
+#: status/management/commands/queuestats.py:46
 #, python-format
 msgid "Only the following %(mta)s MTA's are supported"
 msgstr "Slegs die volgende %(mta)s MTA's word ondersteun"
 
-#: status/management/commands/queuestats.py:80
+#: status/management/commands/queuestats.py:82
 #, fuzzy
 msgid "== Delete flaged queue items from the inbound queue =="
 msgstr "== Verwyder tans %(items)d pyplyn items vanaf die DB =="
 
-#: status/management/commands/queuestats.py:86
+#: status/management/commands/queuestats.py:88
 #, fuzzy, python-format
 msgid "== Deleted %(num)d items from the inbound queue =="
 msgstr "== Verwyder tans %(items)d pyplyn items vanaf die DB =="
 
-#: status/management/commands/queuestats.py:91
+#: status/management/commands/queuestats.py:93
 #, fuzzy
 msgid "== Delete flaged queue items from the outbound queue =="
 msgstr "== Verwyder tans %(items)d pyplyn items vanaf die DB =="
 
-#: status/management/commands/queuestats.py:97
+#: status/management/commands/queuestats.py:99
 #, fuzzy, python-format
 msgid "== Deleted %(num)d items from the outbound queue =="
 msgstr "== Verwyder tans %(items)d pyplyn items vanaf die DB =="
 
-#: status/management/commands/queuestats.py:109
+#: status/management/commands/queuestats.py:111
 #, python-format
 msgid "== Deleting %(items)d queue items from DB =="
 msgstr "== Verwyder tans %(items)d pyplyn items vanaf die DB =="
 
-#: status/management/commands/queuestats.py:114
+#: status/management/commands/queuestats.py:116
 #, python-format
 msgid "== Processing the inbound queue: %(queue)s with %(items)d items =="
 msgstr "== Verwerk die inkomende pyplyn: %(queue)s met %(items)d items =="
 
-#: status/management/commands/queuestats.py:118
+#: status/management/commands/queuestats.py:120
 msgid "== Skipping the inbound queue 0 items found =="
 msgstr "== Die inkomende pyplyn word oorgesien - geen items is gevind nie =="
 
-#: status/management/commands/queuestats.py:120
+#: status/management/commands/queuestats.py:122
 #, python-format
 msgid "== Processing the outbound queue: %(queue)s with %(items)d items =="
 msgstr "== Verwerk tans die uitgaande pyplyn: %(queue)s met %(items)d items =="
 
-#: status/management/commands/queuestats.py:124
+#: status/management/commands/queuestats.py:126
 msgid "== Skipping the outbound queue 0 items found =="
 msgstr "== Die uitgaande pyplyn word oorgesien - geen items is gevind nie =="
 
@@ -934,14 +982,14 @@ msgstr "Bladsy nie gevind nie"
 msgid "Sorry the requested page could not be found please check the url."
 msgstr "Jammer, die bladsy kon nie gevind word nie. Gaan die URL na."
 
-#: templates/500.html:25
-#: templates/500.html.py:28
+#: templates/500.html:25 templates/500.html.py:28
 msgid "Page unavailable"
 msgstr "Bladsy nie beskikbaar nie"
 
 #: templates/500.html:29
 msgid "Sorry the requested page is unavailable due to a server malfunction."
-msgstr "Jammer, as gevolg van 'n bediener fout, is die bladsy nie beskikbaar nie"
+msgstr ""
+"Jammer, as gevolg van 'n bediener fout, is die bladsy nie beskikbaar nie"
 
 #: templates/base.html:41
 msgid "Status "
@@ -979,8 +1027,7 @@ msgstr "Teken uit"
 msgid "Not logged in :: "
 msgstr "Nie ingeteken nie :: "
 
-#: templates/base.html:61
-#: templates/accounts/login.html:70
+#: templates/base.html:61 templates/accounts/login.html:70
 msgid "Login"
 msgstr "Teken in"
 
@@ -992,42 +1039,33 @@ msgstr "Boodskappe"
 msgid "Lists"
 msgstr "Lyste"
 
-#: templates/base.html:83
-#: templates/reports/index.html:16
-#: templates/reports/index.html.py:17
-#: templates/reports/index.html:41
+#: templates/base.html:83 templates/reports/index.html:16
+#: templates/reports/index.html.py:17 templates/reports/index.html:41
 msgid "Reports"
 msgstr "Verslae"
 
-#: templates/base.html:85
-#: templates/config/index.html:35
-#: templates/config/list_scanners.html:21
-#: templates/messages/index.html:70
+#: templates/base.html:85 templates/config/index.html:35
+#: templates/config/list_scanners.html:21 templates/messages/index.html:70
 #: templates/messages/quarantine.html:102
 #: templates/messages/task_status.html:35
 msgid "Status"
 msgstr "Status"
 
-#: templates/base.html:87
-#: templates/config/index.html:22
+#: templates/base.html:87 templates/config/index.html:22
 msgid "Settings"
 msgstr "Verstellings"
 
-#: templates/base.html:89
-#: templates/accounts/add_address.html:8
+#: templates/base.html:89 templates/accounts/add_address.html:8
 #: templates/accounts/admin_change_pw.html:6
 #: templates/accounts/change_pw.html:6
 #: templates/accounts/create_account.html:5
 #: templates/accounts/delete_account.html:5
 #: templates/accounts/delete_address.html:8
-#: templates/accounts/edit_address.html:6
-#: templates/accounts/index.html:25
+#: templates/accounts/edit_address.html:6 templates/accounts/index.html:25
 #: templates/accounts/update_account.html:6
 #: templates/accounts/update_profile.html:6
-#: templates/accounts/user_profile.html:6
-#: templates/config/domain.html:10
-#: templates/config/index.html:18
-#: templates/config/list_scanners.html:6
+#: templates/accounts/user_profile.html:6 templates/config/domain.html:17
+#: templates/config/index.html:18 templates/config/list_scanners.html:6
 msgid "Accounts"
 msgstr "Rekenings"
 
@@ -1047,8 +1085,7 @@ msgstr "Aan adres"
 msgid "From address"
 msgstr "Sender adres"
 
-#: templates/base.html:122
-#: templates/lists/index.html:74
+#: templates/base.html:122 templates/lists/index.html:74
 msgid "containing"
 msgstr "bevat"
 
@@ -1056,19 +1093,15 @@ msgstr "bevat"
 msgid "NOT containing"
 msgstr "bevat NIE"
 
-#: templates/base.html:127
-#: templates/reports/index.html:77
+#: templates/base.html:127 templates/reports/index.html:77
 msgid "Remove"
 msgstr "Verwyder"
 
 #: templates/accounts/add_address.html:6
 #: templates/accounts/delete_address.html:6
-#: templates/accounts/edit_address.html:5
-#: templates/accounts/index.html:20
-#: templates/config/add_auth_host.html:5
-#: templates/config/add_host.html:5
-#: templates/config/domain.html:9
-#: templates/config/list_scanners.html:7
+#: templates/accounts/edit_address.html:5 templates/accounts/index.html:20
+#: templates/config/add_auth_host.html:5 templates/config/add_host.html:5
+#: templates/config/domain.html:16 templates/config/list_scanners.html:7
 #: templates/config/task_status.html:8
 msgid "Domains"
 msgstr "Domeine"
@@ -1091,28 +1124,23 @@ msgstr "Voeg Rekening By"
 msgid "Add Address"
 msgstr "Voeg Adres By"
 
-#: templates/accounts/add_address.html:36
-#: templates/accounts/create_account.html:26
-#: templates/lists/add.form.html:31
+#: templates/accounts/add_address.html:40
+#: templates/accounts/create_account.html:26 templates/lists/add.form.html:31
 msgid "Reset"
 msgstr "Herstel"
 
-#: templates/accounts/add_address.html:37
+#: templates/accounts/add_address.html:41
 #: templates/accounts/user_profile.html:151
-#: templates/config/add_auth_host.html:36
-#: templates/config/add_host.html:34
-#: templates/config/domain.html:67
-#: templates/config/domain.html.py:96
-#: templates/lists/add.form.html:32
-#: templates/reports/filter.form.html:11
+#: templates/config/add_auth_host.html:34 templates/config/add_host.html:34
+#: templates/config/domain.html:74 templates/config/domain.html.py:103
+#: templates/lists/add.form.html:32 templates/reports/filter.form.html:11
 msgid "Add"
 msgstr "Voeg by"
 
 #: templates/accounts/admin_change_pw.html:10
 #: templates/accounts/admin_change_pw.html:11
 #: templates/accounts/admin_change_pw.html:14
-#: templates/accounts/change_pw.html:10
-#: templates/accounts/change_pw.html:11
+#: templates/accounts/change_pw.html:10 templates/accounts/change_pw.html:11
 #: templates/accounts/change_pw.html:14
 msgid "Change Password"
 msgstr "Verander Wagwoord"
@@ -1123,8 +1151,7 @@ msgid "Change"
 msgstr "Verander"
 
 #: templates/accounts/create_account.html:8
-#: templates/accounts/create_account.html:9
-#: templates/accounts/index.html:19
+#: templates/accounts/create_account.html:9 templates/accounts/index.html:19
 msgid "Create account"
 msgstr "Skep rekening"
 
@@ -1149,10 +1176,8 @@ msgstr "Verwyder die gebruiker-rekening: ?"
 #: templates/accounts/delete_account.html:22
 #: templates/accounts/delete_address.html:26
 #: templates/config/delete_auth_host.html:24
-#: templates/config/delete_host.html:24
-#: templates/lists/delete.html:24
-#: templates/messages/detail.html:214
-#: templates/messages/quarantine.html:56
+#: templates/config/delete_host.html:24 templates/lists/delete.html:24
+#: templates/messages/detail.html:214 templates/messages/quarantine.html:56
 msgid "Delete"
 msgstr "Verwyder"
 
@@ -1166,10 +1191,8 @@ msgstr "Verwyder adresse"
 msgid "Delete the address:"
 msgstr "Verwyder die adres:"
 
-#: templates/accounts/edit_address.html:7
-#: templates/accounts/index.html:21
-#: templates/config/domain.html:11
-#: templates/config/index.html:19
+#: templates/accounts/edit_address.html:7 templates/accounts/index.html:21
+#: templates/config/domain.html:18 templates/config/index.html:19
 #: templates/status/index.html:20
 msgid "Scanners"
 msgstr "Skandeerders"
@@ -1191,8 +1214,7 @@ msgstr "Domein"
 #: templates/accounts/edit_address.html:35
 #: templates/accounts/update_account.html:31
 #: templates/accounts/update_profile.html:31
-#: templates/config/edit_auth_host.html:33
-#: templates/config/edit_host.html:31
+#: templates/config/edit_auth_host.html:33 templates/config/edit_host.html:31
 msgid "Update"
 msgstr "Bring op datum"
 
@@ -1204,13 +1226,11 @@ msgstr "Rekeninge :: "
 msgid "Full names"
 msgstr "Volle name"
 
-#: templates/accounts/index.html:32
-#: templates/accounts/login.html:79
+#: templates/accounts/index.html:32 templates/accounts/login.html:79
 msgid "Email address"
 msgstr "E-pos adres"
 
-#: templates/accounts/index.html:40
-#: templates/accounts/index.html.py:42
+#: templates/accounts/index.html:40 templates/accounts/index.html.py:42
 msgid "View account"
 msgstr "Aanskou rekening"
 
@@ -1228,8 +1248,12 @@ msgid "Language"
 msgstr ""
 
 #: templates/accounts/login.html:75
-msgid "Forgotten your password? Enter your e-mail address below, and we'll e-mail instructions for setting a new one."
-msgstr "Jou wagwoord vergeet? Sleutel jou e-pos adres hieronder in, dan e-pos ons dieinstruksies om 'n nuwe wagwoord te kry."
+msgid ""
+"Forgotten your password? Enter your e-mail address below, and we'll e-mail "
+"instructions for setting a new one."
+msgstr ""
+"Jou wagwoord vergeet? Sleutel jou e-pos adres hieronder in, dan e-pos ons "
+"dieinstruksies om 'n nuwe wagwoord te kry."
 
 #: templates/accounts/login.html:83
 msgid "Reset my password"
@@ -1244,8 +1268,12 @@ msgid "Baruwa :: Password reset complete"
 msgstr "Baruwa :: Wagwoord terugstel is voltooid"
 
 #: templates/accounts/reset_done.html:49
-msgid "We've e-mailed you instructions for setting your password to the e-mail address you submitted. You should be receiving it shortly."
-msgstr "Ons het die instruksies, die herstel van 'n wagwoord, vir u gestuur na die e-pos, wat u ingevul het. U behoort binnekort die e-pos te ontvang."
+msgid ""
+"We've e-mailed you instructions for setting your password to the e-mail "
+"address you submitted. You should be receiving it shortly."
+msgstr ""
+"Ons het die instruksies, die herstel van 'n wagwoord, vir u gestuur na die e-"
+"pos, wat u ingevul het. U behoort binnekort die e-pos te ontvang."
 
 #: templates/accounts/reset_done.html:51
 msgid "Your Password was successfully reset "
@@ -1256,7 +1284,9 @@ msgid "Baruwa :: Password reset"
 msgstr "Baruwa :: Wagwoord herstel"
 
 #: templates/accounts/reset_pw.html:22
-msgid "Please enter your new password twice so we can verify you typed it in correctly."
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
 msgstr "Sleutel asseblief u wagwoord twee maal, sodat ons dit kan verifieer."
 
 #: templates/accounts/reset_pw.html:27
@@ -1272,8 +1302,12 @@ msgid "Change my password"
 msgstr "Verander my wagwoord"
 
 #: templates/accounts/reset_pw.html:37
-msgid "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset."
-msgstr "Die wagwoord terugstel skakel is nie geldig nie, dit is klaar gebruik. Versoek asseblief 'n nuwe wagwoord terugstel skakel."
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+"Die wagwoord terugstel skakel is nie geldig nie, dit is klaar gebruik. "
+"Versoek asseblief 'n nuwe wagwoord terugstel skakel."
 
 #: templates/accounts/update_account.html:10
 #: templates/accounts/update_account.html:11
@@ -1330,10 +1364,8 @@ msgid "Active"
 msgstr "Aktief"
 
 #: templates/accounts/user_profile.html:58
-#: templates/accounts/user_profile.html:174
-#: templates/config/domain.html:60
-#: templates/config/domain.html.py:79
-#: templates/config/domain.html:108
+#: templates/accounts/user_profile.html:174 templates/config/domain.html:67
+#: templates/config/domain.html.py:86 templates/config/domain.html:115
 msgid "Disabled"
 msgstr "Ge-deaktiveer"
 
@@ -1399,11 +1431,9 @@ msgstr "Bestuurde domeine"
 msgid "Associated Addresses"
 msgstr "Geassosieerde adresse"
 
-#: templates/accounts/user_profile.html:172
-#: templates/config/domain.html:38
-#: templates/config/domain.html.py:58
-#: templates/config/domain.html:77
-#: templates/config/domain.html.py:106
+#: templates/accounts/user_profile.html:172 templates/config/domain.html:45
+#: templates/config/domain.html.py:65 templates/config/domain.html:84
+#: templates/config/domain.html.py:113
 msgid "Enabled"
 msgstr "Aktief"
 
@@ -1425,18 +1455,11 @@ msgstr ""
 "Domeine :: %(address)s - Voeg bemagtiging bediener by\n"
 
 #: templates/config/add_auth_host.html:17
-#, python-format
-msgid ""
-"\n"
-"\t\tAdd Authentication server%(form_errors)s\n"
-"\t\t"
-msgstr ""
-"\n"
-"\t\tVoeg bemagtiging bediener by %(form_errors)s\n"
-"\t\t"
+#, fuzzy
+msgid "Add Authentication server"
+msgstr "Bemagtigingsbedieners"
 
-#: templates/config/add_auth_host.html:35
-#: templates/config/add_host.html:33
+#: templates/config/add_auth_host.html:33 templates/config/add_host.html:33
 msgid "Clear"
 msgstr "Maak skoon"
 
@@ -1458,8 +1481,7 @@ msgid "Add Mail Server"
 msgstr "Voeg e-pos bediener by"
 
 #: templates/config/delete_auth_host.html:5
-#: templates/config/delete_host.html:5
-#: templates/config/edit_auth_host.html:5
+#: templates/config/delete_host.html:5 templates/config/edit_auth_host.html:5
 #: templates/config/edit_host.html:5
 msgid "Domain page"
 msgstr "Domein bladsy"
@@ -1484,8 +1506,7 @@ msgstr ""
 "        Verwyder die bemagtigingsbediener, %(host_address)s: ?\n"
 "        "
 
-#: templates/config/delete_host.html:8
-#: templates/config/delete_host.html:9
+#: templates/config/delete_host.html:8 templates/config/delete_host.html:9
 msgid "Delete Mail host"
 msgstr "Verwyder e-pos bediener"
 
@@ -1504,11 +1525,11 @@ msgstr ""
 "        Verwyder die e-pos bediener %(host_address)s: ?\n"
 "        "
 
-#: templates/config/domain.html:14
+#: templates/config/domain.html:21
 msgid "Settings :: Domain"
 msgstr "Instellings :: Domein"
 
-#: templates/config/domain.html:15
+#: templates/config/domain.html:22
 #, python-format
 msgid ""
 "\n"
@@ -1517,44 +1538,44 @@ msgstr ""
 "\n"
 "\tDomeine :: Wys - %(domain_address)s\n"
 
-#: templates/config/domain.html:21
+#: templates/config/domain.html:28
 msgid "Domain information"
 msgstr "Domein inligting"
 
-#: templates/config/domain.html:26
+#: templates/config/domain.html:33
 msgid "Domain name:"
 msgstr "Domein naam:"
 
-#: templates/config/domain.html:34
+#: templates/config/domain.html:41
 msgid "Status:"
 msgstr "Status:"
 
-#: templates/config/domain.html:40
+#: templates/config/domain.html:47
 msgid "Inactive"
 msgstr "Onaktief"
 
-#: templates/config/domain.html:46
+#: templates/config/domain.html:53
 msgid "Owner:"
 msgstr "Eienaar:"
 
-#: templates/config/domain.html:54
+#: templates/config/domain.html:61
 msgid "Load Balance servers:"
 msgstr "Las balanseringsbedieners:"
 
-#: templates/config/domain.html:66
+#: templates/config/domain.html:73
 msgid "Delivery SMTP Servers"
 msgstr "Aflewering SMTP-bedieners"
 
-#: templates/config/domain.html:90
+#: templates/config/domain.html:97
 #, fuzzy
 msgid "No smtp delivery servers configured"
 msgstr "Geen SMTP aflewering-bedieners is opgestel nie"
 
-#: templates/config/domain.html:95
+#: templates/config/domain.html:102
 msgid "Authentication Servers"
 msgstr "Bemagtigingsbedieners"
 
-#: templates/config/domain.html:118
+#: templates/config/domain.html:125
 msgid "No auth servers configured"
 msgstr "Geen bemagtigingsbedieners is opgestel nie"
 
@@ -1574,8 +1595,7 @@ msgstr ""
 "\t\t\tVerander bemagtigingsbediener %(forms_errors)s\n"
 "\t\t"
 
-#: templates/config/edit_host.html:8
-#: templates/config/edit_host.html.py:9
+#: templates/config/edit_host.html:8 templates/config/edit_host.html.py:9
 msgid "Settings :: Edit destination mail server"
 msgstr "Opstellings :: Verander e-pos bestemmingsbediener"
 
@@ -1596,8 +1616,7 @@ msgstr "Domein naam"
 msgid "Owner"
 msgstr "Eienaar"
 
-#: templates/config/index.html:38
-#: templates/config/list_scanners.html:24
+#: templates/config/index.html:38 templates/config/list_scanners.html:24
 msgid "Actions"
 msgstr "Aksies"
 
@@ -1626,13 +1645,11 @@ msgstr "Node naam"
 msgid "No scanning nodes found"
 msgstr "Geen skandeernodes gevind nie"
 
-#: templates/config/task_status.html:24
-#: templates/messages/task_status.html:71
+#: templates/config/task_status.html:24 templates/messages/task_status.html:71
 msgid "The request is being processed. Current status: "
 msgstr "Die versoek word verwerk. Huidige status: "
 
-#: templates/config/view_scanner.html:5
-#: templates/config/view_scanner.html:8
+#: templates/config/view_scanner.html:5 templates/config/view_scanner.html:8
 #, python-format
 msgid ""
 "\n"
@@ -1669,30 +1686,21 @@ msgstr "Aan adres:"
 msgid "List type:"
 msgstr "Lys tipe:"
 
-#: templates/lists/add.html:11
-#: templates/lists/delete.html:5
-#: templates/lists/delete.html.py:13
-#: templates/lists/delete.html:23
-#: templates/lists/index.html:21
-#: templates/lists/index.html.py:28
-#: templates/messages/detail.html:46
-#: templates/messages/detail.html.py:48
+#: templates/lists/add.html:11 templates/lists/delete.html:5
+#: templates/lists/delete.html.py:13 templates/lists/delete.html:23
+#: templates/lists/index.html:21 templates/lists/index.html.py:28
+#: templates/messages/detail.html:46 templates/messages/detail.html.py:48
 msgid "Whitelist"
 msgstr "Witlys"
 
-#: templates/lists/add.html:12
-#: templates/lists/delete.html:6
-#: templates/lists/delete.html.py:13
-#: templates/lists/delete.html:23
-#: templates/lists/index.html:19
-#: templates/lists/index.html.py:28
-#: templates/messages/detail.html:53
-#: templates/messages/detail.html.py:55
+#: templates/lists/add.html:12 templates/lists/delete.html:6
+#: templates/lists/delete.html.py:13 templates/lists/delete.html:23
+#: templates/lists/index.html:19 templates/lists/index.html.py:28
+#: templates/messages/detail.html:53 templates/messages/detail.html.py:55
 msgid "Blacklist"
 msgstr "Swartlys"
 
-#: templates/lists/add.html:15
-#: templates/lists/add.html.py:16
+#: templates/lists/add.html:15 templates/lists/add.html.py:16
 msgid "Adding to list"
 msgstr "Voeg tans by lys"
 
@@ -1700,8 +1708,7 @@ msgstr "Voeg tans by lys"
 msgid "Add List Item"
 msgstr "Voeg lysitem by"
 
-#: templates/lists/delete.html:9
-#: templates/lists/delete.html.py:10
+#: templates/lists/delete.html:9 templates/lists/delete.html.py:10
 msgid "Delete from List"
 msgstr "Verwyder van lys"
 
@@ -1734,8 +1741,7 @@ msgstr "Aksie"
 msgid "=builtin="
 msgstr "=ingebou="
 
-#: templates/lists/index.html:62
-#: templates/messages/index.html:99
+#: templates/lists/index.html:62 templates/messages/index.html:99
 #: templates/messages/quarantine.html:129
 msgid "No records returned"
 msgstr "Geen rekords gevind"
@@ -1744,10 +1750,8 @@ msgstr "Geen rekords gevind"
 msgid "Filter "
 msgstr "Filtreer "
 
-#: templates/lists/index.html:72
-#: templates/messages/detail.html:40
-#: templates/messages/preview.html:20
-#: templates/status/detail.html:26
+#: templates/lists/index.html:72 templates/messages/detail.html:40
+#: templates/messages/preview.html:20 templates/status/detail.html:26
 msgid "From:"
 msgstr "Van:"
 
@@ -1767,10 +1771,10 @@ msgstr "Die boodskap met ID, %(id)s, is verwyder"
 #: templates/messages/delete.html:5
 #, fuzzy, python-format
 msgid "The message id: %(id)s could not be deleted: %(error_msg)s"
-msgstr "Die boodskap met ID, %(id)s, kon nie verwyder word nie - FOUT: %(error_msg)s"
+msgstr ""
+"Die boodskap met ID, %(id)s, kon nie verwyder word nie - FOUT: %(error_msg)s"
 
-#: templates/messages/detail.html:13
-#: templates/messages/detail.html.py:14
+#: templates/messages/detail.html:13 templates/messages/detail.html.py:14
 #, python-format
 msgid "Baruwa :: Showing message - %(id)s"
 msgstr "Baruwa :: Vertoon tans boodskap: %(id)s"
@@ -1779,10 +1783,8 @@ msgstr "Baruwa :: Vertoon tans boodskap: %(id)s"
 msgid "Preview message"
 msgstr "Kry voorskou van boodskap"
 
-#: templates/messages/detail.html:20
-#: templates/messages/preview.html:8
-#: templates/messages/release.html:6
-#: templates/messages/release.html.py:7
+#: templates/messages/detail.html:20 templates/messages/preview.html:8
+#: templates/messages/release.html:6 templates/messages/release.html.py:7
 msgid "Release message"
 msgstr "Stel boodskap vry"
 
@@ -1790,40 +1792,33 @@ msgstr "Stel boodskap vry"
 msgid "Full message list"
 msgstr "Volledige boodskaplys"
 
-#: templates/messages/detail.html:23
-#: templates/messages/detail.html.py:200
+#: templates/messages/detail.html:23 templates/messages/detail.html.py:200
 #: templates/messages/index.html:28
 msgid "Quarantine"
 msgstr "Kwarantyn"
 
-#: templates/messages/detail.html:24
-#: templates/messages/index.html:29
+#: templates/messages/detail.html:24 templates/messages/index.html:29
 msgid "Archive"
 msgstr "Argief"
 
-#: templates/messages/detail.html:33
-#: templates/status/detail.html:19
+#: templates/messages/detail.html:33 templates/status/detail.html:19
 msgid "Message Details"
 msgstr "Boodskap besonderhede"
 
-#: templates/messages/detail.html:36
-#: templates/status/detail.html:22
+#: templates/messages/detail.html:36 templates/status/detail.html:22
 msgid "Message ID:"
 msgstr "Boodskap ID:"
 
-#: templates/messages/detail.html:62
-#: templates/messages/preview.html:24
+#: templates/messages/detail.html:62 templates/messages/preview.html:24
 #: templates/status/detail.html:32
 msgid "To:"
 msgstr "Aan:"
 
-#: templates/messages/detail.html:72
-#: templates/status/detail.html:46
+#: templates/messages/detail.html:72 templates/status/detail.html:46
 msgid "Received on:"
 msgstr "Ontvang op:"
 
-#: templates/messages/detail.html:76
-#: templates/status/detail.html:42
+#: templates/messages/detail.html:76 templates/status/detail.html:42
 msgid "Received by:"
 msgstr "Ontvang deur:"
 
@@ -1839,8 +1834,7 @@ msgstr "Ontvang via"
 msgid "Message Headers:"
 msgstr "Boodskap hoofde:"
 
-#: templates/messages/detail.html:92
-#: templates/status/detail.html:58
+#: templates/messages/detail.html:92 templates/status/detail.html:58
 msgid "Size:"
 msgstr "Grootte:"
 
@@ -1864,8 +1858,7 @@ msgstr "Spam-Assassin inligting"
 msgid "Spam:"
 msgstr "Gemorspos:"
 
-#: templates/messages/detail.html:121
-#: templates/messages/detail.html.py:131
+#: templates/messages/detail.html:121 templates/messages/detail.html.py:131
 msgid "Action(s):"
 msgstr "Aksie(s):"
 
@@ -1905,8 +1898,7 @@ msgstr "Spam-Assassin Telling:"
 msgid "Spamassassin Report:"
 msgstr "Spam-Assassin Verslag:"
 
-#: templates/messages/detail.html:213
-#: templates/messages/quarantine.html:53
+#: templates/messages/detail.html:213 templates/messages/quarantine.html:53
 #: templates/messages/quarantine_report.html:39
 #: templates/messages/quarantine_report.html:57
 #: templates/messages/quarantine_report.html:80
@@ -1918,8 +1910,7 @@ msgstr "Stel vry"
 msgid "SA Learn"
 msgstr "SA Leer"
 
-#: templates/messages/detail.html:216
-#: templates/messages/quarantine.html:62
+#: templates/messages/detail.html:216 templates/messages/quarantine.html:62
 msgid "Alt recipients"
 msgstr "Alt ontvangers"
 
@@ -1935,30 +1926,24 @@ msgstr "Die versoekte boodskap ID se besonderhede kon nie gevind word nie"
 msgid "Full message"
 msgstr "Volle boodskap"
 
-#: templates/messages/index.html:36
-#: templates/messages/index.html.py:46
-#: templates/messages/quarantine.html:31
-#: templates/messages/quarantine.html:41
+#: templates/messages/index.html:36 templates/messages/index.html.py:46
+#: templates/messages/quarantine.html:31 templates/messages/quarantine.html:41
 msgid "Showing the 50 most recent messages"
 msgstr "Toon die 50 mees onlangse boodskappe"
 
-#: templates/messages/index.html:43
-#: templates/messages/quarantine.html:38
+#: templates/messages/index.html:43 templates/messages/quarantine.html:38
 msgid "Filters"
 msgstr "Filters"
 
-#: templates/messages/index.html:43
-#: templates/messages/quarantine.html:38
+#: templates/messages/index.html:43 templates/messages/quarantine.html:38
 msgid "have been applied"
 msgstr "is aangebring"
 
-#: templates/messages/index.html:48
-#: templates/messages/quarantine.html:43
+#: templates/messages/index.html:48 templates/messages/quarantine.html:43
 msgid "Enable javascript for updates"
 msgstr "Aktiveer javascript vir opdatering"
 
-#: templates/messages/index.html:63
-#: templates/messages/quarantine.html:96
+#: templates/messages/index.html:63 templates/messages/quarantine.html:96
 #: templates/messages/quarantine_report.html:27
 #: templates/messages/quarantine_report.html:68
 #: templates/messages/quarantine_report_text.html:10
@@ -1966,8 +1951,7 @@ msgstr "Aktiveer javascript vir opdatering"
 msgid "Date/Time"
 msgstr "Datum/Tyd"
 
-#: templates/messages/index.html:64
-#: templates/messages/quarantine.html:97
+#: templates/messages/index.html:64 templates/messages/quarantine.html:97
 #: templates/messages/quarantine_report.html:30
 #: templates/messages/quarantine_report.html:71
 #: templates/messages/quarantine_report_text.html:10
@@ -1975,8 +1959,7 @@ msgstr "Datum/Tyd"
 msgid "From"
 msgstr "Van"
 
-#: templates/messages/index.html:65
-#: templates/messages/quarantine.html:98
+#: templates/messages/index.html:65 templates/messages/quarantine.html:98
 #: templates/messages/quarantine_report.html:33
 #: templates/messages/quarantine_report.html:74
 #: templates/messages/quarantine_report_text.html:10
@@ -1984,19 +1967,14 @@ msgstr "Van"
 msgid "To"
 msgstr "Aan"
 
-#: templates/messages/index.html:68
-#: templates/messages/quarantine.html:100
-#: templates/reports/barreport.html:31
-#: templates/tags/spamreport.html:4
+#: templates/messages/index.html:68 templates/messages/quarantine.html:100
+#: templates/reports/barreport.html:31 templates/tags/spamreport.html:4
 msgid "Score"
 msgstr "Telling"
 
-#: templates/messages/index.html:108
-#: templates/messages/quarantine.html:139
-#: templates/reports/barreport.html:55
-#: templates/reports/listing.html:115
-#: templates/reports/piereport.html:58
-#: templates/reports/relays.html:58
+#: templates/messages/index.html:108 templates/messages/quarantine.html:139
+#: templates/reports/barreport.html:55 templates/reports/listing.html:115
+#: templates/reports/piereport.html:58 templates/reports/relays.html:58
 msgid "Filters have been applied :"
 msgstr "Filters is aktief :"
 
@@ -2010,13 +1988,11 @@ msgstr "Baruwa :: 'n Voorskou van boodskap - %(message_id)s"
 msgid "Previewing message - %(message_id)s "
 msgstr "'n Voorskou van boodskap - %(message_id)s"
 
-#: templates/messages/preview.html:9
-#: templates/messages/preview.html.py:11
+#: templates/messages/preview.html:9 templates/messages/preview.html.py:11
 msgid "Return to message"
 msgstr "Keer terug na boodskap"
 
-#: templates/messages/preview.html:28
-#: templates/status/detail.html:38
+#: templates/messages/preview.html:28 templates/status/detail.html:38
 msgid "Subject:"
 msgstr "Onderwerp:"
 
@@ -2099,11 +2075,14 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"\t    \tThe release of message: %(message_id)s to %(release_address)s failed with error: %(error_msg)s, contact your email admin for assistance.\n"
+"\t    \tThe release of message: %(message_id)s to %(release_address)s failed "
+"with error: %(error_msg)s, contact your email admin for assistance.\n"
 "\t    "
 msgstr ""
 "\n"
-"\t    \tDie vrylaat van die boodskap: %(message_id)s na %(release_address)s is ongeslaagd met fout boodskap: %(error_msg)s - kontak jou e-pos admin vir hulp.\n"
+"\t    \tDie vrylaat van die boodskap: %(message_id)s na %(release_address)s "
+"is ongeslaagd met fout boodskap: %(error_msg)s - kontak jou e-pos admin vir "
+"hulp.\n"
 "\t    "
 
 #: templates/messages/released.html:3
@@ -2119,10 +2098,12 @@ msgstr ""
 #, fuzzy, python-format
 msgid ""
 "\n"
-"The message id: %(id)s could not be released: %(error_msg)s, contact your email admin for assistance.\n"
+"The message id: %(id)s could not be released: %(error_msg)s, contact your "
+"email admin for assistance.\n"
 msgstr ""
 "\n"
-"Die boodskap met ID: %(id)s kon nie vrygestel word nie - die fout is: %(error_msg)s - kontak jou e-pos admin vir hulp.\n"
+"Die boodskap met ID: %(id)s kon nie vrygestel word nie - die fout is: "
+"%(error_msg)s - kontak jou e-pos admin vir hulp.\n"
 
 #: templates/messages/salearn.html:3
 #, fuzzy, python-format
@@ -2160,14 +2141,10 @@ msgstr "Geen items is verwerk nie"
 msgid "Update status"
 msgstr "Dateer rekening op"
 
-#: templates/reports/barreport.html:18
-#: templates/reports/barreport.html:21
-#: templates/reports/listing.html:22
-#: templates/reports/listing.html.py:25
-#: templates/reports/piereport.html:19
-#: templates/reports/piereport.html:22
-#: templates/reports/relays.html:19
-#: templates/reports/relays.html.py:22
+#: templates/reports/barreport.html:18 templates/reports/barreport.html:21
+#: templates/reports/listing.html:22 templates/reports/listing.html.py:25
+#: templates/reports/piereport.html:19 templates/reports/piereport.html:22
+#: templates/reports/relays.html:19 templates/reports/relays.html.py:22
 #, python-format
 msgid "Reports - %(report_title)s"
 msgstr "Verslae - %(report_title)s"
@@ -2272,14 +2249,15 @@ msgstr "Aktiveer javascript om die grafieke te toon"
 msgid "Mail"
 msgstr "E-pos"
 
-#: templates/reports/listing.html:44
-#: templates/status/index.html:69
-msgid "Virii"
-msgstr "Virusse"
+#: templates/reports/listing.html:44 templates/status/index.html:69
+#, fuzzy
+msgid "Viruses"
+msgstr "Virus"
 
 #: templates/reports/listing.html:47
-msgid "Virii %"
-msgstr "Virusse %"
+#, fuzzy
+msgid "Viruses %"
+msgstr "Virus"
 
 #: templates/reports/listing.html:53
 msgid "Spam %"
@@ -2293,23 +2271,19 @@ msgstr "Geen rekords teruggestuur nie."
 msgid "Totals"
 msgstr "Totale"
 
-#: templates/reports/piereport.html:52
-#: templates/reports/relays.html:52
+#: templates/reports/piereport.html:52 templates/reports/relays.html:52
 msgid "Javascript required to view graphs"
 msgstr "Javascript benodig om die grafieke te toon"
 
-#: templates/reports/relays.html:27
-#: templates/tags/relayed_via.html:5
+#: templates/reports/relays.html:27 templates/tags/relayed_via.html:5
 msgid "IP address"
 msgstr "IP adres"
 
-#: templates/reports/relays.html:28
-#: templates/tags/relayed_via.html:6
+#: templates/reports/relays.html:28 templates/tags/relayed_via.html:6
 msgid "Hostname"
 msgstr "Bedienernaam"
 
-#: templates/reports/relays.html:29
-#: templates/tags/relayed_via.html:7
+#: templates/reports/relays.html:29 templates/tags/relayed_via.html:7
 msgid "Country"
 msgstr "Land"
 
@@ -2317,23 +2291,18 @@ msgstr "Land"
 msgid "Total/S/V"
 msgstr "Totaal/S/V"
 
-#: templates/status/bayes.html:7
-#: templates/status/index.html:5
-#: templates/status/index.html.py:73
-#: templates/status/lint.html:7
+#: templates/status/bayes.html:7 templates/status/index.html:5
+#: templates/status/index.html.py:73 templates/status/lint.html:7
 msgid "Mail Queues"
 msgstr "E-pos pyplyne"
 
-#: templates/status/bayes.html:9
-#: templates/status/bayes.html.py:15
-#: templates/status/bayes.html:18
-#: templates/status/index.html:7
+#: templates/status/bayes.html:9 templates/status/bayes.html.py:15
+#: templates/status/bayes.html:18 templates/status/index.html:7
 #: templates/status/lint.html:9
 msgid "Bayes information"
 msgstr "Bayes inligting"
 
-#: templates/status/bayes.html:10
-#: templates/status/index.html:8
+#: templates/status/bayes.html:10 templates/status/index.html:8
 #: templates/status/lint.html:10
 msgid "Spamassassin lint"
 msgstr "Spam-Assassin lint"
@@ -2382,19 +2351,16 @@ msgstr "Laaste Verstruik verminderings-telling"
 msgid "Bayes information could not be collected."
 msgstr "Bayes inligting kon nie bymekaar gemaak word nie."
 
-#: templates/status/detail.html:5
-#: templates/status/detail.html.py:6
+#: templates/status/detail.html:5 templates/status/detail.html.py:6
 #, python-format
 msgid "Baruwa :: Showing queue item - %(id)s"
 msgstr "Baruwa :: Wys pyplyn item: %(id)s"
 
-#: templates/status/detail.html:10
-#: templates/status/mailq.html:9
+#: templates/status/detail.html:10 templates/status/mailq.html:9
 msgid "Inbound Queue"
 msgstr "Ingaande pyplyn"
 
-#: templates/status/detail.html:11
-#: templates/status/mailq.html:10
+#: templates/status/detail.html:11 templates/status/mailq.html:10
 msgid "Outbound Queue"
 msgstr "Uitgaande pyplyn"
 
@@ -2414,8 +2380,7 @@ msgstr "Rede vir die pyplyn:"
 msgid "The message details for the requested queue id could not be retrieved"
 msgstr "Die inligting vir die gesoekte pyplyn ID kon nie gekry word nie"
 
-#: templates/status/index.html:12
-#: templates/status/index.html.py:13
+#: templates/status/index.html:12 templates/status/index.html.py:13
 msgid "System Status"
 msgstr "Sisteem status"
 
@@ -2423,8 +2388,7 @@ msgstr "Sisteem status"
 msgid "Service Status"
 msgstr "Diens status"
 
-#: templates/status/index.html:27
-#: templates/status/index.html.py:40
+#: templates/status/index.html:27 templates/status/index.html.py:40
 #: templates/status/index.html:61
 msgid "processes"
 msgstr "dienste"
@@ -2457,28 +2421,26 @@ msgstr "Aanlyn tyd"
 msgid "Blocked files"
 msgstr "Geblokte lêers"
 
-#: templates/status/lint.html:15
-#: templates/status/lint.html.py:18
+#: templates/status/lint.html:15 templates/status/lint.html.py:18
 #: templates/status/lint.html:22
 msgid "Spamassassin Lint"
 msgstr "Spam-Assassin Lint"
 
 #: templates/status/lint.html:31
 msgid "Lint failed please verify if spamassassin is installed"
-msgstr "Lint het nie geslaag nie, verifieer asseblief of Spam-Assassin geïnstalleer is"
+msgstr ""
+"Lint het nie geslaag nie, verifieer asseblief of Spam-Assassin geïnstalleer "
+"is"
 
-#: templates/status/mailq.html:14
-#: templates/status/mailq.html.py:17
+#: templates/status/mailq.html:14 templates/status/mailq.html.py:17
 msgid "Mail Queue"
 msgstr "E-pos pyplyn"
 
-#: templates/status/mailq.html:14
-#: templates/status/mailq.html.py:17
+#: templates/status/mailq.html:14 templates/status/mailq.html.py:17
 msgid "Outbound"
 msgstr "Uitgaande"
 
-#: templates/status/mailq.html:14
-#: templates/status/mailq.html.py:17
+#: templates/status/mailq.html:14 templates/status/mailq.html.py:17
 msgid "Inbound"
 msgstr "Inkomend"
 
@@ -2492,8 +2454,7 @@ msgid "No queue items found"
 msgstr "Geen pyplyn items gevind nie"
 
 #: templates/tags/generic_paginator.html:2
-#: templates/tags/pagination_heading.html:2
-#: templates/tags/paginator.html:2
+#: templates/tags/pagination_heading.html:2 templates/tags/paginator.html:2
 #, python-format
 msgid "Showing page %(page)s of %(pages)s pages."
 msgstr "Toon bladsy %(page)s van %(pages)s bladsy."
@@ -2510,55 +2471,69 @@ msgstr "Reël"
 msgid "Description"
 msgstr "Beskrywing"
 
-#: utils/mail/message.py:241
-#: utils/mail/message.py:326
+#: utils/mail/message.py:242 utils/mail/message.py:331
 msgid "Message not found in the quarantine"
 msgstr "Die boodskap is nie, in die kwarantyn, gevind nie"
 
-#: utils/mail/message.py:270
-#: utils/mail/message.py:284
+#: utils/mail/message.py:271 utils/mail/message.py:285
 msgid "The quarantined message not found"
 msgstr "Die gekwarantynde boodskap is nie gevind nie"
 
-#: utils/mail/message.py:281
+#: utils/mail/message.py:282
 msgid "Unsupported learn option supplied"
 msgstr "'n Nie-ondersteunde aanleer opsie is verskaf"
 
-#: utils/mail/message.py:389
+#: utils/mail/message.py:394
 #, python-format
 msgid "Expected response code 2xx got %(code)s"
 msgstr ""
 
-#: utils/mail/message.py:393
+#: utils/mail/message.py:398
 msgid "Connection timed out"
 msgstr ""
 
-#: utils/mail/message.py:395
+#: utils/mail/message.py:400
 msgid "The server disconnected abruptly"
 msgstr ""
 
-#: utils/mail/message.py:397
+#: utils/mail/message.py:402
 #, fuzzy, python-format
 msgid "The sender %(sender)s was rejected"
 msgstr "Die node, %(node)s, is geïnisialiseer"
 
-#: utils/mail/message.py:400
+#: utils/mail/message.py:405
 #, fuzzy, python-format
 msgid "Some recipients: %(recpts)s were rejected with errors: %(errors)s"
-msgstr "Die boodskap, %(msgid)s, se vrystelling faal met foutboodskap: %(error)s"
+msgstr ""
+"Die boodskap, %(msgid)s, se vrystelling faal met foutboodskap: %(error)s"
 
-#: utils/mail/message.py:404
+#: utils/mail/message.py:409
 msgid "Error occured while establishing connection to the server"
 msgstr ""
 
-#: utils/mail/message.py:407
+#: utils/mail/message.py:412
 msgid "Server rejected our HELO message"
 msgstr ""
 
-#: utils/mail/message.py:409
+#: utils/mail/message.py:414
 #, python-format
 msgid "Error occured, CODE: %(code)s MESSAGE: %(msg)s"
 msgstr ""
+
+#~ msgid ""
+#~ "\n"
+#~ "\t\tAdd Authentication server%(form_errors)s\n"
+#~ "\t\t"
+#~ msgstr ""
+#~ "\n"
+#~ "\t\tVoeg bemagtiging bediener by %(form_errors)s\n"
+#~ "\t\t"
+
+#~ msgid "Virii"
+#~ msgstr "Virusse"
+
+#~ msgid "Virii %"
+#~ msgstr "Virusse %"
 
 #~ msgid "Error: Empty server response"
 #~ msgstr "Fout: Die terugvoer van die bediener is inhoudloos"
