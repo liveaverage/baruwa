@@ -71,6 +71,7 @@ sub InitBaruwaSQL {
 }
 
 sub ExitBaruwaSQL {
+    MailScanner::Log::InfoLog("Baruwa SQL shutting down");
     close($server);
     $conn->disconnect;
     $bconn->disconnect;
@@ -78,65 +79,81 @@ sub ExitBaruwaSQL {
 }
 
 sub RecoverFromSql {
-    my $st = $bconn->prepare("SELECT * FROM temp_messages")
-      or MailScanner::Log::WarnLog( "Baruwa SQL backup select failure: %s",
-        $DBI::errstr );
-    $st->execute();
+    my $st;
+    eval {
+        $st = $bconn->prepare("SELECT * FROM tm");
+        $st->execute();
+    };
+    if ($@) {
+        MailScanner::Log::InfoLog("Baruwa Backup DB recovery Failure");
+        return;
+    }
+
     my @ids;
     while ( my $message = $st->fetchrow_hashref ) {
-        $sth->execute(
-            $$message{id},            $$message{actions},
-            $$message{clientip},      $$message{date},
-            $$message{from_address},  $$message{from_domain},
-            $$message{headers},       $$message{hostname},
-            $$message{highspam},      $$message{rblspam},
-            $$message{saspam},        $$message{spam},
-            $$message{nameinfected},  $$message{otherinfected},
-            $$message{isquarantined}, $$message{sascore},
-            $$message{scaned},        $$message{size},
-            $$message{blacklisted},   $$message{spamreport},
-            $$message{whitelisted},   $$message{subject},
-            $$message{time},          $$message{timestamp},
-            $$message{to_address},    $$message{to_domain},
-            $$message{virusinfected}
-        );
-
-        if ( $sth->err == 1329 ) {
+        eval {
+            $sth->execute(
+                $$message{id},            $$message{actions},
+                $$message{clientip},      $$message{date},
+                $$message{from_address},  $$message{from_domain},
+                $$message{headers},       $$message{hostname},
+                $$message{highspam},      $$message{rblspam},
+                $$message{saspam},        $$message{spam},
+                $$message{nameinfected},  $$message{otherinfected},
+                $$message{isquarantined}, $$message{sascore},
+                $$message{scaned},        $$message{size},
+                $$message{blacklisted},   $$message{spamreport},
+                $$message{whitelisted},   $$message{subject},
+                $$message{time},          $$message{timestamp},
+                $$message{to_address},    $$message{to_domain},
+                $$message{virusinfected}
+            );
             MailScanner::Log::InfoLog(
                 "$$message{id}: Logged to Baruwa SQL from backup");
             push @ids, $$message{id};
+        };
+        if ($@) {
+            MailScanner::Log::InfoLog("Baruwa Backup DB insert Fail");
         }
+
     }
+
+    # delete messages that have been logged
     while (@ids) {
         my @tmp_ids = splice( @ids, 0, 50 );
         my $del_ids = join q{,}, map { '?' } @tmp_ids;
-        $bconn->do( "DELETE FROM temp_messages WHERE id IN ($del_ids)",
-            undef, @tmp_ids )
-          or
-          MailScanner::Log::WarnLog( "Baruwa SQL backup clean temp failure: %s",
-            $DBI::errstr );
+        eval {
+            $bconn->do( "DELETE FROM tm WHERE id IN ($del_ids)",
+                undef, @tmp_ids );
+        };
+        if ($@) {
+            MailScanner::Log::WarnLog("Baruwa Backup DB clean temp Fail");
+        }
     }
     undef @ids;
 }
 
 sub PrepSqlite {
-    $bconn = DBI->connect_cached(
-        "dbi:SQLite:$sqlite_db",
-        "", "",
-        {
-            PrintError           => 0,
-            AutoCommit           => 1,
-            private_foo_cachekey => 'baruwa_backup'
-        }
-    );
-    if ( !$bconn ) {
-        MailScanner::Log::WarnLog( "Baruwa SQL Backup conn init failure: %s",
-            $DBI::errstr );
+    eval {
+        $bconn = DBI->connect_cached(
+            "dbi:SQLite:$sqlite_db",
+            "", "",
+            {
+                PrintError           => 0,
+                AutoCommit           => 1,
+                private_foo_cachekey => 'baruwa_backup',
+                RaiseError           => 1
+            }
+        ) unless ($bconn);
+    };
+    if ($@) {
+        MailScanner::Log::WarnLog("Baruwa Backup DB init Fail");
     }
-    else {
+
+    eval {
         $bconn->do("PRAGMA default_synchronous = OFF");
         $bconn->do(
-            "CREATE TABLE temp_messages (timestamp TEXT, id TEXT, 
+            "CREATE TABLE tm (timestamp TEXT, id TEXT, 
             size INT, from_address TEXT, from_domain TEXT, to_address TEXT, 
             to_domain TEXT, subject TEXT, clientip TEXT, spam INT, highspam INT,
             saspam INT, rblspam INT, whitelisted INT, blacklisted INT, 
@@ -145,17 +162,27 @@ sub PrepSqlite {
             actions TEXT, isquarantined INT, scaned INT)"
         );
         $bconn->do("CREATE UNIQUE INDEX id_uniq ON temp_messages(id)");
+    };
+    if ($@) {
+        MailScanner::Log::WarnLog("Baruwa Backup DB tables exist");
+    }
+    if ($conn) {
+        MailScanner::Log::InfoLog("Baruwa DB conn alive, starting recovery");
         RecoverFromSql();
-        $bsth = $bconn->prepare( "
-            INSERT INTO temp_messages (
+    }
+    eval {
+        $bsth = $bconn->prepare(
+            "INSERT INTO tm (
             id,actions,clientip,date,from_address,from_domain,headers,
             hostname,highspam,rblspam,saspam,spam,nameinfected,otherinfected,
             isquarantined,sascore,scaned,size,blacklisted,spamreport,
             whitelisted,subject,time,timestamp,to_address,to_domain,
             virusinfected
-        )  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" )
-          or MailScanner::Log::WarnLog( "Baruwa SQL Backup Q Prep failure: %s",
-            $DBI::errstr );
+        )  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+        ) unless $bsth;
+    };
+    if ($@) {
+        MailScanner::Log::WarnLog("Baruwa Backup DB prep Fail");
     }
 }
 
@@ -167,30 +194,31 @@ sub InitSQLConnections {
         Listen    => SOMAXCONN,
         Reuse     => 1
     ) or exit;
-    $conn = DBI->connect_cached(
-        $baruwa_dsn,
-        $db_user, $db_pass,
-        {
-            PrintError           => 0,
-            AutoCommit           => 1,
-            private_foo_cachekey => 'baruwa'
-        }
-    );
-    $conn->do("SET NAMES 'utf8'");
-    $sth = $conn->prepare(
-        "INSERT INTO messages (
-            id,actions,clientip,date,from_address,from_domain,
-            headers,hostname,highspam,rblspam,saspam,spam,
-            nameinfected,otherinfected,isquarantined,sascore,
-            scaned,size,blacklisted,spamreport,whitelisted,
-            subject,time,timestamp,to_address,to_domain,
-            virusinfected
-        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-    );
-    if ( !$sth ) {
-        MailScanner::Log::WarnLog( "Baruwa SQL conn init failure: %s",
-            $conn->errstr );
-
+    eval {
+        $conn = DBI->connect_cached(
+            $baruwa_dsn,
+            $db_user, $db_pass,
+            {
+                PrintError           => 0,
+                AutoCommit           => 1,
+                private_foo_cachekey => 'baruwa',
+                RaiseError           => 1
+            }
+        ) unless $conn;
+        $conn->do("SET NAMES 'utf8'");
+        $sth = $conn->prepare(
+            "INSERT INTO messages (
+                id,actions,clientip,date,from_address,from_domain,
+                headers,hostname,highspam,rblspam,saspam,spam,
+                nameinfected,otherinfected,isquarantined,sascore,
+                scaned,size,blacklisted,spamreport,whitelisted,
+                subject,time,timestamp,to_address,to_domain,
+                virusinfected
+            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+        );
+    };
+    if ($@) {
+        MailScanner::Log::WarnLog("Baruwa SQL init Failed");
     }
     PrepSqlite();
 }
@@ -213,7 +241,7 @@ sub BaruwaListener {
             chop;
             push @in, $_;
         }
-
+        close $client;
         my $data = join "", @in;
         my $tmp = unpack( "u", $data );
         $message = thaw $tmp;
@@ -221,29 +249,8 @@ sub BaruwaListener {
         next unless defined $$message{id};
 
         InitSQLConnections unless $conn->ping;
-        $sth->execute(
-            $$message{id},            $$message{actions},
-            $$message{clientip},      $$message{date},
-            $$message{from_address},  $$message{from_domain},
-            $$message{headers},       $$message{hostname},
-            $$message{highspam},      $$message{rblspam},
-            $$message{saspam},        $$message{spam},
-            $$message{nameinfected},  $$message{otherinfected},
-            $$message{isquarantined}, $$message{sascore},
-            $$message{scanmail},      $$message{size},
-            $$message{blacklisted},   $$message{spamreport},
-            $$message{whitelisted},   $$message{subject},
-            $$message{time},          $$message{timestamp},
-            $$message{to_address},    $$message{to_domain},
-            $$message{virusinfected}
-        );
-
-        if ( $sth->err == 1329 ) {
-            MailScanner::Log::InfoLog("$$message{id}: Logged to Baruwa SQL");
-        }
-        else {
-            MailScanner::Log::InfoLog("$$message{id}: Baruwa SQL using backup");
-            $bsth->execute(
+        eval {
+            $sth->execute(
                 $$message{id},            $$message{actions},
                 $$message{clientip},      $$message{date},
                 $$message{from_address},  $$message{from_domain},
@@ -258,9 +265,34 @@ sub BaruwaListener {
                 $$message{time},          $$message{timestamp},
                 $$message{to_address},    $$message{to_domain},
                 $$message{virusinfected}
-              )
-              or MailScanner::Log::InfoLog(
-                "$$message{id}: backup logging failure: %s", $DBI::errstr );
+            );
+            MailScanner::Log::InfoLog("$$message{id}: Logged to Baruwa SQL");
+        };
+        if ($@) {
+            eval {
+                $bsth->execute(
+                    $$message{id},            $$message{actions},
+                    $$message{clientip},      $$message{date},
+                    $$message{from_address},  $$message{from_domain},
+                    $$message{headers},       $$message{hostname},
+                    $$message{highspam},      $$message{rblspam},
+                    $$message{saspam},        $$message{spam},
+                    $$message{nameinfected},  $$message{otherinfected},
+                    $$message{isquarantined}, $$message{sascore},
+                    $$message{scanmail},      $$message{size},
+                    $$message{blacklisted},   $$message{spamreport},
+                    $$message{whitelisted},   $$message{subject},
+                    $$message{time},          $$message{timestamp},
+                    $$message{to_address},    $$message{to_domain},
+                    $$message{virusinfected}
+                );
+                MailScanner::Log::InfoLog(
+                    "$$message{id}: Logged to using backup DB");
+            };
+            if ($@) {
+                MailScanner::Log::InfoLog(
+                    "$$message{id}: backup logging failed");
+            }
         }
         $message = undef;
     }

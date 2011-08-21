@@ -44,60 +44,68 @@ sub PopulateList {
 
     my ( $conn, $sth, $to_address, $from_address, $count );
 
-    $conn =
-      DBI->connect( $baruwa_dsn, $db_user, $db_pass,
-        { PrintError => 0, AutoCommit => 1 } );
-    if ( !$conn ) {
-        MailScanner::Log::WarnLog( "Baruwa Lists db conn init failue: %s",
-            $DBI::errstr );
-    }
-    $sth = $conn->prepare(
-        "SELECT to_address, from_address FROM lists where list_type = ?");
-    $sth->execute($type);
-    $sth->bind_columns( undef, \$to_address, \$from_address );
-    $count = 0;
-    while ( $sth->fetch() ) {
-        if ( $from_address =~ /^([.:\da-f]+)\s*\/\s*([.:\da-f]+)$/ ) {
-            my ( $network, $bits, $count, $mcount );
-            ( $network, $bits ) = ( $1, $2 );
-            my @count = split( /\./, $network );
-            $count = @count;
-            $network .= '.0' x ( 4 - $count );
-            my @mcount = split( /\./, $bits );
-            $mcount = @mcount;
-            if ( $mcount == 4 ) {
-                eval{
-                    my $range = Net::CIDR::addrandmask2cidr( $network, $bits );
-                    push( @$ips, $range );
+    eval {
+        $conn =
+          DBI->connect( $baruwa_dsn, $db_user, $db_pass,
+            { PrintError => 0, AutoCommit => 1, RaiseError => 1 } )
+          unless $conn;
+        $sth = $conn->prepare(
+            "SELECT to_address, from_address FROM lists where list_type = ?");
+        $sth->execute($type);
+        $sth->bind_columns( undef, \$to_address, \$from_address );
+        $count = 0;
+        while ( $sth->fetch() ) {
+            if ( $from_address =~ /^([.:\da-f]+)\s*\/\s*([.:\da-f]+)$/ ) {
+                my ( $network, $bits, $count, $mcount );
+                ( $network, $bits ) = ( $1, $2 );
+                my @count = split( /\./, $network );
+                $count = @count;
+                $network .= '.0' x ( 4 - $count );
+                my @mcount = split( /\./, $bits );
+                $mcount = @mcount;
+                if ( $mcount == 4 ) {
+                    eval {
+                        my $range =
+                          Net::CIDR::addrandmask2cidr( $network, $bits );
+                        push( @$ips, $range );
+                    };
+                    if ($@) {
+                        MailScanner::Log::WarnLog(
+                            "Invalid network range: %s/%s",
+                            $network, $bits );
+                    }
+                }
+                else {
+                    push( @$ips, "$network/$bits" );
+                }
+            }
+            elsif ( $from_address =~ /^[.:\da-f]+\s*-\s*[.:\da-f]+$/ ) {
+                $from_address =~ s/\s*//g;
+                eval {
+                    my @cidr = Net::CIDR::range2cidr($from_address);
+                    foreach my $cidr (@cidr) {
+                        push( @$ips, $cidr );
+                    }
                 };
-                if ($@){
-                    MailScanner::Log::WarnLog("Invalid network range: %s/%s", $network, $bits);
+                if ($@) {
+                    MailScanner::Log::WarnLog( "Invalid network range: %s",
+                        $from_address );
                 }
             }
             else {
-                push( @$ips, "$network/$bits" );
+                $list->{ lc($to_address) }{ lc($from_address) } = 1;
             }
+            $count++;
         }
-        elsif ( $from_address =~ /^[.:\da-f]+\s*-\s*[.:\da-f]+$/ ) {
-            $from_address =~ s/\s*//g;
-            eval{
-                my @cidr = Net::CIDR::range2cidr($from_address);
-                foreach my $cidr (@cidr) {
-                    push( @$ips, $cidr );
-                }
-            };
-            if ($@){
-                MailScanner::Log::WarnLog("Invalid network range: %s", $from_address);
-            }
-        }
-        else {
-            $list->{ lc($to_address) }{ lc($from_address) } = 1;
-        }
-        $count++;
+        $sth->finish();
+        $conn->disconnect();
+        return $count;
+    };
+    if ($@) {
+        # MailScanner::Log::WarnLog( "Baruwa Lists Failure: %s", $@ );
+        MailScanner::Log::WarnLog( "Baruwa DB init Fail");
+        return 0;
     }
-    $sth->finish();
-    $conn->disconnect();
-    return $count;
 }
 
 sub LookupAddress {

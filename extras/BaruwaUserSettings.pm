@@ -64,34 +64,43 @@ sub PopulateScores {
     $baruwa_dsn = MailScanner::Config::Value('dbdsn')
       if ( !defined($baruwa_dsn) );
 
-    $conn =
-      DBI->connect( $baruwa_dsn, $db_user, $db_pass,
-        { PrintError => 0, AutoCommit => 1 } );
-    if ( !$conn ) {
-        MailScanner::Log::WarnLog( "Baruwa Settings conn init failue: %s",
-            $DBI::errstr );
-    }
-    if ( $type == 1 ) {
-        $query = $low_query;
-    }
-    else {
-        $query = $high_query;
-    }
-
-    $sth = $conn->prepare($query);
-    $sth->execute();
-    $sth->bind_columns( undef, \$email, \$spamscore, \$isadmin );
-    $count = 0;
-    while ( $sth->fetch() ) {
-        $list->{ lc($email) } = $spamscore;
-        if ($isadmin) {
-            $list->{'admin'} = $spamscore;
+    eval {
+        $conn = DBI->connect(
+            $baruwa_dsn,
+            $db_user, $db_pass,
+            {
+                PrintError => 0,
+                AutoCommit => 1,
+                RaiseError => 1
+            }
+        ) unless $conn;
+        if ( $type == 1 ) {
+            $query = $low_query;
         }
-        $count++;
+        else {
+            $query = $high_query;
+        }
+
+        $sth = $conn->prepare($query);
+        $sth->execute();
+        $sth->bind_columns( undef, \$email, \$spamscore, \$isadmin );
+        $count = 0;
+        while ( $sth->fetch() ) {
+            $list->{ lc($email) } = $spamscore;
+            if ($isadmin) {
+                $list->{'admin'} = $spamscore;
+            }
+            $count++;
+        }
+        $sth->finish();
+        $conn->disconnect();
+        return $count;
+    };
+    if ($@) {
+        # MailScanner::Log::WarnLog( "Baruwa Settings conn init failue: %s", $@ );
+        MailScanner::Log::WarnLog( "Baruwa DB Failure");
+        return 0;
     }
-    $sth->finish();
-    $conn->disconnect();
-    return $count;
 }
 
 sub CheckScores {
@@ -183,28 +192,38 @@ sub PopulateScanList {
     $baruwa_dsn = MailScanner::Config::Value('dbdsn')
       if ( !defined($baruwa_dsn) );
 
-    $conn =
-      DBI->connect( $baruwa_dsn, $db_user, $db_pass,
-        { PrintError => 0, AutoCommit => 1 } );
-    if ( !$conn ) {
-        MailScanner::Log::WarnLog( "Baruwa Scan Settings conn init failue: %s",
-            $DBI::errstr );
-    }
+    eval {
+        $conn = DBI->connect(
+            $baruwa_dsn,
+            $db_user, $db_pass,
+            {
+                PrintError => 0,
+                AutoCommit => 1,
+                RaiseError => 1
+            }
+        ) unless $conn;
 
-    $sth = $conn->prepare($scan_query);
-    $sth->execute();
-    $sth->bind_columns( undef, \$email, \$shouldscan, \$isadmin );
-    $count = 0;
-    while ( $sth->fetch() ) {
-        $list->{ lc($email) } = $shouldscan;
-        if ($isadmin) {
-            $list->{'admin'} = $shouldscan;
+        $sth = $conn->prepare($scan_query);
+        $sth->execute();
+        $sth->bind_columns( undef, \$email, \$shouldscan, \$isadmin );
+        $count = 0;
+        while ( $sth->fetch() ) {
+            $list->{ lc($email) } = $shouldscan;
+            if ($isadmin) {
+                $list->{'admin'} = $shouldscan;
+            }
+            $count++;
         }
-        $count++;
+        $sth->finish();
+        $conn->disconnect();
+        return $count;
+    };
+    if ($@) {
+        # MailScanner::Log::WarnLog( "Baruwa Scan Settings init Failure: %s",
+        #     $@ );
+        MailScanner::Log::WarnLog( "Baruwa DB init Fail");
+        return 0;
     }
-    $sth->finish();
-    $conn->disconnect();
-    return $count;
 }
 
 sub CheckShouldScan {
