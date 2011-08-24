@@ -2,6 +2,8 @@
 {% load i18n %}
 {% block scripts %}
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/ajax-csrf-tokenize.js"></script>
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/mailq.js"></script>
 {% endblock scripts %}
 {% block submenu %}
