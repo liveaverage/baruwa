@@ -395,8 +395,8 @@ sub BaruwaSQL {
         $$message{sascore} = 0;
     }
 
-    unless ( defined( $$message{subject} ) and $$message{subject} ) {
-        $$message{subject} = '';
+    unless ( defined( $$message{utf8subject} ) and $$message{utf8subject} ) {
+        $$message{utf8subject} = '';
     }
 
     unless ( defined($spamreport) and $spamreport ) {
