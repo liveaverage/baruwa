@@ -44,6 +44,7 @@ sub PopulateList {
 
     my ( $conn, $sth, $to_address, $from_address, $count );
 
+    $count = 0;
     eval {
         $conn =
           DBI->connect( $baruwa_dsn, $db_user, $db_pass,
@@ -53,14 +54,13 @@ sub PopulateList {
             "SELECT to_address, from_address FROM lists where list_type = ?");
         $sth->execute($type);
         $sth->bind_columns( undef, \$to_address, \$from_address );
-        $count = 0;
         while ( $sth->fetch() ) {
             if ( $from_address =~ /^([.:\da-f]+)\s*\/\s*([.:\da-f]+)$/ ) {
-                my ( $network, $bits, $count, $mcount );
+                my ( $network, $bits, $bcount, $mcount );
                 ( $network, $bits ) = ( $1, $2 );
                 my @count = split( /\./, $network );
-                $count = @count;
-                $network .= '.0' x ( 4 - $count );
+                $bcount = @count;
+                $network .= '.0' x ( 4 - $bcount );
                 my @mcount = split( /\./, $bits );
                 $mcount = @mcount;
                 if ( $mcount == 4 ) {
@@ -99,13 +99,13 @@ sub PopulateList {
         }
         $sth->finish();
         $conn->disconnect();
-        return $count;
     };
     if ($@) {
         # MailScanner::Log::WarnLog( "Baruwa Lists Failure: %s", $@ );
         MailScanner::Log::WarnLog( "Baruwa DB init Fail");
         return 0;
     }
+    return $count;
 }
 
 sub LookupAddress {
