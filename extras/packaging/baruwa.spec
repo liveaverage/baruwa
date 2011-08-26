@@ -4,7 +4,7 @@
 
 Name:           baruwa
 Version:        1.1.0
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Ajax enabled MailScanner web frontend      
 Group:          Applications/Internet
 License:        GPLv2
@@ -200,6 +200,25 @@ fi
 
 
 %changelog
+* Fri Aug 26 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-7
+- FIX: Silence depreciation errors in cron
+- FIX: exception in top hosts report
+- FIX: postfix queue manager not picking up some messages
+- FIX: increase the character length of spamassassin rules
+- FIX: make sa learn command more portable across various os's
+- FIX: cleanly handle sa learn exceptions
+- FIX: SMTP server tests failing
+- FIX: add base tag to the tags sanitized by the previewer
+- FIX: logging to both mysql and sqlite
+- FIX: IE8 caching ajax requests
+- FIX: celery jobs hanging and not returning results
+- FEATURE: support alternative postfix configuration directory when
+  running queuestats
+- FEATURE: support default filter to only show todays messages
+- Update language translations
+- Make InnoDB the default engine
+- Improve error handling in the perl modules
+
 * Mon Aug 01 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-6
 - Depend on mod_wsgi
 - move cron.d out of spec

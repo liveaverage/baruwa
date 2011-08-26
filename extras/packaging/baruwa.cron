@@ -8,12 +8,12 @@
 # baruwa-admin sendquarantinereports >/dev/null
 
 # clean quarantine 
-baruwa-admin cleanquarantine >/dev/null
+baruwa-admin cleanquarantine >/dev/null 2>&1
 # clean up the DB
-baruwa-admin dbclean >/dev/null
+baruwa-admin dbclean >/dev/null 2>&1
 # update sa rule definitions
-baruwa-admin updatesarules >/dev/null
+baruwa-admin updatesarules >/dev/null 2>&1
 # clean up stale sessions
-baruwa-admin cleanup >/dev/null
+baruwa-admin cleanup >/dev/null 2>&1
 # update geoip database
 perl /usr/share/doc/GeoIP-*/fetch-geoipdata.pl

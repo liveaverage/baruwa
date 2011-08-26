@@ -3,4 +3,4 @@
 # Baruwa
 #
 # Send PDF reports
-baruwa-admin sendpdfreports >/dev/null
+baruwa-admin sendpdfreports >/dev/null 2>&1
