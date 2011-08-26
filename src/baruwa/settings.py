@@ -34,7 +34,7 @@ DATABASES = {
         'HOST': '',
         # Set to empty string for default. Not used with sqlite3.
         'PORT': '',
-        'OPTIONS': { 'init_command': 'SET storage_engine=INNODB; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;' },
+        'OPTIONS': { 'init_command': 'SET storage_engine=INNODB, SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;' },
     }
 }
 
