@@ -25,7 +25,7 @@ import datetime
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm, AdminPasswordChangeForm
+from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.db.models import Q
 from django import forms
 from django.conf import settings
@@ -42,7 +42,7 @@ from django.utils.translation import check_for_language
 
 from baruwa.accounts.forms import UserProfileForm, UserCreateForm, \
 UserAddressForm, OrdUserProfileForm, UserUpdateForm, AdminUserUpdateForm, \
-EditAddressForm, DeleteAddressForm, DeleteUserForm
+EditAddressForm, DeleteAddressForm, DeleteUserForm, AuthenticationForm
 from baruwa.accounts.profile import set_user_addresses
 from baruwa.accounts.models import UserAddresses, UserProfile
 from baruwa.utils.decorators import onlysuperusers, authorized_users_only, \

@@ -22,13 +22,34 @@
 from django import forms
 from django.forms.util import ErrorList
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import PasswordResetForm
-from django.utils.translation import ugettext as _
 from django.core.validators import email_re
+from django.utils.translation import ugettext as _
+from django.contrib.auth.forms import PasswordResetForm, AuthenticationForm
 
-from baruwa.utils.regex import ADDRESS_RE
-from baruwa.accounts.models import UserProfile, UserAddresses
 from baruwa.utils.regex import DOM_RE
+from baruwa.utils.regex import ADDRESS_RE
+from baruwa.fixups import max_username_length
+from baruwa.accounts.models import UserProfile, UserAddresses
+
+
+def username_help():
+    "username help text"
+    return _("Required, %(chars)s characters or fewer."
+            " Only letters, numbers, and characters "
+            "such as @.+_- are allowed." %
+            dict(chars=str(max_username_length())))
+
+
+def username_field():
+    "return username field"
+    return forms.RegexField(
+            label=_("Username"), max_length=max_username_length(),
+            regex=r'^[\w.@+-]+$',
+            help_text=username_help(),
+            error_messages={'invalid': _(
+                "This value may contain only letters, numbers"
+                " and @/./+/-/_ characters.")
+            })
 
 
 class PwResetForm(PasswordResetForm):
@@ -78,14 +99,7 @@ class OrdUserProfileForm(forms.ModelForm):
 
 
 class UserCreateForm(forms.ModelForm):
-    username = forms.RegexField(
-        label=_("Username"), max_length=30, regex=r'^[\w.@+-]+$',
-            help_text=_(
-            "Required. 30 characters or fewer. Letters, "
-            "digits and @/./+/-/_ only."),
-            error_messages={'invalid': _(
-            "This value may contain only letters, numbers"
-            " and @/./+/-/_ characters.")})
+    username = username_field()
     password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
 
     def clean_username(self):
@@ -208,14 +222,7 @@ class AdminUserUpdateForm(forms.ModelForm):
     """
     Allows the admins to manage account info
     """
-    username = forms.RegexField(label=_("Username"),
-        max_length=30, regex=r'^[\w.@+-]+$',
-            help_text=_(
-            "Required. 30 characters or fewer. Letters,"
-            " digits and @/./+/-/_ only."),
-            error_messages={'invalid': _(
-            "This value may contain only letters, numbers"
-            " and @/./+/-/_ characters.")})
+    username = username_field()
     id = forms.CharField(widget=forms.HiddenInput)
 
     class Meta:
@@ -235,3 +242,12 @@ class DeleteUserForm(forms.ModelForm):
             'is_staff', 'password', 'is_active', 'first_name',
             'last_name', 'email')
         #fields = ('id')
+
+
+class AuthenticationForm(AuthenticationForm):
+    """Customize authentication form"""
+    def __init__(self, *args, **kwargs):
+        "init"
+        super(AuthenticationForm, self).__init__(*args, **kwargs)
+
+    username = username_field() 

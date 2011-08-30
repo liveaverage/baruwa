@@ -59,7 +59,7 @@ var next = '{% url please-login %}?next=';
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ next }}" />
         <label>{% trans "Username" %}</label>
-        <input type="text" name="username" class="field" id="id_username" maxlength="30" />
+        <input type="text" name="username" class="field" id="id_username" maxlength="255" />
         <label>{% trans "Password" %}</label>
         <input type="password" name="password" class="field" id="id_password" />
         <label>{% trans "Language" %}</label>

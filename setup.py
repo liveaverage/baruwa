@@ -12,6 +12,7 @@ install_requires = ['setuptools',
     'anyjson',
     'iPy',
     'lxml',
+    'South',
 ]
 
 if sys.version_info < (2, 5):

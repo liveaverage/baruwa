@@ -118,6 +118,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'baruwa.fixups',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -129,6 +130,7 @@ INSTALLED_APPS = (
     'baruwa.status',
     'baruwa.config',
     'djcelery',
+    'south',
     #'debug_toolbar',
 )
 
@@ -200,7 +202,7 @@ RADIUS_SECRET['127.0.0.1'] = 'secret'
 # Baruwa only setting
 
 # location of GeoIP IPv6 DB
-GEOIP_IPV6_DB = '/usr/local/share/GeoIP/GeoIPv6.dat'
+GEOIP_IPV6_DB = '/usr/share/GeoIP/GeoIPv6.dat'
 
 # mailscanner configuration file
 MS_CONFIG = '/etc/MailScanner/MailScanner.conf'
@@ -224,6 +226,9 @@ SA_RULES_DIRS = ['/usr/share/spamassassin', '/etc/mail/spamassassin']
 
 #load default filter (only display todays messages)
 #LOAD_BARUWA_DEFAULT_FILTER = True
+
+#max username length defaults to 255
+#MAX_USERNAME_LENGTH = 128
 
 # End Baruwa only settings
 
