@@ -107,7 +107,7 @@ sub connect2db {
         die $@ if $@;
     };
     if ($@) {
-        MailScanner::Log::WarnLog("Baruwa DB init Failed: $@");
+        MailScanner::Log::WarnLog("Baruwa: DB init Failed: $@");
     }
 }
 
@@ -131,10 +131,10 @@ sub log2backup {
             $$message{to_address},    $$message{to_domain},
             $$message{virusinfected}
         );
-        MailScanner::Log::InfoLog("$$message{id}: Logged to using backup DB");
+        MailScanner::Log::InfoLog("Baruwa: $$message{id}: Logged using backup DB");
     };
     if ($@) {
-        MailScanner::Log::InfoLog("$$message{id}: backup recovery failed");
+        MailScanner::Log::InfoLog("Baruwa: $$message{id}: backup logging failed");
     }
 }
 
@@ -146,7 +146,7 @@ sub InitBaruwaSQL {
     }
     else {
         POSIX::setsid();
-        MailScanner::Log::InfoLog("Starting Baruwa SQL logger");
+        MailScanner::Log::InfoLog("Baruwa: Starting SQL logger");
         # Close all I/O filehandles to completely detach from terminal
         open STDIN,  "</dev/null";
         open STDOUT, ">/dev/null";
@@ -165,7 +165,7 @@ sub InitBaruwaSQL {
 }
 
 sub ExitBaruwaSQL {
-    MailScanner::Log::InfoLog("Baruwa SQL shutting down");
+    MailScanner::Log::InfoLog("Baruwa: SQL shutting down");
     close($server);
     $conn->disconnect if $conn;
     #$bconn->disconnect if $bconn;
@@ -179,7 +179,7 @@ sub RecoverFromSql {
         $st->execute();
     };
     if ($@) {
-        MailScanner::Log::InfoLog("Baruwa Backup DB recovery Failure");
+        MailScanner::Log::InfoLog("Baruwa: Backup DB recovery Failure");
         return;
     }
 
@@ -187,11 +187,11 @@ sub RecoverFromSql {
     while ( my $message = $st->fetchrow_hashref ) {
         eval {
             insert_record($message);
-            MailScanner::Log::InfoLog("$$message{id}: Logged to Baruwa SQL from backup");
+            MailScanner::Log::InfoLog("Baruwa: $$message{id}: Logged to SQL from backup");
             push @ids, $$message{id};
         };
         if ($@) {
-            MailScanner::Log::InfoLog("Baruwa Backup DB insert Fail");
+            MailScanner::Log::InfoLog("Baruwa: Backup DB insert Fail");
         }
 
     }
@@ -205,7 +205,7 @@ sub RecoverFromSql {
                 undef, @tmp_ids );
         };
         if ($@) {
-            MailScanner::Log::WarnLog("Baruwa Backup DB clean temp Fail");
+            MailScanner::Log::WarnLog("Baruwa: Backup DB clean temp Fail");
         }
     }
     undef @ids;
@@ -225,7 +225,7 @@ sub initbackup {
         ) unless ($bconn);
     };
     if ($@) {
-        MailScanner::Log::WarnLog("Baruwa Backup DB init Fail");
+        MailScanner::Log::WarnLog("Baruwa: Backup DB init Fail");
     }
 
     create_backup_tables();
@@ -242,10 +242,10 @@ sub initbackup {
         ) unless $bsth;
     };
     if ($@) {
-        MailScanner::Log::WarnLog("Baruwa Backup DB prep Fail");
+        MailScanner::Log::WarnLog("Baruwa: Backup DB prep Fail");
     }else{
         if ($conn && $conn->ping) {
-            MailScanner::Log::InfoLog("Baruwa DB conn alive, starting recovery");
+            MailScanner::Log::InfoLog("Baruwa: DB conn alive, starting recovery");
             RecoverFromSql();
         }
     }
@@ -291,7 +291,7 @@ sub BaruwaListener {
         connect2db unless $conn && $conn->ping;
         eval {
             insert_record($message);
-            MailScanner::Log::InfoLog("$$message{id}: Logged to Baruwa SQL");
+            MailScanner::Log::InfoLog("Baruwa: $$message{id}: Logged to SQL");
         };
         if ($@) {
             log2backup($message);
@@ -303,7 +303,7 @@ sub BaruwaListener {
 }
 
 sub EndBaruwaSQL {
-    MailScanner::Log::InfoLog("Shutting down Baruwa SQL logger");
+    MailScanner::Log::InfoLog("Baruwa: Shutting down SQL logger");
     my $client = IO::Socket::INET->new(
         PeerAddr => '127.0.0.1',
         PeerPort => $server_port,
@@ -442,12 +442,12 @@ sub BaruwaSQL {
         Type     => SOCK_STREAM
     );
     if ($client) {
-        MailScanner::Log::InfoLog("Logging message $msg{id} to Baruwa SQL");
+        MailScanner::Log::InfoLog("Baruwa: Logging message $msg{id} to SQL");
         print $client $p;
         print $client "END\n";
         close $client;
     }else{
-        MailScanner::Log::InfoLog("Sending message $msg{id} to server failed, using backup");
+        MailScanner::Log::InfoLog("Baruwa: Sending message $msg{id} to server failed, using backup");
         initbackup() unless $bconn;
         log2backup(\%msg);
     }

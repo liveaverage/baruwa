@@ -96,8 +96,7 @@ sub PopulateScores {
         $conn->disconnect();
     };
     if ($@) {
-        # MailScanner::Log::WarnLog( "Baruwa Settings conn init failue: %s", $@ );
-        MailScanner::Log::WarnLog( "Baruwa DB Failure");
+        MailScanner::Log::WarnLog( "Baruwa: DB Failure");
         return 0;
     }
     return $count;
@@ -128,43 +127,43 @@ sub CheckScores {
 }
 
 sub InitBaruwaLowScore {
-    MailScanner::Log::InfoLog("Baruwa - Populating spam score settings");
+    MailScanner::Log::InfoLog("Baruwa: Populating spam score settings");
     my $total = PopulateScores( 1, \%Lowscores );
     if ($total) {
-        MailScanner::Log::InfoLog( "Read %d spam score settings", $total );
+        MailScanner::Log::InfoLog( "Baruwa: Read %d spam score settings", $total );
     }
     else {
         MailScanner::Log::InfoLog(
-            "no spam score settings found using defaults");
+            "Baruwa: no spam score settings found using defaults");
     }
     $ltime = time();
 }
 
 sub InitBaruwaHighScore {
-    MailScanner::Log::InfoLog("Baruwa - Populating high spam score settings");
+    MailScanner::Log::InfoLog("Baruwa: Populating high spam score settings");
     my $total = PopulateScores( 2, \%Highscores );
     if ($total) {
-        MailScanner::Log::InfoLog( "Read %d high spam score settings", $total );
+        MailScanner::Log::InfoLog( "Baruwa: Read %d high spam score settings", $total );
     }
     else {
         MailScanner::Log::InfoLog(
-            "no high spam score settings found using defaults");
+            "Baruwa: no high spam score settings found using defaults");
     }
     $htime = time();
 }
 
 sub EndBaruwaLowScore {
-    MailScanner::Log::InfoLog("Shutting down Baruwa spam score settings");
+    MailScanner::Log::InfoLog("Baruwa: Shutting down spam score settings");
 }
 
 sub EndBaruwaHighScore {
-    MailScanner::Log::InfoLog("Shutting down Baruwa high spam score settings");
+    MailScanner::Log::InfoLog("Baruwa: Shutting down high spam score settings");
 }
 
 sub BaruwaLowScore {
     if ( ( time() - $ltime ) >= ( $refresh_time * 60 ) ) {
         MailScanner::Log::InfoLog(
-            "Baruwa - spam score setting refresh time reached");
+            "Baruwa: spam score setting refresh time reached");
         InitBaruwaLowScore();
     }
     my ($message) = @_;
@@ -174,7 +173,7 @@ sub BaruwaLowScore {
 sub BaruwaHighScore {
     if ( ( time() - $htime ) >= ( $refresh_time * 60 ) ) {
         MailScanner::Log::InfoLog(
-            "Baruwa - high spam score setting refresh time reached");
+            "Baruwa: high spam score setting refresh time reached");
         InitBaruwaHighScore();
     }
     my ($message) = @_;
@@ -218,9 +217,7 @@ sub PopulateScanList {
         $conn->disconnect();
     };
     if ($@) {
-        # MailScanner::Log::WarnLog( "Baruwa Scan Settings init Failure: %s",
-        #     $@ );
-        MailScanner::Log::WarnLog( "Baruwa DB init Fail");
+        MailScanner::Log::WarnLog( "Baruwa: DB init Fail");
         return 0;
     }
     return $count;
@@ -245,13 +242,13 @@ sub CheckShouldScan {
 }
 
 sub InitBaruwaShouldScan {
-    MailScanner::Log::InfoLog("Starting Baruwa scanning settings");
+    MailScanner::Log::InfoLog("Baruwa: Starting scanning settings");
     my $total = PopulateScanList( \%ScanList );
-    MailScanner::Log::InfoLog( "Read %d settings", $total );
+    MailScanner::Log::InfoLog( "Baruwa: Read %d settings", $total );
 }
 
 sub EndBaruwaShouldScan {
-    MailScanner::Log::InfoLog("Shutting down Baruwa scanning settings");
+    MailScanner::Log::InfoLog("Baruwa: Shutting down scanning settings");
 }
 
 sub BaruwaShouldScan {

@@ -71,7 +71,7 @@ sub PopulateList {
                     };
                     if ($@) {
                         MailScanner::Log::WarnLog(
-                            "Invalid network range: %s/%s",
+                            "Baruwa: Invalid network range: %s/%s",
                             $network, $bits );
                     }
                 }
@@ -88,7 +88,7 @@ sub PopulateList {
                     }
                 };
                 if ($@) {
-                    MailScanner::Log::WarnLog( "Invalid network range: %s",
+                    MailScanner::Log::WarnLog( "Baruwa: Invalid network range: %s",
                         $from_address );
                 }
             }
@@ -101,8 +101,7 @@ sub PopulateList {
         $conn->disconnect();
     };
     if ($@) {
-        # MailScanner::Log::WarnLog( "Baruwa Lists Failure: %s", $@ );
-        MailScanner::Log::WarnLog( "Baruwa DB init Fail");
+        MailScanner::Log::WarnLog( "Baruwa: DB init Fail");
         return 0;
     }
     return $count;
@@ -139,20 +138,20 @@ sub LookupAddress {
 }
 
 sub InitBaruwaWhitelist {
-    MailScanner::Log::InfoLog("Starting Baruwa whitelists");
+    MailScanner::Log::InfoLog("Baruwa: Starting whitelists");
     my $total = PopulateList( 1, \%Whitelist, \@WhiteIPs );
-    MailScanner::Log::InfoLog( "Read %d whitelist items", $total );
-    MailScanner::Log::InfoLog("Ip blocks whitelisted: @WhiteIPs");
+    MailScanner::Log::InfoLog( "Baruwa: Read %d whitelist items", $total );
+    MailScanner::Log::InfoLog("Baruwa: Ip blocks whitelisted: @WhiteIPs");
     $wtime = time();
 }
 
 sub EndBaruwaWhitelist {
-    MailScanner::Log::InfoLog("Shutting down Baruwa whitelists");
+    MailScanner::Log::InfoLog("Baruwa: Shutting down whitelists");
 }
 
 sub BaruwaWhitelist {
     if ( ( time() - $wtime ) >= ( $refresh_time * 60 ) ) {
-        MailScanner::Log::InfoLog("Baruwa whitelist refresh time reached");
+        MailScanner::Log::InfoLog("Baruwa: whitelist refresh time reached");
         InitBaruwaWhitelist();
     }
     my ($message) = @_;
@@ -160,20 +159,20 @@ sub BaruwaWhitelist {
 }
 
 sub InitBaruwaBlacklist {
-    MailScanner::Log::InfoLog("Starting Baruwa blacklists");
+    MailScanner::Log::InfoLog("Baruwa: Starting blacklists");
     my $total = PopulateList( 2, \%Blacklist, \@BlackIPs );
-    MailScanner::Log::InfoLog( "Read %d blacklist items", $total );
-    MailScanner::Log::InfoLog("Ip blocks blacklisted: @BlackIPs");
+    MailScanner::Log::InfoLog( "Baruwa: Read %d blacklist items", $total );
+    MailScanner::Log::InfoLog("Baruwa: Ip blocks blacklisted: @BlackIPs");
     $btime = time();
 }
 
 sub EndBaruwaBlacklist {
-    MailScanner::Log::InfoLog("Shutting down Baruwa blacklists");
+    MailScanner::Log::InfoLog("Baruwa: Shutting down blacklists");
 }
 
 sub BaruwaBlacklist {
     if ( ( time() - $btime ) >= ( $refresh_time * 60 ) ) {
-        MailScanner::Log::InfoLog("Baruwa blacklist refresh time reached");
+        MailScanner::Log::InfoLog("Baruwa: blacklist refresh time reached");
         InitBaruwaBlacklist();
     }
     my ($message) = @_;
