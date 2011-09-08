@@ -29,7 +29,7 @@ import subprocess
 from datetime import datetime
 from email.Header import decode_header
 
-SUBJECT_RE = re.compile(r'(?:.+)Subject:(.+)')
+SUBJECT_RE = re.compile(r'^H(?:.+)?Subject:\s(.+)')
 
 
 class QueueParser(object):
