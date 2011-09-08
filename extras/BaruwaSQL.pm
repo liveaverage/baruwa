@@ -60,13 +60,35 @@ sub create_backup_tables {
     eval {
         $bconn->do("PRAGMA default_synchronous = OFF");
         $bconn->do(
-            "CREATE TABLE tm (timestamp TEXT, id TEXT, 
-            size INT, from_address TEXT, from_domain TEXT, to_address TEXT, 
-            to_domain TEXT, subject TEXT, clientip TEXT, spam INT, highspam INT,
-            saspam INT, rblspam INT, whitelisted INT, blacklisted INT, 
-            sascore REAL, spamreport TEXT, virusinfected TEXT, nameinfected INT,
-            otherinfected INT, hostname TEXT, date TEXT, time TEXT, headers TEXT, 
-            actions TEXT, isquarantined INT, scaned INT)"
+            "CREATE TABLE IF NOT EXISTS tm (
+                timestamp TEXT NOT NULL,
+                id TEXT NOT NULL,
+                size INT NOT NULL,
+                from_address TEXT NOT NULL,
+                from_domain TEXT NOT NULL,
+                to_address TEXT NOT NULL,
+                to_domain TEXT NOT NULL,
+                subject TEXT NOT NULL,
+                clientip TEXT NOT NULL,
+                spam INT NOT NULL,
+                highspam INT NOT NULL,
+                saspam INT NOT NULL,
+                rblspam INT NOT NULL,
+                whitelisted INT NOT NULL,
+                blacklisted INT NOT NULL,
+                sascore REAL NOT NULL,
+                spamreport TEXT NOT NULL,
+                virusinfected TEXT NOT NULL,
+                nameinfected INT NOT NULL,
+                otherinfected INT NOT NULL,
+                hostname TEXT NOT NULL,
+                date TEXT NOT NULL,
+                time TEXT NOT NULL,
+                headers TEXT NOT NULL, 
+                actions TEXT NOT NULL,
+                isquarantined INT NOT NULL,
+                scaned INT NOT NULL
+            )"
         );
         $bconn->do("CREATE UNIQUE INDEX id_uniq ON tm(id)");
     };
