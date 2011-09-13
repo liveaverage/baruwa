@@ -29,7 +29,9 @@ from django.contrib.auth.forms import PasswordResetForm, AuthenticationForm
 from baruwa.utils.regex import DOM_RE
 from baruwa.utils.regex import ADDRESS_RE
 from baruwa.fixups import max_username_length
-from baruwa.accounts.models import UserProfile, UserAddresses
+from baruwa.accounts.models import UserProfile, UserAddresses, UserSignature
+
+SIG_TYPES = ((1, 'Text signature'), (2, 'HTML Signature'),)
 
 
 def username_help():
@@ -250,4 +252,33 @@ class AuthenticationForm(AuthenticationForm):
         "init"
         super(AuthenticationForm, self).__init__(*args, **kwargs)
 
-    username = username_field() 
+    username = username_field()
+
+
+class AddAccountSignatureForm(forms.ModelForm):
+    """Add domain email signature"""
+    signature_type = forms.ChoiceField(choices=SIG_TYPES)
+    user = forms.ModelChoiceField(
+            queryset=User.objects.exclude(is_superuser=True),
+            widget=forms.HiddenInput())
+    class Meta:
+        model = UserSignature
+        exclude = ('image',)
+
+
+class EditAccountSignatureForm(forms.ModelForm):
+    """Edit domain email signature"""
+    signature_type = forms.ChoiceField(choices=SIG_TYPES,
+                    widget=forms.HiddenInput())
+    class Meta:
+        model = UserSignature
+        exclude = ('id', 'user', 'image',)
+
+
+class DeleteAccountSignatureForm(forms.ModelForm):
+    """Delete domain email signature"""
+    id = forms.CharField(widget=forms.HiddenInput)
+
+    class Meta:
+        model = UserSignature
+        fields = ('id',)

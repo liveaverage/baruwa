@@ -42,12 +42,14 @@ from django.utils.translation import check_for_language
 
 from baruwa.accounts.forms import UserProfileForm, UserCreateForm, \
 UserAddressForm, OrdUserProfileForm, UserUpdateForm, AdminUserUpdateForm, \
-EditAddressForm, DeleteAddressForm, DeleteUserForm, AuthenticationForm
+EditAddressForm, DeleteAddressForm, DeleteUserForm, AuthenticationForm, \
+AddAccountSignatureForm, EditAccountSignatureForm, DeleteAccountSignatureForm
 from baruwa.accounts.profile import set_user_addresses
-from baruwa.accounts.models import UserAddresses, UserProfile
+from baruwa.accounts.models import UserAddresses, UserProfile, UserSignature
 from baruwa.utils.decorators import onlysuperusers, authorized_users_only, \
 only_admins
 from baruwa.utils.misc import jsonify_accounts_list
+from baruwa.config.tasks import GenerateAccountSigs, DeleteAccountSigs
 
 
 def local_login(request, redirect_field_name=REDIRECT_FIELD_NAME):
@@ -349,6 +351,7 @@ def user_profile(request, user_id, template_name='accounts/user_profile.html'):
     account_profile = account_info.get_profile()
     if not account_info.is_superuser:
         addresses = UserAddresses.objects.filter(user=account_info)
+        signatures = UserSignature.objects.filter(user=account_info)
     return render_to_response(template_name, locals(),
         context_instance=RequestContext(request))
 
@@ -398,4 +401,90 @@ def update_profiles(request, user_id, template_name='accounts/update_profile.htm
     user_profile = None
     form.fields['user_id'].widget.attrs['value'] = user_id
     return render_to_response(template_name, locals(),
+        context_instance=RequestContext(request))
+
+
+@login_required
+@authorized_users_only
+def add_account_signature(request, user_id,
+                        template='accounts/add_account_sig.html'):
+    'add account text or html signature'
+    user_account = get_object_or_404(User, pk=user_id)
+    user_profile = get_object_or_404(UserProfile, user=user_account)
+
+    if request.method == 'POST':
+        form = AddAccountSignatureForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                msg = _('The signature has been saved')
+                GenerateAccountSigs.delay(user_id)
+            except IntegrityError:
+                msg = _('A signature of this type already '
+                'exists for account: %(account)s') % dict(
+                account=user_account.username)
+            except DatabaseError:
+                msg = _('An error occured during processing try again later')
+            djmessages.info(request, msg)
+            return HttpResponseRedirect(reverse('user-profile',
+                    args=[user_account.id]))
+        # else:
+        #     print form.errors
+        #     print user_profile.id
+    else:
+        form = AddAccountSignatureForm(initial={'user': user_id})
+        form.fields['user'].widget.attrs['readonly'] = True
+    return render_to_response(template, locals(),
+        context_instance=RequestContext(request))
+
+
+@login_required
+@authorized_users_only
+def edit_account_signature(request, user_id, sig_id,
+        template='accounts/edit_account_sig.html'):
+    'edit account text or html signature'
+    user_account = get_object_or_404(User, pk=user_id)
+    signature = get_object_or_404(UserSignature, id=sig_id)
+
+    if request.method == 'POST':
+        form = EditAccountSignatureForm(request.POST, instance=signature)
+        if form.is_valid():
+            try:
+                form.save()
+                msg = _('The signature has been updated')
+                GenerateAccountSigs.delay(user_id)
+            except DatabaseError:
+                msg = _('An error occured during processing, try again later')
+            djmessages.info(request, msg)
+            return HttpResponseRedirect(reverse('user-profile',
+                    args=[user_account.id]))
+    else:
+        form = EditAccountSignatureForm(instance=signature)
+    return render_to_response(template, locals(),
+        context_instance=RequestContext(request))
+
+
+@login_required
+@authorized_users_only
+def delete_account_signature(request, user_id, sig_id,
+        template='accounts/delete_account_sig.html'):
+    'delete account text or html signature'
+    user_account = get_object_or_404(User, pk=user_id)
+    signature = get_object_or_404(UserSignature, id=sig_id)
+
+    if request.method == 'POST':
+        form = DeleteAccountSignatureForm(request.POST, instance=signature)
+        if form.is_valid():
+            #try:
+            DeleteAccountSigs.delay([sig_id])
+            #    signature.delete()
+            msg = _('The signature, is being deleted.')
+            # except DatabaseError:
+            #     msg = _('An error occured during processing, try again later')
+            djmessages.info(request, msg)
+            return HttpResponseRedirect(reverse('user-profile',
+                    args=[user_account.id]))
+    else:
+        form = DeleteAccountSignatureForm(instance=signature)
+    return render_to_response(template, locals(),
         context_instance=RequestContext(request))

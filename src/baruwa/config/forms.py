@@ -24,10 +24,12 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 from baruwa.accounts.models import UserAddresses
-from baruwa.config.models import MailHost
+from baruwa.config.models import MailHost, DomainSignature
 from baruwa.utils.misc import ipaddr_is_valid
 from baruwa.utils.regex import DOM_RE
 from baruwa.config.models import MailAuthHost
+
+SIG_TYPES = ((1, 'Text signature'), (2, 'HTML Signature'),)
 
 
 def validate_host(value):
@@ -109,3 +111,31 @@ class DeleteMailAuthHostForm(forms.ModelForm):
 class InitializeConfigsForm(forms.Form):
     "Initialize a scanning nodes configuration"
     id = forms.CharField(widget=forms.HiddenInput)
+
+
+class AddDomainSignatureForm(forms.ModelForm):
+    """Add domain email signature"""
+    signature_type = forms.ChoiceField(choices=SIG_TYPES)
+    useraddress = forms.ModelChoiceField(queryset=UserAddresses.objects.filter(address_type=1),
+    widget=forms.HiddenInput())
+    class Meta:
+        model = DomainSignature
+        exclude = ('image',)
+
+
+class EditDomainSignatureForm(forms.ModelForm):
+    """Edit domain email signature"""
+    signature_type = forms.ChoiceField(choices=SIG_TYPES,
+                    widget=forms.HiddenInput())
+    class Meta:
+        model = DomainSignature
+        exclude = ('id', 'useraddress', 'image',)
+
+
+class DeleteDomainSignatureForm(forms.ModelForm):
+    """Delete domain email signature"""
+    id = forms.CharField(widget=forms.HiddenInput)
+
+    class Meta:
+        model = DomainSignature
+        fields = ('id',)

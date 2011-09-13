@@ -20,33 +20,41 @@
 #
 
 import re
+import os
+import base64
+import imghdr
 import anyjson
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import (HttpResponseRedirect, HttpResponse,
+HttpResponseForbidden)
 from django.contrib import messages as djmessages
 from django.core.paginator import Paginator
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.db import connection, IntegrityError, DatabaseError
 from django.utils.translation import check_for_language
 from celery.backends import default_backend
 
+from baruwa.utils.misc import check_access
 from baruwa.utils.decorators import onlysuperusers
-from baruwa.accounts.models import UserAddresses
+from baruwa.accounts.models import UserAddresses, UserProfile
 from baruwa.config.models import MailHost
-from baruwa.config.tasks import TestSMTPServer
+from baruwa.config.tasks import TestSMTPServer, GenerateDomainSigs, \
+DeleteDomainSigs
 from baruwa.config.forms import  MailHostForm, EditMailHost, DeleteMailHost, \
 InitializeConfigsForm
 from baruwa.utils.misc import jsonify_domains_list
 from baruwa.config.models import MailAuthHost, ScannerHost, ScannerConfig, \
-ConfigSection
+ConfigSection, DomainSignature, SignatureImg
 from baruwa.config.forms import MailAuthHostForm, EditMailAuthHostForm, \
- DeleteMailAuthHostForm
+DeleteMailAuthHostForm, AddDomainSignatureForm, EditDomainSignatureForm, \
+DeleteDomainSignatureForm
 
 
 AUTH_TYPES = ['', 'pop3', 'imap', 'smtp', 'radius/RSA SECUREID']
@@ -105,6 +113,7 @@ def view_domain(request, domain_id, template='config/domain.html'):
 
     servers = MailHost.objects.filter(useraddress=domain)
     authservers = MailAuthHost.objects.filter(useraddress=domain)
+    signatures = DomainSignature.objects.filter(useraddress=domain)
     return render_to_response(template, locals(),
         context_instance=RequestContext(request))
 
@@ -472,6 +481,87 @@ def view_settings(request, scanner_id, section_id,
         context_instance=RequestContext(request))
 
 
+@login_required
+@onlysuperusers
+def add_domain_signature(request, domain_id,
+                        template='config/add_domain_sig.html'):
+    'add domain text or html signature'
+    domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
+
+    if request.method == 'POST':
+        form = AddDomainSignatureForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                msg = _('The signature has been saved')
+                GenerateDomainSigs.delay(domain.id)
+            except IntegrityError:
+                msg = _('A signature of this type already '
+                'exists for domain: %(domain)s') % dict(domain=domain.name)
+            except DatabaseError:
+                msg = _('An error occured during processing try again later')
+            djmessages.info(request, msg)
+            return HttpResponseRedirect(reverse('view-domain',
+                    args=[domain.id]))
+    else:
+        form = AddDomainSignatureForm(initial={'useraddress': domain.id})
+        form.fields['useraddress'].widget.attrs['readonly'] = True
+    return render_to_response(template, locals(),
+        context_instance=RequestContext(request))
+
+
+@login_required
+@onlysuperusers
+def edit_domain_signature(request, domain_id, sig_id,
+        template='config/edit_domain_sig.html'):
+    'edit domain text or html signature'
+    domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
+    signature = get_object_or_404(DomainSignature, id=sig_id)
+
+    if request.method == 'POST':
+        form = EditDomainSignatureForm(request.POST, instance=signature)
+        if form.is_valid():
+            try:
+                form.save()
+                msg = _('The signature has been updated')
+                GenerateDomainSigs.delay(domain.id)
+            except DatabaseError:
+                msg = _('An error occured during processing, try again later')
+            djmessages.info(request, msg)
+            return HttpResponseRedirect(reverse('view-domain',
+                    args=[domain.id]))
+    else:
+        form = EditDomainSignatureForm(instance=signature)
+    return render_to_response(template, locals(),
+        context_instance=RequestContext(request))
+
+
+@login_required
+@onlysuperusers
+def delete_domain_signature(request, domain_id, sig_id,
+        template='config/delete_domain_sig.html'):
+    'delete domain text or html signature'
+    domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
+    signature = get_object_or_404(DomainSignature, id=sig_id)
+
+    if request.method == 'POST':
+        form = DeleteDomainSignatureForm(request.POST, instance=signature)
+        if form.is_valid():
+            #try:
+            DeleteDomainSigs.delay([sig_id])
+            #    signature.delete()
+            msg = _('The signature, is being deleted')
+            #except DatabaseError:
+            #    msg = _('An error occured during processing, try again later')
+            djmessages.info(request, msg)
+            return HttpResponseRedirect(reverse('view-domain',
+                    args=[domain.id]))
+    else:
+        form = DeleteDomainSignatureForm(instance=signature)
+    return render_to_response(template, locals(),
+        context_instance=RequestContext(request))
+
+
 def set_language(request):
     next = request.REQUEST.get('next', None)
     if not next:
@@ -487,3 +577,111 @@ def set_language(request):
             else:
                 response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
     return response
+
+
+def filemanager(request, user_id, domain_id=None):
+    "handle file access requests from jquery"
+    def unauthorized():
+        "return unauthorized"
+        body = anyjson.dumps(dict(success=False, error=_("Not authorized.")))
+        return HttpResponseForbidden(body, mimetype='application/json')
+
+    if request.user.is_authenticated():
+        user = User.objects.get(pk=user_id)
+        if user:
+            if not check_access(request, user):
+                unauthorized()
+            action = request.REQUEST.get('action', None)
+            if domain_id:
+                requesturl = reverse('domains-image-manager',
+                                    args=[domain_id, user_id])
+            else:
+                requesturl = reverse('accounts-image-manager',
+                                    args=[user_id])
+            if action and action == 'auth':
+                body = dict(success=True, data=dict(
+                            move=dict(enabled=False, handler=requesturl),
+                            rename=dict(enabled=False, handler=requesturl),
+                            remove=dict(enabled=True, handler=requesturl),
+                            mkdir=dict(enabled=False, handler=requesturl),
+                            upload=dict(enabled=True, handler=requesturl + '?action=upload',
+                            accept_ext=['gif', 'jpg', 'png']),
+                            baseUrl='')
+                            )
+            elif action and action == 'list':
+                imgquery = SignatureImg.objects.filter(owner=user)
+                imgs = {}
+                def builddict(img):
+                    imgs[img.name] = reverse('img-view', args=[user_id, img.id])
+                [builddict(img) for img in imgquery]
+                body = dict(success=True, data=dict(
+                            directories={},
+                            files=imgs))
+            elif action and action == 'upload':
+                if request.method == 'POST':
+                    handle = request.FILES['handle']
+                    prevent = False
+                    currentsigs = SignatureImg.objects.filter(owner=user).count()
+                    profile = UserProfile.objects.filter(user=user)[0]
+                    if user.is_superuser:
+                        prevent = True
+                    elif profile.account_type == 2:
+                        domains = UserAddresses.objects.filter(address_type=1, user=user).count()
+                        if currentsigs >= domains:
+                            prevent = True
+                    else:
+                        if currentsigs:
+                            prevent = True
+                    if not prevent:
+                        chunk = handle.read()
+                        ext = imghdr.what('./xxx', chunk)
+                        if ext in ['gif', 'jpg', 'png', 'jpeg']:
+                            try:
+                                name = request.REQUEST.get('newName') or 'image.%s' % ext
+                                name = os.path.basename(name)
+                                dbimg = SignatureImg(
+                                            name = name,
+                                            image = base64.encodestring(chunk),
+                                            content_type = handle.content_type,
+                                            owner = user,)
+                                dbimg.save()
+                                respond = _('File has been uploaded')
+                            except DatabaseError:
+                                respond = _('An error occured, try again later')
+                        else:
+                            respond = _('The uploaded file is not acceptable')
+                            chunk = None
+                        handle.close()
+                    else:
+                        respond = _('You already have a signature image, '
+                                    'delete the current image before '
+                                    'uploading a new one')
+                    return HttpResponse(respond)
+            elif action and action == 'remove':
+                try:
+                    fname = request.REQUEST.get('file', None)
+                    SignatureImg.objects.filter(owner=user, name=fname).delete()
+                    respond = _('The file has been deleted')
+                    success = True
+                except DatabaseError:
+                    respond = _('The file could not be deleted')
+                    success = False
+                body = dict(success=success, data=respond)
+            else:
+                body = dict(success=False, error=_("Action not supported"),
+                            errorno=255)
+            return HttpResponse(anyjson.dumps(body), mimetype='application/json')
+    else:
+        unauthorized()
+
+
+@login_required
+def view_img(request, user_id, img_id):
+    "view image"
+    user = get_object_or_404(User, id=user_id)
+    img = get_object_or_404(SignatureImg, id=img_id)
+    if not check_access(request, user):
+        return HttpResponseForbidden(
+                _('You are not authorized to access this resource'))
+    return HttpResponse(base64.decodestring(img.image),
+                        mimetype=img.content_type)

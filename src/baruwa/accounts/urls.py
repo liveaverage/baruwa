@@ -48,4 +48,7 @@ urlpatterns = patterns('',
     (r'^pwreset/$', 'django.contrib.auth.views.password_reset',
     {'template_name': 'accounts/login.html', 'password_reset_form': PwResetForm,
     'email_template_name': 'accounts/pw_reset_email.txt', 'post_reset_redirect': '/accounts/mailsent/'}, 'reset-pwform'),
+    (r'^signatures/(?P<user_id>([0-9]+))/add/$', 'baruwa.accounts.views.add_account_signature', {}, 'accounts-add-signature'),
+    (r'^signatures/(?P<user_id>([0-9]+))/edit/(?P<sig_id>([0-9]+))/$', 'baruwa.accounts.views.edit_account_signature', {}, 'accounts-edit-signature'),
+    (r'^signatures/(?P<user_id>([0-9]+))/delete/(?P<sig_id>([0-9]+))/$', 'baruwa.accounts.views.delete_account_signature', {}, 'accounts-delete-signature'),
 )

@@ -19,6 +19,7 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.db.models.signals import class_prepared
@@ -48,4 +49,17 @@ def patch_username():
             v.limit_value = max_username_length()
 
 patch_username()
+
+
+class SignatureImg(models.Model):
+    """Store signature images in the DB"""
+    id = models.AutoField(primary_key=True)
+    content_type = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    image = models.TextField()
+    owner = models.ForeignKey(User)
+
+    class Meta:
+        db_table = 'signature_imgs'
+        unique_together = ('name', 'owner')
 

@@ -195,6 +195,9 @@ CELERY_DEFAULT_EXCHANGE = "default"
 CELERY_DEFAULT_EXCHANGE_TYPE = "direct"
 CELERY_DEFAULT_ROUTING_KEY = "default"
 
+#south
+SOUTH_AUTO_FREEZE_APP = True
+
 # Radius auth settings
 RADIUS_SECRET = {}
 RADIUS_SECRET['127.0.0.1'] = 'secret'
@@ -229,6 +232,9 @@ SA_RULES_DIRS = ['/usr/share/spamassassin', '/etc/mail/spamassassin']
 
 #max username length defaults to 255
 #MAX_USERNAME_LENGTH = 128
+
+#email signatures base directory
+EMAIL_SIGNATURES_DIR = '/etc/MailScanner/signatures'
 
 # End Baruwa only settings
 

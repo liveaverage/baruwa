@@ -194,6 +194,40 @@
 			{% endif %}
 		</div>		 
 	</div>
-{% endfor %}	
+{% endfor %}
+{% if account_profile.account_type == 3 %}
+<div class="header_div">
+    <div class="Reports_heading">
+		{% trans "Email signatures" %}
+		<div class="Profile_edit">[ <a href="{% url accounts-add-signature account_info.id %}">{% trans "Add" %}</a> ]</div>
+	</div>
+</div>
+{% for signature in signatures  %}
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% if signature.signature_type == 1 %}
+			{% trans "Text signature" %}
+		{% else %}
+			{% trans "HTML signature" %}
+		{% endif %}
+	</div>
+	<div class="Profile_values">
+		{% if signature.enabled %}
+			{% trans "Enabled" %}
+		{% else %}
+			{% trans "Disabled" %}
+		{% endif %}
+		<div class="Profile_edit">
+			 <a href="{% url accounts-edit-signature account_info.id signature.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+			 <a href="{% url accounts-delete-signature account_info.id signature.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+	<div class="spanrow">{% trans "No email signatures configured" %}</div>
+</div>
+{% endfor %}
+{% endif %}	
 {% endif %}
 {% endblock content %}

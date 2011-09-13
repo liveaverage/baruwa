@@ -19,9 +19,16 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+from lxml.html.clean import Cleaner
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.utils.html import strip_tags
+
+from baruwa.fixups.models import SignatureImg
+
+UNCLEANTAGS = ['html', 'head', 'link', 'body', 'base']
 
 
 class UserAddresses(models.Model):
@@ -96,6 +103,29 @@ def create_user_profile(sender, **kwargs):
 #def delete_user_profile(sender, **kwargs):
 #    """delete_user_profile"""
 #    user = kwargs['instance']
+
+
+class UserSignature(models.Model):
+    "User Email signatures"
+    id = models.AutoField(primary_key=True)
+    signature_type = models.IntegerField()
+    signature_content = models.TextField(blank=False)
+    enabled = models.BooleanField(default=False)
+    user = models.ForeignKey(User, related_name='us_ur')
+    image = models.ForeignKey(SignatureImg, blank=True, null=True,
+                                related_name='us_si')
+
+    def clean(self):
+        "sanitize inputs"
+        if self.signature_type == 1:
+            self.signature_content = strip_tags(self.signature_content)
+        else:
+            cleaner = Cleaner(remove_tags=UNCLEANTAGS)
+            self.signature_content = cleaner.clean_html(self.signature_content)
+
+    class Meta:
+        db_table = 'user_signatures'
+        unique_together = ('user', 'signature_type')
 
 
 post_save.connect(create_user_profile, sender=User)

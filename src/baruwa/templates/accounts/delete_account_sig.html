@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}{% trans "Delete email signature" %}{% endblock title %}
+{% block heading %}{% trans "Delete email signature" %}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">{% trans "Delete Email signature" %}</div>
+</div>
+<form action="" method="post">
+	{% csrf_token %}
+	{% for hidden in form.hidden_fields %}
+		{{ hidden }}
+	{% endfor %}
+    <div class="LightBlue_div">
+        <div class="form_label">{% trans "Delete the email signature" %}</div>
+        <div class="form_value">
+			<input id="submit-button" type="submit" value="{% trans "Delete" %}" />      
+        </div>
+        <div class="form_error"></div>
+    </div>
+</form>
+{% endblock content %}

@@ -106,11 +106,14 @@ def host_is_local(host):
     """
     Checks if host is local to host running the function
     """
-    host_name = socket.gethostbyname(host)
-    ip_addr = socket.gethostbyname(socket.gethostname())
-    if host_name in [ip_addr, '127.0.0.1']:
-        return True
-    else:
+    try:
+        host_name = socket.gethostbyname(host)
+        ip_addr = socket.gethostbyname(socket.gethostname())
+        if host_name in [ip_addr, '127.0.0.1']:
+            return True
+        else:
+            return False
+    except socket.error:
         return False
 
 
@@ -192,3 +195,21 @@ def ipaddr_is_valid(ip):
         return True
     except ValueError:
         return False
+
+
+def check_access(request, user):
+    if not request.user.is_superuser:
+        account_type = request.session['user_filter']['account_type']
+        if account_type == 2:
+            if request.user.id != user.id:
+                domains = request.session['user_filter']['addresses']
+                if not '@' in user.username:
+                    testname = user.email.split('@')[1]
+                else:
+                    testname = user.username.split('@')[1]
+                if not testname in domains:
+                    return False
+        else:
+            if request.user.id != user.id:
+                return False
+    return True

@@ -19,9 +19,15 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-from django.db import models
+from lxml.html.clean import Cleaner
 
+from django.db import models
+from django.utils.html import strip_tags
+
+from baruwa.fixups.models import SignatureImg
 from baruwa.accounts.models import UserAddresses
+
+UNCLEANTAGS = ['html', 'head', 'link', 'body', 'base']
 
 
 class MailHost(models.Model):
@@ -91,3 +97,28 @@ class ScannerConfig(models.Model):
 
     class Meta:
         db_table = 'scanner_config'
+        unique_together = ('internal', 'host')
+
+
+class DomainSignature(models.Model):
+    "Email signatures"
+    id = models.AutoField(primary_key=True)
+    signature_type = models.IntegerField()
+    signature_content = models.TextField(blank=False)
+    enabled = models.BooleanField(default=False)
+    useraddress = models.ForeignKey(UserAddresses, related_name='ds_ua')
+    image = models.ForeignKey(SignatureImg, blank=True, null=True,
+                                related_name='ds_si')
+
+    def clean(self):
+        "sanitize inputs"
+        if self.signature_type == 1:
+            self.signature_content = strip_tags(self.signature_content)
+        else:
+            cleaner = Cleaner(remove_tags=UNCLEANTAGS)
+            self.signature_content = cleaner.clean_html(self.signature_content)
+
+    class Meta:
+        db_table = 'domain_signatures'
+        unique_together = ('useraddress', 'signature_type')
+

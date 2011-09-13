@@ -42,4 +42,12 @@ urlpatterns = patterns('baruwa.config.views',
     (r'^scanners/(?P<scanner_id>([0-9]+))/settings/(?P<section_id>([0-9]+))/$', 'view_settings', {}, 'view-section'),
     (r'^conntests/(?P<taskid>[\w\d\-]+)/$', test_status, {}, 'conn-status'),
     (r'^setlang/$', 'set_language', {}, 'lang-selector'),
+    (r'^domains/(?P<domain_id>([0-9]+))/add/signature/$', 'add_domain_signature', {}, 'add-signature'),
+    (r'^domains/(?P<domain_id>([0-9]+))/edit/signature/(?P<sig_id>([0-9]+))/$', 'edit_domain_signature', {}, 'edit-signature'),
+    (r'^domains/(?P<domain_id>([0-9]+))/delete/signature/(?P<sig_id>([0-9]+))/$', 'delete_domain_signature', {}, 'delete-signature'),
+    (r'^domains/(?P<domain_id>([0-9]+))/(?P<user_id>([0-9]+))/images/$', 'filemanager', {}, 'domains-image-manager'),
+    (r'^accounts/(?P<user_id>([0-9]+))/images/$', 'filemanager', {}, 'accounts-image-manager'),
+    #(r'^domains/imgs/(?P<domain_id>([0-9]+))/(?P<user_id>([0-9]+))/(?P<img_id>([0-9]+))/$', 'view_img', {}, 'domains-img-view'),
+    #(r'^accounts/imgs/(?P<user_id>([0-9]+))/(?P<img_id>([0-9]+))/$', 'view_img', {}, 'accounts-img-view'),
+    (r'^imgs/(?P<user_id>([0-9]+))/(?P<img_id>([0-9]+))/$', 'view_img', {}, 'img-view')
 )

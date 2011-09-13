@@ -25,3 +25,4 @@ INSERT INTO scanner_config_sections (id, name) values(24, 'What to do with spam'
 INSERT INTO scanner_config_sections (id, name) values(25, 'Logging');
 INSERT INTO scanner_config_sections (id, name) values(26, 'Advanced SpamAssassin Settings');
 INSERT INTO scanner_config_sections (id, name) values(27, 'Advanced Settings');
+INSERT INTO scanner_config_sections (id, name) values(28, 'Configuration serial numbers');
