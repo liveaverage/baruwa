@@ -4,7 +4,7 @@
 
 Name:           baruwa
 Version:        1.1.0
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Ajax enabled MailScanner web frontend      
 Group:          Applications/Internet
 License:        GPLv2
@@ -200,6 +200,9 @@ fi
 
 
 %changelog
+* Fri Aug 26 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-8
+- FIX: logging of number of settings read from DB
+
 * Fri Aug 26 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-7
 - FIX: Silence depreciation errors in cron
 - FIX: exception in top hosts report
