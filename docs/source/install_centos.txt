@@ -47,6 +47,8 @@ be resolved by packages shipped by the Baruwa repo::
 
 .. include:: includes/redhat_celeryd_init.inc
 
+.. include:: includes/signatures.inc
+
 .. include:: includes/redhat_apache.inc
 
 .. include:: includes/configure_ms_redhat.inc

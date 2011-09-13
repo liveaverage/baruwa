@@ -65,3 +65,11 @@ Mailq Stats updates
     # baruwa-admin queuestats
 
 Query the inbound and outbound queues and write stats to the database.
+
+Email Signatures configuration
+==============================
+::
+
+    # baruwa-admin initconfig
+
+Sets up the backend for configuring of domain and user email signatures via the interface.

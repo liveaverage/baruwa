@@ -2,7 +2,7 @@ Baruwa
 ======
 
 :Release: |version|
-:Date: |today|
+:Build Date: |today|
 
 .. include:: includes/intro.inc
 

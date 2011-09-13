@@ -28,6 +28,7 @@ Features
 + AJAX support for most operations
 + Reporting with AJAX enabled query builder
 + I18n support, allows use of multiple languages
++ Signature management / Branding
 + Mail queue management and reporting
 + Interactive SVG graphs
 + Emailed PDF reports
@@ -45,7 +46,7 @@ Features
 
 Screenshots
 ==
-[Screenshots](http://www.flickr.com/photos/baruwa/ "Screenshots") are on our Flickr page.
+[Screenshots](http://www.baruwa.org/about/screenshots.html "Screenshots") are on our site.
 
 
 Requirements
@@ -91,7 +92,7 @@ Binary packages for Ubuntu/Debian, Fedora and RHEL/SL/CENTOS are available.
 Documentation
 ==
 Documentation is included in the docs directory of the tar ball and can also be accessed 
-[online](http://www.baruwa.org/documentation.html)
+[online](http://www.baruwa.org/documentation/)
 
 
 Support

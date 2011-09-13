@@ -27,6 +27,7 @@ Features
 	+ AJAX support for most operations
 	+ Reporting with AJAX enabled query builder
 	+ I18n support, allows use of multiple languages
+	+ Signature management / Branding
 	+ Mail queue management and reporting
 	+ Interactive SVG graphs
 	+ Emailed PDF reports
@@ -44,7 +45,7 @@ Features
 ===========
 Screenshots
 ===========
-Screenshots are on our `Flickr page`_.
+Screenshots are on our `site`_.
 
 ============
 Requirements
@@ -99,5 +100,5 @@ Subscribe to the Baruwa `mailing list`_
 
 .. _`mailing list`: http://lists.baruwa.org/mailman/listinfo/baruwa
 .. _`online`: http://www.baruwa.org/
-.. _`Flickr page`: http://www.flickr.com/photos/baruwa/
+.. _`site`: http://www.baruwa.org/about/screenshots.html
 .. _`MailScanner`: http://www.mailscanner.info/

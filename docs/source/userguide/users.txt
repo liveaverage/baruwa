@@ -39,6 +39,7 @@ The settings tab provides access to the following::
 	* Domain management
 		* SMTP delivery host management
 		* Authentication management
+		* Signature management
 	* Scanner engine configuration
 
 Reports
@@ -65,3 +66,4 @@ Account
 The accounts tab provides access to the following::
 	* Account management
 	* Profile management
+	* Signature management

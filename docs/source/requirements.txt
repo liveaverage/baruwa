@@ -8,6 +8,7 @@ Baruwa requirements
 	+ `Python`_ >= 2.4
 	+ `Django`_ >= 1.2
 	+ `django-celery`_
+	+ `django-south`_
 	+ `MySQL-Python`_ >= 1.2.1p2
 	+ `GeoIP-Python`_
 	+ `iPy`_
@@ -34,6 +35,7 @@ MailScanner requirements
 .. _`Python`: http://www.python.org/
 .. _`Django`: http://www.djangoproject.com/
 .. _`django-celery`: http://pypi.python.org/pypi/django-celery/
+.. _`django-south`: http://south.aeracode.org/
 .. _`MySQL-Python`: http://mysql-python.sourceforge.net/
 .. _`GeoIP-Python`: http://www.maxmind.com/app/python
 .. _`iPy`: https://github.com/haypo/python-ipy/wiki

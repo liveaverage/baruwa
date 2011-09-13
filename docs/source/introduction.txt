@@ -9,6 +9,7 @@ Features
 	+ AJAX support for most operations
 	+ Reporting with AJAX enabled query builder
 	+ I18n support, allows use of multiple languages
+	+ Signature management / Branding
 	+ Mail queue management and reporting
 	+ Interactive SVG graphs
 	+ Emailed PDF reports
@@ -26,7 +27,7 @@ Features
 ===========
 Screenshots
 ===========
-Screenshots are on our `Flickr page`_.
+Screenshots are on our `site`_.
 
-.. _`Flickr Page`: http://www.flickr.com/photos/baruwa/
+.. _`site`: http://www.baruwa.org/about/screenshots.html
 .. _`MailScanner`: http://www.mailscanner.info/

@@ -93,6 +93,8 @@ examples.
 If you have any difficulties please refer to the Baruwa `mailing list`_
 for assistance.
 
+.. include:: includes/signatures.inc
+
 Configure the Web server
 ------------------------
 

@@ -21,8 +21,7 @@ Run the command from the mysql prompt::
 
 Edit the Baruwa settings.py file::
 
-	# baruwa_path=$(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
-	# vi $baruwa_path/baruwa/settings.py
+	# vi /etc/baruwa/settings.py
 	
 Set the following options under the default DATABASE option::
 
@@ -49,7 +48,7 @@ Set the rabbitMQ settings::
 
 Edit the settings.py file and make configuration changes to suit your site.::
 
-	# vi $baruwa_path/baruwa/settings.py
+	# vi /etc/baruwa/settings.py
 
 .. warning::
     
