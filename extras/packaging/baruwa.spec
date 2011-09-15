@@ -4,7 +4,7 @@
 
 Name:           baruwa
 Version:        1.1.0
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        Ajax enabled MailScanner web frontend      
 Group:          Applications/Internet
 License:        GPLv2
@@ -17,7 +17,6 @@ Source4:        baruwa.init
 Source5:        baruwa.sysconfig
 Source6:        baruwa.cron.monthly
 Source7:        baruwa.cron.d
-Patch1:         baruwa-various-fixes.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python-devel
@@ -25,6 +24,7 @@ BuildRequires:  python-setuptools
 BuildRequires:  python-sphinx
 BuildRequires:  gettext
 Requires:       Django >= 1.2
+Requires:       Django-south
 Requires:       django-celery
 Requires:       python-GeoIP
 Requires:       python-IPy
@@ -67,7 +67,6 @@ settings.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch1 -p1
 
 %{__cat} <<'EOF' > %{name}.logrotate
 /var/log/baruwa/*.log {
@@ -101,18 +100,19 @@ mkdir -p source/_static
 %{__install} -p -m0644 src/baruwa/settings.py $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/settings.py
 %{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
 %{__chmod} 0755 $RPM_BUILD_ROOT%{python_sitelib}/%{name}/manage.py
-%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
-%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/cron.d
-%{__install} -d -p $RPM_BUILD_ROOT%{_initrddir}
-%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily
-%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/cron.monthly
-%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig
-%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d
-%{__install} -d -p $RPM_BUILD_ROOT%{_datadir}/%{name}/CustomFunctions
-%{__install} -d -p $RPM_BUILD_ROOT%{_sysconfdir}/MailScanner/conf.d
-%{__install} -d -p $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}
-%{__install} -d -p $RPM_BUILD_ROOT%{_localstatedir}/run/%{name}
-%{__install} -d -p $RPM_BUILD_ROOT%{_localstatedir}/log/%{name}
+%{__install} -d $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
+%{__install} -d $RPM_BUILD_ROOT%{_sysconfdir}/cron.d
+%{__install} -d $RPM_BUILD_ROOT%{_initrddir}
+%{__install} -d $RPM_BUILD_ROOT%{_sysconfdir}/cron.daily
+%{__install} -d $RPM_BUILD_ROOT%{_sysconfdir}/cron.monthly
+%{__install} -d $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig
+%{__install} -d $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d
+%{__install} -d $RPM_BUILD_ROOT%{_datadir}/%{name}/CustomFunctions
+%{__install} -d $RPM_BUILD_ROOT%{_sysconfdir}/MailScanner/conf.d
+%{__install} -d $RPM_BUILD_ROOT%{_sysconfdir}/MailScanner/signatures/{users,domains}/{html,text,imgs}
+%{__install} -d $RPM_BUILD_ROOT%{_localstatedir}/lib/%{name}
+%{__install} -d $RPM_BUILD_ROOT%{_localstatedir}/run/%{name}
+%{__install} -d $RPM_BUILD_ROOT%{_localstatedir}/log/%{name}
 %{__install} -p -m0644 extras/*.pm $RPM_BUILD_ROOT%{_datadir}/%{name}/CustomFunctions
 %{__install} -p -m0644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/%{name}.conf
 %{__install} -p -m0644 %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/MailScanner/conf.d/%{name}.conf
@@ -194,12 +194,17 @@ fi
 %{_sysconfdir}/cron.monthly/%{name}
 %exclude %{_sysconfdir}/%{name}/settings.pyc
 %exclude %{_sysconfdir}/%{name}/settings.pyo
+%attr(0755,celeryd,celeryd) %{_sysconfdir}/MailScanner/signatures
 %attr(0700,celeryd,celeryd) %{_localstatedir}/lib/%{name}
 %attr(0700,celeryd,celeryd) %{_localstatedir}/run/%{name}
 %attr(0700,celeryd,celeryd) %{_localstatedir}/log/%{name}
 
 
 %changelog
+* Thu Sep 15 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-9
+- FEATURE: Support Email Signatures/Disclaimer management
+- FEATURE: Added migrations support
+
 * Fri Aug 26 2011 Andrew Colin Kissa <andrew@topdog.za.net> - 1.1.0-8
 - FIX: logging of number of settings read from DB
 
