@@ -235,7 +235,7 @@ class TotalsMessageManager(models.Manager):
                 AS virus_total, SUM(CASE WHEN (virusinfected=0)
                 AND spam>0 THEN 1 ELSE 0 END) AS spam_total,
                 SUM(size) AS size_total FROM messages WHERE
-                from_domain = %s OR to_domain = %s AND date > %s
+                (from_domain = %s OR to_domain = %s) AND date > %s
                  GROUP BY date ORDER BY date DESC
                 """
             conn.execute(query, [domain, domain, enddate])

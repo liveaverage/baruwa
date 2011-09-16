@@ -72,8 +72,8 @@ class Command(BaseCommand):
             default=False, help='Send a copy of the report to the admin'),
         make_option('--period', dest='period', default=None,
             help='Period to report on: valid options are '
-                '"day(s)","week(s)","month(s)" Examples: '
-                '--period="1 day" --period="2 weeks" --period="5 months"'),
+                '"day(s)","week(s)"" Examples: '
+                '--period="1 day" --period="2 weeks"'),
         make_option('--full', action='store_true', dest='include_daily',
             default=False, help='Include the daily totals table'),
     )
@@ -362,7 +362,7 @@ class Command(BaseCommand):
                     'dom': domain_name
                     }
             for domain in domains:
-                if email_re.match(domain.user.email) or email_re.match(domain.user.username):
+                if email_re.match(domain.user.email):
                     parts = build_parts(domain, enddate, True)
                     if parts:
                         pdf = build_pdf(parts)
