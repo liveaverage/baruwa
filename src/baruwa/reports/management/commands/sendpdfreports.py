@@ -59,6 +59,15 @@ def draw_square(color):
     square.add(sqr)
     return square
 
+def checkdate(date):
+    "check a date string"
+    year, month, day = map(int, date.split('-'))
+    try:
+        datetime.date(year, month, day)
+        return True
+    except ValueError:
+        return False
+
 
 class Command(BaseCommand):
     "Generate and email PDF reports"
@@ -76,6 +85,10 @@ class Command(BaseCommand):
                 '--period="1 day" --period="2 weeks"'),
         make_option('--full', action='store_true', dest='include_daily',
             default=False, help='Include the daily totals table'),
+        make_option('--startdate', dest='startdate', default=None,
+            help='Start date to report on: YYYY-MM-DD'),
+        make_option('--enddate', dest='enddate', default=None,
+            help='End date to report on: YYYY-MM-DD'),
     )
 
     def handle(self, *args, **options):
@@ -87,7 +100,16 @@ class Command(BaseCommand):
         copy_admin = options.get('copy_admin')
         period = options.get('period')
         include_daily = options.get('include_daily')
+        startdate =  options.get('startdate')
+        end_date =  options.get('enddate')
         enddate = None
+
+        if startdate and end_date:
+            if not checkdate(startdate) or not checkdate(end_date):
+                raise CommandError(_("The startdate, enddate specified is invalid"))
+            daterange = (startdate, end_date)
+        else:
+            daterange = None
 
         period_re = re.compile(r"(?P<num>(\d+))\s+(?P<period>(day|week|month))(?:s)?")
         if period:
@@ -192,7 +214,7 @@ class Command(BaseCommand):
 
             return [paragraph, table_with_style]
 
-        def build_parts(account, enddate, isdom=None):
+        def build_parts(account, enddate, isdom=None, daterange=None):
             "build parts"
             parts = []
             sentry = 0
@@ -211,15 +233,17 @@ class Command(BaseCommand):
                     exclude(**exclude_kwargs).annotate(
                         num_count=Count(column), total_size=Sum('size')
                     ).order_by(order_by)
-                    if enddate:
+                    if daterange:
+                        data.filter(date__range=(daterange[0], daterange[1]))
+                    elif enddate:
                         data.filter(date__gt=enddate)
                     data = data[:10]
                 else:
                     #all users
-                    data = Message.report.all(user, enddate).values(column).\
-                    exclude(**exclude_kwargs).annotate(
-                        num_count=Count(column), total_size=Sum('size')
-                    ).order_by(order_by)
+                    data = Message.report.all(user, enddate, daterange).values(
+                            column).exclude(**exclude_kwargs).annotate(
+                            num_count=Count(column), total_size=Sum('size')
+                            ).order_by(order_by)
                     data = data[:10]
 
                 if data:
@@ -248,7 +272,9 @@ class Command(BaseCommand):
                                }
                     filters.append(efilter)
                 msg_totals = MessageTotals.objects.all(
-                    account, filters, addrs, profile.account_type)
+                                account, filters, addrs,
+                                profile.account_type,
+                                daterange)
 
             mail_total = []
             spam_total = []
@@ -363,7 +389,7 @@ class Command(BaseCommand):
                     }
             for domain in domains:
                 if email_re.match(domain.user.email):
-                    parts = build_parts(domain, enddate, True)
+                    parts = build_parts(domain, enddate, True, daterange)
                     if parts:
                         pdf = build_pdf(parts)
                         email = gen_email(pdf, domain.user, domain.address)
@@ -375,7 +401,7 @@ class Command(BaseCommand):
                 try:
                     user = profile.user
                     if email_re.match(user.email) or email_re.match(user.username):
-                        parts = build_parts(user, enddate, False)
+                        parts = build_parts(user, enddate, False, daterange)
                         if parts:
                             pdf = build_pdf(parts)
                             email = gen_email(pdf, user, user.username)

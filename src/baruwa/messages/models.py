@@ -182,7 +182,7 @@ class EmailReportMessageManager(models.Manager):
 
 class ReportMessageManager(models.Manager):
 
-    def all(self, user, enddate=None):
+    def all(self, user, enddate=None, daterange=None):
         "reporting messages"
         addresses = (UserAddresses.objects.values('address').
         filter(user=user).exclude(enabled=0).all()[:])
@@ -190,21 +190,27 @@ class ReportMessageManager(models.Manager):
         .get(user=user))
         if user.is_superuser:
             query = super(ReportMessageManager, self).get_query_set()
-            if enddate:
+            if daterange:
+                query = query.filter(date__range=daterange)
+            elif enddate:
                 query = query.filter(date__gt=enddate)
         else:
             if account_type['account_type'] == 2:
                 query = super(ReportMessageManager, self).get_query_set()\
                 .filter(Q(from_domain__in=addresses) | \
                 Q(to_domain__in=addresses))
-                if enddate:
+                if daterange:
+                    query = query.filter(date__range=daterange)
+                elif enddate:
                     query = query.filter(date__gt=enddate)
             else:
                 query = super(ReportMessageManager, self).get_query_set()\
                 .filter(Q(from_address__in=addresses) | \
                 Q(to_address__in=addresses) | Q(to_address=user.username)\
                  | Q(from_address=user.username))
-                if enddate:
+                if daterange:
+                    query = query.filter(date__range=daterange)
+                elif enddate:
                     query = query.filter(date__gt=enddate)
         return query
 
@@ -253,7 +259,7 @@ class TotalsMessageManager(models.Manager):
         result_list = map(self.makevals, enumerate(conn.fetchall()))
         return result_list
 
-    def all(self, user, filters_list=None, addrs=None, act=3):
+    def all(self, user, filters_list=None, addrs=None, act=3, daterange=None):
         "message totals"
         conn = connection.cursor()
         query = """
@@ -266,20 +272,42 @@ class TotalsMessageManager(models.Manager):
         if filters_list:
             sub = gen_dynamic_raw_query(filters_list)
             if user.is_superuser:
-                conn.execute(query + " WHERE " + sub[0] +
-                " GROUP BY date ORDER BY date DESC", sub[1])
+                if daterange:
+                    conn.execute(query + " WHERE (date BETWEEN '%s' AND '%s')"
+                    " AND " + sub[0] + " GROUP BY date ORDER BY date DESC",
+                    daterange[0], daterange[1], sub[1])
+                else:
+                    conn.execute(query + " WHERE " + sub[0] +
+                    " GROUP BY date ORDER BY date DESC", sub[1])
             else:
                 sql = raw_user_filter(user, addrs, act)
-                conn.execute(query + " WHERE " + sql + " AND " + sub[0] +
-                " GROUP BY date ORDER BY date DESC", sub[1])
+                if daterange:
+                    conn.execute(query + " WHERE (date BETWEEN '%s' AND '%s')"
+                    " AND " + sql + " AND " + sub[0] +
+                    " GROUP BY date ORDER BY date DESC", daterange[0],
+                    daterange[1], sub[1])
+                else:
+                    conn.execute(query + " WHERE " + sql + " AND " + sub[0] +
+                    " GROUP BY date ORDER BY date DESC", sub[1])
         else:
             if user.is_superuser:
-                query = "%s GROUP BY date ORDER BY date DESC" % query
+                if daterange:
+                    query = """%s WHERE date BETWEEN '%s' AND '%s' GROUP BY
+                            date ORDER BY date DESC""" % (query, daterange[0],
+                            daterange[1])
+                else:
+                    query = "%s GROUP BY date ORDER BY date DESC" % query
                 conn.execute(query)
             else:
                 sql = raw_user_filter(user, addrs, act)
-                query = """%s WHERE %s GROUP BY date ORDER BY date
-                DESC""" % (query, sql)
+                if daterange:
+                    query = """%s WHERE (date BETWEEN '%s' AND '%s') AND %s
+                            GROUP BY date ORDER BY date
+                            DESC""" % (query, daterange[0], daterange[1],
+                            sql)
+                else:
+                    query = """%s WHERE %s GROUP BY date ORDER BY date
+                    DESC""" % (query, sql)
                 conn.execute(query)
 
         result_list = map(self.makevals, enumerate(conn.fetchall()))
