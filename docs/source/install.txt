@@ -95,6 +95,8 @@ for assistance.
 
 .. include:: includes/signatures.inc
 
+.. include:: includes/sigs-source.inc
+
 Configure the Web server
 ------------------------
 

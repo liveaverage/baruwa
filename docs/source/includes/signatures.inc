@@ -21,3 +21,4 @@ guess your hostname, so if its correct just press enter.
 
 You need to initialize each of your machines if you are running a
 clustered setup.
+

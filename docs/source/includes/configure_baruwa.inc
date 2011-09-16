@@ -30,12 +30,14 @@ Set the following options under the default DATABASE option::
     PASSWORD = '<password>'
     HOST = 'localhost'
 
-Populate the database and create admin user::
+Populate the database::
 
-	# baruwa-admin syncdb
+	# baruwa-admin syncdb --noinput
+	# for name in  $(echo "accounts messages lists reports status config fixups"); do baruwa-admin migrate $name; done
 	
-The syncdb command populates your SQL database and allows you 
-to create the admin user.
+Create the admin user account::
+
+	# baruwa-admin createsuperuser
 
 Set the rabbitMQ settings::
 
