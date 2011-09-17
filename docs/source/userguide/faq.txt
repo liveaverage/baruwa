@@ -7,8 +7,10 @@
 FAQ's
 =====
 
+Answers to many common questions.
+
 General
-=======
+-------
 
 What is the default admin password ?
 ------------------------------------
