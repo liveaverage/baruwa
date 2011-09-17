@@ -14,11 +14,15 @@ This is a minor release with bug fixes and new features,
 
 - Run fake migration 0001 for all the modules.::
 
-	# for name in  $(echo "accounts messages lists reports status config"); do baruwa-admin migrate $name 0001 --fake; done
+	# for name in  $(echo "accounts messages lists reports status config"); do
+		baruwa-admin migrate $name 0001 --fake;
+	  done
 
 - Run actual migration for all the modules.::
 
-	# for name in  $(echo "accounts messages lists reports status config fixups"); do baruwa-admin migrate $name; done
+	# for name in  $(echo "accounts messages lists reports status config fixups"); do
+		baruwa-admin migrate $name;
+	  done
 
 - Review the new settings and add the ones that apply to you,
   The settings added are:

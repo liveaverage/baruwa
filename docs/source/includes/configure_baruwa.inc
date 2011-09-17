@@ -33,7 +33,9 @@ Set the following options under the default DATABASE option::
 Populate the database::
 
 	# baruwa-admin syncdb --noinput
-	# for name in  $(echo "accounts messages lists reports status config fixups"); do baruwa-admin migrate $name; done
+	# for name in  $(echo "accounts messages lists reports status config fixups"); do
+		baruwa-admin migrate $name;
+	  done
 	
 Create the admin user account::
 

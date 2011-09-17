@@ -14,7 +14,8 @@ Baruwa Lists::
 
 	Aug 9 18:32:42 localhost MailScanner[27260]: Starting Baruwa whitelists 
 	Aug 9 18:32:42 localhost MailScanner[27260]: Read 6 whitelist items 
-	Aug 9 18:32:42 localhost MailScanner[27260]: Ip blocks whitelisted 192.168.1.0/24 192.168.2.0/24 xxx.xx.xxx.0/26
+	Aug 9 18:32:42 localhost MailScanner[27260]: Ip blocks whitelisted 192.168.1.0/24 192.168.2.0/24
+	xxx.xx.xxx.0/26
 
 Baruwa User settings::
 

@@ -4,6 +4,9 @@
 External authentication
 =======================
 
+Baruwa can be configured to authenticate to external authentication systems, such as LDAP, RADIUS,
+IMAP, POP3, SMTP, OAUTH.
+
 SMTP, POP3, IMAP and RADIUS/RSA SECURID
 ========================================
 
