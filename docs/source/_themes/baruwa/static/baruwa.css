@@ -10,6 +10,15 @@ body{
     /*font-size: small;*/
 }
 
+input {
+    border-color: #98DBCC;
+    border-width: 1px;
+    border-style: solid;
+    font-family: sans-serif;
+    margin-right: 2px;
+    font-size: 1em;
+}
+
 a {
 	text-decoration: none;
 }
