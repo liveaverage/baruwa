@@ -290,7 +290,7 @@ sub BaruwaListener {
     while ( ( $client, $client_address ) = $server->accept() ) {
         my ( $port, $packed_ip ) = sockaddr_in($client_address);
         my $client_ip = inet_ntoa($packed_ip);
-        alarm $timeout;
+        #alarm $timeout;
         if ( $client_ip ne '127.0.0.1' ) {
             close($client);
             next;

@@ -35,7 +35,7 @@ class MailQueueItem(models.Model):
     size = models.IntegerField()
     attempts = models.IntegerField()
     lastattempt = models.DateTimeField()
-    direction = models.IntegerField(default=1)
+    direction = models.IntegerField(default=1, db_index=True)
     reason = models.TextField(blank=True)
     flag = models.IntegerField(default=0)
 
