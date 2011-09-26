@@ -4,7 +4,7 @@
 Baruwa on Ubuntu/Debian
 =======================
 
-As of Baruwa 1.1.0 an Apt repo is provided to able users of Ubuntu and
+As of Baruwa 1.1.0 an Apt repo is provided to enable users of Ubuntu and
 Debian to install Baruwa using apt-get.
 
 Install & Configure RabbitMQ

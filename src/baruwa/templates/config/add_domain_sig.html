@@ -44,16 +44,17 @@ Domains :: {{ address }} - add email signature
 {% endblock content %}
 {% block scripts %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.wysiwyg.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/wysiwyg.link.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/wysiwyg.image.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/wysiwyg.fileManager.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.cleditor.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/jquery.cleditor.imgs.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/signatures.js"></script>
+{% include "common/signaturejs.html" %}
 {% endblock scripts %}
 {% block headers %}
+<link href="{{ MEDIA_URL }}css/jquery.cleditor.css" rel="stylesheet" type="text/css" />
 <link href="{{ MEDIA_URL }}css/jquery.wysiwyg.css" rel="stylesheet" type="text/css" />
 <link href="{{ MEDIA_URL }}css/wysiwyg.fileManager.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 var fm_url = '{% url domains-image-manager domain.id domain.user.id %}';
+var media_url = '{{MEDIA_URL}}';
 </script>
 {% endblock headers %}
