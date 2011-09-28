@@ -624,3 +624,22 @@ class Archive(models.Model):
                     (self.from_address not in addresses)):
                     return False
         return True
+
+
+class DeliveryInfo(models.Model):
+    """Holds the relay information for a specific message"""
+    id = models.CharField(max_length=255, primary_key=True)
+    hostname = models.TextField()
+    destination = models.TextField()
+    status = models.TextField()
+    timestamp = models.DateTimeField(db_index=True,)
+
+
+    class Meta:
+        db_table = u'deliveryinfo'
+        get_latest_by = 'timestamp'
+        ordering = ['-timestamp']
+
+    def __unicode__(self):
+        return u"RelayInfo"
+

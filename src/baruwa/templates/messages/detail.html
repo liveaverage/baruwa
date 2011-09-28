@@ -111,6 +111,25 @@ var media_url = '{{MEDIA_URL}}';
         {% if message_details.otherinfected %}<span class="positive">Y</span>{% else %}<span class="negative">N</span>{% endif %}
     </div>
 </div>
+{% if delivery_reports %}
+<div class="header_div">
+    <div class="Reports_heading">{% trans "Delivery information" %}</div>
+</div>
+<div class="LightBlue_div">
+	<div class="delivery_heading">{% trans "Processed at:" %}</div>
+	<div class="delivery_heading">{% trans "Processed by:" %}</div>
+	<div class="delivery_heading">{% trans "Delivered to:" %}</div>
+	<div class="delivery_heading">{% trans "Delivery status" %}</div>
+</div>
+{% for dreport in delivery_reports %}
+<div class="LightBlue_div">
+	<div class="delivery_col">{{dreport.timestamp}}</div>
+	<div class="delivery_col">{{dreport.hostname}}</div>
+	<div class="delivery_col">{{dreport.destination}}</div>
+	<div class="delivery_col">{{dreport.status}}</div>
+</div>
+{% endfor %}
+{% endif %}
 <div class="header_div">
     <div class="Reports_heading">{% trans "Spamassassin information" %}</div>
 </div>

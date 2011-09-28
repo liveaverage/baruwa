@@ -37,7 +37,7 @@ from django.utils.translation import ugettext as _
 from celery.task.sets import TaskSet
 from celery.result import TaskSetResult
 
-from baruwa.messages.models import Message, Release, Archive
+from baruwa.messages.models import Message, Release, Archive, DeliveryInfo
 from baruwa.messages.tasks import ProcessQuarantine, PreviewMessageTask,\
  ReleaseMessage, ProcessQuarantinedMsg
 from baruwa.messages.forms import QuarantineProcessForm, BulkQuarantineProcessForm
@@ -174,6 +174,7 @@ def detail(request, message_id, archive=False):
         return HttpResponseForbidden(_('You are not authorized'
         ' to access this page'))
 
+    delivery_reports = DeliveryInfo.objects.filter(id=message_id)
     error_list = ''
     quarantine_form = QuarantineProcessForm()
     quarantine_form.fields[
