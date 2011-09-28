@@ -127,7 +127,7 @@ def write_html_sig(sigfile, sig, basedir, is_domain, logger):
             logger.info(_("Wrote img: %(img)s") % dict(img=imgfile))
             # update the sig with image obtained
             sig.image = img
-    if link:
+    if 'link' in locals():
         sig.save()
     sighandle = open(sigfile, 'w')
     if not sig.signature_content.startswith('--'):
