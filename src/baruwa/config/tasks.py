@@ -25,7 +25,6 @@ import base64
 import socket
 
 from celery.task import Task
-from lxml.html.clean import Cleaner
 from lxml.html import tostring, fragments_fromstring, iterlinks
 
 from django.conf import settings
@@ -34,6 +33,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import resolve
 from django.utils.translation import ugettext as _
 
+from baruwa.utils.html import SignatureCleaner
 from baruwa.utils.mail.message import TestDeliveryServers
 from baruwa.config.models import (UNCLEANTAGS, SignatureImg,
 DomainSignature, ScannerConfig, ScannerHost, ConfigSection)
@@ -107,7 +107,8 @@ def write_text_sig(sigfile, sig, logger):
 
 def write_html_sig(sigfile, sig, basedir, is_domain, logger):
     "write html sig"
-    cleaner = Cleaner(style=True, remove_tags=UNCLEANTAGS)
+    cleaner = SignatureCleaner(style=True, remove_tags=UNCLEANTAGS,
+                                safe_attrs_only=False)
     html = cleaner.clean_html(sig.signature_content)
     html = fragments_fromstring(html)[0]
     for element, attribute, link, pos in iterlinks(html):

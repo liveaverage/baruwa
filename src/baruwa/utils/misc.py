@@ -198,7 +198,6 @@ def ipaddr_is_valid(ip):
 
 
 def check_access(request, user):
-    "Check user access"
     if not request.user.is_superuser:
         account_type = request.session['user_filter']['account_type']
         if account_type == 2:
@@ -214,10 +213,3 @@ def check_access(request, user):
             if request.user.id != user.id:
                 return False
     return True
-
-
-def save_signature(obj, cleaned):
-    "Workaround to bug stripping font face"
-    for field in cleaned.keys():
-        setattr(obj, field, cleaned[field])
-    obj.save()

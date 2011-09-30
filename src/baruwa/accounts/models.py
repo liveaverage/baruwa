@@ -19,7 +19,6 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
-from lxml.html.clean import Cleaner
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -27,6 +26,7 @@ from django.db.models.signals import post_save
 from django.utils.html import strip_tags
 
 from baruwa.fixups.models import SignatureImg
+from baruwa.utils.html import SignatureCleaner
 
 UNCLEANTAGS = ['html', 'head', 'link', 'body', 'base']
 
@@ -120,7 +120,8 @@ class UserSignature(models.Model):
         if self.signature_type == 1:
             self.signature_content = strip_tags(self.signature_content)
         else:
-            cleaner = Cleaner(remove_tags=UNCLEANTAGS)
+            cleaner = SignatureCleaner(remove_tags=UNCLEANTAGS,
+                                        safe_attrs_only=False)
             self.signature_content = cleaner.clean_html(self.signature_content)
 
     class Meta:
