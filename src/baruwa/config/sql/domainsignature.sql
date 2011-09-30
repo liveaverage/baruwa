@@ -1,6 +1,6 @@
 -- htmlsigs.customize
 -- Inline HTML Signature
-CREATE VIEW htmlsigs AS
+CREATE OR REPLACE VIEW htmlsigs AS
 -- email aliases
 SELECT CONCAT("From:\t", user_addresses.address, "\t%signature-dir%/users/html/", auth_user.id, ".html") rule,
 'htmlsigs' collate utf8_unicode_ci as name FROM user_addresses, user_signatures, auth_user WHERE
@@ -26,7 +26,7 @@ SELECT "FromOrTo:\tdefault\t %report-dir%/inline.sig.html" rule, 'htmlsigs' coll
 
 -- textsigs.customize
 -- Inline Text Signature
-CREATE VIEW textsigs AS
+CREATE OR REPLACE VIEW textsigs AS
 -- email aliases
 SELECT CONCAT("From:\t", user_addresses.address, "\t%signature-dir%/users/text/", auth_user.id, ".txt") rule,
 'textsigs' collate utf8_unicode_ci as name FROM user_addresses, user_signatures, auth_user WHERE
@@ -49,7 +49,7 @@ SELECT "FromOrTo:\tdefault\t %report-dir%/inline.sig.txt" rule, 'textsigs' colla
 
 -- sigimgfiles.customize
 -- Signature Image Filename
-CREATE VIEW sigimgfiles AS
+CREATE OR REPLACE VIEW sigimgfiles AS
 -- email aliases
 SELECT CONCAT("From:\t", user_addresses.address, "\t%signature-dir%/users/imgs/", signature_imgs.name) rule,
 'sigimgfiles' collate utf8_unicode_ci as name FROM user_addresses, signature_imgs, profiles, auth_user, 
@@ -74,7 +74,7 @@ SELECT "FromOrTo:\tdefault\tno" rule, 'sigimgfiles' collate utf8_unicode_ci as n
 
 -- sigimgs.customize
 -- Signature Image <img> Filename
-CREATE VIEW sigimgs AS
+CREATE OR REPLACE VIEW sigimgs AS
 -- email aliases
 SELECT CONCAT("From:\t", user_addresses.address, "\t", signature_imgs.name) rule,
 'sigimgs' collate utf8_unicode_ci as name FROM user_addresses, signature_imgs,
@@ -98,7 +98,7 @@ domain_signatures.useraddress_id = user_addresses.id AND user_addresses.address_
 SELECT "FromOrTo:\tdefault\tno" rule, 'sigimgs' collate utf8_unicode_ci as name;
 
 -- ms_rulesets
-CREATE VIEW ms_rulesets AS
+CREATE OR REPLACE VIEW ms_rulesets AS
 -- htmlsigs
 SELECT * FROM htmlsigs UNION
 -- textsigs
