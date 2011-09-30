@@ -28,7 +28,6 @@ import re
 import time
 import datetime
 
-#from datetime import date, fromtimestamp
 
 from twisted.internet import reactor
 from twisted.enterprise import adbapi
@@ -54,33 +53,33 @@ def parser():
     """Set up pyparser"""
     month = Word(string.uppercase, string.lowercase, exact=3)
     integer = Word(nums)
-    serverDateTime = Combine(month + " " + integer + " " +
+    serverdatetime = Combine(month + " " + integer + " " +
                     integer + ":" + integer + ":" + integer)
     hostname = Word(alphas + nums + "_" + "-")
     daemon = Word(alphas + "/" + "-" + "_") + Optional(Suppress("[")
                 + integer + Suppress("]")) + Suppress(":")
     message = Regex(".*")
-    return serverDateTime + hostname + daemon + message
+    return serverdatetime + hostname + daemon + message
 
 
 class Logger(DatagramProtocol):
     "UDP protocol extension to handle syslog messages"
-    def __init__(self, dbConnection):
+    def __init__(self, dbconn):
         "Overide to provide connection pool"
-        self.db = dbConnection
+        self.dbconn = dbconn
         self.parser = parser()
         self.query = """INSERT INTO deliveryinfo
                         (id, hostname, destination, status, timestamp)
                         VALUES (%s, %s, %s, %s, %s)"""
         self.items = {}
 
-    def _dbError(self, dberror):
+    def _dberror(self, dberror):
         "Print the DB error"
         print "Error occured: %s" % dberror.getErrorMessage()
 
     def _save2db(self, *args):
         "Save to DB"
-        self.db.runOperation(self.query, args).addErrback(self._dbError)
+        self.dbconn.runOperation(self.query, args).addErrback(self._dberror)
 
     def _process_exim(self, fields):
         "process an exim log entry"
@@ -129,6 +128,6 @@ class Logger(DatagramProtocol):
             pass
 
 if __name__ == "__main__":
-    dbConnection = adbapi.ConnectionPool(DB_DRIVER, **DB_ARGS)
-    reactor.listenUDP(10514, Logger(dbConnection))
+    dbconnection = adbapi.ConnectionPool(DB_DRIVER, **DB_ARGS)
+    reactor.listenUDP(10514, Logger(dbconnection))
     reactor.run()
