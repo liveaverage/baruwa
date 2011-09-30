@@ -49,7 +49,7 @@ from baruwa.config.tasks import TestSMTPServer, GenerateDomainSigs, \
 DeleteDomainSigs
 from baruwa.config.forms import  MailHostForm, EditMailHost, DeleteMailHost, \
 InitializeConfigsForm
-from baruwa.utils.misc import jsonify_domains_list
+from baruwa.utils.misc import jsonify_domains_list, save_signature
 from baruwa.config.models import MailAuthHost, ScannerHost, ScannerConfig, \
 ConfigSection, DomainSignature, SignatureImg
 from baruwa.config.forms import MailAuthHostForm, EditMailAuthHostForm, \
@@ -492,7 +492,12 @@ def add_domain_signature(request, domain_id,
         form = AddDomainSignatureForm(request.POST)
         if form.is_valid():
             try:
-                form.save()
+                # form.save()
+                # Bug in Django form.save() strips "font face" attributes
+                # using explict assignments instead
+                cleaned = form.cleaned_data
+                signature = DomainSignature()
+                save_signature(signature, cleaned)
                 msg = _('The signature has been saved')
                 GenerateDomainSigs.delay(domain.id)
             except IntegrityError:
@@ -522,7 +527,11 @@ def edit_domain_signature(request, domain_id, sig_id,
         form = EditDomainSignatureForm(request.POST, instance=signature)
         if form.is_valid():
             try:
-                form.save()
+                # form.save()
+                # Bug in Django form.save() strips "font face" attributes
+                # using explict assignments instead
+                cleaned = form.cleaned_data
+                save_signature(signature, cleaned)
                 msg = _('The signature has been updated')
                 GenerateDomainSigs.delay(domain.id)
             except DatabaseError:

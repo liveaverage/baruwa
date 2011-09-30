@@ -48,7 +48,7 @@ from baruwa.accounts.profile import set_user_addresses
 from baruwa.accounts.models import UserAddresses, UserProfile, UserSignature
 from baruwa.utils.decorators import onlysuperusers, authorized_users_only, \
 only_admins
-from baruwa.utils.misc import jsonify_accounts_list
+from baruwa.utils.misc import jsonify_accounts_list, save_signature
 from baruwa.config.tasks import GenerateAccountSigs, DeleteAccountSigs
 
 
@@ -416,9 +416,14 @@ def add_account_signature(request, user_id,
         form = AddAccountSignatureForm(request.POST)
         if form.is_valid():
             try:
-                form.save()
+                #form.save()
+                # Bug in Django form.save() strips "font face" attributes
+                # using explict assignments instead
+                cleaned = form.cleaned_data
+                signature = UserSignature()
+                save_signature(signature, cleaned)
                 msg = _('The signature has been saved')
-                GenerateAccountSigs.delay(user_id)
+                # GenerateAccountSigs.delay(user_id)
             except IntegrityError:
                 msg = _('A signature of this type already '
                 'exists for account: %(account)s') % dict(
@@ -428,9 +433,6 @@ def add_account_signature(request, user_id,
             djmessages.info(request, msg)
             return HttpResponseRedirect(reverse('user-profile',
                     args=[user_account.id]))
-        # else:
-        #     print form.errors
-        #     print user_profile.id
     else:
         form = AddAccountSignatureForm(initial={'user': user_id})
         form.fields['user'].widget.attrs['readonly'] = True
@@ -450,7 +452,10 @@ def edit_account_signature(request, user_id, sig_id,
         form = EditAccountSignatureForm(request.POST, instance=signature)
         if form.is_valid():
             try:
-                form.save()
+                # Bug in Django form.save() strips "font face" attributes
+                # using explict assignments instead
+                cleaned = form.cleaned_data
+                save_signature(signature, cleaned)
                 msg = _('The signature has been updated')
                 GenerateAccountSigs.delay(user_id)
             except DatabaseError:
