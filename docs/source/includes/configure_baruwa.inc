@@ -33,7 +33,7 @@ Set the following options under the default DATABASE option::
 Populate the database::
 
 	# baruwa-admin syncdb --noinput
-	# for name in  $(echo "accounts messages lists reports status config fixups"); do
+	# for name in  $(echo "accounts messages lists reports status fixups config"); do
 		baruwa-admin migrate $name;
 	  done
 	
