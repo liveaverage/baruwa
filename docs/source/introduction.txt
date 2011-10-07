@@ -14,7 +14,7 @@ Features
 	+ Interactive SVG graphs
 	+ Emailed PDF reports
 	+ Archiving of old message logs
-	+ SQLite backup prevents data loss when MySQL is down
+	+ SQLite backup prevents data loss when MySQL or PostgreSQL is down
 	+ MTA integration for relay domains and transports configuration
 	+ Multi user profiles (No restrictions on username format)
 	+ User profile aware white/blacklist management

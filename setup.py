@@ -7,7 +7,6 @@ from setuptools import setup, find_packages
 install_requires = ['setuptools',
     'Django>= 1.2',
     'django-celery',
-    'MySQL-python>=1.2.1p2',
     'reportlab',
     'anyjson',
     'iPy',

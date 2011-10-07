@@ -20,7 +20,8 @@ database with SQLite as backup, managing whitelists and blacklists and managing 
 user spam check settings.
 
 Baruwa is open source software, written in Python/Perl using the Django Framework and 
-MySQL for storage, it is released under the GPLv2 and is available for free download.
+MySQL or PostgreSQL for storage, it is released under the GPLv2 and is available for
+free download.
 
 
 Features
@@ -33,7 +34,7 @@ Features
 + Interactive SVG graphs
 + Emailed PDF reports
 + Archiving of old message logs
-+ SQLite backup prevents data loss when MySQL is down
++ SQLite backup prevents data loss when MySQL or PostgreSQL is down
 + MTA integration for relay domains and transports configuration
 + Multi user profiles (No restrictions on username format)
 + User profile aware white/blacklist management
@@ -54,11 +55,11 @@ Requirements
 + Python >= 2.4
 + Django >= 1.2
 + django-celery
-+ MySQLdb >= 1.2.1p2
++ MySQLdb >= 1.2.1p2 or Psycopg
 + GeoIP
 + iPy
 + Any Web server that can run Django (Apache/mod_wsgi recommended)
-+ MySQL
++ MySQL or PostgreSQL
 + Dojo toolkit >= 1.5.0
 + Reportlab
 + Lxml

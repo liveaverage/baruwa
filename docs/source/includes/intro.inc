@@ -16,4 +16,5 @@ database with SQLite as backup, managing whitelists and blacklists and managing 
 user spam check settings.
 
 Baruwa is open source software, written in Python/Perl using the Django Framework and 
-MySQL for storage, it is released under the GPLv2 and is available for free download.
+MySQL or PostgreSQL for storage, it is released under the GPLv2 and is available for
+free download.
