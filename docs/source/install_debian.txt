@@ -30,16 +30,20 @@ Then add the following to your sources file
 
 debian::
 
-	deb http://apt.baruwa.org/debian stable main
+	deb http://apt.baruwa.org/debian "dist" main
+
+Replace "dist" with the name of the release you are running: (squeeze, wheezy, sid)
 
 ubuntu::
 
-	deb http://apt.baruwa.org/ubuntu natty main
+	deb http://apt.baruwa.org/ubuntu "dist" main
+
+Replace "dist" with the name of the release you are running: (lucid, maverick, natty oneiric)
 
 You can now install Baruwa from the APT repo::
 
-	# sudo apt-get update
-	# sudo apt-get install baruwa
+	# apt-get update
+	# apt-get install baruwa
 
 Automated configuration
 =======================
