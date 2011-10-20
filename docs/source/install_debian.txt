@@ -32,13 +32,13 @@ debian::
 
 	deb http://apt.baruwa.org/debian "dist" main
 
-Replace "dist" with the name of the release you are running: (squeeze, wheezy, sid)
+Replace `"dist"` with the name of the release you are running: (squeeze, wheezy, sid)
 
 ubuntu::
 
 	deb http://apt.baruwa.org/ubuntu "dist" main
 
-Replace "dist" with the name of the release you are running: (lucid, maverick, natty oneiric)
+Replace `"dist"` with the name of the release you are running: (lucid, maverick, natty oneiric)
 
 You can now install Baruwa from the APT repo::
 

@@ -31,6 +31,7 @@ This is a minor release with bug fixes and new features,
   + LOAD_BARUWA_DEFAULT_FILTER = True
   + MAX_USERNAME_LENGTH = 128
   + EMAIL_SIGNATURES_DIR = '/etc/MailScanner/signatures'
+  + BARUWA_NUM_RECENT_MESSAGES = 50
 
 - If you intend on using email signatures/disclaimers, Run::
 
