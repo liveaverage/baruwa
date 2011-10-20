@@ -180,11 +180,13 @@ function json2html(data){
                 $("div.Grid_heading ~ div").remove();
                 $("div.Grid_heading").after(rows.join(''));
             }else{
-                if(len == 49){
+                var baruwa_tmp_num = (baruwa_num_recent_messages - 1);
+                var baruwa_tmp_num2 = (baruwa_num_recent_messages - 2);
+                if(len == baruwa_tmp_num){
                     $("div.Grid_heading ~ div").remove();
                     $("div.Grid_heading").after(rows.join(''));
                 }else{
-                    remove_rows = (48 - len);
+                    remove_rows = (baruwa_tmp_num2 - len);
                     $("div.Grid_heading ~ div:gt("+remove_rows+")").remove();
                     $("div.Grid_heading").after(rows.join(''));
                 }

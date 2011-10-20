@@ -28,6 +28,7 @@ from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponse
 from django.http import HttpResponseRedirect
+from django.conf import settings
 from django.contrib import messages as djmessages
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
@@ -53,6 +54,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
     active_filters = []
     ordering = order_by
     form = None
+    num_of_recent_msgs = getattr(settings, 'BARUWA_NUM_RECENT_MESSAGES', 50)
     template_name = 'messages/index.html'
     if direction == 'dsc':
         ordering = order_by
@@ -71,13 +73,13 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             'id', 'timestamp', 'from_address', 'to_address', 'subject',
             'size', 'sascore', 'highspam', 'spam', 'virusinfected',
             'otherinfected', 'whitelisted', 'blacklisted', 'nameinfected',
-            'scaned').filter(timestamp__gt=last_ts)[:50]
+            'scaned').filter(timestamp__gt=last_ts)[:num_of_recent_msgs]
         else:
             message_list = Message.messages.for_user(request).values(
             'id', 'timestamp', 'from_address', 'to_address', 'subject',
             'size', 'sascore', 'highspam', 'spam', 'virusinfected',
             'otherinfected', 'whitelisted', 'blacklisted', 'nameinfected',
-            'scaned')[:50]
+            'scaned')[:num_of_recent_msgs]
     else:
         if view_type == 'archive':
             message_list = Archive.messages.for_user(request).values(
@@ -99,7 +101,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             form = BulkQuarantineProcessForm()
             form.fields['altrecipients'].widget.attrs['size'] = '55'
             message_list = apply_filter(message_list, request, active_filters)
-            p = Paginator(message_list, 50)
+            p = Paginator(message_list, num_of_recent_msgs)
             if page == 'last':
                 page = p.num_pages
             po = p.page(page)
@@ -121,7 +123,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             message_list = map(jsonify_msg_list, message_list)
             pg = None
         else:
-            p = Paginator(message_list, 50)
+            p = Paginator(message_list, num_of_recent_msgs)
             if page == 'last':
                 page = p.num_pages
             po = p.page(page)
@@ -146,7 +148,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
 
     if list_all:
         return object_list(request, template_name=template_name,
-        queryset=message_list, paginate_by=50, page=page,
+        queryset=message_list, paginate_by=num_of_recent_msgs, page=page,
         extra_context={'view_type': view_type, 'direction': direction,
         'order_by': ordering, 'active_filters': active_filters,
         'list_all': list_all, 'quarantine_type': quarantine_type,

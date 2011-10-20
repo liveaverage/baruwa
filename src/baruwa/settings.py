@@ -99,6 +99,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.request',
     'baruwa.utils.context_processors.status',
+    'baruwa.utils.context_processors.general',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -235,6 +236,10 @@ SA_RULES_DIRS = ['/usr/share/spamassassin', '/etc/mail/spamassassin']
 
 #email signatures base directory
 EMAIL_SIGNATURES_DIR = '/etc/MailScanner/signatures'
+
+#number of recent messages to display on front page
+# defaults to 50
+#BARUWA_NUM_RECENT_MESSAGES = 50
 
 # End Baruwa only settings
 

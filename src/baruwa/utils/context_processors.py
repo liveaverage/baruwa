@@ -19,6 +19,8 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+from django.conf import settings
+
 from baruwa.utils.misc import get_sys_status
 
 
@@ -40,3 +42,8 @@ def status(request):
     status = get_sys_status(request)
 
     return status
+
+def general(request):
+    "set misc variables"
+    num_of_recent_msgs = getattr(settings, 'BARUWA_NUM_RECENT_MESSAGES', 50)
+    return {'baruwa_num_recent_messages': num_of_recent_msgs}
