@@ -68,6 +68,17 @@ The install asks you for the following info
  + baruwa admin password (The baruwa admin user password)
  + baruwa admin email (The baruwa admin user email address)
 
+Populate the database::
+
+	# baruwa-admin syncdb --noinput
+	# for name in  $(echo "accounts messages lists reports status fixups config"); do
+		baruwa-admin migrate $name;
+	  done
+
+Create the admin user account::
+
+	# baruwa-admin createsuperuser
+
 .. include:: includes/configure_ms_redhat.inc
 
 Configure Baruwa

@@ -111,39 +111,57 @@ if [ "$1" = "configure" ]; then
         s/\(BROKER_VHOST = \"\).*\(\"\)/\1$mqvhost\2/;
         " /etc/baruwa/settings.py 
         # populate the database
-        /usr/share/pyshared/baruwa/manage.py syncdb --noinput || true
+        # export PYTHONPATH='/usr/share/pyshared'
+        # baruwa-admin syncdb --noinput || true
         # create admin user
-        export DJANGO_SETTINGS_MODULE=baruwa.settings
-	    TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX`
-	    echo "import os" > "$TMPDEST"
-	    echo "import sys" >> "$TMPDEST"
-	    echo "os.environ['DJANGO_SETTINGS_MODULE'] = 'baruwa.settings'" >> "$TMPDEST"
-	    echo "sys.path.append('/usr/share/pyshared')" >> "$TMPDEST"
-	    echo "from django.contrib.auth.models import User" >> "$TMPDEST"
-	    echo "from baruwa.accounts.models import UserProfile" >> "$TMPDEST"
-	    echo "try:" >> "$TMPDEST"
-	    echo "  User.objects.create_superuser('$baruwauser', '$baruwaemail', '$baruwapass')" >> "$TMPDEST"
-	    echo "  user.save()" >> "$TMPDEST"
-	    echo "  profile = user.get_profile()" >> "$TMPDEST"
-	    echo "except UserProfile.DoesNotExist:" >> "$TMPDEST"
-	    echo "  profile = UserProfile(user=user, account_type=1)" >> "$TMPDEST"
-	    echo "  profile.save()" >> "$TMPDEST"
-	    echo "except: pass" >> "$TMPDEST"
-	    python "$TMPDEST" || true
-	    rm -f $TMPDEST
+        #         export DJANGO_SETTINGS_MODULE=baruwa.settings
+        # TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX`
+        # echo "import os" > "$TMPDEST"
+        # echo "import sys" >> "$TMPDEST"
+        # echo "os.environ['DJANGO_SETTINGS_MODULE'] = 'baruwa.settings'" >> "$TMPDEST"
+        # echo "sys.path.append('/usr/share/pyshared')" >> "$TMPDEST"
+        # echo "from django.contrib.auth.models import User" >> "$TMPDEST"
+        # echo "from baruwa.accounts.models import UserProfile" >> "$TMPDEST"
+        # echo "try:" >> "$TMPDEST"
+        # echo "  User.objects.create_superuser('$baruwauser', '$baruwaemail', '$baruwapass')" >> "$TMPDEST"
+        # echo "  user.save()" >> "$TMPDEST"
+        # echo "  profile = user.get_profile()" >> "$TMPDEST"
+        # echo "except UserProfile.DoesNotExist:" >> "$TMPDEST"
+        # echo "  profile = UserProfile(user=user, account_type=1)" >> "$TMPDEST"
+        # echo "  profile.save()" >> "$TMPDEST"
+        # echo "except: pass" >> "$TMPDEST"
+        # python "$TMPDEST" || true
+        # rm -f $TMPDEST
+#         for name in  $(echo "accounts messages lists reports status fixups config"); do
+#             baruwa-admin migrate $name || true;
+#         done
+#         TMPDEST=`mktemp -t $PACKAGE.XXXXXXXX`
+#         cat << EOF > $TMPDEST
+# import pexpect
+# try:
+#  child = pexpect.spawn ('baruwa-admin createsuperuser --username=$baruwauser --email=$baruwaemail')
+#  child.expect ('Password: ')
+#  child.sendline ('$baruwapass')
+#  child.expect ('Password (again): ')
+#  child.sendline ('$baruwapass')
+# except pexpect.EOF:
+#  pass
+# EOF
+#         python $TMPDEST || true
+#         rm -f $TMPDEST
         #db_reset baruwa/mysql/dbserver
-    	db_reset baruwa/mysql/dbadmin
-    	db_reset baruwa/mysql/dbadmpass
+    	#db_reset baruwa/mysql/dbadmin
+    	#db_reset baruwa/mysql/dbadmpass
     	#db_reset baruwa/mysql/dbname
     	#db_reset baruwa/mysql/dbuser
-    	#db_reset baruwa/mysql/dbpass
+    	db_reset baruwa/mysql/dbpass
     	#db_reset baruwa/rabbitmq/mquser
     	#db_reset baruwa/rabbitmq/mqpass
     	#db_reset baruwa/django/baruwauser
-    	db_reset baruwa/django/baruwapass
+    	#db_reset baruwa/django/baruwapass
     	#db_reset baruwa/django/baruwaemail
     fi
-    db_reset baruwa/mysql/configure
+    #db_reset baruwa/mysql/configure
     db_stop
     # restart webserver
     for webserver in $restart; do

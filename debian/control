@@ -31,7 +31,8 @@ Depends: ${misc:Depends}, ${python:Depends},
          mailscanner (>= 4.80.10),
          python-lxml,
          adduser,
-         python-django-celery
+         python-django-celery,
+         python-django-south
 Description: Web 2.0 MailScanner front-end.
  .
  Baruwa provides an easy to use interface for 

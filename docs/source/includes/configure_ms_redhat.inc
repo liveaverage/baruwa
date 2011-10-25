@@ -16,14 +16,14 @@ installed automatically when you install baruwa.
 Edit the provided Baruwa MailScanner config file /etc/MailScanner/conf.d/baruwa.conf,
 you need to make sure the following options are correct::
 
-    Quarantine User = exim #(Or what ever your "Run As User" is set to)
+    Quarantine User = exim #(Or what ever your `Run As User` is set to)
     DB DSN = DBI:mysql:database=baruwa;host=spam01;port=3306 #set to valid DSN
     DB Username = baruwa # your DB username
     DB Password = password # your DB password
 
 To actually quarantine and later process messages with in Baruwa, set
-'store' as one of your keywords for the "Spam Actions" and
-"High Scoring Spam Actions" MailScanner options.
+`store` as one of your keywords for the `Spam Actions` and
+`High Scoring Spam Actions` MailScanner options.
 
 The provided MailScanner configuration provides for SQL logging, Whitelists and
 Blacklists and Per user settings. 

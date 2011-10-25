@@ -53,9 +53,9 @@ override_dh_pysupport:
 override_dh_installdocs:
 	dh_installdocs
 	# Remove embedded copy of libjs-jquery
-	cd debian/baruwa-doc/usr/share/doc/baruwa-doc/html/_static \
-		&& rm jquery.js \
-		&& ln -s ../../../../javascript/jquery/jquery.js .
+	# cd debian/baruwa-doc/usr/share/doc/baruwa-doc/html/_static \
+	#	&& rm jquery.js \
+	#	&& ln -s ../../../../javascript/jquery/jquery.js .
 
 override_dh_fixperms:
 	dh_fixperms
