@@ -184,7 +184,11 @@ class EmailParser(object):
             codecs.lookup(charset)
         except LookupError:
             charset = 'ascii'
-        return body.decode(charset, 'replace')
+        try:
+            text = body.decode(charset, 'replace')
+        except UnicodeError:
+            text = body.decode('ascii', 'replace')
+        return text
 
     def return_html_part(self, part):
         "Sanitize the html and return utf8"

@@ -19,7 +19,7 @@
 // vim: ai ts=4 sts=4 et sw=4
 //
 function getTaskStatus(){
-    $.getJSON(location.url, function(json, textStatus) {
+    $.getJSON(location.href, function(json, textStatus) {
       if (!json.finished) {
           $('#status').text(json.status);
           $('#percent').text(json.completed);
