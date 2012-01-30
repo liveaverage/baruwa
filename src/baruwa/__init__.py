@@ -1,6 +1,6 @@
 #
 # Baruwa - Web 2.0 MailScanner front-end.
-# Copyright (C) 2010-2011  Andrew Colin Kissa <andrew@topdog.za.net>
+# Copyright (C) 2010-2012  Andrew Colin Kissa <andrew@topdog.za.net>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ available for free download.
 """
 
 __author__ = "Andrew Colin Kissa"
-__copyright__ = "Copyright 2010-2011 Andrew Colin Kissa"
+__copyright__ = "Copyright 2010-2012 Andrew Colin Kissa"
 __license__ = "GPLv2"
 __email__ = "andrew@topdog.za.net"
 __version__ = "1.1.0"
