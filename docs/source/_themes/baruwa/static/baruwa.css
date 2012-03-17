@@ -266,7 +266,7 @@ div.featured{
 #navigation ul li ul {
   display:none;
   position:absolute;
-  top:119px;
+  top:147px;
   min-width:140px;
 }
 
@@ -316,4 +316,17 @@ div.featured{
     padding-right: 8px;
     padding-top: 3px;
     text-align: right;
+}
+
+div#notice{
+    margin:0;
+    padding: 5px 0 5px;
+    background-color:#2F4C63;
+    font-size: 12px;
+    text-align:center;
+    color:#FEFBF5;
+}
+
+div#notice a {
+    color:#FEFBF5;
 }
