@@ -78,4 +78,4 @@ def paginator(context, adjacent_pages=2):
         'quarantine_type': context['quarantine_type'],
     }
 
-register.inclusion_tag('tags/paginator.html', takes_context=True)(paginator)
+register.inclusion_tag('mail/tags/paginator.html', takes_context=True)(paginator)

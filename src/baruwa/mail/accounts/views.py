@@ -83,7 +83,7 @@ def local_login(request, redirect_field_name=REDIRECT_FIELD_NAME):
     else:
         form = AuthenticationForm(request)
     request.session.set_test_cookie()
-    return render_to_response('accounts/login.html',
+    return render_to_response('mail/accounts/login.html',
         {'form': form, redirect_field_name: redirect_to},
         context_instance=RequestContext(request))
 
@@ -127,7 +127,7 @@ def index(request, page=1, direction='dsc', order_by='id'):
         json = anyjson.dumps({'items': users, 'paginator': pg})
         return HttpResponse(json, mimetype='application/javascript')
 
-    return object_list(request, template_name='accounts/index.html',
+    return object_list(request, template_name='mail/accounts/index.html',
         queryset=users, paginate_by=15, page=page,
         extra_context={'app': 'accounts', 'list_all': 1,
         'direction': direction, 'order_by': order_by}, allow_empty=True)
@@ -135,7 +135,7 @@ def index(request, page=1, direction='dsc', order_by='id'):
 
 @login_required
 @onlysuperusers
-def create_account(request, template_name='accounts/create_account.html'):
+def create_account(request, template_name='mail/accounts/create_account.html'):
     """
     create_account
     """
@@ -163,7 +163,7 @@ def create_account(request, template_name='accounts/create_account.html'):
 
 @login_required
 @authorized_users_only
-def update_account(request, user_id, template_name='accounts/update_account.html'):
+def update_account(request, user_id, template_name='mail/accounts/update_account.html'):
     """update_account"""
     user_account = get_object_or_404(User, pk=user_id)
     if request.method == 'POST':
@@ -196,7 +196,7 @@ def update_account(request, user_id, template_name='accounts/update_account.html
 
 @login_required
 @authorized_users_only
-def delete_account(request, user_id, template_name='accounts/delete_account.html'):
+def delete_account(request, user_id, template_name='mail/accounts/delete_account.html'):
     """delete_account"""
     user_account = get_object_or_404(User, pk=user_id)
     if request.method == 'POST':
@@ -234,7 +234,7 @@ def delete_account(request, user_id, template_name='accounts/delete_account.html
 
 @login_required
 @onlysuperusers
-def add_address(request, user_id, is_domain=False, template_name='accounts/add_address.html'):
+def add_address(request, user_id, is_domain=False, template_name='mail/accounts/add_address.html'):
     """
     Adds an address to a user profile.
     """
@@ -263,7 +263,7 @@ def add_address(request, user_id, is_domain=False, template_name='accounts/add_a
 
 @login_required
 @onlysuperusers
-def edit_address(request, address_id, template_name='accounts/edit_address.html'):
+def edit_address(request, address_id, template_name='mail/accounts/edit_address.html'):
     """
     Edit an address
     """
@@ -293,7 +293,7 @@ def edit_address(request, address_id, template_name='accounts/edit_address.html'
 
 @login_required
 @onlysuperusers
-def delete_address(request, address_id, template_name='accounts/delete_address.html'):
+def delete_address(request, address_id, template_name='mail/accounts/delete_address.html'):
     """Delete address"""
     address = get_object_or_404(UserAddresses, pk=address_id)
     if request.method == 'POST':
@@ -314,7 +314,7 @@ def delete_address(request, address_id, template_name='accounts/delete_address.h
 
 @login_required
 @onlysuperusers
-def change_password(request, user_id, template_name='accounts/admin_change_pw.html'):
+def change_password(request, user_id, template_name='mail/accounts/admin_change_pw.html'):
     """
     Admin change users password
     """
@@ -342,7 +342,7 @@ def change_password(request, user_id, template_name='accounts/admin_change_pw.ht
 
 @login_required
 @authorized_users_only
-def user_profile(request, user_id, template_name='accounts/user_profile.html'):
+def user_profile(request, user_id, template_name='mail/accounts/user_profile.html'):
     """
     Displays user profiles.
     """
@@ -367,7 +367,7 @@ def profile(request):
 
 @login_required
 @authorized_users_only
-def update_profiles(request, user_id, template_name='accounts/update_profile.html'):
+def update_profiles(request, user_id, template_name='mail/accounts/update_profile.html'):
     """
     Updates a user profile.
     """
@@ -407,7 +407,7 @@ def update_profiles(request, user_id, template_name='accounts/update_profile.htm
 @login_required
 @authorized_users_only
 def add_account_signature(request, user_id,
-                        template='accounts/add_account_sig.html'):
+                        template='mail/accounts/add_account_sig.html'):
     'add account text or html signature'
     user_account = get_object_or_404(User, pk=user_id)
     user_profile = get_object_or_404(UserProfile, user=user_account)
@@ -441,7 +441,7 @@ def add_account_signature(request, user_id,
 @login_required
 @authorized_users_only
 def edit_account_signature(request, user_id, sig_id,
-        template='accounts/edit_account_sig.html'):
+        template='mail/accounts/edit_account_sig.html'):
     'edit account text or html signature'
     user_account = get_object_or_404(User, pk=user_id)
     signature = get_object_or_404(UserSignature, id=sig_id)
@@ -467,7 +467,7 @@ def edit_account_signature(request, user_id, sig_id,
 @login_required
 @authorized_users_only
 def delete_account_signature(request, user_id, sig_id,
-        template='accounts/delete_account_sig.html'):
+        template='mail/accounts/delete_account_sig.html'):
     'delete account text or html signature'
     user_account = get_object_or_404(User, pk=user_id)
     signature = get_object_or_404(UserSignature, id=sig_id)

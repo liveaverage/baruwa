@@ -123,7 +123,7 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
         json = anyjson.dumps({'items': listing, 'paginator': pg})
         return HttpResponse(json, mimetype='application/javascript')
 
-    return object_list(request, template_name='lists/index.html',
+    return object_list(request, template_name='mail/lists/index.html',
         queryset=listing, paginate_by=15, page=page,
         extra_context={'app': 'lists', 'list_kind': list_kind,
         'direction': direction, 'order_by': ordering,
@@ -131,7 +131,7 @@ def index(request, list_kind=1, page=1, direction='dsc', order_by='id'):
 
 
 @login_required
-def add_to_list(request, template='lists/add.html'):
+def add_to_list(request, template='mail/lists/add.html'):
     """add_to_list"""
     error_msg = ''
     is_saved = False
@@ -238,7 +238,7 @@ def delete_from_list(request, item_id):
     else:
         form = ListDeleteForm()
         form.fields['list_item'].widget.attrs['value'] = item_id
-    return render_to_response('lists/delete.html', locals(),
+    return render_to_response('mail/lists/delete.html', locals(),
         context_instance=RequestContext(request))
 
 

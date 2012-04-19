@@ -138,7 +138,7 @@ def tds_geoip(value):
         IP(value).version()
         cname, ccode = geoip_lookup(value)
         if ccode and cname:
-            tag = '<img src="/static/imgs/flags/%s.png" alt="%s"/>' % (ccode,
+            tag = '<img src="/static/mail/imgs/flags/%s.png" alt="%s"/>' % (ccode,
             cname)
     except ValueError:
         tag = ''
@@ -224,7 +224,7 @@ def tds_get_rules(rules):
     return return_value
 
 
-@register.inclusion_tag('tags/spamreport.html')
+@register.inclusion_tag('mail/tags/spamreport.html')
 def spam_report(value):
     "print spam report"
     if not value:

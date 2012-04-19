@@ -7,9 +7,9 @@ var media_url = '{{MEDIA_URL}}';
 //]]>
 </script>
 <!--
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/prevent-caching-of-ajax-requests.js"></script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/domain.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/domain.js"></script>
 -->
 {% endblock scripts %}
 {% block submenu %}
@@ -87,9 +87,9 @@ var media_url = '{{MEDIA_URL}}';
 			{% trans "Disabled" %}
 		{% endif %}
 		<div class="Profile_edit">
-			 <a class="selector" href="{% url test-host server.id %}"><img src="{{ MEDIA_URL }}imgs/connect.png" alt="Test" title="Test" /></a>
-			 <a href="{% url edit-host server.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
-			 <a href="{% url delete-host server.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+			 <a class="selector" href="{% url test-host server.id %}"><img src="{{ MEDIA_URL }}mail/imgs/connect.png" alt="Test" title="Test" /></a>
+			 <a href="{% url edit-host server.id %}"><img src="{{ MEDIA_URL }}mail/imgs/edit.png" alt="Edit" title="Edit" /></a>
+			 <a href="{% url delete-host server.id %}"><img src="{{ MEDIA_URL }}mail/imgs/action_delete.png" alt="Delete" title="Delete" /></a>
 		</div>
 	</div>
 </div>
@@ -116,8 +116,8 @@ var media_url = '{{MEDIA_URL}}';
 			{% trans "Disabled" %}
 		{% endif %}
 		<div class="Profile_edit">
-			 <a href="{% url edit-auth-host  authserver.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
-			 <a href="{% url delete-auth-host authserver.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+			 <a href="{% url edit-auth-host  authserver.id %}"><img src="{{ MEDIA_URL }}mail/imgs/edit.png" alt="Edit" title="Edit" /></a>
+			 <a href="{% url delete-auth-host authserver.id %}"><img src="{{ MEDIA_URL }}mail/imgs/action_delete.png" alt="Delete" title="Delete" /></a>
 		</div>
 	</div>
 </div>
@@ -148,8 +148,8 @@ var media_url = '{{MEDIA_URL}}';
 			{% trans "Disabled" %}
 		{% endif %}
 		<div class="Profile_edit">
-			 <a href="{% url edit-signature domain.id signature.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
-			 <a href="{% url delete-signature domain.id signature.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+			 <a href="{% url edit-signature domain.id signature.id %}"><img src="{{ MEDIA_URL }}mail/imgs/edit.png" alt="Edit" title="Edit" /></a>
+			 <a href="{% url delete-signature domain.id signature.id %}"><img src="{{ MEDIA_URL }}mail/imgs/action_delete.png" alt="Delete" title="Delete" /></a>
 		</div>
 	</div>
 </div>

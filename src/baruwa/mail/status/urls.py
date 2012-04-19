@@ -24,7 +24,7 @@ from django.conf.urls.defaults import patterns, include, handler500, handler404
 from django.contrib.auth.decorators import login_required
 from baruwa.mail.messages.views import task_status
 
-urlpatterns = patterns('baruwa.status.views',
+urlpatterns = patterns('baruwa.mail.status.views',
     (r'^$', 'index', {}, 'status-index'),
     (r'^bayes/$', 'bayes_info', {}, 'bayes-info'),
     (r'^lint/$', 'sa_lint', {}, 'sa-lint'),

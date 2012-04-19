@@ -28,9 +28,9 @@
 <div id="scanner-id-{{scanner.id}}" class="{% cycle 'LightBlue' 'LightGray' %}_div">
 	<div class="Domains_hash">
 		{% if domain.enabled %}
-			<img src="{{ MEDIA_URL }}imgs/active.png" alt="" />
+			<img src="{{ MEDIA_URL }}mail/imgs/active.png" alt="" />
 		{% else %}
-			<img src="{{ MEDIA_URL }}imgs/inactive.png" alt="" />
+			<img src="{{ MEDIA_URL }}mail/imgs/inactive.png" alt="" />
 		{% endif %}	
 	</div>
 	<div class="Scanners_name">
@@ -38,17 +38,17 @@
 	</div>
 	<div class="Scanners_status">
 		{% if configs %}
-			<img src="{{ MEDIA_URL }}imgs/tick.png" alt="" />
+			<img src="{{ MEDIA_URL }}mail/imgs/tick.png" alt="" />
 		{% else %}
 			<a href="{% url init-scanner scanner.id %}">{% trans "Initialize" %}</a>
 		{% endif %}
 	</div>
 	<div class="Scanners_action">
 		<div class="Scanners_action_change">
-			<a href=""><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+			<a href=""><img src="{{ MEDIA_URL }}mail/imgs/edit.png" alt="Edit" title="Edit" /></a>
 		</div>
 		<div class="Scanners_action_change">
-			<a href=""><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+			<a href=""><img src="{{ MEDIA_URL }}mail/imgs/action_delete.png" alt="Delete" title="Delete" /></a>
 		</div>
 	</div>
 </div>

@@ -55,7 +55,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
     ordering = order_by
     form = None
     num_of_recent_msgs = getattr(settings, 'BARUWA_NUM_RECENT_MESSAGES', 50)
-    template_name = 'messages/index.html'
+    template_name = 'mail/messages/index.html'
     if direction == 'dsc':
         ordering = order_by
         order_by = '-%s' % order_by
@@ -88,7 +88,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             'otherinfected', 'whitelisted', 'blacklisted', 'nameinfected',
             'scaned').order_by(order_by)
         elif view_type == 'quarantine':
-            template_name = 'messages/quarantine.html'
+            template_name = 'mail/messages/quarantine.html'
             message_list = Message.quarantine.for_user(request).values(
             'id', 'timestamp', 'from_address', 'to_address', 'subject',
             'size', 'sascore', 'highspam', 'spam', 'virusinfected',
@@ -205,14 +205,14 @@ def detail(request, message_id, archive=False):
                     if not result['release']:
                         success = False
                         error_msg = dict(result['errors'])['release']
-                    template = 'messages/released.html'
+                    template = 'mail/messages/released.html'
                     html.append(render_to_string(template,
                         {'id': message_details.id, 'addrs': to_addr,
                         'success': success, 'error_msg': error_msg}))
                 if form_data['learn']:
                     #salean
                     error_msg = ''
-                    template = "messages/salearn.html"
+                    template = "mail/messages/salearn.html"
                     if not result['learn']:
                         success = False
                         error_msg = dict(result['errors'])['learn']
@@ -225,7 +225,7 @@ def detail(request, message_id, archive=False):
                     if not result['delete']:
                         success = False
                         error_msg = dict(result['errors'])['delete']
-                    template = "messages/delete.html"
+                    template = "mail/messages/delete.html"
                     html.append(render_to_string(template,
                     {'id': message_details.id, 'success': success,
                     'error_msg': error_msg}))
@@ -244,7 +244,7 @@ def detail(request, message_id, archive=False):
             content_type='application/javascript; charset=utf-8')
 
     quarantine_form.fields['altrecipients'].widget.attrs['size'] = '55'
-    return render_to_response('messages/detail.html', locals(),
+    return render_to_response('mail/messages/detail.html', locals(),
         context_instance=RequestContext(request))
 
 
@@ -282,7 +282,7 @@ def preview(request, message_id, is_attach=False, attachment_id=0,
         preview_task.wait()
         if preview_task.result:
             result = preview_task.result
-            return render_to_response('messages/preview.html',
+            return render_to_response('mail/messages/preview.html',
             {'message': result, 'message_id': message_id},
             context_instance=RequestContext(request))
         msg = _("The requested message could not be previewed")
@@ -304,7 +304,7 @@ def search(request):
     return HttpResponseRedirect(reverse('main-messages-index'))
 
 
-def auto_release(request, message_uuid, template='messages/release.html'):
+def auto_release(request, message_uuid, template='mail/messages/release.html'):
     "Releases message from the quarantine without need to login"
     release_record = get_object_or_404(Release, uuid=message_uuid, released=0)
     message_details = get_object_or_404(Message, id=release_record.message_id)
@@ -377,5 +377,5 @@ def task_status(request, taskid):
         response = anyjson.dumps(rdict)
         return HttpResponse(response,
         content_type='application/javascript; charset=utf-8')
-    return render_to_response('messages/task_status.html', rdict,
+    return render_to_response('mail/messages/task_status.html', rdict,
     context_instance=RequestContext(request))

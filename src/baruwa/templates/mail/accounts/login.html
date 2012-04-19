@@ -25,17 +25,17 @@
 <head>
 <title>{% trans "Baruwa :: Login" %}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/login.css" />
-<link rel="icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" />
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}mail/css/login.css" />
+<link rel="icon" href="{{ MEDIA_URL }}mail/imgs/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{{ MEDIA_URL }}mail/imgs/favicon.ico" type="image/x-icon" />
+<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/jquery.js"></script>
 {% ifequal request.path '/accounts/login/'%}
 <script type="text/javascript">
 var url = '{% url lang-selector %}';
 var next = '{% url please-login %}?next=';
 </script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/prevent-caching-of-ajax-requests.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/login.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/login.js"></script>
 {% endifequal %}
 </head>
 <body>
@@ -43,7 +43,7 @@ var next = '{% url please-login %}?next=';
 <div id="box">
     <div id="login_head">
         <h1 id="logo">
-        <img src="{{ MEDIA_URL }}imgs/css/logo.jpg" alt="Baruwa" />
+        <img src="{{ MEDIA_URL }}mail/imgs/css/logo.jpg" alt="Baruwa" />
         </h1>
     </div>
     <div id="login_part"{% ifequal request.path '/accounts/pwreset/'%} style="display:none;"{% endifequal %}>

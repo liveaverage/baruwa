@@ -44,4 +44,4 @@ def lists_sorter(context, field_name, field_text):
                 direc, context['order_by']])
     return {'field_text': _(field_text), 'link': link,
         'rlink': rlink, 'dir': direc}
-register.inclusion_tag('tags/sorter.html', takes_context=True)(lists_sorter)
+register.inclusion_tag('mail/tags/sorter.html', takes_context=True)(lists_sorter)

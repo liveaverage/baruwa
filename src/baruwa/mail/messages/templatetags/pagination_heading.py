@@ -30,5 +30,5 @@ def pagination_heading(context):
         return {'page': context['page'], 'pages': context['pages']}
     else:
         return {'page': 1, 'pages': 1}
-register.inclusion_tag('tags/pagination_heading.html',
+register.inclusion_tag('mail/tags/pagination_heading.html',
     takes_context=True)(pagination_heading)

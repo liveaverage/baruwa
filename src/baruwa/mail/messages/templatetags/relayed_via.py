@@ -31,7 +31,7 @@ from baruwa.utils.regex import RELAY_HOSTS_RE, RECIEVED_RE
 register = template.Library()
 
 
-@register.inclusion_tag('tags/relayed_via.html')
+@register.inclusion_tag('mail/tags/relayed_via.html')
 def relayed_via(headers):
     "display relayed via"
     header_list = headers.split("\n")

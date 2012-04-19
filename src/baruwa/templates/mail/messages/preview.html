@@ -37,7 +37,7 @@
         <div class="mailitem">{% trans "Attachments:" %}</div>
         <div class="maildetail">
             {% for name in message.attachments %}
-            <img src="{{ MEDIA_URL }}imgs/dl.png" />&nbsp;<a href="{% url download-attachment message_id=message_id, attachment_id=forloop.counter %}">{{ name.filename }}</a>&nbsp;
+            <img src="{{ MEDIA_URL }}mail/imgs/dl.png" />&nbsp;<a href="{% url download-attachment message_id=message_id, attachment_id=forloop.counter %}">{{ name.filename }}</a>&nbsp;
             {%endfor%}
         </div>
     </div>

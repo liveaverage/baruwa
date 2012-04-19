@@ -21,7 +21,7 @@
 
 from django.conf.urls.defaults import patterns, include, handler500, handler404
 
-urlpatterns = patterns('baruwa.lists.views',
+urlpatterns = patterns('baruwa.mail.lists.views',
     (r'^$', 'index', {}, 'lists-index'),
     (r'^(?P<list_kind>([1-2]))/$', 'index', {}, 'lists-start'),
     (r'^(?P<list_kind>([1-2]))/(?P<page>([0-9]+|last))/$', 'index'),

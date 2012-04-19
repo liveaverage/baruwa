@@ -84,5 +84,5 @@ def generic_paginator(context, adjacent_pages=2):
         'list_all': context['list_all'],
     }
 
-register.inclusion_tag('tags/generic_paginator.html',
+register.inclusion_tag('mail/tags/generic_paginator.html',
     takes_context=True)(generic_paginator)

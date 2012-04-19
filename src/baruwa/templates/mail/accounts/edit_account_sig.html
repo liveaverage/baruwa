@@ -42,16 +42,16 @@ Accounts :: {{ address }} - edit email signature
 </form>
 {% endblock content %}
 {% block scripts %}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.cleditor.min.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/jquery.cleditor.imgs.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/signatures.js"></script>
-{% include "common/signaturejs.html" %}
+<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/jquery.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/jquery.cleditor.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/jquery.cleditor.imgs.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/signatures.js"></script>
+{% include "mail/common/signaturejs.html" %}
 {% endblock scripts %}
 {% block headers %}
-<link href="{{ MEDIA_URL }}css/jquery.cleditor.css" rel="stylesheet" type="text/css" />
-<link href="{{ MEDIA_URL }}css/jquery.wysiwyg.css" rel="stylesheet" type="text/css" />
-<link href="{{ MEDIA_URL }}css/wysiwyg.fileManager.css" rel="stylesheet" type="text/css" />
+<link href="{{ MEDIA_URL }}mail/css/jquery.cleditor.css" rel="stylesheet" type="text/css" />
+<link href="{{ MEDIA_URL }}mail/css/jquery.wysiwyg.css" rel="stylesheet" type="text/css" />
+<link href="{{ MEDIA_URL }}mail/css/wysiwyg.fileManager.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 var fm_url = '{% url accounts-image-manager user_account.id %}';
 var media_url = '{{MEDIA_URL}}';

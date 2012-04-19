@@ -20,9 +20,9 @@
     <div class="Status_col">{% trans "Scanners" %}</div>
     <div class="Status_col">
         {% if scanners %}
-        <img src="{{ MEDIA_URL }}imgs/status_ok.png" alt="x" />
+        <img src="{{ MEDIA_URL }}mail/imgs/status_ok.png" alt="x" />
         {%else%}
-        <img src="{{ MEDIA_URL }}imgs/caution.png" alt="x" />
+        <img src="{{ MEDIA_URL }}mail/imgs/caution.png" alt="x" />
         {%endif%}
         &nbsp;{{scanners}} {% trans "processes" %}
         </div>
@@ -33,9 +33,9 @@
     <div class="Status_col">MTA</div>
     <div class="Status_col">
         {% if mta %}
-        <img src="{{ MEDIA_URL }}imgs/status_ok.png" alt="x" />
+        <img src="{{ MEDIA_URL }}mail/imgs/status_ok.png" alt="x" />
         {%else%}
-        <img src="{{ MEDIA_URL }}imgs/caution.png" alt="x" />
+        <img src="{{ MEDIA_URL }}mail/imgs/caution.png" alt="x" />
         {%endif%}
         &nbsp;{{mta}} {% trans "processes" %}
     </div>
@@ -45,7 +45,7 @@
 <div class="LightBlue_div">
     <div class="Status_col">{% trans "Load" %}</div>
     <div class="Status_col">
-    <img src="{{ MEDIA_URL }}imgs/status_ok.png" alt="x" />&nbsp;{{ load }}
+    <img src="{{ MEDIA_URL }}mail/imgs/status_ok.png" alt="x" />&nbsp;{{ load }}
     </div>
     <div class="Status_col">{% trans "High scoring spam" %}</div>
     <div class="Status_col">{{ data.high_spam }}</div>
@@ -54,9 +54,9 @@
     <div class="Status_col">{% trans "AV" %}</div>
     <div class="Status_col">
         {% if av %}
-        <img src="{{ MEDIA_URL }}imgs/status_ok.png" alt="x" />
+        <img src="{{ MEDIA_URL }}mail/imgs/status_ok.png" alt="x" />
         {%else%}
-        <img src="{{ MEDIA_URL }}imgs/caution.png" alt="x" />
+        <img src="{{ MEDIA_URL }}mail/imgs/caution.png" alt="x" />
         {%endif%}
         &nbsp;{{av}} {% trans "processes" %}
     </div>

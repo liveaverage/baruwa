@@ -85,7 +85,7 @@ def index(request):
     upt = pipe1.communicate()[0].split()
     uptime = upt[2] + ' ' + upt[3].rstrip(',')
 
-    return render_to_response('status/index.html', {'data': data, 'load': load,
+    return render_to_response('mail/status/index.html', {'data': data, 'load': load,
         'scanners': scanners, 'mta': mta, 'av': clamd, 'uptime': uptime,
         'outq': outq['count'], 'inq': inq['count']},
         context_instance=RequestContext(request))
@@ -132,7 +132,7 @@ def bayes_info(request):
             elif match.group(5) == 'last expire reduction count':
                 info['rcount'] = match.group(3)
 
-    return render_to_response('status/bayes.html', {'data': info},
+    return render_to_response('mail/status/bayes.html', {'data': info},
         context_instance=RequestContext(request))
 
 
@@ -153,7 +153,7 @@ def sa_lint(request):
             break
         lint.append(line)
 
-    return render_to_response('status/lint.html', {'data': lint},
+    return render_to_response('mail/status/lint.html', {'data': lint},
         context_instance=RequestContext(request))
 
 
@@ -194,7 +194,7 @@ def mailq(request, queue, page=1, direction='dsc', order_by='timestamp'):
     request.session['queue_choices'] = choices
     request.session.modified = True
 
-    return object_list(request, template_name='status/mailq.html',
+    return object_list(request, template_name='mail/status/mailq.html',
     queryset=items, paginate_by=50, page=page,
     extra_context={'list_all': True, 'app': app.strip('/'),
     'direction': direction, 'order_by': ordering, 'form': form},
@@ -205,7 +205,7 @@ def mailq(request, queue, page=1, direction='dsc', order_by='timestamp'):
 def detail(request, itemid):
     "show queued mail details"
     itemdetails = get_object_or_404(MailQueueItem, id=itemid)
-    return render_to_response('status/detail.html',
+    return render_to_response('mail/status/detail.html',
     {'itemdetails': itemdetails}, context_instance=RequestContext(request))
 
 

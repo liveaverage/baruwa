@@ -63,7 +63,7 @@ AUTH_TYPES = ['', 'pop3', 'imap', 'smtp', 'radius/RSA SECUREID']
 @login_required
 @onlysuperusers
 def index(request, page=1, direction='dsc', order_by='id',
-        template='config/index.html'):
+        template='mail/config/index.html'):
     """
     Displays a paginated list of domains mail is processed for
     """
@@ -105,7 +105,7 @@ def index(request, page=1, direction='dsc', order_by='id',
 
 @login_required
 @onlysuperusers
-def view_domain(request, domain_id, template='config/domain.html'):
+def view_domain(request, domain_id, template='mail/config/domain.html'):
     "Displays a domain"
 
     domain = get_object_or_404(UserAddresses, id=domain_id,
@@ -120,7 +120,7 @@ def view_domain(request, domain_id, template='config/domain.html'):
 
 @login_required
 @onlysuperusers
-def add_host(request, domain_id, template='config/add_host.html'):
+def add_host(request, domain_id, template='mail/config/add_host.html'):
     "Adds Mail host"
 
     domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
@@ -154,7 +154,7 @@ def add_host(request, domain_id, template='config/add_host.html'):
 
 @login_required
 @onlysuperusers
-def edit_host(request, host_id, template='config/edit_host.html'):
+def edit_host(request, host_id, template='mail/config/edit_host.html'):
     "Edists Mail host"
 
     host = get_object_or_404(MailHost, id=host_id)
@@ -189,7 +189,7 @@ def edit_host(request, host_id, template='config/edit_host.html'):
 
 @login_required
 @onlysuperusers
-def delete_host(request, host_id, template='config/delete_host.html'):
+def delete_host(request, host_id, template='mail/config/delete_host.html'):
     'Deletes Mail host'
 
     host = get_object_or_404(MailHost, id=host_id)
@@ -270,13 +270,13 @@ def test_status(request, taskid):
             response = anyjson.dumps(dict(html='', completed=False))
             return HttpResponse(response,
                 content_type='application/javascript; charset=utf-8')
-    return render_to_response('config/task_status.html', {'status': status},
+    return render_to_response('mail/config/task_status.html', {'status': status},
     context_instance=RequestContext(request))
 
 
 @login_required
 @onlysuperusers
-def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
+def add_auth_host(request, domain_id, template='mail/config/add_auth_host.html'):
     'Add an external auth host'
     domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
     if request.method == 'POST':
@@ -310,7 +310,7 @@ def add_auth_host(request, domain_id, template='config/add_auth_host.html'):
 
 @login_required
 @onlysuperusers
-def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
+def edit_auth_host(request, host_id, template='mail/config/edit_auth_host.html'):
     'Edits an external auth host'
 
     host = get_object_or_404(MailAuthHost, id=host_id)
@@ -348,7 +348,7 @@ def edit_auth_host(request, host_id, template='config/edit_auth_host.html'):
 @login_required
 @onlysuperusers
 def delete_auth_host(request, host_id,
-                    template='config/delete_auth_host.html'):
+                    template='mail/config/delete_auth_host.html'):
     'Deletes an external auth host'
     host = get_object_or_404(MailAuthHost, id=host_id)
 
@@ -391,7 +391,7 @@ def delete_auth_host(request, host_id,
 @login_required
 @onlysuperusers
 def list_scanners(request, page=1, direction='dsc', order_by='id',
-                template='config/list_scanners.html'):
+                template='mail/config/list_scanners.html'):
     'lists the scanning nodes'
     scanners = ScannerHost.objects.values('id', 'address')
     configs = ScannerConfig.objects.values('value')[:1]
@@ -423,7 +423,7 @@ def list_scanners(request, page=1, direction='dsc', order_by='id',
 
 @login_required
 @onlysuperusers
-def view_scanner(request, scanner_id, template='config/view_scanner.html'):
+def view_scanner(request, scanner_id, template='mail/config/view_scanner.html'):
     'Displays links to various scanner configuration sections'
     scanner = get_object_or_404(ScannerHost, id=scanner_id)
     configs = ScannerConfig.objects.values('value')
@@ -444,7 +444,7 @@ def view_scanner(request, scanner_id, template='config/view_scanner.html'):
 
 @login_required
 @onlysuperusers
-def init_scanner(request, scanner_id, template='config/init_scanner.html'):
+def init_scanner(request, scanner_id, template='mail/config/init_scanner.html'):
     'Initialiazes the default scanner configuration values'
     scanner = get_object_or_404(ScannerHost, id=scanner_id)
     if request.method == 'POST':
@@ -452,7 +452,7 @@ def init_scanner(request, scanner_id, template='config/init_scanner.html'):
         if form.is_valid():
             try:
                 path = getattr(
-                settings, 'TEMPLATE_DIRS', ('/tmp'))[0] + '/config/scanner-init.sql'
+                settings, 'TEMPLATE_DIRS', ('/tmp'))[0] + '/mail/config/scanner-init.sql'
                 sql_file = open(path, 'r')
                 sql = sql_file.read()
                 sql_file.close()
@@ -475,7 +475,7 @@ def init_scanner(request, scanner_id, template='config/init_scanner.html'):
 @login_required
 @onlysuperusers
 def view_settings(request, scanner_id, section_id,
-                template='config/view_settings.html'):
+                template='mail/config/view_settings.html'):
     'Displays settings on a section basis'
     return render_to_response(template, locals(),
         context_instance=RequestContext(request))
@@ -484,7 +484,7 @@ def view_settings(request, scanner_id, section_id,
 @login_required
 @onlysuperusers
 def add_domain_signature(request, domain_id,
-                        template='config/add_domain_sig.html'):
+                        template='mail/config/add_domain_sig.html'):
     'add domain text or html signature'
     domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
 
@@ -513,7 +513,7 @@ def add_domain_signature(request, domain_id,
 @login_required
 @onlysuperusers
 def edit_domain_signature(request, domain_id, sig_id,
-        template='config/edit_domain_sig.html'):
+        template='mail/config/edit_domain_sig.html'):
     'edit domain text or html signature'
     domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
     signature = get_object_or_404(DomainSignature, id=sig_id)
@@ -539,7 +539,7 @@ def edit_domain_signature(request, domain_id, sig_id,
 @login_required
 @onlysuperusers
 def delete_domain_signature(request, domain_id, sig_id,
-        template='config/delete_domain_sig.html'):
+        template='mail/config/delete_domain_sig.html'):
     'delete domain text or html signature'
     domain = get_object_or_404(UserAddresses, id=domain_id, address_type=1)
     signature = get_object_or_404(DomainSignature, id=sig_id)

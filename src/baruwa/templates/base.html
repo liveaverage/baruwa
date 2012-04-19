@@ -24,15 +24,15 @@
 <head>
 <title>.:. Baruwa :: {% block title %}{% endblock title %}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="{{ MEDIA_URL }}css/style.css" rel="stylesheet" type="text/css" />
-<link rel="icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" /> 
+<link href="{{ MEDIA_URL }}mail/css/style.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="{{ MEDIA_URL }}mail/imgs/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{{ MEDIA_URL }}mail/imgs/favicon.ico" type="image/x-icon" /> 
 {% block headers %}{% endblock headers %}
 </head>
 <body{%block body_class%}{%endblock body_class%}>
     <div id="header">
     	<div class="logo">
-			<a href="{% url index-page %}"><img src="{{ MEDIA_URL }}imgs/css/logo.jpg" alt="" /></a>
+			<a href="{% url index-page %}"><img src="{{ MEDIA_URL }}mail/imgs/css/logo.jpg" alt="" /></a>
 		</div>
         <div class="search">
         	<div class="Link">
@@ -40,9 +40,9 @@
 					<li>
 						{% trans "Status " %}<a href="{% url status-index %}">
 						{% if baruwa_status %}
-						<img id="statusimg" src="{{ MEDIA_URL }}imgs/active.png" alt="OK" />
+						<img id="statusimg" src="{{ MEDIA_URL }}mail/imgs/active.png" alt="OK" />
 						{% else %}
-						<img id="statusimg" src="{{ MEDIA_URL }}imgs/inactive.png" alt="FAULTY" />
+						<img id="statusimg" src="{{ MEDIA_URL }}mail/imgs/inactive.png" alt="FAULTY" />
 						{% endif %}
 						</a>
 					</li>
@@ -68,7 +68,7 @@
                 <form method="post" action="{% url message-search %}">
 					{% csrf_token %}
             	    <div class="text_box"><input name="message_id" type="text" /></div>
-                    <div class="search_btn"><input name="submit" type="image" src="{{ MEDIA_URL }}imgs/css/search_btn.gif" /></div>
+                    <div class="search_btn"><input name="submit" type="image" src="{{ MEDIA_URL }}mail/imgs/css/search_btn.gif" /></div>
                 </form>
 				{% endif %}
             </div>
@@ -100,7 +100,7 @@
    </div>
    <div class="clearer"></div>
    <div id="Main_Content">
-        <div class="Curb"><img src="{{ MEDIA_URL }}imgs/css/top_curb.gif" alt="" /></div>
+        <div class="Curb"><img src="{{ MEDIA_URL }}mail/imgs/css/top_curb.gif" alt="" /></div>
         <div class="heading">
         <span id="heading">
             {% block heading %}{% endblock heading %}
@@ -141,7 +141,7 @@
         {% block add_item %}{% endblock add_item %}
         </div><!--GRID CONTAINER END HERE-->
         {% block paging %}{% endblock paging %}
-        <div class="Curb"><img src="{{ MEDIA_URL }}imgs/css/footer_curb.gif" alt="" /></div>
+        <div class="Curb"><img src="{{ MEDIA_URL }}mail/imgs/css/footer_curb.gif" alt="" /></div>
    </div>
    <div id="Footer_container">
 	    <!-- 

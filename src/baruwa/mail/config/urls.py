@@ -22,7 +22,7 @@
 from django.conf.urls.defaults import patterns, include, handler500, handler404
 from baruwa.mail.config.views import test_status
 
-urlpatterns = patterns('baruwa.config.views',
+urlpatterns = patterns('baruwa.mail.config.views',
     (r'^$', 'index', {}, 'settings-index'),
     (r'^(?P<page>([0-9]+|last))/$', 'index'),
     (r'^(?P<page>([0-9]+|last))/(?P<direction>(dsc|asc))/(?P<order_by>(id|address))/$', 'index', {}, 'domains-list'),

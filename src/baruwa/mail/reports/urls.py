@@ -21,7 +21,7 @@
 
 from django.conf.urls.defaults import patterns, include, handler500, handler404
 
-urlpatterns = patterns('baruwa.reports.views',
+urlpatterns = patterns('baruwa.mail.reports.views',
     (r'^$', 'index', {}, 'reports-index'),
     (r'^(?P<report_kind>([1-9]{1}|[1]{1}[0-3]{1}))/$', 'report', {},
     'report-kind'),

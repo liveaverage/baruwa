@@ -42,4 +42,4 @@ def status_sorter(context, field_name, field_text):
             'dir': direc
             }
 
-register.inclusion_tag('tags/sorter.html', takes_context=True)(status_sorter)
+register.inclusion_tag('mail/tags/sorter.html', takes_context=True)(status_sorter)

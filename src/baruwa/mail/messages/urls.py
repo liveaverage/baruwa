@@ -21,7 +21,7 @@
 
 from django.conf.urls.defaults import patterns, include, handler500, handler404
 
-urlpatterns = patterns('baruwa.messages.views',
+urlpatterns = patterns('baruwa.mail.messages.views',
     (r'^$', 'index', {}, 'main-messages-index'),
     (r'^(?P<view_type>(full|quarantine|archive))/$', 'index', {'list_all': 1}, 'all-messages-index'),
     (r'^(?P<view_type>(full|quarantine|archive))/(?P<direction>(dsc|asc))/(?P<order_by>(timestamp|from_address|to_address|subject|size|sascore))/$',

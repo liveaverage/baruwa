@@ -5,15 +5,16 @@
 //<![CDATA[
 var link_url = '{% url main-messages-index %}';
 var media_url = '{{MEDIA_URL}}';
+var messages_base_url = "{% url main-messages-index %}";
 //]]>
 </script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/prevent-caching-of-ajax-requests.js"></script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.progressbar.js"></script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/task_status.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/jquery.progressbar.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/task_status.js"></script>
 {% endblock scripts %}
 {% block headers %}
-<link href="{{ MEDIA_URL }}css/progressbar.css" rel="stylesheet" type="text/css" />
+<link href="{{ MEDIA_URL }}mail/css/progressbar.css" rel="stylesheet" type="text/css" />
 {% if not finished  %}
 <!--<meta http-equiv="refresh" content="5" />-->
 {% endif %}

@@ -2,8 +2,8 @@
 {% load i18n %}
 {% block submenu %}
 <ul>
-  <li><a id="list-link" href="/lists/1/">{% trans "Whitelist" %}</a></li>
-  <li><a id="list-link" href="/lists/2/">{% trans "Blacklist" %}</a></li>
+  <li><a id="list-link" href="{% url lists-start 1 %}">{% trans "Whitelist" %}</a></li>
+  <li><a id="list-link" href="{% url lists-start 2 %}">{% trans "Blacklist" %}</a></li>
 </ul>
 {% endblock submenu %}
 {% block title %}{% trans "Delete from List" %}{% endblock title %}

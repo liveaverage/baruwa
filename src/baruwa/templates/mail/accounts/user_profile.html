@@ -176,8 +176,8 @@
 			<div class="Profile_edit">
 				{% if user.is_superuser %}
 				{% ifnotequal user.get_profile.account_type 3  %}
-				 <a href="{% url edit-address address.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
-				 <a href="{% url delete-address address.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+				 <a href="{% url edit-address address.id %}"><img src="{{ MEDIA_URL }}mail/imgs/edit.png" alt="Edit" title="Edit" /></a>
+				 <a href="{% url delete-address address.id %}"><img src="{{ MEDIA_URL }}mail/imgs/action_delete.png" alt="Delete" title="Delete" /></a>
 				{% endifnotequal %}	
 				{% endif %}
 			</div>
@@ -190,7 +190,7 @@
 		</div>
 		<div class="Profile_values">
 			{% if user.is_superuser %}
-			<a href="{% ifequal account_profile.account_type 2  %}{% url add-domain account_profile.id %}{% else %}{% url add-address account_profile.id %}{% endifequal %}" title="Add Address"><img alt="Add Address" src="{{ MEDIA_URL }}imgs/action_add.png" /></a>
+			<a href="{% ifequal account_profile.account_type 2  %}{% url add-domain account_profile.id %}{% else %}{% url add-address account_profile.id %}{% endifequal %}" title="Add Address"><img alt="Add Address" src="{{ MEDIA_URL }}mail/imgs/action_add.png" /></a>
 			{% endif %}
 		</div>		 
 	</div>
@@ -218,8 +218,8 @@
 			{% trans "Disabled" %}
 		{% endif %}
 		<div class="Profile_edit">
-			 <a href="{% url accounts-edit-signature account_info.id signature.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
-			 <a href="{% url accounts-delete-signature account_info.id signature.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+			 <a href="{% url accounts-edit-signature account_info.id signature.id %}"><img src="{{ MEDIA_URL }}mail/imgs/edit.png" alt="Edit" title="Edit" /></a>
+			 <a href="{% url accounts-delete-signature account_info.id signature.id %}"><img src="{{ MEDIA_URL }}mail/imgs/action_delete.png" alt="Delete" title="Delete" /></a>
 		</div>
 	</div>
 </div>

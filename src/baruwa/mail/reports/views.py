@@ -118,7 +118,7 @@ def index(request):
         return HttpResponse(response,
             content_type='application/javascript; charset=utf-8')
 
-    return render_to_response('reports/index.html', {'form': filter_form,
+    return render_to_response('mail/reports/index.html', {'form': filter_form,
         'data': data, 'errors': errors, 'active_filters': active_filters,
         'saved_filters': saved_filters},
         context_instance=RequestContext(request))
@@ -238,7 +238,7 @@ def del_filter(request, index_num):
 def report(request, report_kind):
     "displays a report"
     report_kind = int(report_kind)
-    template = "reports/piereport.html"
+    template = "mail/reports/piereport.html"
     active_filters = []
     if report_kind == 1:
         data = run_query('from_address', {'from_address__exact': ""},
@@ -309,7 +309,7 @@ def report(request, report_kind):
             data = [obj.obj_to_dict() for obj in data]
 
         pie_data = {'scores': scores, 'count': counts}
-        template = "reports/barreport.html"
+        template = "mail/reports/barreport.html"
         report_title = _("Spam Score distribution")
     elif report_kind == 10:
         data = run_hosts_query(request, active_filters)
@@ -321,7 +321,7 @@ def report(request, report_kind):
                 row['country'] = tds_geoip(row['clientip'])
                 row['hostname'] = tds_hostname(row['clientip'])
         report_title = _("Top mail hosts by quantity")
-        template = "reports/relays.html"
+        template = "mail/reports/relays.html"
     elif report_kind == 11:
         from baruwa.mail.messages.models import MessageTotals
 
@@ -382,7 +382,7 @@ def report(request, report_kind):
             data = [obj.obj_to_dict() for obj in data]
 
         report_title = _("Total messages [ After SMTP ]")
-        template = "reports/listing.html"
+        template = "mail/reports/listing.html"
     filter_form = FilterForm()
 
     if request.is_ajax():

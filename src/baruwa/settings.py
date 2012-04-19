@@ -123,20 +123,20 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'baruwa.auth',
-    'baruwa.accounts',
-    'baruwa.messages',
-    'baruwa.lists',
-    'baruwa.reports',
-    'baruwa.status',
-    'baruwa.config',
+    'baruwa.mail.auth',
+    'baruwa.mail.accounts',
+    'baruwa.mail.messages',
+    'baruwa.mail.lists',
+    'baruwa.mail.reports',
+    'baruwa.mail.status',
+    'baruwa.mail.config',
     'djcelery',
     'south',
     #'debug_toolbar',
 )
 
 AUTHENTICATION_BACKENDS = (
-    'baruwa.auth.backends.MailBackend',
+    'baruwa.mail.auth.backends.MailBackend',
     'django.contrib.auth.backends.ModelBackend',
     #'baruwa.auth.radius.RadiusAuth',
 )

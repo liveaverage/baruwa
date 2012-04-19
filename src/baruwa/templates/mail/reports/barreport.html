@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block body_class%} class="tundra"{%endblock body_class%}
-{% block headers %}<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />{% endblock headers %}
+{% block headers %}<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}mail/js/dijit/themes/tundra/tundra.css" />{% endblock headers %}
 {% block scripts %}<script type="text/javascript">
 	var djConfig = { parseOnLoad:true, isDebug:false };
 	var labels = {{pie_data.scores|safe}};
 	var sa_scores = {{pie_data.count|safe}};
 	var media_url = '{{MEDIA_URL}}';
 </script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/dojo/dojo.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/reports.common.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/reports.barreport.js"></script>{% endblock scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/dojo/dojo.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/reports.common.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/reports.barreport.js"></script>{% endblock scripts %}
 {% block submenu %}
 &nbsp;
 {% endblock submenu %}
@@ -61,5 +61,5 @@
         </span>
     </div>
 </div>
-{% include "reports/filter.form.html" %}
+{% include "mail/reports/filter.form.html" %}
 {% endblock content %}
