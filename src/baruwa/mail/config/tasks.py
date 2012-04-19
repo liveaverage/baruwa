@@ -35,9 +35,9 @@ from django.utils.translation import ugettext as _
 
 from baruwa.utils.html import SignatureCleaner
 from baruwa.utils.mail.message import TestDeliveryServers
-from baruwa.config.models import (UNCLEANTAGS, SignatureImg,
+from baruwa.mail.config.models import (UNCLEANTAGS, SignatureImg,
 DomainSignature, ScannerConfig, ScannerHost, ConfigSection)
-from baruwa.accounts.models import UserSignature, UserAddresses
+from baruwa.mail.accounts.models import UserSignature, UserAddresses
 
 
 def update_ms_serial(logger):

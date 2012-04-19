@@ -21,7 +21,7 @@
 
 from django.db.models import Q
 
-from baruwa.reports.forms import FILTER_ITEMS, FILTER_BY
+from baruwa.mail.reports.forms import FILTER_ITEMS, FILTER_BY
 
 
 def place_positive_vars(key, largs, kwargs, lkwargs, value):

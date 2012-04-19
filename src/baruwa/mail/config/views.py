@@ -43,16 +43,16 @@ from celery.backends import default_backend
 
 from baruwa.utils.misc import check_access
 from baruwa.utils.decorators import onlysuperusers
-from baruwa.accounts.models import UserAddresses, UserProfile
-from baruwa.config.models import MailHost
-from baruwa.config.tasks import TestSMTPServer, GenerateDomainSigs, \
+from baruwa.mail.accounts.models import UserAddresses, UserProfile
+from baruwa.mail.config.models import MailHost
+from baruwa.mail.config.tasks import TestSMTPServer, GenerateDomainSigs, \
 DeleteDomainSigs
-from baruwa.config.forms import  MailHostForm, EditMailHost, DeleteMailHost, \
+from baruwa.mail.config.forms import  MailHostForm, EditMailHost, DeleteMailHost, \
 InitializeConfigsForm
 from baruwa.utils.misc import jsonify_domains_list
-from baruwa.config.models import MailAuthHost, ScannerHost, ScannerConfig, \
+from baruwa.mail.config.models import MailAuthHost, ScannerHost, ScannerConfig, \
 ConfigSection, DomainSignature, SignatureImg
-from baruwa.config.forms import MailAuthHostForm, EditMailAuthHostForm, \
+from baruwa.mail.config.forms import MailAuthHostForm, EditMailAuthHostForm, \
 DeleteMailAuthHostForm, AddDomainSignatureForm, EditDomainSignatureForm, \
 DeleteDomainSignatureForm
 

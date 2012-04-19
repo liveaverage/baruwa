@@ -25,7 +25,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.utils.html import strip_tags
 
-from baruwa.fixups.models import SignatureImg
+from baruwa.mail.fixups.models import SignatureImg
 from baruwa.utils.html import SignatureCleaner
 
 UNCLEANTAGS = ['html', 'head', 'link', 'body', 'base']

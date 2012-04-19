@@ -20,7 +20,7 @@
 #
 
 from django.conf.urls.defaults import patterns, include, handler500, handler404
-from baruwa.accounts.forms import PwResetForm
+from baruwa.mail.accounts.forms import PwResetForm
 
 urlpatterns = patterns('',
     (r'^$', 'baruwa.accounts.views.index', {}, 'accounts'),

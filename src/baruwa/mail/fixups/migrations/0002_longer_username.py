@@ -23,7 +23,7 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
-from baruwa.fixups import max_username_length
+from baruwa.mail.fixups import max_username_length
 
 class Migration(SchemaMigration):
 

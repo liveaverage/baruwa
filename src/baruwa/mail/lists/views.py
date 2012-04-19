@@ -35,9 +35,9 @@ from django.db.models import Q
 from django.utils.translation import ugettext as _
 from django.contrib import messages as djmessages
 
-from baruwa.lists.forms import ListAddForm, AdminListAddForm
-from baruwa.lists.forms import FilterForm, ListDeleteForm
-from baruwa.lists.models import List
+from baruwa.mail.lists.forms import ListAddForm, AdminListAddForm
+from baruwa.mail.lists.forms import FilterForm, ListDeleteForm
+from baruwa.mail.lists.models import List
 from baruwa.utils.misc import jsonify_list
 
 

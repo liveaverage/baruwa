@@ -32,7 +32,7 @@ class Command(NoArgsCommand):
 
     def handle_noargs(self, **options):
         #import datetime
-        #from baruwa.messages.models import Message
+        #from baruwa.mail.messages.models import Message
         #interval = datetime.timedelta(days=60)
         #last_date = datetime.datetime.now() - interval
         #Message.objects.filter(timestamp__lt=last_date).delete()

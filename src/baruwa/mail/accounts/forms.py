@@ -28,8 +28,8 @@ from django.contrib.auth.forms import PasswordResetForm, AuthenticationForm
 
 from baruwa.utils.regex import DOM_RE
 from baruwa.utils.regex import ADDRESS_RE
-from baruwa.fixups import max_username_length
-from baruwa.accounts.models import UserProfile, UserAddresses, UserSignature
+from baruwa.mail.fixups import max_username_length
+from baruwa.mail.accounts.models import UserProfile, UserAddresses, UserSignature
 
 SIG_TYPES = ((1, 'Text signature'), (2, 'HTML Signature'),)
 

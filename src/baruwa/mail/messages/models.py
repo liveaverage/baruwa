@@ -25,7 +25,7 @@ from django.db import models
 from django.db.models import Q
 from django.db import connection
 
-from baruwa.accounts.models import UserProfile, UserAddresses
+from baruwa.mail.accounts.models import UserProfile, UserAddresses
 from baruwa.utils.queryfilters import raw_user_filter, gen_dynamic_raw_query
 
 

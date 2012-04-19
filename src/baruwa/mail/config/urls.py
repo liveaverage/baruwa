@@ -20,7 +20,7 @@
 #
 
 from django.conf.urls.defaults import patterns, include, handler500, handler404
-from baruwa.config.views import test_status
+from baruwa.mail.config.views import test_status
 
 urlpatterns = patterns('baruwa.config.views',
     (r'^$', 'index', {}, 'settings-index'),

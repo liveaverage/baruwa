@@ -37,9 +37,9 @@ from django.contrib import messages as djmessages
 
 from baruwa.utils.misc import get_processes, get_config_option
 from baruwa.utils.decorators import onlysuperusers
-from baruwa.messages.models import MessageStats
-from baruwa.status.models import MailQueueItem
-from baruwa.status.forms import DeleteQueueItems
+from baruwa.mail.messages.models import MessageStats
+from baruwa.mail.status.models import MailQueueItem
+from baruwa.mail.status.forms import DeleteQueueItems
 
 
 @login_required

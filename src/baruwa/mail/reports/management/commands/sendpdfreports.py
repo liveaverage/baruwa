@@ -42,10 +42,10 @@ from django.template.defaultfilters import filesizeformat
 from django.core.mail import EmailMessage, SMTPConnection
 from django.core.management.base import BaseCommand, CommandError
 
-from baruwa.messages.models import Message
-from baruwa.messages.models import MessageTotals
-from baruwa.accounts.models import UserProfile, UserAddresses
-from baruwa.messages.templatetags.messages_extras import tds_trunc
+from baruwa.mail.messages.models import Message
+from baruwa.mail.messages.models import MessageTotals
+from baruwa.mail.accounts.models import UserProfile, UserAddresses
+from baruwa.mail.messages.templatetags.messages_extras import tds_trunc
 from baruwa.utils.graphs import PieChart, PIE_CHART_COLORS, BarChart
 
 

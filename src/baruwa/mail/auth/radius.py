@@ -24,9 +24,9 @@ from StringIO import StringIO
 from django.core.validators import email_re
 from django.contrib.auth.models import User
 from django.conf import settings
-from baruwa.accounts.models import UserProfile
-from baruwa.config.models import MailAuthHost
-from baruwa.accounts.models import UserAddresses
+from baruwa.mail.accounts.models import UserProfile
+from baruwa.mail.config.models import MailAuthHost
+from baruwa.mail.accounts.models import UserAddresses
 
 
 DICTIONARY = u"""

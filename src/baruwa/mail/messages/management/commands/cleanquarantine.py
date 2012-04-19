@@ -29,7 +29,7 @@ from django.utils.translation import ugettext as _
 from django.conf import settings
 
 from baruwa.utils.misc import get_config_option
-from baruwa.messages.models import Message
+from baruwa.mail.messages.models import Message
 
 
 REGEX = re.compile(r"^\d{8}$")

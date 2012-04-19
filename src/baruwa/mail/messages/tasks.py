@@ -24,7 +24,7 @@
 from celery.task import Task
 from django.utils.translation import ugettext as _
 
-from baruwa.messages.models import Message
+from baruwa.mail.messages.models import Message
 from baruwa.utils.mail.message import ProcessQuarantinedMessage, PreviewMessage
 
 

@@ -26,7 +26,7 @@ from django.db.models.signals import class_prepared
 from django.core.validators import MaxLengthValidator
 
 
-from baruwa.fixups import max_username_length
+from baruwa.mail.fixups import max_username_length
 
 
 def long_username(sender, *args, **kwargs):

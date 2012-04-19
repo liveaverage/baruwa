@@ -23,11 +23,11 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
-from baruwa.accounts.models import UserAddresses
-from baruwa.config.models import MailHost, DomainSignature
+from baruwa.mail.accounts.models import UserAddresses
+from baruwa.mail.config.models import MailHost, DomainSignature
 from baruwa.utils.misc import ipaddr_is_valid
 from baruwa.utils.regex import DOM_RE
-from baruwa.config.models import MailAuthHost
+from baruwa.mail.config.models import MailAuthHost
 
 SIG_TYPES = ((1, 'Text signature'), (2, 'HTML Signature'),)
 

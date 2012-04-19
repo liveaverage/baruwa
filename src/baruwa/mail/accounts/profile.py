@@ -21,8 +21,8 @@
 
 from django.core.validators import email_re
 
-from baruwa.accounts.models import UserProfile, UserAddresses
-from baruwa.accounts.forms import UserProfileForm
+from baruwa.mail.accounts.models import UserProfile, UserAddresses
+from baruwa.mail.accounts.forms import UserProfileForm
 
 
 def retrieve_profile(user):

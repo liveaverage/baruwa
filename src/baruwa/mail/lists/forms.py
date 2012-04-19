@@ -81,7 +81,7 @@ class ListAddForm(forms.Form):
         cleaned_data = self.cleaned_data
         from_address = cleaned_data.get("from_address")
         to_address = cleaned_data.get("to_address")
-        from baruwa.lists.models import List
+        from baruwa.mail.lists.models import List
         list_objs = List.objects.filter(from_address=from_address,
         to_address=to_address)
         if list_objs:

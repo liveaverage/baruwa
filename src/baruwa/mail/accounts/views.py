@@ -40,16 +40,16 @@ from django.contrib import messages as djmessages
 from django.utils.translation import ugettext as _
 from django.utils.translation import check_for_language
 
-from baruwa.accounts.forms import UserProfileForm, UserCreateForm, \
+from baruwa.mail.accounts.forms import UserProfileForm, UserCreateForm, \
 UserAddressForm, OrdUserProfileForm, UserUpdateForm, AdminUserUpdateForm, \
 EditAddressForm, DeleteAddressForm, DeleteUserForm, AuthenticationForm, \
 AddAccountSignatureForm, EditAccountSignatureForm, DeleteAccountSignatureForm
-from baruwa.accounts.profile import set_user_addresses
-from baruwa.accounts.models import UserAddresses, UserProfile, UserSignature
+from baruwa.mail.accounts.profile import set_user_addresses
+from baruwa.mail.accounts.models import UserAddresses, UserProfile, UserSignature
 from baruwa.utils.decorators import onlysuperusers, authorized_users_only, \
 only_admins
 from baruwa.utils.misc import jsonify_accounts_list
-from baruwa.config.tasks import GenerateAccountSigs, DeleteAccountSigs
+from baruwa.mail.config.tasks import GenerateAccountSigs, DeleteAccountSigs
 
 
 def local_login(request, redirect_field_name=REDIRECT_FIELD_NAME):

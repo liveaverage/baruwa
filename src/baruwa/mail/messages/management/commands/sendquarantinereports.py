@@ -35,9 +35,9 @@ from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.db.models import Q
 
-from baruwa.messages.models import Message
-from baruwa.accounts.models import UserProfile
-from baruwa.messages.models import Release
+from baruwa.mail.messages.models import Message
+from baruwa.mail.accounts.models import UserProfile
+from baruwa.mail.messages.models import Release
 
 
 def embed_img(email, img_id, img_data):

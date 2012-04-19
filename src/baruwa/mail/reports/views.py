@@ -31,10 +31,10 @@ from django.template import RequestContext
 from django.template.defaultfilters import force_escape
 from django.utils.translation import ugettext as _
 
-from baruwa.reports.forms import FilterForm, FILTER_ITEMS, FILTER_BY
-from baruwa.reports.models import SavedFilter
-from baruwa.reports.utils import pack_json_data, run_query, run_hosts_query
-from baruwa.messages.models import Message
+from baruwa.mail.reports.forms import FilterForm, FILTER_ITEMS, FILTER_BY
+from baruwa.mail.reports.models import SavedFilter
+from baruwa.mail.reports.utils import pack_json_data, run_query, run_hosts_query
+from baruwa.mail.messages.models import Message
 from baruwa.utils.queryfilters import gen_dynamic_query, get_active_filters
 
 
@@ -283,7 +283,7 @@ def report(request, report_kind):
         pie_data = pack_json_data(data, 'to_domain', 'total_size')
         report_title = _("Top recipient domains by volume")
     elif report_kind == 9:
-        from baruwa.messages.models import SpamScores
+        from baruwa.mail.messages.models import SpamScores
 
         filter_list = []
         addrs = []
@@ -315,7 +315,7 @@ def report(request, report_kind):
         data = run_hosts_query(request, active_filters)
         pie_data = pack_json_data(data, 'clientip', 'num_count')
         if request.is_ajax():
-            from baruwa.messages.templatetags.messages_extras import \
+            from baruwa.mail.messages.templatetags.messages_extras import \
                 tds_geoip, tds_hostname
             for row in data:
                 row['country'] = tds_geoip(row['clientip'])
@@ -323,7 +323,7 @@ def report(request, report_kind):
         report_title = _("Top mail hosts by quantity")
         template = "reports/relays.html"
     elif report_kind == 11:
-        from baruwa.messages.models import MessageTotals
+        from baruwa.mail.messages.models import MessageTotals
 
         filter_list = []
         addrs = []

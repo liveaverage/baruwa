@@ -32,7 +32,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
 from baruwa.utils.misc import geoip_lookup
-from baruwa.messages.models import SaRules
+from baruwa.mail.messages.models import SaRules
 from baruwa.utils.regex import clean_regex
 from baruwa.utils.misc import get_config_option
 from baruwa.utils.regex import RBL_RE, SARULE_RE, LEARN_RE

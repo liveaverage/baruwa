@@ -22,7 +22,7 @@
 from djcelery import views as celery_views
 from django.conf.urls.defaults import patterns, include, handler500, handler404
 from django.contrib.auth.decorators import login_required
-from baruwa.messages.views import task_status
+from baruwa.mail.messages.views import task_status
 
 urlpatterns = patterns('baruwa.status.views',
     (r'^$', 'index', {}, 'status-index'),

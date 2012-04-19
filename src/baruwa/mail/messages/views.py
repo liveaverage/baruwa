@@ -38,10 +38,10 @@ from django.utils.translation import ugettext as _
 from celery.task.sets import TaskSet
 from celery.result import TaskSetResult
 
-from baruwa.messages.models import Message, Release, Archive, DeliveryInfo
-from baruwa.messages.tasks import ProcessQuarantine, PreviewMessageTask,\
+from baruwa.mail.messages.models import Message, Release, Archive, DeliveryInfo
+from baruwa.mail.messages.tasks import ProcessQuarantine, PreviewMessageTask,\
  ReleaseMessage, ProcessQuarantinedMsg
-from baruwa.messages.forms import QuarantineProcessForm, BulkQuarantineProcessForm
+from baruwa.mail.messages.forms import QuarantineProcessForm, BulkQuarantineProcessForm
 from baruwa.utils.misc import jsonify_msg_list, jsonify_status
 from baruwa.utils.queryfilters import apply_filter
 from baruwa.utils.context_processors import status

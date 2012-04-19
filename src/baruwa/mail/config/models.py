@@ -22,9 +22,9 @@
 from django.db import models
 from django.utils.html import strip_tags
 
-from baruwa.fixups.models import SignatureImg
+from baruwa.mail.fixups.models import SignatureImg
 from baruwa.utils.html import SignatureCleaner
-from baruwa.accounts.models import UserAddresses
+from baruwa.mail.accounts.models import UserAddresses
 
 UNCLEANTAGS = ['html', 'head', 'link', 'body', 'base']
 

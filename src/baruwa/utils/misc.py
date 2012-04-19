@@ -29,8 +29,8 @@ from django.conf import settings
 from django.db.models import Q, Count
 from django.template.defaultfilters import force_escape
 
-from baruwa.messages.models import MessageStats
-from baruwa.status.models import MailQueueItem
+from baruwa.mail.messages.models import MessageStats
+from baruwa.mail.status.models import MailQueueItem
 
 
 def jsonify_msg_list(element):

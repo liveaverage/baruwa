@@ -28,7 +28,7 @@ from django.utils.translation import ugettext as _
 from django.db import IntegrityError
 from django.conf import settings
 
-from baruwa.messages.models import SaRules
+from baruwa.mail.messages.models import SaRules
 
 
 class Command(NoArgsCommand):

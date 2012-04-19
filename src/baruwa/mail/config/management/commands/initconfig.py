@@ -26,7 +26,7 @@ from django.utils.translation import ugettext as _
 from django.db import DatabaseError
 
 from baruwa.utils.misc import host_is_local
-from baruwa.config.models import ScannerHost
+from baruwa.mail.config.models import ScannerHost
 
 class Command(NoArgsCommand):
     "cleans the quarantine directory"
