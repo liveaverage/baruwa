@@ -101,12 +101,12 @@ function buildrows(data){
             };
             rows[count++] = '<div class="'+stripHTML(c)+'_div">';
             rows[count++] = '<div class="quaran_select_row"><input type="checkbox" name="message_id" value="'+n.id+'" class="selector" /></div>';
-            rows[count++] = '<div class="quaran_date_time_row"><a href="'+messages_base_url+'/view/'+n.id+'/">'+n.timestamp+'</a></div>';
-            rows[count++] = '<div class="quaran_from_row"><a href="'+messages_base_url+'/view/'+n.id+'/">'+from+'</a></div>';
-            rows[count++] = '<div class="quaran_to_row"><a href="'+messages_base_url+'/view/'+n.id+'/">'+to+'</a></div>';
-            rows[count++] = '<div class="quaran_subject_row"><a href="'+messages_base_url+'/view/'+n.id+'/">'+subject+'</a></div>';
-            rows[count++] = '<div class="quaran_score_row"><a href="'+messages_base_url+'/view/'+n.id+'/">'+n.sascore+'</a></div>';
-            rows[count++] = '<div class="quaran_status_row"><a href="'+messages_base_url+'/view/'+n.id+'/">'+mstatus+'</a></div>';
+            rows[count++] = '<div class="quaran_date_time_row"><a href="'+messages_base_url+'view/'+n.id+'/">'+n.timestamp+'</a></div>';
+            rows[count++] = '<div class="quaran_from_row"><a href="'+messages_base_url+'view/'+n.id+'/">'+from+'</a></div>';
+            rows[count++] = '<div class="quaran_to_row"><a href="'+messages_base_url+'view/'+n.id+'/">'+to+'</a></div>';
+            rows[count++] = '<div class="quaran_subject_row"><a href="'+messages_base_url+'view/'+n.id+'/">'+subject+'</a></div>';
+            rows[count++] = '<div class="quaran_score_row"><a href="'+messages_base_url+'view/'+n.id+'/">'+n.sascore+'</a></div>';
+            rows[count++] = '<div class="quaran_status_row"><a href="'+messages_base_url+'view/'+n.id+'/">'+mstatus+'</a></div>';
             rows[count++] = '</div>';
         });
         if(!rows.length){
@@ -126,9 +126,9 @@ function buildrows(data){
 function toplinkize(direction,field_name,quarantine_type){
     var tmp = '';
     if(direction == 'dsc'){
-        tmp = ' <a href="'+messages_base_url+'/quarantine/asc/'+field_name+'/">&uarr;</a>';
+        tmp = ' <a href="'+messages_base_url+'quarantine/asc/'+field_name+'/">&uarr;</a>';
     }else{
-        tmp = ' <a href="'+messages_base_url+'/quarantine/dsc/'+field_name+'/">&darr;</a>';
+        tmp = ' <a href="'+messages_base_url+'quarantine/dsc/'+field_name+'/">&darr;</a>';
     }
     if (quarantine_type) {
         tmp = tmp.replace(/quarantine\//g,'quarantine/'+quarantine_type+'/');
@@ -143,7 +143,7 @@ function en_history(){
     window.scrollTo(0,0);
     if (url == 'messages-quarantine') {
         $('#sub-menu-links ul li').remove();
-        var qlinks = [messages_base_url+'/quarantine/', messages_base_url+'/quarantine/spam/', messages_base_url+'/quarantine/policyblocked/'];
+        var qlinks = [messages_base_url+'quarantine/', messages_base_url+'quarantine/spam/', messages_base_url+'quarantine/policyblocked/'];
         var qtexts = [gettext('Full quarantine'), gettext('Spam'), gettext('Non Spam')];
         var mylinks = [];
         for (var i=0; i < qlinks.length; i++) {
@@ -180,9 +180,9 @@ function paginate(){
 
    if(rj.show_first){
         if(rj.direction){
-            li=messages_base_url+'/quarantine/'+rj.direction+'/'+rj.order_by+'/';
+            li=messages_base_url+'quarantine/'+rj.direction+'/'+rj.order_by+'/';
         }else{
-            li=messages_base_url+'/quarantine/'+rj.order_by+'/';
+            li=messages_base_url+'quarantine/'+rj.order_by+'/';
         }
         if (rj.quarantine_type) {
             li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
@@ -192,9 +192,9 @@ function paginate(){
    }
    if(rj.has_previous){
         if(rj.direction){
-            li=messages_base_url+'/quarantine/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/';
+            li=messages_base_url+'quarantine/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/';
         }else{
-            li=messages_base_url+'/quarantine/'+rj.previous+'/'+rj.order_by+'/';
+            li=messages_base_url+'quarantine/'+rj.previous+'/'+rj.order_by+'/';
         }
         if (rj.quarantine_type) {
             li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
@@ -206,9 +206,9 @@ function paginate(){
             tmp +='<span><b>'+lnk+'</b>&nbsp;</span>';
         }else{
             if(rj.direction){
-                li=messages_base_url+'/quarantine/'+lnk+'/'+rj.direction+'/'+rj.order_by+'/';
+                li=messages_base_url+'quarantine/'+lnk+'/'+rj.direction+'/'+rj.order_by+'/';
             }else{
-                li=messages_base_url+'/quarantine/'+lnk+'/'+rj.order_by+'/';
+                li=messages_base_url+'quarantine/'+lnk+'/'+rj.order_by+'/';
             }
             if (rj.quarantine_type) {
                 li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
@@ -218,9 +218,9 @@ function paginate(){
    });
    if(rj.has_next){
         if(rj.direction){
-            li=messages_base_url+'/quarantine/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/';
+            li=messages_base_url+'quarantine/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/';
         }else{
-            li=messages_base_url+'/quarantine/'+rj.next+'/'+rj.order_by+'/';
+            li=messages_base_url+'quarantine/'+rj.next+'/'+rj.order_by+'/';
         }
         if (rj.quarantine_type) {
             li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
@@ -229,9 +229,9 @@ function paginate(){
    }
    if(rj.show_last){
         if(rj.direction){
-            li=messages_base_url+'/quarantine/last/'+rj.direction+'/'+rj.order_by+'/';
+            li=messages_base_url+'quarantine/last/'+rj.direction+'/'+rj.order_by+'/';
         }else{
-            li=messages_base_url+'/quarantine/last/'+rj.order_by+'/';
+            li=messages_base_url+'quarantine/last/'+rj.order_by+'/';
         }
         if (rj.quarantine_type) {
             li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
@@ -252,7 +252,7 @@ function paginate(){
             tmpl = toplinkize(rj.direction,carray[i],rj.quarantine_type);
             $(styles[i]).empty().html(h).append(tmpl);
         }else{
-            ur = '<a href="'+messages_base_url+'/quarantine/'+rj.direction+'/'+carray[i]+'/">'+h+'</a>';
+            ur = '<a href="'+messages_base_url+'quarantine/'+rj.direction+'/'+carray[i]+'/">'+h+'</a>';
             if (rj.quarantine_type) {
                 ur = ur.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
             };

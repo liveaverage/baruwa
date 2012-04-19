@@ -7,7 +7,7 @@
 	{% else %}
 	<a href="{% url sorted-messages-page view_type,1,direction,order_by %}">
 	{% endif %}
-		<img src="/static/imgs/first_pager.png" alt="First"/>
+		<img src="/static/mail/imgs/first_pager.png" alt="First"/>
 	</a>
 </span>
 <span>......</span>
@@ -19,7 +19,7 @@
 	{% else %}
 	<a href="{% url sorted-messages-page view_type,previous,direction,order_by %}">
 	{% endif %}
-		<img src="/static/imgs/previous_pager.png" alt="Previous"/>
+		<img src="/static/mail/imgs/previous_pager.png" alt="Previous"/>
 	</a>
 </span>
 {% endif %}
@@ -45,7 +45,7 @@
 	{% else %}
 	<a href="{% url sorted-messages-page view_type,next,direction,order_by %}">	
 	{% endif %}	
-		<img src="/static/imgs/next_pager.png" alt="Next"/>
+		<img src="/static/mail/imgs/next_pager.png" alt="Next"/>
 	</a>
 </span>
 {% endif %}
@@ -57,7 +57,7 @@
 	{% else %}
 	<a href="{% url sorted-messages-page view_type,'last',direction,order_by %}">	
 	{% endif %}
-		<img src="/static/imgs/last_pager.png" alt="Last"/>
+		<img src="/static/mail/imgs/last_pager.png" alt="Last"/>
 	</a>
 </span>
 {% endif %}

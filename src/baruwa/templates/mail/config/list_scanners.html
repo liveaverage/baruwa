@@ -34,21 +34,21 @@
 		{% endif %}	
 	</div>
 	<div class="Scanners_name">
-		<a href="{% url view-scanner scanner.id %}">{{ scanner.address }}</a>
+		{{ scanner.address }}
 	</div>
 	<div class="Scanners_status">
 		{% if configs %}
 			<img src="{{ MEDIA_URL }}mail/imgs/tick.png" alt="" />
 		{% else %}
-			<a href="{% url init-scanner scanner.id %}">{% trans "Initialize" %}</a>
+			{% trans "Initialize" %}
 		{% endif %}
 	</div>
 	<div class="Scanners_action">
 		<div class="Scanners_action_change">
-			<a href=""><img src="{{ MEDIA_URL }}mail/imgs/edit.png" alt="Edit" title="Edit" /></a>
+			<img src="{{ MEDIA_URL }}mail/imgs/edit.png" alt="Edit" title="Edit" />
 		</div>
 		<div class="Scanners_action_change">
-			<a href=""><img src="{{ MEDIA_URL }}mail/imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+			<img src="{{ MEDIA_URL }}mail/imgs/action_delete.png" alt="Delete" title="Delete" />
 		</div>
 	</div>
 </div>
