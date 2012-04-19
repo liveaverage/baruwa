@@ -1,0 +1,1 @@
+$(document).ready(function(){$("#allchecker").click(function(){$(".selector").attr("checked",this.checked)})});
