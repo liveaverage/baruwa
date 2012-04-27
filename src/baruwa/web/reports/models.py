@@ -18,3 +18,22 @@
 #
 # vim: ai ts=4 sts=4 et sw=4
 #
+
+from django.db import models
+from django.contrib.auth.models import User
+
+class WebSavedFilter(models.Model):
+    """SavedFilter"""
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, unique=True)
+    field = models.CharField(max_length=25)
+    op_field = models.IntegerField()
+    value = models.CharField(max_length=100)
+    user = models.ForeignKey(User)
+
+    class Meta:
+        app_label = 'web'
+        db_table = 'web_report_filters'
+
+    def __unicode__(self):
+        return u"Web Saved Filter id: " + self.id

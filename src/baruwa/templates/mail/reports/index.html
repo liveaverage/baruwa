@@ -8,11 +8,12 @@
 var rj;
 var ax_error = false;
 var media_url = '{{MEDIA_URL}}';
+var report_rm_url = '/mail/reports/fd/';
 //]]>
 </script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/prevent-caching-of-ajax-requests.js"></script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/ajax-csrf-tokenize.js"></script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/reports.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}common/js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}common/js/baruwa/ajax-csrf-tokenize.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}common/js/baruwa/reports.js"></script>
 {% endblock scripts %}
 {% block title %}{% trans "Reports" %}{% endblock title %}
 {% block heading %}{% trans "Reports" %}{% endblock heading %}
@@ -75,10 +76,10 @@ var media_url = '{{MEDIA_URL}}';
 <div class="LightBlue_div">
     <div class="Active_filters">
         <div class="Filter_remove">
-            <a href="{% url remove-filter forloop.counter0 %}"><img src="{{ MEDIA_URL }}mail/imgs/action_remove.png" alt="x" title="{% trans "Remove" %}" /></a>
+            <a href="{% url remove-filter forloop.counter0 %}"><img src="{{ MEDIA_URL }}common/imgs/action_remove.png" alt="x" title="{% trans "Remove" %}" /></a>
         </div>
         <div class="Filter_save">
-            <a href="{% url save-filter forloop.counter0 %}"><img src="{{ MEDIA_URL }}mail/imgs/save.png" alt="Save" title="{% trans "Save" %}" /></a>
+            <a href="{% url save-filter forloop.counter0 %}"><img src="{{ MEDIA_URL }}common/imgs/save.png" alt="Save" title="{% trans "Save" %}" /></a>
         </div>
         <div class="Filter_detail">
             {{ f.filter_field }} {{ f.filter_by }} {{ f.filter_value }}
@@ -99,13 +100,13 @@ var media_url = '{{MEDIA_URL}}';
 <div class="LightBlue_div">
     <div class="Active_filters">
         <div class="Filter_remove">
-            <a href="{% url delete-filter sf.filter_id %}"><img src="{{ MEDIA_URL }}mail/imgs/action_delete.png" alt="x" title="Delete" /></a>
+            <a href="{% url delete-filter sf.filter_id %}"><img src="{{ MEDIA_URL }}common/imgs/action_delete.png" alt="x" title="Delete" /></a>
         </div>
         <div class="Filter_save">
             {% if not sf.is_loaded %}
-            <a href="{% url load-filter sf.filter_id %}"><img src="{{ MEDIA_URL }}mail/imgs/action_add.png" alt="Load" title="Load" /></a>
+            <a href="{% url load-filter sf.filter_id %}"><img src="{{ MEDIA_URL }}common/imgs/action_add.png" alt="Load" title="Load" /></a>
             {% else %}
-            <img src="{{ MEDIA_URL }}mail/imgs/action_add.png" alt="Load" />
+            <img src="{{ MEDIA_URL }}common/imgs/action_add.png" alt="Load" />
             {% endif %}
         </div>
         <div class="Filter_detail">

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url all-visits-index 'full' %}">{% trans "All visits" %}</a></li>
+	<li><a href="{% url all-visits-index 'url' %}">{% trans "Url filtered visits" %}</a></li>
+	<li><a href="{% url all-visits-index 'virus' %}">{% trans "Virus detected visits" %}</a></li>
+	<li><a href="{% url all-visits-index 'search' %}">{% trans "Search query visits" %}</a></li>
+</ul>
+{% endblock submenu %}
+{% block content %}
+{% if visit_details %}
+<div class="Grid_heading">
+    <div class="Reports_heading">{% trans "Visit Details" %}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Visit ID:" %}</div>
+    <div class="maildetail">{{ visit_details.id }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Date" %}</div>
+    <div class="maildetail">{{ visit_details.date|date:"Y-m-d" }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Time" %}</div>
+    <div class="maildetail">{{ visit_details.time|time:"H:i:s" }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Hostname:" %}</div>
+    <div class="maildetail">
+		{{ visit_details.ip.hostname }}
+	</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Username" %}</div>
+    <div class="maildetail">{{ visit_details.authuser }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Site:" %}</div>
+    <div class="maildetail">{{ visit_details.site.site }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Url:" %}</div>
+    <div class="maildetail">{{ visit_details.url }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Category:" %}</div>
+    <div class="maildetail">{{ visit_details.site.category }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Size:" %}</div>
+    <div id="clientip" class="maildetail">{{ visit_details.bytes|filesizeformat }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Result code:" %}</div>
+    <div id="clientip" class="maildetail">{{ visit_details.resultcode }}</div>
+</div>
+<div class="lightblue_div">
+    <div class="mailitem">{% trans "Url filtered:" %}</div>
+    <div class="maildetail">{% if visit_details.urlfilter > 0 %}
+	<span class="positive">Y</span>	&nbsp;
+	{% for u in visit_details.urlitems %}
+	{{u.src}}&nbsp;
+	{% endfor %}
+	{% else %}
+	<span class="negative">N</span>
+	{% endif %}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Virus detected:" %}</div>
+    <div class="maildetail">
+        {% if visit_details.virusdetection > 0 %}
+		<span class="positive">Y</span>&nbsp;{% trans "Viruses detected: " %}
+		{% for v in visit_details.virusitems %}
+		"{{v.virusname}}"&nbsp;
+		{% endfor %}
+		{% else %}
+		<span class="negative">N</span>
+		{% endif %}
+    </div>
+</div>
+<div class="LightBlue_div">
+    <div class="mailitem">{% trans "Is Search Query:" %}</div>
+    <div class="maildetail">
+        {% if visit_details.searchquery > 0 %}
+		<span class="positive">Y</span>&nbsp;{% trans "Searched for: " %}
+		{% for q in visit_details.searchitems %}
+		"{{q.query}}"
+		{% endfor %}
+		{% else %}
+		<span class="negative">N</span>
+		{% endif %}
+    </div>
+</div>
+{% else %}
+<div class="LightBlue_div">
+    <div class="spanrow">{% trans "The details for the requested visit id could not be retrieved" %}</div>
+</div>
+{% endif %}
+<div class="LightBlue_div">
+    <div class="spanrow"></div>
+</div>
+{% endblock content %}

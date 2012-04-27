@@ -7,10 +7,12 @@
     var djConfig = { parseOnLoad:true, isDebug:false };
 	var json_data = {{pie_data|safe}};
 	var media_url = '{{MEDIA_URL}}';
+	var is_web = false;
+	var report_rm_url = '/mail/reports/fd/';
 </script>
 <script type="text/javascript" src="{{ MEDIA_URL }}common/js/dojo/dojo.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/lib.js"></script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/reports.common.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}common/js/baruwa/lib.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}common/js/baruwa/reports.common.js"></script>
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/reports.relays.js"></script>{%endif%}{% endblock scripts %}
 {% block submenu %}
 &nbsp;

@@ -18,3 +18,17 @@
 #
 # vim: ai ts=4 sts=4 et sw=4
 #
+
+
+from django.conf.urls.defaults import patterns, include, handler500, handler404
+
+urlpatterns = patterns('baruwa.web.visits.views',
+    (r'^$', 'index', {}, 'main-visits-index'),
+    (r'^(?P<view_type>(full|url|virus|search))/$', 'index', {'list_all': 1}, 'all-visits-index'),
+    (r'^(?P<view_type>(full|url|virus|search))/(?P<direction>(dsc|asc))/(?P<order_by>(id|date|hostname|username|site|category|size))/$',
+    'index', {'list_all': 1}, 'all-visits-list'),
+    (r'^(?P<view_type>(full|url|virus|search))/(?P<page>([0-9]+|last))/$', 'index', {'list_all': 1}, 'all-visits-page'),
+    (r'^(?P<view_type>(full|url|virus|search))/(?P<page>([0-9]+|last))/(?P<direction>(dsc|asc))/(?P<order_by>(id|date|hostname|username|site|category|size))/$',
+    'index', {'list_all': 1}, 'sorted-visits-page'),
+    (r'^view/(?P<visit_id>(\d+))/$', 'detail', {}, 'visit-detail'),
+)

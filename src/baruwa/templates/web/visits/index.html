@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url all-visits-index 'full' %}">{% trans "All visits" %}</a></li>
+	<li><a href="{% url all-visits-index 'url' %}">{% trans "Url filtered visits" %}</a></li>
+	<li><a href="{% url all-visits-index 'virus' %}">{% trans "Virus detected visits" %}</a></li>
+	<li><a href="{% url all-visits-index 'search' %}">{% trans "Search query visits" %}</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+{% if list_all %}
+	{% load pagination_heading %}{% pagination_heading %}
+{% else %}
+	{% blocktrans %}Showing the {{baruwa_num_recent_messages}} most recent visits{% endblocktrans %}
+{% endif %}
+{% endblock title %}
+{% block heading %}
+{% if list_all %}
+	{% load pagination_heading %}{% pagination_heading %}
+	{%if active_filters %}
+		(<small><a href="{% url reports-index %}#active_filters">{% trans "Filters" %}</a> {% trans "have been applied" %}</small>)
+	{%endif%}
+{% else %}
+	{% blocktrans %}Showing the {{baruwa_num_recent_messages}} most recent visits {% endblocktrans %}
+	<small>
+	    [{% trans "Enable javascript for updates" %}]
+	</small>
+{% endif %}
+{% endblock heading %}
+{% block content %}
+<div class="Grid_heading"> <!--Heading Start Here-->
+	{% if list_all %}
+	<div class="web_tm_heading">{% trans "Date/Time" %}</div>
+	<!-- <div class="web_ip_heading">{% trans "IP" %}</div> -->
+	<div class="web_hostname_heading">{% trans "Hostname" %}</div>
+	<div class="web_username_heading">{% trans "Username" %}</div>
+	<div class="web_site_heading">{% trans "Site" %}</div>
+	<div class="web_category_heading">{% trans "Category" %}</div>
+	<div class="web_size_heading">{% trans "Size" %}</div>
+	{% else %}
+	<div class="web_tm_heading">{% trans "Date/Time" %}</div>
+	<!-- <div class="web_ip_heading">{% trans "IP" %}</div> -->
+	<div class="web_hostname_heading">{% trans "Hostname" %}</div>
+	<div class="web_username_heading">{% trans "Username" %}</div>
+	<div class="web_site_heading">{% trans "Site" %}</div>
+	<div class="web_category_heading">{% trans "Category" %}</div>
+	<div class="web_size_heading">{% trans "Size" %}</div>
+	{% endif %}
+	<div class="web_status_heading">{% trans "Status" %}</div>
+</div>	<!--Heading End Here-->
+{% load iptools %}
+{% load messages_extras %}
+{% for visit in object_list %}
+<div class="LightBlue_div">
+	<div class="web_tm">
+		<a href="{% url visit-detail visit.id %}">{{ visit.date|date:"Y-m-d"  }} {{ visit.time|time:"H:i:s"}}</a>
+	</div>
+	<div class="web_hostname">
+		<a href="{% url visit-detail visit.id %}">{{ visit.ip.hostname }}</a>
+	</div>
+	<div class="web_username">
+		<a href="{% url visit-detail visit.id %}">{{ visit.authuser|tds_trunc:25 }}</a>
+	</div>
+	<div class="web_site">
+		<a href="{% url visit-detail visit.id %}">{{ visit.site.site }}</a>
+	</div>
+	<div class="web_category">
+		<a href="{% url visit-detail visit.id %}">{{ visit.site.category|tds_trunc:5 }}</a>
+	</div>
+	<div class="web_size">
+		<a href="{% url visit-detail visit.id %}">{{ visit.bytes|filesizeformat }}</a>
+	</div>
+	<div class="web_status">
+		<a href="{% url visit-detail visit.id %}">{{ visit.status }}</a>
+	</div>                        
+</div>
+{% empty %}
+<div class="LightBlue_div">
+<div class="spanrow">{% trans "No records returned" %}</div>
+</div>
+{% endfor %}
+{% endblock content %}
+{% block paging %}
+{% if list_all %}
+<div class="content_footer">
+	<div id="filters">
+		{% if active_filters %}
+		<b>{% trans "Filters have been applied :" %}</b>
+		<span id="fhl" style="display:inline;">
+		{% for f in active_filters %}
+		"<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
+		{% endfor %}
+		</span>
+		{% endif %}
+	</div>
+	<div id="paginator">
+		{% if is_paginated %}{% load generic_paginator %}{% generic_paginator 3 %}{% endif %}
+	</div>
+</div>
+{% endif %}
+{% endblock paging %}

@@ -25,6 +25,7 @@
 <title>.:. Baruwa :: {% block title %}{% endblock title %}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="{{ MEDIA_URL }}mail/css/style.css" rel="stylesheet" type="text/css" />
+<link href="{{ MEDIA_URL }}web/css/style_uncompressed.css" rel="stylesheet" type="text/css" />
 <link rel="icon" href="{{ MEDIA_URL }}mail/imgs/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="{{ MEDIA_URL }}mail/imgs/favicon.ico" type="image/x-icon" /> 
 {% block headers %}{% endblock headers %}
@@ -32,7 +33,7 @@
 <body{%block body_class%}{%endblock body_class%}>
     <div id="header">
     	<div class="logo">
-			<a href="{% url index-page %}"><img src="{{ MEDIA_URL }}mail/imgs/css/logo.jpg" alt="" /></a>
+			<a href="/"><img src="{{ MEDIA_URL }}mail/imgs/css/logo.jpg" alt="" /></a>
 		</div>
         <div class="search">
         	<div class="Link">
@@ -77,6 +78,7 @@
     <div class="clearer"></div>
     <div class="Box_Mainnav"> <!-- Box_Mainnav start here -->
         <div class="Mainnav"> <!-- Mainnav start here -->
+			{% if baruwa_subapp == 'mail' %}
 			{% if user.is_authenticated %}
             <a href="{% url main-messages-index %}" class="topnav"><span>{% trans "Messages" %}</span></a> 
             <a href="{% url lists-index %}" class="topnav"><span>{% trans "Lists" %}</span></a> 
@@ -85,12 +87,21 @@
  				<a href="{% url status-index %}" class="topnav"><span>{% trans "Status" %}</span></a>
 				{% if user.is_superuser %}
 				<a href="{% url settings-index %}" class="topnav"><span>{% trans "Settings" %}</span></a>
+				<a href="/web/" class="topnav"><span>{% trans "Web" %}</span></a>
 				{% else %}
 				<a href="{% url accounts %}" class="topnav"><span>{% trans "Accounts" %}</span></a>
 				{% endif %}
 			{% else %}
 				<a href="{% url user-profile user.id %}" class="topnav"><span>{% trans "Account" %}</span></a>
  			{% endifnotequal %}
+			{% endif %}
+			{% else %}
+			<a href="{% url main-visits-index %}" class="topnav"><span>{% trans "Visits" %}</span></a>
+			<a href="{% url main-connections-index %}" class="topnav"><span>{% trans "Connections" %}</span></a>
+			<a href="{% url web-reports-index %}" class="topnav"><span>{% trans "Reports" %}</span></a>
+			<a href="{% url main-status-index %}" class="topnav"><span>{% trans "Status" %}</span></a>
+			<a href="{% url main-settings-index %}" class="topnav"><span>{% trans "Settings" %}</span></a>
+			<a href="/mail/" class="topnav"><span>{% trans "Mail" %}</span></a>
 			{% endif %}
         </div> <!-- Mainnav end here -->
    </div> <!-- Box_Mainnav end here -->

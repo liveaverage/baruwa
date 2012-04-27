@@ -40,8 +40,26 @@ function build_rows(build_array){
 		if (item.from_domain) {
 			address = item.from_domain;
 		};
-		if (item.to_domain) {
-			address = item.to_domain;
+		if (item.site__category) {
+			address = item.site__category;
+		};
+		if (item.site__site) {
+			address = item.site__site;
+		};
+		if (item.virusname) {
+			address = item.virusname;
+		};
+		if (item.bytes) {
+			address = item.bytes;
+		};
+		if (item.ip__hostname) {
+			address = item.ip__hostname;
+		};
+		if (item.user__authuser) {
+			address = item.user__authuser;
+		};
+		if (item.query) {
+			address = item.query;
 		};
 		rows[count++] = '<div class="graph_row">';
 		rows[count++] = '<div class="row_hash">'+c+'.</div>';
@@ -100,7 +118,7 @@ function process_response(data){
 }
 
 dojo.addOnLoad(function() {
-    init_form();
+    init_form(is_web);
     //bind to form submit
     dojo.query("#filter-form").onsubmit(function(e){
     	e.preventDefault();

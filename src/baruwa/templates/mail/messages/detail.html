@@ -7,8 +7,8 @@
 var media_url = '{{MEDIA_URL}}';
 //]]>
 </script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/prevent-caching-of-ajax-requests.js"></script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/ajax-csrf-tokenize.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}common/js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}common/js/baruwa/ajax-csrf-tokenize.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/details.js"></script>
 {% endblock scripts %}
 {% block title %}{% blocktrans with message_details.id as id %}Baruwa :: Showing message - {{ id }}{% endblocktrans %}{% endblock %}

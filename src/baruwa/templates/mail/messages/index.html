@@ -4,7 +4,7 @@
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/jquery.js"></script>
 {% if list_all %}
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/jquery.address.js"></script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}common/js/baruwa/prevent-caching-of-ajax-requests.js"></script>
 {% endif %}
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
@@ -18,7 +18,7 @@ var messages_base_url = "{% url main-messages-index %}";
 var baruwa_num_recent_messages = {{baruwa_num_recent_messages}};
 //]]>
 </script>
-<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/lib.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}common/js/baruwa/lib.js"></script>
 {% if not list_all %}
 <script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/baruwa/recent_messages.js"></script>
 {% else %}

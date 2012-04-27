@@ -7,10 +7,12 @@
         var djConfig = { parseOnLoad:true, isDebug:false };
 		var json_data = {{pie_data|safe}};
 		var media_url = '{{MEDIA_URL}}';
+		var is_web = false;
+		var report_rm_url = '/mail/reports/fd/';
 </script>
 <script type="text/javascript" src="{{ MEDIA_URL }}common/js/dojo/dojo.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/lib.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/reports.common.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}common/js/common/lib.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}common/js/baruwa/reports.common.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/reports.pie.js"></script>{%endif%}{% endblock scripts %}
 {% block submenu %}
 &nbsp;
@@ -58,7 +60,7 @@
         {% trans "Filters have been applied :" %}
         <span id="fhl">
             {% for f in active_filters %}
-            	&nbsp;<a href="{% url remove-filter forloop.counter0 %}"><img src="/static/imgs/sm-del.png" alt="x"/></a> "{{ f.filter_field }} {{f.filter_by}} {{f.filter_value}}"
+            	&nbsp;<a href="{% url remove-filter forloop.counter0 %}"><img src="{{ MEDIA_URL }}common/imgs/sm-del.png" alt="x"/></a> "{{ f.filter_field }} {{f.filter_by}} {{f.filter_value}}"
 				{% if not forloop.last %},{% endif %}
             {% endfor %}
         </span>

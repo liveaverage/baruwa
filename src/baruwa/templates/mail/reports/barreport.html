@@ -7,9 +7,11 @@
 	var labels = {{pie_data.scores|safe}};
 	var sa_scores = {{pie_data.count|safe}};
 	var media_url = '{{MEDIA_URL}}';
+	var is_web = false;
+	var report_rm_url = '/mail/reports/fd/';
 </script>
 <script type="text/javascript" src="{{ MEDIA_URL }}common/js/dojo/dojo.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/reports.common.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}common/js/baruwa/reports.common.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/reports.barreport.js"></script>{% endblock scripts %}
 {% block submenu %}
 &nbsp;

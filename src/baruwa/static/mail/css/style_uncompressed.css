@@ -456,7 +456,7 @@ div.blacklist {
 	font-weight:bold;
 	border-bottom:dashed 1px #227495;
 	height:50px;
-	/height:30px;
+	/*height:30px;*/
 	width:976px;
 	margin:0 auto;
 }

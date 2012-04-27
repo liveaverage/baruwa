@@ -70,7 +70,7 @@ def index(request):
                     success = False
                     errors = _("The requested filter is already being used")
             filter_list = request.session.get('filter_by')
-            data = gen_dynamic_query(data, filter_list, active_filters)
+            data = gen_dynamic_query(data, filter_list, active_filters, True)
         else:
             success = False
             error_list = filter_form.errors.values()[0]

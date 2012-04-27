@@ -22,6 +22,7 @@
 from django.db.models import Q
 
 from baruwa.mail.reports.forms import FILTER_ITEMS, FILTER_BY
+from baruwa.web.reports.forms import FILTER_ITEMS as WEBFILTER_ITEMS, FILTER_BY as WEBFILTER_BY
 
 
 def place_positive_vars(key, largs, kwargs, lkwargs, value):
@@ -96,7 +97,7 @@ def get_active_filters(filter_list, active_filters):
             filter_value=filter_item['value']))
 
 
-def gen_dynamic_query(model, filter_list, active_filters=None):
+def gen_dynamic_query(model, filter_list, active_filters=None, isweb=None):
     "build a dynamic query"
     kwargs = {}
     lkwargs = {}
@@ -105,8 +106,13 @@ def gen_dynamic_query(model, filter_list, active_filters=None):
     nargs = []
     largs = []
 
-    filter_items = dict(FILTER_ITEMS)
-    filter_by = dict(FILTER_BY)
+    if isweb is None:
+        filter_items = dict(FILTER_ITEMS)
+        filter_by = dict(FILTER_BY)
+    else:
+        filter_items = dict(WEBFILTER_ITEMS)
+        filter_by = dict(WEBFILTER_BY)
+        
 
     for filter_item in filter_list:
         value = str(filter_item['value'])
@@ -170,11 +176,14 @@ def gen_dynamic_query(model, filter_list, active_filters=None):
     return model
 
 
-def apply_filter(model, request, active_filters):
+def apply_filter(model, request, active_filters, isweb=None):
     "apply filters to a model"
     if request.session.get('filter_by', False):
         filter_list = request.session.get('filter_by')
         model = gen_dynamic_query(model, filter_list, active_filters)
+    if request.session.get('web_filter_by', False) and isweb:
+        filter_list = request.session.get('web_filter_by')
+        model = gen_dynamic_query(model, filter_list, active_filters, True)
     return model
 
 

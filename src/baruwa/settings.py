@@ -35,8 +35,26 @@ DATABASES = {
         # Set to empty string for default. Not used with sqlite3.
         'PORT': '',
         'OPTIONS': { 'init_command': 'SET storage_engine=INNODB, SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;' },
-    }
+    },
+    'web': {
+        # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3'
+        # or 'oracle'.
+        'ENGINE': 'django.db.backends.mysql',
+        # Or path to database file if using sqlite3.
+        'NAME': '',
+        # Not used with sqlite3.
+        'USER': '',
+        # Not used with sqlite3.
+        'PASSWORD': '',
+        # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '',
+        # Set to empty string for default. Not used with sqlite3.
+        'PORT': '',
+        'OPTIONS': { 'init_command': 'SET storage_engine=INNODB, SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;' },
+    },
 }
+
+DATABASE_ROUTERS = ['baruwa.utils.dbrouters.BaruwaDBRouter',]
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -130,6 +148,11 @@ INSTALLED_APPS = (
     'baruwa.mail.reports',
     'baruwa.mail.status',
     'baruwa.mail.config',
+    'baruwa.web.visits',
+    'baruwa.web.config',
+    'baruwa.web.reports',
+    'baruwa.web.status',
+    'baruwa.web.connections',
     'djcelery',
     'south',
     #'debug_toolbar',

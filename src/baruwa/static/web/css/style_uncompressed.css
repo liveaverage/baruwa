@@ -1,0 +1,159 @@
+.web_tm_heading{
+    width:124px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+    float:left;
+    margin:0px;
+    padding:7px 5px 7px 5px;
+}
+.web_ip_heading{
+    font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+    float:left;
+    margin:0px;
+    padding:7px 5px 7px 5px;
+}
+.web_hostname_heading{
+    width:163px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+    float:left;
+    margin:0px;
+    padding:7px 5px 7px 5px;
+}
+.web_username_heading{
+    width:190px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+    float:left;
+    margin:0px;
+    padding:7px 5px 7px 5px;
+}
+.web_site_heading{
+    width:260px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+    float:left;
+    margin:0px;
+    padding:7px 5px 7px 5px;
+}
+.web_category_heading{
+    width:52px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+    float:left;
+    margin:0px;
+    padding:7px 5px 7px 5px;
+}
+.web_size_heading{
+    width:72px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+    float:left;
+    margin:0px;
+    padding:7px 5px 7px 5px;
+}
+.web_status_heading{
+    width:45px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#005aab;
+	font-size:12px;
+	font-weight:bold;
+    float:left;
+    margin:0px;
+    padding:7px 5px 7px 5px;
+}
+
+.web_tm{
+    width:124px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+    float:left;
+    margin:0px;
+	padding:7px 5px 7px 5px;
+}
+.web_ip{
+    font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+    float:left;
+    margin:0px;
+	padding:7px 5px 7px 5px;
+}
+.web_hostname{
+    width:163px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+    float:left;
+    margin:0px;
+	padding:7px 5px 7px 5px;
+}
+.web_username{
+    width:190px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+    float:left;
+    margin:0px;
+	padding:7px 5px 7px 5px;
+}
+.web_site{
+    width:260px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+    float:left;
+    margin:0px;
+	padding:7px 5px 7px 5px;
+}
+.web_category{
+    width:52px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+    float:left;
+    margin:0px;
+	padding:7px 5px 7px 5px;
+}
+.web_size{
+    width:72px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+    float:left;
+    margin:0px;
+	padding:7px 5px 7px 5px;
+}
+.web_status{
+    width:45px;
+    font-family:Arial, Helvetica, sans-serif;
+	color:#000;
+	font-size:12px;
+	font-weight:normal;
+    float:left;
+    margin:0px;
+	padding:7px 5px 7px 5px;
+}

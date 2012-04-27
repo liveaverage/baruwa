@@ -36,7 +36,7 @@ def status(request):
     if not request.user.is_authenticated():
         return status
 
-    if request.is_ajax() and not request.path.startswith('/messages/'):
+    if request.is_ajax() and not request.path.startswith('/mail/messages/'):
         return status
 
     status = get_sys_status(request)
@@ -46,4 +46,9 @@ def status(request):
 def general(request):
     "set misc variables"
     num_of_recent_msgs = getattr(settings, 'BARUWA_NUM_RECENT_MESSAGES', 50)
-    return {'baruwa_num_recent_messages': num_of_recent_msgs}
+    if request.path.startswith('/mail') or request.path == '/':
+        subapp = 'mail'
+    else:
+        subapp = 'web'
+    return {'baruwa_num_recent_messages': num_of_recent_msgs,
+            'baruwa_subapp': subapp}

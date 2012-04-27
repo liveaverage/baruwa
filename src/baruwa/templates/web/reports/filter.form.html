@@ -1,0 +1,13 @@
+{% load i18n %}
+<div id="afform" class="header_div">
+    <div class="Reports_heading">{% trans "Add Filter" %}</div>
+</div>
+<div class="LightBlue_div">
+    <form id="filter-form" method="post" action="{% url web-reports-index %}">
+	{% csrf_token %}
+        <div class="Reports_col">{{ form.filtered_field }}</div>
+        <div class="Reports_col">{{ form.filtered_by }}</div>
+        <div class="Reports_col"><input type="text" id="id_filtered_value" name="filtered_value" size="30" /></div>
+        <div class="Reports_col"><input id="filter_form_submit" type="submit" value="{% trans "Add" %}" /></div>
+    </form>
+</div>

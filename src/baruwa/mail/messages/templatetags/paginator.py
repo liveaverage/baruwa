@@ -56,6 +56,8 @@ def paginator(context, adjacent_pages=2):
 
     if not 'order_by' in context:
         context['order_by'] = None
+    if not 'quarantine_type' in context:
+        context['quarantine_type'] = None
 
     return {
         'page_obj': page_obj,

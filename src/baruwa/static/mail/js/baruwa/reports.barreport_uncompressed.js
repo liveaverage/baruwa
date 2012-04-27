@@ -93,7 +93,7 @@ function process_response(data){
 }
 
 dojo.addOnLoad(function(){
-    init_form();
+    init_form(is_web);
     //bind to form submit
     dojo.query("#filter-form").onsubmit(function(e){
     	e.preventDefault();

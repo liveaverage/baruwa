@@ -185,9 +185,15 @@ function addFilter(){
 }
 
 $(document).ready(function(){
-    bool_fields = ["scaned","spam","highspam","saspam","rblspam","whitelisted","blacklisted","virusinfected","nameinfected","otherinfected","isquarantined"];
-    num_fields = ["size","sascore"];
-    text_fields = ["id","from_address","from_domain","to_address","to_domain","subject","clientip","spamreport","headers", "hostname"];
+    if (is_web){
+        bool_fields = [];
+        num_fields = ["bytes"];
+        text_fields = ["virusname", "user__authuser", "site_category", "url", "site__site", "query", "hostname"];
+    }else{
+        bool_fields = ["scaned","spam","highspam","saspam","rblspam","whitelisted","blacklisted","virusinfected","nameinfected","otherinfected","isquarantined"];
+        num_fields = ["size","sascore"];
+        text_fields = ["id","from_address","from_domain","to_address","to_domain","subject","clientip","spamreport","headers"];
+    }
     time_fields = ["date","time"];
     num_values = [{'value':1,'opt':gettext('is equal to')},{'value':2,'opt':gettext('is not equal to')},
                     {'value':3,'opt':gettext('is greater than')},{'value':4,'opt':gettext('is less than')}];

@@ -18,11 +18,17 @@
 //
 // vim: ai ts=4 sts=4 et sw=4
 //
-function init_form(){
+function init_form(is_web){
     //form initialization
-    bool_fields = ["scaned","spam","highspam","saspam","rblspam","whitelisted","blacklisted","virusinfected","nameinfected","otherinfected","isquarantined"];
-    num_fields = ["size","sascore"];
-    text_fields = ["id","from_address","from_domain","to_address","to_domain","subject","clientip","spamreport","headers"];
+    if (is_web){
+        bool_fields = [];
+        num_fields = ["bytes"];
+        text_fields = ["virusname", "user__authuser", "site_category", "url", "site__site", "query", "hostname"];
+    }else{
+        bool_fields = ["scaned","spam","highspam","saspam","rblspam","whitelisted","blacklisted","virusinfected","nameinfected","otherinfected","isquarantined"];
+        num_fields = ["size","sascore"];
+        text_fields = ["id","from_address","from_domain","to_address","to_domain","subject","clientip","spamreport","headers"];
+    }
     time_fields = ["date","time"];
     num_values = [{'value':1,'opt':gettext('is equal to')},{'value':2,'opt':gettext('is not equal to')},
                     {'value':3,'opt':gettext('is greater than')},{'value':4,'opt':gettext('is less than')}];
@@ -82,7 +88,7 @@ function build_filters(filter_array){
 	var links = [];
 	var count = 0;
 	dojo.forEach(filter_array, function(item, i){
-		links[count++] = '<a href="/mail/reports/fd/'+i+'/"><img src="'+media_url+'mail/imgs/sm-del.png" alt="[x]"/></a>';
+		links[count++] = '<a href="'+report_rm_url+i+'/"><img src="'+media_url+'common/imgs/sm-del.png" alt="[x]"/></a>';
 		links[count++] = '&nbsp;"'+item.filter_field+' '+item.filter_by+' '+item.filter_value+'"';
 	});
 	return links.join('');

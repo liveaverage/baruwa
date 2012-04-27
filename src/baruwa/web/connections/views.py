@@ -18,3 +18,17 @@
 #
 # vim: ai ts=4 sts=4 et sw=4
 #
+
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+from django.contrib.auth.decorators import login_required
+
+from baruwa.utils.decorators import onlysuperusers
+
+
+@login_required
+@onlysuperusers
+def index(request, list_all=0, page=1):
+    """index"""
+    return render_to_response('web/connections/index.html', locals(),
+        context_instance=RequestContext(request))

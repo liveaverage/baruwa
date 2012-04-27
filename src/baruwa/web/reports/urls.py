@@ -18,3 +18,15 @@
 #
 # vim: ai ts=4 sts=4 et sw=4
 #
+
+
+from django.conf.urls.defaults import patterns, include, handler500, handler404
+
+urlpatterns = patterns('baruwa.web.reports.views',
+    (r'^$', 'index', {}, 'web-reports-index'),
+    (r'^(?P<report_kind>(\d+))/$', 'report', {}, 'web-report-kind'),
+    (r'^fd/(?P<index_num>(\d+))/$', 'rem_filter', {}, 'web-remove-filter'),
+    (r'^fs/(?P<index_num>(\d+))/$', 'save_filter', {}, 'web-save-filter'),
+    (r'^sfd/(?P<index_num>(\d+))/$', 'del_filter', {}, 'web-delete-filter'),
+    (r'^sfl/(?P<index_num>(\d+))/$', 'load_filter', {}, 'web-load-filter'),
+)
