@@ -8,10 +8,10 @@
 		var json_data = {{pie_data|safe}};
 		var media_url = '{{MEDIA_URL}}';
 		var is_web = false;
-		var report_rm_url = '/mail/reports/fd/';
+		var report_url_base = '{% url reports-index %}';
 </script>
 <script type="text/javascript" src="{{ MEDIA_URL }}common/js/dojo/dojo.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}common/js/common/lib.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}common/js/baruwa/lib.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}common/js/baruwa/reports.common.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/reports.pie.js"></script>{%endif%}{% endblock scripts %}
 {% block submenu %}

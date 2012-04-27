@@ -8,7 +8,7 @@
 	var sa_scores = {{pie_data.count|safe}};
 	var media_url = '{{MEDIA_URL}}';
 	var is_web = false;
-	var report_rm_url = '/mail/reports/fd/';
+	var report_url_base = '{% url reports-index %}';
 </script>
 <script type="text/javascript" src="{{ MEDIA_URL }}common/js/dojo/dojo.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}common/js/baruwa/reports.common.js"></script>

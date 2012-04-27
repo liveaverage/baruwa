@@ -10,11 +10,11 @@
 	var virii_data = {{pie_data.virii|safe}};
 	var volume_data = {{pie_data.volume|safe}};
 	var media_url = '{{MEDIA_URL}}';
-	var report_rm_url = '/mail/reports/fd/';
+	var report_url_base = '{% url reports-index %}';
 </script>
 <script type="text/javascript" src="{{ MEDIA_URL }}common/js/dojo/dojo.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}common/js/baruwa/lib.js"></script>
-<script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/reports.common.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}common/js/baruwa/reports.common.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}mail/js/baruwa/reports.listing.js"></script>{% endblock scripts %}
 {% block submenu %}
 &nbsp;

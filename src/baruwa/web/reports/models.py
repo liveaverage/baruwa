@@ -32,7 +32,7 @@ class WebSavedFilter(models.Model):
     user = models.ForeignKey(User)
 
     class Meta:
-        app_label = 'web'
+        # app_label = 'web'
         db_table = 'web_report_filters'
 
     def __unicode__(self):

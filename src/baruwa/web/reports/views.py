@@ -26,6 +26,7 @@ from django.db.models import Count, Max, Min
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.utils.translation import ugettext as _
+from django.db import IntegrityError, DatabaseError
 from django.template.defaultfilters import force_escape
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
@@ -34,6 +35,7 @@ from baruwa.web.visits.models import Traffic
 from baruwa.web.reports.forms import FilterForm
 from baruwa.utils.decorators import onlysuperusers
 from baruwa.web.reports.models import WebSavedFilter
+from baruwa.web.reports.forms import FilterForm, FILTER_ITEMS, FILTER_BY
 from baruwa.web.reports.utils import run_query, pack_json_data, REPORT_DICT
 from baruwa.utils.queryfilters import gen_dynamic_query, get_active_filters
 
@@ -47,6 +49,7 @@ def index(request, list_all=0, page=1):
     active_filters = []
     saved_filters = []
     data = Traffic.objects
+    filters = WebSavedFilter.objects.all().filter(user=request.user)
     filter_form = FilterForm()
     if request.method == 'POST':
         filter_form = FilterForm(request.POST)
@@ -83,24 +86,24 @@ def index(request, list_all=0, page=1):
             filter_list = request.session.get('web_filter_by')
             data = gen_dynamic_query(data, filter_list, active_filters, True)
     data = data.aggregate(count=Count('date'), newest=Max('date'), oldest=Min('date'))
-    # if filters.count() > 0:
-    #     if request.session.get('web_filter_by', False):
-    #         filter_list = request.session.get('web_filter_by')
-    #     else:
-    #         filter_list = []
-    #     for filt in filters:
-    #         loaded = 0
-    #         if filter_list:
-    #             loaded = 0
-    #             for fitem in filter_list:
-    #                 if fitem['filter'] == filt.op_field and (
-    #                     fitem['value'] == filt.value and
-    #                     fitem['field'] == filt.field):
-    #                     loaded = 1
-    #                     break
-    #         saved_filters.append(
-    #             {'filter_id': filt.id, 'filter_name': force_escape(filt.name),
-    #             'is_loaded': loaded})
+    if filters.count() > 0:
+        if request.session.get('web_filter_by', False):
+            filter_list = request.session.get('web_filter_by')
+        else:
+            filter_list = []
+        for filt in filters:
+            loaded = 0
+            if filter_list:
+                loaded = 0
+                for fitem in filter_list:
+                    if fitem['filter'] == filt.op_field and (
+                        fitem['value'] == filt.value and
+                        fitem['field'] == filt.field):
+                        loaded = 1
+                        break
+            saved_filters.append(
+                {'filter_id': filt.id, 'filter_name': force_escape(filt.name),
+                'is_loaded': loaded})
     if request.is_ajax():
         if not data['newest'] is None and not data['oldest'] is None:
             data['newest'] = data['newest'].strftime("%a %d %b %Y @ %H:%M %p")
