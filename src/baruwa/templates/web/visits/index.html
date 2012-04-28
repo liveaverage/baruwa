@@ -1,5 +1,34 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block scripts %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/jquery.js"></script>
+{% if list_all %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}mail/js/jquery.address.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}common/js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+{% endif %}
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var last_id = 0;
+{% if not list_all %}
+var full_visits_listing = false;
+{% else %}
+var full_visits_listing = true;
+{% endif %}
+var rj;
+var ax_error = false;
+var ax_in_progress = false;
+var media_url = '{{MEDIA_URL}}';
+var visits_base_url = "{% url main-visits-index %}";
+var baruwa_num_recent_visits = {{baruwa_num_recent_messages}};
+//]]>
+</script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}common/js/baruwa/lib.js"></script>
+{% if not list_all %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}web/js/baruwa/recent_visits.js"></script>
+{% else %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}web/js/baruwa/visits.js"></script>
+{% endif %}
+{% endblock scripts %}
 {% block submenu %}
 <ul>
 	<li><a href="{% url all-visits-index 'full' %}">{% trans "All visits" %}</a></li>
@@ -19,7 +48,7 @@
 {% if list_all %}
 	{% load pagination_heading %}{% pagination_heading %}
 	{%if active_filters %}
-		(<small><a href="{% url reports-index %}#active_filters">{% trans "Filters" %}</a> {% trans "have been applied" %}</small>)
+		(<small><a href="{% url web-reports-index %}#active_filters">{% trans "Filters" %}</a> {% trans "have been applied" %}</small>)
 	{%endif%}
 {% else %}
 	{% blocktrans %}Showing the {{baruwa_num_recent_messages}} most recent visits {% endblocktrans %}
@@ -89,7 +118,7 @@
 		<b>{% trans "Filters have been applied :" %}</b>
 		<span id="fhl" style="display:inline;">
 		{% for f in active_filters %}
-		"<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
+		"<a href="{% url web-reports-index %}#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
 		{% endfor %}
 		</span>
 		{% endif %}

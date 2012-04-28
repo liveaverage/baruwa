@@ -74,6 +74,27 @@ def jsonify_status(element):
         element[key] = str(element[key])
     return element
 
+def jsonify_visit_list(element):
+    """
+    Fixes the converting error in converting
+    DATETIME objects to JSON
+    """
+    if element.site.category and len(element.site.category) > 5:
+        cat = element.site.category[0:5] + '...'
+    else:
+        cat = 'None'
+    newval = {}
+    newval['id'] = element.id
+    newval['date'] = str(element.date)
+    newval['time'] = str(element.time)
+    newval['hostname'] = element.ip.hostname
+    newval['username'] = element.authuser
+    newval['site'] = element.site.site
+    newval['category'] = cat
+    newval['bytes'] = element.bytes
+    newval['status'] = element.status
+    return newval
+
 
 def get_processes(process_name):
     "Gets running processes by process name"

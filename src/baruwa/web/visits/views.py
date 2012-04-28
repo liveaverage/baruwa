@@ -19,15 +19,21 @@
 # vim: ai ts=4 sts=4 et sw=4
 #
 
+import re
+import anyjson
+
 from django.conf import settings
+from django.http import HttpResponse
 from django.template import RequestContext
 from django.core.paginator import Paginator
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 
-from baruwa.web.visits.models import Traffic, Urlfilterdeny, Virusdetection, Searchquery
+from baruwa.utils.misc import jsonify_visit_list
+from baruwa.utils.queryfilters import apply_filter
 from baruwa.utils.decorators import onlysuperusers
+from baruwa.web.visits.models import Traffic, Urlfilterdeny, Virusdetection, Searchquery
 
 
 @login_required
@@ -36,7 +42,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
         order_by='id'):
     """index"""
     template_name = 'web/visits/index.html'
-    active_filters = {}
+    active_filters = []
     num_of_recent_visits = getattr(settings, 'BARUWA_NUM_RECENT_MESSAGES', 50)
     ordering = order_by
     if direction == 'dsc':
@@ -49,6 +55,9 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             last_id = last_id.strip()
             if not re.match(r'^(\d+)$', last_id):
                 last_id = None
+        print '*' * 100
+        print last_id
+        print '*' * 100
         if not last_id is None and request.is_ajax():
             visit_list = Traffic.objects\
                         .filter(id__gt=last_id)\
@@ -66,14 +75,13 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
         if view_type == 'search':
             inner_q = Searchquery.objects.values('traffic').query
             visit_list = visit_list.filter(id__in=inner_q)
-        visit_list = visit_list.all()
-    # visit_list = apply_filter(visit_list, request, active_filters)
+        visit_list = apply_filter(visit_list, request, active_filters, True)
+        # visit_list = visit_list.all()
     
     if request.is_ajax():
-        # sys_status = jsonify_status(status(request))
         sys_status = None
         if not list_all:
-            visit_list = map(jsonify_msg_list, visit_list)
+            visit_list = map(jsonify_visit_list, visit_list)
             pg = None
         else:
             p = Paginator(visit_list, num_of_recent_visits)
@@ -81,7 +89,7 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
                 page = p.num_pages
             po = p.page(page)
             visit_list = po.object_list
-            # visit_list = map(jsonify_msg_list, visit_list)
+            visit_list = map(jsonify_visit_list, visit_list)
             page = int(page)
             ap = 2
             startp = max(page - ap, 1)
@@ -102,7 +110,8 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
         queryset=visit_list, paginate_by=num_of_recent_visits, page=page,
         extra_context={'view_type': view_type, 'direction': direction,
         'order_by': ordering, 'active_filters': active_filters,
-        'list_all': list_all, 'app': 'web/visits/' + view_type}, allow_empty=True)
+        'list_all': list_all, 'app': 'web/visits/' + view_type},
+        allow_empty=True)
     else:
         return object_list(request, template_name=template_name,
         queryset=visit_list, extra_context={'view_type': view_type,

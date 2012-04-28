@@ -187,7 +187,7 @@ function paginate(){
         if (rj.quarantine_type) {
             li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
         };
-        tmp +='<span><a href="'+li+'"><img src="'+media_url+'mail/imgs/first_pager.png" alt="First"/></a></span>';
+        tmp +='<span><a href="'+li+'"><img src="'+media_url+'common/imgs/first_pager.png" alt="First"/></a></span>';
         tmp +='<span>.....</span>';
    }
    if(rj.has_previous){
@@ -199,7 +199,7 @@ function paginate(){
         if (rj.quarantine_type) {
             li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
         };
-        tmp +='<span><a href="'+li+'"><img src="'+media_url+'mail/imgs/previous_pager.png" alt="Previous"/></a></span>';
+        tmp +='<span><a href="'+li+'"><img src="'+media_url+'common/imgs/previous_pager.png" alt="Previous"/></a></span>';
    }
    $.each(rj.page_numbers,function(itr,lnk){
         if(rj.page == lnk){ 
@@ -225,7 +225,7 @@ function paginate(){
         if (rj.quarantine_type) {
             li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
         };
-        tmp +='<span><a href="'+li+'"><img src="'+media_url+'mail/imgs/next_pager.png" alt="Next"/></a></span>';
+        tmp +='<span><a href="'+li+'"><img src="'+media_url+'common/imgs/next_pager.png" alt="Next"/></a></span>';
    }
    if(rj.show_last){
         if(rj.direction){
@@ -237,7 +237,7 @@ function paginate(){
             li = li.replace(/quarantine\//g,'quarantine/'+rj.quarantine_type+'/');
         };
         tmp +='<span>......</span>';
-        tmp +='<a href="'+li+'"><img src="'+media_url+'mail/imgs/last_pager.png" alt="Last"/></a></span>';
+        tmp +='<a href="'+li+'"><img src="'+media_url+'common/imgs/last_pager.png" alt="Last"/></a></span>';
    }
     columns = "timestamp from_address to_address subject sascore";
     linfo = gettext('Date/Time')+'#'+gettext('From')+'#'+gettext('To')+'#'+gettext('Subject')+'#'+gettext('Score');
@@ -306,5 +306,5 @@ function jsize_page(){
     });
     $.address.externalChange(handlextern);
 }
-var loading_msg = '<div id="loading_message"><div id="loading"><img src="'+media_url+'mail/imgs/ajax-loader.gif" alt="loading"/><br/><b>'+gettext('Loading')+'</b></div></div>';
+var loading_msg = '<div id="loading_message"><div id="loading"><img src="'+media_url+'common/imgs/ajax-loader.gif" alt="loading"/><br/><b>'+gettext('Loading')+'</b></div></div>';
 $(document).ready(jsize_page);

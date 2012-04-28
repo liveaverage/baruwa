@@ -197,4 +197,55 @@ function json2html(data){
     }
 }
 
-
+function buildhtml(data){
+    if(data){
+        rj = data.paginator;
+        if(data.items.length){
+            last_id = data.items[0].id;
+        }
+        var to;
+        var tmp;
+        rows = [];
+        len = data.items.length;
+        len --;
+        count = 0;
+        //build records table
+        $.each(data.items,function(i,n){
+            //build html rows
+            rows[count++] = '<div class="LightBlue_div">';
+            rows[count++] = '<div class="web_tm"><a href="'+visits_base_url+'/'+n.id+'/">'+n.date+'/'+n.time+'</a></div>';
+            rows[count++] = '<div class="web_hostname"><a href="'+visits_base_url+'/'+n.id+'/">'+n.hostname+'</a></div>';
+            rows[count++] = '<div class="web_username"><a href="'+visits_base_url+'/'+n.id+'/">'+n.username+'</a></div>';
+            rows[count++] = '<div class="web_site"><a href="'+visits_base_url+'/'+n.id+'/">'+n.site+'</a></div>';
+            rows[count++] = '<div class="web_category"><a href="'+visits_base_url+'/'+n.id+'/">'+n.category+'</a></div>';
+            rows[count++] = '<div class="web_size"><a href="'+visits_base_url+'/'+n.id+'/">'+n.bytes+'</a></div>';
+            rows[count++] = '<div class="web_status"><a href="'+visits_base_url+'/'+n.id+'/">'+n.status+'</a></div>';                       
+            rows[count++] = '</div>';
+        });
+        if(!rows.length){
+            if(full_visits_listing){
+                rows = '<div class="spanrow">'+gettext('No records returned')+'</div>';
+                $("div.Grid_heading ~ div").remove();
+                $("div.Grid_heading").after(rows);
+            }
+        }else{
+            if(full_visits_listing){
+                $("div.Grid_heading ~ div").remove();
+                $("div.Grid_heading").after(rows.join(''));
+            }else{
+                var baruwa_tmp_num = (baruwa_num_recent_visits - 1);
+                var baruwa_tmp_num2 = (baruwa_num_recent_visits - 2);
+                if(len == baruwa_tmp_num){
+                    $("div.Grid_heading ~ div").remove();
+                    $("div.Grid_heading").after(rows.join(''));
+                }else{
+                    remove_rows = (baruwa_tmp_num2 - len);
+                    $("div.Grid_heading ~ div:gt("+remove_rows+")").remove();
+                    $("div.Grid_heading").after(rows.join(''));
+                }
+            }
+        }
+    }else{
+        $("#my-spinner").empty().append(gettext('Empty response from server. check network!'));
+    }
+}

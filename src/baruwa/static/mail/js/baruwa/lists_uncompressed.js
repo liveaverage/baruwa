@@ -69,11 +69,11 @@ function paginate(){
     li = '';
 
     if(rj.show_first){
-        tmp +='<span><a href="/mail/lists/'+rj.list_kind+'/1/'+rj.direction+'/'+rj.order_by+'/"><img src="'+media_url+'mail/imgs/first_pager.png" alt="First"/></a></span>';
+        tmp +='<span><a href="/mail/lists/'+rj.list_kind+'/1/'+rj.direction+'/'+rj.order_by+'/"><img src="'+media_url+'common/imgs/first_pager.png" alt="First"/></a></span>';
         tmp +='<span>.....</span>';
     }
     if(rj.has_previous){
-        tmp +='<span><a href="/mail/lists/'+rj.list_kind+'/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/"><img src="'+media_url+'mail/imgs/previous_pager.png" alt="Previous"/></a></span>';
+        tmp +='<span><a href="/mail/lists/'+rj.list_kind+'/'+rj.previous+'/'+rj.direction+'/'+rj.order_by+'/"><img src="'+media_url+'common/imgs/previous_pager.png" alt="Previous"/></a></span>';
     }
     $.each(rj.page_numbers,function(itr,lnk){
         li = '/mail/lists/'+rj.list_kind+'/'+lnk+'/'+rj.direction+'/'+rj.order_by+'/';
@@ -84,11 +84,11 @@ function paginate(){
         }
     });
     if(rj.has_next){
-        tmp +='<span><a href="/mail/lists/'+rj.list_kind+'/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/"><img src="'+media_url+'mail/imgs/next_pager.png" alt="Next"/></a></span>';
+        tmp +='<span><a href="/mail/lists/'+rj.list_kind+'/'+rj.next+'/'+rj.direction+'/'+rj.order_by+'/"><img src="'+media_url+'common/imgs/next_pager.png" alt="Next"/></a></span>';
     }
     if(rj.show_last){
         tmp +='<span>......</span>';
-        tmp +='<a href="/mail/lists/'+rj.list_kind+'/last/'+rj.direction+'/'+rj.order_by+'/"><img src="'+media_url+'mail/imgs/last_pager.png" alt="Last"/></a></span>';
+        tmp +='<a href="/mail/lists/'+rj.list_kind+'/last/'+rj.direction+'/'+rj.order_by+'/"><img src="'+media_url+'common/imgs/last_pager.png" alt="Last"/></a></span>';
     }
     columns = "id to_address from_address";
     linfo = "hash To From"
@@ -129,7 +129,7 @@ function lists_from_json(data){
             }else{
                 to_address = n.to_address;
             }
-            link = '<a href="/mail/lists/delete/'+n.id+'/"><img src="'+media_url+'mail/imgs/action_delete.png" title="Delete" alt="Delete" /></a>';
+            link = '<a href="/mail/lists/delete/'+n.id+'/"><img src="'+media_url+'common/imgs/action_delete.png" title="Delete" alt="Delete" /></a>';
             if(n.from_address == '127.0.0.1'){
                 if(n.to_address == 'any'){
                     link = '=builtin=';
