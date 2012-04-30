@@ -37,7 +37,10 @@ from baruwa.mail.status.models import MailQueueItem
 
 def obfuscation(value):
     "obfuscation"
-    return re.sub(r'\w', 'x', value)
+    obs = getattr(settings, 'WEB_OBFUSCATE', None)
+    if obs:
+        return re.sub(r'\w', 'x', value)
+    return value
 
 
 def trunc(value, arg):
@@ -113,9 +116,10 @@ def jsonify_visit_list(element):
     newval['hostname'] = obfuscation(trunc(element.ip.hostname, 20))
     newval['username'] = obfuscation(trunc(element.authuser, 25))
     newval['site'] = trunc(element.site.site, 43)
-    newval['category'] = element.site.category if element.site.category else 'None'
+    newval['category'] = trunc(element.site.category, 15) if element.site.category else 'None'
     newval['bytes'] = element.bytes
     newval['status'] = element.status
+    newval['css'] = element.css
     return newval
 
 

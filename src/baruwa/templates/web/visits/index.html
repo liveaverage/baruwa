@@ -82,7 +82,7 @@ var baruwa_num_recent_visits = {{baruwa_num_recent_messages}};
 {% load texttools %}
 {% load messages_extras %}
 {% for visit in object_list %}
-<div class="LightBlue_div">
+<div class="{{visit.css}}">
 	<div class="web_tm">
 		<a href="{% url visit-detail visit.id %}">{{ visit.date|date:"Y-m-d"  }} {{ visit.time|time:"H:i:s"}}</a>
 	</div>
@@ -96,7 +96,7 @@ var baruwa_num_recent_visits = {{baruwa_num_recent_messages}};
 		<a href="{% url visit-detail visit.id %}">{{ visit.site.site|tds_trunc:43 }}</a>
 	</div>
 	<div class="web_category">
-		<a href="{% url visit-detail visit.id %}">{{ visit.site.category }}</a>
+		<a href="{% url visit-detail visit.id %}">{{ visit.site.category|tds_trunc:15 }}</a>
 	</div>
 	<div class="web_size">
 		<a href="{% url visit-detail visit.id %}">{{ visit.bytes|filesizeformat }}</a>

@@ -211,6 +211,18 @@ class Traffic(models.Model):
 
     virusitems = property(_virusitems)
 
+    def _css(self):
+        "CSS"
+        if self.virusdetection_set.count() > 0:
+            return 'web_virus_detected' 
+        if self.urlfilterdeny_set.count() > 0:
+            return 'web_url_filtered'
+        if self.searchquery_set.count() > 0:
+            return 'web_search_query'  
+        return 'LightBlue_div'
+
+    css = property(_css)
+
     class Meta:
         app_label = 'web'
         db_table = u'traffic'
