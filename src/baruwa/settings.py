@@ -137,7 +137,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'baruwa.fixups',
+    'baruwa.mail.fixups',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
