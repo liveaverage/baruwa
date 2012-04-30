@@ -20,6 +20,7 @@
 #
 
 import os
+import re
 import socket
 import GeoIP
 import subprocess
@@ -28,9 +29,31 @@ from IPy import IP
 from django.conf import settings
 from django.db.models import Q, Count
 from django.template.defaultfilters import force_escape
+from django.template.defaultfilters import wordwrap, linebreaksbr
 
 from baruwa.mail.messages.models import MessageStats
 from baruwa.mail.status.models import MailQueueItem
+
+
+def obfuscation(value):
+    "obfuscation"
+    return re.sub(r'\w', 'x', value)
+
+
+def trunc(value, arg):
+    "truncate value"
+    value = value.strip()
+    length = len(value)
+    arg = int(arg)
+    if length <= arg:
+        return value
+    else:
+        if re.search(r'(\s)', value):
+            tmp = wordwrap(value, arg)
+            return linebreaksbr(tmp)
+        else:
+            suffix = '...'
+            return value[0:arg] + suffix
 
 
 def jsonify_msg_list(element):
@@ -79,18 +102,18 @@ def jsonify_visit_list(element):
     Fixes the converting error in converting
     DATETIME objects to JSON
     """
-    if element.site.category and len(element.site.category) > 5:
-        cat = element.site.category[0:5] + '...'
-    else:
-        cat = 'None'
+    # if element.site.category and len(element.site.category) > 5:
+    #     cat = element.site.category[0:5] + '...'
+    # else:
+    #     cat = 'None'
     newval = {}
     newval['id'] = element.id
     newval['date'] = str(element.date)
     newval['time'] = str(element.time)
-    newval['hostname'] = element.ip.hostname
-    newval['username'] = element.authuser
-    newval['site'] = element.site.site
-    newval['category'] = cat
+    newval['hostname'] = obfuscation(trunc(element.ip.hostname, 20))
+    newval['username'] = obfuscation(trunc(element.authuser, 25))
+    newval['site'] = trunc(element.site.site, 43)
+    newval['category'] = element.site.category if element.site.category else 'None'
     newval['bytes'] = element.bytes
     newval['status'] = element.status
     return newval

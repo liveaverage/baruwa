@@ -55,9 +55,6 @@ def index(request, list_all=0, page=1, view_type='full', direction='dsc',
             last_id = last_id.strip()
             if not re.match(r'^(\d+)$', last_id):
                 last_id = None
-        print '*' * 100
-        print last_id
-        print '*' * 100
         if not last_id is None and request.is_ajax():
             visit_list = Traffic.objects\
                         .filter(id__gt=last_id)\

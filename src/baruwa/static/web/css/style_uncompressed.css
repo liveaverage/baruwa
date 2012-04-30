@@ -18,7 +18,7 @@
     padding:7px 5px 7px 5px;
 }
 .web_hostname_heading{
-    width:163px;
+    width:123px;
     font-family:Arial, Helvetica, sans-serif;
 	color:#005aab;
 	font-size:12px;
@@ -28,7 +28,7 @@
     padding:7px 5px 7px 5px;
 }
 .web_username_heading{
-    width:190px;
+    width:170px;
     font-family:Arial, Helvetica, sans-serif;
 	color:#005aab;
 	font-size:12px;
@@ -48,7 +48,7 @@
     padding:7px 5px 7px 5px;
 }
 .web_category_heading{
-    width:52px;
+    width:112px;
     font-family:Arial, Helvetica, sans-serif;
 	color:#005aab;
 	font-size:12px;
@@ -98,7 +98,7 @@
 	padding:7px 5px 7px 5px;
 }
 .web_hostname{
-    width:163px;
+    width:123px;
     font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -108,7 +108,7 @@
 	padding:7px 5px 7px 5px;
 }
 .web_username{
-    width:190px;
+    width:170px;
     font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;
@@ -128,7 +128,7 @@
 	padding:7px 5px 7px 5px;
 }
 .web_category{
-    width:52px;
+    width:112px;
     font-family:Arial, Helvetica, sans-serif;
 	color:#000;
 	font-size:12px;

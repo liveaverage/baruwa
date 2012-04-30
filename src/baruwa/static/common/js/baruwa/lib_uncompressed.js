@@ -213,13 +213,13 @@ function buildhtml(data){
         $.each(data.items,function(i,n){
             //build html rows
             rows[count++] = '<div class="LightBlue_div">';
-            rows[count++] = '<div class="web_tm"><a href="'+visits_base_url+'/'+n.id+'/">'+n.date+'/'+n.time+'</a></div>';
-            rows[count++] = '<div class="web_hostname"><a href="'+visits_base_url+'/'+n.id+'/">'+n.hostname+'</a></div>';
-            rows[count++] = '<div class="web_username"><a href="'+visits_base_url+'/'+n.id+'/">'+n.username+'</a></div>';
-            rows[count++] = '<div class="web_site"><a href="'+visits_base_url+'/'+n.id+'/">'+n.site+'</a></div>';
-            rows[count++] = '<div class="web_category"><a href="'+visits_base_url+'/'+n.id+'/">'+n.category+'</a></div>';
-            rows[count++] = '<div class="web_size"><a href="'+visits_base_url+'/'+n.id+'/">'+n.bytes+'</a></div>';
-            rows[count++] = '<div class="web_status"><a href="'+visits_base_url+'/'+n.id+'/">'+n.status+'</a></div>';                       
+            rows[count++] = '<div class="web_tm"><a href="'+visits_base_url+'view/'+n.id+'/">'+n.date+'/'+n.time+'</a></div>';
+            rows[count++] = '<div class="web_hostname"><a href="'+visits_base_url+'view/'+n.id+'/">'+n.hostname+'</a></div>';
+            rows[count++] = '<div class="web_username"><a href="'+visits_base_url+'view/'+n.id+'/">'+n.username+'</a></div>';
+            rows[count++] = '<div class="web_site"><a href="'+visits_base_url+'view/'+n.id+'/">'+n.site+'</a></div>';
+            rows[count++] = '<div class="web_category"><a href="'+visits_base_url+'view/'+n.id+'/">'+n.category+'</a></div>';
+            rows[count++] = '<div class="web_size"><a href="'+visits_base_url+'view/'+n.id+'/">'+filesizeformat(n.bytes)+'</a></div>';
+            rows[count++] = '<div class="web_status"><a href="'+visits_base_url+'view/'+n.id+'/">'+n.status+'</a></div>';                       
             rows[count++] = '</div>';
         });
         if(!rows.length){

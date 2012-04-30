@@ -79,6 +79,7 @@ var baruwa_num_recent_visits = {{baruwa_num_recent_messages}};
 	<div class="web_status_heading">{% trans "Status" %}</div>
 </div>	<!--Heading End Here-->
 {% load iptools %}
+{% load texttools %}
 {% load messages_extras %}
 {% for visit in object_list %}
 <div class="LightBlue_div">
@@ -86,16 +87,16 @@ var baruwa_num_recent_visits = {{baruwa_num_recent_messages}};
 		<a href="{% url visit-detail visit.id %}">{{ visit.date|date:"Y-m-d"  }} {{ visit.time|time:"H:i:s"}}</a>
 	</div>
 	<div class="web_hostname">
-		<a href="{% url visit-detail visit.id %}">{{ visit.ip.hostname }}</a>
+		<a href="{% url visit-detail visit.id %}">{{ visit.ip.hostname|tds_trunc:20|tds_obfuscation }}</a>
 	</div>
 	<div class="web_username">
-		<a href="{% url visit-detail visit.id %}">{{ visit.authuser|tds_trunc:25 }}</a>
+		<a href="{% url visit-detail visit.id %}">{{ visit.authuser|tds_trunc:25|tds_obfuscation }}</a>
 	</div>
 	<div class="web_site">
-		<a href="{% url visit-detail visit.id %}">{{ visit.site.site }}</a>
+		<a href="{% url visit-detail visit.id %}">{{ visit.site.site|tds_trunc:43 }}</a>
 	</div>
 	<div class="web_category">
-		<a href="{% url visit-detail visit.id %}">{{ visit.site.category|tds_trunc:5 }}</a>
+		<a href="{% url visit-detail visit.id %}">{{ visit.site.category }}</a>
 	</div>
 	<div class="web_size">
 		<a href="{% url visit-detail visit.id %}">{{ visit.bytes|filesizeformat }}</a>

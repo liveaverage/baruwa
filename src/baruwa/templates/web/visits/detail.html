@@ -10,6 +10,8 @@
 {% endblock submenu %}
 {% block content %}
 {% if visit_details %}
+{% load texttools %}
+{% load messages_extras %}
 <div class="Grid_heading">
     <div class="Reports_heading">{% trans "Visit Details" %}</div>
 </div>
@@ -28,12 +30,12 @@
 <div class="LightBlue_div">
     <div class="mailitem">{% trans "Hostname:" %}</div>
     <div class="maildetail">
-		{{ visit_details.ip.hostname }}
+		{{ visit_details.ip.hostname|tds_obfuscation }}
 	</div>
 </div>
 <div class="LightBlue_div">
     <div class="mailitem">{% trans "Username" %}</div>
-    <div class="maildetail">{{ visit_details.authuser }}</div>
+    <div class="maildetail">{{ visit_details.authuser|tds_obfuscation }}</div>
 </div>
 <div class="LightBlue_div">
     <div class="mailitem">{% trans "Site:" %}</div>
@@ -41,7 +43,7 @@
 </div>
 <div class="LightBlue_div">
     <div class="mailitem">{% trans "Url:" %}</div>
-    <div class="maildetail">{{ visit_details.url }}</div>
+    <div class="maildetail">{{ visit_details.url|tds_wrap_headers|linebreaksbr }}</div>
 </div>
 <div class="LightBlue_div">
     <div class="mailitem">{% trans "Category:" %}</div>
