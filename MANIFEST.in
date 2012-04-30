@@ -8,9 +8,9 @@ include UPGRADE
 include MANIFEST.in
 include src/baruwa/baruwa.wsgi
 include src/baruwa/virtual.wsgi
-include src/baruwa/lists/sql/list.sql
-include src/baruwa/config/sql/configsection.sql
-include src/baruwa/config/sql/domainsignature.sql
+include src/baruwa/mail/lists/sql/list.sql
+include src/baruwa/mail/config/sql/configsection.sql
+include src/baruwa/mail/config/sql/domainsignature.sql
 recursive-include docs *
 recursive-include extras *
 recursive-include src/baruwa/templates *
