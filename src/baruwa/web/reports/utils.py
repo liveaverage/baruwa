@@ -22,6 +22,7 @@
 from django.db.models import Count, Sum
 from django.utils.translation import ugettext as _
 
+from baruwa.utils.misc import obfuscation
 from baruwa.utils.graphs import PIE_COLORS
 from baruwa.utils.queryfilters import apply_filter
 from baruwa.web.visits.models import Traffic, Virusdetection, SearchqueryInfo
@@ -72,6 +73,6 @@ def pack_json_data(data, reportid):
         pie_data['y'] = item[arg2]
         pie_data['color'] = PIE_COLORS[index]
         pie_data['stroke'] = 'black'
-        pie_data['tooltip'] = str(item[arg1])
+        pie_data['tooltip'] = obfuscation(str(item[arg1])) if reportid in [9, 10, 11, 12] else item[arg1]
         ret.append(pie_data)
     return ret

@@ -40,9 +40,9 @@ FILTER_ITEMS = (
     ('url', _('Site url')),
     ('site__category', _('Category')),
     ('user__authuser', _('Username')),
-    ('hostname', _('Hostname')),
-    ('query', _('Search Phrase')),
-    ('virusname', _('Virus detected')),
+    ('ip__hostname', _('Hostname')),
+    # ('query', _('Search Phrase')),
+    # ('virusname', _('Virus detected')),
 )
 
 FILTER_BY = (
@@ -63,7 +63,7 @@ FILTER_BY = (
 EMPTY_VALUES = (None, '')
 
 # BOOL_FIELDS = []
-TEXT_FIELDS = ["virusname", "user__authuser", "site_category", "url", "site__site", "query", "hostname"]
+TEXT_FIELDS = ["virusname", "user__authuser", "site_category", "url", "site__site", "query", "ip__hostname"]
 TIME_FIELDS = ["date", "time"]
 NUM_FIELDS = ["bytes"]
 

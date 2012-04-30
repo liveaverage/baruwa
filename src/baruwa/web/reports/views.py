@@ -256,8 +256,6 @@ def report(request, report_kind):
         return HttpResponse(response,
             content_type='application/javascript; charset=utf-8')
     else:
-        # if not report_kind in [9, 11]:
-        #     pie_data = anyjson.dumps(pie_data)
         pie_data = anyjson.dumps(pie_data)
         return render_to_response(template, {'pie_data': pie_data,
             'top_items': data, 'report_title': report_title,

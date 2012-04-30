@@ -34,6 +34,7 @@
 <div class="lightblue_div">
     <div id="graphrows" class="Graph_rows_col">
         {% load messages_extras %}
+		{% load texttools %}
         {% for item in top_items %}
         <div class="graph_row">
             <div class="row_hash">{{ forloop.counter }}.</div>
@@ -43,8 +44,8 @@
                 {% if item.site__site %}{{item.site__site}}{%endif%}
                 {% if item.virusname %}{{item.virusname|tds_trunc:42}}{%endif%}
                 {% if item.bytes %}{{item.bytes}}{%endif%}
-				{% if item.ip__hostname %}{{item.ip__hostname}}{%endif%}
-				{% if item.user__authuser %}{{item.user__authuser}}{%endif%}
+				{% if item.ip__hostname %}{{item.ip__hostname|tds_obfuscation}}{%endif%}
+				{% if item.user__authuser %}{{item.user__authuser|tds_obfuscation}}{%endif%}
 				{% if item.query %}{{item.query}}{%endif%}
             </div>
             <div class="row_count">{{ item.num_count }}</div>
