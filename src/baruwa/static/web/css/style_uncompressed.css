@@ -157,3 +157,40 @@
     margin:0px;
 	padding:7px 5px 7px 5px;
 }
+
+.web_virus_detected{
+	background:#ff0000;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+}
+
+.web_virus_detected a{
+ 	color:#fff !important;
+}
+
+.web_url_filtered{
+	background:#717171;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+}
+
+.web_url_filtered a{
+ 	color:#fff !important;
+}
+
+.web_search_query{
+	background:#DDFFDD;
+ 	width:976px;
+	float:left;
+	margin:2px 0 0 0;
+}
+
+.web_url_filtered:hover {
+    background: #000 !important;
+}
+
+.iweb_virus_detected:hover {
+    background: #000 !important;
+}
