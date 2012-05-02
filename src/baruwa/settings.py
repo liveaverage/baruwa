@@ -264,7 +264,7 @@ EMAIL_SIGNATURES_DIR = '/etc/MailScanner/signatures'
 # defaults to 50
 #BARUWA_NUM_RECENT_MESSAGES = 50
 
-WEB_OBFUSCATE = True
+WEB_OBFUSCATE = False
 
 # End Baruwa only settings
 
