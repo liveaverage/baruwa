@@ -155,7 +155,7 @@ def gen_dynamic_query(model, filter_list, active_filters=None, isweb=None):
         if not active_filters is None:
             active_filters.append(
                 {
-                'filter_field': filter_items[filter_item['field']],
+                'filter_field': filter_items[filter_item['field']] if filter_item['field'] != 'query' else 'searchquery__query',
                 'filter_by': filter_by[int(filter_item['filter'])],
                 'filter_value': value}
                 )
@@ -176,13 +176,24 @@ def gen_dynamic_query(model, filter_list, active_filters=None, isweb=None):
     return model
 
 
-def apply_filter(model, request, active_filters, isweb=None):
+def apply_filter(model, request, active_filters, isweb=None, reportid=None):
     "apply filters to a model"
     if request.session.get('filter_by', False):
         filter_list = request.session.get('filter_by')
         model = gen_dynamic_query(model, filter_list, active_filters)
     if request.session.get('web_filter_by', False) and isweb:
         filter_list = request.session.get('web_filter_by')
+        if reportid and reportid in [13, 14]:
+            for index, web_filter in enumerate(filter_list):
+                if web_filter['field'] == 'searchquery__query':
+                    break
+            web_filter['field'] = 'query'
+            filter_list[index] = web_filter
+        if reportid and reportid in [5, 6]:
+            for index, web_filter in enumerate(filter_list):
+                if web_filter['field'] == 'searchquery__query':
+                    break
+            filter_list.pop(index)
         model = gen_dynamic_query(model, filter_list, active_filters, True)
     return model
 

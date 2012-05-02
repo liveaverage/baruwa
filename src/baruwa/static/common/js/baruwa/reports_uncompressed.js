@@ -188,7 +188,7 @@ $(document).ready(function(){
     if (is_web){
         bool_fields = [];
         num_fields = ["bytes"];
-        text_fields = ["virusname", "user__authuser", "site_category", "url", "site__site", "query", "ip__hostname"];
+        text_fields = ["virusname", "user__authuser", "site_category", "url", "site__site", "searchquery__query", "ip__hostname"];
     }else{
         bool_fields = ["scaned","spam","highspam","saspam","rblspam","whitelisted","blacklisted","virusinfected","nameinfected","otherinfected","isquarantined"];
         num_fields = ["size","sascore"];

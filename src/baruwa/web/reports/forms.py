@@ -41,7 +41,7 @@ FILTER_ITEMS = (
     ('site__category', _('Category')),
     ('user__authuser', _('Username')),
     ('ip__hostname', _('Hostname')),
-    # ('query', _('Search Phrase')),
+    ('searchquery__query', _('Search Phrase')),
     # ('virusname', _('Virus detected')),
 )
 

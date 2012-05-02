@@ -41,14 +41,14 @@ REPORT_DICT = {
     10: {'queryfield': 'ip__hostname', 'exclude': {'ip__hostname__exact': '0'}, 'order': '-total_size', 'model': Traffic, 'size': 'bytes', 'title': _('Top Hosts by Volume')},
     11: {'queryfield': 'user__authuser', 'exclude': {'user__authuser__exact': ''}, 'order': '-num_count', 'model': Traffic, 'size': 'bytes', 'title': _('Top Users By Quantity')},
     12: {'queryfield': 'user__authuser', 'exclude': {'user__authuser__exact': ''}, 'order': '-total_size', 'model': Traffic, 'size': 'bytes', 'title': _('Top Users By Volume')},
-    13: {'queryfield': 'query', 'exclude': {'query__exact': ''}, 'order': '-num_count', 'model': SearchqueryInfo, 'size': 'traffic__bytes', 'title': _('Top Search Phrases By Quantity')},
-    14: {'queryfield': 'query', 'exclude': {'query__exact': ''}, 'order': '-total_size', 'model': SearchqueryInfo, 'size': 'traffic__bytes', 'title': _('Top Search Phrases By Volume')},
+    13: {'queryfield': 'searchquery__query', 'exclude': {'query__exact': ''}, 'order': '-num_count', 'model': SearchqueryInfo, 'size': 'traffic__bytes', 'title': _('Top Search Phrases By Quantity')},
+    14: {'queryfield': 'searchquery__query', 'exclude': {'query__exact': ''}, 'order': '-total_size', 'model': SearchqueryInfo, 'size': 'traffic__bytes', 'title': _('Top Search Phrases By Volume')},
 }
 
 
 def run_query(reportid, request, active_filters):
     "run a query"
-    query_field = REPORT_DICT[reportid]['queryfield']
+    query_field = REPORT_DICT[reportid]['queryfield'] if reportid not in [13, 14] else 'query'
     exclude_kwargs = REPORT_DICT[reportid]['exclude']
     order_by = REPORT_DICT[reportid]['order']
     size_field = REPORT_DICT[reportid]['size']
@@ -65,7 +65,7 @@ def run_query(reportid, request, active_filters):
                 .annotate(num_count=Count(query_field),
                 total_size=Sum(size_field))\
                 .order_by(order_by)
-    data = apply_filter(data, request, active_filters, True)
+    data = apply_filter(data, request, active_filters, True, reportid)
     data = data[:10]
     return data
 
@@ -73,7 +73,9 @@ def run_query(reportid, request, active_filters):
 def pack_json_data(data, reportid):
     "creates the json for the svn pie charts"
     if reportid in [7, 8]:
-        arg1 = 'url' #REPORT_DICT[reportid]['url']
+        arg1 = 'url'
+    elif reportid in [13, 14]:
+        arg1 = 'query'
     else:
         arg1 = REPORT_DICT[reportid]['queryfield']
     arg2 = REPORT_DICT[reportid]['order'].lstrip('-')
