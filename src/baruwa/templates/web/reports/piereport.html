@@ -35,6 +35,7 @@
     <div id="graphrows" class="Graph_rows_col">
         {% load messages_extras %}
 		{% load texttools %}
+		{% load reporttools %}
         {% for item in top_items %}
         <div class="graph_row">
             <div class="row_hash">{{ forloop.counter }}.</div>
@@ -43,7 +44,7 @@
                 {% if item.site__category %}{{item.site__category|tds_trunc:42}}{%endif%}
                 {% if item.site__site %}{{item.site__site}}{%endif%}
                 {% if item.virusname %}{{item.virusname|tds_trunc:42}}{%endif%}
-                {% if item.bytes %}{{item.bytes}}{%endif%}
+                {% if item.url %}{{item.url|baruwa_getfilename}}{%endif%}
 				{% if item.ip__hostname %}{{item.ip__hostname|tds_obfuscation}}{%endif%}
 				{% if item.user__authuser %}{{item.user__authuser|tds_obfuscation}}{%endif%}
 				{% if item.query %}{{item.query}}{%endif%}

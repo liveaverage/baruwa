@@ -53,10 +53,18 @@ def run_query(reportid, request, active_filters):
     order_by = REPORT_DICT[reportid]['order']
     size_field = REPORT_DICT[reportid]['size']
     model = REPORT_DICT[reportid]['model']
-    data = model.objects.values(query_field)\
-            .exclude(**exclude_kwargs)\
-            .annotate(num_count=Count(query_field), total_size=Sum(size_field))\
-            .order_by(order_by)
+    if reportid in [7, 8]:
+        data = model.objects.values(query_field, 'url')\
+                .exclude(**exclude_kwargs)\
+                .annotate(num_count=Count(query_field),
+                total_size=Sum(size_field))\
+                .order_by(order_by)
+    else:
+        data = model.objects.values(query_field)\
+                .exclude(**exclude_kwargs)\
+                .annotate(num_count=Count(query_field),
+                total_size=Sum(size_field))\
+                .order_by(order_by)
     data = apply_filter(data, request, active_filters, True)
     data = data[:10]
     return data
@@ -64,7 +72,10 @@ def run_query(reportid, request, active_filters):
 
 def pack_json_data(data, reportid):
     "creates the json for the svn pie charts"
-    arg1 = REPORT_DICT[reportid]['queryfield']
+    if reportid in [7, 8]:
+        arg1 = 'url' #REPORT_DICT[reportid]['url']
+    else:
+        arg1 = REPORT_DICT[reportid]['queryfield']
     arg2 = REPORT_DICT[reportid]['order'].lstrip('-')
     ret = []
 
@@ -73,6 +84,6 @@ def pack_json_data(data, reportid):
         pie_data['y'] = item[arg2]
         pie_data['color'] = PIE_COLORS[index]
         pie_data['stroke'] = 'black'
-        pie_data['tooltip'] = obfuscation(str(item[arg1])) if reportid in [9, 10, 11, 12] else item[arg1]
+        pie_data['tooltip'] = obfuscation(str(item[arg1].split('/')[-1])) if reportid in [9, 10, 11, 12] else item[arg1].split('/')[-1]
         ret.append(pie_data)
     return ret
