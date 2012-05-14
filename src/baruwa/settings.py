@@ -118,6 +118,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'baruwa.utils.context_processors.status',
     'baruwa.utils.context_processors.general',
+    'baruwa.web.context.web_totals',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -265,6 +266,8 @@ EMAIL_SIGNATURES_DIR = '/etc/MailScanner/signatures'
 #BARUWA_NUM_RECENT_MESSAGES = 50
 
 WEB_OBFUSCATE = False
+
+BARUWA_WEB_TOTALS_INTERVAL = 5
 
 # End Baruwa only settings
 

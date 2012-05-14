@@ -503,7 +503,21 @@ div.blacklist {
 
 }
 
-.Box_Mainnav .Mainnav a.topnav:link, .Mainnav a.topnav:visited, .Mainnav a:active{
+.Box_Mainnav .Mainnav a.topnav_s{ /*aero button CSS*/
+	background: transparent url('/static/mail/imgs/css/tab_left_s.gif') no-repeat top left;
+	display: inline-block;
+	float: left;
+	font: bold 14px Arial, Helvetica, sans-serif; /* Change 13px as desired */
+	line-height: 23px; /* This value + 8px should equal height of button background (default is 31px) */
+	height: 32px; /* Height of button background height */
+	padding-left: 20px; /* Width of left menu image */
+	text-decoration: none;
+	margin-right: 2px; /*spacing between buttons*/
+	cursor:pointer;
+
+}
+
+.Box_Mainnav .Mainnav a.topnav:link, .Mainnav a.topnav:visited, .Mainnav a:active, .Box_Mainnav .Mainnav a.topnav_s:link, .Mainnav a.topnav_s:visited,{
 	color: #013f5c; /*button text color*/
 }
 
@@ -524,7 +538,19 @@ div.blacklist {
 	-moz-opacity: 0.99;
 }
 
-.Box_Mainnav .Mainnav a.topnav:hover span{ /*topnav button CSS*/
+.Box_Mainnav .Mainnav a.topnav_s span{
+  background: transparent url('/static/mail/imgs/css/tab_right_s.gif') no-repeat top right;
+  display: inline-block;
+  padding: 4px 20px 6px 0; /*Set 10px here to match value of 'padding-left' value above*/
+  padding: 4px 20px 6px 0; /*Set 10px here to match value of 'padding-left' value above*/
+  _padding: 3px 20px 6px 0; /*Set 10px here to match value of 'padding-left' value above*/
+  height:22px;
+  cursor:pointer;
+  color:#fff;
+}
+
+
+.Box_Mainnav .Mainnav a.topnav:hover span, .Box_Mainnav .Mainnav a.topnav_:hover span{ /*topnav button CSS*/
 	background: transparent url('/static/mail/imgs/css/tab_right.gif') no-repeat bottom right;
 	color:#013f5c;
 }

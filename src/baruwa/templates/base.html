@@ -56,6 +56,9 @@
 					<li>
 						{% trans "In: " %}<a href="{% url mailq-inbound %}"><span id="inq">{{baruwa_in_queue}}</span></a> {% trans "Out: " %}<a href="{% url mailq-outbound %}"><span id="outq">{{baruwa_out_queue}}</span></a>
 					</li>
+					{% else %}
+					<li>{% trans "Users: " %}{{web_users}}</li>
+					<li>{% trans "Hosts: " %}{{web_hosts}}</li>
 					{% endif %}
 					{% if user.is_authenticated %}
 					<li>{% trans "Signed in as " %}<a href="{% url user-profile user.id %}">{{user.username}}</a></li>
@@ -89,7 +92,7 @@
  				<a href="{% url status-index %}" class="topnav"><span>{% trans "Status" %}</span></a>
 				{% if user.is_superuser %}
 				<a href="{% url settings-index %}" class="topnav"><span>{% trans "Settings" %}</span></a>
-				<a href="/web/" class="topnav"><span>{% trans "Web" %}</span></a>
+				<a href="/web/" class="topnav_s"><span>{% trans "Web" %}</span></a>
 				{% else %}
 				<a href="{% url accounts %}" class="topnav"><span>{% trans "Accounts" %}</span></a>
 				{% endif %}
@@ -103,7 +106,7 @@
 			<a href="{% url web-reports-index %}" class="topnav"><span>{% trans "Reports" %}</span></a>
 			<a href="{% url main-status-index %}" class="topnav"><span>{% trans "Status" %}</span></a>
 			<a href="{% url main-settings-index %}" class="topnav"><span>{% trans "Settings" %}</span></a>
-			<a href="/mail/" class="topnav"><span>{% trans "Mail" %}</span></a>
+			<a href="/mail/" class="topnav_s"><span>{% trans "Mail" %}</span></a>
 			{% endif %}
         </div> <!-- Mainnav end here -->
    </div> <!-- Box_Mainnav end here -->
