@@ -119,9 +119,8 @@ dojo.addOnLoad(function() {
         remove_filter(e,this);
     });
     //chart init and render
-    var dc = dojox.charting;
-    chart = new dc.Chart2D("chart");
-    chart.setTheme(dc.themes.Tufte).addPlot("default", {
+    var chart = new dojox.charting.Chart2D("chart");
+    chart.setTheme(dojox.charting.themes.Tufte).addPlot("default", {
     type: "Pie",
     font: "normal normal 8pt Tahoma",
     fontColor: "black",
@@ -129,8 +128,8 @@ dojo.addOnLoad(function() {
     radius: 80
     });
     chart.addSeries("Series A", json_data);
-    var anim_a = new dc.action2d.MoveSlice(chart, "default");
-    var anim_b = new dc.action2d.Highlight(chart, "default");
-    var anim_c = new dc.action2d.Tooltip(chart, "default");
+    var anim_a = new dojox.charting.action2d.MoveSlice(chart, "default");
+    var anim_b = new dojox.charting.action2d.Highlight(chart, "default");
+    var anim_c = new dojox.charting.action2d.Tooltip(chart, "default");
     chart.render();
 });

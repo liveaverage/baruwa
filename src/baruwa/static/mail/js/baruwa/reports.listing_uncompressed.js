@@ -117,9 +117,8 @@ dojo.addOnLoad(function(){
         remove_filter(e,this);
     });
     //init chart and render
-	var dc = dojox.charting;
 	var dur = 450;
-	chart = new dojox.charting.Chart2D("chart");
+	var chart = new dojox.charting.Chart2D("chart");
 	chart.addAxis("x",{labels: labels,majorTickStep:10});
 	chart.addAxis("y",{vertical:true});
 	chart.addAxis("vol_x", {type: "Invisible", leftBottom: false});
@@ -130,13 +129,13 @@ dojo.addOnLoad(function(){
 	chart.addSeries("spam", spam_data, {stroke: {color: "black"}, fill: "pink"});
 	chart.addSeries("virii", virii_data, {stroke: {color: "black"}, fill: "red"});
 	chart.addSeries("volume", volume_data, {plot: "other", stroke: {color:"blue"}, fill: "lightblue"});
-	var anim6a = new dc.action2d.Highlight(chart, "default", {
+	var anim6a = new dojox.charting.action2d.Highlight(chart, "default", {
 	duration: dur,
 	easing:   dojo.fx.easing.sineOut
 	});
-	//var anim6b = new dc.action2d.Shake(chart, "default");
-	//var anim6b = new dc.action2d.Tooltip(chart, "other");
-	var anim6c = new dc.action2d.Tooltip(chart, "default");
+	//var anim6b = new dojox.charting.action2d.Shake(chart, "default");
+	//var anim6b = new dojox.charting.action2d.Tooltip(chart, "other");
+	var anim6c = new dojox.charting.action2d.Tooltip(chart, "default");
 	chart.render();
 	var mail_legend = new dojox.charting.widget.Legend({chart: chart}, "mail_legend");
 });

@@ -110,13 +110,12 @@ dojo.addOnLoad(function(){
     dojo.query("#fhl a").onclick(function(e){
         remove_filter(e,this);
     });
-    var dc = dojox.charting;
     //init chart and render
-	chart = new dojox.charting.Chart2D("chart");
+	var chart = new dojox.charting.Chart2D("chart");
 	chart.addPlot("default", {type: "ClusteredColumns",gap:1});
 	chart.addAxis("x",{labels: labels,majorTickStep:10});
 	chart.addAxis("y", {vertical: true});
 	chart.addSeries("SA scores", sa_scores,{stroke: {color: "black"}, fill: "blue"});
-	var anim6c = new dc.action2d.Tooltip(chart, "default");
+	var anim6c = new dojox.charting.action2d.Tooltip(chart, "default");
 	chart.render();	
 });
