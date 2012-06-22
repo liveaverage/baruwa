@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Settings :: Verify" %}{% endblock title %}
+{% block heading %}{% trans "Settings :: Verify" %}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Reports_heading">{% trans "Settings Verify" %}</div>
+</div>
+<div class="lightblue_div">
+	{% if success %}
+	<div class="spanrow">{% trans "Settings successfully verified" %}</div>
+	{% else %}
+	<div class="spanrow">{% trans "Verification of Settings failed" %}</div>
+	{% endif %}
+</div>
+{% endblock content %}

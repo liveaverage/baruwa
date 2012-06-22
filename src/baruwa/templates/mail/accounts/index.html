@@ -54,7 +54,7 @@ var media_url = '{{MEDIA_URL}}';
 		{{ user.email }}
     </div>
 	<div class="Users_del">
-		<a href="{% url delete-account user.id %}"><img src="{{ MEDIA_URL }}mail/imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+		<a href="{% url delete-account user.id %}"><img src="{{ MEDIA_URL }}common/imgs/action_delete.png" alt="Delete" title="Delete" /></a>
 	</div>
 </div>
 {% endfor %}

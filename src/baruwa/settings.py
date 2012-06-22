@@ -269,6 +269,12 @@ WEB_OBFUSCATE = False
 
 BARUWA_WEB_TOTALS_INTERVAL = 5
 
+# Web configuration verification tool
+BARUWA_WEB_VERIFY_CMD = '/usr/bin/true'
+
+# Web configuration apply tool
+BARUWA_WEB_APPLY_CMD = '/usr/bin/true'
+
 # End Baruwa only settings
 
 try:
