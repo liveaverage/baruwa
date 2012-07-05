@@ -2,17 +2,17 @@
 {% load i18n %}
 {% block submenu %}
 <ul>
-	<li><a href="{% url time-rules %}">{% trans "Time periods" %}</a></li>
+	<li><a href="{% url source-rules %}">{% trans "Sources" %}</a></li>
 </ul>	
 {% endblock submenu %}
-{% block title %}{% trans "Settings :: Update Time period" %}{% endblock title %}
-{% block heading %}{% trans "Settings :: Update Time period" %}{% endblock heading %}
+{% block title %}{% trans "Settings :: Update Source" %}{% endblock title %}
+{% block heading %}{% trans "Settings :: Update Source" %}{% endblock heading %}
 {% block content %}
 <form action="" method="post">
 	{% csrf_token %}
 <div class="Grid_heading">
     <div class="Bayes_heading">
-		{% trans "Update Time period" %}
+		{% trans "Update Source" %}
 	</div>
 </div>
 {% if form.non_field_errors %}
