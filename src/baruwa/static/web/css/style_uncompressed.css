@@ -309,7 +309,7 @@
 }
 
 .web_ods_row_name{
-    width:430px;
+    width:390px;
     font-family:Arial, Helvetica, sans-serif;
     color:#000;
 	font-size:12px;
@@ -319,7 +319,7 @@
 }
 
 .web_ods_row_dest{
-    width:400px;
+    width:300px;
     font-family:Arial, Helvetica, sans-serif;
     color:#000;
 	font-size:12px;
@@ -349,7 +349,7 @@
 }
 
 .web_ods_name{
-    width:430px;
+    width:390px;
     font-family:Arial, Helvetica, sans-serif;
     color:#005aab;
     font-size:12px;
@@ -359,7 +359,7 @@
 }
 
 .web_ods_dest{
-    width:400px;
+    width:300px;
     font-family:Arial, Helvetica, sans-serif;
     color:#005aab;
     font-size:12px;

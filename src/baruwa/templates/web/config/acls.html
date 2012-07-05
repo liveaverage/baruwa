@@ -20,14 +20,14 @@
 {% for acl in object_list %}
 <div class="{% cycle 'LightBlue' 'LightGray' %}_div">
 	<div class="web_ods_row_up">
-		{% if acl.is_first or acl.default %}
+		{% if acl.first or acl.default %}
 		&nbsp;
 		{% else %}
 		<a href="{% url move-acl-rule 'up', acl.id%}"><img src="{{ MEDIA_URL }}web/imgs/arrow_up.png" alt="up" title="up" /></a>
 		{% endif %}
 	</div>
 	<div class="web_ods_row_down">
-		{% if acl.is_last or acl.default %}
+		{% if acl.last or acl.default %}
 		&nbsp;
 		{% else %}
 		<a href="{% url move-acl-rule 'down', acl.id%}"><img src="{{ MEDIA_URL }}web/imgs/arrow_down.png" alt="down" title="down" /></a>

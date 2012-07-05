@@ -23,6 +23,7 @@ from django import forms
 
 from baruwa.web.config.models import Time, Source, Destination, AclRule
 from baruwa.web.config.models import DestinationComponent, DestinationPolicy
+from baruwa.web.config.models import OrderedDestination
 
 
 class TimeBase(forms.ModelForm):
@@ -52,6 +53,12 @@ class DCForm(forms.ModelForm):
     class Meta:
         exclude = ('id',)
         model = DestinationComponent
+
+
+class ODSForm(forms.ModelForm):
+    class Meta:
+        exclude = ('id', 'order',)
+        model = OrderedDestination
 
 
 class DPSForm(forms.ModelForm):

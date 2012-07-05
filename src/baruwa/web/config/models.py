@@ -283,8 +283,79 @@ class OrderedDestination(models.Model):
         config += self.destination.name
         return config
 
+    def swap_order(self, other):
+        "Swap item"
+        maxorder = OrderedDestination\
+                    .objects\
+                    .filter(destination_policy__exact=self.destination_policy)\
+                    .all()[0].order + 1
+        prev_order, self.order = self.order, maxorder
+        self.save()
+        self.order, other.order = other.order, prev_order
+        other.save()
+        self.save()
+
+    def save(self, *args, **kwargs):
+        "Generate order if not set and save to DB"
+        if self.order is None:
+            try:
+                self.order = OrderedDestination\
+                            .objects\
+                            .filter(destination_policy__exact=self.destination_policy)\
+                            .all()[0].order + 1
+            except(IndexError):
+                self.order = 0
+        super(OrderedDestination, self).save(*args, **kwargs)
+
+    def move_up(self):
+        "Move up"
+        try:
+            if self.is_first():
+                raise IndexError
+            next_item = OrderedDestination\
+                        .objects\
+                        .filter(destination_policy__exact=self.destination_policy)\
+                        .filter(order__gt=self.order).reverse()[0]
+        except IndexError:
+            pass
+        else:
+            self.swap_order(next_item)
+
+    def move_down(self):
+        "Move down"
+        try:
+            if self.is_last():
+                raise IndexError
+            prev_item = OrderedDestination\
+                        .objects\
+                        .filter(destination_policy__exact=self.destination_policy)\
+                        .filter(order__lt=self.order).all()[0]
+        except IndexError:
+            pass
+        else:
+            self.swap_order(prev_item)
+
+    def is_first(self):
+        "Returns true if first item"
+        return OrderedDestination\
+                .objects\
+                .filter(destination_policy__exact=self.destination_policy)\
+                .filter(order__gt=self.order).count() == 0
+
+    first = property(is_first)
+
+    def is_last(self):
+        "Returns true if last item"
+        return OrderedDestination\
+                .objects\
+                .filter(destination_policy__exact=self.destination_policy)\
+                .filter(order__lt=(self.order)).count() == 0
+
+    last = property(is_last)
+
     class Meta:
-        ordering = ['destination_policy','order']
+        ordering = ['destination_policy','-order']
+        #ordering = ["-order",]
         unique_together = ('destination_policy', 'destination', 'permit',)
 
 

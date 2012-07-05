@@ -39,7 +39,7 @@ from baruwa.web.config.models import Time, Source, DestinationComponent
 from baruwa.web.config.models import Destination, OrderedDestination
 from baruwa.web.config.models import DestinationPolicy, AclRule
 from baruwa.web.config.forms import TimeForm, SourceForm, DestForm, DCForm
-from baruwa.web.config.forms import DPSForm, ACLForm, ApplyForm
+from baruwa.web.config.forms import DPSForm, ACLForm, ApplyForm, ODSForm
 from baruwa.web.config.utils import lock_tables, unlock_tables
 
 
@@ -133,7 +133,7 @@ def delete_acl(request, aclid):
 @login_required
 @onlysuperusers
 def move_acl(request, aclid, direction):
-    "Delete a time period"
+    "Reorder an ACL"
     acl = get_object_or_404(AclRule, pk=aclid)
     if direction == 'up':
         acl.move_up()
@@ -487,6 +487,84 @@ def ordered_destinations(request, page=1):
     queryset=ods, paginate_by=10, page=page,
     extra_context={'list_all': 1, 'app': 'web/settings/ods'},
     allow_empty=True)
+
+
+@login_required
+@onlysuperusers
+def add_ods(request):
+    "add an ordered destination policy"
+    if request.method == 'POST':
+        form = ODSForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                msg = _('The ordered destination policy was created successfully')
+                messages.info(request, msg)
+                return HttpResponseRedirect(reverse('od-rules'))
+            except DatabaseError:
+                msg = _('The ordered destination policy could not be created')
+                messages.info(request, msg)
+                return HttpResponseRedirect(reverse('od-rules'))
+    else:
+        form = ODSForm()
+    return render_to_response('web/config/add_ods.html', locals(),
+        context_instance=RequestContext(request))
+
+
+@login_required
+@onlysuperusers
+def edit_ods(request, odid):
+    "Edit an Ordered Destination policy"
+    ods = get_object_or_404(OrderedDestination, pk=odid)
+    if request.method == 'POST':
+        form = ODSForm(request.POST, instance=ods)
+        if form.is_valid():
+            try:
+                form.save()
+                msg = _('The ordered destination policy has been updated')
+            except DatabaseError:
+                msg = _('The ordered destination policy could not be updated')
+            messages.info(request, msg)
+            return HttpResponseRedirect(reverse('od-rules'))
+    else:
+        form = ODSForm(instance=ods)
+    return render_to_response('web/config/edit_ods.html', locals(),
+        context_instance=RequestContext(request))
+
+
+@login_required
+@onlysuperusers
+def delete_ods(request, odid):
+    "Delete an Ordered Destination policy"
+    ods = get_object_or_404(OrderedDestination, pk=odid)
+    if request.method == 'POST':
+        form = ODSForm(request.POST, instance=ods)
+        if form.is_valid():
+            try:
+                ods.delete()
+                msg = _('The ordered destination policy has been deleted')
+            except DatabaseError:
+                msg = _('The ordered destination policy could not be deleted')
+            messages.info(request, msg)
+            return HttpResponseRedirect(reverse('od-rules'))
+    else:
+        form = ODSForm(instance=ods)
+    return render_to_response('web/config/delete_ods.html', locals(),
+        context_instance=RequestContext(request))
+
+
+@login_required
+@onlysuperusers
+def move_od(request, odid, direction):
+    "Move an OD"
+    ods = get_object_or_404(OrderedDestination, pk=odid)
+    if direction == 'up':
+        ods.move_up()
+    else:
+        ods.move_down()
+    if '/settings/ods/' in request.META['HTTP_REFERER']:
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    return HttpResponseRedirect(reverse('od-rules'))
 
 
 @login_required
