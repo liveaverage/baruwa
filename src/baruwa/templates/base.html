@@ -70,7 +70,7 @@
             </div>
             <div class="clearer"></div>
             <div class="search_box">
-				{% if user.is_authenticated %}
+				{% if user.is_authenticated and baruwa_subapp == 'mail' %}
                 <form method="post" action="{% url message-search %}">
 					{% csrf_token %}
             	    <div class="text_box"><input name="message_id" type="text" /></div>
