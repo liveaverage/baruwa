@@ -275,6 +275,9 @@ BARUWA_WEB_VERIFY_CMD = '/usr/bin/true'
 # Web configuration apply tool
 BARUWA_WEB_APPLY_CMD = '/usr/bin/true'
 
+# Number of web settings per page
+BARUWA_WEB_NUM_SETTINGS = 10
+
 # End Baruwa only settings
 
 try:

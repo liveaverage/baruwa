@@ -3,6 +3,8 @@
 {% block submenu %}
 <ul>
 	<li><a href="{% url add-destination-rule %}">{% trans "Add Destination" %}</a></li>
+	<li><a href="{% url destination-rules-local %}">{% trans "Local Destinations" %}</a></li>
+	<li><a href="{% url destination-rules-nonlocal %}">{% trans "Non Local Destinations" %}</a></li>
 </ul>
 {% endblock submenu %}
 {% block title %}{% trans "Settings :: Destinations ::" %}{% load pagination_heading %}{% pagination_heading %}{% endblock title %}

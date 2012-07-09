@@ -58,9 +58,10 @@ def acls(request, page=1):
     template_name = 'web/config/acls.html'
 
     acls = AclRule.objects.all()
+    num_per_page = getattr(settings, 'BARUWA_WEB_NUM_SETTINGS', 10)
     
     return object_list(request, template_name=template_name,
-    queryset=acls, paginate_by=10, page=page,
+    queryset=acls, paginate_by=num_per_page, page=page,
     extra_context={'list_all': 1, 'app': 'web/settings/acls'},
     allow_empty=True)
 
@@ -151,9 +152,10 @@ def times(request, page=1):
     template_name = 'web/config/times.html'
 
     time_list = Time.objects.all()
+    num_per_page = getattr(settings, 'BARUWA_WEB_NUM_SETTINGS', 10)
     
     return object_list(request, template_name=template_name,
-    queryset=time_list, paginate_by=10, page=page,
+    queryset=time_list, paginate_by=num_per_page, page=page,
     extra_context={'list_all': 1, 'app': 'web/settings/times'},
     allow_empty=True)
 
@@ -232,9 +234,10 @@ def sources(request, page=1):
     template_name = 'web/config/sources.html'
 
     time_list = Source.objects.all()
+    num_per_page = getattr(settings, 'BARUWA_WEB_NUM_SETTINGS', 10)
     
     return object_list(request, template_name=template_name,
-    queryset=time_list, paginate_by=10, page=page,
+    queryset=time_list, paginate_by=num_per_page, page=page,
     extra_context={'list_all': 1, 'app': 'web/settings/sources'},
     allow_empty=True)
 
@@ -313,9 +316,10 @@ def destination_component(request, page=1):
     template_name = 'web/config/dc.html'
 
     dcomp = DestinationComponent.objects.all()
+    num_per_page = getattr(settings, 'BARUWA_WEB_NUM_SETTINGS', 10)
     
     return object_list(request, template_name=template_name,
-    queryset=dcomp, paginate_by=10, page=page,
+    queryset=dcomp, paginate_by=num_per_page, page=page,
     extra_context={'list_all': 1, 'app': 'web/settings/dcs'},
     allow_empty=True)
 
@@ -396,15 +400,30 @@ def delete_dc(request, dcid):
 
 @login_required
 @onlysuperusers
-def destinations(request, page=1):
+def destinations(request, page=1, local=None):
     "Destinations"
     template_name = 'web/config/destinations.html'
 
-    destinations = Destination.objects.all()
+    if local is None:
+        #destinations = Destination.objects.order_by('name').all()
+        destinations = Destination.objects.all()
+        app = 'web/settings/destinations'
+    else:
+        if local == 1:
+            destinations = Destination.objects\
+                            .filter(is_local__exact=True)\
+                            .order_by('name').all()
+            app = 'web/settings/destinations/local'
+        else:
+            destinations = Destination.objects\
+                            .filter(is_local__exact=False)\
+                            .order_by('name').all()
+            app = 'web/settings/destinations/nonlocal'
+    num_per_page = getattr(settings, 'BARUWA_WEB_NUM_SETTINGS', 10)
     
     return object_list(request, template_name=template_name,
-    queryset=destinations, paginate_by=10, page=page,
-    extra_context={'list_all': 1, 'app': 'web/settings/destinations'},
+    queryset=destinations, paginate_by=num_per_page, page=page,
+    extra_context={'list_all': 1, 'app': app},
     allow_empty=True)
 
 
@@ -482,9 +501,10 @@ def ordered_destinations(request, page=1):
     template_name = 'web/config/ods.html'
 
     ods = OrderedDestination.objects.all()
+    num_per_page = getattr(settings, 'BARUWA_WEB_NUM_SETTINGS', 10)
     
     return object_list(request, template_name=template_name,
-    queryset=ods, paginate_by=10, page=page,
+    queryset=ods, paginate_by=num_per_page, page=page,
     extra_context={'list_all': 1, 'app': 'web/settings/ods'},
     allow_empty=True)
 
@@ -574,9 +594,10 @@ def destination_policy(request, page=1):
     template_name = 'web/config/dps.html'
 
     dps = DestinationPolicy.objects.all()
+    num_per_page = getattr(settings, 'BARUWA_WEB_NUM_SETTINGS', 10)
     
     return object_list(request, template_name=template_name,
-    queryset=dps, paginate_by=10, page=page,
+    queryset=dps, paginate_by=num_per_page, page=page,
     extra_context={'list_all': 1, 'app': 'web/settings/dps'},
     allow_empty=True)
 
