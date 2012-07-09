@@ -500,7 +500,10 @@ def ordered_destinations(request, page=1):
     "Ordered destinations"
     template_name = 'web/config/ods.html'
 
-    ods = OrderedDestination.objects.all()
+    ods = OrderedDestination\
+            .objects\
+            .exclude(destination_policy__name__in=['PERMITALL', 'PERMITNONE'])\
+            .all()
     num_per_page = getattr(settings, 'BARUWA_WEB_NUM_SETTINGS', 10)
     
     return object_list(request, template_name=template_name,
