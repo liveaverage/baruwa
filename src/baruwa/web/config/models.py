@@ -73,19 +73,15 @@ class SquidGuardBasicModel(ModelWithNameRules):
 ### %(name)s
 %(cfgtype)s %(name)s {
 %(content)s
-}
-
-    """
-    CONF_TEMPLATE_DEST = """
-### %(name)s
+}"""
+    CONF_TEMPLATE_DEST = """### %(name)s
 dest %(local_or_BL)s__%(name)s {
-    domainlist         %(local_or_BL)s/%(name)s/domains
-    urllist            %(local_or_BL)s/%(name)s/urls
-    expressionlists    %(local_or_BL)s/%(name)s/expressionlist
-    verbose squidguard-global.log
+    #domainlist         %(local_or_BL)s/%(name)s/domains
+    #urllist            %(local_or_BL)s/%(name)s/urls
+    #expressionlist     %(local_or_BL)s/%(name)s/expressions
+    logfile            verbose squidguard-global.log
 }
-
-    """
+"""
 
     def __unicode__(self):
         return self.name
@@ -100,17 +96,29 @@ dest %(local_or_BL)s__%(name)s {
             content = ''
             for line in self.config.split('\n'):
                 if line:
-                    content += '    %s' % line 
+                    content += '    %s\n' % line 
             config = self.CONF_TEMPLATE % {'cfgtype':cfgtype,
                                             'name':self.name,
-                                            'content':content}
+                                            'content':content[:-1]}
         if cfgtype in ('destination',):
-            if self.is_local():
+            if self.is_local == 1:
                 local_or_BL = 'local'
             else: 
                 local_or_BL= 'BL'
+
+            # Replacing __ with / to make sure for example recreation__sport actually goes to a subdir
             config = self.CONF_TEMPLATE_DEST % {'local_or_BL':local_or_BL,
-                                                'name':self.name}
+                                                'name':self.name.replace('__','/')}
+            if self.is_local == 1:
+                if len(self.destinationcomponent_set.all().filter(destination_type="d")) > 0:
+                    config = config.replace("#domainlist","domainlist")
+                if len(self.destinationcomponent_set.all().filter(destination_type="u")) > 0:
+                    config = config.replace("#urllist","urllist")
+            else:
+                if len(self.destinationcomponent_set.all().filter(destination_type="r")) > 0:
+                    config = config.replace("#expressionlist","expressionlist")
+                config = config.replace("#domainlist","domainlist")
+                config = config.replace("#urllist","urllist")
         return config
 
     class Meta:
@@ -236,16 +244,16 @@ class DestinationPolicy(ModelWithNameRules):
     def squidguard_config(self):
         cfg = ''
         remaining_destinations = list(Destination.objects.all())
-        for ordereddestination in self.ordereddestination_set.order_by('order'):
+        for ordereddestination in self.ordereddestination_set.order_by('-order'):
             cfg += ordereddestination.squidguard_config()
             if ordereddestination.destination in remaining_destinations:
                 remaining_destinations.remove(ordereddestination.destination)
 
-        for remaining_destination in remaining_destinations:
-            if self.permit_other_access:
-                cfg += '%s ' % remaining_destination.name
-            else:
-                cfg += "!%s " % remaining_destination.name
+        #for remaining_destination in remaining_destinations:
+            #if self.permit_other_access:
+                #cfg += '%s ' % remaining_destination.name
+            #else:
+                #cfg += "!%s " % remaining_destination.name
 
         if self.permit_other_access:
             cfg += 'all'
@@ -280,7 +288,12 @@ class OrderedDestination(models.Model):
         config = ''
         if not self.permit:
             config = '!'
-        config += self.destination.name
+        prefix = ""
+        if self.destination.is_local == 0:
+            prefix = "BL__"
+        elif self.destination.is_local == 1:
+            prefix = "local__"
+        config += prefix + self.destination.name + " "
         return config
 
     def swap_order(self, other):
@@ -365,14 +378,12 @@ class AclRule(models.Model):
     through the webfilter, rules are evaluated one by one
     (order property determines priority). First matching rule wins.'''
 
-    CONF_TEMPLATE = """
-### %(name)s
-%(source_and_time)s {
-    pass %(destination_policy)s
-    redirect http://localhost/cgi-bin/squidguard/squidGuard.cgi?clientaddr=%%a&clientname=%%n&clientuser=%%i&clientgroup=%%s&targetgroup=%%t&url=%%u
-    logfile verbose squidguard-global.log
-}
-    """
+    CONF_TEMPLATE = """    ### %(name)s
+    %(source_and_time)s {
+        pass %(destination_policy)s
+        redirect http://localhost/cgi-bin/squidguard/squidGuard.cgi?clientaddr=%%a&clientname=%%n&clientuser=%%i&clientgroup=%%s&targetgroup=%%t&url=%%u
+        logfile verbose squidguard-global.log
+    }"""
 
     order = models.PositiveIntegerField()
     time = models.ForeignKey(Time)
@@ -419,7 +430,7 @@ class AclRule(models.Model):
     def squidguard_config(self):
         conf = {}
         conf['name'] = self.source.name
-        conf['source_and_time'] += self._get_source_and_time()
+        conf['source_and_time'] = self._get_source_and_time()
         conf['destination_policy'] = self.destination_policy.squidguard_config()
         return self.CONF_TEMPLATE % conf
 
