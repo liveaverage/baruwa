@@ -21,8 +21,10 @@
 
 import os
 import re
-import socket
+import sys
 import GeoIP
+import socket
+import traceback
 import subprocess
 
 from IPy import IP
@@ -261,3 +263,13 @@ def check_access(request, user):
             if request.user.id != user.id:
                 return False
     return True
+
+
+def get_exc_str(bClear=False):
+    x=sys.exc_info()
+    if not x[0]:
+        return "No py exception"
+    out="%s/%s/%s" % (str(x[0]), str(traceback.extract_tb(x[2])), str(x[1]))
+    if bClear:
+        sys.exc_clear()
+    return out

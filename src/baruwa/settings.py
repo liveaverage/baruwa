@@ -278,6 +278,22 @@ BARUWA_WEB_APPLY_CMD = '/usr/bin/true'
 # Number of web settings per page
 BARUWA_WEB_NUM_SETTINGS = 10
 
+# LDAP/AD SERVER PORT
+AD_DNS_NAME = '127.0.0.1'
+# LDAP SERVER PORT
+AD_LDAP_PORT = 389
+# Search base
+AD_SEARCH_DN = 'dc=foo, dc=local'
+# domain to authenticate
+AD_AUTH_DOMAIN = 'FOO'
+# Admin group
+AD_ADMIN_GROUP = 'AdminFoo'
+# User group
+AD_USER_GROUP = 'UsersFoo'
+AD_SEARCH_FIELDS = ['mail','givenName','sn','SAMAccountName','memberOf','dn']
+AD_LDAP_SCHEME = 'ldap://'
+AD_LDAP_URL = '%s%s:%s' % (AD_LDAP_SCHEME, AD_DNS_NAME, AD_LDAP_PORT)
+
 # End Baruwa only settings
 
 try:
