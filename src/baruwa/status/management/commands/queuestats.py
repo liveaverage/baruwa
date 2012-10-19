@@ -20,13 +20,15 @@
 #
 
 "Queue stats generator"
+import subprocess
+
 from optparse import make_option
 
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.translation import ugettext as _
 
 from baruwa.utils.mail.mailq import Mailq
-from baruwa.status.models import MailQueueItem
+from baruwa.mail.status.models import MailQueueItem
 from baruwa.utils.misc import get_config_option
 
 
@@ -80,30 +82,42 @@ class Command(BaseCommand):
 
         inqueue = Mailq(mta, inqdir)
         print _("== Delete flaged queue items from the inbound queue ==")
-        ditems = MailQueueItem.objects.values('messageid').filter(
-        flag__gt=0, direction=1).all()
+        ditems = MailQueueItem.objects\
+                            .values('messageid')\
+                            .filter(flag__gt=0, direction=1).all()
         inrm = inqueue.delete([item['messageid'] for item in ditems])
-        MailQueueItem.objects.filter(messageid__in=[
-        item['msgid'] for item in inrm]).delete()
+        MailQueueItem.objects.filter(
+                messageid__in=[item['msgid'] for item in inrm]).delete()
         print _("== Deleted %(num)d items from the inbound queue ==") % {
-        'num': len(inrm)}
+                'num': len(inrm)}
         inqueue.process()
 
         outqueue = Mailq(mta, outqdir)
         print _("== Delete flaged queue items from the outbound queue ==")
-        ditems = MailQueueItem.objects.values('messageid').filter(
-        flag__gt=0, direction=2).all()
+        ditems = MailQueueItem.objects\
+                            .values('messageid')\
+                            .filter(flag__gt=0, direction=2)\
+                            .all()
         outrm = outqueue.delete([item['messageid'] for item in ditems])
-        MailQueueItem.objects.filter(messageid__in=[
-        item['msgid'] for item in outrm]).delete()
+        MailQueueItem.objects.filter(
+                    messageid__in=[item['msgid'] for item in outrm]).delete()
         print _("== Deleted %(num)d items from the outbound queue ==") % {
         'num': len(outrm)}
         outqueue.process()
 
         allids = [item['messageid'] for item in inqueue]
         allids.extend([item['messageid'] for item in outqueue])
+        pipe1 = subprocess.Popen('hostname',
+                                shell=True,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
+        hostname = pipe1.stdout.read().strip()
         dbids = [item['messageid']
-                for item in MailQueueItem.objects.values('messageid').all()]
+                for item in MailQueueItem\
+                            .objects.values('messageid')\
+                            .filter(hostname=hostname)\
+                            .all()
+                ]
         remids = [item for item in dbids if not item in allids]
         preids = [item for item in dbids if not item in remids]
 
