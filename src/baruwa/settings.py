@@ -139,6 +139,7 @@ AUTHENTICATION_BACKENDS = (
     'baruwa.auth.backends.MailBackend',
     'django.contrib.auth.backends.ModelBackend',
     #'baruwa.auth.radius.RadiusAuth',
+    #'baruwa.auth.ad.ActiveDirectoryBackend',
 )
 
 AUTH_PROFILE_MODULE = 'accounts.userprofile'
@@ -240,6 +241,23 @@ EMAIL_SIGNATURES_DIR = '/etc/MailScanner/signatures'
 #number of recent messages to display on front page
 # defaults to 50
 #BARUWA_NUM_RECENT_MESSAGES = 50
+
+# LDAP/AD SERVER PORT
+AD_HOST_NAME = '127.0.0.1'
+# LDAP SERVER PORT
+AD_LDAP_PORT = 389
+# Search base
+AD_SEARCH_DN = 'dc=foo, dc=local'
+# Admin group
+AD_ADMIN_GROUP = 'AdminFoo'
+# User group
+AD_USER_GROUP = 'UsersFoo'
+# LDAP search fields
+AD_SEARCH_FIELDS = ['mail','givenName','sn','SAMAccountName','memberOf','dn']
+# connection scheme
+AD_LDAP_SCHEME = 'ldap://'
+# module log file
+AD_LOG_FILE = '/var/log/httpd/logs/baruwa-ldap.log'
 
 # End Baruwa only settings
 
