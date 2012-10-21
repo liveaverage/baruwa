@@ -51,8 +51,8 @@ class MailAuthHost(models.Model):
         (1, 'POP3'),
         (2, 'IMAP'),
         (3, 'SMTP'),
-        (4, 'RADIUS/RSA SECUREID')
-        (5, 'Active directory')
+        (4, 'RADIUS/RSA SECUREID'),
+        (5, 'Active directory'),
     )
 
     address = models.CharField(max_length=255)

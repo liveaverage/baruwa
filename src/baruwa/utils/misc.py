@@ -266,10 +266,10 @@ def check_access(request, user):
 
 
 def get_exc_str(bClear=False):
-    x=sys.exc_info()
+    x = sys.exc_info()
     if not x[0]:
         return "No py exception"
-    out="%s/%s/%s" % (str(x[0]), str(traceback.extract_tb(x[2])), str(x[1]))
+    out = "%s/%s/%s" % (str(x[0]), str(traceback.extract_tb(x[2])), str(x[1]))
     if bClear:
         sys.exc_clear()
     return out

@@ -163,6 +163,7 @@ AUTHENTICATION_BACKENDS = (
     'baruwa.mail.auth.backends.MailBackend',
     'django.contrib.auth.backends.ModelBackend',
     #'baruwa.auth.radius.RadiusAuth',
+    #'baruwa.auth.ad.ActiveDirectoryBackend',
 )
 
 AUTH_PROFILE_MODULE = 'accounts.userprofile'
