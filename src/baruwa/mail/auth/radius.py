@@ -60,7 +60,7 @@ class RadiusAuth:
         if not dom:
             return None
 
-        hosts = MailAuthHost.objects.filter(useraddress=dom, protocol=3)
+        hosts = MailAuthHost.objects.filter(useraddress=dom, protocol=4)
 
         if not hosts:
             return None
@@ -75,7 +75,7 @@ class RadiusAuth:
                                 secret=settings.RADIUS_SECRET[host.address].encode('utf-8'),
                                 dict=Dictionary(StringIO(DICTIONARY)),)
             except AttributeError:
-                return None
+                continue
 
             request = client.CreateAuthPacket(code=packet.Accessrequest,
                 User_Name=login_user,)
@@ -84,9 +84,9 @@ class RadiusAuth:
                 reply = client.SendPacket(request)
                 if (reply.code == packet.AccessReject or
                     reply.code != packet.AccessAccept):
-                    return None
+                    continue
             except (Timeout, Exception):
-                return None
+                continue
             try:
                 user = User.objects.get(username=username)
             except User.DoesNotExist:
