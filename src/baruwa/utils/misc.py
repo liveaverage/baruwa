@@ -20,8 +20,10 @@
 #
 
 import os
+import sys
 import socket
 import GeoIP
+import traceback
 import subprocess
 
 from IPy import IP
