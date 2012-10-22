@@ -22,10 +22,7 @@ ad-hoc and contract basis for Baruwa and all the associated
 applications. Any issues big or small from custom features
 to running entire clusters on a day to day basis.
 
-All commercial support is offered via the `Elance`_ escrow 
-system.
 
-.. _`Elance`: http://www.elance.com/s/datopdog/
 .. _`mailing-list`: http://lists.baruwa.org/
 .. _`forum`: http://baruwa-users-list.963389.n3.nabble.com/
 .. _`author`: http://www.topdog.za.net/
