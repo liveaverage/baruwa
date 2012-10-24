@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block body_class%}{% if pie_data.mail and pie_data.spam and pie_data.virii and pie_data.dates%} class="tundra"{%endif%}{%endblock body_class%}
+{% block headers %}<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />{% endblock headers %}
+{% block scripts %}<script type="text/javascript">
+	var djConfig = { parseOnLoad:true, isDebug:false };
+	var labels = {{pie_data.dates|safe}};
+	var mail_data = {{pie_data.mail|safe}};
+	var spam_data = {{pie_data.spam|safe}};
+	var virii_data = {{pie_data.virii|safe}};
+	var volume_data = {{pie_data.volume|safe}};
+	var media_url = '{{MEDIA_URL}}';
+</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/dojo/dojo.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/lib.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/reports.common.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/reports.listing.js"></script>{% endblock scripts %}
+{% block submenu %}
+&nbsp;
+{% endblock submenu %}
+{% block title %}
+{% blocktrans %}Reports - {{report_title}}{% endblocktrans %}
+{% endblock title %}
+{% block heading %}
+{% blocktrans %}Reports - {{report_title}}{% endblocktrans %}
+{% endblock heading %}
+{% block content %}
+<div class="White_div">
+	<div id="chart" style="width: 950px; height: 250px;">
+		<noscript>{% trans "Enable Javascript to view graphs" %}</noscript>
+	</div>	
+</div>
+<div class="White_div">
+	<div id="mail_legend"></div>
+</div>
+<div class="header_div">
+	<div class="totals_date">
+		{% trans "Date" %}
+	</div>
+	<div class="totals_mail">
+		{% trans "Mail" %}
+	</div>
+	<div class="totals_virii">
+		{% trans "Viruses" %}
+	</div>
+	<div class="totals_viriip">
+		{% trans "Viruses %" %}
+	</div>
+	<div class="totals_spam">
+		{% trans "Spam" %}
+	</div>
+	<div class="totals_spamp">
+		{% trans "Spam %" %}
+	</div>
+	<div class="totals_volume">
+		{% trans "Volume" %}
+	</div>
+</div>
+<div id="graphrows">
+{% for row in top_items %}
+<div class="{% cycle 'LightBlue_div' 'LightGray_div' %}">
+	<div class="totals_date">
+		{{ row.date }}
+	</div>
+	<div class="totals_mail">
+		{{ row.mail_total }}
+	</div>
+	<div class="totals_virii">
+		{{ row.virus_total }}
+	</div>
+	<div class="totals_viriip">
+		{{ row.virus_percent }}
+	</div>
+	<div class="totals_spam">
+		{{ row.spam_total }}
+	</div>
+	<div class="totals_spamp">
+		{{ row.spam_percent }}
+	</div>
+	<div class="totals_volume">
+		{{ row.size_total|filesizeformat }}
+	</div>
+</div>
+{% empty %}
+<div class="spanrow">
+	{% trans "No records returned." %}
+</div>
+{% endfor %}
+</div>
+<div class="LightBlue_div">
+	<div class="totals_date">
+		{% trans "Totals" %}
+	</div>
+	<div class="totals_mail">
+		{{pie_data.mail_total}}
+	</div>
+	<div class="totals_virii">
+		{{pie_data.virus_total}}
+	</div>
+	<div class="totals_viriip">
+		{{pie_data.vpct}}
+	</div>
+	<div class="totals_spam">
+		{{pie_data.spam_total}}
+	</div>
+	<div class="totals_spamp">
+		{{pie_data.spct}}
+	</div>
+	<div class="totals_volume">
+		{{ pie_data.volume_total|filesizeformat }}
+	</div>
+</div>
+<div id="filterrow" class="lightblue_div{% if not active_filters %} hide{% endif %}">
+    <div class="filterrow">
+        {% trans "Filters have been applied :" %}
+        <span id="fhl">
+            {% for f in active_filters %}
+            	&nbsp;<a href="{% url remove-filter forloop.counter0 %}"><img src="/static/imgs/sm-del.png" alt="x"/></a> "{{ f.filter_field }} {{f.filter_by}} {{f.filter_value}}"
+				{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        </span>
+    </div>
+</div>
+{% include "reports/filter.form.html" %}
+{% endblock content %}

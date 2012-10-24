@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block scripts %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/ajax-csrf-tokenize.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/mailq.js"></script>
+{% endblock scripts %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url mailq-inbound %}">{% trans "Inbound Queue" %}</a></li>
+	<li><a href="{% url mailq-outbound %}">{% trans "Outbound Queue" %}</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+{% trans "Mail Queue" %} ::{% ifequal request.path '/status/mailq/outbound/' %} {% trans "Outbound" %}{% else %} {% trans "Inbound" %}{% endifequal %} - {% load pagination_heading %}{% pagination_heading %}
+{% endblock title %}
+{% block heading %}
+{% trans "Mail Queue" %} ::{% ifequal request.path '/status/mailq/outbound/' %} {% trans "Outbound" %}{% else %} {% trans "Inbound" %}{% endifequal %} - {% load pagination_heading %}{% pagination_heading %}
+{% endblock heading %}
+{% block content %}
+<form method="post" action="{% url process-mailq %}">
+{% csrf_token %}
+<div id="form-submission">
+	<div class="quaran_lightblue_div">
+		<div class="quaran_mailq_info">&nbsp;</div>
+		<div class="quaran_mailq_form">
+			<input type="submit" value="{% trans "Delete from queue" %}" />
+		</div>
+	</div>
+</div>
+{% load status_sorter %}
+<div class="Grid_heading">
+	<div class="Select_heading"><input type="checkbox" name="selector" id="allchecker" /></div>
+	<div class="Date_Time_heading">{% status_sorter "timestamp" "Received" %}</div>
+	<div class="From_heading">{% status_sorter "from_address" "From" %}</div>
+	<div class="To_heading">{% status_sorter "to_address" "To" %}</div>
+	<div class="Subject_heading">{% status_sorter "subject" "Subject" %}</div>
+	<div class="Size_heading">{% status_sorter "size" "Size" %}</div>
+	<div class="Attempts_heading">{% status_sorter "attempts" "Attempts" %}</div>
+</div>
+{% load messages_extras %}
+{% for item in object_list %}
+<div class="LightBlue_div">
+	<div class="Select_row"><input class="selector" type="checkbox" name="queueid" value="{{item.id}}" /></div>
+	<div class="Date_Time"><a href="{% url mailq-detail item.id %}">{{item.timestamp|date:"Y-m-d H:i:s" }}</a></div>
+	<div class="From_row"><a href="{% url mailq-detail item.id %}">{{item.from_address|tds_trunc:30}}</a></div>
+	<div class="To_row"><a href="{% url mailq-detail item.id %}">{{item.to_address|tds_nl_commas|linebreaksbr}}</a></div>
+	<div class="Subject_row"><a href="{% url mailq-detail item.id %}">{{item.subject|striptags|escape|tds_trunc:45}}</a></div>
+	<div class="Size_row"><a href="{% url mailq-detail item.id %}">{{item.size|filesizeformat}}</a></div>
+	<div class="Attempts_row"><a href="{% url mailq-detail item.id %}">{{item.attempts}}</a></div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+	<div class="spanrow">{% trans "No queue items found" %}</div>
+</div>
+{% endfor %}
+</form>
+{% endblock content %}
+{% block paging %}
+<div class="content_footer">
+    <div id="paginator">
+    {% load generic_paginator %}{% generic_paginator 3 %}
+    </div>
+</div>
+{% endblock paging %}

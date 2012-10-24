@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url settings-index %}">{% trans "Domains" %}</a></li>
+	<li><a href="{% url view-domain domain.id %}">{% trans "Domain page" %}</a></li>
+</ul>	
+{% endblock submenu %}
+{% block title %}{% trans "Settings :: Edit Email signature" %}{% endblock title %}
+{% block heading %}{% blocktrans with domain.address as address %}
+Domains :: {{ address }} - edit email signature
+{% endblocktrans %}{% endblock heading %}
+{% block content %}
+<form action="" method="post">
+	{% csrf_token %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">
+		{% trans "Edit Domain signature" %}
+	</div>
+</div>
+{% for hidden in form.hidden_fields %}
+	{{ hidden }}
+{% endfor %}
+{% if form.non_field_errors %}
+<div class="LightBlue_div">
+	<div class="spanrow form_error">{{ form.non_field_errors }}</div>
+</div>
+{% endif %}
+{% for field in form.visible_fields %}
+<div class="LightBlue_div">
+	<div class="form_label">{{ field.label }}</div>
+	<div class="form_value">{{ field }}</div>
+	<div class="form_error">{{ field.errors }}</div>
+</div>
+{% endfor %}
+<div class="LightBlue_div">
+    <div class="form_label">&nbsp;</div>
+    <div class="form_value">
+        <input id="submit-button" type="submit" value="{% trans "Update" %}" />
+    </div>
+    <div class="form_error"></div>
+</div>
+</form>
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.cleditor.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/jquery.cleditor.imgs.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/signatures.js"></script>
+{% include "common/signaturejs.html" %}
+{% endblock scripts %}
+{% block headers %}
+<link href="{{ MEDIA_URL }}css/jquery.cleditor.css" rel="stylesheet" type="text/css" />
+<link href="{{ MEDIA_URL }}css/jquery.wysiwyg.css" rel="stylesheet" type="text/css" />
+<link href="{{ MEDIA_URL }}css/wysiwyg.fileManager.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+var fm_url = '{% url domains-image-manager domain.id domain.user.id %}';
+var media_url = '{{MEDIA_URL}}';
+</script>
+{% endblock headers %}

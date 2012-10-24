@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url mailq %}">{% trans "Mail Queues" %}</a></li>
+{% if user.is_superuser %}
+    <li><a href="{% url bayes-info %}">{% trans "Bayes information" %}</a></li>
+    <li><a href="{% url sa-lint %}">{% trans "Spamassassin lint" %}</a></li>
+{% endif %}
+</ul>
+{% endblock submenu %}
+{% block title %}{% trans "System Status" %}{% endblock title %}
+{% block heading %}{% trans "System Status" %}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Status_service">{% trans "Service Status" %}</div>
+    <div class="Status_message">{% trans "Message Totals" %}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Status_col">{% trans "Scanners" %}</div>
+    <div class="Status_col">
+        {% if scanners %}
+        <img src="{{ MEDIA_URL }}imgs/status_ok.png" alt="x" />
+        {%else%}
+        <img src="{{ MEDIA_URL }}imgs/caution.png" alt="x" />
+        {%endif%}
+        &nbsp;{{scanners}} {% trans "processes" %}
+        </div>
+    <div class="Status_col">{% trans "Processed" %}</div>
+    <div class="Status_col">{{ data.total }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Status_col">MTA</div>
+    <div class="Status_col">
+        {% if mta %}
+        <img src="{{ MEDIA_URL }}imgs/status_ok.png" alt="x" />
+        {%else%}
+        <img src="{{ MEDIA_URL }}imgs/caution.png" alt="x" />
+        {%endif%}
+        &nbsp;{{mta}} {% trans "processes" %}
+    </div>
+    <div class="Status_col">{% trans "Clean" %}</div>
+    <div class="Status_col">{{ data.clean_mail }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Status_col">{% trans "Load" %}</div>
+    <div class="Status_col">
+    <img src="{{ MEDIA_URL }}imgs/status_ok.png" alt="x" />&nbsp;{{ load }}
+    </div>
+    <div class="Status_col">{% trans "High scoring spam" %}</div>
+    <div class="Status_col">{{ data.high_spam }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Status_col">{% trans "AV" %}</div>
+    <div class="Status_col">
+        {% if av %}
+        <img src="{{ MEDIA_URL }}imgs/status_ok.png" alt="x" />
+        {%else%}
+        <img src="{{ MEDIA_URL }}imgs/caution.png" alt="x" />
+        {%endif%}
+        &nbsp;{{av}} {% trans "processes" %}
+    </div>
+    <div class="Status_col">{% trans "Low scoring spam" %}</div>
+    <div class="Status_col">{{ data.spam_mail }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Status_col">{% trans "Uptime" %}</div>
+    <div class="Status_col">{{ uptime }}</div>
+    <div class="Status_col">{% trans "Viruses" %}</div>
+    <div class="Status_col">{{ data.virii }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Status_col">{% trans "Mail Queues" %}</div>
+    <div class="Status_col">Inbound:{{inq}} Outbound:{{outq}}</div>
+    <div class="Status_col">{% trans "Blocked files" %}</div>
+    <div class="Status_col">{{ data.otherinfected }}</div>
+</div>
+{% endblock content %}
+

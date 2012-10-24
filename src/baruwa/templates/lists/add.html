@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.clearform.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/ajax-csrf-tokenize.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/lists.add.js"></script>
+{% endblock %}
+{% block submenu %}
+<ul>
+  <li><a id="list-link" href="/lists/1/">{% trans "Whitelist" %}</a></li>
+  <li><a id="list-link" href="/lists/2/">{% trans "Blacklist" %}</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}{% trans "Adding to list" %}{% endblock title %}
+{% block heading %}{% trans "Adding to list" %}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">{% trans "Add List Item" %}</div>
+</div>
+{% include "lists/add.form.html" %}
+{% endblock content %}

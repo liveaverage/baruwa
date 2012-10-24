@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-27 17:58+0200\n"
+"POT-Creation-Date: 2011-09-13 23:00+0200\n"
 "PO-Revision-Date: 2011-06-06 17:52+0100\n"
 "Last-Translator: Viktor Matys <v.matys@grumpa.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,50 +17,48 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n>1 && n<5 ? 1 : 2;\n"
 
-#: dev_settings.py:66 settings.py:71
+#: dev_settings.py:46 settings.py:53
 msgid "English"
 msgstr "English"
 
-#: dev_settings.py:67 settings.py:72
+#: dev_settings.py:47 settings.py:54
 msgid "Afrikaans"
 msgstr "Afrikaans"
 
-#: dev_settings.py:68 settings.py:73
+#: dev_settings.py:48 settings.py:55
 msgid "Italian"
 msgstr "Italian"
 
-#: dev_settings.py:69 settings.py:74
+#: dev_settings.py:49 settings.py:56
 msgid "Czech"
 msgstr ""
 
-#: dev_settings.py:70 settings.py:75
+#: dev_settings.py:50 settings.py:57
 msgid "French"
 msgstr ""
 
-#: dev_settings.py:71 settings.py:76
+#: dev_settings.py:51 settings.py:58
 #, fuzzy
 msgid "Polish"
 msgstr "English"
 
-#: mail/accounts/forms.py:39
+#: accounts/forms.py:39
 #, python-format
 msgid ""
 "Required, %(chars)s characters or fewer. Only letters, numbers, and "
 "characters such as @.+_- are allowed."
 msgstr ""
 
-#: mail/accounts/forms.py:48 templates/mail/accounts/index.html:31
-#: templates/mail/accounts/login.html:61 templates/web/visits/detail.html:35
-#: templates/web/visits/index.html:37 templates/web/visits/index.html.py:45
-#: web/reports/forms.py:42
+#: accounts/forms.py:48 templates/accounts/index.html:31
+#: templates/accounts/login.html:61
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: mail/accounts/forms.py:52
+#: accounts/forms.py:52
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr "Hodnota může obsahovat pouze písmena, číslice a znaky @/./+/-/_."
 
-#: mail/accounts/forms.py:70
+#: accounts/forms.py:70
 msgid ""
 "That e-mail address doesn't have an associated user account. Are you sure "
 "you've registered?"
@@ -68,7 +66,7 @@ msgstr ""
 "E-mailová adresa nemá přidružený uživatelský účet. Určitě jste registrovaný/"
 "á?"
 
-#: mail/accounts/forms.py:74
+#: accounts/forms.py:74
 msgid ""
 "That e-mail address belongs to an externally authenticated account. Please "
 "change the password on that external system."
@@ -76,7 +74,7 @@ msgstr ""
 "Tato e-mailová adresa přináleží externě autentifikovanému účtu. Heslo měňte "
 "prosím na onom vzdáleném systému."
 
-#: mail/accounts/forms.py:79
+#: accounts/forms.py:79
 #, fuzzy
 msgid ""
 "That e-mail address belongs to an admin account Please use the manage.py "
@@ -85,284 +83,284 @@ msgstr ""
 "E-mailová adresa patří administrátorskému účtu. Ke znovunastavení použijte "
 "příkaz manage.py."
 
-#: mail/accounts/forms.py:105 templates/mail/accounts/login.html:63
+#: accounts/forms.py:105 templates/accounts/login.html:63
 msgid "Password"
 msgstr "Heslo"
 
-#: mail/accounts/forms.py:114
+#: accounts/forms.py:114
 msgid "A user with that username already exists."
 msgstr "Uživatel s tímto jménem již existuje."
 
-#: mail/accounts/forms.py:145 mail/accounts/forms.py:180
+#: accounts/forms.py:145 accounts/forms.py:180
 msgid "Super users do not use addresses"
 msgstr "Superuživatel adresu nepoužívá."
 
-#: mail/accounts/forms.py:151 mail/accounts/forms.py:186
+#: accounts/forms.py:151 accounts/forms.py:186
 msgid "provide a valid domain address"
 msgstr "poskytněte platnou doménovou adresu"
 
-#: mail/accounts/forms.py:156 mail/accounts/forms.py:191
+#: accounts/forms.py:156 accounts/forms.py:191
 msgid "provide a valid email address"
 msgstr "poskytněte platnou e-mailovou adresu"
 
-#: mail/accounts/views.py:147
+#: accounts/views.py:147
 #, python-format
 msgid "The user account %(account)s was created successfully"
 msgstr "Uživatelský účet %(account)s byl úspěšně vytvořen."
 
-#: mail/accounts/views.py:153
+#: accounts/views.py:153
 msgid "The user account could not be created"
 msgstr "Uživatelský účet nemohl být vytvořen."
 
-#: mail/accounts/views.py:177
+#: accounts/views.py:177
 #, python-format
 msgid "The user account %(account)s has been updated"
 msgstr "Uživatelský účet %(account)s byl aktualizován."
 
-#: mail/accounts/views.py:180
+#: accounts/views.py:180
 #, python-format
 msgid "The user account %(account)s could not be updated"
 msgstr "Uživatelský účet %(account)s nemohl být aktualizován."
 
-#: mail/accounts/views.py:211
+#: accounts/views.py:211
 #, python-format
 msgid "The user account %(account)s has been deleted"
 msgstr "Uživatelský účet %(account)s byl smazán."
 
-#: mail/accounts/views.py:220
+#: accounts/views.py:220
 #, python-format
 msgid "The deletion of user account %(account)s failed"
 msgstr "Ostraňování uživatelského účtu %(account)s selhalo."
 
-#: mail/accounts/views.py:246
+#: accounts/views.py:246
 #, python-format
 msgid "The address %(addr)s has been added to %(account)s account"
 msgstr "Adresa %(addr)s byla přidána k účtu %(account)s."
 
-#: mail/accounts/views.py:249
+#: accounts/views.py:249
 msgid "The address already exists"
 msgstr "Adresa již existuje."
 
-#: mail/accounts/views.py:276
+#: accounts/views.py:276
 #, python-format
 msgid "The address %(addr)s has been updated"
 msgstr "Adresa %(addr)s byla aktualizována."
 
-#: mail/accounts/views.py:279
+#: accounts/views.py:279
 #, python-format
 msgid "The address %(addr)s could not be updated"
 msgstr "Adresa %(addr)s nemohla být aktualizována."
 
-#: mail/accounts/views.py:301
+#: accounts/views.py:301
 #, python-format
 msgid "The address %(addr)s has been deleted"
 msgstr "Adresa %(addr)s byla smazána."
 
-#: mail/accounts/views.py:327
+#: accounts/views.py:327
 #, python-format
 msgid "The password for user %(account)s has been updated"
 msgstr "Heslo uživatele %(account)s bylo aktualizováno."
 
-#: mail/accounts/views.py:330
+#: accounts/views.py:330
 msgid "The password could not be updated"
 msgstr "Heslo nemohlo být aktualizováno."
 
-#: mail/accounts/views.py:386
+#: accounts/views.py:386
 #, python-format
 msgid "The user profile for %(account)s has been updated"
 msgstr "Uživatelský profil pro %(account)s byl aktualizován."
 
-#: mail/accounts/views.py:389
+#: accounts/views.py:389
 #, python-format
 msgid "The user profile for %(account)s could not be updated"
 msgstr "Uživatelský profil pro %(account)s nemohl být aktualizován."
 
-#: mail/accounts/views.py:420 mail/config/views.py:496
+#: accounts/views.py:420 config/views.py:496
 #, fuzzy
 msgid "The signature has been saved"
 msgstr "Adresa %(addr)s byla aktualizována."
 
-#: mail/accounts/views.py:423
+#: accounts/views.py:423
 #, python-format
 msgid "A signature of this type already exists for account: %(account)s"
 msgstr ""
 
-#: mail/accounts/views.py:427 mail/config/views.py:502
+#: accounts/views.py:427 config/views.py:502
 msgid "An error occured during processing try again later"
 msgstr ""
 
-#: mail/accounts/views.py:454 mail/config/views.py:526
+#: accounts/views.py:454 config/views.py:526
 #, fuzzy
 msgid "The signature has been updated"
 msgstr "Adresa %(addr)s byla aktualizována."
 
-#: mail/accounts/views.py:457 mail/config/views.py:529
+#: accounts/views.py:457 config/views.py:529
 msgid "An error occured during processing, try again later"
 msgstr ""
 
-#: mail/accounts/views.py:481
+#: accounts/views.py:481
 #, fuzzy
 msgid "The signature, is being deleted."
 msgstr "Zpráva id: %(id)s byla odstraněna"
 
-#: mail/config/forms.py:38
+#: config/forms.py:38
 #, fuzzy, python-format
 msgid "%s is not a valid hostname or IPv4/IPv6 address"
 msgstr "Zadejte prosím platné jméno hostitele nebo IPv4 adresu"
 
-#: mail/config/forms.py:44
+#: config/forms.py:44
 msgid "Enter a valid IPv4/IPv6 address or hostname."
 msgstr ""
 
-#: mail/config/tasks.py:64
+#: config/tasks.py:64
 #, python-format
 msgid "Notified %(h)s of config update"
 msgstr ""
 
-#: mail/config/tasks.py:67
+#: config/tasks.py:67
 #, python-format
 msgid "Failed to notify %(h)s of config update"
 msgstr ""
 
-#: mail/config/tasks.py:81
+#: config/tasks.py:81
 #, python-format
 msgid "Starting connection tests to: %(host)s"
 msgstr "Spouštím test spojení k %(host)s."
 
-#: mail/config/tasks.py:105
+#: config/tasks.py:105
 #, python-format
 msgid "Wrote text signature: %(sig)s"
 msgstr ""
 
-#: mail/config/tasks.py:128
+#: config/tasks.py:127
 #, python-format
 msgid "Wrote img: %(img)s"
 msgstr ""
 
-#: mail/config/tasks.py:137
+#: config/tasks.py:136
 #, python-format
 msgid "Wrote html signature: %(sig)s"
 msgstr ""
 
-#: mail/config/tasks.py:155
+#: config/tasks.py:154
 #, fuzzy, python-format
 msgid "Processing signatures for: %(user)s"
 msgstr "== Zpracování adresáře %(path)s =="
 
-#: mail/config/tasks.py:168 mail/config/tasks.py:204
+#: config/tasks.py:167 config/tasks.py:203
 #, python-format
 msgid "Error occured: %(err)s"
 msgstr ""
 
-#: mail/config/tasks.py:172
+#: config/tasks.py:171
 #, python-format
 msgid "Finished processing signatures for: %(u)s"
 msgstr ""
 
-#: mail/config/tasks.py:175
+#: config/tasks.py:174
 #, python-format
 msgid "User with userid: %s not found"
 msgstr ""
 
-#: mail/config/tasks.py:191
+#: config/tasks.py:190
 #, fuzzy, python-format
 msgid "Processing signatures for: %(d)s"
 msgstr "Zpracovávám zprávu v karanténě %(id)s."
 
-#: mail/config/tasks.py:208
+#: config/tasks.py:207
 #, python-format
 msgid "Finished processing signatures for: %(d)s"
 msgstr ""
 
-#: mail/config/tasks.py:211
+#: config/tasks.py:210
 #, fuzzy, python-format
 msgid "Domain with domainid: %s not found"
 msgstr "Žádná doména nenalezena"
 
-#: mail/config/tasks.py:227
+#: config/tasks.py:226
 #, python-format
 msgid "Deleting signatures for: %(d)s"
 msgstr ""
 
-#: mail/config/tasks.py:238 mail/config/tasks.py:271
+#: config/tasks.py:237 config/tasks.py:270
 #, python-format
 msgid "Error deleting %(f)s: %(e)s"
 msgstr ""
 
-#: mail/config/tasks.py:241
+#: config/tasks.py:240
 #, python-format
 msgid "Finished deletion of signatures for: %(d)s"
 msgstr ""
 
-#: mail/config/tasks.py:244
+#: config/tasks.py:243
 msgid "Domain signatures not found"
 msgstr ""
 
-#: mail/config/tasks.py:261
+#: config/tasks.py:260
 #, python-format
 msgid "Deleting signatures for: %(a)s"
 msgstr ""
 
-#: mail/config/tasks.py:274
+#: config/tasks.py:273
 #, python-format
 msgid "Finished deletion of signatures for: %(u)s"
 msgstr ""
 
-#: mail/config/tasks.py:277
+#: config/tasks.py:276
 #, fuzzy
 msgid "Account signatures not found"
 msgstr "Stav účtu"
 
-#: mail/config/views.py:133
+#: config/views.py:133
 #, python-format
 msgid "Delivery SMTP server: %(server)s was added successfully"
 msgstr "Doručovací SMTP server %(server)s byl úspěšně přidán."
 
-#: mail/config/views.py:143
+#: config/views.py:143
 msgid "Adding of Delivery SMTP server failed"
 msgstr "Přidání doručovacího SMTP serveru selhalo."
 
-#: mail/config/views.py:167
+#: config/views.py:167
 #, python-format
 msgid "Delivery SMTP server: %(server)s has been updated successfully"
 msgstr "Doručovací SMTP server %(server)s byl úspěšně aktualizován."
 
-#: mail/config/views.py:177
+#: config/views.py:177
 #, python-format
 msgid "Delivery SMTP server: %(server)s update failed"
 msgstr "Aktualizace doručovacího SMTP serveru %(server)s  selhala."
 
-#: mail/config/views.py:202
+#: config/views.py:202
 #, python-format
 msgid "Delivery SMTP server: %(server)s has been deleted"
 msgstr "Doručovací SMTP server %(server)s byl odstraněn."
 
-#: mail/config/views.py:213
+#: config/views.py:213
 #, python-format
 msgid "Delivery SMTP server: %(server)s could not be deleted"
 msgstr "Doručovací SMTP server %(server)s nemohl být odstraněn."
 
-#: mail/config/views.py:250
+#: config/views.py:250
 msgid "The server is contactable and accepting messages"
 msgstr "Server je dostupný a přijímá zprávy."
 
-#: mail/config/views.py:253
+#: config/views.py:253
 #, python-format
 msgid ""
 "The server is contactable via ICMP but is not accepting messages from me, "
 "Errors: %s"
 msgstr "Server je dostupný přes ICMP, ale nepřijímá ode mě zprávy. Chyba: %s."
 
-#: mail/config/views.py:257
+#: config/views.py:257
 #, python-format
 msgid "The server is not accepting messages, Errors: %s"
 msgstr "Server nepřijímá zprávy. Chyba: %s."
 
-#: mail/config/views.py:260
+#: config/views.py:260
 msgid "The tests failed to run try again later"
 msgstr "Testy selhaly. Zkuste to později opakovat."
 
-#: mail/config/views.py:287
+#: config/views.py:287
 #, python-format
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s was "
@@ -371,11 +369,11 @@ msgstr ""
 "Externí autentifikace %(auth)s: na hostiteli %(host)s pro doménu %(dom)s "
 "úspěšně přidána."
 
-#: mail/config/views.py:299
+#: config/views.py:299
 msgid "Addition of external authentication failed"
 msgstr "Přidání externí autentifikace selhalo."
 
-#: mail/config/views.py:323
+#: config/views.py:323
 #, python-format
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s has "
@@ -384,11 +382,11 @@ msgstr ""
 "Externí autentifikace %(auth)s: na hostiteli %(host)s pro doménu %(dom)s "
 "aktualizována úspěšně."
 
-#: mail/config/views.py:336
+#: config/views.py:336
 msgid "Update of external authentication failed"
 msgstr "Aktualizace externí autentifikace selhala."
 
-#: mail/config/views.py:360
+#: config/views.py:360
 #, python-format
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s has "
@@ -397,7 +395,7 @@ msgstr ""
 "Externí autentifikace %(auth)s: na hostiteli %(host)s pro doménu %(dom)s "
 "byla odstraněna."
 
-#: mail/config/views.py:374
+#: config/views.py:374
 #, python-format
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s could "
@@ -406,110 +404,110 @@ msgstr ""
 "Externí autentifikace %(auth)s: na hostiteli %(host)s pro doménu %(dom)s "
 "nemohla být odstraněna."
 
-#: mail/config/views.py:431
+#: config/views.py:431
 #, python-format
 msgid "The node %(node)s is not been initialized, Please initialize"
 msgstr ""
 
-#: mail/config/views.py:462
+#: config/views.py:462
 #, python-format
 msgid "The node %(node)s has been initialized"
 msgstr ""
 
-#: mail/config/views.py:499
+#: config/views.py:499
 #, python-format
 msgid "A signature of this type already exists for domain: %(domain)s"
 msgstr ""
 
-#: mail/config/views.py:553
+#: config/views.py:553
 #, fuzzy
 msgid "The signature, is being deleted"
 msgstr "Zpráva id: %(id)s byla odstraněna"
 
-#: mail/config/views.py:586
+#: config/views.py:586
 msgid "Not authorized."
 msgstr ""
 
-#: mail/config/views.py:648
+#: config/views.py:648
 #, fuzzy
 msgid "File has been uploaded"
 msgstr "Použité filtry :"
 
-#: mail/config/views.py:650
+#: config/views.py:650
 msgid "An error occured, try again later"
 msgstr ""
 
-#: mail/config/views.py:652
+#: config/views.py:652
 msgid "The uploaded file is not acceptable"
 msgstr ""
 
-#: mail/config/views.py:656
+#: config/views.py:656
 msgid ""
 "You already have a signature image, delete the current image before "
 "uploading a new one"
 msgstr ""
 
-#: mail/config/views.py:664
+#: config/views.py:664
 #, fuzzy
 msgid "The file has been deleted"
 msgstr "Adresa %(addr)s byla smazána."
 
-#: mail/config/views.py:667
+#: config/views.py:667
 #, fuzzy
 msgid "The file could not be deleted"
 msgstr "Zprávu nešlo zobrazit"
 
-#: mail/config/views.py:671
+#: config/views.py:671
 msgid "Action not supported"
 msgstr ""
 
-#: mail/config/views.py:685
+#: config/views.py:685
 #, fuzzy
 msgid "You are not authorized to access this resource"
 msgstr "Nemáte autorizaci k prohlížení této stránky."
 
-#: mail/config/management/commands/initconfig.py:38
+#: config/management/commands/initconfig.py:38
 #, python-format
 msgid "Please enter the hostname [%s]: "
 msgstr ""
 
-#: mail/config/management/commands/initconfig.py:46
+#: config/management/commands/initconfig.py:46
 #, python-format
 msgid "The hostname %(h)s is not assigned to this system, try again"
 msgstr ""
 
-#: mail/config/management/commands/initconfig.py:54
+#: config/management/commands/initconfig.py:54
 #, fuzzy, python-format
 msgid "The host: %(h)s has been initialized"
 msgstr "Zpráva id: %(id)s byla odstraněna"
 
-#: mail/config/management/commands/initconfig.py:57
+#: config/management/commands/initconfig.py:57
 msgid "The settings could not be saved check your DB settings"
 msgstr ""
 
-#: mail/config/management/commands/initconfig.py:61
+#: config/management/commands/initconfig.py:61
 #, python-format
 msgid "The host: %(h)s is already initialized"
 msgstr ""
 
-#: mail/fixups/models.py:37
+#: fixups/models.py:37
 #, fuzzy, python-format
 msgid ""
 "Required, %s characters or fewer. Only letters, numbers, and @, ., +, -, or "
 "_ characters."
 msgstr "Vyžadováno. 30 či méně znaků. Pouze písmena, číslice a @/./+/-/_."
 
-#: mail/lists/forms.py:58
+#: lists/forms.py:58
 #, python-format
 msgid "%(email)s provide a valid e-mail address"
 msgstr ""
 
-#: mail/lists/forms.py:63
+#: lists/forms.py:63
 #, python-format
 msgid "The address: %(email)s does not belong to you."
 msgstr "Adresa %(email)s nepatří vám."
 
-#: mail/lists/forms.py:75
+#: lists/forms.py:75
 #, fuzzy
 msgid ""
 "Provide either a valid IPv4/IPv6, email, Domain address, or IPv4/IPv6 "
@@ -518,668 +516,647 @@ msgstr ""
 "Zadejte buď platnou IPV4, e-mailovou, nebo doménovou adresu, nebo síťový "
 "rozsah IPv4."
 
-#: mail/lists/forms.py:88 mail/lists/views.py:185
+#: lists/forms.py:88 lists/views.py:185
 msgid "The list item already exists"
 msgstr "Pložka seznamu už existuje."
 
-#: mail/lists/forms.py:119
+#: lists/forms.py:119
 #, python-format
 msgid "The address: %(addr)s does not belong to you."
 msgstr "Adresa %(addr)s nepatří vám."
 
-#: mail/lists/forms.py:124
+#: lists/forms.py:124
 msgid "Provide either a valid domain"
 msgstr ""
 
-#: mail/lists/forms.py:140
+#: lists/forms.py:140
 msgid "provide a valid user part of the email address"
 msgstr "zadejte platnou uživatelskou část e-maillové adresy"
 
-#: mail/lists/views.py:195
+#: lists/views.py:195
 #, fuzzy
 msgid "The address has been added to the list"
 msgstr "Adresa %(addr)s byla přidána k účtu %(account)s."
 
-#: mail/lists/views.py:220
+#: lists/views.py:220
 msgid "You do not have authorization"
 msgstr "Nemáte autorizaci"
 
-#: mail/lists/views.py:227
+#: lists/views.py:227
 msgid "List item deleted"
 msgstr ""
 
-#: mail/lists/views.py:236
+#: lists/views.py:236
 #, fuzzy
 msgid "List item could not be deleted"
 msgstr "Zprávu nešlo zobrazit"
 
-#: mail/messages/forms.py:29 mail/messages/templatetags/messages_extras.py:72
-#: templates/base.html:52 templates/mail/messages/quarantine.html:25
-#: templates/mail/messages/task_status.html:25
-#: templates/mail/reports/listing.html:51
+#: messages/forms.py:29 messages/templatetags/messages_extras.py:72
+#: templates/base.html:51 templates/messages/quarantine.html:24
+#: templates/messages/task_status.html:24 templates/reports/listing.html:50
 msgid "Spam"
 msgstr "Spam"
 
-#: mail/messages/forms.py:30
+#: messages/forms.py:30
 msgid "Ham"
 msgstr "Čistá (Ham)"
 
-#: mail/messages/forms.py:31
+#: messages/forms.py:31
 msgid "Forget"
 msgstr "Zapomenout"
 
-#: mail/messages/forms.py:62
+#: messages/forms.py:62
 msgid "Select atleast one action to perform"
 msgstr "Vyberte alespoň jednu akci, která se má vykonat"
 
-#: mail/messages/forms.py:66
+#: messages/forms.py:66
 msgid "Provide atleast one alternative recipient"
 msgstr "Zadejte alespoň jednoho náhradního příjemce."
 
-#: mail/messages/forms.py:73 mail/reports/forms.py:147
+#: messages/forms.py:73 reports/forms.py:147
 #, python-format
 msgid "%(email)s is not a valid e-mail address."
 msgstr "%(email)s není platnou e-mailovou adresou."
 
-#: mail/messages/tasks.py:44
+#: messages/tasks.py:44
 #, python-format
 msgid "Message: %(id)s released to: %(addrs)s"
 msgstr "Zpráva: %(id)s uvolněna pro: %(addrs)s."
 
-#: mail/messages/tasks.py:48
+#: messages/tasks.py:48
 #, python-format
 msgid "Message: %(id)s release failed"
 msgstr "Uvolnění zprávy %(id)s selhalo."
 
-#: mail/messages/tasks.py:62
+#: messages/tasks.py:62
 #, python-format
 msgid "Processing quarantined message: %(id)s"
 msgstr "Zpracovávám zprávu v karanténě %(id)s."
 
-#: mail/messages/tasks.py:77 mail/messages/tasks.py:166
+#: messages/tasks.py:77 messages/tasks.py:166
 #, python-format
 msgid "Message: %(msgid)s %(task)s failed with error: %(error)s"
 msgstr "Zpráva: %(msgid)s %(task)s selhalo s chybou: %(error)s."
 
-#: mail/messages/tasks.py:94 mail/messages/tasks.py:184
+#: messages/tasks.py:94 messages/tasks.py:184
 #, python-format
 msgid "Message: %(msgid)s released to: %(to)s"
 msgstr "Zpráva: %(msgid)s uvolněna pro: %(to)s."
 
-#: mail/messages/tasks.py:98 mail/messages/tasks.py:188
+#: messages/tasks.py:98 messages/tasks.py:188
 msgid "The sender address is empty"
 msgstr "Adresa odesílatele je prázdná."
 
-#: mail/messages/tasks.py:100 mail/messages/tasks.py:190
+#: messages/tasks.py:100 messages/tasks.py:190
 #, python-format
 msgid "Message: %(msgid)s release failed with error: %(error)s"
 msgstr "Uvolnění zprávy %(msgid)s selhalo s chybou: %(error)s."
 
-#: mail/messages/tasks.py:109 mail/messages/tasks.py:198
+#: messages/tasks.py:109 messages/tasks.py:198
 #, python-format
 msgid "Message: %(msgid)s learning failed with error: %(error)s"
 msgstr "Učení zprávou %(msgid)s selhalo s chybou: %(error)s."
 
-#: mail/messages/tasks.py:113 mail/messages/tasks.py:201
+#: messages/tasks.py:113 messages/tasks.py:201
 #, python-format
 msgid "Message: %(msgid)s learnt as %(learn)s"
 msgstr "Zpráva %(msgid)s naučena jako %(learn)s."
 
-#: mail/messages/tasks.py:121 mail/messages/tasks.py:209
+#: messages/tasks.py:121 messages/tasks.py:209
 #, python-format
 msgid "Message: %(msgid)s deleting failed with error: %(error)s"
 msgstr "Odstraňování zprávy %(msgid)s selhalo s chybou: %(error)s."
 
-#: mail/messages/tasks.py:125 mail/messages/tasks.py:212
+#: messages/tasks.py:125 messages/tasks.py:212
 #, python-format
 msgid "Message: %(msgid)s deleted from quarantine"
 msgstr "Zpráva %(msgid)s byla odstraněna z karantény."
 
-#: mail/messages/tasks.py:141
+#: messages/tasks.py:141
 #, python-format
 msgid "Bulk Processing %(len)d quarantined messages"
 msgstr ""
 
-#: mail/messages/tasks.py:232
+#: messages/tasks.py:232
 #, python-format
 msgid "Accessing message: %(id)s, Failed: %(error)s"
 msgstr "Přístup ke zprávě %(id)s selhal: %(error)s"
 
-#: mail/messages/tasks.py:236
+#: messages/tasks.py:236
 #, python-format
 msgid "Download attachment: %(attachid)s of message: %(id)s by user: %(user)s"
 msgstr "Stažení přílohy %(attachid)s zprávy %(id)s uživatelem %(user)s"
 
-#: mail/messages/tasks.py:239
+#: messages/tasks.py:239
 #, python-format
 msgid "Preview of message: %(id)s requested by user: %(user)s"
 msgstr "Prohlédnutí zprávy %(id)s vyžádáno uživatelem %(user)s."
 
-#: mail/messages/views.py:176 mail/messages/views.py:265
+#: messages/views.py:174 messages/views.py:262
 msgid "You are not authorized to access this page"
 msgstr "Nemáte autorizaci k prohlížení této stránky."
 
-#: mail/messages/views.py:235
+#: messages/views.py:232
 msgid "Processing the request failed"
 msgstr "Zpracování požadavku selhalo."
 
-#: mail/messages/views.py:278
+#: messages/views.py:275
 msgid "The requested attachment could not be downloaded"
 msgstr "Požadovaná příloha nemohla být stáhnuta."
 
-#: mail/messages/views.py:288
+#: messages/views.py:285
 msgid "The requested message could not be previewed"
 msgstr "Požádovaná zpráva nemohla být prohlédnuta."
 
-#: mail/messages/views.py:302
+#: messages/views.py:299
 msgid "No messages found with that message id"
 msgstr "Nenalezeny žádné zprávy s tímto id."
 
-#: mail/messages/views.py:352
+#: messages/views.py:349
 msgid "System was unable to process your request"
 msgstr "Systém nebyl schopný zpracovat váš požadavek."
 
-#: mail/messages/management/commands/cleanquarantine.py:90
+#: messages/management/commands/cleanquarantine.py:90
 #, python-format
 msgid "== Processing directory %(path)s =="
 msgstr "== Zpracování adresáře %(path)s =="
 
-#: mail/messages/management/commands/cleanquarantine.py:109
+#: messages/management/commands/cleanquarantine.py:109
 #, python-format
 msgid "== Removing directory  %(path)s =="
 msgstr "== Odstraňování adresáře %(path)s =="
 
-#: mail/messages/management/commands/cleanquarantine.py:113
+#: messages/management/commands/cleanquarantine.py:113
 #, python-format
 msgid "Failed to remove %(path)s"
 msgstr "Ostranění %(path)s selhalo."
 
-#: mail/messages/management/commands/cleanquarantine.py:115
+#: messages/management/commands/cleanquarantine.py:115
 #, python-format
 msgid "The directory %(path)s is a sym link skipping"
 msgstr "Adresář %(path)s je symbolický odkaz. Přeskakuji."
 
-#: mail/messages/management/commands/dbclean.py:30
+#: messages/management/commands/dbclean.py:30
 msgid ""
 "Deletes records older than QUARANTINE_DAYS_TO_KEEP days from the messages "
 "table"
 msgstr ""
 
-#: mail/messages/management/commands/sendquarantinereports.py:75
+#: messages/management/commands/sendquarantinereports.py:75
 msgid ""
 "Generates an email report of the quarantined messages for the past 24 hours"
 msgstr ""
 "Vytvoří e-mail s hlášením o zprávách vložených do karantény za posledních 24 "
 "hodin."
 
-#: mail/messages/management/commands/sendquarantinereports.py:88
+#: messages/management/commands/sendquarantinereports.py:88
 msgid "=== Processing quarantine notifications ==="
 msgstr ""
 
-#: mail/messages/management/commands/sendquarantinereports.py:100
+#: messages/management/commands/sendquarantinereports.py:100
 #, python-format
 msgid "Baruwa quarantine report for %(user)s"
 msgstr "Baruwa - hlášení o karanténě pro %(user)s."
 
-#: mail/messages/management/commands/sendquarantinereports.py:130
+#: messages/management/commands/sendquarantinereports.py:130
 #, python-format
 msgid "sent quarantine report to %(addr)s"
 msgstr "odesláno hlášení o karanténě na %(addr)s"
 
-#: mail/messages/management/commands/sendquarantinereports.py:132
+#: messages/management/commands/sendquarantinereports.py:132
 #, python-format
 msgid "failed to send to: %(addr)s"
 msgstr "odeslání na %(addr)s selhalo"
 
-#: mail/messages/management/commands/sendquarantinereports.py:134
+#: messages/management/commands/sendquarantinereports.py:134
 #, python-format
 msgid "skipping report to %(addr)s no messages"
 msgstr ""
 
-#: mail/messages/management/commands/sendquarantinereports.py:135
+#: messages/management/commands/sendquarantinereports.py:135
 msgid "=== completed quarantine notifications ==="
 msgstr ""
 
-#: mail/messages/management/commands/updatesarules.py:36
+#: messages/management/commands/updatesarules.py:36
 msgid "Updates the database with the spam descriptions"
 msgstr "Aktualizuje databázi s popisy spamu."
 
-#: mail/messages/templatetags/messages_extras.py:74
+#: messages/templatetags/messages_extras.py:74
 msgid "BL"
 msgstr "BL"
 
-#: mail/messages/templatetags/messages_extras.py:78
+#: messages/templatetags/messages_extras.py:78
 msgid "Infected"
 msgstr "Infikováno"
 
-#: mail/messages/templatetags/messages_extras.py:83
-#: templates/mail/status/index.html:42
+#: messages/templatetags/messages_extras.py:83 templates/status/index.html:42
 msgid "Clean"
 msgstr "Čisté"
 
-#: mail/messages/templatetags/messages_extras.py:85
+#: messages/templatetags/messages_extras.py:85
 msgid "WL"
 msgstr "WL"
 
-#: mail/messages/templatetags/messages_extras.py:87
+#: messages/templatetags/messages_extras.py:87
 msgid "NS"
 msgstr "NS"
 
-#: mail/messages/templatetags/messages_extras.py:128
+#: messages/templatetags/messages_extras.py:128
 msgid "Any address"
 msgstr "Nějaká adresa"
 
-#: mail/messages/templatetags/messages_extras.py:161
+#: messages/templatetags/messages_extras.py:161
 msgid "unknown"
 msgstr "neznámé"
 
-#: mail/messages/templatetags/messages_extras.py:346
+#: messages/templatetags/messages_extras.py:346
 msgid "I do not know how to read it"
 msgstr "Nevím, jak to přečíst."
 
-#: mail/messages/templatetags/relayed_via.py:66
+#: messages/templatetags/relayed_via.py:66
 msgid "RFC1918 Private address"
 msgstr "Soukromá adresa dle RFC1918."
 
-#: mail/messages/templatetags/relayed_via.py:68
+#: messages/templatetags/relayed_via.py:68
 msgid "Reverse lookup failed"
 msgstr "Reverzní vyhledávání selhalo."
 
-#: mail/reports/forms.py:36 templates/mail/messages/task_status.html:38
+#: reports/forms.py:36 templates/messages/task_status.html:37
 msgid "Message ID"
 msgstr "ID zprávy"
 
-#: mail/reports/forms.py:37 templates/mail/messages/index.html:70
-#: templates/web/visits/index.html:40 templates/web/visits/index.html.py:48
-#: web/reports/forms.py:36
+#: reports/forms.py:37 templates/messages/index.html:68
 msgid "Size"
 msgstr "Velikost"
 
-#: mail/reports/forms.py:38
+#: reports/forms.py:38
 msgid "From Address"
 msgstr "Adresa Od"
 
-#: mail/reports/forms.py:39
+#: reports/forms.py:39
 msgid "From Domain"
 msgstr "Doména Od"
 
-#: mail/reports/forms.py:40
+#: reports/forms.py:40
 msgid "To Address"
 msgstr "Adresa Komu"
 
-#: mail/reports/forms.py:41
+#: reports/forms.py:41
 msgid "To Domain"
 msgstr "Doména Komu"
 
-#: mail/reports/forms.py:42 templates/mail/messages/detail.html:69
-#: templates/mail/messages/index.html:69
-#: templates/mail/messages/quarantine.html:101
-#: templates/mail/messages/quarantine_report.html:36
-#: templates/mail/messages/quarantine_report.html:77
-#: templates/mail/messages/quarantine_report_text.html:10
-#: templates/mail/messages/quarantine_report_text.html:20
+#: reports/forms.py:42 templates/messages/detail.html:69
+#: templates/messages/index.html:67 templates/messages/quarantine.html:100
+#: templates/messages/quarantine_report.html:36
+#: templates/messages/quarantine_report.html:77
+#: templates/messages/quarantine_report_text.html:10
+#: templates/messages/quarantine_report_text.html:20
 msgid "Subject"
 msgstr "Předmět"
 
-#: mail/reports/forms.py:43
+#: reports/forms.py:43
 msgid "Received from"
 msgstr "Přijato od"
 
-#: mail/reports/forms.py:45
+#: reports/forms.py:45
 msgid "Was scanned"
 msgstr ""
 
-#: mail/reports/forms.py:46
+#: reports/forms.py:46
 msgid "Is spam"
 msgstr "Je spam"
 
-#: mail/reports/forms.py:47
+#: reports/forms.py:47
 msgid "Is high spam"
 msgstr "Je high spam"
 
-#: mail/reports/forms.py:48
+#: reports/forms.py:48
 msgid "Is SA spam"
 msgstr "Je SA spam"
 
-#: mail/reports/forms.py:49
+#: reports/forms.py:49
 msgid "Is RBL listed"
 msgstr "Je na seznamu RBL"
 
-#: mail/reports/forms.py:50
+#: reports/forms.py:50
 msgid "Is whitelisted"
 msgstr "Je na whitelistu"
 
-#: mail/reports/forms.py:51
+#: reports/forms.py:51
 msgid "Is blacklisted"
 msgstr "Je na blacklistu"
 
-#: mail/reports/forms.py:52
+#: reports/forms.py:52
 msgid "SA score"
 msgstr "SA skóre"
 
-#: mail/reports/forms.py:53
+#: reports/forms.py:53
 msgid "Spam report"
 msgstr "Hlášení o spamu"
 
-#: mail/reports/forms.py:54
+#: reports/forms.py:54
 msgid "Is virus infected"
 msgstr "Virová infekce"
 
-#: mail/reports/forms.py:55
+#: reports/forms.py:55
 msgid "Is name infected"
 msgstr "Jmenná infekce"
 
-#: mail/reports/forms.py:56
+#: reports/forms.py:56
 msgid "Is other infected"
 msgstr "Jiná infekce"
 
-#: mail/reports/forms.py:57 templates/mail/reports/listing.html:39
-#: templates/web/visits/detail.html:21 web/reports/forms.py:37
+#: reports/forms.py:57 templates/reports/listing.html:38
 msgid "Date"
 msgstr "Datum"
 
-#: mail/reports/forms.py:58 templates/web/visits/detail.html:25
-#: web/reports/forms.py:38
+#: reports/forms.py:58
 msgid "Time"
 msgstr "Čas"
 
-#: mail/reports/forms.py:59
+#: reports/forms.py:59
 msgid "Headers"
 msgstr "Hlavičky"
 
-#: mail/reports/forms.py:60
+#: reports/forms.py:60
 msgid "Is quarantined"
 msgstr ""
 
-#: mail/reports/forms.py:61
+#: reports/forms.py:61
 msgid "Processed by host"
 msgstr "Zpracováno hostitelem"
 
-#: mail/reports/forms.py:65 web/reports/forms.py:49
+#: reports/forms.py:65
 msgid "is equal to"
 msgstr "je rovno"
 
-#: mail/reports/forms.py:66 web/reports/forms.py:50
+#: reports/forms.py:66
 msgid "is not equal to"
 msgstr "není rovno"
 
-#: mail/reports/forms.py:67 web/reports/forms.py:51
+#: reports/forms.py:67
 msgid "is greater than"
 msgstr "je větší než"
 
-#: mail/reports/forms.py:68 web/reports/forms.py:52
+#: reports/forms.py:68
 msgid "is less than"
 msgstr "je menší než"
 
-#: mail/reports/forms.py:69 web/reports/forms.py:53
+#: reports/forms.py:69
 msgid "contains"
 msgstr "obsahuje"
 
-#: mail/reports/forms.py:70 web/reports/forms.py:54
+#: reports/forms.py:70
 msgid "does not contain"
 msgstr "neobsahuje"
 
-#: mail/reports/forms.py:71 web/reports/forms.py:55
+#: reports/forms.py:71
 msgid "matches regex"
 msgstr "odpovídá regex"
 
-#: mail/reports/forms.py:72 web/reports/forms.py:56
+#: reports/forms.py:72
 msgid "does not match regex"
 msgstr "neodpovídá regex"
 
-#: mail/reports/forms.py:73 web/reports/forms.py:57
+#: reports/forms.py:73
 msgid "is null"
 msgstr "je null"
 
-#: mail/reports/forms.py:74 web/reports/forms.py:58
+#: reports/forms.py:74
 msgid "is not null"
 msgstr "není null"
 
-#: mail/reports/forms.py:75 web/reports/forms.py:59
+#: reports/forms.py:75
 msgid "is true"
 msgstr "je pravda"
 
-#: mail/reports/forms.py:76 web/reports/forms.py:60
+#: reports/forms.py:76
 msgid "is false"
 msgstr "není pravda"
 
-#: mail/reports/forms.py:121 mail/reports/forms.py:127
-#: mail/reports/forms.py:137 mail/reports/forms.py:184
-#: web/reports/forms.py:101 web/reports/forms.py:111 web/reports/forms.py:119
+#: reports/forms.py:121 reports/forms.py:127 reports/forms.py:137
+#: reports/forms.py:184
 #, python-format
 msgid "%(field)s does not support the %(filt)s filter"
 msgstr "%(field)s nepodporuje %(filt)s filtr"
 
-#: mail/reports/forms.py:131 mail/reports/forms.py:141
-#: mail/reports/forms.py:188 web/reports/forms.py:105 web/reports/forms.py:115
-#: web/reports/forms.py:123
+#: reports/forms.py:131 reports/forms.py:141 reports/forms.py:188
 msgid "Please supply a value to query"
 msgstr "Vložte prosím hodnotu do dotazu"
 
-#: mail/reports/forms.py:133 web/reports/forms.py:107
+#: reports/forms.py:133
 msgid "The value has to be numeric"
 msgstr "Hodnota musí být číselná"
 
-#: mail/reports/forms.py:155 mail/reports/forms.py:169
+#: reports/forms.py:155 reports/forms.py:169
 msgid "Please provide a valid regex"
 msgstr "Zadejte prosím platný regex"
 
-#: mail/reports/forms.py:162
+#: reports/forms.py:162
 msgid "Please provide a valid domain name"
 msgstr "Zadejte prosím platné jméno domény"
 
-#: mail/reports/forms.py:174
+#: reports/forms.py:174
 msgid "Please provide a valid ipv4 address"
 msgstr "Zadejte prosím platnou adresu IPv4"
 
-#: mail/reports/forms.py:179
+#: reports/forms.py:179
 msgid "Please provide a valid hostname or ipv4 address"
 msgstr "Zadejte prosím platné jméno hostitele nebo IPv4 adresu"
 
-#: mail/reports/forms.py:195 web/reports/forms.py:130
+#: reports/forms.py:195
 msgid "Please provide a valid date in YYYY-MM-DD format"
 msgstr "Zadejte prosím platné datum ve formátu RRRR-MM-DD"
 
-#: mail/reports/forms.py:201 web/reports/forms.py:136
+#: reports/forms.py:201
 msgid "Please provide valid time in HH:MM format"
 msgstr "Zadejte prosím platný čas ve formátu HH:MM"
 
-#: mail/reports/views.py:71 web/reports/views.py:74
+#: reports/views.py:71
 msgid "The requested filter is already being used"
 msgstr "Požadovaný filtr už byl použit"
 
-#: mail/reports/views.py:160 web/reports/views.py:163
+#: reports/views.py:160
 msgid "This filter already exists"
 msgstr "Tento filtr již existuje"
 
-#: mail/reports/views.py:194 web/reports/views.py:198
+#: reports/views.py:194
 msgid "This filter you attempted to load does not exist"
 msgstr "Filtr, který se pokoušíte načíst, neexistuje"
 
-#: mail/reports/views.py:211 web/reports/views.py:216
+#: reports/views.py:211
 msgid "This filter you attempted to delete does not exist"
 msgstr "Filtr, který se pokoušíte odstranit, neexistuje"
 
-#: mail/reports/views.py:224 web/reports/views.py:229
+#: reports/views.py:224
 msgid "Deletion of the filter failed, Try again"
 msgstr "Odstraňování filtru selhalo. Zkuste to znovu"
 
-#: mail/reports/views.py:247
+#: reports/views.py:247
 msgid "Top senders by quantity"
 msgstr "Největší odesílatelé podle množství"
 
-#: mail/reports/views.py:252
+#: reports/views.py:252
 msgid "Top senders by volume"
 msgstr "Největší odesílatelé podle objemu"
 
-#: mail/reports/views.py:257
+#: reports/views.py:257
 msgid "Top sender domains by quantity"
 msgstr "Nejvíce odesílající domény podle množství"
 
-#: mail/reports/views.py:262
+#: reports/views.py:262
 msgid "Top sender domains by volume"
 msgstr "Nejvíce odesílající domény podle objemu"
 
-#: mail/reports/views.py:267
+#: reports/views.py:267
 msgid "Top recipients by quantity"
 msgstr "Největší příjemci podle množství"
 
-#: mail/reports/views.py:272
+#: reports/views.py:272
 msgid "Top recipients by volume"
 msgstr "Největší příjemci podle objemu"
 
-#: mail/reports/views.py:278
+#: reports/views.py:278
 msgid "Top recipient domains by quantity"
 msgstr "Nejvíce přijímající domény podle množství"
 
-#: mail/reports/views.py:284
+#: reports/views.py:284
 msgid "Top recipient domains by volume"
 msgstr "Nejvíce přijímající domény podle objemu"
 
-#: mail/reports/views.py:313
+#: reports/views.py:313
 msgid "Spam Score distribution"
 msgstr "Rozdělení spamového skóre"
 
-#: mail/reports/views.py:323
+#: reports/views.py:323
 msgid "Top mail hosts by quantity"
 msgstr "Největší e-mailoví hostitelé podle množství"
 
-#: mail/reports/views.py:384
+#: reports/views.py:384
 msgid "Total messages [ After SMTP ]"
 msgstr "Zpráv celkem [ Po SMTP ]"
 
-#: mail/reports/management/commands/sendpdfreports.py:74
+#: reports/management/commands/sendpdfreports.py:65
 msgid "Generates and sends PDF summary reports via email"
 msgstr "Vytvoří a odešle e-mailem souhnné hlášení v pdf"
 
-#: mail/reports/management/commands/sendpdfreports.py:96
-#: mail/status/management/commands/queuestats.py:41
+#: reports/management/commands/sendpdfreports.py:83
+#: status/management/commands/queuestats.py:41
 msgid "Command doesn't accept any arguments"
 msgstr "Přikaz nepřijímá žádné argumenty"
 
-#: mail/reports/management/commands/sendpdfreports.py:109
-#, fuzzy
-msgid "The startdate, enddate specified is invalid"
-msgstr "Období, které jste zadal není platné"
-
-#: mail/reports/management/commands/sendpdfreports.py:118
+#: reports/management/commands/sendpdfreports.py:96
 msgid "The period you specified is invalid"
 msgstr "Období, které jste zadal není platné"
 
-#: mail/reports/management/commands/sendpdfreports.py:183
-#: templates/mail/accounts/edit_address.html:10
-#: templates/mail/accounts/edit_address.html:11
-#: templates/mail/accounts/edit_address.html:14
-#: templates/mail/reports/piereport.html:29
-#: templates/web/reports/piereport.html:29
+#: reports/management/commands/sendpdfreports.py:161
+#: templates/accounts/edit_address.html:10
+#: templates/accounts/edit_address.html:11
+#: templates/accounts/edit_address.html:14 templates/reports/piereport.html:27
 msgid "Address"
 msgstr "Adresa"
 
-#: mail/reports/management/commands/sendpdfreports.py:183
-#: templates/mail/reports/barreport.html:36
-#: templates/mail/reports/piereport.html:30
-#: templates/web/reports/piereport.html:30
+#: reports/management/commands/sendpdfreports.py:161
+#: templates/reports/barreport.html:34 templates/reports/piereport.html:28
 msgid "Count"
 msgstr "Počet"
 
-#: mail/reports/management/commands/sendpdfreports.py:183
-#: templates/mail/reports/listing.html:57
-#: templates/mail/reports/piereport.html:31
-#: templates/mail/reports/relays.html:33
-#: templates/web/reports/piereport.html:31
+#: reports/management/commands/sendpdfreports.py:161
+#: templates/reports/listing.html:56 templates/reports/piereport.html:29
+#: templates/reports/relays.html:31
 msgid "Volume"
 msgstr "Objem"
 
-#: mail/reports/management/commands/sendpdfreports.py:256
-#: templates/mail/reports/index.html:63 templates/mail/status/index.html:17
+#: reports/management/commands/sendpdfreports.py:232
+#: templates/reports/index.html:61 templates/status/index.html:17
 msgid "Message Totals"
 msgstr ""
 
-#: mail/reports/management/commands/sendpdfreports.py:340
+#: reports/management/commands/sendpdfreports.py:314
 msgid "Baruwa mail report"
 msgstr "Baruwa e-mailové hlášení"
 
-#: mail/reports/management/commands/sendpdfreports.py:362
+#: reports/management/commands/sendpdfreports.py:336
 #, python-format
 msgid "Baruwa usage report for: %(user)s"
 msgstr "Baruwa uživatelské hlášení pro: %(user)s"
 
-#: mail/reports/management/commands/sendpdfreports.py:374
+#: reports/management/commands/sendpdfreports.py:348
 #, python-format
 msgid "* Queue %(user)s's report to: %(addr)s"
 msgstr ""
 
-#: mail/reports/management/commands/sendpdfreports.py:379
+#: reports/management/commands/sendpdfreports.py:353
 msgid "=================== Processing reports ======================"
 msgstr ""
 
-#: mail/reports/management/commands/sendpdfreports.py:387
+#: reports/management/commands/sendpdfreports.py:361
 #, python-format
 msgid "========== domain name %(dom)s does not exist =========="
 msgstr "========== doména jména %(dom)s neexistuje =========="
 
-#: mail/reports/management/commands/sendpdfreports.py:416
+#: reports/management/commands/sendpdfreports.py:390
 #, python-format
 msgid "====== sending %(num)s messages ======="
 msgstr "====== odesílání %(num)s zpráv ======="
 
-#: mail/reports/management/commands/sendpdfreports.py:419
+#: reports/management/commands/sendpdfreports.py:393
 #, python-format
 msgid "Sending failed ERROR: %(error)s"
 msgstr "Odesílání selhalo CHYBA: %(error)s"
 
-#: mail/status/views.py:223
+#: status/views.py:223
 #, python-format
 msgid "The queue items (%(num)d) have been flagged for deletion"
 msgstr ""
 
-#: mail/status/views.py:228
+#: status/views.py:228
 msgid "The queue items could not be processed"
 msgstr ""
 
-#: mail/status/management/commands/queuestats.py:46
+#: status/management/commands/queuestats.py:46
 #, python-format
 msgid "Only the following %(mta)s MTA's are supported"
 msgstr "Pouze tyto %(mta)s MTA jsou podporovány"
 
-#: mail/status/management/commands/queuestats.py:82
+#: status/management/commands/queuestats.py:82
 msgid "== Delete flaged queue items from the inbound queue =="
 msgstr ""
 
-#: mail/status/management/commands/queuestats.py:88
+#: status/management/commands/queuestats.py:88
 #, python-format
 msgid "== Deleted %(num)d items from the inbound queue =="
 msgstr ""
 
-#: mail/status/management/commands/queuestats.py:93
+#: status/management/commands/queuestats.py:93
 msgid "== Delete flaged queue items from the outbound queue =="
 msgstr ""
 
-#: mail/status/management/commands/queuestats.py:99
+#: status/management/commands/queuestats.py:99
 #, python-format
 msgid "== Deleted %(num)d items from the outbound queue =="
 msgstr ""
 
-#: mail/status/management/commands/queuestats.py:111
+#: status/management/commands/queuestats.py:111
 #, python-format
 msgid "== Deleting %(items)d queue items from DB =="
 msgstr ""
 
-#: mail/status/management/commands/queuestats.py:116
+#: status/management/commands/queuestats.py:116
 #, python-format
 msgid "== Processing the inbound queue: %(queue)s with %(items)d items =="
 msgstr ""
 
-#: mail/status/management/commands/queuestats.py:120
+#: status/management/commands/queuestats.py:120
 msgid "== Skipping the inbound queue 0 items found =="
 msgstr ""
 
-#: mail/status/management/commands/queuestats.py:122
+#: status/management/commands/queuestats.py:122
 #, python-format
 msgid "== Processing the outbound queue: %(queue)s with %(items)d items =="
 msgstr ""
 
-#: mail/status/management/commands/queuestats.py:126
+#: status/management/commands/queuestats.py:126
 msgid "== Skipping the outbound queue 0 items found =="
 msgstr ""
 
@@ -1203,373 +1180,336 @@ msgstr "Stránka nedostupná"
 msgid "Sorry the requested page is unavailable due to a server malfunction."
 msgstr "Požadovaná stránka není dostupná kvůli chybě serveru."
 
-#: templates/base.html:42
+#: templates/base.html:41
 msgid "Status "
 msgstr "Stav"
 
-#: templates/base.html:51
+#: templates/base.html:50
 msgid "Msgs: "
 msgstr "Zprávy:"
 
-#: templates/base.html:52
+#: templates/base.html:51
 msgid "Total"
 msgstr "Celkem"
 
-#: templates/base.html:52
+#: templates/base.html:51
 msgid "Virus"
 msgstr "Virus"
 
-#: templates/base.html:56
+#: templates/base.html:55
 msgid "In: "
 msgstr "Do:"
 
-#: templates/base.html:56
+#: templates/base.html:55
 msgid "Out: "
 msgstr "Ven:"
 
-#: templates/base.html:59
+#: templates/base.html:58
 msgid "Signed in as "
 msgstr ""
 
-#: templates/base.html:60
+#: templates/base.html:59
 msgid "Logout"
 msgstr "Odhlášení"
 
-#: templates/base.html:62
+#: templates/base.html:61
 msgid "Not logged in :: "
 msgstr "Nepřihlášen ::"
 
-#: templates/base.html:62 templates/mail/accounts/login.html:71
+#: templates/base.html:61 templates/accounts/login.html:71
 msgid "Login"
 msgstr "Přihlášení"
 
-#: templates/base.html:83
+#: templates/base.html:81
 msgid "Messages"
 msgstr "Zprávy"
 
-#: templates/base.html:84
+#: templates/base.html:82
 msgid "Lists"
 msgstr "Seznamy"
 
-#: templates/base.html:85 templates/base.html.py:101
-#: templates/mail/reports/index.html:19 templates/mail/reports/index.html:20
-#: templates/mail/reports/index.html:44 templates/web/reports/index.html:42
+#: templates/base.html:83 templates/reports/index.html:17
+#: templates/reports/index.html.py:18 templates/reports/index.html:42
 msgid "Reports"
 msgstr "Hlášení"
 
-#: templates/base.html:87 templates/base.html.py:102
-#: templates/mail/config/index.html:36
-#: templates/mail/config/list_scanners.html:21
-#: templates/mail/messages/index.html:73
-#: templates/mail/messages/quarantine.html:104
-#: templates/mail/messages/task_status.html:37
-#: templates/web/visits/index.html:50
+#: templates/base.html:85 templates/config/index.html:36
+#: templates/config/list_scanners.html:21 templates/messages/index.html:71
+#: templates/messages/quarantine.html:103
+#: templates/messages/task_status.html:36
 msgid "Status"
 msgstr "Stav"
 
-#: templates/base.html:89 templates/base.html.py:103
-#: templates/mail/config/index.html:23
+#: templates/base.html:87 templates/config/index.html:23
 msgid "Settings"
 msgstr "Nastavení"
 
-#: templates/base.html:90
-msgid "Web"
-msgstr ""
-
-#: templates/base.html:92 templates/mail/accounts/add_account_sig.html:5
-#: templates/mail/accounts/add_address.html:8
-#: templates/mail/accounts/admin_change_pw.html:6
-#: templates/mail/accounts/change_pw.html:6
-#: templates/mail/accounts/create_account.html:5
-#: templates/mail/accounts/delete_account.html:5
-#: templates/mail/accounts/delete_account_sig.html:5
-#: templates/mail/accounts/delete_address.html:8
-#: templates/mail/accounts/edit_account_sig.html:5
-#: templates/mail/accounts/edit_address.html:6
-#: templates/mail/accounts/index.html:26
-#: templates/mail/accounts/update_account.html:6
-#: templates/mail/accounts/update_profile.html:6
-#: templates/mail/accounts/user_profile.html:6
-#: templates/mail/config/domain.html:18 templates/mail/config/index.html:19
-#: templates/mail/config/list_scanners.html:6
+#: templates/base.html:89 templates/accounts/add_account_sig.html:5
+#: templates/accounts/add_address.html:8
+#: templates/accounts/admin_change_pw.html:6
+#: templates/accounts/change_pw.html:6
+#: templates/accounts/create_account.html:5
+#: templates/accounts/delete_account.html:5
+#: templates/accounts/delete_account_sig.html:5
+#: templates/accounts/delete_address.html:8
+#: templates/accounts/edit_account_sig.html:5
+#: templates/accounts/edit_address.html:6 templates/accounts/index.html:26
+#: templates/accounts/update_account.html:6
+#: templates/accounts/update_profile.html:6
+#: templates/accounts/user_profile.html:6 templates/config/domain.html:18
+#: templates/config/index.html:19 templates/config/list_scanners.html:6
 msgid "Accounts"
 msgstr "Účty"
 
-#: templates/base.html:95
+#: templates/base.html:92
 msgid "Account"
 msgstr "Účet"
 
-#: templates/base.html:99
-msgid "Visits"
-msgstr ""
-
-#: templates/base.html:100
-#, fuzzy
-msgid "Connections"
-msgstr "Akce"
-
-#: templates/base.html:104 templates/mail/reports/listing.html:42
-msgid "Mail"
-msgstr "E-mail"
-
-#: templates/base.html:126
+#: templates/base.html:115
 msgid "Filtered by"
 msgstr "Filtrováno podle"
 
-#: templates/base.html:128
+#: templates/base.html:117
 msgid "To address"
 msgstr "Adresa Komu"
 
-#: templates/base.html:130
+#: templates/base.html:119
 msgid "From address"
 msgstr "Adresa Od"
 
-#: templates/base.html:133 templates/mail/lists/index.html:75
+#: templates/base.html:122 templates/lists/index.html:75
 msgid "containing"
 msgstr "obsahující"
 
-#: templates/base.html:135
+#: templates/base.html:124
 msgid "NOT containing"
 msgstr "NEobsahující"
 
-#: templates/base.html:138 templates/mail/reports/index.html:80
-#: templates/web/reports/index.html:82
+#: templates/base.html:127 templates/reports/index.html:78
 msgid "Remove"
 msgstr "Vyjmout"
 
-#: templates/mail/accounts/add_account_sig.html:6
+#: templates/accounts/add_account_sig.html:6
 #, fuzzy
 msgid "Account page"
 msgstr "Typ účtu"
 
-#: templates/mail/accounts/add_account_sig.html:9
+#: templates/accounts/add_account_sig.html:9
 #, fuzzy
 msgid "Accounts :: Add Email signature"
 msgstr "Účty :: Přidat účet"
 
-#: templates/mail/accounts/add_account_sig.html:10
+#: templates/accounts/add_account_sig.html:10
 #, python-format
 msgid ""
 "\n"
 "Accounts :: %(address)s - add email signature\n"
 msgstr ""
 
-#: templates/mail/accounts/add_account_sig.html:18
+#: templates/accounts/add_account_sig.html:18
 msgid "Add email signature"
 msgstr ""
 
-#: templates/mail/accounts/add_account_sig.html:39
-#: templates/mail/config/add_auth_host.html:33
-#: templates/mail/config/add_domain_sig.html:38
-#: templates/mail/config/add_host.html:33
+#: templates/accounts/add_account_sig.html:39
+#: templates/config/add_auth_host.html:33
+#: templates/config/add_domain_sig.html:38 templates/config/add_host.html:33
 msgid "Clear"
 msgstr ""
 
-#: templates/mail/accounts/add_account_sig.html:40
-#: templates/mail/accounts/add_address.html:41
-#: templates/mail/accounts/user_profile.html:151
-#: templates/mail/accounts/user_profile.html:202
-#: templates/mail/config/add_auth_host.html:34
-#: templates/mail/config/add_domain_sig.html:39
-#: templates/mail/config/add_host.html:34 templates/mail/config/domain.html:75
-#: templates/mail/config/domain.html:104 templates/mail/config/domain.html:132
-#: templates/mail/lists/add.form.html:32
-#: templates/mail/reports/filter.form.html:11
-#: templates/web/reports/filter.form.html:11
+#: templates/accounts/add_account_sig.html:40
+#: templates/accounts/add_address.html:41
+#: templates/accounts/user_profile.html:151
+#: templates/accounts/user_profile.html:202
+#: templates/config/add_auth_host.html:34
+#: templates/config/add_domain_sig.html:39 templates/config/add_host.html:34
+#: templates/config/domain.html:75 templates/config/domain.html.py:104
+#: templates/config/domain.html:132 templates/lists/add.form.html:32
+#: templates/reports/filter.form.html:11
 msgid "Add"
 msgstr "Přidat"
 
-#: templates/mail/accounts/add_address.html:6
-#: templates/mail/accounts/delete_address.html:6
-#: templates/mail/accounts/edit_address.html:5
-#: templates/mail/accounts/index.html:21
-#: templates/mail/config/add_auth_host.html:5
-#: templates/mail/config/add_domain_sig.html:5
-#: templates/mail/config/add_host.html:5
-#: templates/mail/config/delete_domain_sig.html:5
-#: templates/mail/config/domain.html:17
-#: templates/mail/config/edit_domain_sig.html:5
-#: templates/mail/config/list_scanners.html:7
-#: templates/mail/config/task_status.html:8
+#: templates/accounts/add_address.html:6
+#: templates/accounts/delete_address.html:6
+#: templates/accounts/edit_address.html:5 templates/accounts/index.html:21
+#: templates/config/add_auth_host.html:5
+#: templates/config/add_domain_sig.html:5 templates/config/add_host.html:5
+#: templates/config/delete_domain_sig.html:5 templates/config/domain.html:17
+#: templates/config/edit_domain_sig.html:5
+#: templates/config/list_scanners.html:7 templates/config/task_status.html:8
 msgid "Domains"
 msgstr "Domény"
 
-#: templates/mail/accounts/add_address.html:12
-#: templates/mail/accounts/add_address.html:13
+#: templates/accounts/add_address.html:12
+#: templates/accounts/add_address.html:13
 msgid "Domains :: Add Domain"
 msgstr "Domény :: Přidat doménu"
 
-#: templates/mail/accounts/add_address.html:12
-#: templates/mail/accounts/add_address.html:13
+#: templates/accounts/add_address.html:12
+#: templates/accounts/add_address.html:13
 msgid "Accounts :: Add Address"
 msgstr "Účty :: Přidat účet"
 
-#: templates/mail/accounts/add_address.html:16
+#: templates/accounts/add_address.html:16
 msgid "Add Domain"
 msgstr "Přidat účet"
 
-#: templates/mail/accounts/add_address.html:16
+#: templates/accounts/add_address.html:16
 msgid "Add Address"
 msgstr "Přidat adresu"
 
-#: templates/mail/accounts/add_address.html:40
-#: templates/mail/accounts/create_account.html:26
-#: templates/mail/lists/add.form.html:31
+#: templates/accounts/add_address.html:40
+#: templates/accounts/create_account.html:26 templates/lists/add.form.html:31
 msgid "Reset"
 msgstr "Reset"
 
-#: templates/mail/accounts/admin_change_pw.html:10
-#: templates/mail/accounts/admin_change_pw.html:11
-#: templates/mail/accounts/admin_change_pw.html:14
-#: templates/mail/accounts/change_pw.html:10
-#: templates/mail/accounts/change_pw.html:11
-#: templates/mail/accounts/change_pw.html:14
+#: templates/accounts/admin_change_pw.html:10
+#: templates/accounts/admin_change_pw.html:11
+#: templates/accounts/admin_change_pw.html:14
+#: templates/accounts/change_pw.html:10 templates/accounts/change_pw.html:11
+#: templates/accounts/change_pw.html:14
 msgid "Change Password"
 msgstr "Změnit heslo"
 
-#: templates/mail/accounts/admin_change_pw.html:31
-#: templates/mail/accounts/change_pw.html:31
+#: templates/accounts/admin_change_pw.html:31
+#: templates/accounts/change_pw.html:31
 msgid "Change"
 msgstr "Změnit"
 
-#: templates/mail/accounts/create_account.html:8
-#: templates/mail/accounts/create_account.html:9
-#: templates/mail/accounts/index.html:20
+#: templates/accounts/create_account.html:8
+#: templates/accounts/create_account.html:9 templates/accounts/index.html:20
 msgid "Create account"
 msgstr "Vytvořit účet"
 
-#: templates/mail/accounts/create_account.html:12
+#: templates/accounts/create_account.html:12
 msgid "User account creation"
 msgstr "Vytvoření účtu uživatele"
 
-#: templates/mail/accounts/create_account.html:27
+#: templates/accounts/create_account.html:27
 msgid "Create"
 msgstr "Vytvořit"
 
-#: templates/mail/accounts/delete_account.html:8
-#: templates/mail/accounts/delete_account.html:9
-#: templates/mail/accounts/delete_account.html:12
+#: templates/accounts/delete_account.html:8
+#: templates/accounts/delete_account.html:9
+#: templates/accounts/delete_account.html:12
 msgid "Delete Account"
 msgstr "Odstranit účet"
 
-#: templates/mail/accounts/delete_account.html:20
+#: templates/accounts/delete_account.html:20
 msgid "Delete the user account: ?"
 msgstr "Odstranit účet uživatele: ?"
 
-#: templates/mail/accounts/delete_account.html:22
-#: templates/mail/accounts/delete_account_sig.html:22
-#: templates/mail/accounts/delete_address.html:26
-#: templates/mail/config/delete_auth_host.html:24
-#: templates/mail/config/delete_domain_sig.html:23
-#: templates/mail/config/delete_host.html:24
-#: templates/mail/lists/delete.html:24 templates/mail/messages/detail.html:234
-#: templates/mail/messages/quarantine.html:58
+#: templates/accounts/delete_account.html:22
+#: templates/accounts/delete_account_sig.html:22
+#: templates/accounts/delete_address.html:26
+#: templates/config/delete_auth_host.html:24
+#: templates/config/delete_domain_sig.html:23
+#: templates/config/delete_host.html:24 templates/lists/delete.html:24
+#: templates/messages/detail.html:215 templates/messages/quarantine.html:57
 msgid "Delete"
 msgstr "Odstranit"
 
-#: templates/mail/accounts/delete_account_sig.html:8
-#: templates/mail/accounts/delete_account_sig.html:9
-#: templates/mail/config/delete_domain_sig.html:9
-#: templates/mail/config/delete_domain_sig.html:10
+#: templates/accounts/delete_account_sig.html:8
+#: templates/accounts/delete_account_sig.html:9
+#: templates/config/delete_domain_sig.html:9
+#: templates/config/delete_domain_sig.html:10
 msgid "Delete email signature"
 msgstr ""
 
-#: templates/mail/accounts/delete_account_sig.html:12
-#: templates/mail/config/delete_domain_sig.html:13
+#: templates/accounts/delete_account_sig.html:12
+#: templates/config/delete_domain_sig.html:13
 msgid "Delete Email signature"
 msgstr ""
 
-#: templates/mail/accounts/delete_account_sig.html:20
-#: templates/mail/config/delete_domain_sig.html:21
+#: templates/accounts/delete_account_sig.html:20
+#: templates/config/delete_domain_sig.html:21
 #, fuzzy
 msgid "Delete the email signature"
 msgstr "Odstranit adresu:"
 
-#: templates/mail/accounts/delete_address.html:12
-#: templates/mail/accounts/delete_address.html:13
-#: templates/mail/accounts/delete_address.html:16
+#: templates/accounts/delete_address.html:12
+#: templates/accounts/delete_address.html:13
+#: templates/accounts/delete_address.html:16
 msgid "Delete Address"
 msgstr "Odstranit adresu"
 
-#: templates/mail/accounts/delete_address.html:24
+#: templates/accounts/delete_address.html:24
 msgid "Delete the address:"
 msgstr "Odstranit adresu:"
 
-#: templates/mail/accounts/edit_account_sig.html:8
+#: templates/accounts/edit_account_sig.html:8
 msgid "Accounts :: Edit Email signature"
 msgstr ""
 
-#: templates/mail/accounts/edit_account_sig.html:9
+#: templates/accounts/edit_account_sig.html:9
 #, python-format
 msgid ""
 "\n"
 "Accounts :: %(address)s - edit email signature\n"
 msgstr ""
 
-#: templates/mail/accounts/edit_account_sig.html:17
+#: templates/accounts/edit_account_sig.html:17
 #, fuzzy
 msgid "Edit Account signature"
 msgstr "Stav účtu"
 
-#: templates/mail/accounts/edit_account_sig.html:38
-#: templates/mail/accounts/edit_address.html:35
-#: templates/mail/accounts/update_account.html:31
-#: templates/mail/accounts/update_profile.html:31
-#: templates/mail/config/edit_auth_host.html:33
-#: templates/mail/config/edit_domain_sig.html:39
-#: templates/mail/config/edit_host.html:31
+#: templates/accounts/edit_account_sig.html:38
+#: templates/accounts/edit_address.html:35
+#: templates/accounts/update_account.html:31
+#: templates/accounts/update_profile.html:31
+#: templates/config/edit_auth_host.html:33
+#: templates/config/edit_domain_sig.html:39 templates/config/edit_host.html:31
 msgid "Update"
 msgstr "Aktualizovat"
 
-#: templates/mail/accounts/edit_address.html:7
-#: templates/mail/accounts/index.html:22 templates/mail/config/domain.html:19
-#: templates/mail/config/index.html:20 templates/mail/status/index.html:20
+#: templates/accounts/edit_address.html:7 templates/accounts/index.html:22
+#: templates/config/domain.html:19 templates/config/index.html:20
+#: templates/status/index.html:20
 msgid "Scanners"
 msgstr "Scannery"
 
-#: templates/mail/accounts/edit_address.html:10
-#: templates/mail/accounts/edit_address.html:11
-#: templates/mail/accounts/edit_address.html:14
-#: templates/mail/accounts/user_profile.html:26
-#: templates/mail/accounts/user_profile.html:80
+#: templates/accounts/edit_address.html:10
+#: templates/accounts/edit_address.html:11
+#: templates/accounts/edit_address.html:14
+#: templates/accounts/user_profile.html:26
+#: templates/accounts/user_profile.html:80
 msgid "Edit"
 msgstr "Upravit"
 
-#: templates/mail/accounts/edit_address.html:10
-#: templates/mail/accounts/edit_address.html:11
-#: templates/mail/accounts/edit_address.html:14
+#: templates/accounts/edit_address.html:10
+#: templates/accounts/edit_address.html:11
+#: templates/accounts/edit_address.html:14
 msgid "Domain"
 msgstr "Doména"
 
-#: templates/mail/accounts/index.html:27
+#: templates/accounts/index.html:27
 msgid "Accounts :: "
 msgstr "Účty ::"
 
-#: templates/mail/accounts/index.html:32
+#: templates/accounts/index.html:32
 msgid "Full names"
 msgstr "Celá jména"
 
-#: templates/mail/accounts/index.html:33 templates/mail/accounts/login.html:80
+#: templates/accounts/index.html:33 templates/accounts/login.html:80
 msgid "Email address"
 msgstr "E-mailová adresa"
 
-#: templates/mail/accounts/index.html:41 templates/mail/accounts/index.html:43
+#: templates/accounts/index.html:41 templates/accounts/index.html.py:43
 msgid "View account"
 msgstr "Zobrazit účet"
 
-#: templates/mail/accounts/login.html:26
+#: templates/accounts/login.html:26
 msgid "Baruwa :: Login"
 msgstr "Baruwa :: Přihlášení"
 
-#: templates/mail/accounts/login.html:51
+#: templates/accounts/login.html:51
 msgid "Your username and password didn't match. Please try again."
 msgstr "Vaše uživatelské jméno a heslo nesouhlasí. Zkuste to prosím znovu."
 
-#: templates/mail/accounts/login.html:65
+#: templates/accounts/login.html:65
 msgid "Language"
 msgstr "Jazyk"
 
-#: templates/mail/accounts/login.html:76
+#: templates/accounts/login.html:76
 msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll e-mail "
 "instructions for setting a new one."
@@ -1577,19 +1517,19 @@ msgstr ""
 "Zapomenuté heslo? Zadejte vaši e-mailovou adresu níže a my vás budeme "
 "instruovat e-mailem, jak si nastavit nové heslo."
 
-#: templates/mail/accounts/login.html:84
+#: templates/accounts/login.html:84
 msgid "Reset my password"
 msgstr "Znovunastavit mé heslo"
 
-#: templates/mail/accounts/reset_done.html:28
+#: templates/accounts/reset_done.html:28
 msgid "Baruwa :: Password reset successful"
 msgstr "Baruwa :: Heslo znovunastaveno úspěšně"
 
-#: templates/mail/accounts/reset_done.html:30
+#: templates/accounts/reset_done.html:30
 msgid "Baruwa :: Password reset complete"
 msgstr "Baruwa :: Znovunastavení hesla je hotovo"
 
-#: templates/mail/accounts/reset_done.html:49
+#: templates/accounts/reset_done.html:49
 msgid ""
 "We've e-mailed you instructions for setting your password to the e-mail "
 "address you submitted. You should be receiving it shortly."
@@ -1597,15 +1537,15 @@ msgstr ""
 "Zaslali jsme vám instrukce jak nastavit heslo na vámi zadanou e-mailovou "
 "adresu. Měli byste jej neprodleně obdržet."
 
-#: templates/mail/accounts/reset_done.html:51
+#: templates/accounts/reset_done.html:51
 msgid "Your Password was successfully reset "
 msgstr "Vaše heslo bylo znovunastaveno úspěšně"
 
-#: templates/mail/accounts/reset_pw.html:6
+#: templates/accounts/reset_pw.html:6
 msgid "Baruwa :: Password reset"
 msgstr "Baruwa :: Znovunastavení hesla"
 
-#: templates/mail/accounts/reset_pw.html:22
+#: templates/accounts/reset_pw.html:22
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
@@ -1613,19 +1553,19 @@ msgstr ""
 "Zadejte vaše nové heslo dvakrát, abychom mohli ověřit, že bylo vloženo "
 "správně."
 
-#: templates/mail/accounts/reset_pw.html:27
+#: templates/accounts/reset_pw.html:27
 msgid "New password:"
 msgstr "Nové heslo:"
 
-#: templates/mail/accounts/reset_pw.html:30
+#: templates/accounts/reset_pw.html:30
 msgid "Confirm password:"
 msgstr "Potvrdit heslo:"
 
-#: templates/mail/accounts/reset_pw.html:33
+#: templates/accounts/reset_pw.html:33
 msgid "Change my password"
 msgstr "Změnit moje heslo"
 
-#: templates/mail/accounts/reset_pw.html:37
+#: templates/accounts/reset_pw.html:37
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
@@ -1633,231 +1573,224 @@ msgstr ""
 "Odkaz na znovunastavení hesla je neplatný pravděpodobně proto, že už byl "
 "použit. Vyžádejte si prosím znovunastavení hesla znovu."
 
-#: templates/mail/accounts/update_account.html:10
-#: templates/mail/accounts/update_account.html:11
+#: templates/accounts/update_account.html:10
+#: templates/accounts/update_account.html:11
 msgid "Update account"
 msgstr "Aktualizovat účet"
 
-#: templates/mail/accounts/update_account.html:14
+#: templates/accounts/update_account.html:14
 msgid "Update user account"
 msgstr "Aktualizovat účet uživatele"
 
-#: templates/mail/accounts/update_profile.html:10
-#: templates/mail/accounts/update_profile.html:11
-#: templates/mail/accounts/update_profile.html:14
+#: templates/accounts/update_profile.html:10
+#: templates/accounts/update_profile.html:11
+#: templates/accounts/update_profile.html:14
 msgid "Update Profile"
 msgstr "Aktualizovat profil"
 
-#: templates/mail/accounts/user_profile.html:9
-#: templates/mail/accounts/user_profile.html:16
+#: templates/accounts/user_profile.html:9
+#: templates/accounts/user_profile.html:16
 msgid "Change your password"
 msgstr "Změňte své heslo"
 
-#: templates/mail/accounts/user_profile.html:13
+#: templates/accounts/user_profile.html:13
 msgid "Change users password"
 msgstr "Změnit heslo uživatele"
 
-#: templates/mail/accounts/user_profile.html:20
-#: templates/mail/accounts/user_profile.html:21
+#: templates/accounts/user_profile.html:20
+#: templates/accounts/user_profile.html:21
 msgid "Account Profile"
 msgstr "Profil účtu"
 
-#: templates/mail/accounts/user_profile.html:25
+#: templates/accounts/user_profile.html:25
 #, python-format
 msgid "Viewing %(account)s's Profile"
 msgstr "Zobrazení profilu účtu %(account)s"
 
-#: templates/mail/accounts/user_profile.html:31
+#: templates/accounts/user_profile.html:31
 msgid "Username:"
 msgstr "Uživatelské jméno:"
 
-#: templates/mail/accounts/user_profile.html:39
+#: templates/accounts/user_profile.html:39
 msgid "Full names:"
 msgstr "Celá jména:"
 
-#: templates/mail/accounts/user_profile.html:47
+#: templates/accounts/user_profile.html:47
 msgid "Email Address:"
 msgstr "E-mailová adresa:"
 
-#: templates/mail/accounts/user_profile.html:55
+#: templates/accounts/user_profile.html:55
 msgid "Account status:"
 msgstr "Stav účtu"
 
-#: templates/mail/accounts/user_profile.html:58
+#: templates/accounts/user_profile.html:58
 msgid "Active"
 msgstr "Aktivní"
 
-#: templates/mail/accounts/user_profile.html:58
-#: templates/mail/accounts/user_profile.html:174
-#: templates/mail/accounts/user_profile.html:218
-#: templates/mail/config/domain.html:68 templates/mail/config/domain.html:87
-#: templates/mail/config/domain.html:116 templates/mail/config/domain.html:148
+#: templates/accounts/user_profile.html:58
+#: templates/accounts/user_profile.html:174
+#: templates/accounts/user_profile.html:218 templates/config/domain.html:68
+#: templates/config/domain.html.py:87 templates/config/domain.html:116
+#: templates/config/domain.html.py:148
 msgid "Disabled"
 msgstr "Zablokovaný"
 
-#: templates/mail/accounts/user_profile.html:63
+#: templates/accounts/user_profile.html:63
 msgid "Last login:"
 msgstr "Poslední přihlášení:"
 
-#: templates/mail/accounts/user_profile.html:71
+#: templates/accounts/user_profile.html:71
 msgid "Account created on:"
 msgstr "Účet vytvořen na:"
 
-#: templates/mail/accounts/user_profile.html:79
+#: templates/accounts/user_profile.html:79
 msgid "Profile Settings"
 msgstr "Nastavení profilu"
 
-#: templates/mail/accounts/user_profile.html:85
+#: templates/accounts/user_profile.html:85
 msgid "Account type:"
 msgstr "Typ účtu"
 
-#: templates/mail/accounts/user_profile.html:89
+#: templates/accounts/user_profile.html:89
 msgid "Administrator"
 msgstr "Administrátor"
 
-#: templates/mail/accounts/user_profile.html:92
+#: templates/accounts/user_profile.html:92
 msgid "Domain Administrator"
 msgstr "Doménový administrátor"
 
-#: templates/mail/accounts/user_profile.html:95
+#: templates/accounts/user_profile.html:95
 msgid "User account"
 msgstr "Uživatelský účet"
 
-#: templates/mail/accounts/user_profile.html:102
+#: templates/accounts/user_profile.html:102
 msgid "Scan email:"
 msgstr "Zkontrolovat e-mail:"
 
-#: templates/mail/accounts/user_profile.html:106
-#: templates/mail/accounts/user_profile.html:118
+#: templates/accounts/user_profile.html:106
+#: templates/accounts/user_profile.html:118
 msgid "Yes"
 msgstr "Ano"
 
-#: templates/mail/accounts/user_profile.html:108
-#: templates/mail/accounts/user_profile.html:120
+#: templates/accounts/user_profile.html:108
+#: templates/accounts/user_profile.html:120
 msgid "No"
 msgstr "Ne"
 
-#: templates/mail/accounts/user_profile.html:114
+#: templates/accounts/user_profile.html:114
 msgid "Send quarantine report:"
 msgstr "Zaslat hlášení o karanténě:"
 
-#: templates/mail/accounts/user_profile.html:126
+#: templates/accounts/user_profile.html:126
 msgid "Spam High Score:"
 msgstr "Spam vysoké skóre:"
 
-#: templates/mail/accounts/user_profile.html:134
+#: templates/accounts/user_profile.html:134
 msgid "Spam Low Score:"
 msgstr "Spam nízké skóre:"
 
-#: templates/mail/accounts/user_profile.html:144
+#: templates/accounts/user_profile.html:144
 msgid "Domains managed"
 msgstr ""
 
-#: templates/mail/accounts/user_profile.html:146
+#: templates/accounts/user_profile.html:146
 msgid "Associated Addresses"
 msgstr ""
 
-#: templates/mail/accounts/user_profile.html:172
-#: templates/mail/accounts/user_profile.html:216
-#: templates/mail/config/domain.html:46 templates/mail/config/domain.html:66
-#: templates/mail/config/domain.html:85 templates/mail/config/domain.html:114
-#: templates/mail/config/domain.html:146
+#: templates/accounts/user_profile.html:172
+#: templates/accounts/user_profile.html:216 templates/config/domain.html:46
+#: templates/config/domain.html.py:66 templates/config/domain.html:85
+#: templates/config/domain.html.py:114 templates/config/domain.html:146
 msgid "Enabled"
 msgstr "Povoleno"
 
-#: templates/mail/accounts/user_profile.html:189
+#: templates/accounts/user_profile.html:189
 msgid "No addresses stored at the moment."
 msgstr "V tuto chvíli nejsou uloženy žádné adresy."
 
-#: templates/mail/accounts/user_profile.html:201
-#: templates/mail/config/domain.html:131
+#: templates/accounts/user_profile.html:201 templates/config/domain.html:131
 #, fuzzy
 msgid "Email signatures"
 msgstr "E-mailová adresa"
 
-#: templates/mail/accounts/user_profile.html:209
-#: templates/mail/config/domain.html:139
+#: templates/accounts/user_profile.html:209 templates/config/domain.html:139
 msgid "Text signature"
 msgstr ""
 
-#: templates/mail/accounts/user_profile.html:211
-#: templates/mail/config/domain.html:141
+#: templates/accounts/user_profile.html:211 templates/config/domain.html:141
 msgid "HTML signature"
 msgstr ""
 
-#: templates/mail/accounts/user_profile.html:228
-#: templates/mail/config/domain.html:158
+#: templates/accounts/user_profile.html:228 templates/config/domain.html:158
 #, fuzzy
 msgid "No email signatures configured"
 msgstr "Žádné auth servery nejsou nakonfigurovány"
 
-#: templates/mail/config/add_auth_host.html:8
+#: templates/config/add_auth_host.html:8
 msgid "Settings :: Add authentication server"
 msgstr "Nastavení :: Přidání autentifikačního serveru"
 
-#: templates/mail/config/add_auth_host.html:9
+#: templates/config/add_auth_host.html:9
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(address)s - add authentication server\n"
 msgstr ""
 
-#: templates/mail/config/add_auth_host.html:17
+#: templates/config/add_auth_host.html:17
 #, fuzzy
 msgid "Add Authentication server"
 msgstr "Autentifikační servery"
 
-#: templates/mail/config/add_domain_sig.html:8
+#: templates/config/add_domain_sig.html:8
 #, fuzzy
 msgid "Settings :: Add Email signature"
 msgstr "Nastavení :: Přidání cílového mail serveru"
 
-#: templates/mail/config/add_domain_sig.html:9
+#: templates/config/add_domain_sig.html:9
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(address)s - add email signature\n"
 msgstr ""
 
-#: templates/mail/config/add_domain_sig.html:17
+#: templates/config/add_domain_sig.html:17
 #, fuzzy
 msgid "Add Domain signature"
 msgstr "Přidat účet"
 
-#: templates/mail/config/add_host.html:8
+#: templates/config/add_host.html:8
 msgid "Settings :: Add destination mail server"
 msgstr "Nastavení :: Přidání cílového mail serveru"
 
-#: templates/mail/config/add_host.html:9
+#: templates/config/add_host.html:9
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(domain_address)s - add destination mail server\n"
 msgstr ""
 
-#: templates/mail/config/add_host.html:17
+#: templates/config/add_host.html:17
 msgid "Add Mail Server"
 msgstr "Přidat mail server"
 
-#: templates/mail/config/delete_auth_host.html:5
-#: templates/mail/config/delete_domain_sig.html:6
-#: templates/mail/config/delete_host.html:5
-#: templates/mail/config/edit_auth_host.html:5
-#: templates/mail/config/edit_domain_sig.html:6
-#: templates/mail/config/edit_host.html:5
+#: templates/config/delete_auth_host.html:5
+#: templates/config/delete_domain_sig.html:6
+#: templates/config/delete_host.html:5 templates/config/edit_auth_host.html:5
+#: templates/config/edit_domain_sig.html:6 templates/config/edit_host.html:5
 msgid "Domain page"
 msgstr ""
 
-#: templates/mail/config/delete_auth_host.html:8
-#: templates/mail/config/delete_auth_host.html:9
+#: templates/config/delete_auth_host.html:8
+#: templates/config/delete_auth_host.html:9
 msgid "Delete authentication host"
 msgstr ""
 
-#: templates/mail/config/delete_auth_host.html:12
+#: templates/config/delete_auth_host.html:12
 msgid "Delete Authentication Host"
 msgstr ""
 
-#: templates/mail/config/delete_auth_host.html:20
+#: templates/config/delete_auth_host.html:20
 #, python-format
 msgid ""
 "\n"
@@ -1865,16 +1798,15 @@ msgid ""
 "        "
 msgstr ""
 
-#: templates/mail/config/delete_host.html:8
-#: templates/mail/config/delete_host.html:9
+#: templates/config/delete_host.html:8 templates/config/delete_host.html:9
 msgid "Delete Mail host"
 msgstr ""
 
-#: templates/mail/config/delete_host.html:12
+#: templates/config/delete_host.html:12
 msgid "Delete Mail Host"
 msgstr ""
 
-#: templates/mail/config/delete_host.html:20
+#: templates/config/delete_host.html:20
 #, python-format
 msgid ""
 "\n"
@@ -1882,11 +1814,11 @@ msgid ""
 "        "
 msgstr ""
 
-#: templates/mail/config/domain.html:22
+#: templates/config/domain.html:22
 msgid "Settings :: Domain"
 msgstr "Nastavení :: Doména"
 
-#: templates/mail/config/domain.html:23
+#: templates/config/domain.html:23
 #, python-format
 msgid ""
 "\n"
@@ -1895,52 +1827,52 @@ msgstr ""
 "\n"
 "\tDomény :: Zobrauji - %(domain_address)s\n"
 
-#: templates/mail/config/domain.html:29
+#: templates/config/domain.html:29
 msgid "Domain information"
 msgstr "Informace o doméně"
 
-#: templates/mail/config/domain.html:34
+#: templates/config/domain.html:34
 msgid "Domain name:"
 msgstr "Jméno domény:"
 
-#: templates/mail/config/domain.html:42
+#: templates/config/domain.html:42
 msgid "Status:"
 msgstr "Stav:"
 
-#: templates/mail/config/domain.html:48
+#: templates/config/domain.html:48
 msgid "Inactive"
 msgstr "Neaktivní"
 
-#: templates/mail/config/domain.html:54
+#: templates/config/domain.html:54
 msgid "Owner:"
 msgstr "Vlastník:"
 
-#: templates/mail/config/domain.html:62
+#: templates/config/domain.html:62
 msgid "Load Balance servers:"
 msgstr "Servery vyrovnávání zátěže:"
 
-#: templates/mail/config/domain.html:74
+#: templates/config/domain.html:74
 msgid "Delivery SMTP Servers"
 msgstr "Doručovací SMTP servery"
 
-#: templates/mail/config/domain.html:98
+#: templates/config/domain.html:98
 msgid "No smtp delivery servers configured"
 msgstr "Není nakonfigurován žádný doručovací smtp server"
 
-#: templates/mail/config/domain.html:103
+#: templates/config/domain.html:103
 msgid "Authentication Servers"
 msgstr "Autentifikační servery"
 
-#: templates/mail/config/domain.html:126
+#: templates/config/domain.html:126
 msgid "No auth servers configured"
 msgstr "Žádné auth servery nejsou nakonfigurovány"
 
-#: templates/mail/config/edit_auth_host.html:8
-#: templates/mail/config/edit_auth_host.html:9
+#: templates/config/edit_auth_host.html:8
+#: templates/config/edit_auth_host.html:9
 msgid "Settings :: Edit authentication mail server"
 msgstr "Nastavení :: Úprava autentifikačního mail serveru"
 
-#: templates/mail/config/edit_auth_host.html:15
+#: templates/config/edit_auth_host.html:15
 #, python-format
 msgid ""
 "\n"
@@ -1948,148 +1880,142 @@ msgid ""
 "\t\t"
 msgstr ""
 
-#: templates/mail/config/edit_domain_sig.html:9
+#: templates/config/edit_domain_sig.html:9
 #, fuzzy
 msgid "Settings :: Edit Email signature"
 msgstr "Nastavení :: Úprava cílového mail serveru"
 
-#: templates/mail/config/edit_domain_sig.html:10
+#: templates/config/edit_domain_sig.html:10
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(address)s - edit email signature\n"
 msgstr ""
 
-#: templates/mail/config/edit_domain_sig.html:18
+#: templates/config/edit_domain_sig.html:18
 #, fuzzy
 msgid "Edit Domain signature"
 msgstr "Jméno domény:"
 
-#: templates/mail/config/edit_host.html:8
-#: templates/mail/config/edit_host.html:9
+#: templates/config/edit_host.html:8 templates/config/edit_host.html.py:9
 msgid "Settings :: Edit destination mail server"
 msgstr "Nastavení :: Úprava cílového mail serveru"
 
-#: templates/mail/config/edit_host.html:15
+#: templates/config/edit_host.html:15
 msgid "Edit Mail Server"
 msgstr "Upravit mail server"
 
-#: templates/mail/config/index.html:24
+#: templates/config/index.html:24
 msgid "Domains :: "
 msgstr "Domény ::"
 
-#: templates/mail/config/index.html:30
+#: templates/config/index.html:30
 msgid "Domain Name"
 msgstr "Jméno domény"
 
-#: templates/mail/config/index.html:33
+#: templates/config/index.html:33
 msgid "Owner"
 msgstr "Vlastník"
 
-#: templates/mail/config/index.html:39
-#: templates/mail/config/list_scanners.html:24
+#: templates/config/index.html:39 templates/config/list_scanners.html:24
 msgid "Actions"
 msgstr "Akce"
 
-#: templates/mail/config/index.html:75
+#: templates/config/index.html:75
 msgid "No domains found"
 msgstr "Žádná doména nenalezena"
 
-#: templates/mail/config/init_scanner.html:19
-#: templates/mail/config/list_scanners.html:43
+#: templates/config/init_scanner.html:19
+#: templates/config/list_scanners.html:43
 msgid "Initialize"
 msgstr "Inicializovat"
 
-#: templates/mail/config/list_scanners.html:11
+#: templates/config/list_scanners.html:11
 msgid "Scanning Nodes"
 msgstr ""
 
-#: templates/mail/config/list_scanners.html:12
+#: templates/config/list_scanners.html:12
 msgid "Scanning Nodes ::"
 msgstr ""
 
-#: templates/mail/config/list_scanners.html:18
+#: templates/config/list_scanners.html:18
 msgid "Node Name"
 msgstr ""
 
-#: templates/mail/config/list_scanners.html:56
+#: templates/config/list_scanners.html:56
 msgid "No scanning nodes found"
 msgstr ""
 
-#: templates/mail/config/task_status.html:24
-#: templates/mail/messages/task_status.html:73
+#: templates/config/task_status.html:24 templates/messages/task_status.html:72
 msgid "The request is being processed. Current status: "
 msgstr "Požadavek je zpracováván. Současný stav:"
 
-#: templates/mail/config/view_scanner.html:5
-#: templates/mail/config/view_scanner.html:8
+#: templates/config/view_scanner.html:5 templates/config/view_scanner.html:8
 #, python-format
 msgid ""
 "\n"
 "Viewing Scanning Node %(scanner_address)s\n"
 msgstr ""
 
-#: templates/mail/config/view_scanner.html:13
+#: templates/config/view_scanner.html:13
 msgid "Configuration Settings"
 msgstr "Konfigurační nastavení"
 
-#: templates/mail/config/view_settings.html:5
+#: templates/config/view_settings.html:5
 msgid "Scanning Node Settings"
 msgstr ""
 
-#: templates/mail/config/view_settings.html:6
+#: templates/config/view_settings.html:6
 msgid "Scanning Node Settings :: "
 msgstr ""
 
-#: templates/mail/config/view_settings.html:8
+#: templates/config/view_settings.html:8
 msgid "Not yet Implemented"
 msgstr "Není dosud implementováno"
 
-#: templates/mail/lists/add.form.html:5
+#: templates/lists/add.form.html:5
 msgid "From address:"
 msgstr "Adresa Od:"
 
-#: templates/mail/lists/add.form.html:12
+#: templates/lists/add.form.html:12
 msgid "To address:"
 msgstr "Adresa Komu:"
 
-#: templates/mail/lists/add.form.html:22
+#: templates/lists/add.form.html:22
 msgid "List type:"
 msgstr "Typ seznamu"
 
-#: templates/mail/lists/add.html:12 templates/mail/lists/delete.html:5
-#: templates/mail/lists/delete.html:13 templates/mail/lists/delete.html:23
-#: templates/mail/lists/index.html:22 templates/mail/lists/index.html.py:29
-#: templates/mail/messages/detail.html:47
-#: templates/mail/messages/detail.html:49
+#: templates/lists/add.html:12 templates/lists/delete.html:5
+#: templates/lists/delete.html.py:13 templates/lists/delete.html:23
+#: templates/lists/index.html:22 templates/lists/index.html.py:29
+#: templates/messages/detail.html:47 templates/messages/detail.html.py:49
 msgid "Whitelist"
 msgstr "Whitelist"
 
-#: templates/mail/lists/add.html:13 templates/mail/lists/delete.html:6
-#: templates/mail/lists/delete.html:13 templates/mail/lists/delete.html:23
-#: templates/mail/lists/index.html:20 templates/mail/lists/index.html.py:29
-#: templates/mail/messages/detail.html:54
-#: templates/mail/messages/detail.html:56
+#: templates/lists/add.html:13 templates/lists/delete.html:6
+#: templates/lists/delete.html.py:13 templates/lists/delete.html:23
+#: templates/lists/index.html:20 templates/lists/index.html.py:29
+#: templates/messages/detail.html:54 templates/messages/detail.html.py:56
 msgid "Blacklist"
 msgstr "Blacklist"
 
-#: templates/mail/lists/add.html:16 templates/mail/lists/add.html.py:17
+#: templates/lists/add.html:16 templates/lists/add.html.py:17
 msgid "Adding to list"
 msgstr "Přidání do seznamu"
 
-#: templates/mail/lists/add.html:20
+#: templates/lists/add.html:20
 msgid "Add List Item"
 msgstr "Přidat položku seznamu"
 
-#: templates/mail/lists/delete.html:9 templates/mail/lists/delete.html:10
+#: templates/lists/delete.html:9 templates/lists/delete.html.py:10
 msgid "Delete from List"
 msgstr "Odstranit ze seznamu"
 
-#: templates/mail/lists/delete.html:13
+#: templates/lists/delete.html:13
 msgid "Delete Item from"
 msgstr "Odstranit položku z"
 
-#: templates/mail/lists/delete.html:22
+#: templates/lists/delete.html:22
 #, python-format
 msgid ""
 "\n"
@@ -2098,405 +2024,341 @@ msgstr ""
 "\n"
 "\t\t\t\tTohle odstraní %(address)s z "
 
-#: templates/mail/lists/index.html:24
+#: templates/lists/index.html:24
 msgid "Add to List"
 msgstr "Přidat do seznamu"
 
-#: templates/mail/lists/index.html:27
+#: templates/lists/index.html:27
 msgid "List management"
 msgstr "Správa seznamu"
 
-#: templates/mail/lists/index.html:43
+#: templates/lists/index.html:43
 msgid "Action"
 msgstr "Akce"
 
-#: templates/mail/lists/index.html:54
+#: templates/lists/index.html:54
 msgid "=builtin="
 msgstr "=vestavěný="
 
-#: templates/mail/lists/index.html:63 templates/mail/messages/index.html:102
-#: templates/mail/messages/quarantine.html:131
-#: templates/web/visits/index.html:80
+#: templates/lists/index.html:63 templates/messages/index.html:100
+#: templates/messages/quarantine.html:130
 msgid "No records returned"
 msgstr "Nevráceny žádné záznamy"
 
-#: templates/mail/lists/index.html:72
+#: templates/lists/index.html:72
 msgid "Filter "
 msgstr "Filtr"
 
-#: templates/mail/lists/index.html:73 templates/mail/messages/detail.html:41
-#: templates/mail/messages/preview.html:20
-#: templates/mail/status/detail.html:26
+#: templates/lists/index.html:73 templates/messages/detail.html:41
+#: templates/messages/preview.html:20 templates/status/detail.html:26
 msgid "From:"
 msgstr "Od:"
 
-#: templates/mail/lists/index.html:76
+#: templates/lists/index.html:76
 msgid "excluding"
 msgstr ""
 
-#: templates/mail/lists/index.html:79
+#: templates/lists/index.html:79
 msgid "GO"
 msgstr "JDI"
 
-#: templates/mail/messages/delete.html:3
+#: templates/messages/delete.html:3
 #, python-format
 msgid "The message id: %(id)s has been deleted"
 msgstr "Zpráva id: %(id)s byla odstraněna"
 
-#: templates/mail/messages/delete.html:5
+#: templates/messages/delete.html:5
 #, python-format
 msgid "The message id: %(id)s could not be deleted: %(error_msg)s"
 msgstr "Zpráva id: %(id)s nemohla být odstraněna: %(error_msg)s"
 
-#: templates/mail/messages/detail.html:14
-#: templates/mail/messages/detail.html:15
+#: templates/messages/detail.html:14 templates/messages/detail.html.py:15
 #, python-format
 msgid "Baruwa :: Showing message - %(id)s"
 msgstr "Baruwa :: Zobrazení zprávy - %(id)s"
 
-#: templates/mail/messages/detail.html:20
+#: templates/messages/detail.html:20
 msgid "Preview message"
 msgstr "Zobrazit zprávu"
 
-#: templates/mail/messages/detail.html:21
-#: templates/mail/messages/preview.html:8
-#: templates/mail/messages/release.html:6
-#: templates/mail/messages/release.html:7
+#: templates/messages/detail.html:21 templates/messages/preview.html:8
+#: templates/messages/release.html:6 templates/messages/release.html.py:7
 msgid "Release message"
 msgstr "Uvolnit zprávu"
 
-#: templates/mail/messages/detail.html:23
+#: templates/messages/detail.html:23
 msgid "Full message list"
 msgstr "Úplný seznam zpráv"
 
-#: templates/mail/messages/detail.html:24
-#: templates/mail/messages/detail.html:220
-#: templates/mail/messages/index.html:31
+#: templates/messages/detail.html:24 templates/messages/detail.html.py:201
+#: templates/messages/index.html:29
 msgid "Quarantine"
 msgstr "Karanténa"
 
-#: templates/mail/messages/detail.html:25
-#: templates/mail/messages/index.html:32
+#: templates/messages/detail.html:25 templates/messages/index.html:30
 msgid "Archive"
 msgstr "Archiv"
 
-#: templates/mail/messages/detail.html:34 templates/mail/status/detail.html:19
+#: templates/messages/detail.html:34 templates/status/detail.html:19
 msgid "Message Details"
 msgstr "Detaily zprávy"
 
-#: templates/mail/messages/detail.html:37 templates/mail/status/detail.html:22
+#: templates/messages/detail.html:37 templates/status/detail.html:22
 msgid "Message ID:"
 msgstr "Zpráva ID:"
 
-#: templates/mail/messages/detail.html:63
-#: templates/mail/messages/preview.html:24
-#: templates/mail/status/detail.html:32
+#: templates/messages/detail.html:63 templates/messages/preview.html:24
+#: templates/status/detail.html:32
 msgid "To:"
 msgstr "Komu:"
 
-#: templates/mail/messages/detail.html:73 templates/mail/status/detail.html:46
+#: templates/messages/detail.html:73 templates/status/detail.html:46
 msgid "Received on:"
 msgstr "Přijato kdy:"
 
-#: templates/mail/messages/detail.html:77 templates/mail/status/detail.html:42
+#: templates/messages/detail.html:77 templates/status/detail.html:42
 msgid "Received by:"
 msgstr "Přijato kým:"
 
-#: templates/mail/messages/detail.html:81
+#: templates/messages/detail.html:81
 msgid "Received from:"
 msgstr "Přijato z:"
 
-#: templates/mail/messages/detail.html:85
+#: templates/messages/detail.html:85
 msgid "Recieved via:"
 msgstr "Přijato přes:"
 
-#: templates/mail/messages/detail.html:89
+#: templates/messages/detail.html:89
 msgid "Message Headers:"
 msgstr "Hlavičky zprávy:"
 
-#: templates/mail/messages/detail.html:93 templates/mail/status/detail.html:58
-#: templates/web/visits/detail.html:51
+#: templates/messages/detail.html:93 templates/status/detail.html:58
 msgid "Size:"
 msgstr "Velikost:"
 
-#: templates/mail/messages/detail.html:97
+#: templates/messages/detail.html:97
 msgid "Virus infected:"
 msgstr "Infikováno virem:"
 
-#: templates/mail/messages/detail.html:103
+#: templates/messages/detail.html:103
 msgid "Blocked File:"
 msgstr "Blokovaný soubor:"
 
-#: templates/mail/messages/detail.html:109
+#: templates/messages/detail.html:109
 msgid "Other infection:"
 msgstr "Jiná infekce:"
 
-#: templates/mail/messages/detail.html:116
-#, fuzzy
-msgid "Delivery information"
-msgstr "Informace o doméně"
-
-#: templates/mail/messages/detail.html:119
-#, fuzzy
-msgid "Processed at:"
-msgstr "Zpracováno"
-
-#: templates/mail/messages/detail.html:120
-#, fuzzy
-msgid "Processed by:"
-msgstr "Zpracováno"
-
-#: templates/mail/messages/detail.html:121
-msgid "Delivered to:"
-msgstr ""
-
-#: templates/mail/messages/detail.html:122
-#, fuzzy
-msgid "Delivery status"
-msgstr "Stav služby"
-
-#: templates/mail/messages/detail.html:134
+#: templates/messages/detail.html:115
 msgid "Spamassassin information"
 msgstr "Informace Spamassassina"
 
-#: templates/mail/messages/detail.html:137
+#: templates/messages/detail.html:118
 msgid "Spam:"
 msgstr "Spam:"
 
-#: templates/mail/messages/detail.html:141
-#: templates/mail/messages/detail.html:151
+#: templates/messages/detail.html:122 templates/messages/detail.html.py:132
 msgid "Action(s):"
 msgstr "Akce:"
 
-#: templates/mail/messages/detail.html:148
+#: templates/messages/detail.html:129
 msgid "High Scoring Spam:"
 msgstr "Spam vysokého skóre:"
 
-#: templates/mail/messages/detail.html:158
+#: templates/messages/detail.html:139
 msgid "Spamassassin Spam:"
 msgstr "Spam dle Spamassassina:"
 
-#: templates/mail/messages/detail.html:168
+#: templates/messages/detail.html:149
 msgid "Listed in RBL:"
 msgstr "Na seznamu RBL:"
 
-#: templates/mail/messages/detail.html:171
+#: templates/messages/detail.html:152
 msgid "Listed in :"
 msgstr ""
 
-#: templates/mail/messages/detail.html:178
+#: templates/messages/detail.html:159
 msgid "Spam Whitelisted:"
 msgstr "Spam na whitelistu:"
 
-#: templates/mail/messages/detail.html:188
+#: templates/messages/detail.html:169
 msgid "Spam Blacklisted:"
 msgstr "Spam na blacklistu:"
 
-#: templates/mail/messages/detail.html:198
+#: templates/messages/detail.html:179
 msgid "Spamassassin Auto learned:"
 msgstr "Spamassassin samoučení:"
 
-#: templates/mail/messages/detail.html:204
+#: templates/messages/detail.html:185
 msgid "Spamassassin Score:"
 msgstr "Spamassassin skóre:"
 
-#: templates/mail/messages/detail.html:211
+#: templates/messages/detail.html:192
 msgid "Spamassassin Report:"
 msgstr "Spamassassin hlášení:"
 
-#: templates/mail/messages/detail.html:233
-#: templates/mail/messages/quarantine.html:55
-#: templates/mail/messages/quarantine_report.html:39
-#: templates/mail/messages/quarantine_report.html:57
-#: templates/mail/messages/quarantine_report.html:80
-#: templates/mail/messages/quarantine_report.html:98
+#: templates/messages/detail.html:214 templates/messages/quarantine.html:54
+#: templates/messages/quarantine_report.html:39
+#: templates/messages/quarantine_report.html:57
+#: templates/messages/quarantine_report.html:80
+#: templates/messages/quarantine_report.html:98
 msgid "Release"
 msgstr "Uvolnit"
 
-#: templates/mail/messages/detail.html:235
+#: templates/messages/detail.html:216
 msgid "SA Learn"
 msgstr "SA učit"
 
-#: templates/mail/messages/detail.html:236
-#: templates/mail/messages/quarantine.html:64
+#: templates/messages/detail.html:217 templates/messages/quarantine.html:63
 msgid "Alt recipients"
 msgstr "Náhradní příjemci"
 
-#: templates/mail/messages/detail.html:272
+#: templates/messages/detail.html:253
 msgid "Submit"
 msgstr "Odeslat"
 
-#: templates/mail/messages/detail.html:280
+#: templates/messages/detail.html:261
 msgid "The message details for the requested message id could not be retrieved"
 msgstr "Podrobnosti zprávy pro zadané ID zprávy nelze získat"
 
-#: templates/mail/messages/index.html:30
+#: templates/messages/index.html:28
 msgid "Full message"
 msgstr "Celá zpráva"
 
-#: templates/mail/messages/index.html:39
-#, fuzzy, python-format
-msgid "Showing the %(baruwa_num_recent_messages)s most recent messages"
+#: templates/messages/index.html:37 templates/messages/index.html.py:47
+#: templates/messages/quarantine.html:32 templates/messages/quarantine.html:42
+msgid "Showing the 50 most recent messages"
 msgstr "Zobrazení 50 nejčerstvějších zpráv"
 
-#: templates/mail/messages/index.html:46
-#: templates/mail/messages/quarantine.html:40
-#: templates/web/visits/index.html:22
+#: templates/messages/index.html:44 templates/messages/quarantine.html:39
 msgid "Filters"
 msgstr "Filtry"
 
-#: templates/mail/messages/index.html:46
-#: templates/mail/messages/quarantine.html:40
-#: templates/web/visits/index.html:22
+#: templates/messages/index.html:44 templates/messages/quarantine.html:39
 msgid "have been applied"
 msgstr "bylo aplikováno"
 
-#: templates/mail/messages/index.html:49
-#, fuzzy, python-format
-msgid "Showing the %(baruwa_num_recent_messages)s most recent messages "
-msgstr "Zobrazení 50 nejčerstvějších zpráv"
-
-#: templates/mail/messages/index.html:51
-#: templates/mail/messages/quarantine.html:45
-#: templates/web/visits/index.html:27
+#: templates/messages/index.html:49 templates/messages/quarantine.html:44
 msgid "Enable javascript for updates"
 msgstr "Pro aktualizace povolte javascript"
 
-#: templates/mail/messages/index.html:66
-#: templates/mail/messages/quarantine.html:98
-#: templates/mail/messages/quarantine_report.html:27
-#: templates/mail/messages/quarantine_report.html:68
-#: templates/mail/messages/quarantine_report_text.html:10
-#: templates/mail/messages/quarantine_report_text.html:20
-#: templates/web/visits/index.html:34 templates/web/visits/index.html.py:42
+#: templates/messages/index.html:64 templates/messages/quarantine.html:97
+#: templates/messages/quarantine_report.html:27
+#: templates/messages/quarantine_report.html:68
+#: templates/messages/quarantine_report_text.html:10
+#: templates/messages/quarantine_report_text.html:20
 msgid "Date/Time"
 msgstr "Datum/Čas"
 
-#: templates/mail/messages/index.html:67
-#: templates/mail/messages/quarantine.html:99
-#: templates/mail/messages/quarantine_report.html:30
-#: templates/mail/messages/quarantine_report.html:71
-#: templates/mail/messages/quarantine_report_text.html:10
-#: templates/mail/messages/quarantine_report_text.html:20
+#: templates/messages/index.html:65 templates/messages/quarantine.html:98
+#: templates/messages/quarantine_report.html:30
+#: templates/messages/quarantine_report.html:71
+#: templates/messages/quarantine_report_text.html:10
+#: templates/messages/quarantine_report_text.html:20
 msgid "From"
 msgstr "Od"
 
-#: templates/mail/messages/index.html:68
-#: templates/mail/messages/quarantine.html:100
-#: templates/mail/messages/quarantine_report.html:33
-#: templates/mail/messages/quarantine_report.html:74
-#: templates/mail/messages/quarantine_report_text.html:10
-#: templates/mail/messages/quarantine_report_text.html:20
+#: templates/messages/index.html:66 templates/messages/quarantine.html:99
+#: templates/messages/quarantine_report.html:33
+#: templates/messages/quarantine_report.html:74
+#: templates/messages/quarantine_report_text.html:10
+#: templates/messages/quarantine_report_text.html:20
 msgid "To"
 msgstr "Komu"
 
-#: templates/mail/messages/index.html:71
-#: templates/mail/messages/quarantine.html:102
-#: templates/mail/reports/barreport.html:33
-#: templates/mail/tags/spamreport.html:4
+#: templates/messages/index.html:69 templates/messages/quarantine.html:101
+#: templates/reports/barreport.html:31 templates/tags/spamreport.html:4
 msgid "Score"
 msgstr "Skóre"
 
-#: templates/mail/messages/index.html:111
-#: templates/mail/messages/quarantine.html:141
-#: templates/mail/reports/barreport.html:57
-#: templates/mail/reports/listing.html:116
-#: templates/mail/reports/piereport.html:60
-#: templates/mail/reports/relays.html:60
-#: templates/web/reports/piereport.html:63 templates/web/visits/index.html:89
+#: templates/messages/index.html:109 templates/messages/quarantine.html:140
+#: templates/reports/barreport.html:55 templates/reports/listing.html:115
+#: templates/reports/piereport.html:58 templates/reports/relays.html:58
 msgid "Filters have been applied :"
 msgstr "Použité filtry :"
 
-#: templates/mail/messages/preview.html:3
+#: templates/messages/preview.html:3
 #, python-format
 msgid "Baruwa :: Previewing message - %(message_id)s"
 msgstr "Baruwa :: Zobrazení zprávy - %(message_id)s"
 
-#: templates/mail/messages/preview.html:4
+#: templates/messages/preview.html:4
 #, python-format
 msgid "Previewing message - %(message_id)s "
 msgstr "Zobrazení zprávy - %(message_id)s"
 
-#: templates/mail/messages/preview.html:9
-#: templates/mail/messages/preview.html:11
+#: templates/messages/preview.html:9 templates/messages/preview.html.py:11
 msgid "Return to message"
 msgstr "Vrátit se ke zprávě"
 
-#: templates/mail/messages/preview.html:28
-#: templates/mail/status/detail.html:38
+#: templates/messages/preview.html:28 templates/status/detail.html:38
 msgid "Subject:"
 msgstr "Předmět:"
 
-#: templates/mail/messages/preview.html:32
+#: templates/messages/preview.html:32
 msgid "Date:"
 msgstr "Datum:"
 
-#: templates/mail/messages/preview.html:37
+#: templates/messages/preview.html:37
 msgid "Attachments:"
 msgstr "Přílohy:"
 
-#: templates/mail/messages/preview.html:46
+#: templates/messages/preview.html:46
 msgid "Message content"
 msgstr "Obsah zprávy"
 
-#: templates/mail/messages/preview.html:60
+#: templates/messages/preview.html:60
 msgid "Message is multipart"
 msgstr "Zpráva je multipart"
 
-#: templates/mail/messages/preview.html:60
+#: templates/messages/preview.html:60
 msgid "view"
 msgstr ""
 
-#: templates/mail/messages/preview.html:60
+#: templates/messages/preview.html:60
 msgid "the other part"
 msgstr "další část"
 
-#: templates/mail/messages/preview.html:66
+#: templates/messages/preview.html:66
 msgid "Message could not be previewed"
 msgstr "Zprávu nešlo zobrazit"
 
-#: templates/mail/messages/quarantine.html:24
-#: templates/mail/messages/task_status.html:24
+#: templates/messages/quarantine.html:23
+#: templates/messages/task_status.html:23
 msgid "Full Quarantine"
 msgstr "Celá karanténa"
 
-#: templates/mail/messages/quarantine.html:26
-#: templates/mail/messages/task_status.html:26
+#: templates/messages/quarantine.html:25
+#: templates/messages/task_status.html:25
 msgid "Non Spam"
 msgstr "Není spam"
 
-#: templates/mail/messages/quarantine.html:33
-#: templates/mail/messages/quarantine.html:43
-msgid "Showing the 50 most recent messages"
-msgstr "Zobrazení 50 nejčerstvějších zpráv"
-
-#: templates/mail/messages/quarantine.html:61
+#: templates/messages/quarantine.html:60
 msgid "Train"
 msgstr "Učit"
 
-#: templates/mail/messages/quarantine.html:84
+#: templates/messages/quarantine.html:83
 msgid "Process"
 msgstr "Zpracovat"
 
-#: templates/mail/messages/quarantine_report.html:23
-#: templates/mail/messages/quarantine_report_text.html:7
+#: templates/messages/quarantine_report.html:23
+#: templates/messages/quarantine_report_text.html:7
 msgid "Spam Report"
 msgstr "Spamové hlášení"
 
-#: templates/mail/messages/quarantine_report.html:64
-#: templates/mail/messages/quarantine_report_text.html:17
+#: templates/messages/quarantine_report.html:64
+#: templates/messages/quarantine_report_text.html:17
 msgid "Policy Blocked Report"
 msgstr ""
 
-#: templates/mail/messages/quarantine_report_text.html:28
+#: templates/messages/quarantine_report_text.html:28
 msgid "To view these quarantined messages please visit :"
 msgstr "Pro zobrazení těchto zpráv z karantény prosím navštivte :"
 
-#: templates/mail/messages/release.html:10
+#: templates/messages/release.html:10
 msgid "Quarantined Message release"
 msgstr "Uvolnit zprávu z karantény"
 
-#: templates/mail/messages/release.html:15
+#: templates/messages/release.html:15
 #, python-format
 msgid ""
 "\n"
@@ -2507,7 +2369,7 @@ msgstr ""
 "\t\t\tZpráva: %(message_id)s byla uvolněna pro %(release_address)s\n"
 "\t\t"
 
-#: templates/mail/messages/release.html:19
+#: templates/messages/release.html:19
 #, python-format
 msgid ""
 "\n"
@@ -2520,7 +2382,7 @@ msgstr ""
 "chybou: %(error_msg)s. O pomoc požádejte svého správce pošty.\n"
 "\t    "
 
-#: templates/mail/messages/released.html:3
+#: templates/messages/released.html:3
 #, python-format
 msgid ""
 "\n"
@@ -2529,7 +2391,7 @@ msgstr ""
 "\n"
 "Zpráva id: %(id)s byla uvolněna\n"
 
-#: templates/mail/messages/released.html:7
+#: templates/messages/released.html:7
 #, python-format
 msgid ""
 "\n"
@@ -2540,7 +2402,7 @@ msgstr ""
 "Zpráva id: %(id)s nemohla být uvolněna: %(error_msg)s. O pomoc požádejte "
 "svého správce pošty.\n"
 
-#: templates/mail/messages/salearn.html:3
+#: templates/messages/salearn.html:3
 #, python-format
 msgid ""
 "\n"
@@ -2549,7 +2411,7 @@ msgstr ""
 "\n"
 "Zpráva id: %(id)s zpracována\n"
 
-#: templates/mail/messages/salearn.html:7
+#: templates/messages/salearn.html:7
 #, python-format
 msgid ""
 "\n"
@@ -2558,610 +2420,396 @@ msgstr ""
 "\n"
 "Zpráva id: %(id)s nebyla naučena: %(msg)s\n"
 
-#: templates/mail/messages/task_status.html:39
+#: templates/messages/task_status.html:38
 msgid "Response message"
 msgstr "Odpovědní zpráva"
 
-#: templates/mail/messages/task_status.html:59
+#: templates/messages/task_status.html:58
 msgid "The task was completed successfully."
 msgstr "Úloha byla ukončena úspěšně."
 
-#: templates/mail/messages/task_status.html:65
+#: templates/messages/task_status.html:64
 msgid "No items processed"
 msgstr "Nezpracovány žádné položky"
 
-#: templates/mail/messages/task_status.html:82
+#: templates/messages/task_status.html:81
 msgid "Update status"
 msgstr ""
 
-#: templates/mail/reports/barreport.html:20
-#: templates/mail/reports/barreport.html:23
-#: templates/mail/reports/listing.html:23
-#: templates/mail/reports/listing.html:26
-#: templates/mail/reports/piereport.html:21
-#: templates/mail/reports/piereport.html:24
-#: templates/mail/reports/relays.html:21 templates/mail/reports/relays.html:24
-#: templates/web/reports/piereport.html:21
-#: templates/web/reports/piereport.html:24
+#: templates/reports/barreport.html:18 templates/reports/barreport.html:21
+#: templates/reports/listing.html:22 templates/reports/listing.html.py:25
+#: templates/reports/piereport.html:19 templates/reports/piereport.html:22
+#: templates/reports/relays.html:19 templates/reports/relays.html.py:22
 #, python-format
 msgid "Reports - %(report_title)s"
 msgstr ""
 
-#: templates/mail/reports/barreport.html:28
+#: templates/reports/barreport.html:26
 msgid "Enable javascript to view graphs"
 msgstr "Pro zobrazování grafů povolte javascript"
 
-#: templates/mail/reports/barreport.html:51
+#: templates/reports/barreport.html:49
 msgid "No items returned"
 msgstr "Nebyly vráceny žádné položky"
 
-#: templates/mail/reports/filter.form.html:3
-#: templates/web/reports/filter.form.html:3
+#: templates/reports/filter.form.html:3
 msgid "Add Filter"
 msgstr "Přidat filtr"
 
-#: templates/mail/reports/index.html:23 templates/web/reports/index.html:21
+#: templates/reports/index.html:21
 msgid "Statistics"
 msgstr "Statistiky"
 
-#: templates/mail/reports/index.html:27
+#: templates/reports/index.html:25
 msgid "Message count"
 msgstr "Počet zpráv"
 
-#: templates/mail/reports/index.html:33
+#: templates/reports/index.html:31
 msgid "Oldest message processed on"
 msgstr "Nejstarší zpráva byla zpracována"
 
-#: templates/mail/reports/index.html:39
+#: templates/reports/index.html:37
 msgid "Newest message processed on"
 msgstr "Nejnovější zpráva byla zpracována"
 
-#: templates/mail/reports/index.html:49
+#: templates/reports/index.html:47
 msgid "Top Senders by Quantity"
 msgstr "Největší odesílatelé podle množství"
 
-#: templates/mail/reports/index.html:50
+#: templates/reports/index.html:48
 msgid "Top Senders by Volume"
 msgstr "Největší odesílatelé podle objemu"
 
-#: templates/mail/reports/index.html:51
+#: templates/reports/index.html:49
 msgid "Top Sender Domains by Quantity"
 msgstr "Nejvíce odesílající domény podle množství"
 
-#: templates/mail/reports/index.html:52
+#: templates/reports/index.html:50
 msgid "Top Sender Domains by Volume"
 msgstr "Nejvíce odesílající domény podle objemu"
 
-#: templates/mail/reports/index.html:53
+#: templates/reports/index.html:51
 msgid "Spamassassin Score Distribution"
 msgstr "Rozdělení skóre spamassassina"
 
-#: templates/mail/reports/index.html:54
+#: templates/reports/index.html:52
 msgid "Top Mail hosts"
 msgstr "Největší e-mailoví hostitelé"
 
-#: templates/mail/reports/index.html:59
+#: templates/reports/index.html:57
 msgid "Top Recipients by Quantity"
 msgstr "Největší příjemci podle množství"
 
-#: templates/mail/reports/index.html:60
+#: templates/reports/index.html:58
 msgid "Top Recipients by Volume"
 msgstr "Největší příjemci podle objemu"
 
-#: templates/mail/reports/index.html:61
+#: templates/reports/index.html:59
 msgid "Top Recipient Domains By Quantity"
 msgstr "Nejvíce přijímající domény podle množství"
 
-#: templates/mail/reports/index.html:62
+#: templates/reports/index.html:60
 msgid "Top Recipient Domains By Volume"
 msgstr "Nejvíce přijímající domény podle objemu"
 
-#: templates/mail/reports/index.html:64
+#: templates/reports/index.html:62
 msgid "Message Listings"
 msgstr ""
 
-#: templates/mail/reports/index.html:70 templates/web/reports/index.html:72
+#: templates/reports/index.html:68
 msgid "Active Filter(s)"
 msgstr "Aktivní filtr(y)"
 
-#: templates/mail/reports/index.html:83 templates/web/reports/index.html:85
+#: templates/reports/index.html:81
 msgid "Save"
 msgstr "Uložit"
 
-#: templates/mail/reports/index.html:92 templates/web/reports/index.html:94
+#: templates/reports/index.html:90
 msgid "No active filters at the moment"
 msgstr "V tuto chvíli žádné aktivní filtry"
 
-#: templates/mail/reports/index.html:97 templates/web/reports/index.html:99
+#: templates/reports/index.html:95
 msgid "Saved Filter(s)"
 msgstr "Uložené filtry"
 
-#: templates/mail/reports/index.html:120 templates/web/reports/index.html:122
+#: templates/reports/index.html:118
 msgid "No saved filters at the moment"
 msgstr "V tuto chvíli žádné uložené filtry"
 
-#: templates/mail/reports/listing.html:31
+#: templates/reports/listing.html:30
 msgid "Enable Javascript to view graphs"
 msgstr "Pro zobrazování grafů povolte javascript"
 
-#: templates/mail/reports/listing.html:45 templates/mail/status/index.html:69
+#: templates/reports/listing.html:41
+msgid "Mail"
+msgstr "E-mail"
+
+#: templates/reports/listing.html:44 templates/status/index.html:69
 #, fuzzy
 msgid "Viruses"
 msgstr "Virus"
 
-#: templates/mail/reports/listing.html:48
+#: templates/reports/listing.html:47
 #, fuzzy
 msgid "Viruses %"
 msgstr "Virus"
 
-#: templates/mail/reports/listing.html:54
+#: templates/reports/listing.html:53
 msgid "Spam %"
 msgstr "Spam %"
 
-#: templates/mail/reports/listing.html:87
+#: templates/reports/listing.html:86
 msgid "No records returned."
 msgstr "Nevráceny žádné záznamy."
 
-#: templates/mail/reports/listing.html:93
+#: templates/reports/listing.html:92
 msgid "Totals"
 msgstr ""
 
-#: templates/mail/reports/piereport.html:54
-#: templates/mail/reports/relays.html:54
-#: templates/web/reports/piereport.html:57
+#: templates/reports/piereport.html:52 templates/reports/relays.html:52
 msgid "Javascript required to view graphs"
 msgstr "Pro zobrazování grafů je vyžadován javascript"
 
-#: templates/mail/reports/relays.html:29
-#: templates/mail/tags/relayed_via.html:5
+#: templates/reports/relays.html:27 templates/tags/relayed_via.html:5
 msgid "IP address"
 msgstr "IP adresa"
 
-#: templates/mail/reports/relays.html:30
-#: templates/mail/tags/relayed_via.html:6 templates/web/visits/index.html:36
-#: templates/web/visits/index.html.py:44 web/reports/forms.py:43
+#: templates/reports/relays.html:28 templates/tags/relayed_via.html:6
 msgid "Hostname"
 msgstr "Jméno hostitele"
 
-#: templates/mail/reports/relays.html:31
-#: templates/mail/tags/relayed_via.html:7
+#: templates/reports/relays.html:29 templates/tags/relayed_via.html:7
 msgid "Country"
 msgstr "Země"
 
-#: templates/mail/reports/relays.html:32
+#: templates/reports/relays.html:30
 msgid "Total/S/V"
 msgstr ""
 
-#: templates/mail/status/bayes.html:7 templates/mail/status/index.html:5
-#: templates/mail/status/index.html:73 templates/mail/status/lint.html:7
+#: templates/status/bayes.html:7 templates/status/index.html:5
+#: templates/status/index.html.py:73 templates/status/lint.html:7
 msgid "Mail Queues"
 msgstr ""
 
-#: templates/mail/status/bayes.html:9 templates/mail/status/bayes.html:15
-#: templates/mail/status/bayes.html:18 templates/mail/status/index.html:7
-#: templates/mail/status/lint.html:9
+#: templates/status/bayes.html:9 templates/status/bayes.html.py:15
+#: templates/status/bayes.html:18 templates/status/index.html:7
+#: templates/status/lint.html:9
 msgid "Bayes information"
 msgstr "Bayes informace"
 
-#: templates/mail/status/bayes.html:10 templates/mail/status/index.html:8
-#: templates/mail/status/lint.html:10
+#: templates/status/bayes.html:10 templates/status/index.html:8
+#: templates/status/lint.html:10
 msgid "Spamassassin lint"
 msgstr "Spamassassin lint"
 
-#: templates/mail/status/bayes.html:22
+#: templates/status/bayes.html:22
 msgid "Bayes Database Information"
 msgstr "Informace o databázi bayes"
 
-#: templates/mail/status/bayes.html:26
+#: templates/status/bayes.html:26
 msgid "Bayes Version"
 msgstr "Verze bayes"
 
-#: templates/mail/status/bayes.html:30
+#: templates/status/bayes.html:30
 msgid "Number of Spam messages"
 msgstr "Počet spamových zpráv"
 
-#: templates/mail/status/bayes.html:34
+#: templates/status/bayes.html:34
 msgid "Number of Ham messages"
 msgstr "Počet nespamových zpráv"
 
-#: templates/mail/status/bayes.html:38
+#: templates/status/bayes.html:38
 msgid "Number of Tokens"
 msgstr "Počet tokenů"
 
-#: templates/mail/status/bayes.html:42
+#: templates/status/bayes.html:42
 msgid "Newest Token"
 msgstr "Nejnovější token"
 
-#: templates/mail/status/bayes.html:46
+#: templates/status/bayes.html:46
 msgid "Oldest Token"
 msgstr "Nejstarší token"
 
-#: templates/mail/status/bayes.html:50
+#: templates/status/bayes.html:50
 msgid "Last Journal Sync"
 msgstr "Poslední synchronizace žurnálu"
 
-#: templates/mail/status/bayes.html:54
+#: templates/status/bayes.html:54
 msgid "Last Expiry"
 msgstr ""
 
-#: templates/mail/status/bayes.html:58
+#: templates/status/bayes.html:58
 msgid "Last Expiry Reduction Count"
 msgstr ""
 
-#: templates/mail/status/bayes.html:64
+#: templates/status/bayes.html:64
 msgid "Bayes information could not be collected."
 msgstr "Informace o bayes nemohly být získány."
 
-#: templates/mail/status/detail.html:5 templates/mail/status/detail.html:6
+#: templates/status/detail.html:5 templates/status/detail.html.py:6
 #, python-format
 msgid "Baruwa :: Showing queue item - %(id)s"
 msgstr ""
 
-#: templates/mail/status/detail.html:10 templates/mail/status/mailq.html:11
+#: templates/status/detail.html:10 templates/status/mailq.html:11
 msgid "Inbound Queue"
 msgstr "Příchozí fronta"
 
-#: templates/mail/status/detail.html:11 templates/mail/status/mailq.html:12
+#: templates/status/detail.html:11 templates/status/mailq.html:12
 msgid "Outbound Queue"
 msgstr "Odchozí fronta"
 
-#: templates/mail/status/detail.html:50
+#: templates/status/detail.html:50
 msgid "Number of delivery attempts:"
 msgstr "Počet pokusů o doručení:"
 
-#: templates/mail/status/detail.html:54
+#: templates/status/detail.html:54
 msgid "Last delivery attempt on:"
 msgstr "Poslední pokus doručit:"
 
-#: templates/mail/status/detail.html:62
+#: templates/status/detail.html:62
 msgid "Reasons for queuing:"
 msgstr "Důvody pro zařazení do fronty:"
 
-#: templates/mail/status/detail.html:67
+#: templates/status/detail.html:67
 msgid "The message details for the requested queue id could not be retrieved"
 msgstr "Podrobnosti zprávy pro požadovanou frontu nemohly být získány"
 
-#: templates/mail/status/index.html:12 templates/mail/status/index.html:13
+#: templates/status/index.html:12 templates/status/index.html.py:13
 msgid "System Status"
 msgstr "Stav systému"
 
-#: templates/mail/status/index.html:16
+#: templates/status/index.html:16
 msgid "Service Status"
 msgstr "Stav služby"
 
-#: templates/mail/status/index.html:27 templates/mail/status/index.html:40
-#: templates/mail/status/index.html:61
+#: templates/status/index.html:27 templates/status/index.html.py:40
+#: templates/status/index.html:61
 msgid "processes"
 msgstr "zpracováno"
 
-#: templates/mail/status/index.html:29
+#: templates/status/index.html:29
 msgid "Processed"
 msgstr "Zpracováno"
 
-#: templates/mail/status/index.html:46
+#: templates/status/index.html:46
 msgid "Load"
 msgstr ""
 
-#: templates/mail/status/index.html:50
+#: templates/status/index.html:50
 msgid "High scoring spam"
 msgstr "Spam vysokého skóre"
 
-#: templates/mail/status/index.html:54
+#: templates/status/index.html:54
 msgid "AV"
 msgstr "AV"
 
-#: templates/mail/status/index.html:63
+#: templates/status/index.html:63
 msgid "Low scoring spam"
 msgstr "Spam nízkého skóre"
 
-#: templates/mail/status/index.html:67
+#: templates/status/index.html:67
 msgid "Uptime"
 msgstr "Uptime"
 
-#: templates/mail/status/index.html:75
+#: templates/status/index.html:75
 msgid "Blocked files"
 msgstr "Blokované soubory"
 
-#: templates/mail/status/lint.html:15 templates/mail/status/lint.html.py:18
-#: templates/mail/status/lint.html:22
+#: templates/status/lint.html:15 templates/status/lint.html.py:18
+#: templates/status/lint.html:22
 msgid "Spamassassin Lint"
 msgstr "Spamassassin Lint"
 
-#: templates/mail/status/lint.html:31
+#: templates/status/lint.html:31
 msgid "Lint failed please verify if spamassassin is installed"
 msgstr "Lint selhal. Ověřte prosím, zda je spamassassin nainstalován"
 
-#: templates/mail/status/mailq.html:16 templates/mail/status/mailq.html:19
+#: templates/status/mailq.html:16 templates/status/mailq.html.py:19
 msgid "Mail Queue"
 msgstr "E-mailová fronta"
 
-#: templates/mail/status/mailq.html:16 templates/mail/status/mailq.html:19
+#: templates/status/mailq.html:16 templates/status/mailq.html.py:19
 msgid "Outbound"
 msgstr "Odchozí"
 
-#: templates/mail/status/mailq.html:16 templates/mail/status/mailq.html:19
+#: templates/status/mailq.html:16 templates/status/mailq.html.py:19
 msgid "Inbound"
 msgstr "Příchozí"
 
-#: templates/mail/status/mailq.html:28
+#: templates/status/mailq.html:28
 msgid "Delete from queue"
 msgstr "Odstranit z fronty"
 
-#: templates/mail/status/mailq.html:55
+#: templates/status/mailq.html:55
 msgid "No queue items found"
 msgstr "Žádné položky ve frontě nenalezeny"
 
-#: templates/mail/tags/generic_paginator.html:2
-#: templates/mail/tags/pagination_heading.html:2
-#: templates/mail/tags/paginator.html:2
+#: templates/tags/generic_paginator.html:2
+#: templates/tags/pagination_heading.html:2 templates/tags/paginator.html:2
 #, python-format
 msgid "Showing page %(page)s of %(pages)s pages."
 msgstr "Zobrazuji stránku %(page)s z %(pages)s stránek."
 
-#: templates/mail/tags/relayed_via.html:23
+#: templates/tags/relayed_via.html:23
 msgid "direct connection"
 msgstr "přímé spojení"
 
-#: templates/mail/tags/spamreport.html:5
+#: templates/tags/spamreport.html:5
 msgid "Rule"
 msgstr "Pravidlo"
 
-#: templates/mail/tags/spamreport.html:6
+#: templates/tags/spamreport.html:6
 msgid "Description"
 msgstr "Popis"
 
-#: templates/web/reports/index.html:25
-#, fuzzy
-msgid "Visit count"
-msgstr "Zobrazit účet"
-
-#: templates/web/reports/index.html:31
-#, fuzzy
-msgid "Oldest visit processed on"
-msgstr "Nejstarší zpráva byla zpracována"
-
-#: templates/web/reports/index.html:37
-#, fuzzy
-msgid "Newest visit processed on"
-msgstr "Nejnovější zpráva byla zpracována"
-
-#: templates/web/reports/index.html:47 web/reports/utils.py:33
-#, fuzzy
-msgid "Top Sites by Quantity"
-msgstr "Největší odesílatelé podle množství"
-
-#: templates/web/reports/index.html:48 web/reports/utils.py:34
-#, fuzzy
-msgid "Top Sites by Volume"
-msgstr "Největší odesílatelé podle objemu"
-
-#: templates/web/reports/index.html:49 web/reports/utils.py:35
-#, fuzzy
-msgid "Top Detected Viruses by Quantity"
-msgstr "Největší odesílatelé podle množství"
-
-#: templates/web/reports/index.html:50 web/reports/utils.py:36
-#, fuzzy
-msgid "Top Detected Viruses by Volume"
-msgstr "Největší odesílatelé podle objemu"
-
-#: templates/web/reports/index.html:51 web/reports/utils.py:37
-#, fuzzy
-msgid "Top Files by Quantity"
-msgstr "Největší odesílatelé podle množství"
-
-#: templates/web/reports/index.html:52 web/reports/utils.py:38
-#, fuzzy
-msgid "Top Files by Volume"
-msgstr "Největší odesílatelé podle objemu"
-
-#: templates/web/reports/index.html:53 web/reports/utils.py:31
-#, fuzzy
-msgid "Top Categories by Quantity"
-msgstr "Největší odesílatelé podle množství"
-
-#: templates/web/reports/index.html:54 web/reports/utils.py:32
-#, fuzzy
-msgid "Top Categories by Volume"
-msgstr "Největší odesílatelé podle objemu"
-
-#: templates/web/reports/index.html:59 web/reports/utils.py:39
-#, fuzzy
-msgid "Top Hosts by Quantity"
-msgstr "Největší e-mailoví hostitelé podle množství"
-
-#: templates/web/reports/index.html:60 web/reports/utils.py:40
-#, fuzzy
-msgid "Top Hosts by Volume"
-msgstr "Největší odesílatelé podle objemu"
-
-#: templates/web/reports/index.html:61 web/reports/utils.py:41
-#, fuzzy
-msgid "Top Users By Quantity"
-msgstr "Největší odesílatelé podle množství"
-
-#: templates/web/reports/index.html:62 web/reports/utils.py:42
-#, fuzzy
-msgid "Top Users By Volume"
-msgstr "Největší odesílatelé podle objemu"
-
-#: templates/web/reports/index.html:63 web/reports/utils.py:43
-#, fuzzy
-msgid "Top Search Phrases By Quantity"
-msgstr "Největší odesílatelé podle množství"
-
-#: templates/web/reports/index.html:64 web/reports/utils.py:44
-#, fuzzy
-msgid "Top Search Phrases By Volume"
-msgstr "Největší odesílatelé podle objemu"
-
-#: templates/web/reports/index.html:65
-msgid "Visit Totals"
-msgstr ""
-
-#: templates/web/reports/index.html:66
-msgid "Visit Listings"
-msgstr ""
-
-#: templates/web/visits/detail.html:5 templates/web/visits/index.html:5
-msgid "All visits"
-msgstr ""
-
-#: templates/web/visits/detail.html:6 templates/web/visits/index.html:6
-#, fuzzy
-msgid "Url filtered visits"
-msgstr "Tento filtr již existuje"
-
-#: templates/web/visits/detail.html:7 templates/web/visits/index.html:7
-#, fuzzy
-msgid "Virus detected visits"
-msgstr "Infikováno virem:"
-
-#: templates/web/visits/detail.html:8 templates/web/visits/index.html:8
-msgid "Search query visits"
-msgstr ""
-
-#: templates/web/visits/detail.html:14
-#, fuzzy
-msgid "Visit Details"
-msgstr "Detaily zprávy"
-
-#: templates/web/visits/detail.html:17
-msgid "Visit ID:"
-msgstr ""
-
-#: templates/web/visits/detail.html:29
-#, fuzzy
-msgid "Hostname:"
-msgstr "Jméno hostitele"
-
-#: templates/web/visits/detail.html:39
-msgid "Site:"
-msgstr ""
-
-#: templates/web/visits/detail.html:43
-msgid "Url:"
-msgstr ""
-
-#: templates/web/visits/detail.html:47
-msgid "Category:"
-msgstr ""
-
-#: templates/web/visits/detail.html:55
-msgid "Result code:"
-msgstr ""
-
-#: templates/web/visits/detail.html:59
-msgid "Url filtered:"
-msgstr ""
-
-#: templates/web/visits/detail.html:70
-#, fuzzy
-msgid "Virus detected:"
-msgstr "Infikováno virem:"
-
-#: templates/web/visits/detail.html:73
-#, fuzzy
-msgid "Viruses detected: "
-msgstr "Infikováno virem:"
-
-#: templates/web/visits/detail.html:83
-msgid "Is Search Query:"
-msgstr ""
-
-#: templates/web/visits/detail.html:86
-msgid "Searched for: "
-msgstr ""
-
-#: templates/web/visits/detail.html:97
-#, fuzzy
-msgid "The details for the requested visit id could not be retrieved"
-msgstr "Podrobnosti zprávy pro zadané ID zprávy nelze získat"
-
-#: templates/web/visits/index.html:15
-#, fuzzy, python-format
-msgid "Showing the %(baruwa_num_recent_messages)s most recent visits"
-msgstr "Zobrazení 50 nejčerstvějších zpráv"
-
-#: templates/web/visits/index.html:25
-#, fuzzy, python-format
-msgid "Showing the %(baruwa_num_recent_messages)s most recent visits "
-msgstr "Zobrazení 50 nejčerstvějších zpráv"
-
-#: templates/web/visits/index.html:35 templates/web/visits/index.html.py:43
-msgid "IP"
-msgstr ""
-
-#: templates/web/visits/index.html:38 templates/web/visits/index.html.py:46
-#: web/reports/forms.py:39
-msgid "Site"
-msgstr ""
-
-#: templates/web/visits/index.html:39 templates/web/visits/index.html.py:47
-#: web/reports/forms.py:41
-msgid "Category"
-msgstr ""
-
-#: utils/mail/message.py:247 utils/mail/message.py:336
+#: utils/mail/message.py:243 utils/mail/message.py:332
 msgid "Message not found in the quarantine"
 msgstr "Zpráva v karanténě nenalezena"
 
-#: utils/mail/message.py:276 utils/mail/message.py:290
+#: utils/mail/message.py:272 utils/mail/message.py:286
 msgid "The quarantined message not found"
 msgstr "Zpráva v karanténě nenalezena"
 
-#: utils/mail/message.py:287
+#: utils/mail/message.py:283
 msgid "Unsupported learn option supplied"
 msgstr "Vložena nepodporovaná volba učení"
 
-#: utils/mail/message.py:399
+#: utils/mail/message.py:395
 #, python-format
 msgid "Expected response code 2xx got %(code)s"
 msgstr "Očekáván kód odpovědi 2xx. Přišel %(code)s"
 
-#: utils/mail/message.py:403
+#: utils/mail/message.py:399
 msgid "Connection timed out"
 msgstr "Time out spojení vypršel"
 
-#: utils/mail/message.py:405
+#: utils/mail/message.py:401
 msgid "The server disconnected abruptly"
 msgstr "Server neočekávaně odpojen"
 
-#: utils/mail/message.py:407
+#: utils/mail/message.py:403
 #, python-format
 msgid "The sender %(sender)s was rejected"
 msgstr "Odesílatel %(sender)s byl odmítnut"
 
-#: utils/mail/message.py:410
+#: utils/mail/message.py:406
 #, python-format
 msgid "Some recipients: %(recpts)s were rejected with errors: %(errors)s"
 msgstr "Někteří příjemci: %(recpts)s byly odmítnuti s chybou: %(errors)s"
 
-#: utils/mail/message.py:414
+#: utils/mail/message.py:410
 msgid "Error occured while establishing connection to the server"
 msgstr "Při ustavování spojení se serverem se objevila chyba"
 
-#: utils/mail/message.py:417
+#: utils/mail/message.py:413
 msgid "Server rejected our HELO message"
 msgstr "Server odmítl naše HELO"
 
-#: utils/mail/message.py:419
+#: utils/mail/message.py:415
 #, python-format
 msgid "Error occured, CODE: %(code)s MESSAGE: %(msg)s"
 msgstr "Objevila se chyba, KÓD: %(code)s ZPRÁVA: %(msg)s"
-
-#: web/reports/forms.py:40
-msgid "Site url"
-msgstr ""
-
-#: web/reports/forms.py:44
-msgid "Search Phrase"
-msgstr ""
-
-#: web/reports/forms.py:45
-#, fuzzy
-msgid "Virus detected"
-msgstr "Infikováno virem:"
 
 #~ msgid "Virii"
 #~ msgstr "Viry"

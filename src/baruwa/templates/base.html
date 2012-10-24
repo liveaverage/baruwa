@@ -24,27 +24,25 @@
 <head>
 <title>.:. Baruwa :: {% block title %}{% endblock title %}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="{{ MEDIA_URL }}mail/css/style.css" rel="stylesheet" type="text/css" />
-<link href="{{ MEDIA_URL }}web/css/style_uncompressed.css" rel="stylesheet" type="text/css" />
-<link rel="icon" href="{{ MEDIA_URL }}mail/imgs/favicon.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="{{ MEDIA_URL }}mail/imgs/favicon.ico" type="image/x-icon" /> 
+<link href="{{ MEDIA_URL }}css/style.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{{ MEDIA_URL }}imgs/favicon.ico" type="image/x-icon" /> 
 {% block headers %}{% endblock headers %}
 </head>
 <body{%block body_class%}{%endblock body_class%}>
     <div id="header">
     	<div class="logo">
-			<a href="/"><img src="{{ MEDIA_URL }}mail/imgs/css/logo.jpg" alt="" /></a>
+			<a href="{% url index-page %}"><img src="{{ MEDIA_URL }}imgs/css/logo.jpg" alt="" /></a>
 		</div>
         <div class="search">
         	<div class="Link">
                 <ul>
-					{% if baruwa_subapp == 'mail' %}
 					<li>
 						{% trans "Status " %}<a href="{% url status-index %}">
 						{% if baruwa_status %}
-						<img id="statusimg" src="{{ MEDIA_URL }}mail/imgs/active.png" alt="OK" />
+						<img id="statusimg" src="{{ MEDIA_URL }}imgs/active.png" alt="OK" />
 						{% else %}
-						<img id="statusimg" src="{{ MEDIA_URL }}mail/imgs/inactive.png" alt="FAULTY" />
+						<img id="statusimg" src="{{ MEDIA_URL }}imgs/inactive.png" alt="FAULTY" />
 						{% endif %}
 						</a>
 					</li>
@@ -56,10 +54,6 @@
 					<li>
 						{% trans "In: " %}<a href="{% url mailq-inbound %}"><span id="inq">{{baruwa_in_queue}}</span></a> {% trans "Out: " %}<a href="{% url mailq-outbound %}"><span id="outq">{{baruwa_out_queue}}</span></a>
 					</li>
-					{% else %}
-					<li>{% trans "Users: " %}{{web_users}}</li>
-					<li>{% trans "Hosts: " %}{{web_hosts}}</li>
-					{% endif %}
 					{% if user.is_authenticated %}
 					<li>{% trans "Signed in as " %}<a href="{% url user-profile user.id %}">{{user.username}}</a></li>
                     <li><a href="{% url logout %}">{% trans "Logout" %}</a></li>
@@ -70,11 +64,11 @@
             </div>
             <div class="clearer"></div>
             <div class="search_box">
-				{% if user.is_authenticated and baruwa_subapp == 'mail' %}
+				{% if user.is_authenticated %}
                 <form method="post" action="{% url message-search %}">
 					{% csrf_token %}
             	    <div class="text_box"><input name="message_id" type="text" /></div>
-                    <div class="search_btn"><input name="submit" type="image" src="{{ MEDIA_URL }}mail/imgs/css/search_btn.gif" /></div>
+                    <div class="search_btn"><input name="submit" type="image" src="{{ MEDIA_URL }}imgs/css/search_btn.gif" /></div>
                 </form>
 				{% endif %}
             </div>
@@ -83,7 +77,6 @@
     <div class="clearer"></div>
     <div class="Box_Mainnav"> <!-- Box_Mainnav start here -->
         <div class="Mainnav"> <!-- Mainnav start here -->
-			{% if baruwa_subapp == 'mail' %}
 			{% if user.is_authenticated %}
             <a href="{% url main-messages-index %}" class="topnav"><span>{% trans "Messages" %}</span></a> 
             <a href="{% url lists-index %}" class="topnav"><span>{% trans "Lists" %}</span></a> 
@@ -92,21 +85,12 @@
  				<a href="{% url status-index %}" class="topnav"><span>{% trans "Status" %}</span></a>
 				{% if user.is_superuser %}
 				<a href="{% url settings-index %}" class="topnav"><span>{% trans "Settings" %}</span></a>
-				<a href="/web/" class="topnav_s"><span>{% trans "Web" %}</span></a>
 				{% else %}
 				<a href="{% url accounts %}" class="topnav"><span>{% trans "Accounts" %}</span></a>
 				{% endif %}
 			{% else %}
 				<a href="{% url user-profile user.id %}" class="topnav"><span>{% trans "Account" %}</span></a>
  			{% endifnotequal %}
-			{% endif %}
-			{% else %}
-			<a href="{% url main-visits-index %}" class="topnav"><span>{% trans "Visits" %}</span></a>
-			<a href="{% url main-connections-index %}" class="topnav"><span>{% trans "Connections" %}</span></a>
-			<a href="{% url web-reports-index %}" class="topnav"><span>{% trans "Reports" %}</span></a>
-			<a href="{% url main-status-index %}" class="topnav"><span>{% trans "Status" %}</span></a>
-			<a href="{% url main-settings-index %}" class="topnav"><span>{% trans "Settings" %}</span></a>
-			<a href="/mail/" class="topnav_s"><span>{% trans "Mail" %}</span></a>
 			{% endif %}
         </div> <!-- Mainnav end here -->
    </div> <!-- Box_Mainnav end here -->
@@ -116,7 +100,7 @@
    </div>
    <div class="clearer"></div>
    <div id="Main_Content">
-        <div class="Curb"><img src="{{ MEDIA_URL }}mail/imgs/css/top_curb.gif" alt="" /></div>
+        <div class="Curb"><img src="{{ MEDIA_URL }}imgs/css/top_curb.gif" alt="" /></div>
         <div class="heading">
         <span id="heading">
             {% block heading %}{% endblock heading %}
@@ -157,10 +141,22 @@
         {% block add_item %}{% endblock add_item %}
         </div><!--GRID CONTAINER END HERE-->
         {% block paging %}{% endblock paging %}
-        <div class="Curb"><img src="{{ MEDIA_URL }}mail/imgs/css/footer_curb.gif" alt="" /></div>
+        <div class="Curb"><img src="{{ MEDIA_URL }}imgs/css/footer_curb.gif" alt="" /></div>
    </div>
    <div id="Footer_container">
-        <div class="Copy_right">Baruwa 1 &copy; 2010 Andrew Colin Kissa </div>
+	    <!-- 
+	
+		DO NOT REMOVE THE COPYRIGHT NOTICES
+		=====================================
+		
+		Removal of the notice is a violation of the licensing if you do,
+		do not expect any support from me and make sure you distribute
+		your modifications as per the terms of the GPL
+		
+		In short DONOT try and claim my work as your own.
+
+		-->
+        <div class="Copy_right">Baruwa &copy; 2010 Andrew Colin Kissa </div>
         <div class="Links_footer">
 		</div>
     </div>

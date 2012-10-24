@@ -149,8 +149,6 @@ Use the `cherokee cookbook`_ instructions.
 
 .. include:: includes/testing.inc
 
-.. include:: includes/assistance.inc
-
 Distribution / OS installation
 ==============================
 

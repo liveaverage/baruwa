@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block scripts %}
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var media_url = '{{MEDIA_URL}}';
+//]]>
+</script>
+<!--
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/domain.js"></script>
+-->
+{% endblock scripts %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url settings-index %}">{% trans "Domains" %}</a></li>
+  	<li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
+  	<li><a href="">{% trans "Scanners" %}</a></li>
+</ul>	
+{% endblock submenu %}
+{% block title %}{% trans "Settings :: Domain" %}{% endblock title %}
+{% block heading %}{% blocktrans with domain.address as domain_address %}
+	Domains :: Showing - {{ domain_address }}
+{% endblocktrans %}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">
+		{% trans "Domain information" %}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Domain_cols">
+		{% trans "Domain name:" %}
+	</div>
+	<div class="Domain_values">
+		{{ domain.address }}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Domain_cols">
+		{% trans "Status:" %}
+	</div>
+	<div class="Domain_values">
+		{% if domain.enabled %}
+ 		{% trans "Enabled" %}
+		{% else %}
+		{% trans "Inactive" %}
+		{% endif %}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Domain_cols">
+		{% trans "Owner:" %}
+	</div>
+	<div class="Domain_values">
+		{{ domain.user.first_name }} {{ domain.user.last_name }} ( {{ domain.user.username }} )
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Domain_cols">
+		{% trans "Load Balance servers:" %}
+	</div>
+	<div class="Domain_values">
+		{% if domain.load_balance %}
+			{% trans "Enabled" %}
+		{% else %}
+			{% trans "Disabled" %}
+		{% endif %}
+	</div>
+</div>
+<div class="header_div">
+    <div class="Reports_heading">
+		{% trans "Delivery SMTP Servers" %}
+		<div class="Profile_edit">[ <a href="{% url add-host domain.id %}">{% trans "Add" %}</a> ]</div>
+	</div>
+</div>
+{% for server in servers  %}
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{{ server.address }}
+	</div>
+	<div class="Profile_values">
+		{% if server.enabled %}
+			{% trans "Enabled" %}
+		{% else %}
+			{% trans "Disabled" %}
+		{% endif %}
+		<div class="Profile_edit">
+			 <a class="selector" href="{% url test-host server.id %}"><img src="{{ MEDIA_URL }}imgs/connect.png" alt="Test" title="Test" /></a>
+			 <a href="{% url edit-host server.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+			 <a href="{% url delete-host server.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+	<div class="spanrow">{% trans "No smtp delivery servers configured" %}</div>
+</div>
+{% endfor %}
+<div class="header_div">
+    <div class="Reports_heading">
+		{% trans "Authentication Servers" %}
+		<div class="Profile_edit">[ <a href="{% url add-auth-host domain.id %}">{% trans "Add" %}</a> ]</div>
+	</div>
+</div>
+{% for authserver in authservers  %}
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{{ authserver.address }}
+	</div>
+	<div class="Profile_values">
+		{% if authserver.enabled %}
+			{% trans "Enabled" %}
+		{% else %}
+			{% trans "Disabled" %}
+		{% endif %}
+		<div class="Profile_edit">
+			 <a href="{% url edit-auth-host  authserver.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+			 <a href="{% url delete-auth-host authserver.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+	<div class="spanrow">{% trans "No auth servers configured" %}</div>
+</div>
+{% endfor %}
+<div class="header_div">
+    <div class="Reports_heading">
+		{% trans "Email signatures" %}
+		<div class="Profile_edit">[ <a href="{% url add-signature domain.id %}">{% trans "Add" %}</a> ]</div>
+	</div>
+</div>
+{% for signature in signatures  %}
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% if signature.signature_type == 1 %}
+			{% trans "Text signature" %}
+		{% else %}
+			{% trans "HTML signature" %}
+		{% endif %}
+	</div>
+	<div class="Profile_values">
+		{% if signature.enabled %}
+			{% trans "Enabled" %}
+		{% else %}
+			{% trans "Disabled" %}
+		{% endif %}
+		<div class="Profile_edit">
+			 <a href="{% url edit-signature domain.id signature.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+			 <a href="{% url delete-signature domain.id signature.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+	<div class="spanrow">{% trans "No email signatures configured" %}</div>
+</div>
+{% endfor %}
+{% endblock content %}

@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block submenu %}
+<ul>
+{% ifnotequal user.get_profile.account_type 3  %}
+	<li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
+	{% ifequal user.id account_info.id %}
+		{% if not user.is_superuser %}
+		  	<li><a id="change-pw" href="{% url change-password %}">{% trans "Change your password" %}</a></li>	
+		{% endif %}
+	{% endifequal %}
+	{% if user.is_superuser %}
+		<li><a href="{% url change-pw account_info.id %}">{% trans "Change users password" %}</a></li>
+	{% endif %}
+{% else %}
+<li><a id="change-pw" href="{% url change-password %}">{% trans "Change your password" %}</a></li>
+{% endifnotequal %}
+</ul>
+{% endblock submenu %}
+{% block title %}{% trans "Account Profile" %}{% endblock title %}
+{% block heading %}{% trans "Account Profile" %}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">
+		{% blocktrans with account_info.username as account %}Viewing {{ account }}'s Profile{% endblocktrans %}
+		<div class="Profile_edit">[ <a href="{% url update-account account_info.id %}">{% trans "Edit" %}</a> ]</div>
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% trans "Username:" %}
+	</div>
+	<div class="Profile_values">
+		{{ account_info.username }}
+	</div>
+</div>	
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% trans "Full names:" %}
+	</div>
+	<div class="Profile_values">
+		{{ account_info.first_name }} {{ account_info.last_name }}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% trans "Email Address:" %}
+	</div>
+	<div class="Profile_values">
+		{{ account_info.email }}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% trans "Account status:" %}
+	</div>
+	<div class="Profile_values">
+		{% if account_info.is_active %}{% trans "Active" %}{% else %}{% trans "Disabled" %}{% endif %}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% trans "Last login:" %}
+	</div>
+	<div class="Profile_values">
+		{{ account_info.last_login }}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% trans "Account created on:" %}
+	</div>
+	<div class="Profile_values">
+		{{ account_info.date_joined }}
+	</div>
+</div>
+<div class="header_div">
+    <div class="Reports_heading">
+		{% trans "Profile Settings" %}
+		<div class="Profile_edit">[ <a href="{% url update-profile account_info.id %}">{% trans "Edit" %}</a> ]</div>
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% trans "Account type:" %}
+	</div>
+	<div class="Profile_values">
+		{% if account_info.is_superuser  %}
+			{% trans "Administrator" %}
+		{% else %}
+		{% ifequal account_profile.account_type 2  %}
+			{% trans "Domain Administrator" %}
+		{% endifequal %}
+		{% ifequal account_profile.account_type 3  %}
+			{% trans "User account" %}
+		{% endifequal %}
+		{% endif %}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% trans "Scan email:" %}
+	</div>
+	<div class="Profile_values">
+		{% if account_profile.scan_mail %}
+			{% trans "Yes" %}
+		{% else %}
+			{% trans "No" %}
+		{% endif %}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% trans "Send quarantine report:" %}
+	</div>
+	<div class="Profile_values">
+		{% if account_profile.send_report %}
+			{% trans "Yes" %}
+		{% else %}
+			{% trans "No" %}
+		{% endif %}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% trans "Spam High Score:" %}
+	</div>
+	<div class="Profile_values">
+		{{ account_profile.sa_high_score }}
+	</div>
+</div>
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% trans "Spam Low Score:" %}
+	</div>
+	<div class="Profile_values">
+		{{ account_profile.sa_low_score }}
+	</div>
+</div>
+{% if not account_info.is_superuser %}
+<div class="header_div">
+    <div class="Reports_heading">
+		{% ifequal account_profile.account_type 2  %}
+		{% trans "Domains managed" %}
+		{% else %}
+		{% trans "Associated Addresses" %}
+		{% endifequal %}
+		{% if user.is_superuser %}
+		{% if addresses %}
+		<div class="Profile_edit">
+			[ <a href="{% ifequal account_profile.account_type 2  %}{% url add-domain account_profile.id %}{% else %}{% url add-address account_profile.id %}{% endifequal %}">{% trans "Add" %}</a> ]
+		</div>	
+		{% endif %}	
+		{% endif %}	
+	</div>
+</div>
+{% for address in addresses %}
+	<div class="LightBlue_div">
+		<div class="Profile_cols">
+			{% if user.is_superuser %}
+			{% ifequal account_profile.account_type 2  %}
+			<a href="{% url view-domain address.id %}">{{ address.address }}</a>
+			{% else %}
+			{{ address.address }}
+			{% endifequal %}
+			{% else %}
+			{{ address.address }}	
+			{% endif %}
+		</div>
+		<div class="Profile_values">
+			{% if address.enabled %}
+				{% trans "Enabled" %}
+			{% else %}
+				{% trans "Disabled" %}
+			{% endif %}
+			<div class="Profile_edit">
+				{% if user.is_superuser %}
+				{% ifnotequal user.get_profile.account_type 3  %}
+				 <a href="{% url edit-address address.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+				 <a href="{% url delete-address address.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+				{% endifnotequal %}	
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% empty %}
+	<div class="LightBlue_div">
+		<div class="Profile_cols">
+			{% trans "No addresses stored at the moment." %}
+		</div>
+		<div class="Profile_values">
+			{% if user.is_superuser %}
+			<a href="{% ifequal account_profile.account_type 2  %}{% url add-domain account_profile.id %}{% else %}{% url add-address account_profile.id %}{% endifequal %}" title="Add Address"><img alt="Add Address" src="{{ MEDIA_URL }}imgs/action_add.png" /></a>
+			{% endif %}
+		</div>		 
+	</div>
+{% endfor %}
+{% if account_profile.account_type == 3 %}
+<div class="header_div">
+    <div class="Reports_heading">
+		{% trans "Email signatures" %}
+		<div class="Profile_edit">[ <a href="{% url accounts-add-signature account_info.id %}">{% trans "Add" %}</a> ]</div>
+	</div>
+</div>
+{% for signature in signatures  %}
+<div class="LightBlue_div">
+	<div class="Profile_cols">
+		{% if signature.signature_type == 1 %}
+			{% trans "Text signature" %}
+		{% else %}
+			{% trans "HTML signature" %}
+		{% endif %}
+	</div>
+	<div class="Profile_values">
+		{% if signature.enabled %}
+			{% trans "Enabled" %}
+		{% else %}
+			{% trans "Disabled" %}
+		{% endif %}
+		<div class="Profile_edit">
+			 <a href="{% url accounts-edit-signature account_info.id signature.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+			 <a href="{% url accounts-delete-signature account_info.id signature.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+	<div class="spanrow">{% trans "No email signatures configured" %}</div>
+</div>
+{% endfor %}
+{% endif %}	
+{% endif %}
+{% endblock content %}

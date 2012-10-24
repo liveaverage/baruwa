@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block scripts %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+{% if list_all %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.address.js"></script>
+{% endif %}
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var last_ts = '';
+var rj;
+var ax_error = false;
+var media_url = '{{MEDIA_URL}}';
+//]]>
+</script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/lib.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/ajax-csrf-tokenize.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/quarantine.js"></script>
+{% endblock scripts %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url all-messages-index 'quarantine' %}">{% trans "Full Quarantine" %}</a></li>
+	<li><a href="{% url quarantine-bytype-index 'quarantine', 'spam' %}">{% trans "Spam" %}</a></li>
+	<li><a href="{% url quarantine-bytype-index 'quarantine', 'policyblocked' %}">{% trans "Non Spam" %}</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}
+{% if list_all %}
+	{% load pagination_heading %}{% pagination_heading %}
+{% else %}
+	{% trans "Showing the 50 most recent messages" %}
+{% endif %}
+{% endblock title %}
+{% block heading %}
+{% if list_all %}
+	{% load pagination_heading %}{% pagination_heading %}
+	{%if active_filters %}
+		(<small><a href="{% url reports-index %}#active_filters">{% trans "Filters" %}</a> {% trans "have been applied" %}</small>)
+	{%endif%}
+{% else %}
+	{% trans "Showing the 50 most recent messages" %}
+	<small>
+	    [{% trans "Enable javascript for updates" %}]
+	</small>
+{% endif %}
+{% endblock heading %}
+{% block content %}
+<form method="post" action="{% url message-bulk-process %}">
+{% csrf_token %}
+<div id="form-submission">
+	<div class="quaran_lightblue_div">
+		<div class="quaran_release_col">
+			{% trans "Release" %}
+		</div>
+		<div class="quaran_release_col">
+			{% trans "Delete" %}
+		</div>
+		<div class="quaran_release_col">
+			{% trans "Train" %}
+		</div>
+		<div class="quaran_release_col">
+			{% trans "Alt recipients" %}
+		</div>
+	</div>
+	<div class="quaran_lightblue_div">
+	<div class="quaran_release_col">
+		{{ quarantine_form.release }}
+	</div>
+	<div class="quaran_release_col">
+		{{ quarantine_form.todelete }}
+	</div>
+	<div class="quaran_release_col">
+		{{ quarantine_form.learn }}&nbsp;{{ quarantine_form.salearn_as }}
+	</div>
+	<div class="quaran_release_col">
+		{{ quarantine_form.use_alt }}
+	</div>
+	<div class="quaran_alt_col">
+		{{ quarantine_form.altrecipients }}
+	</div>
+	<div class="quaran_release_col">
+		<input type="submit" id="submit_q_request" value="{% trans "Process" %}" />
+	</div>
+	</div>
+</div>
+<div class="Grid_heading"> <!--Heading Start Here-->
+	<div class="quaran_select_heading"><input type="checkbox" name="selector" id="allchecker" /></div>
+	{% if list_all %}
+	{% load sorter %}
+	<div class="quaran_date_time_heading">{% sorter "timestamp" "Date/Time" %}</div>
+	<div class="quaran_from_heading">{% sorter "from_address" "From" %}</div>
+	<div class="quaran_to_heading">{% sorter "to_address" "To" %}</div>
+	<div class="quaran_subject_heading">{% sorter "subject" "Subject" %}</div>
+	<div class="quaran_score_heading">{% sorter "sascore" "Score" %}</div>
+	{% else %}
+	<div class="quaran_date_time_heading">{% trans "Date/Time" %}</div>
+	<div class="quaran_from_heading">{% trans "From" %}</div>
+	<div class="quaran_to_heading">{% trans "To" %}</div>
+	<div class="quaran_subject_heading">{% trans "Subject" %}</div>
+	<div class="quaran_score_heading">{% trans "Score" %}</div>
+	{% endif %}
+	<div class="quaran_status_heading">{% trans "Status" %}</div>
+</div>	<!--Heading End Here-->
+{% load messages_extras %}
+{% for message in object_list %}
+<div class="{{ message|tds_msg_class }}_div">
+	<div class="quaran_select_row"><input type="checkbox" name="message_id" value="{{message.id}}" class="selector" /></div>
+	<div class="quaran_date_time_row">
+		<a href="{% url message-detail message.id %}">{{ message.timestamp|date:"Y-m-d H:i:s"  }}</a>
+	</div>
+	<div class="quaran_from_row">
+		<a href="{% url message-detail message.id %}">{{ message.from_address|tds_trunc:30 }}</a>
+	</div>
+	<div class="quaran_to_row">
+		<a href="{% url message-detail message.id %}">{{ message.to_address|tds_nl_commas|linebreaksbr }}</a>
+	</div>
+	<div class="quaran_subject_row">
+		<a href="{% url message-detail message.id %}">{{ message.subject|striptags|escape|tds_trunc:45 }}</a>
+	</div>
+	<div class="quaran_score_row">
+		<a href="{% url message-detail message.id %}">{{ message.sascore }}</a>
+	</div>
+	<div class="quaran_status_row">
+		<a href="{% url message-detail message.id %}">{{ message|tds_msg_status }}</a>
+	</div>                        
+</div>
+{% empty %}
+<div class="LightBlue_div">
+<div class="spanrow">{% trans "No records returned" %}</div>
+</div>
+{% endfor %}
+</form>
+{% endblock content %}
+{% block paging %}
+{% if list_all %}
+<div class="content_footer">
+	<div id="filters">
+		{% if active_filters %}
+		<b>{% trans "Filters have been applied :" %}</b>
+		<span id="fhl" style="display:inline;">
+		{% for f in active_filters %}
+		"<a href="/reports/#active_filters">{{f.filter_field}} {{f.filter_by}} {{f.filter_value}}</a>"{% if not forloop.last %},{% endif %}
+		{% endfor %}
+		</span>
+		{% endif %}
+	</div>
+	<div id="paginator">
+		{% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+	</div>
+</div>
+{% endif %}
+{% endblock paging %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[{{ MEDIA_URL }}
+var rj;
+var ax_error = false;
+var media_url = '{{MEDIA_URL}}';
+//]]>
+</script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.address.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/ajax-csrf-tokenize.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/domains.js"></script>
+{% endblock scripts %}
+{% block submenu %}
+<ul>
+  <li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
+  <li><a href="{% url list-scanners %}">{% trans "Scanners" %}</a></li>
+</ul>	
+{% endblock submenu %}
+{% block title %}{% trans "Settings" %}{% endblock title %}
+{% block heading %}{% trans "Domains :: " %}{% load pagination_heading %}{% pagination_heading %}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+	<div class="Domains_grid_hash">		
+	</div>
+	<div class="Domains_grid_name">
+		{% trans "Domain Name" %}
+	</div>
+	<div class="Domains_grid_owner">
+		{% trans "Owner" %}
+	</div>
+	<div class="Domains_grid_status">
+		{% trans "Status" %}
+	</div>
+	<div class="Domains_grid_action">
+		{% trans "Actions" %}
+	</div>
+</div>
+{% for domain in object_list %}
+<div id="domain-id-{{domain.id}}" class="{% cycle 'LightBlue' 'LightGray' %}_div">
+	<div class="Domains_hash">
+		{% if domain.enabled %}
+			<img src="{{ MEDIA_URL }}imgs/active.png" alt="" />
+		{% else %}
+			<img src="{{ MEDIA_URL }}imgs/inactive.png" alt="" />
+		{% endif %}	
+	</div>
+	<div class="Domains_name">
+		<a href="{% url view-domain domain.id %}">{{ domain.address }}</a>
+	</div>
+	<div class="Domains_owner">
+		<a href="{% url user-profile domain.user__id %}">{{ domain.user__first_name }} {{ domain.user__last_name }} ( {{ domain.user__username }} )</a>
+	</div>
+	<div class="Domains_status">
+		{% if domain.enabled %}
+			<img src="{{ MEDIA_URL }}imgs/tick.png" alt="" />
+		{% else %}
+			<img src="{{ MEDIA_URL }}imgs/minus.png" alt="" />
+		{% endif %}
+	</div>
+	<div class="Domains_action">
+		<div class="Domains_action_edit">
+			<a href="{% url edit-address domain.id %}"><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+		</div>
+		<div class="Domains_action_delete">
+			<a href="{% url delete-address domain.id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+<div class="spanrow">{% trans "No domains found" %}</div>
+</div>
+{% endfor %}
+{% endblock content %}
+{% block paging %}
+<div class="content_footer">
+    <div id="paginator">
+    {% load generic_paginator %}{% generic_paginator 3 %}
+    </div>
+</div>
+{% endblock paging %}

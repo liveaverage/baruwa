@@ -96,5 +96,3 @@ Edit the settings.py file and make configuration changes to suit your site.::
 .. include:: includes/signatures.inc
 
 .. include:: includes/testing.inc
-
-.. include:: includes/assistance.inc

@@ -77,7 +77,6 @@ def jsonify_status(element):
     return element
 
 
-
 def get_processes(process_name):
     "Gets running processes by process name"
     pipe1 = subprocess.Popen(['ps', 'ax'], stdout=subprocess.PIPE,

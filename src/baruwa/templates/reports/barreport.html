@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block body_class%} class="tundra"{%endblock body_class%}
+{% block headers %}<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/dijit/themes/tundra/tundra.css" />{% endblock headers %}
+{% block scripts %}<script type="text/javascript">
+	var djConfig = { parseOnLoad:true, isDebug:false };
+	var labels = {{pie_data.scores|safe}};
+	var sa_scores = {{pie_data.count|safe}};
+	var media_url = '{{MEDIA_URL}}';
+</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/dojo/dojo.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/reports.common.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/reports.barreport.js"></script>{% endblock scripts %}
+{% block submenu %}
+&nbsp;
+{% endblock submenu %}
+{% block title %}
+{% blocktrans %}Reports - {{report_title}}{% endblocktrans %}
+{% endblock title %}
+{% block heading %}
+{% blocktrans %}Reports - {{report_title}}{% endblocktrans %}
+{% endblock heading %}
+{% block content %}
+<div class="White_div">
+	<div id="chart" style="width: 950px; height: 250px;">
+		<noscript>{% trans "Enable javascript to view graphs" %}</noscript>
+	</div>
+</div>
+<div class="header_div">
+	<div class="SA_score">
+		{% trans "Score" %}
+	</div>
+	<div class="SA_count">
+		{% trans "Count" %}
+	</div>
+</div>
+<div id="graphrows">
+{% for item in top_items %}
+	<div class="{% cycle 'LightBlue_div' 'LightGray_div' %}">
+		<div class="SA_score">
+			{{ item.score }}
+		</div>
+		<div class="SA_count">
+			{{ item.count }}
+		</div>
+	</div>
+{% empty %}
+	<div class="spanrow">
+		{% trans "No items returned" %}
+	</div>
+{% endfor %}
+</div>
+<div id="filterrow" class="lightblue_div{% if not active_filters %} hide{% endif %}">
+    <div class="filterrow">
+        {% trans "Filters have been applied :" %}
+        <span id="fhl">
+            {% for f in active_filters %}
+            	&nbsp;<a href="{% url remove-filter forloop.counter0 %}"><img src="/static/imgs/sm-del.png" alt="x"/></a> "{{ f.filter_field }} {{f.filter_by}} {{f.filter_value}}"
+				{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        </span>
+    </div>
+</div>
+{% include "reports/filter.form.html" %}
+{% endblock content %}

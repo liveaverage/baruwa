@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block scripts %}
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.clearform.js"></script>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+var rj;
+var ax_error = false;
+var media_url = '{{MEDIA_URL}}';
+//]]>
+</script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/prevent-caching-of-ajax-requests.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/ajax-csrf-tokenize.js"></script>
+<script type="text/javascript" language="javascript" src="{{ MEDIA_URL }}js/baruwa/reports.js"></script>
+{% endblock scripts %}
+{% block title %}{% trans "Reports" %}{% endblock title %}
+{% block heading %}{% trans "Reports" %}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Reports_heading">{% trans "Statistics" %}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Reports_cols">
+        <div class="title">{% trans "Message count" %}</div>
+    </div>
+    <div id="msgcount" class="Reports_cols">{{ data.count }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Reports_cols">
+        <div class="title">{% trans "Oldest message processed on" %}</div>
+    </div>
+    <div id="oldestmsg" class="Reports_cols">{{ data.oldest }}</div>
+</div>
+<div class="LightBlue_div">
+    <div class="Reports_cols">
+        <div class="title">{% trans "Newest message processed on" %}</div>
+    </div>
+    <div id="newestmsg" class="Reports_cols">{{ data.newest }}</div>
+</div>
+<div class="header_div">
+    <div class="Reports_heading">{% trans "Reports" %}</div>
+</div>
+<div class="lightblue_div">
+    <div class="Reports_cols">
+        <ul class="reports">
+            <li><a href="{% url report-kind 1 %}">{% trans "Top Senders by Quantity" %}</a></li>
+            <li><a href="{% url report-kind 2 %}">{% trans "Top Senders by Volume" %}</a></li>
+            <li><a href="{% url report-kind 3 %}">{% trans "Top Sender Domains by Quantity" %}</a></li>
+            <li><a href="{% url report-kind 4 %}">{% trans "Top Sender Domains by Volume" %}</a></li>
+            <li><a href="{% url report-kind 9 %}">{% trans "Spamassassin Score Distribution" %}</a></li>
+            <li><a href="{% url report-kind 10 %}">{% trans "Top Mail hosts" %}</a></li>
+        </ul>
+    </div>
+    <div class="Reports_cols">
+        <ul class="reports">
+            <li><a href="{% url report-kind 5 %}">{% trans "Top Recipients by Quantity" %}</a></li>
+            <li><a href="{% url report-kind 6 %}">{% trans "Top Recipients by Volume" %}</a></li>
+            <li><a href="{% url report-kind 7 %}">{% trans "Top Recipient Domains By Quantity" %}</a></li>
+            <li><a href="{% url report-kind 8 %}">{% trans "Top Recipient Domains By Volume" %}</a></li>
+            <li><a href="{% url report-kind 11 %}">{% trans "Message Totals" %}</a></li>
+            <li><a href="{% url all-messages-index 'full' %}">{% trans "Message Listings" %}</a></li>
+        </ul>
+    </div>
+</div>
+{% include "reports/filter.form.html" %}
+<div id="aheading" class="header_div">
+    <div class="Reports_heading">{% trans "Active Filter(s)" %}</div>
+</div>
+{% if errors %}
+<div id="filter-error">{{ errors }}</div>
+{% endif %}
+<div id="afilters">
+{% for f in active_filters %} 
+<div class="LightBlue_div">
+    <div class="Active_filters">
+        <div class="Filter_remove">
+            <a href="{% url remove-filter forloop.counter0 %}"><img src="{{ MEDIA_URL }}imgs/action_remove.png" alt="x" title="{% trans "Remove" %}" /></a>
+        </div>
+        <div class="Filter_save">
+            <a href="{% url save-filter forloop.counter0 %}"><img src="{{ MEDIA_URL }}imgs/save.png" alt="Save" title="{% trans "Save" %}" /></a>
+        </div>
+        <div class="Filter_detail">
+            {{ f.filter_field }} {{ f.filter_by }} {{ f.filter_value }}
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+    <div class="spanrow">{% trans "No active filters at the moment" %}</div>
+</div>
+{% endfor %}
+</div>
+<div class="header_div">
+    <div class="Reports_heading">{% trans "Saved Filter(s)" %}</div>
+</div>
+<div id="sfilters">
+{% for sf in saved_filters %}
+<div class="LightBlue_div">
+    <div class="Active_filters">
+        <div class="Filter_remove">
+            <a href="{% url delete-filter sf.filter_id %}"><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="x" title="Delete" /></a>
+        </div>
+        <div class="Filter_save">
+            {% if not sf.is_loaded %}
+            <a href="{% url load-filter sf.filter_id %}"><img src="{{ MEDIA_URL }}imgs/action_add.png" alt="Load" title="Load" /></a>
+            {% else %}
+            <img src="{{ MEDIA_URL }}imgs/action_add.png" alt="Load" />
+            {% endif %}
+        </div>
+        <div class="Filter_detail">
+            {{ sf.filter_name }}
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="LightBlue_div">
+    <div class="spanrow">{% trans "No saved filters at the moment" %}</div>
+</div>
+{% endfor %}
+</div>
+{% endblock content %}

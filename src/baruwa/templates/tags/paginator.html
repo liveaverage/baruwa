@@ -1,0 +1,63 @@
+{% load i18n %}
+{% blocktrans %}Showing page {{ page }} of {{ pages }} pages.{% endblocktrans %}
+{% if show_first %}
+<span>
+	{% if quarantine_type %}
+	<a href="{% url quarantine-sorted-bytype-pager view_type,quarantine_type,1,direction,order_by %}">
+	{% else %}
+	<a href="{% url sorted-messages-page view_type,1,direction,order_by %}">
+	{% endif %}
+		<img src="/static/imgs/first_pager.png" alt="First"/>
+	</a>
+</span>
+<span>......</span>
+{% endif %}
+{% if has_previous %}
+<span>
+	{% if quarantine_type %}
+	<a href="{% url quarantine-sorted-bytype-pager view_type,quarantine_type,previous,direction,order_by %}">
+	{% else %}
+	<a href="{% url sorted-messages-page view_type,previous,direction,order_by %}">
+	{% endif %}
+		<img src="/static/imgs/previous_pager.png" alt="Previous"/>
+	</a>
+</span>
+{% endif %}
+{% for linkpage in page_numbers %}
+{% ifequal linkpage page %}
+<span><b>{{ page }}</b></span>
+{% else %}
+<span>
+	{% if quarantine_type %}
+	<a href="{% url quarantine-sorted-bytype-pager view_type,quarantine_type,linkpage,direction,order_by %}">
+	{% else %}
+	<a href="{% url sorted-messages-page view_type,linkpage,direction,order_by %}">	
+	{% endif %}
+		{{ linkpage }}
+	</a>
+</span>
+{% endifequal %}
+{% endfor %}
+{% if has_next %}
+<span>
+	{% if quarantine_type %}
+	<a href="{% url quarantine-sorted-bytype-pager view_type,quarantine_type,next,direction,order_by %}">
+	{% else %}
+	<a href="{% url sorted-messages-page view_type,next,direction,order_by %}">	
+	{% endif %}	
+		<img src="/static/imgs/next_pager.png" alt="Next"/>
+	</a>
+</span>
+{% endif %}
+{% if show_last %}
+<span>......</span>
+<span>
+	{% if quarantine_type %}
+	<a href="{% url quarantine-sorted-bytype-pager view_type,quarantine_type,'last',direction,order_by %}">
+	{% else %}
+	<a href="{% url sorted-messages-page view_type,'last',direction,order_by %}">	
+	{% endif %}
+		<img src="/static/imgs/last_pager.png" alt="Last"/>
+	</a>
+</span>
+{% endif %}

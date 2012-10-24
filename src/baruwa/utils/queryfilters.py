@@ -21,8 +21,7 @@
 
 from django.db.models import Q
 
-from baruwa.mail.reports.forms import FILTER_ITEMS, FILTER_BY
-from baruwa.web.reports.forms import FILTER_ITEMS as WEBFILTER_ITEMS, FILTER_BY as WEBFILTER_BY
+from baruwa.reports.forms import FILTER_ITEMS, FILTER_BY
 
 
 def place_positive_vars(key, largs, kwargs, lkwargs, value):
@@ -97,7 +96,7 @@ def get_active_filters(filter_list, active_filters):
             filter_value=filter_item['value']))
 
 
-def gen_dynamic_query(model, filter_list, active_filters=None, isweb=None):
+def gen_dynamic_query(model, filter_list, active_filters=None):
     "build a dynamic query"
     kwargs = {}
     lkwargs = {}
@@ -106,13 +105,8 @@ def gen_dynamic_query(model, filter_list, active_filters=None, isweb=None):
     nargs = []
     largs = []
 
-    if isweb is None:
-        filter_items = dict(FILTER_ITEMS)
-        filter_by = dict(FILTER_BY)
-    else:
-        filter_items = dict(WEBFILTER_ITEMS)
-        filter_by = dict(WEBFILTER_BY)
-        
+    filter_items = dict(FILTER_ITEMS)
+    filter_by = dict(FILTER_BY)
 
     for filter_item in filter_list:
         value = str(filter_item['value'])
@@ -155,7 +149,7 @@ def gen_dynamic_query(model, filter_list, active_filters=None, isweb=None):
         if not active_filters is None:
             active_filters.append(
                 {
-                'filter_field': filter_items[filter_item['field']] if filter_item['field'] != 'query' else filter_items['searchquery__query'],
+                'filter_field': filter_items[filter_item['field']],
                 'filter_by': filter_by[int(filter_item['filter'])],
                 'filter_value': value}
                 )
@@ -176,32 +170,11 @@ def gen_dynamic_query(model, filter_list, active_filters=None, isweb=None):
     return model
 
 
-def apply_filter(model, request, active_filters, isweb=None, reportid=None):
+def apply_filter(model, request, active_filters):
     "apply filters to a model"
     if request.session.get('filter_by', False):
         filter_list = request.session.get('filter_by')
         model = gen_dynamic_query(model, filter_list, active_filters)
-    if request.session.get('web_filter_by', False) and isweb:
-        filter_list = request.session.get('web_filter_by')
-        if reportid and reportid in [13, 14]:
-            found = False
-            for index, web_filter in enumerate(filter_list):
-                if web_filter['field'] == 'searchquery__query':
-                    found = True
-                    break
-            if found:
-                web_filter['field'] = 'query'
-                filter_list[:] = []
-                filter_list.append(web_filter)
-            else:
-                filter_list[:] = []
-
-        if reportid and reportid in [5, 6]:
-            for index, web_filter in enumerate(filter_list):
-                if web_filter['field'] == 'searchquery__query':
-                    break
-            filter_list.pop(index)
-        model = gen_dynamic_query(model, filter_list, active_filters, True)
     return model
 
 

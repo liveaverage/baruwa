@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block submenu %}
+{% if user.is_superuser %}
+<ul>
+  <li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
+  <li><a href="{% url settings-index %}">{% trans "Domains" %}</a></li>
+</ul>	
+{% endif %}
+{% endblock submenu %}
+{% block title %}{% trans "Scanning Nodes" %}{% endblock title %}
+{% block heading %}{% trans "Scanning Nodes ::" %} {% load pagination_heading %}{% pagination_heading %}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+	<div class="Domains_grid_hash">		
+	</div>
+	<div class="Scanners_grid_name">
+		{% trans "Node Name" %}
+	</div>
+	<div class="Scanners_grid_status">
+		{% trans "Status" %}
+	</div>
+	<div class="Scanners_grid_action">
+		{% trans "Actions" %}
+	</div>
+</div>
+{% for scanner in object_list %}
+<div id="scanner-id-{{scanner.id}}" class="{% cycle 'LightBlue' 'LightGray' %}_div">
+	<div class="Domains_hash">
+		{% if domain.enabled %}
+			<img src="{{ MEDIA_URL }}imgs/active.png" alt="" />
+		{% else %}
+			<img src="{{ MEDIA_URL }}imgs/inactive.png" alt="" />
+		{% endif %}	
+	</div>
+	<div class="Scanners_name">
+		<a href="{% url view-scanner scanner.id %}">{{ scanner.address }}</a>
+	</div>
+	<div class="Scanners_status">
+		{% if configs %}
+			<img src="{{ MEDIA_URL }}imgs/tick.png" alt="" />
+		{% else %}
+			<a href="{% url init-scanner scanner.id %}">{% trans "Initialize" %}</a>
+		{% endif %}
+	</div>
+	<div class="Scanners_action">
+		<div class="Scanners_action_change">
+			<a href=""><img src="{{ MEDIA_URL }}imgs/edit.png" alt="Edit" title="Edit" /></a>
+		</div>
+		<div class="Scanners_action_change">
+			<a href=""><img src="{{ MEDIA_URL }}imgs/action_delete.png" alt="Delete" title="Delete" /></a>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="spanrow">{% trans "No scanning nodes found" %}</div>
+{% endfor %}
+{% endblock content %}
+{% block paging %}
+<div class="content_footer">
+    <div id="paginator">
+    {% load generic_paginator %}{% generic_paginator 3 %}
+    </div>
+</div>
+{% endblock paging %}

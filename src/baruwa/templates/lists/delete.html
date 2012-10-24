@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block submenu %}
+<ul>
+  <li><a id="list-link" href="/lists/1/">{% trans "Whitelist" %}</a></li>
+  <li><a id="list-link" href="/lists/2/">{% trans "Blacklist" %}</a></li>
+</ul>
+{% endblock submenu %}
+{% block title %}{% trans "Delete from List" %}{% endblock title %}
+{% block heading %}{% trans "Delete from List" %}{% endblock heading %}
+{% block content %}
+<div class="Grid_heading">
+    <div class="Reports_heading">{% trans "Delete Item from" %} {% ifequal list_item.list_type 1 %}{% trans "Whitelist" %}{% else %}{% trans "Blacklist" %}{% endifequal %}</div>
+</div>
+<form method="post" action="{% url list-del item_id %}">
+	{% csrf_token %}
+	<div class="hide">
+	    {{ form.list_item }}
+	</div>
+	<div class="LightBlue_div">
+	    <div class="listdel">
+			{% blocktrans with list_item.from_address as address %}
+				This will delete {{ address }} from the {% endblocktrans %}{% ifequal list_item.list_type 1 %}{% trans "Whitelist" %}{% else %}{% trans "Blacklist" %}{% endifequal %} 
+			<div class="right"><input type="submit" value="{% trans "Delete" %}" /></div>
+		</div>
+	</div>
+</form>
+{% endblock content %}

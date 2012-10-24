@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block submenu %}
+<ul>
+	<li><a href="{% url accounts %}">{% trans "Accounts" %}</a></li>
+	<li><a href="{% url update-profile user_profile.id %}">{% trans "Account page" %}</a></li>
+</ul>	
+{% endblock submenu %}
+{% block title %}{% trans "Accounts :: Add Email signature" %}{% endblock title %}
+{% block heading %}{% blocktrans with account.username as address %}
+Accounts :: {{ address }} - add email signature
+{% endblocktrans %}{% endblock heading %}
+{% block content %}
+<form action="" method="post">
+	{% csrf_token %}
+<div class="Grid_heading">
+    <div class="Bayes_heading">
+		{% trans "Add email signature" %}
+	</div>
+</div>
+{% if form.non_field_errors %}
+<div class="LightBlue_div">
+	<div class="spanrow form_error">{{ form.non_field_errors }}</div>
+</div>
+{% endif %}
+{% for hidden in form.hidden_fields %}
+	{{ hidden }}
+{% endfor %}
+{% for field in form.visible_fields %}
+<div class="LightBlue_div">
+	<div class="form_label">{{ field.label }}</div>
+	<div class="form_value">{{ field }}</div>
+	<div class="form_error">{{ field.errors }}</div>
+</div>
+{% endfor %}
+<div class="LightBlue_div">
+    <div class="form_label">&nbsp;</div>
+    <div class="form_value">
+        <input id="cancel-button" type="reset" value="{% trans "Clear" %}" />&nbsp;
+        <input id="submit-button" type="submit" value="{% trans "Add" %}" />
+    </div>
+    <div class="form_error"></div>
+</div>
+</form>
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.cleditor.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/jquery.cleditor.imgs.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/ajax-csrf-tokenize.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/baruwa/signatures.js"></script>
+{% include "common/signaturejs.html" %}
+{% endblock scripts %}
+{% block headers %}
+<link href="{{ MEDIA_URL }}css/jquery.cleditor.css" rel="stylesheet" type="text/css" />
+<link href="{{ MEDIA_URL }}css/jquery.wysiwyg.css" rel="stylesheet" type="text/css" />
+<link href="{{ MEDIA_URL }}css/wysiwyg.fileManager.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+var fm_url = '{% url accounts-image-manager user_account.id %}';
+var media_url = '{{MEDIA_URL}}';
+</script>
+{% endblock headers %}

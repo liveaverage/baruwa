@@ -1,0 +1,24 @@
+{% load i18n %}
+{% if hosts %}
+<div>
+    <div class="relayed_heading">
+        <div class="relayed_col">{% trans "IP address" %}</div>
+        <div class="relayed_col_country">{% trans "Hostname" %}</div>
+        <div class="relayed_col">{% trans "Country" %}</div>
+    </div>
+{% for host in hosts %}
+    <div class="relayed_div">
+        <div class="relayed_col">{{ host.ip_address }}</div>
+        <div class="relayed_col_country">{{ host.hostname|default:"Lookup failed" }}</div>
+        <div class="relayed_col">
+            {% if host.country_code %}
+            <img src="/static/imgs/flags/{{host.country_code}}.png" alt="{{host.country_code}}" />
+            {% endif %}
+            &nbsp;{{ host.country_name }}
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% else %}
+&nbsp;&nbsp;&nbsp;-- {% trans "direct connection" %} --
+{% endif %}

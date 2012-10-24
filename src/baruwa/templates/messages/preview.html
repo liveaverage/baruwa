@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% blocktrans %}Baruwa :: Previewing message - {{ message_id }}{% endblocktrans %}{% endblock %}
+{% block heading %}{% blocktrans %}Previewing message - {{ message_id }} {% endblocktrans %}{% endblock %}
+{% block submenu %}
+<ul>
+	{% if not archive %}
+  	<li><a href="{% url message-detail message_id %}#qheading">{% trans "Release message" %}</a></li>
+	<li><a href="{% url message-detail message_id %}">{% trans "Return to message" %}</a></li>
+	{% else %}
+	<li><a href="{% url archive-message-detail message_id %}">{% trans "Return to message" %}</a></li>
+	{% endif %}
+  	
+</ul>
+{% endblock submenu %}
+{% block content %}
+{% if message %}
+{% load messages_extras %}
+    <div class="LightBlue_div">
+        <div class="mailitem">{% trans "From:" %}</div>
+        <div class="maildetail">{{message.headers.from|escape}}</div>
+    </div>
+    <div class="LightBlue_div">
+        <div class="mailitem">{% trans "To:" %}</div>
+        <div class="maildetail">{{message.headers.to|escape}}</div>
+    </div>
+    <div class="LightBlue_div">
+        <div class="mailitem">{% trans "Subject:" %}</div>
+        <div class="maildetail">{{message.headers.subject|escape}}</div>
+    </div>
+    <div class="LightBlue_div">
+        <div class="mailitem">{% trans "Date:" %}</div>
+        <div class="maildetail">{{message.headers.date|escape}}</div>
+    </div>
+    {% if message.attachments %}
+    <div class="lightblue_div">
+        <div class="mailitem">{% trans "Attachments:" %}</div>
+        <div class="maildetail">
+            {% for name in message.attachments %}
+            <img src="{{ MEDIA_URL }}imgs/dl.png" />&nbsp;<a href="{% url download-attachment message_id=message_id, attachment_id=forloop.counter %}">{{ name.filename }}</a>&nbsp;
+            {%endfor%}
+        </div>
+    </div>
+    {% endif %}
+    <div class="header_div">
+        <div class="Reports_heading">{% trans "Message content" %}</div>
+    </div>
+    <div class="lightblue_div">
+        <div id="mailpreview">
+            {% ifequal message.parts.0.type "text" %}
+            {{message.parts.0.content|linebreaksbr|escape}}
+            {% else %}
+            {{ message.parts.0.content|safe }}	
+            {% endifequal %}
+        </div>
+    </div>
+    <div class="lightblue_div">
+        <div class="spanrow">
+            {% if message.parts.1 %}
+            <small>:: {% trans "Message is multipart" %} <a href="">{% trans "view" %}</a> {% trans "the other part" %}</small>
+            {%endif%}
+        </div>
+    </div>
+{% else %}
+    <div class="LightBlue_div">
+        <div class="spanrow">{% trans "Message could not be previewed" %}</div>
+    </div>
+{% endif %}
+{% endblock content %}
