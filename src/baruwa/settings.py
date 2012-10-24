@@ -35,23 +35,7 @@ DATABASES = {
         # Set to empty string for default. Not used with sqlite3.
         'PORT': '',
         'OPTIONS': { 'init_command': 'SET storage_engine=INNODB, SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;' },
-    },
-    'web': {
-        # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3'
-        # or 'oracle'.
-        'ENGINE': 'django.db.backends.mysql',
-        # Or path to database file if using sqlite3.
-        'NAME': '',
-        # Not used with sqlite3.
-        'USER': '',
-        # Not used with sqlite3.
-        'PASSWORD': '',
-        # Set to empty string for localhost. Not used with sqlite3.
-        'HOST': '',
-        # Set to empty string for default. Not used with sqlite3.
-        'PORT': '',
-        'OPTIONS': { 'init_command': 'SET storage_engine=INNODB, SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;' },
-    },
+    }
 }
 
 DATABASE_ROUTERS = ['baruwa.utils.dbrouters.BaruwaDBRouter',]
@@ -118,7 +102,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'baruwa.utils.context_processors.status',
     'baruwa.utils.context_processors.general',
-    'baruwa.web.context.web_totals',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -138,29 +121,24 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'baruwa.mail.fixups',
+    'baruwa.fixups',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'baruwa.mail.auth',
-    'baruwa.mail.accounts',
-    'baruwa.mail.messages',
-    'baruwa.mail.lists',
-    'baruwa.mail.reports',
-    'baruwa.mail.status',
-    'baruwa.mail.config',
-    'baruwa.web.visits',
-    'baruwa.web.config',
-    'baruwa.web.reports',
-    'baruwa.web.status',
-    'baruwa.web.connections',
+    'baruwa.auth',
+    'baruwa.accounts',
+    'baruwa.messages',
+    'baruwa.lists',
+    'baruwa.reports',
+    'baruwa.status',
+    'baruwa.config',
     'djcelery',
     'south',
     #'debug_toolbar',
 )
 
 AUTHENTICATION_BACKENDS = (
-    'baruwa.mail.auth.backends.MailBackend',
+    'baruwa.auth.backends.MailBackend',
     'django.contrib.auth.backends.ModelBackend',
     #'baruwa.auth.radius.RadiusAuth',
     #'baruwa.auth.ad.ActiveDirectoryBackend',
@@ -265,19 +243,6 @@ EMAIL_SIGNATURES_DIR = '/etc/MailScanner/signatures'
 #number of recent messages to display on front page
 # defaults to 50
 #BARUWA_NUM_RECENT_MESSAGES = 50
-
-WEB_OBFUSCATE = False
-
-BARUWA_WEB_TOTALS_INTERVAL = 5
-
-# Web configuration verification tool
-BARUWA_WEB_VERIFY_CMD = '/usr/bin/true'
-
-# Web configuration apply tool
-BARUWA_WEB_APPLY_CMD = '/usr/bin/true'
-
-# Number of web settings per page
-BARUWA_WEB_NUM_SETTINGS = 10
 
 # LDAP/AD SERVER PORT
 AD_HOST_NAME = '127.0.0.1'
