@@ -28,7 +28,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.utils.translation import ugettext as _
 
 from baruwa.utils.mail.mailq import Mailq
-from baruwa.mail.status.models import MailQueueItem
+from baruwa.status.models import MailQueueItem
 from baruwa.utils.misc import get_config_option
 
 
