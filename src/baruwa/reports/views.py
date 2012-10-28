@@ -300,8 +300,9 @@ def report(request, report_kind):
             get_active_filters(filter_list, active_filters)
 
         data = SpamScores.objects.all(request.user, filter_list, addrs, act)
-        for row in data:
-            scores.append({'value': int(row.score), 'text': str(row.score)})
+        for index, row in enumerate(data):
+            value = index + 1
+            scores.append({'value': value, 'text': str(row.score)})
             counts.append({'y': int(row.count),
             'tooltip': 'Score ' + str(row.score) + ': ' + str(row.count)})
 
