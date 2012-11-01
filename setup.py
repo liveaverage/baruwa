@@ -22,13 +22,14 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(name='baruwa',
-      version="1.1.1",
+      version="1.1.2",
       description="Ajax enabled MailScanner web frontend",
       long_description=read('README'),
       keywords='MailScanner Email Filters Quarantine Spam',
       author='Andrew Colin Kissa',
       author_email='andrew@topdog.za.net',
       url='http://www.baruwa.org',
+      download_url='http://www.topdog-software.com/oss/baruwa/1.1.2',
       license='GPL',
       platforms=["any"],
       packages=find_packages('src'),

@@ -43,3 +43,4 @@ Install Baruwa::
 
 .. include:: includes/testing.inc
 
+.. include:: includes/assistance.inc

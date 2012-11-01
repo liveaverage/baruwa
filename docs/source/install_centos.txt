@@ -35,6 +35,10 @@ EL-6::
 Install the dependencies::
 
 	# yum install mysql-server mod_wsgi rabbitmq-server
+
+.. note::
+
+	If you are installing on RHEL/CENTOS 6 you need to run yum install django-picklefield
 	
 Install Baruwa, all the required dependencies not in the other repo's will
 be resolved by packages shipped by the Baruwa repo::
@@ -54,3 +58,5 @@ be resolved by packages shipped by the Baruwa repo::
 .. include:: includes/configure_ms_redhat.inc
 
 .. include:: includes/testing.inc
+
+.. include:: includes/assistance.inc

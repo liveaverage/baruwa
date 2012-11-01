@@ -2,6 +2,26 @@
 Upgrading
 =========
 
+1.1.2
+-----
+
+This is a minor release with various bug fixes and a few
+new features.
+
+- Backup your current install then upgrade.
+
+- Review the new settings and add the ones that apply to you,
+  The settings added are:
+
+  + AD_HOST_NAME
+  + AD_LDAP_PORT
+  + AD_SEARCH_DN
+  + AD_ADMIN_GROUP
+  + AD_USER_GROUP
+  + AD_SEARCH_FIELDS
+  + AD_LDAP_SCHEME
+  + AD_LOG_FILE
+
 1.1.1
 -----
 

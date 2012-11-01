@@ -39,7 +39,7 @@ Features
 + Multi user profiles (No restrictions on username format)
 + User profile aware white/blacklist management
 + Ip / network addresses supported in white/blacklist manager
-+ Easy plug-in authentication to external authentication systems (POP3, IMAP, SMTP and RADIUS supported out of the box)
++ Easy plug-in authentication to external authentication systems (POP3, IMAP, SMTP, Active Directory and RADIUS supported out of the box)
 + Tools for housekeeping tasks (quarantine management, rule updates, quarantine notifications, etc)
 + Easy clustering of multiple servers
 + Works both with and without Javascript enabled (graphs require Javascript)
@@ -68,6 +68,7 @@ Requirements
 + UUID (python 2.4 only)
 + Sphinx (Optional for building docs)
 + Pyrad (Optional for RADIUS/RSA SECURID authentication)
++ Python-ldap (optional for Active directory authentication)
 
 Note
 ==

@@ -22,6 +22,7 @@ Baruwa requirements
 	+ `UUID`_ (Only for python 2.4)
 	+ `Sphinx`_ (Optional - to build documentation)
 	+ `Pyrad`_ (Optional for RADIUS/RSA SECURID authentication)
+	+ `Python ldap`_ (optional for Active directory authentication)
 
 MailScanner requirements
 ========================
@@ -57,3 +58,4 @@ MailScanner requirements
 .. _`DBD-SQLite`: http://search.cpan.org/~msergeant/DBD-SQLite-0.31/
 .. _`DBD-Pg`: http://search.cpan.org/~rudy/DBD-Pg/
 .. _`MailScanner`: http://www.mailscanner.info/
+.. _`Python ldap`: http://python-ldap.org/
