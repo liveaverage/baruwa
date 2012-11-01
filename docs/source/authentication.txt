@@ -11,8 +11,8 @@ SMTP, POP3, IMAP and RADIUS/RSA SECURID
 ========================================
 
 Baruwa supports authentication to external authentication systems. SMTP, POP3, IMAP, RADIUS/RSA SECURID
-are supported out of the box. TLS, APOP are also supported to ensure user authentication details are
-protected over the wire.
+Active Directory are supported out of the box. TLS, APOP are also supported to ensure user authentication
+details are protected over the wire.
 
 Authentication is setup on a per domain basis.
 
@@ -33,6 +33,19 @@ RADIUS secret
 The RADIUS secret need to be set in the settings file on a per Address basis::
 
     RADIUS_SECRET['127.0.0.1'] = 'radius secret'
+
+ACTIVE DIRECTORY
+================
+
+Active directory authentication support has been introduced and is still experimental. Its configured
+by using the AD_* options in the settings file, and adding an authentication server within the web
+interface.
+
+The following features are supported:
+
+	* Authentication of users including admin users
+	* Creation and update of users alias addresses
+	* Creation and update of user profile information
 
 
 LDAP
