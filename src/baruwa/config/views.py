@@ -57,7 +57,7 @@ DeleteMailAuthHostForm, AddDomainSignatureForm, EditDomainSignatureForm, \
 DeleteDomainSignatureForm
 
 
-AUTH_TYPES = ['', 'pop3', 'imap', 'smtp', 'radius/RSA SECUREID']
+AUTH_TYPES = ['', 'pop3', 'imap', 'smtp', 'radius/RSA SECUREID', 'Active directory']
 
 
 @login_required
