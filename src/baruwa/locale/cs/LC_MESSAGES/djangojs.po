@@ -1,21 +1,21 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: baruwa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-13 23:01+0200\n"
-"PO-Revision-Date: 2011-06-06 17:52+0100\n"
-"Last-Translator: Viktor Matys <v.matys@grumpa.net>\n"
+"POT-Creation-Date: 2012-11-11 10:21+0200\n"
+"PO-Revision-Date: 2012-11-11 08:26+0000\n"
+"Last-Translator: datopdog <andrew@topdog.za.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n>1 && n<5 ? 1 : 2;\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: static/js/baruwa/accounts.js:1 static/js/baruwa/accounts_uncompressed.js:2
 msgid "&nbsp;Processing..."
@@ -184,7 +184,7 @@ msgstr "Čisté"
 msgid "No records returned"
 msgstr "Nevráceny žádné záznamy"
 
-#: static/js/baruwa/lib.js:1 static/js/baruwa/lib_uncompressed.js:195
+#: static/js/baruwa/lib.js:1 static/js/baruwa/lib_uncompressed.js:197
 msgid "Empty response from server. check network!"
 msgstr "Prázdná odpověď serveru. Zkontrolujte síť!"
 
