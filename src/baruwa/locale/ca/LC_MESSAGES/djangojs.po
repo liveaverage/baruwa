@@ -3,24 +3,23 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Sandro <sandro@e-den.it>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: baruwa\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-11 10:21+0200\n"
-"PO-Revision-Date: 2012-11-15 07:22+0000\n"
+"PO-Revision-Date: 2012-11-15 06:54+0000\n"
 "Last-Translator: datopdog <andrew@topdog.za.net>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: Catalan (http://www.transifex.com/projects/p/baruwa/language/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: it\n"
+"Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: static/js/baruwa/accounts.js:1 static/js/baruwa/accounts_uncompressed.js:2
 msgid "&nbsp;Processing..."
-msgstr "elaborazione..."
+msgstr "tractament..."
 
 #: static/js/baruwa/accounts.js:1 static/js/baruwa/accounts_uncompressed.js:18
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:110
@@ -30,14 +29,14 @@ msgstr "elaborazione..."
 #: static/js/baruwa/recent_messages.js:1
 #: static/js/baruwa/recent_messages_uncompressed.js:73
 msgid "Error connecting to server. check network!"
-msgstr "Errore durante il collegamento al server. Controlla le impostazioni della rete!"
+msgstr "Error en la connexió al servidor. Fes una xarxa!"
 
 #: static/js/baruwa/accounts.js:1 static/js/baruwa/accounts_uncompressed.js:19
 #: static/js/baruwa/domain.js:1 static/js/baruwa/domain_uncompressed.js:37
 #: static/js/baruwa/domains.js:1 static/js/baruwa/domains_uncompressed.js:40
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:42
 msgid "Server error"
-msgstr "Errore del server"
+msgstr "Error de servidor"
 
 #: static/js/baruwa/accounts.js:1 static/js/baruwa/accounts_uncompressed.js:37
 #: static/js/baruwa/domains.js:1 static/js/baruwa/domains_uncompressed.js:58
@@ -48,22 +47,22 @@ msgstr "Errore del server"
 #: static/js/baruwa/quarantine_uncompressed.js:177
 #: static/js/baruwa/quarantine_uncompressed.js:264
 msgid "Showing page %(page)s of %(pages)s pages."
-msgstr "Paginga %(page)s di %(pages)s."
+msgstr "Mostrant pàgina %(page)s de %(pages)s pàgines."
 
 #: static/js/baruwa/accounts.js:1 static/js/baruwa/accounts_uncompressed.js:82
 msgid "This will delete the account "
-msgstr "Questo eliminerà l'account"
+msgstr "Se suprimirà el compte "
 
 #: static/js/baruwa/accounts.js:1 static/js/baruwa/accounts_uncompressed.js:83
 #: static/js/baruwa/domains.js:1 static/js/baruwa/domains_uncompressed.js:108
 msgid "and all associated data. This action is not reversible"
-msgstr "e tutti i dati associati. L'azione non è reversibile."
+msgstr "i les dades relacionades. Aquesta acció no és reversible"
 
 #: static/js/baruwa/accounts.js:1 static/js/baruwa/accounts_uncompressed.js:86
 #: static/js/baruwa/domains.js:1 static/js/baruwa/domains_uncompressed.js:110
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:237
 msgid "Do you wish to continue ?"
-msgstr "Vuoi continuare?"
+msgstr "Voleu continuar?"
 
 #: static/js/baruwa/accounts.js:1
 #: static/js/baruwa/accounts_uncompressed.js:106
@@ -94,31 +93,31 @@ msgstr "Vuoi continuare?"
 #: static/js/baruwa/reports_uncompressed.js:96
 #: static/js/baruwa/reports_uncompressed.js:162
 msgid "Dismiss"
-msgstr "Lascia"
+msgstr "Desestimar"
 
 #: static/js/baruwa/accounts.js:1
 #: static/js/baruwa/accounts_uncompressed.js:150
 msgid "No accounts at the moment"
-msgstr "Nessun acccount al momento"
+msgstr "Cap compte en el moment"
 
 #: static/js/baruwa/accounts.js:1
 #: static/js/baruwa/accounts_uncompressed.js:180 static/js/baruwa/domains.js:1
 #: static/js/baruwa/domains_uncompressed.js:212
 msgid "Processing"
-msgstr "Sto processando"
+msgstr "Processament"
 
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:22
 msgid "List by IP address"
-msgstr "Lista per indirizzo IP"
+msgstr "Llista d'adreces IP"
 
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:23
 msgid "Do you want to continue ?"
-msgstr "Vuoi continuare?"
+msgstr "Voleu continuar?"
 
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:24
 #: static/js/baruwa/details_uncompressed.js:82
 msgid "Yes"
-msgstr "Si"
+msgstr "Sí"
 
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:25
 msgid "No"
@@ -126,96 +125,96 @@ msgstr "No"
 
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:50
 msgid "Submitting"
-msgstr "Sto inviando"
+msgstr "Presentació"
 
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:69
 msgid " has been added to your "
-msgstr "è stato aggiunto al tuo"
+msgstr " s'ha afegit a la seva "
 
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:77
 msgid "Error adding to "
-msgstr "Errore dusarnte l'aggiunta a"
+msgstr "Error en afegir a "
 
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:89
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:23
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:241
 msgid "Processing..."
-msgstr "Sto processando..."
+msgstr "Tractament..."
 
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:97
 #: static/js/baruwa/details_uncompressed.js:100
 msgid "Empty server response"
-msgstr "Risposta vuota dal server"
+msgstr "Resposta de servidor buida"
 
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:125
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:178
 msgid "Processing request............."
-msgstr "Sto processando la richiesta"
+msgstr "Processar la sol·licitud..."
 
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:184
 #: static/js/baruwa/details_uncompressed.js:189
 msgid "Show headers"
-msgstr "Mostra le intestazioni"
+msgstr "Mostra les capçaleres"
 
 #: static/js/baruwa/details.js:1 static/js/baruwa/details_uncompressed.js:193
 msgid "Hide headers"
-msgstr "Nascondi le intestazioni"
+msgstr "Amagar les capçaleres"
 
 #: static/js/baruwa/domain.js:1 static/js/baruwa/domain_uncompressed.js:71
 msgid "Testing connection"
-msgstr "Sto testando la connessione"
+msgstr "Connexió de prova"
 
 #: static/js/baruwa/domains.js:1 static/js/baruwa/domains_uncompressed.js:107
 msgid "This will delete the domain "
-msgstr "Questo eliminerà il dominio"
+msgstr "Se suprimirà el domini "
 
 #: static/js/baruwa/domains.js:1 static/js/baruwa/domains_uncompressed.js:182
 msgid "No domains at the moment"
-msgstr "Nessun dominio al momento"
+msgstr "No hi ha dominis en el moment"
 
 #: static/js/baruwa/lib.js:1 static/js/baruwa/lib_uncompressed.js:136
 msgid "Infected"
-msgstr "Infetto"
+msgstr "Infectats"
 
 #: static/js/baruwa/lib.js:1 static/js/baruwa/lib_uncompressed.js:140
 msgid "Clean"
-msgstr "Pulisci"
+msgstr "Netejar"
 
 #: static/js/baruwa/lib.js:1 static/js/baruwa/lib_uncompressed.js:175
 msgid "No records returned"
-msgstr "Nessun record trovato"
+msgstr "No hi ha registres retornats"
 
 #: static/js/baruwa/lib.js:1 static/js/baruwa/lib_uncompressed.js:197
 msgid "Empty response from server. check network!"
-msgstr "Risposta vuota dal server. Controlla le impostazioni della rete."
+msgstr "Buit resposta del servidor. Fes una xarxa!"
 
 #: static/js/baruwa/lists.add.js:1
 #: static/js/baruwa/lists.add_uncompressed.js:49
 msgid "The address has been added to the list"
-msgstr "L'indirizzo è stato aggiunto alla lista"
+msgstr "L'adreça s'ha afegit a la llista"
 
 #: static/js/baruwa/lists.add.js:1
 #: static/js/baruwa/lists.add_uncompressed.js:86
 msgid "Processing...."
-msgstr "Sto processando..."
+msgstr "Tractament..."
 
 #: static/js/baruwa/lists.add.js:1
 #: static/js/baruwa/lists.add_uncompressed.js:89
 msgid "Server Error occured"
-msgstr "È occorso un errore del server"
+msgstr "Occured d'Error de servidor"
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:69
 msgid "List management "
-msgstr "Gestione della lista"
+msgstr "Gestió de la llista "
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:124
 #: static/js/baruwa/lists_uncompressed.js:129
 msgid "Any address"
-msgstr "Qualunque indirizzo"
+msgstr "Qualsevol adreça"
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:158
 msgid "No items at the moment"
-msgstr "Nessun elemento al momento"
+msgstr "No hi ha elements en el moment"
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:165
 msgid "To:"
@@ -223,23 +222,23 @@ msgstr "A:"
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:167
 msgid "From:"
-msgstr "Da:"
+msgstr "De:"
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:179
 msgid "Blacklist"
-msgstr "Lista nera"
+msgstr "Llista negra"
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:181
 msgid "Whitelist :: "
-msgstr "Lista Bianca ::"
+msgstr "Whitelist:: "
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:183
 msgid "Whitelist"
-msgstr "Lista bianca"
+msgstr "Whitelist"
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:185
 msgid "Blacklist :: "
-msgstr "Lista Nera ::"
+msgstr "Llista negra:: "
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:206
 #: static/js/baruwa/messages.js:1
@@ -257,34 +256,34 @@ msgstr "Lista Nera ::"
 #: static/js/baruwa/reports_uncompressed.js:172
 #: static/js/baruwa/reports_uncompressed.js:177
 msgid "Loading"
-msgstr "Caricando"
+msgstr "S'està carregant"
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:220
 msgid "Go"
-msgstr "Vai"
+msgstr "Se'n van"
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:234
 msgid "This will delete the item "
-msgstr "Questo eliminerà l'elemento"
+msgstr "Se suprimirà l'element "
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:235
 msgid "from the list. This action is not reversible"
-msgstr "dalla lista. Questa azione non è reversibile"
+msgstr "de la llista. Aquesta acció no és reversible"
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:256
 msgid "List item deleted"
-msgstr "Elemento della lista eliminato"
+msgstr "Suprimit l'element de llista"
 
 #: static/js/baruwa/lists.js:1 static/js/baruwa/lists_uncompressed.js:260
 msgid "List item could not be deleted"
-msgstr "L'elemento non ha potuto essere eliminato"
+msgstr "No s'ha pogut suprimir l'element de llista"
 
 #: static/js/baruwa/messages.js:1
 #: static/js/baruwa/messages_uncompressed.js:111
 #: static/js/baruwa/quarantine.js:1
 #: static/js/baruwa/quarantine_uncompressed.js:244
 msgid "From"
-msgstr "Da:"
+msgstr "De"
 
 #: static/js/baruwa/messages.js:1
 #: static/js/baruwa/messages_uncompressed.js:111
@@ -298,26 +297,26 @@ msgstr "A"
 #: static/js/baruwa/quarantine.js:1
 #: static/js/baruwa/quarantine_uncompressed.js:244
 msgid "Subject"
-msgstr "Oggetto"
+msgstr "Tema"
 
 #: static/js/baruwa/messages.js:1
 #: static/js/baruwa/messages_uncompressed.js:111
 msgid "Size"
-msgstr "Dimensione"
+msgstr "Mida"
 
 #: static/js/baruwa/messages.js:1
 #: static/js/baruwa/messages_uncompressed.js:111
 #: static/js/baruwa/quarantine.js:1
 #: static/js/baruwa/quarantine_uncompressed.js:244
 msgid "Score"
-msgstr "Punteggio"
+msgstr "Puntuació obtinguda"
 
 #: static/js/baruwa/messages.js:1
 #: static/js/baruwa/messages_uncompressed.js:116
 #: static/js/baruwa/quarantine.js:1
 #: static/js/baruwa/quarantine_uncompressed.js:244
 msgid "Date/Time"
-msgstr "Data/Ora"
+msgstr "Data i hora"
 
 #: static/js/baruwa/messages.js:1
 #: static/js/baruwa/messages_uncompressed.js:145
@@ -326,49 +325,49 @@ msgstr "Data/Ora"
 #: static/js/baruwa/quarantine_uncompressed.js:283
 #: static/js/baruwa/quarantine_uncompressed.js:291
 msgid "Show filters"
-msgstr "Mostra i filtri"
+msgstr "Mostra els filtres"
 
 #: static/js/baruwa/messages.js:1
 #: static/js/baruwa/messages_uncompressed.js:151
 #: static/js/baruwa/quarantine.js:1
 #: static/js/baruwa/quarantine_uncompressed.js:289
 msgid "Hide filters"
-msgstr "Nascondi i filtri"
+msgstr "Amaga els filtres"
 
 #: static/js/baruwa/quarantine.js:1
 #: static/js/baruwa/quarantine_uncompressed.js:148
 msgid "Full quarantine"
-msgstr "Quarantena piena"
+msgstr "Quarantena de ple"
 
 #: static/js/baruwa/quarantine.js:1
 #: static/js/baruwa/quarantine_uncompressed.js:148
 msgid "Spam"
-msgstr "Spam"
+msgstr "Correu brossa"
 
 #: static/js/baruwa/quarantine.js:1
 #: static/js/baruwa/quarantine_uncompressed.js:148
 msgid "Non Spam"
-msgstr "Non Spam"
+msgstr ""
 
 #: static/js/baruwa/recent_messages.js:1
 #: static/js/baruwa/recent_messages_uncompressed.js:26
 msgid "Content refresh in progress, please wait for it to complete"
-msgstr "Refresh del contenuto in corso, prego aspetta che sia completo"
+msgstr "Contingut de l'actualització en curs, si us plau, espereu que finalitzi"
 
 #: static/js/baruwa/recent_messages.js:1
 #: static/js/baruwa/recent_messages_uncompressed.js:52
 msgid "[updated every 60 sec's]"
-msgstr "[update ogni 60 secondi]"
+msgstr "[actualitzat cada 60 segons]"
 
 #: static/js/baruwa/recent_messages.js:1
 #: static/js/baruwa/recent_messages_uncompressed.js:54
 msgid "Refreshing..."
-msgstr "Rinfrescante..."
+msgstr "S'està actualitzant..."
 
 #: static/js/baruwa/recent_messages.js:1
 #: static/js/baruwa/recent_messages_uncompressed.js:61
 msgid "[last update at "
-msgstr "[ultimo aggiornamento alle"
+msgstr "[Última actualització a les "
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:28
@@ -378,7 +377,7 @@ msgstr "[ultimo aggiornamento alle"
 #: static/js/baruwa/reports_uncompressed.js:195
 #: static/js/baruwa/reports_uncompressed.js:199
 msgid "is equal to"
-msgstr "uguale a"
+msgstr "és igual a"
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:28
@@ -388,7 +387,7 @@ msgstr "uguale a"
 #: static/js/baruwa/reports_uncompressed.js:195
 #: static/js/baruwa/reports_uncompressed.js:199
 msgid "is not equal to"
-msgstr "non uguale a "
+msgstr "no és igual a"
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:29
@@ -396,7 +395,7 @@ msgstr "non uguale a "
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:194
 #: static/js/baruwa/reports_uncompressed.js:200
 msgid "is greater than"
-msgstr "più grande di"
+msgstr "és més gran que"
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:29
@@ -404,70 +403,70 @@ msgstr "più grande di"
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:194
 #: static/js/baruwa/reports_uncompressed.js:200
 msgid "is less than"
-msgstr "minore di"
+msgstr "és menys de"
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:31
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:196
 msgid "is null"
-msgstr "è nullo"
+msgstr "és nul."
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:31
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:196
 msgid "is not null"
-msgstr "non è nullo"
+msgstr "no és nul"
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:32
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:197
 msgid "contains"
-msgstr "contiene"
+msgstr "conté"
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:32
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:197
 msgid "does not contain"
-msgstr "non contiene"
+msgstr "no conté"
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:33
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:198
 msgid "matches regex"
-msgstr "Corrispondenza su espressione regolare"
+msgstr "partits regex"
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:33
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:198
 msgid "does not match regex"
-msgstr "non corrsiponde alla espressione regolare"
+msgstr "no coincideix el regex"
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:36
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:201
 msgid "is true"
-msgstr "è vero"
+msgstr "és cert"
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:36
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:201
 msgid "is false"
-msgstr "è falso"
+msgstr "és fals"
 
 #: static/js/baruwa/reports.common.js:1
 #: static/js/baruwa/reports.common_uncompressed.js:37
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:202
 msgid "Please select"
-msgstr "Prego scegli"
+msgstr "Si us plau seleccioni"
 
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:51
 msgid "No active filters at the moment"
-msgstr "Nessun filtro attivo al momento"
+msgstr "Cap filtre actiu en el moment"
 
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:83
 #: static/js/baruwa/reports_uncompressed.js:149
 msgid "No saved filters at the moment"
-msgstr "Nessun filtro salvato al momento"
+msgstr "Cap filtre desada en el moment"
 
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports.listing.js:1
 #: static/js/baruwa/reports.listing_uncompressed.js:84
@@ -481,11 +480,11 @@ msgstr "Nessun filtro salvato al momento"
 #: static/js/baruwa/reports_uncompressed.js:100
 #: static/js/baruwa/reports_uncompressed.js:166
 msgid "Add"
-msgstr "Aggiungi"
+msgstr "Afegir"
 
 #: static/js/baruwa/reports.js:1 static/js/baruwa/reports_uncompressed.js:246
 msgid "Error occured"
-msgstr "Errore..."
+msgstr "Occured d'error"
 
 #: static/js/baruwa/reports.listing.js:1
 #: static/js/baruwa/reports.listing_uncompressed.js:56
@@ -494,14 +493,14 @@ msgstr "Errore..."
 #: static/js/baruwa/reports.relays.js:1
 #: static/js/baruwa/reports.relays_uncompressed.js:63
 msgid "Processing..........."
-msgstr "Sto processandro"
+msgstr "Tractament..."
 
 #: static/js/baruwa/task_status.js:1
 #: static/js/baruwa/task_status_uncompressed.js:47
 msgid "The task was completed successfully."
-msgstr "L'attività è stata completata con successo."
+msgstr "La tasca s'ha completat correctament."
 
 #: static/js/baruwa/task_status.js:1
 #: static/js/baruwa/task_status_uncompressed.js:52
 msgid "No items processed"
-msgstr "No gli elementi elaborati"
+msgstr "No hi ha elements processats"

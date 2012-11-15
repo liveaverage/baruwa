@@ -3,712 +3,750 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Sandro <sandro@e-den.it>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: baruwa\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: baruwa@lists.baruwa.org\n"
 "POT-Creation-Date: 2012-11-11 10:21+0200\n"
-"PO-Revision-Date: 2012-11-15 07:23+0000\n"
-"Last-Translator: datopdog <andrew@topdog.za.net>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2012-11-15 09:03+0200\n"
+"Last-Translator: Andrew Colin Kissa <andrew@topdog.za.net>\n"
+"Language-Team: (http://www.transifex.com/projects/p/baruwa/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: it\n"
+"Generated-By: auto-translate.py\n"
+"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: settings.py:53
 msgid "English"
-msgstr "Inglese"
+msgstr "Αγγλικά"
 
 #: settings.py:54
 msgid "Afrikaans"
-msgstr "Afrikaans"
+msgstr "Αφρικάανς"
 
 #: settings.py:55
 msgid "Italian"
-msgstr "Italiano"
+msgstr "Ιταλικά"
 
 #: settings.py:56
 msgid "Czech"
-msgstr "Ceco"
+msgstr "Τσεχικά"
 
 #: settings.py:57
 msgid "French"
-msgstr "Francese"
+msgstr "Γαλλικά"
 
 #: settings.py:58
 msgid "Polish"
-msgstr "Polacco"
+msgstr "Πολωνικά"
 
 #: accounts/forms.py:39
 #, python-format
 msgid ""
 "Required, %(chars)s characters or fewer. Only letters, numbers, and "
 "characters such as @.+_- are allowed."
-msgstr "Necessaria, %(chars)s caratteri o meno. Solo lettere, numeri e caratteri come @. + _ - sono ammessi."
+msgstr ""
+"Απαιτείται, %(chars)s χαρακτήρες ή λιγότερους. Μόνο γράμματα, αριθμούς και "
+"χαρακτήρες όπως @. + _ - επιτρέπονται."
 
 #: accounts/forms.py:48 templates/accounts/index.html:31
 #: templates/accounts/login.html:61
 msgid "Username"
-msgstr "Username"
+msgstr "Όνομα χρήστη"
 
 #: accounts/forms.py:52
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
-msgstr "Questo valore può contenere solo lettere, numeri ed i caratteri @/./+/-/_ "
+msgstr ""
+"Αυτή η τιμή μπορεί να περιέχει μόνο γράμματα, αριθμούς και @/. / +/-/ _ "
+"χαρακτήρες."
 
 #: accounts/forms.py:70
 msgid ""
 "That e-mail address doesn't have an associated user account. Are you sure "
 "you've registered?"
-msgstr "Tale indirizzo di posta elettronica non dispone di un account utente associato. Sei sicuro che sei registrato?"
+msgstr ""
+"Η διεύθυνση ηλεκτρονικού ταχυδρομείου δεν έχει ένα λογαριασμό χρήστη "
+"συσχετισμένο. Είστε βέβαιοι ότι έχετε έχετε γραφτεί;"
 
 #: accounts/forms.py:74
 msgid ""
 "That e-mail address belongs to an externally authenticated account. Please "
 "change the password on that external system."
-msgstr "Tale indirizzo di posta elettronica appartiene a un account autenticato esternamente. Si prega di cambiare la password su quel sistema esterno."
+msgstr ""
+"Ότι η διεύθυνση ηλεκτρονικού ταχυδρομείου ανήκει σε εξωτερικά πιστοποιημένο "
+"λογαριασμό. Αλλάξτε τον κωδικό πρόσβασης σε αυτό το εξωτερικό σύστημα."
 
 #: accounts/forms.py:79
 msgid ""
 "That e-mail address belongs to an admin account Please use the manage.py "
 "command to reset"
-msgstr "Tale indirizzo di posta elettronica appartiene a un account di amministratore per favore usa il comando manage.py per ripristinare"
+msgstr ""
+"Η διεύθυνση ηλεκτρονικού ταχυδρομείου ανήκει σε ένα λογαριασμό διαχειριστή "
+"παρακαλούμε να χρησιμοποιήσετε την εντολή manage.py για την επαναφορά"
 
 #: accounts/forms.py:105 templates/accounts/login.html:63
 msgid "Password"
-msgstr "Password"
+msgstr "Κωδικός πρόσβασης"
 
 #: accounts/forms.py:114
 msgid "A user with that username already exists."
-msgstr "Un utente con questa 'username' essite già"
+msgstr "Ένας χρήστης με αυτό το όνομα υπάρχει ήδη."
 
 #: accounts/forms.py:145 accounts/forms.py:180
 msgid "Super users do not use addresses"
-msgstr "I Superuser non usano gli indirizzi"
+msgstr "Σούπερ χρήστες να μην χρησιμοποιούν διευθύνσεις"
 
 #: accounts/forms.py:151 accounts/forms.py:186
 msgid "provide a valid domain address"
-msgstr "scrivi un indirizzo di dominio valido"
+msgstr "Δώστε ένα έγκυρο τομέα διεύθυνση"
 
 #: accounts/forms.py:156 accounts/forms.py:191
 msgid "provide a valid email address"
-msgstr "scrivi un indirizzo email valido"
+msgstr "παρέχουν μια έγκυρη διεύθυνση ηλεκτρονικού ταχυδρομείου"
 
 #: accounts/views.py:147
 #, python-format
 msgid "The user account %(account)s was created successfully"
-msgstr "L'accoutn utente %(account)s è stato creato correttamente"
+msgstr "Ο λογαριασμός χρήστη %(account)s δημιουργήθηκε με επιτυχία"
 
 #: accounts/views.py:153
 msgid "The user account could not be created"
-msgstr "L'account utente non può essere creato"
+msgstr "Δεν ήταν δυνατή η δημιουργία λογαριασμού χρήστη"
 
 #: accounts/views.py:177
 #, python-format
 msgid "The user account %(account)s has been updated"
-msgstr "L'account utente %(account)s è stato aggiornato"
+msgstr "Ο λογαριασμός χρήστη %(account)s έχει ενημερωθεί"
 
 #: accounts/views.py:180
 #, python-format
 msgid "The user account %(account)s could not be updated"
-msgstr "L'account utente %(account)s potrebbe non essere aggiornato"
+msgstr "Ο λογαριασμός χρήστη %(account)s δεν ήταν δυνατή η ενημέρωση"
 
 #: accounts/views.py:211
 #, python-format
 msgid "The user account %(account)s has been deleted"
-msgstr "L'account utente %(account)s è stato eliminato"
+msgstr "Ο λογαριασμός χρήστη %(account)s έχει διαγραφεί"
 
 #: accounts/views.py:220
 #, python-format
 msgid "The deletion of user account %(account)s failed"
-msgstr "La eliminazione dell'account utente %(account)s è fallita"
+msgstr "Η διαγραφή του λογαριασμού χρήστη %(account)s απέτυχε"
 
 #: accounts/views.py:246
 #, python-format
 msgid "The address %(addr)s has been added to %(account)s account"
-msgstr "L'indirizzo %(addr)s è stato aggiunto all'account %(account)s"
+msgstr "Η διεύθυνση %(addr)s έχει προστεθεί %(account)s λογαριασμός"
 
 #: accounts/views.py:249
 msgid "The address already exists"
-msgstr "L'indirizzo esiste già"
+msgstr "Τη διεύθυνση που υπάρχει ήδη"
 
 #: accounts/views.py:276
 #, python-format
 msgid "The address %(addr)s has been updated"
-msgstr "L'indirizzo %(addr)s è stato aggiornato"
+msgstr "Η διεύθυνση %(addr)s έχει ενημερωθεί"
 
 #: accounts/views.py:279
 #, python-format
 msgid "The address %(addr)s could not be updated"
-msgstr "L'indirizzo %(addr)s potrebbe non essere aggiornato"
+msgstr "Η διεύθυνση %(addr)s δεν ήταν δυνατή η ενημέρωση"
 
 #: accounts/views.py:301
 #, python-format
 msgid "The address %(addr)s has been deleted"
-msgstr "L'indirizzo %(addr)s è stato eliminato"
+msgstr "Η διεύθυνση %(addr)s έχει διαγραφεί"
 
 #: accounts/views.py:327
 #, python-format
 msgid "The password for user %(account)s has been updated"
-msgstr "La password per l'utente %(account)s è stata aggiornata"
+msgstr "Ο κωδικός πρόσβασης για το χρήστη %(account)s έχει ενημερωθεί"
 
 #: accounts/views.py:330
 msgid "The password could not be updated"
-msgstr "La password potrebbe non essere aggiornata"
+msgstr "Δεν ήταν δυνατή η ενημέρωση του κωδικού πρόσβασης"
 
 #: accounts/views.py:386
 #, python-format
 msgid "The user profile for %(account)s has been updated"
-msgstr "il profilo per l'utente %(account)s è stato aggiornato"
+msgstr "Το προφίλ χρήστη για %(account)s έχει ενημερωθεί"
 
 #: accounts/views.py:389
 #, python-format
 msgid "The user profile for %(account)s could not be updated"
-msgstr "Il profilo di utente %(account)s potrebbe non essere aggiornato"
+msgstr "Το προφίλ χρήστη για %(account)s δεν ήταν δυνατή η ενημέρωση"
 
 #: accounts/views.py:420 config/views.py:496
 msgid "The signature has been saved"
-msgstr "La firma è stata salvata"
+msgstr "Η υπογραφή έχει αποθηκευτεί"
 
 #: accounts/views.py:423
 #, python-format
 msgid "A signature of this type already exists for account: %(account)s"
-msgstr "Una firma di questo tipo esiste già per conto: %(account)s"
+msgstr "Υπάρχει ήδη μια υπογραφή αυτού του τύπου λογαριασμού: %(account)s"
 
 #: accounts/views.py:427 config/views.py:502
 msgid "An error occured during processing try again later"
-msgstr "Si è verificato un errore durante l'elaborazione di riprovare più tardi"
+msgstr "Παρουσιάστηκε σφάλμα κατά την επεξεργασία προσπαθήστε πάλι αργότερα"
 
 #: accounts/views.py:454 config/views.py:526
 msgid "The signature has been updated"
-msgstr "La firma è stata aggiornata"
+msgstr "Η υπογραφή έχει ενημερωθεί"
 
 #: accounts/views.py:457 config/views.py:529
 msgid "An error occured during processing, try again later"
-msgstr "Si è verificato un errore durante l'elaborazione, riprovare più tardi"
+msgstr "Παρουσιάστηκε σφάλμα κατά την επεξεργασία, δοκιμάστε ξανά αργότερα"
 
 #: accounts/views.py:481
 msgid "The signature, is being deleted."
-msgstr "La firma, è da eliminare."
+msgstr "Η υπογραφή, που διαγράφεται."
 
 #: config/forms.py:38
 #, python-format
 msgid "%s is not a valid hostname or IPv4/IPv6 address"
-msgstr "%s non è un nome di host valido o un indirizzo IPv4/IPv6"
+msgstr ""
+"το %s δεν είναι ένα έγκυρο όνομα κεντρικού υπολογιστή ή τη διεύθυνση "
+"IPv4/IPv6"
 
 #: config/forms.py:44
 msgid "Enter a valid IPv4/IPv6 address or hostname."
-msgstr "Immettere un indirizzo IPv4/IPv6 valido o un nome host."
+msgstr ""
+"Εισαγάγετε μια έγκυρη διεύθυνση IPv4/IPv6 ή όνομα κεντρικού υπολογιστή."
 
 #: config/tasks.py:64
 #, python-format
 msgid "Notified %(h)s of config update"
-msgstr "Notificato %(h)s di configurazione aggiornamento"
+msgstr "Κοινοποιηθείσα %(h)s config ενημερωμένης έκδοσης"
 
 #: config/tasks.py:67
 #, python-format
 msgid "Failed to notify %(h)s of config update"
-msgstr "Non è riuscito a notificare %(h)s di configurazione aggiornamento"
+msgstr "Απέτυχε να κοινοποιούν %(h)s config ενημερωμένης έκδοσης"
 
 #: config/tasks.py:81
 #, python-format
 msgid "Starting connection tests to: %(host)s"
-msgstr "Iniziare il test di connessione a: %(host)s"
+msgstr "Ξεκινώντας σύνδεσης δοκιμών: %(host)s"
 
 #: config/tasks.py:105
 #, python-format
 msgid "Wrote text signature: %(sig)s"
-msgstr "Ha scritto firma testo: %(sig)s"
+msgstr "Έγραψε κείμενο υπογραφής: %(sig)s"
 
 #: config/tasks.py:128
 #, python-format
 msgid "Wrote img: %(img)s"
-msgstr "Ha scritto img: %(img)s"
+msgstr "Έγραψε img: %(img)s"
 
 #: config/tasks.py:137
 #, python-format
 msgid "Wrote html signature: %(sig)s"
-msgstr "Ha scritto firma html: %(sig)s"
+msgstr "Έγραψε υπογραφή html: %(sig)s"
 
 #: config/tasks.py:155
 #, python-format
 msgid "Processing signatures for: %(user)s"
-msgstr "Elaborazione firme per: %(user)s"
+msgstr "Επεξεργασία υπογραφές για: %(user)s"
 
 #: config/tasks.py:168 config/tasks.py:204
 #, python-format
 msgid "Error occured: %(err)s"
-msgstr "Si è verificato un errore: %(err)s"
+msgstr "Παρουσιάστηκε σφάλμα: %(err)s"
 
 #: config/tasks.py:172
 #, python-format
 msgid "Finished processing signatures for: %(u)s"
-msgstr "Finito il trattamento le firme per: %(u)s"
+msgstr "Ολοκληρωθεί η επεξεργασία υπογραφές για: %(u)s"
 
 #: config/tasks.py:175
 #, python-format
 msgid "User with userid: %s not found"
-msgstr "Utente con userid: %s non trovato"
+msgstr "Χρήστη με αναγνωριστικό χρήστη: %s δεν βρέθηκε"
 
 #: config/tasks.py:191
 #, python-format
 msgid "Processing signatures for: %(d)s"
-msgstr "Elaborazione firme per: %(d)s"
+msgstr "Επεξεργασία υπογραφές για: %(d)s"
 
 #: config/tasks.py:208
 #, python-format
 msgid "Finished processing signatures for: %(d)s"
-msgstr "Finito il trattamento le firme per: %(d)s"
+msgstr "Ολοκληρωθεί η επεξεργασία υπογραφές για: %(d)s"
 
 #: config/tasks.py:211
 #, python-format
 msgid "Domain with domainid: %s not found"
-msgstr "Dominio con IDDominio: %s non trovato"
+msgstr "Τομέα με domainid: %s δεν βρέθηκε"
 
 #: config/tasks.py:227
 #, python-format
 msgid "Deleting signatures for: %(d)s"
-msgstr "L'eliminazione di firme per: %(d)s"
+msgstr "Διαγραφή υπογραφές για: %(d)s"
 
 #: config/tasks.py:238 config/tasks.py:271
 #, python-format
 msgid "Error deleting %(f)s: %(e)s"
-msgstr "L'eliminazione di errore %(f)s: %(e)s"
+msgstr "Σφάλμα διαγραφής %(f)s: %(e)s"
 
 #: config/tasks.py:241
 #, python-format
 msgid "Finished deletion of signatures for: %(d)s"
-msgstr "Finito di eliminazione delle firme per: %(d)s"
+msgstr "Ολοκληρωθεί η διαγραφή των υπογραφών για: %(d)s"
 
 #: config/tasks.py:244
 msgid "Domain signatures not found"
-msgstr "Firme di dominio non trovate"
+msgstr "Τομέα υπογραφές δεν βρέθηκε"
 
 #: config/tasks.py:261
 #, python-format
 msgid "Deleting signatures for: %(a)s"
-msgstr "L'eliminazione di firme per: %(a)s"
+msgstr "Διαγραφή υπογραφές για: %(a)s"
 
 #: config/tasks.py:274
 #, python-format
 msgid "Finished deletion of signatures for: %(u)s"
-msgstr "Finito di eliminazione delle firme per: %(u)s"
+msgstr "Ολοκληρωθεί η διαγραφή των υπογραφών για: %(u)s"
 
 #: config/tasks.py:277
 msgid "Account signatures not found"
-msgstr "Firme di conto non trovate"
+msgstr "Λογαριασμός υπογραφές δεν βρέθηκε"
 
 #: config/views.py:133
 #, python-format
 msgid "Delivery SMTP server: %(server)s was added successfully"
-msgstr "Server di consegna SMTP: %(server)s aggiunto con successo"
+msgstr "Παράδοσης SMTP server: %(server)s προστέθηκε με επιτυχία"
 
 #: config/views.py:143
 msgid "Adding of Delivery SMTP server failed"
-msgstr "L'aggiunta del server SMPT è fallita"
+msgstr "Προσθήκη του παράδοσης SMTP server απέτυχε"
 
 #: config/views.py:167
 #, python-format
 msgid "Delivery SMTP server: %(server)s has been updated successfully"
-msgstr "Server di consegna SMTP: %(server)s aggiornato con successo"
+msgstr "Παράδοσης SMTP server: %(server)s έχει ενημερωθεί με επιτυχία"
 
 #: config/views.py:177
 #, python-format
 msgid "Delivery SMTP server: %(server)s update failed"
-msgstr "Server SMPT: %(server)s aggiornamento fallito"
+msgstr "Παράδοσης SMTP server: %(server)s Ενημέρωση απέτυχε"
 
 #: config/views.py:202
 #, python-format
 msgid "Delivery SMTP server: %(server)s has been deleted"
-msgstr "Server SMPT: %(server)s eliminato"
+msgstr "Παράδοσης SMTP server: %(server)s έχει διαγραφεί"
 
 #: config/views.py:213
 #, python-format
 msgid "Delivery SMTP server: %(server)s could not be deleted"
-msgstr "Server SMPT: %(server)s non ha potuto essere eliminato"
+msgstr "Παράδοσης SMTP server: %(server)s δεν ήταν δυνατή η διαγραφή"
 
 #: config/views.py:250
 msgid "The server is contactable and accepting messages"
-msgstr "Il server è contattabili e ad accettare i messaggi"
+msgstr "Ο διακομιστής δεν είναι δυνατό να αγγιχθούν και αποδέχεται μηνύματα"
 
 #: config/views.py:253
 #, python-format
 msgid ""
 "The server is contactable via ICMP but is not accepting messages from me, "
 "Errors: %s"
-msgstr "Il server è contattabile tramite ICMP ma non accetta messaggi da me, errori: %s"
+msgstr ""
+"Ο διακομιστής είναι δυνατό να αγγιχθούν μέσω ICMP, αλλά δεν δέχεται μηνύματα"
+" από μένα, σφάλματα: %s"
 
 #: config/views.py:257
 #, python-format
 msgid "The server is not accepting messages, Errors: %s"
-msgstr "Il server non accetta messaggi di errori: %s"
+msgstr "Ο διακομιστής δεν αποδέχεται μηνύματα, σφάλματα: %s"
 
 #: config/views.py:260
 msgid "The tests failed to run try again later"
-msgstr "Il test non è riuscito a eseguire riprovare più tardi"
+msgstr "Απέτυχε η εκτέλεση δοκιμών προσπαθήστε πάλι αργότερα"
 
 #: config/views.py:287
 #, python-format
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s was "
 "added successfully"
-msgstr "AUtenticazione esterna %(auth)s: su host %(host)s per dominio %(dom)s è stata aggiunta correttamente"
+msgstr ""
+"Εξωτερικού ελέγχου ταυτότητας %(auth)s: στον κεντρικό υπολογιστή %(host)s "
+"για τον τομέα %(dom)s προστέθηκε με επιτυχία"
 
 #: config/views.py:299
 msgid "Addition of external authentication failed"
-msgstr "L'aggiunta di autenticazione esterna è fallita"
+msgstr "Προσθήκη του εξωτερικού ελέγχου ταυτότητας απέτυχε"
 
 #: config/views.py:323
 #, python-format
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s has "
 "been updated successfully"
-msgstr "L'autenticazione esterna %(auth)s su host %(host)s per il dominio %(dom)s è stata aggiornata. "
+msgstr ""
+"Εξωτερικού ελέγχου ταυτότητας %(auth)s: στον κεντρικό υπολογιστή %(host)s "
+"για τον τομέα %(dom)s έχει ενημερωθεί με επιτυχία"
 
 #: config/views.py:336
 msgid "Update of external authentication failed"
-msgstr "L'aggiornamento dell'autenticazione esterna è fallito"
+msgstr "Ενημερωμένη έκδοση του εξωτερικού ελέγχου ταυτότητας απέτυχε"
 
 #: config/views.py:360
 #, python-format
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s has "
 "been deleted"
-msgstr "L'autenticazione esterna %(auth)s su host %(host)s per dominio %(dom)s è stata cancellata"
+msgstr ""
+"Εξωτερικού ελέγχου ταυτότητας %(auth)s: στον κεντρικό υπολογιστή %(host)s "
+"για τον τομέα %(dom)s έχει διαγραφεί"
 
 #: config/views.py:374
 #, python-format
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s could "
 "not be deleted"
-msgstr "L'autenticazione esterna %(auth)s su host %(host)s per il dominio %(dom)s non ha potuto essere cancellata"
+msgstr ""
+"Εξωτερικού ελέγχου ταυτότητας %(auth)s: στον κεντρικό υπολογιστή %(host)s "
+"για τον τομέα %(dom)s δεν ήταν δυνατή η διαγραφή"
 
 #: config/views.py:431
 #, python-format
 msgid "The node %(node)s is not been initialized, Please initialize"
-msgstr "Il nodo %(node)s non è inizializzato. Prego inizializzare"
+msgstr "Ο κόμβος %(node)s δεν έχει γίνει προετοιμασία, παρακαλώ προετοιμασία"
 
 #: config/views.py:462
 #, python-format
 msgid "The node %(node)s has been initialized"
-msgstr "il %(node)s è stato inizializzato"
+msgstr "Ο κόμβος %(node)s έχει γίνει προετοιμασία της"
 
 #: config/views.py:499
 #, python-format
 msgid "A signature of this type already exists for domain: %(domain)s"
-msgstr "Una firma di questo tipo esiste già per dominio: %(domain)s"
+msgstr "Υπάρχει ήδη μια υπογραφή αυτού του τύπου για τον τομέα: %(domain)s"
 
 #: config/views.py:553
 msgid "The signature, is being deleted"
-msgstr "La firma, è essere cancellato"
+msgstr "Να διαγραφεί η υπογραφή,"
 
 #: config/views.py:586
 msgid "Not authorized."
-msgstr "Non autorizzato."
+msgstr "Δεν επιτρέπεται."
 
 #: config/views.py:648
 msgid "File has been uploaded"
-msgstr "File è stato caricato"
+msgstr "Αποστολή αρχείου"
 
 #: config/views.py:650
 msgid "An error occured, try again later"
-msgstr "È verificato un errore, provare più tardi"
+msgstr "Παρουσιάστηκε σφάλμα, δοκιμάστε ξανά αργότερα"
 
 #: config/views.py:652
 msgid "The uploaded file is not acceptable"
-msgstr "Il file caricato non è accettabile"
+msgstr "Το απεσταλμένο αρχείο δεν είναι αποδεκτό"
 
 #: config/views.py:656
 msgid ""
 "You already have a signature image, delete the current image before "
 "uploading a new one"
-msgstr "Hai già un'immagine della firma, eliminare l'immagine corrente prima di caricare una nuova"
+msgstr ""
+"Σας έχουμε μια εικόνα της υπογραφής ήδη, διαγράψτε την τρέχουσα εικόνα πριν "
+"από την αποστολή μια καινούρια"
 
 #: config/views.py:664
 msgid "The file has been deleted"
-msgstr "Il file è stato eliminato"
+msgstr "Το αρχείο έχει διαγραφεί"
 
 #: config/views.py:667
 msgid "The file could not be deleted"
-msgstr "Impossibile eliminare il file."
+msgstr "Δεν ήταν δυνατή η διαγραφή του αρχείου"
 
 #: config/views.py:671
 msgid "Action not supported"
-msgstr "Azione non supportata"
+msgstr "Η ενέργεια δεν υποστηρίζεται"
 
 #: config/views.py:685
 msgid "You are not authorized to access this resource"
-msgstr "Non sei autorizzato ad accedere a questa risorsa"
+msgstr "Δεν έχετε δικαίωμα για πρόσβαση σε αυτόν τον πόρο"
 
 #: config/management/commands/initconfig.py:38
 #, python-format
 msgid "Please enter the hostname [%s]: "
-msgstr "Si prega di inserire l'hostname [% s]: "
+msgstr "Παρακαλώ εισάγετε το όνομα κεντρικού υπολογιστή [% s]: "
 
 #: config/management/commands/initconfig.py:46
 #, python-format
 msgid "The hostname %(h)s is not assigned to this system, try again"
-msgstr "L'hostname %(h)s non è stata assegnata a questo sistema, riprovare"
+msgstr ""
+"Το όνομα κεντρικού υπολογιστή %(h)s δεν έχει εκχωρηθεί σε αυτό το σύστημα, "
+"προσπαθήστε πάλι"
 
 #: config/management/commands/initconfig.py:54
 #, python-format
 msgid "The host: %(h)s has been initialized"
-msgstr "Host: %(h)s è stato inizializzato"
+msgstr "Υποδοχής: %(h)s έχει γίνει προετοιμασία της"
 
 #: config/management/commands/initconfig.py:57
 msgid "The settings could not be saved check your DB settings"
-msgstr "Non potevano essere salvate le impostazioni di controllare le impostazioni del DB"
+msgstr ""
+"Δεν ήταν δυνατή η αποθήκευση των ρυθμίσεων Ελέγξτε τις ρυθμίσεις σας DB"
 
 #: config/management/commands/initconfig.py:61
 #, python-format
 msgid "The host: %(h)s is already initialized"
-msgstr "Host: %(h)s è già inizializzato"
+msgstr "Υποδοχής: %(h)s έχει γίνει ήδη προετοιμασία"
 
 #: fixups/models.py:37
 #, python-format
 msgid ""
 "Required, %s characters or fewer. Only letters, numbers, and @, ., +, -, or "
 "_ characters."
-msgstr "Necessaria, %s caratteri o meno. Solo lettere, numeri, e @,., +, -, o caratteri _."
+msgstr ""
+"Απαιτείται, %s χαρακτήρες ή λιγότερους. Μόνο γράμματα, αριθμούς, και @,., +,"
+" -, ή _ χαρακτήρες."
 
 #: lists/forms.py:58
 #, python-format
 msgid "%(email)s provide a valid e-mail address"
-msgstr "%(email)s fornisce un indirizzo email valido"
+msgstr "%(email)s παρέχουν μια έγκυρη διεύθυνση ηλεκτρονικού ταχυδρομείου"
 
 #: lists/forms.py:63
 #, python-format
 msgid "The address: %(email)s does not belong to you."
-msgstr "L'indirizzo: %(email)s non appartiene a te."
+msgstr "Διεύθυνση: %(email)s δεν ανήκει σε εσάς."
 
 #: lists/forms.py:75
 msgid ""
 "Provide either a valid IPv4/IPv6, email, Domain address, or IPv4/IPv6 "
 "network or range"
-msgstr "Fornire un valido IPv4/IPv6, email, indirizzo di dominio o IPv4/IPv6 network o gamma"
+msgstr ""
+"Παρέχει ένα έγκυρο IPv4/IPv6, email, διεύθυνση τομέα είτε IPv4/IPv6 δικτύου "
+"ή περιοχή"
 
 #: lists/forms.py:88 lists/views.py:185
 msgid "The list item already exists"
-msgstr "L'elemento della lista esiste già"
+msgstr "Το στοιχείο της λίστας υπάρχει ήδη"
 
 #: lists/forms.py:119
 #, python-format
 msgid "The address: %(addr)s does not belong to you."
-msgstr "L'indirizzo: %(addr)s non appartiene a te."
+msgstr "Διεύθυνση: %(addr)s δεν ανήκει σε εσάς."
 
 #: lists/forms.py:124
 msgid "Provide either a valid domain"
-msgstr "Fornisci o un dominio valido"
+msgstr "Παρέχουν είτε έναν έγκυρο τομέα"
 
 #: lists/forms.py:140
 msgid "provide a valid user part of the email address"
-msgstr "scrivi la parte utente di un indirizzo e-mail"
+msgstr ""
+"παρέχουν μια έγκυρος χρήστης μέρος με τη διεύθυνση ηλεκτρονικού ταχυδρομείου"
 
 #: lists/views.py:195
 msgid "The address has been added to the list"
-msgstr "L'indirizzo è stato aggiunto alla lista"
+msgstr "Η διεύθυνση έχει προστεθεί στη λίστα"
 
 #: lists/views.py:220
 msgid "You do not have authorization"
-msgstr "Non hai autorizzazione"
+msgstr "Δεν έχετε άδεια"
 
 #: lists/views.py:227
 msgid "List item deleted"
-msgstr "Elenco elemento eliminato"
+msgstr "Στοιχείο λίστας που διαγράφηκε"
 
 #: lists/views.py:236
 msgid "List item could not be deleted"
-msgstr "Voce di elenco potrebbe non essere eliminato"
+msgstr "Δεν ήταν δυνατή η διαγραφή του στοιχείου λίστας"
 
 #: messages/forms.py:29 messages/templatetags/messages_extras.py:72
 #: templates/base.html:51 templates/messages/quarantine.html:24
 #: templates/messages/task_status.html:24 templates/reports/listing.html:50
 msgid "Spam"
-msgstr "Spam"
+msgstr "Ανεπιθύμητη αλληλογραφία"
 
 #: messages/forms.py:30
 msgid "Ham"
-msgstr "Lui"
+msgstr "Τον"
 
 #: messages/forms.py:31
 msgid "Forget"
-msgstr "Dimenticare"
+msgstr "Ξεχνάμε"
 
 #: messages/forms.py:62
 msgid "Select atleast one action to perform"
-msgstr "Scegli almento una azione da eseguire"
+msgstr "Επιλέξτε τουλάχιστον μία ενέργεια που θα εκτελέσει"
 
 #: messages/forms.py:66
 msgid "Provide atleast one alternative recipient"
-msgstr "Scivi almento un destinatario alternativo"
+msgstr "Παρέχουν τουλάχιστον ένα εναλλακτικό παραλήπτη"
 
 #: messages/forms.py:73 reports/forms.py:147
 #, python-format
 msgid "%(email)s is not a valid e-mail address."
-msgstr "%(email)s NON è un indirizzo email valido"
+msgstr "%(email)s δεν είναι μια έγκυρη διεύθυνση ηλεκτρονικού ταχυδρομείου."
 
 #: messages/tasks.py:44
 #, python-format
 msgid "Message: %(id)s released to: %(addrs)s"
-msgstr "Messaggio: %(id)s pubblicato da: %(addrs)s"
+msgstr "Μήνυμα: %(id)s κυκλοφόρησε σε: %(addrs)s"
 
 #: messages/tasks.py:48
 #, python-format
 msgid "Message: %(id)s release failed"
-msgstr "Messaggio: %(id)s rilascio non riuscita"
+msgstr "Μήνυμα: %(id)s απελευθέρωση απέτυχε"
 
 #: messages/tasks.py:62
 #, python-format
 msgid "Processing quarantined message: %(id)s"
-msgstr "Elaborazione del messaggio in quarantena: %(id)s"
+msgstr "Επεξεργασία σε καραντίνα μηνύματος: %(id)s"
 
 #: messages/tasks.py:77 messages/tasks.py:166
 #, python-format
 msgid "Message: %(msgid)s %(task)s failed with error: %(error)s"
-msgstr "Messaggio: %(msgid)s %(task)s non riuscita con errore: %(error)s"
+msgstr "Μήνυμα: %(msgid)s %(task)s απέτυχε με σφάλμα: %(error)s"
 
 #: messages/tasks.py:94 messages/tasks.py:184
 #, python-format
 msgid "Message: %(msgid)s released to: %(to)s"
-msgstr "Messaggio: %(msgid)s pubblicato da: %(to)s"
+msgstr "Μήνυμα: %(msgid)s κυκλοφόρησε σε: %(to)s"
 
 #: messages/tasks.py:98 messages/tasks.py:188
 msgid "The sender address is empty"
-msgstr "L'indirizzo del mittente è vuoto"
+msgstr "Η διεύθυνση αποστολέα είναι κενό"
 
 #: messages/tasks.py:100 messages/tasks.py:190
 #, python-format
 msgid "Message: %(msgid)s release failed with error: %(error)s"
-msgstr "Messaggio: %(msgid)s rilascio non riuscita con errore: %(error)s"
+msgstr "Μήνυμα: %(msgid)s απελευθέρωση απέτυχε με σφάλμα: %(error)s"
 
 #: messages/tasks.py:109 messages/tasks.py:198
 #, python-format
 msgid "Message: %(msgid)s learning failed with error: %(error)s"
-msgstr "Messaggio: %(msgid)s apprendimento non riuscita con errore: %(error)s"
+msgstr "Μήνυμα: %(msgid)s μάθηση απέτυχε με σφάλμα: %(error)s"
 
 #: messages/tasks.py:113 messages/tasks.py:201
 #, python-format
 msgid "Message: %(msgid)s learnt as %(learn)s"
-msgstr "Messaggio: %(msgid)s imparato come %(learn)s"
+msgstr "Μήνυμα: %(msgid)s δίδαξε ως %(learn)s"
 
 #: messages/tasks.py:121 messages/tasks.py:209
 #, python-format
 msgid "Message: %(msgid)s deleting failed with error: %(error)s"
-msgstr "Messaggio: %(msgid)s l'eliminazione non riuscita con errore: %(error)s"
+msgstr "Μήνυμα: %(msgid)s Διαγραφή απέτυχε με σφάλμα: %(error)s"
 
 #: messages/tasks.py:125 messages/tasks.py:212
 #, python-format
 msgid "Message: %(msgid)s deleted from quarantine"
-msgstr "Messaggio: %(msgid)s cancellato dalla quarantena"
+msgstr "Μήνυμα: %(msgid)s διαγράφεται από την απομόνωση"
 
 #: messages/tasks.py:141
 #, python-format
 msgid "Bulk Processing %(len)d quarantined messages"
-msgstr "Elaborazione di massa %(len)d messaggi in quarantena"
+msgstr "Μαζική επεξεργασία %(len)d μηνύματα σε καραντίνα"
 
 #: messages/tasks.py:232
 #, python-format
 msgid "Accessing message: %(id)s, Failed: %(error)s"
-msgstr "Messaggio di accesso: %(id)s, fallito: %(error)s"
+msgstr "Πρόσβασης μήνυμα: %(id)s, απέτυχε: %(error)s"
 
 #: messages/tasks.py:236
 #, python-format
 msgid "Download attachment: %(attachid)s of message: %(id)s by user: %(user)s"
-msgstr "Scarica allegato: %(attachid)s messaggio: %(id)s utente: %(user)s"
+msgstr "Λήψη συνημμένου: %(attachid)s μήνυμα: %(id)s από χρήστη: %(user)s"
 
 #: messages/tasks.py:239
 #, python-format
 msgid "Preview of message: %(id)s requested by user: %(user)s"
-msgstr "Anteprima del messaggio: %(id)s richiesto dall'utente: %(user)s"
+msgstr "Προεπισκόπηση του μηνύματος: %(id)s ζητείται από το χρήστη: %(user)s"
 
 #: messages/views.py:176 messages/views.py:265
 msgid "You are not authorized to access this page"
-msgstr "Non hai l'autorizzazione per accede a questa pagina"
+msgstr "Δεν έχετε δικαίωμα για πρόσβαση σε αυτήν τη σελίδα"
 
 #: messages/views.py:235
 msgid "Processing the request failed"
-msgstr "Elaborazione della richiesta non riuscita"
+msgstr "Επεξεργασίας της αίτησης απέτυχε"
 
 #: messages/views.py:278
 msgid "The requested attachment could not be downloaded"
-msgstr "L'allegato richiesto non poteva essere scaricato"
+msgstr "Δεν ήταν δυνατή η λήψη του το αιτούμενη συνημμένο"
 
 #: messages/views.py:288
 msgid "The requested message could not be previewed"
-msgstr "Il messaggio richiesto non poteva essere previsto"
+msgstr ""
+"Δεν θα μπορούσε να επιτρέπει την προεπισκόπησή του αιτούμενου μηνύματος"
 
 #: messages/views.py:302
 msgid "No messages found with that message id"
-msgstr "Nessun messaggio trovato con quell'id messaggio"
+msgstr "Τα μηνύματα δεν βρέθηκε με το αναγνωριστικό μηνύματος"
 
 #: messages/views.py:352
 msgid "System was unable to process your request"
-msgstr "Sistema è stato in grado di elaborare la richiesta"
+msgstr "Σύστημα δεν ήταν δυνατό να επεξεργαστεί την αίτησή σας"
 
 #: messages/management/commands/cleanquarantine.py:90
 #, python-format
 msgid "== Processing directory %(path)s =="
-msgstr "Sto processand la cartella %(path)s"
+msgstr "== Επεξεργασία καταλόγου %(path)s =="
 
 #: messages/management/commands/cleanquarantine.py:109
 #, python-format
 msgid "== Removing directory  %(path)s =="
-msgstr "Sto rimuovendo la cartella %(path)s"
+msgstr "== Κατάργηση καταλόγου %(path)s =="
 
 #: messages/management/commands/cleanquarantine.py:113
 #, python-format
 msgid "Failed to remove %(path)s"
-msgstr "Fallita rimozione di %(path)s"
+msgstr "Απέτυχε η κατάργηση %(path)s"
 
 #: messages/management/commands/cleanquarantine.py:115
 #, python-format
 msgid "The directory %(path)s is a sym link skipping"
-msgstr "La cartella %(path)s è un symlink, salto"
+msgstr "Ο κατάλογος %(path)s είναι μια σύνδεση sym παράλειψη"
 
 #: messages/management/commands/dbclean.py:30
 msgid ""
 "Deletes records older than QUARANTINE_DAYS_TO_KEEP days from the messages "
 "table"
-msgstr "Elimina i record più vecchi di giorni QUARANTINE_DAYS_TO_KEEP dalla tabella dei messaggi"
+msgstr ""
+"Διαγράφει εγγραφές ηλικίας άνω των QUARANTINE_DAYS_TO_KEEP ημερών από τον "
+"πίνακα μηνυμάτων"
 
 #: messages/management/commands/sendquarantinereports.py:75
 msgid ""
 "Generates an email report of the quarantined messages for the past 24 hours"
-msgstr "Genera un report di email i messaggi messi in quarantena per gli ultimi 24 ore"
+msgstr ""
+"Δημιουργεί μια έκθεση email από τα μηνύματα σε καραντίνα τις τελευταίες 24 "
+"ώρες"
 
 #: messages/management/commands/sendquarantinereports.py:88
 msgid "=== Processing quarantine notifications ==="
-msgstr "Processo le notifiche di quarantena"
+msgstr "=== Επεξεργασία απομόνωσης κοινοποιήσεις ==="
 
 #: messages/management/commands/sendquarantinereports.py:100
 #, python-format
 msgid "Baruwa quarantine report for %(user)s"
-msgstr "Report di quarantena di Baruwa per %(user)s"
+msgstr "Baruwa έκθεση απομόνωσης για %(user)s"
 
 #: messages/management/commands/sendquarantinereports.py:130
 #, python-format
 msgid "sent quarantine report to %(addr)s"
-msgstr "inviato report di quarantena a %(addr)s"
+msgstr "αποστέλλεται έκθεση απομόνωσης %(addr)s"
 
 #: messages/management/commands/sendquarantinereports.py:132
 #, python-format
 msgid "failed to send to: %(addr)s"
-msgstr "fallita spedizione a: %(addr)s"
+msgstr "Απέτυχε η αποστολή να: %(addr)s"
 
 #: messages/management/commands/sendquarantinereports.py:134
 #, python-format
 msgid "skipping report to %(addr)s no messages"
-msgstr "non produco report per %(addr)s, nessun messaggio"
+msgstr "Παράλειψη έκθεση %(addr)s χωρίς μηνύματα"
 
 #: messages/management/commands/sendquarantinereports.py:135
 msgid "=== completed quarantine notifications ==="
-msgstr "Comepletate le notifiche di quarantena"
+msgstr "=== ολοκληρωθεί απομόνωσης κοινοποιήσεις ==="
 
 #: messages/management/commands/updatesarules.py:36
 msgid "Updates the database with the spam descriptions"
-msgstr "Aggiorna il database con le descrizioni di spam"
+msgstr "Ενημερώνει τη βάση δεδομένων με τις περιγραφές του spam"
 
 #: messages/templatetags/messages_extras.py:74
 msgid "BL"
@@ -716,15 +754,15 @@ msgstr "BL"
 
 #: messages/templatetags/messages_extras.py:78
 msgid "Infected"
-msgstr "Infetti"
+msgstr "Έχουν μολυνθεί"
 
 #: messages/templatetags/messages_extras.py:83 templates/status/index.html:42
 msgid "Clean"
-msgstr "Puliti"
+msgstr "Καθαρισμός"
 
 #: messages/templatetags/messages_extras.py:85
 msgid "WL"
-msgstr "WL"
+msgstr "Η WL"
 
 #: messages/templatetags/messages_extras.py:87
 msgid "NS"
@@ -732,47 +770,47 @@ msgstr "NS"
 
 #: messages/templatetags/messages_extras.py:128
 msgid "Any address"
-msgstr "Qualunque indirizzo"
+msgstr "Κάθε διεύθυνση"
 
 #: messages/templatetags/messages_extras.py:161
 msgid "unknown"
-msgstr "sconosciuto"
+msgstr "άγνωστο"
 
 #: messages/templatetags/messages_extras.py:346
 msgid "I do not know how to read it"
-msgstr "non so come leggerlo"
+msgstr "Δεν ξέρω πώς να το διαβάσει"
 
 #: messages/templatetags/relayed_via.py:66
 msgid "RFC1918 Private address"
-msgstr "RFC1918 Indirizzo privato"
+msgstr "Ιδιωτικού RFC1918 διεύθυνση"
 
 #: messages/templatetags/relayed_via.py:68
 msgid "Reverse lookup failed"
-msgstr "Reverse lookup fallito"
+msgstr "Αντίστροφης αναζήτησης απέτυχε"
 
 #: reports/forms.py:36 templates/messages/task_status.html:37
 msgid "Message ID"
-msgstr "ID Messaggio"
+msgstr "Αναγνωριστικό μηνύματος"
 
 #: reports/forms.py:37 templates/messages/index.html:69
 msgid "Size"
-msgstr "Dimensione"
+msgstr "Μέγεθος"
 
 #: reports/forms.py:38
 msgid "From Address"
-msgstr "Dall'indirizzo"
+msgstr "Από διεύθυνση"
 
 #: reports/forms.py:39
 msgid "From Domain"
-msgstr "Dal dominio"
+msgstr "Από τον τομέα"
 
 #: reports/forms.py:40
 msgid "To Address"
-msgstr "All'indirizzo"
+msgstr "Στην διεύθυνση"
 
 #: reports/forms.py:41
 msgid "To Domain"
-msgstr "Al Dominio"
+msgstr "Σε τομέα"
 
 #: reports/forms.py:42 templates/messages/detail.html:69
 #: templates/messages/index.html:68 templates/messages/quarantine.html:100
@@ -781,405 +819,409 @@ msgstr "Al Dominio"
 #: templates/messages/quarantine_report_text.html:10
 #: templates/messages/quarantine_report_text.html:20
 msgid "Subject"
-msgstr "Oggetto"
+msgstr "Θέμα"
 
 #: reports/forms.py:43
 msgid "Received from"
-msgstr "Ricevuto da"
+msgstr "Έλαβε από"
 
 #: reports/forms.py:45
 msgid "Was scanned"
-msgstr "È stato digitalizzato"
+msgstr "Σαρώθηκε"
 
 #: reports/forms.py:46
 msgid "Is spam"
-msgstr "È spam"
+msgstr "Είναι spam"
 
 #: reports/forms.py:47
 msgid "Is high spam"
-msgstr "È spam alto"
+msgstr "Είναι υψηλό spam"
 
 #: reports/forms.py:48
 msgid "Is SA spam"
-msgstr "È spam SA"
+msgstr "Είναι SA spam"
 
 #: reports/forms.py:49
 msgid "Is RBL listed"
-msgstr "è listato in RBL"
+msgstr "Παρατίθεται RBL"
 
 #: reports/forms.py:50
 msgid "Is whitelisted"
-msgstr "è nella lista bianca"
+msgstr "Είναι whitelisted"
 
 #: reports/forms.py:51
 msgid "Is blacklisted"
-msgstr "è nella lista nera"
+msgstr "Είναι στη λίστα προγραφών"
 
 #: reports/forms.py:52
 msgid "SA score"
-msgstr "Punteggio SA"
+msgstr "Η βαθμολογία του"
 
 #: reports/forms.py:53
 msgid "Spam report"
-msgstr "Report spam"
+msgstr "Έκθεση spam"
 
 #: reports/forms.py:54
 msgid "Is virus infected"
-msgstr "È infetto da virus"
+msgstr "Έχει προσβληθεί ιούς"
 
 #: reports/forms.py:55
 msgid "Is name infected"
-msgstr "Nome è infetto"
+msgstr "Είναι προσβεβλημένος ονομασία"
 
 #: reports/forms.py:56
 msgid "Is other infected"
-msgstr "è infetto da in altro modo"
+msgstr "Είναι άλλο προσβληθεί"
 
 #: reports/forms.py:57 templates/reports/listing.html:38
 msgid "Date"
-msgstr "Data"
+msgstr "Ημερομηνία"
 
 #: reports/forms.py:58
 msgid "Time"
-msgstr "Ora"
+msgstr "Χρόνος"
 
 #: reports/forms.py:59
 msgid "Headers"
-msgstr "Headers"
+msgstr "Κεφαλίδες"
 
 #: reports/forms.py:60
 msgid "Is quarantined"
-msgstr "È in quarantena"
+msgstr "Είναι σε καραντίνα"
 
 #: reports/forms.py:61
 msgid "Processed by host"
-msgstr "processato da host"
+msgstr "Επεξεργασία από κεντρικό υπολογιστή"
 
 #: reports/forms.py:65
 msgid "is equal to"
-msgstr "uguale a"
+msgstr "είναι ίση με"
 
 #: reports/forms.py:66
 msgid "is not equal to"
-msgstr "non uguale a "
+msgstr "δεν είναι ίσο με"
 
 #: reports/forms.py:67
 msgid "is greater than"
-msgstr "più grande di"
+msgstr "είναι μεγαλύτερη από"
 
 #: reports/forms.py:68
 msgid "is less than"
-msgstr "minore di"
+msgstr "είναι μικρότερο από"
 
 #: reports/forms.py:69
 msgid "contains"
-msgstr "contiene"
+msgstr "περιέχει"
 
 #: reports/forms.py:70
 msgid "does not contain"
-msgstr "non contiene"
+msgstr "δεν περιέχουν"
 
 #: reports/forms.py:71
 msgid "matches regex"
-msgstr "Corrispondenza su espressione regolare"
+msgstr "ταιριάζει με regex"
 
 #: reports/forms.py:72
 msgid "does not match regex"
-msgstr "non corrsiponde alla espressione regolare"
+msgstr "δεν συμφωνεί με το regex"
 
 #: reports/forms.py:73
 msgid "is null"
-msgstr "è nullo"
+msgstr "είναι null"
 
 #: reports/forms.py:74
 msgid "is not null"
-msgstr "non è nullo"
+msgstr "δεν είναι null"
 
 #: reports/forms.py:75
 msgid "is true"
-msgstr "è vero"
+msgstr "είναι αλήθεια"
 
 #: reports/forms.py:76
 msgid "is false"
-msgstr "è falso"
+msgstr "είναι ψευδής"
 
 #: reports/forms.py:121 reports/forms.py:127 reports/forms.py:137
 #: reports/forms.py:184
 #, python-format
 msgid "%(field)s does not support the %(filt)s filter"
-msgstr "%(field)s non supporta il filtro %(filt)s"
+msgstr "%(field)s δεν υποστηρίζει την %(filt)s φίλτρο"
 
 #: reports/forms.py:131 reports/forms.py:141 reports/forms.py:188
 msgid "Please supply a value to query"
-msgstr "Prego fornire un valore alla query"
+msgstr "Δώστε μια τιμή σε ερώτημα"
 
 #: reports/forms.py:133
 msgid "The value has to be numeric"
-msgstr "il valore deve essere numerico"
+msgstr "Η τιμή πρέπει να είναι αριθμητικά"
 
 #: reports/forms.py:155 reports/forms.py:169
 msgid "Please provide a valid regex"
-msgstr "prego fornisci una espresione regolare valida"
+msgstr "Δώστε μια έγκυρη regex"
 
 #: reports/forms.py:162
 msgid "Please provide a valid domain name"
-msgstr "Prego fornisci un nome di dominio valido"
+msgstr "Δώστε ένα έγκυρο όνομα τομέα"
 
 #: reports/forms.py:174
 msgid "Please provide a valid ipv4 address"
-msgstr "prego fornisci un valido indirizzo IPv4"
+msgstr "Δώστε μια έγκυρη ipv4 διεύθυνση"
 
 #: reports/forms.py:179
 msgid "Please provide a valid hostname or ipv4 address"
-msgstr "prego fornisci un valido hostname o un indirizzo IPv4 valido"
+msgstr "Δώστε ένα έγκυρο όνομα κεντρικού υπολογιστή ή ipv4 διεύθυνση"
 
 #: reports/forms.py:195
 msgid "Please provide a valid date in YYYY-MM-DD format"
-msgstr "Prego fornisci una valida data in YYYY-MM-DD"
+msgstr "Δώστε μια έγκυρη ημερομηνία με τη μορφή ΕΕΕΕ-μμ-ηη"
 
 #: reports/forms.py:201
 msgid "Please provide valid time in HH:MM format"
-msgstr "Prego fornisci un orario valido in HH:MM"
+msgstr "Δώστε χρόνο έγκυρη μορφή ωω: λλ"
 
 #: reports/views.py:71
 msgid "The requested filter is already being used"
-msgstr "Il filtro richiesto è già in uso"
+msgstr "Το αιτούμενη φίλτρο χρησιμοποιείται ήδη"
 
 #: reports/views.py:160
 msgid "This filter already exists"
-msgstr "Questo filtro esiste già"
+msgstr "Το φίλτρο αυτό υπάρχει ήδη"
 
 #: reports/views.py:194
 msgid "This filter you attempted to load does not exist"
-msgstr "Il filtro che hai cercato di caricare non esiste"
+msgstr "Αυτό το φίλτρο που προσπαθήσατε να φορτώσετε δεν υπάρχει"
 
 #: reports/views.py:211
 msgid "This filter you attempted to delete does not exist"
-msgstr "Il filtro che hai tentato di eliminare non esiste"
+msgstr "Προσπαθήσατε να διαγράψετε αυτό το φίλτρο δεν υπάρχει"
 
 #: reports/views.py:224
 msgid "Deletion of the filter failed, Try again"
-msgstr "La cancellazione del filtro è fallita"
+msgstr "Διαγραφή του φίλτρου απέτυχε, δοκιμάστε ξανά"
 
 #: reports/views.py:247
 msgid "Top senders by quantity"
-msgstr "Primi per quantità di invii"
+msgstr "Επάνω αποστολείς από ποσότητα"
 
 #: reports/views.py:252
 msgid "Top senders by volume"
-msgstr "Primi per volume di invii"
+msgstr "Επάνω αποστολείς από όγκο"
 
 #: reports/views.py:257
 msgid "Top sender domains by quantity"
-msgstr "Primi dominio per quantità"
+msgstr "Τομείς άνω αποστολέα την ποσότητα"
 
 #: reports/views.py:262
 msgid "Top sender domains by volume"
-msgstr "Primi per volume di innvii"
+msgstr "Τομείς άνω αποστολέα από όγκο"
 
 #: reports/views.py:267
 msgid "Top recipients by quantity"
-msgstr "Primi per numero di messaggi ricevuti"
+msgstr "Επάνω στους παραλήπτες από ποσότητα"
 
 #: reports/views.py:272
 msgid "Top recipients by volume"
-msgstr "Primi per volume ricevuto"
+msgstr "Επάνω στους παραλήπτες του όγκου"
 
 #: reports/views.py:278
 msgid "Top recipient domains by quantity"
-msgstr "Primi domini per quantità di messaggi ricevuti"
+msgstr "Επάνω δικαιούχων τομέων από την ποσότητα"
 
 #: reports/views.py:284
 msgid "Top recipient domains by volume"
-msgstr "Primi domini per volume ricevuto"
+msgstr "Επάνω δικαιούχων τομέων του όγκου"
 
 #: reports/views.py:314
 msgid "Spam Score distribution"
-msgstr "Distribuzione del punteggio Spam"
+msgstr "Διανομή spam σκορ"
 
 #: reports/views.py:324
 msgid "Top mail hosts by quantity"
-msgstr "Primi host di posta per quantità"
+msgstr "Επάνω mail φιλοξενεί την ποσότητα"
 
 #: reports/views.py:385
 msgid "Total messages [ After SMTP ]"
-msgstr "Totale messaggi [ dopo SMTP ]"
+msgstr "Σύνολο μηνυμάτων [μετά SMTP]"
 
 #: reports/management/commands/sendpdfreports.py:74
 msgid "Generates and sends PDF summary reports via email"
-msgstr "Genera e Invia report Riepilogo in formato PDF via e-mail"
+msgstr "Δημιουργεί και στέλνει PDF συνοπτικές εκθέσεις μέσω email"
 
 #: reports/management/commands/sendpdfreports.py:96
 #: status/management/commands/queuestats.py:43
 msgid "Command doesn't accept any arguments"
-msgstr "Comando non accetta argomenti"
+msgstr "Η εντολή δεν δέχεται οποιαδήποτε ορίσματα"
 
 #: reports/management/commands/sendpdfreports.py:109
 msgid "The startdate, enddate specified is invalid"
-msgstr "Startdate, enddate specificato non è valido"
+msgstr "Το ημερομ_αρχής, enddate που ορίζεται δεν είναι έγκυρη"
 
 #: reports/management/commands/sendpdfreports.py:118
 msgid "The period you specified is invalid"
-msgstr "Il periodo specificato non è valido"
+msgstr "Το χρονικό διάστημα που καθορίσατε δεν είναι έγκυρο"
 
 #: reports/management/commands/sendpdfreports.py:183
 #: templates/accounts/edit_address.html:10
 #: templates/accounts/edit_address.html:11
 #: templates/accounts/edit_address.html:14 templates/reports/piereport.html:27
 msgid "Address"
-msgstr "Indirizzi"
+msgstr "Διεύθυνση"
 
 #: reports/management/commands/sendpdfreports.py:183
 #: templates/reports/barreport.html:34 templates/reports/piereport.html:28
 msgid "Count"
-msgstr "Numero"
+msgstr "Καταμέτρηση"
 
 #: reports/management/commands/sendpdfreports.py:183
 #: templates/reports/listing.html:56 templates/reports/piereport.html:29
 #: templates/reports/relays.html:31
 msgid "Volume"
-msgstr "Volumne"
+msgstr "Όγκος"
 
 #: reports/management/commands/sendpdfreports.py:256
 #: templates/reports/index.html:61 templates/status/index.html:17
 msgid "Message Totals"
-msgstr "Numero totale messaggi"
+msgstr "Μήνυμα συνόλων"
 
 #: reports/management/commands/sendpdfreports.py:340
 msgid "Baruwa mail report"
-msgstr "Report mail Baruwa"
+msgstr "Baruwa αλληλογραφίας έκθεση"
 
 #: reports/management/commands/sendpdfreports.py:362
 #, python-format
 msgid "Baruwa usage report for: %(user)s"
-msgstr "Report Baruwa per: %(user)s"
+msgstr "Baruwa έκθεσης χρήσης για: %(user)s"
 
 #: reports/management/commands/sendpdfreports.py:374
 #, python-format
 msgid "* Queue %(user)s's report to: %(addr)s"
-msgstr "* Accoda il report dell'utente %(user)s a: %(addr)s "
+msgstr "* Ουρά %(user)s»s έκθεση: %(addr)s"
 
 #: reports/management/commands/sendpdfreports.py:379
 msgid "=================== Processing reports ======================"
-msgstr "=================== Sto processando i Report ======================"
+msgstr "=== Επεξεργασίας εκθέσεων ==="
 
 #: reports/management/commands/sendpdfreports.py:387
 #, python-format
 msgid "========== domain name %(dom)s does not exist =========="
-msgstr "========== il nome di dominio %(dom)s non esiste =========="
+msgstr "=== όνομα τομέα %(dom)s δεν υπάρχει ==="
 
 #: reports/management/commands/sendpdfreports.py:416
 #, python-format
 msgid "====== sending %(num)s messages ======="
-msgstr "====== spedisco %(num)s messaggi ======="
+msgstr "=== αποστολή %(num)s μηνύματα ==="
 
 #: reports/management/commands/sendpdfreports.py:419
 #, python-format
 msgid "Sending failed ERROR: %(error)s"
-msgstr "Spedisco gli errori dovuti a fallimento: %(error)s"
+msgstr "Αποστολή απέτυχε σφάλμα: %(error)s"
 
 #: status/views.py:223
 #, python-format
 msgid "The queue items (%(num)d) have been flagged for deletion"
-msgstr "Gli elementi della coda (%(num)d) sono state contrassegnate per l'eliminazione"
+msgstr "Τα στοιχεία ουράς (%(num)d) έχουν ήδη επισημανθεί για διαγραφή"
 
 #: status/views.py:228
 msgid "The queue items could not be processed"
-msgstr "Gli elementi della coda non potrebbero essere trasformati"
+msgstr "Δεν ήταν δυνατή η επεξεργασία των στοιχείων ουράς"
 
 #: status/management/commands/queuestats.py:48
 #, python-format
 msgid "Only the following %(mta)s MTA's are supported"
-msgstr "Solo i seguenti %(mta)s MTA è supportato"
+msgstr "Μόνο τα παρακάτω %(mta)s Υποστηρίζονται MTA's"
 
 #: status/management/commands/queuestats.py:84
 msgid "== Delete flaged queue items from the inbound queue =="
-msgstr "= = Elimina gli elementi della coda flaged dalla coda in ingresso = ="
+msgstr "== Διαγραφή στοιχείων ουράς flaged από την εισερχόμενη ουρά =="
 
 #: status/management/commands/queuestats.py:91
 #, python-format
 msgid "== Deleted %(num)d items from the inbound queue =="
-msgstr "= = Cancellato %(num)d elementi dalla coda in ingresso = ="
+msgstr "== Διαγραφεί %(num)d στοιχεία από την εισερχόμενη ουρά =="
 
 #: status/management/commands/queuestats.py:96
 msgid "== Delete flaged queue items from the outbound queue =="
-msgstr "= = Elimina gli elementi della coda flaged dalla coda in uscita = ="
+msgstr "== Διαγραφή στοιχείων ουράς flaged από την εξερχόμενη ουρά =="
 
 #: status/management/commands/queuestats.py:104
 #, python-format
 msgid "== Deleted %(num)d items from the outbound queue =="
-msgstr "= = Cancellato %(num)d elementi dalla coda in uscita = ="
+msgstr "== Διαγραφεί %(num)d στοιχεία από την εξερχόμενη ουρά =="
 
 #: status/management/commands/queuestats.py:125
 #, python-format
 msgid "== Deleting %(items)d queue items from DB =="
-msgstr "= = Eliminazione %(items)d coda di oggetti dal DB = ="
+msgstr "== Διαγραφή %(items)d ουρά στοιχεία από DB =="
 
 #: status/management/commands/queuestats.py:130
 #, python-format
 msgid "== Processing the inbound queue: %(queue)s with %(items)d items =="
-msgstr "= = La coda in entrata di elaborazione: %(queue)s con %(items)d elementi = ="
+msgstr ""
+"== Επεξεργασία της ουράς εισερχομένων: %(queue)s με %(items)d στοιχεία =="
 
 #: status/management/commands/queuestats.py:134
 msgid "== Skipping the inbound queue 0 items found =="
-msgstr "= = Saltando gli elementi della coda in ingresso 0 trovati = ="
+msgstr "== Η παράλειψη των στοιχείων ουράς εισερχομένων 0 βρέθηκαν =="
 
 #: status/management/commands/queuestats.py:136
 #, python-format
 msgid "== Processing the outbound queue: %(queue)s with %(items)d items =="
-msgstr "= = La coda in uscita di elaborazione: %(queue)s con %(items)d elementi = ="
+msgstr ""
+"== Μεταποίησης στην ουρά εξερχόμενων: %(queue)s με %(items)d στοιχεία =="
 
 #: status/management/commands/queuestats.py:140
 msgid "== Skipping the outbound queue 0 items found =="
-msgstr "= = Saltando gli elementi della coda in uscita 0 trovati = ="
+msgstr "== Η παράλειψη των στοιχείων ουράς εξερχομένων 0 βρέθηκαν =="
 
 #: templates/404.html:25
 msgid "404 Page Not Found"
-msgstr "404 Pagina non trovata"
+msgstr "404 Page Not Found"
 
 #: templates/404.html:28
 msgid "Page Not Found"
-msgstr "Pagina Non Trovata"
+msgstr "Σελίδα δεν βρέθηκε"
 
 #: templates/404.html:29
 msgid "Sorry the requested page could not be found please check the url."
-msgstr "Spiacente, la pagina richiesta non è stata trovata, per favore controlla l'URL"
+msgstr "Δυστυχώς η σελίδα που ζητήθηκε δεν βρέθηκε παρακαλώ ελέγξτε το url."
 
 #: templates/500.html:25 templates/500.html.py:28
 msgid "Page unavailable"
-msgstr "Pagina non disponibile"
+msgstr "Σελίδα δεν είναι διαθέσιμη"
 
 #: templates/500.html:29
 msgid "Sorry the requested page is unavailable due to a server malfunction."
-msgstr "Spiacente la pagina richiesta non e disponibile per un malfunzionamento del server"
+msgstr ""
+"Δυστυχώς η σελίδα που ζητήθηκε δεν είναι διαθέσιμο οφείλεται σε "
+"δυσλειτουργία του server."
 
 #: templates/base.html:41
 msgid "Status "
-msgstr "Status "
+msgstr "Κατάσταση "
 
 #: templates/base.html:50
 msgid "Msgs: "
-msgstr "Msg:"
+msgstr "Αριθμός μηνυμάτων: "
 
 #: templates/base.html:51
 msgid "Total"
-msgstr "Totale"
+msgstr "Συνολικά"
 
 #: templates/base.html:51
 msgid "Virus"
-msgstr "Virus"
+msgstr "Ιός"
 
 #: templates/base.html:55
 msgid "In: "
-msgstr "In: "
+msgstr "Στο: "
 
 #: templates/base.html:55
 msgid "Out: "
-msgstr "Fuori: "
+msgstr "Που: "
 
 #: templates/base.html:58
 msgid "Signed in as "
-msgstr "Loggato come"
+msgstr "Υπεγράφη στην ως "
 
 #: templates/base.html:59
 msgid "Logout"
@@ -1187,35 +1229,35 @@ msgstr "Logout"
 
 #: templates/base.html:61
 msgid "Not logged in :: "
-msgstr "Non loggato in ::"
+msgstr "Δεν είστε συνδεδεμένοι:: "
 
 #: templates/base.html:61 templates/accounts/login.html:71
 msgid "Login"
-msgstr "Login"
+msgstr "Σύνδεση"
 
 #: templates/base.html:81
 msgid "Messages"
-msgstr "Messaggi"
+msgstr "Μηνύματα"
 
 #: templates/base.html:82
 msgid "Lists"
-msgstr "Liste"
+msgstr "Λίστες"
 
 #: templates/base.html:83 templates/reports/index.html:17
 #: templates/reports/index.html.py:18 templates/reports/index.html:42
 msgid "Reports"
-msgstr "Report"
+msgstr "Εκθέσεις"
 
 #: templates/base.html:85 templates/config/index.html:36
 #: templates/config/list_scanners.html:21 templates/messages/index.html:72
 #: templates/messages/quarantine.html:103
 #: templates/messages/task_status.html:36
 msgid "Status"
-msgstr "Stato"
+msgstr "Κατάσταση"
 
 #: templates/base.html:87 templates/config/index.html:23
 msgid "Settings"
-msgstr "Impostazioni"
+msgstr "Ρυθμίσεις"
 
 #: templates/base.html:89 templates/accounts/add_account_sig.html:5
 #: templates/accounts/add_address.html:8
@@ -1232,60 +1274,62 @@ msgstr "Impostazioni"
 #: templates/accounts/user_profile.html:6 templates/config/domain.html:18
 #: templates/config/index.html:19 templates/config/list_scanners.html:6
 msgid "Accounts"
-msgstr "Account"
+msgstr "Λογαριασμοί"
 
 #: templates/base.html:92
 msgid "Account"
-msgstr "Account"
+msgstr "Λογαριασμός"
 
 #: templates/base.html:115
 msgid "Filtered by"
-msgstr "Filtrato per"
+msgstr "Φιλτράρεται από"
 
 #: templates/base.html:117
 msgid "To address"
-msgstr "All'indirizzo"
+msgstr "Στην διεύθυνση"
 
 #: templates/base.html:119
 msgid "From address"
-msgstr "Dall'indirizzo"
+msgstr "Από διεύθυνση"
 
 #: templates/base.html:122 templates/lists/index.html:75
 msgid "containing"
-msgstr "contiene"
+msgstr "που περιέχουν"
 
 #: templates/base.html:124
 msgid "NOT containing"
-msgstr "Non contiene"
+msgstr "ΔΕΝ περιέχουν"
 
 #: templates/base.html:127 templates/reports/index.html:78
 msgid "Remove"
-msgstr "Rimuovi"
+msgstr "Κατάργηση"
 
 #: templates/accounts/add_account_sig.html:6
 msgid "Account page"
-msgstr "Nella pagina account"
+msgstr "Σελίδα του λογαριασμού"
 
 #: templates/accounts/add_account_sig.html:9
 msgid "Accounts :: Add Email signature"
-msgstr "Conti:: Aggiungi firma Email"
+msgstr "Λογαριασμοί:: Προσθήκη υπογραφής ηλεκτρονικού ταχυδρομείου"
 
 #: templates/accounts/add_account_sig.html:10
 #, python-format
 msgid ""
 "\n"
 "Accounts :: %(address)s - add email signature\n"
-msgstr "\nConti:: %(address)s -Aggiungi firma email\n"
+msgstr ""
+"\n"
+"Λογαριασμοί:: %(address)s -προσθήκη υπογραφής ηλεκτρονικού ταχυδρομείου\n"
 
 #: templates/accounts/add_account_sig.html:18
 msgid "Add email signature"
-msgstr "Aggiungi firma email"
+msgstr "Προσθήκη υπογραφής ηλεκτρονικού ταχυδρομείου"
 
 #: templates/accounts/add_account_sig.html:39
 #: templates/config/add_auth_host.html:33
 #: templates/config/add_domain_sig.html:38 templates/config/add_host.html:33
 msgid "Clear"
-msgstr "Pulisci"
+msgstr "Σαφής"
 
 #: templates/accounts/add_account_sig.html:40
 #: templates/accounts/add_address.html:41
@@ -1297,7 +1341,7 @@ msgstr "Pulisci"
 #: templates/config/domain.html:132 templates/lists/add.form.html:32
 #: templates/reports/filter.form.html:11
 msgid "Add"
-msgstr "Aggiungi"
+msgstr "Προσθήκη"
 
 #: templates/accounts/add_address.html:6
 #: templates/accounts/delete_address.html:6
@@ -1308,30 +1352,30 @@ msgstr "Aggiungi"
 #: templates/config/edit_domain_sig.html:5
 #: templates/config/list_scanners.html:7 templates/config/task_status.html:8
 msgid "Domains"
-msgstr "Domini"
+msgstr "Τομείς"
 
 #: templates/accounts/add_address.html:12
 #: templates/accounts/add_address.html:13
 msgid "Domains :: Add Domain"
-msgstr "Domini :: Aggiunti dominio"
+msgstr "Τομείς:: Προσθήκη τομέα"
 
 #: templates/accounts/add_address.html:12
 #: templates/accounts/add_address.html:13
 msgid "Accounts :: Add Address"
-msgstr "Accoutn :: Aggiungi account"
+msgstr "Λογαριασμοί:: Προσθήκη διεύθυνση"
 
 #: templates/accounts/add_address.html:16
 msgid "Add Domain"
-msgstr "Aggiungi Dominio"
+msgstr "Προσθήκη τομέα"
 
 #: templates/accounts/add_address.html:16
 msgid "Add Address"
-msgstr "Aggiungi indirizzo"
+msgstr "Προσθήκη διεύθυνση"
 
 #: templates/accounts/add_address.html:40
 #: templates/accounts/create_account.html:26 templates/lists/add.form.html:31
 msgid "Reset"
-msgstr "Reset"
+msgstr "Επαναφορά"
 
 #: templates/accounts/admin_change_pw.html:10
 #: templates/accounts/admin_change_pw.html:11
@@ -1339,35 +1383,35 @@ msgstr "Reset"
 #: templates/accounts/change_pw.html:10 templates/accounts/change_pw.html:11
 #: templates/accounts/change_pw.html:14
 msgid "Change Password"
-msgstr "Cambia password"
+msgstr "Αλλαγή κωδικού πρόσβασης"
 
 #: templates/accounts/admin_change_pw.html:31
 #: templates/accounts/change_pw.html:31
 msgid "Change"
-msgstr "Cambia"
+msgstr "Αλλαγή"
 
 #: templates/accounts/create_account.html:8
 #: templates/accounts/create_account.html:9 templates/accounts/index.html:20
 msgid "Create account"
-msgstr "Crea account"
+msgstr "Δημιουργία λογαριασμού"
 
 #: templates/accounts/create_account.html:12
 msgid "User account creation"
-msgstr "Creazione accoutnutente"
+msgstr "Δημιουργία λογαριασμού χρήστη"
 
 #: templates/accounts/create_account.html:27
 msgid "Create"
-msgstr "Crea"
+msgstr "Δημιουργία"
 
 #: templates/accounts/delete_account.html:8
 #: templates/accounts/delete_account.html:9
 #: templates/accounts/delete_account.html:12
 msgid "Delete Account"
-msgstr "Elimina account"
+msgstr "Διαγραφή λογαριασμού"
 
 #: templates/accounts/delete_account.html:20
 msgid "Delete the user account: ?"
-msgstr "Cancella l'account utente: ?"
+msgstr "Διαγραφή λογαριασμού χρήστη:;"
 
 #: templates/accounts/delete_account.html:22
 #: templates/accounts/delete_account_sig.html:22
@@ -1377,49 +1421,51 @@ msgstr "Cancella l'account utente: ?"
 #: templates/config/delete_host.html:24 templates/lists/delete.html:24
 #: templates/messages/detail.html:234 templates/messages/quarantine.html:57
 msgid "Delete"
-msgstr "Elimina"
+msgstr "Διαγραφή"
 
 #: templates/accounts/delete_account_sig.html:8
 #: templates/accounts/delete_account_sig.html:9
 #: templates/config/delete_domain_sig.html:9
 #: templates/config/delete_domain_sig.html:10
 msgid "Delete email signature"
-msgstr "Eliminare firma email"
+msgstr "Διαγραφή email signature"
 
 #: templates/accounts/delete_account_sig.html:12
 #: templates/config/delete_domain_sig.html:13
 msgid "Delete Email signature"
-msgstr "Eliminare Email firma"
+msgstr "Διαγραφή Email signature"
 
 #: templates/accounts/delete_account_sig.html:20
 #: templates/config/delete_domain_sig.html:21
 msgid "Delete the email signature"
-msgstr "Eliminare la firma di posta elettronica"
+msgstr "Διαγράψτε την ηλεκτρονική υπογραφή"
 
 #: templates/accounts/delete_address.html:12
 #: templates/accounts/delete_address.html:13
 #: templates/accounts/delete_address.html:16
 msgid "Delete Address"
-msgstr "Elimina indirizzo"
+msgstr "Διαγραφή διεύθυνσης"
 
 #: templates/accounts/delete_address.html:24
 msgid "Delete the address:"
-msgstr "Elimina l'indirizzo:"
+msgstr "Διαγράψτε τη διεύθυνση:"
 
 #: templates/accounts/edit_account_sig.html:8
 msgid "Accounts :: Edit Email signature"
-msgstr "Conti:: Modifica firma Email"
+msgstr "Λογαριασμοί:: Επεξεργασία υπογραφής ηλεκτρονικού ταχυδρομείου"
 
 #: templates/accounts/edit_account_sig.html:9
 #, python-format
 msgid ""
 "\n"
 "Accounts :: %(address)s - edit email signature\n"
-msgstr "\nConti:: %(address)s -Modifica firma email\n"
+msgstr ""
+"\n"
+"Λογαριασμοί:: %(address)s -Επεξεργασία υπογραφής ηλεκτρονικού ταχυδρομείου\n"
 
 #: templates/accounts/edit_account_sig.html:17
 msgid "Edit Account signature"
-msgstr "Modifica firma del conto"
+msgstr "Επεξεργαστείτε την υπογραφή του λογαριασμού"
 
 #: templates/accounts/edit_account_sig.html:38
 #: templates/accounts/edit_address.html:35
@@ -1428,13 +1474,13 @@ msgstr "Modifica firma del conto"
 #: templates/config/edit_auth_host.html:33
 #: templates/config/edit_domain_sig.html:39 templates/config/edit_host.html:31
 msgid "Update"
-msgstr "Aggiorna"
+msgstr "Η ενημερωμένη έκδοση"
 
 #: templates/accounts/edit_address.html:7 templates/accounts/index.html:22
 #: templates/config/domain.html:19 templates/config/index.html:20
 #: templates/status/index.html:20
 msgid "Scanners"
-msgstr "Scanner"
+msgstr "Σαρωτές"
 
 #: templates/accounts/edit_address.html:10
 #: templates/accounts/edit_address.html:11
@@ -1442,151 +1488,164 @@ msgstr "Scanner"
 #: templates/accounts/user_profile.html:26
 #: templates/accounts/user_profile.html:80
 msgid "Edit"
-msgstr "Modifica"
+msgstr "Επεξεργασία"
 
 #: templates/accounts/edit_address.html:10
 #: templates/accounts/edit_address.html:11
 #: templates/accounts/edit_address.html:14
 msgid "Domain"
-msgstr "Dominio"
+msgstr "Τομέα"
 
 #: templates/accounts/index.html:27
 msgid "Accounts :: "
-msgstr "Account ::"
+msgstr "Λογαριασμοί:: "
 
 #: templates/accounts/index.html:32
 msgid "Full names"
-msgstr "Nome intero"
+msgstr "Πλήρεις ονομασίες"
 
 #: templates/accounts/index.html:33 templates/accounts/login.html:80
 msgid "Email address"
-msgstr "Indirizzo email"
+msgstr "Διεύθυνση ηλεκτρονικού ταχυδρομείου"
 
 #: templates/accounts/index.html:41 templates/accounts/index.html.py:43
 msgid "View account"
-msgstr "Vedi account"
+msgstr "Προβολή λογαριασμού"
 
 #: templates/accounts/login.html:26
 msgid "Baruwa :: Login"
-msgstr "Baruwa: Login"
+msgstr "Baruwa: είσοδος"
 
 #: templates/accounts/login.html:51
 msgid "Your username and password didn't match. Please try again."
-msgstr "Utente e password non validano. Prova di nuovo."
+msgstr ""
+"Συμφωνούν με το όνομα χρήστη και κωδικό πρόσβασης. Παρακαλούμε δοκιμάστε "
+"ξανά."
 
 #: templates/accounts/login.html:65
 msgid "Language"
-msgstr "Lingua"
+msgstr "Γλώσσα"
 
 #: templates/accounts/login.html:76
 msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll e-mail "
 "instructions for setting a new one."
-msgstr "Dimenticato la password? Inserisci il tuo indirizzo e-mail qui sotto e noi ti e-mail le istruzioni per l'impostazione di una nuova."
+msgstr ""
+"Ξεχάσατε τον κωδικό σας; Πληκτρολογήστε παρακάτω τη διεύθυνση σας "
+"ηλεκτρονικού ταχυδρομείου, και εμείς θα ηλεκτρονικού ταχυδρομείου οδηγιών "
+"για τη ρύθμιση ένα νέο."
 
 #: templates/accounts/login.html:84
 msgid "Reset my password"
-msgstr "Reimpostare la mia password"
+msgstr "Επαναφέρετε τον κωδικό πρόσβασής μου"
 
 #: templates/accounts/reset_done.html:28
 msgid "Baruwa :: Password reset successful"
-msgstr "Baruwa:: Password reset successo"
+msgstr "Baruwa:: Επαναφορά του κωδικού πρόσβασης επιτυχή"
 
 #: templates/accounts/reset_done.html:30
 msgid "Baruwa :: Password reset complete"
-msgstr "Baruwa:: Password reset completo"
+msgstr "Baruwa:: Επαναφορά του κωδικού πρόσβασης ολοκληρώθηκε"
 
 #: templates/accounts/reset_done.html:49
 msgid ""
 "We've e-mailed you instructions for setting your password to the e-mail "
 "address you submitted. You should be receiving it shortly."
-msgstr "Noi abbiamo e-mail voi istruzioni per impostare la password all'indirizzo di posta elettronica inviati. Si dovrebbe ricevere poco."
+msgstr ""
+"Έλαβα μέσω ηελκτρονικού μας έχετε ταχυδρομείου σας οδηγίες για τη ρύθμιση "
+"κωδικού πρόσβασης στη διεύθυνση ηλεκτρονικού ταχυδρομείου που υποβάλατε. Σας"
+" θα πρέπει να τη λάβουν σύντομα."
 
 #: templates/accounts/reset_done.html:51
 msgid "Your Password was successfully reset "
-msgstr "La Password è stata reimpostata con successo "
+msgstr "Με επιτυχία έγινε επαναφορά του κωδικού πρόσβασης "
 
 #: templates/accounts/reset_pw.html:6
 msgid "Baruwa :: Password reset"
-msgstr "Baruwa:: Reimpostare la Password"
+msgstr "Baruwa:: Επαναφορά κωδικού πρόσβασης"
 
 #: templates/accounts/reset_pw.html:22
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
-msgstr "Si prega di inserire la nuova password due volte così possiamo verificare che digitato correttamente."
+msgstr ""
+"Πληκτρολογήστε τον νέο κωδικό πρόσβασης δύο φορές έτσι ώστε εμείς να "
+"επιβεβαιώσετε το πληκτρολογήσατε σωστά."
 
 #: templates/accounts/reset_pw.html:27
 msgid "New password:"
-msgstr "Nuova password:"
+msgstr "Νέος κωδικός πρόσβασης:"
 
 #: templates/accounts/reset_pw.html:30
 msgid "Confirm password:"
-msgstr "Conferma password:"
+msgstr "Επιβεβαίωση κωδικού:"
 
 #: templates/accounts/reset_pw.html:33
 msgid "Change my password"
-msgstr "Cambiare la mia password"
+msgstr "Αλλάξτε τον κωδικό πρόσβασής μου"
 
 #: templates/accounts/reset_pw.html:37
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
-msgstr "Il link di reimpostazione della password non era valido, forse perché è già stato usato.  Si prega di richiedere un nuova password reset."
+msgstr ""
+"Στη σύνδεση επαναφορά του κωδικού πρόσβασης ήταν έγκυρος, πιθανώς επειδή "
+"έχει ήδη χρησιμοποιηθεί.  Παρακαλώ να ζητήσουν νέα επαναφορά του κωδικού "
+"πρόσβασης."
 
 #: templates/accounts/update_account.html:10
 #: templates/accounts/update_account.html:11
 msgid "Update account"
-msgstr "Aaggiorna account"
+msgstr "Ενημέρωση λογαριασμού"
 
 #: templates/accounts/update_account.html:14
 msgid "Update user account"
-msgstr "Aggiorna accoutn utente"
+msgstr "Ενημέρωση λογαριασμού χρήστη"
 
 #: templates/accounts/update_profile.html:10
 #: templates/accounts/update_profile.html:11
 #: templates/accounts/update_profile.html:14
 msgid "Update Profile"
-msgstr "Aggiorna profilo"
+msgstr "Ενημέρωση προφίλ"
 
 #: templates/accounts/user_profile.html:9
 #: templates/accounts/user_profile.html:16
 msgid "Change your password"
-msgstr "Cambia password"
+msgstr "Αλλάξτε τον κωδικό πρόσβασης"
 
 #: templates/accounts/user_profile.html:13
 msgid "Change users password"
-msgstr "Cambia password utente"
+msgstr "Αλλαγή κωδικού πρόσβασης χρηστών"
 
 #: templates/accounts/user_profile.html:20
 #: templates/accounts/user_profile.html:21
 msgid "Account Profile"
-msgstr "Profilo Account"
+msgstr "Προφίλ λογαριασμού"
 
 #: templates/accounts/user_profile.html:25
 #, python-format
 msgid "Viewing %(account)s's Profile"
-msgstr "Dettagli profilo %(account)s"
+msgstr "Προβολή %(account)s»s προφίλ"
 
 #: templates/accounts/user_profile.html:31
 msgid "Username:"
-msgstr "Username:"
+msgstr "Όνομα χρήστη:"
 
 #: templates/accounts/user_profile.html:39
 msgid "Full names:"
-msgstr "Nome intero:"
+msgstr "Πλήρεις ονομασίες:"
 
 #: templates/accounts/user_profile.html:47
 msgid "Email Address:"
-msgstr "Indirizzo email:"
+msgstr "Διεύθυνση email:"
 
 #: templates/accounts/user_profile.html:55
 msgid "Account status:"
-msgstr "Stato dell'account:"
+msgstr "Κατάσταση λογαριασμού:"
 
 #: templates/accounts/user_profile.html:58
 msgid "Active"
-msgstr "Attivo"
+msgstr "Ενεργό"
 
 #: templates/accounts/user_profile.html:58
 #: templates/accounts/user_profile.html:174
@@ -1594,157 +1653,163 @@ msgstr "Attivo"
 #: templates/config/domain.html.py:87 templates/config/domain.html:116
 #: templates/config/domain.html.py:148
 msgid "Disabled"
-msgstr "Disabilitato"
+msgstr "Άτομα με ειδικές ανάγκες"
 
 #: templates/accounts/user_profile.html:63
 msgid "Last login:"
-msgstr "Ultimo Login:"
+msgstr "Τελευταία σύνδεση:"
 
 #: templates/accounts/user_profile.html:71
 msgid "Account created on:"
-msgstr "Account creato il:"
+msgstr "Ο λογαριασμός δημιουργήθηκε σχετικά με:"
 
 #: templates/accounts/user_profile.html:79
 msgid "Profile Settings"
-msgstr "Impostazioni di profilo"
+msgstr "Ρυθμίσεις προφίλ"
 
 #: templates/accounts/user_profile.html:85
 msgid "Account type:"
-msgstr "Tipo di account"
+msgstr "Τύπος λογαριασμού:"
 
 #: templates/accounts/user_profile.html:89
 msgid "Administrator"
-msgstr "Amministratore"
+msgstr "Διαχειριστής"
 
 #: templates/accounts/user_profile.html:92
 msgid "Domain Administrator"
-msgstr "Amministratore di dominio"
+msgstr "Διαχειριστής τομέα"
 
 #: templates/accounts/user_profile.html:95
 msgid "User account"
-msgstr "Accout utente"
+msgstr "Λογαριασμός χρήστη"
 
 #: templates/accounts/user_profile.html:102
 msgid "Scan email:"
-msgstr "Scansione e-mail:"
+msgstr "Σάρωση email:"
 
 #: templates/accounts/user_profile.html:106
 #: templates/accounts/user_profile.html:118
 msgid "Yes"
-msgstr "Si"
+msgstr "Ναι"
 
 #: templates/accounts/user_profile.html:108
 #: templates/accounts/user_profile.html:120
 msgid "No"
-msgstr "No"
+msgstr "Δεν"
 
 #: templates/accounts/user_profile.html:114
 msgid "Send quarantine report:"
-msgstr "Invia report di quarantena"
+msgstr "Αποστολή έκθεσης απομόνωσης:"
 
 #: templates/accounts/user_profile.html:126
 msgid "Spam High Score:"
-msgstr "Punteggio spam alto"
+msgstr "Υψηλό σκορ spam:"
 
 #: templates/accounts/user_profile.html:134
 msgid "Spam Low Score:"
-msgstr "Punteggio spam basso"
+msgstr "Spam χαμηλή βαθμολογία:"
 
 #: templates/accounts/user_profile.html:144
 msgid "Domains managed"
-msgstr "Domini gestiti"
+msgstr "Τομείς που διαχειρίζεται"
 
 #: templates/accounts/user_profile.html:146
 msgid "Associated Addresses"
-msgstr "Indirizzi associati"
+msgstr "Σχετικές διευθύνσεις"
 
 #: templates/accounts/user_profile.html:172
 #: templates/accounts/user_profile.html:216 templates/config/domain.html:46
 #: templates/config/domain.html.py:66 templates/config/domain.html:85
 #: templates/config/domain.html.py:114 templates/config/domain.html:146
 msgid "Enabled"
-msgstr "Abilitato"
+msgstr "Ενεργοποιημένη"
 
 #: templates/accounts/user_profile.html:189
 msgid "No addresses stored at the moment."
-msgstr "Nessun indirizzo memorizzato al momento."
+msgstr "Οι διευθύνσεις δεν αποθηκεύονται αυτή τη στιγμή."
 
 #: templates/accounts/user_profile.html:201 templates/config/domain.html:131
 msgid "Email signatures"
-msgstr "Firme email"
+msgstr "Email υπογραφές"
 
 #: templates/accounts/user_profile.html:209 templates/config/domain.html:139
 msgid "Text signature"
-msgstr "Firma testo"
+msgstr "Κείμενο υπογραφή"
 
 #: templates/accounts/user_profile.html:211 templates/config/domain.html:141
 msgid "HTML signature"
-msgstr "Firma HTML"
+msgstr "Υπογραφή HTML"
 
 #: templates/accounts/user_profile.html:228 templates/config/domain.html:158
 msgid "No email signatures configured"
-msgstr "No firme di posta elettronica configurate"
+msgstr "Χωρίς υπογραφές ηλεκτρονικού ταχυδρομείου έχει ρυθμιστεί"
 
 #: templates/config/add_auth_host.html:8
 msgid "Settings :: Add authentication server"
-msgstr "Impostazioni :: Aggiungi server di autenticazione"
+msgstr "Ρυθμίσεις:: Προσθήκη διακομιστή ελέγχου ταυτότητας"
 
 #: templates/config/add_auth_host.html:9
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(address)s - add authentication server\n"
-msgstr "\nDomini :: %(address)s - aggiungi server di autenticazione\n"
+msgstr ""
+"\n"
+"Τομείς:: %(address)s -Προσθέστε το διακομιστή ελέγχου ταυτότητας\n"
 
 #: templates/config/add_auth_host.html:17
 msgid "Add Authentication server"
-msgstr "Aggiungere il server di autenticazione"
+msgstr "Προσθέστε το διακομιστή ελέγχου ταυτότητας"
 
 #: templates/config/add_domain_sig.html:8
 msgid "Settings :: Add Email signature"
-msgstr "Impostazioni:: Aggiungi firma Email"
+msgstr "Ρυθμίσεις:: Προσθήκη υπογραφής ηλεκτρονικού ταχυδρομείου"
 
 #: templates/config/add_domain_sig.html:9
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(address)s - add email signature\n"
-msgstr "\nDomini:: %(address)s -Aggiungi firma email\n"
+msgstr ""
+"\n"
+"Τομείς:: %(address)s -προσθήκη υπογραφής ηλεκτρονικού ταχυδρομείου\n"
 
 #: templates/config/add_domain_sig.html:17
 msgid "Add Domain signature"
-msgstr "Aggiungi dominio firma"
+msgstr "Προσθήκη υπογραφής τομέα"
 
 #: templates/config/add_host.html:8
 msgid "Settings :: Add destination mail server"
-msgstr "Impostazioni :: Aggiungi mail server "
+msgstr "Ρυθμίσεις:: Προσθήκη διακομιστή αλληλογραφίας προορισμού"
 
 #: templates/config/add_host.html:9
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(domain_address)s - add destination mail server\n"
-msgstr "\nDomini :: %(domain_address)s - aggiungi mail server di destinazione\n"
+msgstr ""
+"\n"
+"Τομείς:: %(domain_address)s -Προσθέστε το διακομιστή αλληλογραφίας προορισμού\n"
 
 #: templates/config/add_host.html:17
 msgid "Add Mail Server"
-msgstr "Aggiungi mail server"
+msgstr "Προσθήκη διακομιστή αλληλογραφίας"
 
 #: templates/config/delete_auth_host.html:5
 #: templates/config/delete_domain_sig.html:6
 #: templates/config/delete_host.html:5 templates/config/edit_auth_host.html:5
 #: templates/config/edit_domain_sig.html:6 templates/config/edit_host.html:5
 msgid "Domain page"
-msgstr "Pagina di Dominio"
+msgstr "Σελίδα του τομέα"
 
 #: templates/config/delete_auth_host.html:8
 #: templates/config/delete_auth_host.html:9
 msgid "Delete authentication host"
-msgstr "Elimina host di autenticazione"
+msgstr "Διαγραφή κεντρικού ελέγχου ταυτότητας"
 
 #: templates/config/delete_auth_host.html:12
 msgid "Delete Authentication Host"
-msgstr "Elimina host di autenticazione"
+msgstr "Διαγραφή κεντρικού ελέγχου ταυτότητας"
 
 #: templates/config/delete_auth_host.html:20
 #, python-format
@@ -1752,15 +1817,18 @@ msgid ""
 "\n"
 "        Delete the Authentication host %(host_address)s: ?\n"
 "        "
-msgstr "\n         Elimina l'host di autenticazione %(host_address)s: ?\n        "
+msgstr ""
+"\n"
+"        Διαγραφή του κεντρικού ελέγχου ταυτότητας %(host_address)s:;\n"
+"        "
 
 #: templates/config/delete_host.html:8 templates/config/delete_host.html:9
 msgid "Delete Mail host"
-msgstr "Elimina Mail host"
+msgstr "Διαγραφή υποδοχής αλληλογραφίας"
 
 #: templates/config/delete_host.html:12
 msgid "Delete Mail Host"
-msgstr "Elimina Mail host"
+msgstr "Διαγραφή υποδοχής αλληλογραφίας"
 
 #: templates/config/delete_host.html:20
 #, python-format
@@ -1768,63 +1836,68 @@ msgid ""
 "\n"
 "        Delete the mail host %(host_address)s: ?\n"
 "        "
-msgstr "\n         Elimina mail host %(host_address)s: ?\n        "
+msgstr ""
+"\n"
+"        Διαγραφή υποδοχής αλληλογραφίας %(host_address)s:;\n"
+"        "
 
 #: templates/config/domain.html:22
 msgid "Settings :: Domain"
-msgstr "Impostazioni :: Dominio"
+msgstr "Ρυθμίσεις:: τομέα"
 
 #: templates/config/domain.html:23
 #, python-format
 msgid ""
 "\n"
 "\tDomains :: Showing - %(domain_address)s\n"
-msgstr "\n        Domains :: Mostra - %(domain_address)s\n"
+msgstr ""
+"\n"
+"\tΤομέων:: Εμφάνιση-%(domain_address)s\n"
 
 #: templates/config/domain.html:29
 msgid "Domain information"
-msgstr "Informazioni sul dominio"
+msgstr "Πληροφορίες τομέα"
 
 #: templates/config/domain.html:34
 msgid "Domain name:"
-msgstr "Nome dominio:"
+msgstr "Όνομα τομέα:"
 
 #: templates/config/domain.html:42
 msgid "Status:"
-msgstr "Stato:"
+msgstr "Κατάσταση:"
 
 #: templates/config/domain.html:48
 msgid "Inactive"
-msgstr "Inattivo"
+msgstr "Ανενεργή"
 
 #: templates/config/domain.html:54
 msgid "Owner:"
-msgstr "Proprietario"
+msgstr "Ιδιοκτήτης:"
 
 #: templates/config/domain.html:62
 msgid "Load Balance servers:"
-msgstr "Server di bilanciamento del carico:"
+msgstr "Διακομιστές εξισορρόπηση φορτίου:"
 
 #: templates/config/domain.html:74
 msgid "Delivery SMTP Servers"
-msgstr "Server SMTP"
+msgstr "Διακομιστές παράδοσης SMTP"
 
 #: templates/config/domain.html:98
 msgid "No smtp delivery servers configured"
-msgstr "Nessun server SMTP configurato"
+msgstr "Κανένας διακομιστής παράδοσης smtp έχει ρυθμιστεί"
 
 #: templates/config/domain.html:103
 msgid "Authentication Servers"
-msgstr "Server di autenticazione"
+msgstr "Διακομιστές ελέγχου ταυτότητας"
 
 #: templates/config/domain.html:126
 msgid "No auth servers configured"
-msgstr "Nessun server di autenticazione configurato"
+msgstr "Δεν έχουν ρυθμιστεί οι διακομιστές ΑΠΘ"
 
 #: templates/config/edit_auth_host.html:8
 #: templates/config/edit_auth_host.html:9
 msgid "Settings :: Edit authentication mail server"
-msgstr "Impostazioni :: Modifica autenticazione mail server"
+msgstr "Ρυθμίσεις:: Επεξεργασία ελέγχου ταυτότητας διακομιστή αλληλογραφίας"
 
 #: templates/config/edit_auth_host.html:15
 #, python-format
@@ -1832,159 +1905,168 @@ msgid ""
 "\n"
 "\t\t\tEdit authentication Server %(forms_errors)s\n"
 "\t\t"
-msgstr "\n\t\t\tModifica server autenticazione %(forms_errors)s\n\t\t"
+msgstr ""
+"\n"
+"\t\t\tΕπεξεργασία ελέγχου ταυτότητας διακομιστή %(forms_errors)s\n"
+"\t\t"
 
 #: templates/config/edit_domain_sig.html:9
 msgid "Settings :: Edit Email signature"
-msgstr "Impostazioni:: Modifica firma Email"
+msgstr "Ρυθμίσεις:: Επεξεργασία υπογραφής ηλεκτρονικού ταχυδρομείου"
 
 #: templates/config/edit_domain_sig.html:10
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(address)s - edit email signature\n"
-msgstr "\nDomini:: %(address)s -Modifica firma email\n"
+msgstr ""
+"\n"
+"Τομείς:: %(address)s -Επεξεργασία υπογραφής ηλεκτρονικού ταχυδρομείου\n"
 
 #: templates/config/edit_domain_sig.html:18
 msgid "Edit Domain signature"
-msgstr "Modifica firma del dominio"
+msgstr "Επεξεργασία υπογραφής τομέα"
 
 #: templates/config/edit_host.html:8 templates/config/edit_host.html.py:9
 msgid "Settings :: Edit destination mail server"
-msgstr "Impostazioni :: Modifica mail server (destinazione)"
+msgstr "Ρυθμίσεις:: Επεξεργασία διακομιστή αλληλογραφίας προορισμού"
 
 #: templates/config/edit_host.html:15
 msgid "Edit Mail Server"
-msgstr "Modificare il Server di posta"
+msgstr "Διακομιστής αλληλογραφίας επεξεργασία"
 
 #: templates/config/index.html:24
 msgid "Domains :: "
-msgstr "Domini :: "
+msgstr "Τομείς:: "
 
 #: templates/config/index.html:30
 msgid "Domain Name"
-msgstr "Nome dominio:"
+msgstr "Όνομα τομέα"
 
 #: templates/config/index.html:33
 msgid "Owner"
-msgstr "Proprietario"
+msgstr "Ιδιοκτήτης"
 
 #: templates/config/index.html:39 templates/config/list_scanners.html:24
 msgid "Actions"
-msgstr "Azioni"
+msgstr "Δράσεις"
 
 #: templates/config/index.html:75
 msgid "No domains found"
-msgstr "Nessun dominio trovato"
+msgstr "Δεν βρέθηκαν τομείς"
 
 #: templates/config/init_scanner.html:19
 #: templates/config/list_scanners.html:43
 msgid "Initialize"
-msgstr "inizializza"
+msgstr "Προετοιμασία"
 
 #: templates/config/list_scanners.html:11
 msgid "Scanning Nodes"
-msgstr "Nodi di scansione"
+msgstr "Σάρωση κόμβοι"
 
 #: templates/config/list_scanners.html:12
 msgid "Scanning Nodes ::"
-msgstr "Scansione nodi::"
+msgstr "Σάρωση κόμβοι::"
 
 #: templates/config/list_scanners.html:18
 msgid "Node Name"
-msgstr "Nome Nodo"
+msgstr "Όνομα κόμβου"
 
 #: templates/config/list_scanners.html:56
 msgid "No scanning nodes found"
-msgstr "Nessuna scansione nodi trovati"
+msgstr "Δεν σάρωσης κόμβοι που βρέθηκαν"
 
 #: templates/config/task_status.html:24 templates/messages/task_status.html:72
 msgid "The request is being processed. Current status: "
-msgstr "La richiesta è in fase di elaborazione. Stato attuale: "
+msgstr "Γίνεται επεξεργασία της αίτησης. Τρέχουσα κατάσταση: "
 
 #: templates/config/view_scanner.html:5 templates/config/view_scanner.html:8
 #, python-format
 msgid ""
 "\n"
 "Viewing Scanning Node %(scanner_address)s\n"
-msgstr "\nVisualizzazione scansione nodo %(scanner_address)s\n"
+msgstr ""
+"\n"
+"Προβολή σάρωσης κόμβος %(scanner_address)s\n"
 
 #: templates/config/view_scanner.html:13
 msgid "Configuration Settings"
-msgstr "Configurazione Impostazioni"
+msgstr "Ρυθμίσεις παραμέτρων"
 
 #: templates/config/view_settings.html:5
 msgid "Scanning Node Settings"
-msgstr "Nodo Impostazioni di scansione"
+msgstr "Ρυθμίσεις σάρωσης κόμβου"
 
 #: templates/config/view_settings.html:6
 msgid "Scanning Node Settings :: "
-msgstr "Nodo Impostazioni di scansione:: "
+msgstr "Σάρωση κόμβο ρυθμίσεις:: "
 
 #: templates/config/view_settings.html:8
 msgid "Not yet Implemented"
-msgstr "Non ancora implementata"
+msgstr "Δεν έχει ακόμη υλοποιηθεί"
 
 #: templates/lists/add.form.html:5
 msgid "From address:"
-msgstr "Dall'indirizzo:"
+msgstr "Από την διεύθυνση:"
 
 #: templates/lists/add.form.html:12
 msgid "To address:"
-msgstr "All'indirizzo:"
+msgstr "Διεύθυνση:"
 
 #: templates/lists/add.form.html:22
 msgid "List type:"
-msgstr "Tipo di lista:"
+msgstr "Τύπος λίστας:"
 
 #: templates/lists/add.html:12 templates/lists/delete.html:5
 #: templates/lists/delete.html.py:13 templates/lists/delete.html:23
 #: templates/lists/index.html:22 templates/lists/index.html.py:29
 #: templates/messages/detail.html:47 templates/messages/detail.html.py:49
 msgid "Whitelist"
-msgstr "Lista bianca"
+msgstr "Whitelist"
 
 #: templates/lists/add.html:13 templates/lists/delete.html:6
 #: templates/lists/delete.html.py:13 templates/lists/delete.html:23
 #: templates/lists/index.html:20 templates/lists/index.html.py:29
 #: templates/messages/detail.html:54 templates/messages/detail.html.py:56
 msgid "Blacklist"
-msgstr "Lista nera"
+msgstr "Μαύρη λίστα"
 
 #: templates/lists/add.html:16 templates/lists/add.html.py:17
 msgid "Adding to list"
-msgstr "Aggiungi alla lista"
+msgstr "Προσθήκη στη λίστα"
 
 #: templates/lists/add.html:20
 msgid "Add List Item"
-msgstr "Aggiungi elemento alla lista"
+msgstr "Προσθήκη στοιχείου λίστας"
 
 #: templates/lists/delete.html:9 templates/lists/delete.html.py:10
 msgid "Delete from List"
-msgstr "Elimina dalla lista"
+msgstr "Διαγραφή από την λίστα"
 
 #: templates/lists/delete.html:13
 msgid "Delete Item from"
-msgstr "Eliminat elemento da"
+msgstr "Διαγραφή στοιχείου από"
 
 #: templates/lists/delete.html:22
 #, python-format
 msgid ""
 "\n"
 "\t\t\t\tThis will delete %(address)s from the "
-msgstr "\n                                Questo cancella %(address)s da"
+msgstr ""
+"\n"
+"\t\t\t\tΑυτό θα διαγράψει %(address)s από το "
 
 #: templates/lists/index.html:24
 msgid "Add to List"
-msgstr "Aggiungi alla lista"
+msgstr "Προσθήκη στη λίστα"
 
 #: templates/lists/index.html:27
 msgid "List management"
-msgstr "Gestiona lista"
+msgstr "Διαχείριση λιστών"
 
 #: templates/lists/index.html:43
 msgid "Action"
-msgstr "Azione"
+msgstr "Δράση"
 
 #: templates/lists/index.html:54
 msgid "=builtin="
@@ -1993,134 +2075,135 @@ msgstr "= builtin ="
 #: templates/lists/index.html:63 templates/messages/index.html:101
 #: templates/messages/quarantine.html:130
 msgid "No records returned"
-msgstr "Nessun record ritornato"
+msgstr "Δεν επιστραφούν εγγραφές"
 
 #: templates/lists/index.html:72
 msgid "Filter "
-msgstr "Filtro"
+msgstr "Φίλτρο "
 
 #: templates/lists/index.html:73 templates/messages/detail.html:41
 #: templates/messages/preview.html:20 templates/status/detail.html:26
 msgid "From:"
-msgstr "Da:"
+msgstr "Από:"
 
 #: templates/lists/index.html:76
 msgid "excluding"
-msgstr "escludendo"
+msgstr "εξαιρουμένων των"
 
 #: templates/lists/index.html:79
 msgid "GO"
-msgstr "VAI"
+msgstr "ΠΆΜΕ"
 
 #: templates/messages/delete.html:3
 #, python-format
 msgid "The message id: %(id)s has been deleted"
-msgstr "Il messaggio cn ID: %(id)s è stato eliminato"
+msgstr "Το αναγνωριστικό μηνύματος: %(id)s έχει διαγραφεί"
 
 #: templates/messages/delete.html:5
 #, python-format
 msgid "The message id: %(id)s could not be deleted: %(error_msg)s"
-msgstr "Id messaggio: %(id)s non poteva essere eliminato: %(error_msg)s"
+msgstr ""
+"Το αναγνωριστικό μηνύματος: %(id)s δεν ήταν δυνατή η διαγραφή: %(error_msg)s"
 
 #: templates/messages/detail.html:14 templates/messages/detail.html.py:15
 #, python-format
 msgid "Baruwa :: Showing message - %(id)s"
-msgstr "Baruwa :: dettaglio messaggio - %(id)s "
+msgstr "Baruwa:: Εμφάνιση μηνύματος-%(id)s"
 
 #: templates/messages/detail.html:20
 msgid "Preview message"
-msgstr "Anteprima messaggio"
+msgstr "Προεπισκόπηση μηνύματος"
 
 #: templates/messages/detail.html:21 templates/messages/preview.html:8
 #: templates/messages/release.html:6 templates/messages/release.html.py:7
 msgid "Release message"
-msgstr "Rilascia messaggio"
+msgstr "Μήνυμα έκδοσης"
 
 #: templates/messages/detail.html:23
 msgid "Full message list"
-msgstr "Lista completa di messaggi"
+msgstr "Λίστα μηνυμάτων πλήρους"
 
 #: templates/messages/detail.html:24 templates/messages/detail.html.py:220
 #: templates/messages/index.html:30
 msgid "Quarantine"
-msgstr "Quarantena"
+msgstr "Καραντίνα"
 
 #: templates/messages/detail.html:25 templates/messages/index.html:31
 msgid "Archive"
-msgstr "Archivio"
+msgstr "Αρχειοθέτησης"
 
 #: templates/messages/detail.html:34 templates/status/detail.html:19
 msgid "Message Details"
-msgstr "Dettaglio mesaggio"
+msgstr "Λεπτομέρειες μηνύματος"
 
 #: templates/messages/detail.html:37 templates/status/detail.html:22
 msgid "Message ID:"
-msgstr "ID Messaggio:"
+msgstr "Αναγνωριστικό μηνύματος:"
 
 #: templates/messages/detail.html:63 templates/messages/preview.html:24
 #: templates/status/detail.html:32
 msgid "To:"
-msgstr "A:"
+msgstr "Για να:"
 
 #: templates/messages/detail.html:73 templates/status/detail.html:46
 msgid "Received on:"
-msgstr "Ricevuto il:"
+msgstr "Έλαβε σχετικά με:"
 
 #: templates/messages/detail.html:77 templates/status/detail.html:42
 msgid "Received by:"
-msgstr "Ricevuto da:"
+msgstr "Λαμβάνονται από:"
 
 #: templates/messages/detail.html:81
 msgid "Received from:"
-msgstr "Ricevuto da:"
+msgstr "Έλαβε από:"
 
 #: templates/messages/detail.html:85
 msgid "Recieved via:"
-msgstr "Ricevuto via:"
+msgstr "Που λαμβάνονται μέσω:"
 
 #: templates/messages/detail.html:89
 msgid "Message Headers:"
-msgstr "Intestazioni messaggio:"
+msgstr "Οι κεφαλίδες των μηνυμάτων:"
 
 #: templates/messages/detail.html:93 templates/status/detail.html:58
 msgid "Size:"
-msgstr "Dimensione:"
+msgstr "Μέγεθος:"
 
 #: templates/messages/detail.html:97
 msgid "Virus infected:"
-msgstr "è infetto da virus:"
+msgstr "Προσβληθεί από ιό:"
 
 #: templates/messages/detail.html:103
 msgid "Blocked File:"
-msgstr "File bloccato:"
+msgstr "Αποκλεισμένο αρχείο:"
 
 #: templates/messages/detail.html:109
 msgid "Other infection:"
-msgstr "Altre infezioni:"
+msgstr "Άλλη λοίμωξη:"
 
 #: templates/messages/detail.html:116
 msgid "Delivery information"
-msgstr "Informazioni sulla consegna"
+msgstr "Πληροφορίες παράδοσης"
 
 #: templates/messages/detail.html:119
 msgid "Processed at:"
-msgstr "Elaborato a:"
+msgstr "Επεξεργασία:"
 
 #: templates/messages/detail.html:120
 msgid "Processed by:"
-msgstr "Elaborato da:"
+msgstr "Επεξεργασία από:"
 
 #: templates/messages/detail.html:121
 msgid "Delivered to:"
-msgstr "Consegnato a:"
+msgstr "Παραδίδονται σε:"
 
 #: templates/messages/detail.html:122
 msgid "Delivery status"
-msgstr "Stato di consegna"
+msgstr "Κατάσταση παράδοσης"
 
 #: templates/messages/detail.html:134
 msgid "Spamassassin information"
-msgstr "Informazioni da Spamassassin"
+msgstr "Spamassassin πληροφορίες"
 
 #: templates/messages/detail.html:137
 msgid "Spam:"
@@ -2128,43 +2211,43 @@ msgstr "Spam:"
 
 #: templates/messages/detail.html:141 templates/messages/detail.html.py:151
 msgid "Action(s):"
-msgstr "Azioni:"
+msgstr "Ενέργειες:"
 
 #: templates/messages/detail.html:148
 msgid "High Scoring Spam:"
-msgstr "Punteggio spam altro"
+msgstr "Υψηλή Βαθμολογία Spam:"
 
 #: templates/messages/detail.html:158
 msgid "Spamassassin Spam:"
-msgstr "Punteggio Spam"
+msgstr "Spamassassin Spam:"
 
 #: templates/messages/detail.html:168
 msgid "Listed in RBL:"
-msgstr "Elencato in RBL:"
+msgstr "Αναφέρονται στον RBL:"
 
 #: templates/messages/detail.html:171
 msgid "Listed in :"
-msgstr "Elencato in:"
+msgstr "Αναφέρονται σε:"
 
 #: templates/messages/detail.html:178
 msgid "Spam Whitelisted:"
-msgstr "Nella lista bianca di spam:"
+msgstr "Spam Whitelisted:"
 
 #: templates/messages/detail.html:188
 msgid "Spam Blacklisted:"
-msgstr "Nella lista nera di spam:"
+msgstr "Στη λίστα προγραφών spam:"
 
 #: templates/messages/detail.html:198
 msgid "Spamassassin Auto learned:"
-msgstr "Autoapprendimento spamassassin:"
+msgstr "Spamassassin Auto έμαθε:"
 
 #: templates/messages/detail.html:204
 msgid "Spamassassin Score:"
-msgstr "Punteggio spamassassin:"
+msgstr "Spamassassin βαθμολογία:"
 
 #: templates/messages/detail.html:211
 msgid "Spamassassin Report:"
-msgstr "Report spamassassin:"
+msgstr "Spamassassin έκθεση:"
 
 #: templates/messages/detail.html:233 templates/messages/quarantine.html:54
 #: templates/messages/quarantine_report.html:39
@@ -2172,50 +2255,52 @@ msgstr "Report spamassassin:"
 #: templates/messages/quarantine_report.html:80
 #: templates/messages/quarantine_report.html:98
 msgid "Release"
-msgstr "Rilascia"
+msgstr "Απελευθέρωση"
 
 #: templates/messages/detail.html:235
 msgid "SA Learn"
-msgstr "Apprendimeno SA"
+msgstr "Μάθετε SA"
 
 #: templates/messages/detail.html:236 templates/messages/quarantine.html:63
 msgid "Alt recipients"
-msgstr "Destinatari alternativi"
+msgstr "ALT παραλήπτες"
 
 #: templates/messages/detail.html:272
 msgid "Submit"
-msgstr "Invia"
+msgstr "Υποβάλουν"
 
 #: templates/messages/detail.html:280
 msgid ""
 "The message details for the requested message id could not be retrieved"
-msgstr "I dettagli relativi al messaggio di questo ID non ha potuto essere recuperati"
+msgstr ""
+"Δεν ήταν δυνατή η ανάκτηση λεπτομερειών μηνύματος για το αναγνωριστικό "
+"μηνύματος που ζητήθηκε"
 
 #: templates/messages/index.html:29
 msgid "Full message"
-msgstr "Lista completa di messaggi"
+msgstr "Πλήρες μήνυμα"
 
 #: templates/messages/index.html:38
 #, python-format
 msgid "Showing the %(baruwa_num_recent_messages)s most recent messages"
-msgstr "Mostrando il %(baruwa_num_recent_messages)s messaggi più recenti"
+msgstr "Εμφάνιση ο %(baruwa_num_recent_messages)s πιο πρόσφατα μηνύματα"
 
 #: templates/messages/index.html:45 templates/messages/quarantine.html:39
 msgid "Filters"
-msgstr "Filtri"
+msgstr "Φίλτρα"
 
 #: templates/messages/index.html:45 templates/messages/quarantine.html:39
 msgid "have been applied"
-msgstr "non sono stati applicati"
+msgstr "έχουν εφαρμοστεί"
 
 #: templates/messages/index.html:48
 #, python-format
 msgid "Showing the %(baruwa_num_recent_messages)s most recent messages "
-msgstr "Mostrando il %(baruwa_num_recent_messages)s messaggi più recenti "
+msgstr "Εμφάνιση ο %(baruwa_num_recent_messages)s πιο πρόσφατα μηνύματα "
 
 #: templates/messages/index.html:50 templates/messages/quarantine.html:44
 msgid "Enable javascript for updates"
-msgstr "Abilita javascript per aggiornamenti"
+msgstr "Ενεργοποιήστε τη javascript για ενημερώσεις"
 
 #: templates/messages/index.html:65 templates/messages/quarantine.html:97
 #: templates/messages/quarantine_report.html:27
@@ -2223,7 +2308,7 @@ msgstr "Abilita javascript per aggiornamenti"
 #: templates/messages/quarantine_report_text.html:10
 #: templates/messages/quarantine_report_text.html:20
 msgid "Date/Time"
-msgstr "Data/Ora"
+msgstr "Ημερομηνία/ώρα"
 
 #: templates/messages/index.html:66 templates/messages/quarantine.html:98
 #: templates/messages/quarantine_report.html:30
@@ -2231,7 +2316,7 @@ msgstr "Data/Ora"
 #: templates/messages/quarantine_report_text.html:10
 #: templates/messages/quarantine_report_text.html:20
 msgid "From"
-msgstr "Da:"
+msgstr "Από"
 
 #: templates/messages/index.html:67 templates/messages/quarantine.html:99
 #: templates/messages/quarantine_report.html:33
@@ -2239,69 +2324,69 @@ msgstr "Da:"
 #: templates/messages/quarantine_report_text.html:10
 #: templates/messages/quarantine_report_text.html:20
 msgid "To"
-msgstr "A"
+msgstr "Να"
 
 #: templates/messages/index.html:70 templates/messages/quarantine.html:101
 #: templates/reports/barreport.html:31 templates/tags/spamreport.html:4
 msgid "Score"
-msgstr "Punteggio"
+msgstr "Βαθμολογία"
 
 #: templates/messages/index.html:110 templates/messages/quarantine.html:140
 #: templates/reports/barreport.html:55 templates/reports/listing.html:115
 #: templates/reports/piereport.html:58 templates/reports/relays.html:58
 msgid "Filters have been applied :"
-msgstr "I filtri non sono stati applicati:"
+msgstr "Έχουν εφαρμοστεί φίλτρα:"
 
 #: templates/messages/preview.html:3
 #, python-format
 msgid "Baruwa :: Previewing message - %(message_id)s"
-msgstr "Baruwa :: Anteprima messaggi - %(message_id)s"
+msgstr "Baruwa:: Η προεπισκόπηση μηνύματος-%(message_id)s"
 
 #: templates/messages/preview.html:4
 #, python-format
 msgid "Previewing message - %(message_id)s "
-msgstr "Anteprima messaggi - %(message_id)s"
+msgstr "Προεπισκόπησης μηνυμάτων-%(message_id)s "
 
 #: templates/messages/preview.html:9 templates/messages/preview.html.py:11
 msgid "Return to message"
-msgstr "Torna al messaggio"
+msgstr "Επιστρέψετε στο μήνυμα"
 
 #: templates/messages/preview.html:28 templates/status/detail.html:38
 msgid "Subject:"
-msgstr "Oggetto:"
+msgstr "Θέμα:"
 
 #: templates/messages/preview.html:32
 msgid "Date:"
-msgstr "Data:"
+msgstr "Ημερομηνία:"
 
 #: templates/messages/preview.html:37
 msgid "Attachments:"
-msgstr "Allegati:"
+msgstr "Συνημμένα:"
 
 #: templates/messages/preview.html:46
 msgid "Message content"
-msgstr "Contenuto messaggio"
+msgstr "Περιεχόμενο του μηνύματος"
 
 #: templates/messages/preview.html:60
 msgid "Message is multipart"
-msgstr "Il messaggio è multiparte"
+msgstr "Το μήνυμα είναι με πολλά τμήματα"
 
 #: templates/messages/preview.html:60
 msgid "view"
-msgstr "vista"
+msgstr "προβολή"
 
 #: templates/messages/preview.html:60
 msgid "the other part"
-msgstr "l'altra parte"
+msgstr "το άλλο τμήμα"
 
 #: templates/messages/preview.html:66
 msgid "Message could not be previewed"
-msgstr "Non è stato possibile vedere lanteprima del messaggio"
+msgstr "Το μήνυμα δεν θα μπορούσε να προεπισκόπηση"
 
 #: templates/messages/quarantine.html:23
 #: templates/messages/task_status.html:23
 msgid "Full Quarantine"
-msgstr "Quarantena piena"
+msgstr "Πλήρης απομόνωση"
 
 #: templates/messages/quarantine.html:25
 #: templates/messages/task_status.html:25
@@ -2310,33 +2395,33 @@ msgstr ""
 
 #: templates/messages/quarantine.html:32 templates/messages/quarantine.html:42
 msgid "Showing the 50 most recent messages"
-msgstr "Mostra i 50 messaggi più recenti"
+msgstr "Δείχνει τα 50 πιο πρόσφατα μηνύματα"
 
 #: templates/messages/quarantine.html:60
 msgid "Train"
-msgstr "Treno"
+msgstr "Τρένο"
 
 #: templates/messages/quarantine.html:83
 msgid "Process"
-msgstr "Processo"
+msgstr "Διαδικασία"
 
 #: templates/messages/quarantine_report.html:23
 #: templates/messages/quarantine_report_text.html:7
 msgid "Spam Report"
-msgstr "Report di spam"
+msgstr "Έκθεση spam"
 
 #: templates/messages/quarantine_report.html:64
 #: templates/messages/quarantine_report_text.html:17
 msgid "Policy Blocked Report"
-msgstr "Report della politica di blocco"
+msgstr "Πολιτική αποκλεισμένων έκθεση"
 
 #: templates/messages/quarantine_report_text.html:28
 msgid "To view these quarantined messages please visit :"
-msgstr "Per vedere questi messaggi in quarantena, prego visita :"
+msgstr "Για να προβάλετε αυτά σε καραντίνα μηνύματα παρακαλούμε επισκεφθείτε:"
 
 #: templates/messages/release.html:10
 msgid "Quarantined Message release"
-msgstr "Rilascio messaggi in quarantena"
+msgstr "Σε καραντίνα μήνυμα έκδοσης"
 
 #: templates/messages/release.html:15
 #, python-format
@@ -2344,7 +2429,10 @@ msgid ""
 "\n"
 "\t\t\tThe message: %(message_id)s has been released to %(release_address)s\n"
 "\t\t"
-msgstr "\n\t\t\tThe message: %(message_id)s è stato rilasciato a %(release_address)s\n\t\t"
+msgstr ""
+"\n"
+"\t\t\tΤο μήνυμα: %(message_id)s έχει εκδοθεί %(release_address)s\n"
+"\t\t"
 
 #: templates/messages/release.html:19
 #, python-format
@@ -2352,51 +2440,62 @@ msgid ""
 "\n"
 "\t    \tThe release of message: %(message_id)s to %(release_address)s failed with error: %(error_msg)s, contact your email admin for assistance.\n"
 "\t    "
-msgstr "\n\t    \tIl rilascio del messaggio: %(message_id)s a %(release_address)s non riuscita con errore: %(error_msg)s, contattare il vostro amministratore e-mail per assistenza.\n\t    "
+msgstr ""
+"\n"
+"\t    \tΤην απελευθέρωση του μήνυμα: %(message_id)s να %(release_address)s απέτυχε με σφάλμα: %(error_msg)s, επικοινωνήστε με το διαχειριστή ηλεκτρονικού ταχυδρομείου σας για βοήθεια.\n"
+"\t    "
 
 #: templates/messages/released.html:3
 #, python-format
 msgid ""
 "\n"
 "The message id: %(id)s has been released\n"
-msgstr "\nIl messaggio '%(id)s' è stato rilasciato\n"
+msgstr ""
+"\n"
+"Το αναγνωριστικό μηνύματος: %(id)s έχει κυκλοφορήσει\n"
 
 #: templates/messages/released.html:7
 #, python-format
 msgid ""
 "\n"
 "The message id: %(id)s could not be released: %(error_msg)s, contact your email admin for assistance.\n"
-msgstr "\nId messaggio: %(id)s non poteva essere rilasciato: %(error_msg)s, contattare il vostro amministratore e-mail per assistenza.\n"
+msgstr ""
+"\n"
+"Το αναγνωριστικό μηνύματος: %(id)s δεν θα μπορούσε να κυκλοφορήσει: %(error_msg)s, επικοινωνήστε με το διαχειριστή ηλεκτρονικού ταχυδρομείου σας για βοήθεια.\n"
 
 #: templates/messages/salearn.html:3
 #, python-format
 msgid ""
 "\n"
 "The message id: %(id)s processed\n"
-msgstr "\nId messaggio: %(id)s elaborati\n"
+msgstr ""
+"\n"
+"Το αναγνωριστικό μηνύματος: %(id)s επεξεργασία\n"
 
 #: templates/messages/salearn.html:7
 #, python-format
 msgid ""
 "\n"
 "The message id: %(id)s not learned: %(msg)s\n"
-msgstr "\nId messaggio: %(id)s non imparato: %(msg)s\n"
+msgstr ""
+"\n"
+"Το αναγνωριστικό μηνύματος: %(id)s δεν έμαθε: %(msg)s\n"
 
 #: templates/messages/task_status.html:38
 msgid "Response message"
-msgstr "Messaggio di risposta"
+msgstr "Μήνυμα απόκρισης"
 
 #: templates/messages/task_status.html:58
 msgid "The task was completed successfully."
-msgstr "L'attività è stata completata con successo."
+msgstr "Η εργασία ολοκληρώθηκε με επιτυχία."
 
 #: templates/messages/task_status.html:64
 msgid "No items processed"
-msgstr "No gli elementi elaborati"
+msgstr "Καμία επεξεργασία στοιχείων"
 
 #: templates/messages/task_status.html:81
 msgid "Update status"
-msgstr "Stato di aggiornamento"
+msgstr "Ενημέρωση κατάστασης"
 
 #: templates/reports/barreport.html:18 templates/reports/barreport.html:21
 #: templates/reports/listing.html:22 templates/reports/listing.html.py:25
@@ -2404,115 +2503,115 @@ msgstr "Stato di aggiornamento"
 #: templates/reports/relays.html:19 templates/reports/relays.html.py:22
 #, python-format
 msgid "Reports - %(report_title)s"
-msgstr "Report - %(report_title)s"
+msgstr "Εκθέσεις-%(report_title)s"
 
 #: templates/reports/barreport.html:26
 msgid "Enable javascript to view graphs"
-msgstr "Abilita javascript per vedere i grafici"
+msgstr "Ενεργοποιήστε τη javascript για να δείτε τα γραφήματα"
 
 #: templates/reports/barreport.html:49
 msgid "No items returned"
-msgstr "Nessun elemento ritornato"
+msgstr "Δεν επιστρέφονται στοιχεία"
 
 #: templates/reports/filter.form.html:3
 msgid "Add Filter"
-msgstr "Aggiungi filtro"
+msgstr "Προσθήκη φίλτρου"
 
 #: templates/reports/index.html:21
 msgid "Statistics"
-msgstr "Statistica"
+msgstr "Στατιστικά στοιχεία"
 
 #: templates/reports/index.html:25
 msgid "Message count"
-msgstr "Numero di messaggi"
+msgstr "Πλήθος μηνυμάτων"
 
 #: templates/reports/index.html:31
 msgid "Oldest message processed on"
-msgstr "Messaggio più vecchio processato su"
+msgstr "Παλαιότερο μηνύματος επεξεργασία για"
 
 #: templates/reports/index.html:37
 msgid "Newest message processed on"
-msgstr "Messaggio più nuovo processato su"
+msgstr "Νέος μηνύματος επεξεργασία για"
 
 #: templates/reports/index.html:47
 msgid "Top Senders by Quantity"
-msgstr "Primi per quantità di invii"
+msgstr "Επάνω αποστολείς από ποσότητα"
 
 #: templates/reports/index.html:48
 msgid "Top Senders by Volume"
-msgstr "Primi per volume di invii"
+msgstr "Επάνω αποστολείς από όγκο"
 
 #: templates/reports/index.html:49
 msgid "Top Sender Domains by Quantity"
-msgstr "Primi domini per quantità"
+msgstr "Επάνω τους τομείς αποστολέα την ποσότητα"
 
 #: templates/reports/index.html:50
 msgid "Top Sender Domains by Volume"
-msgstr "Primi domini per volume ricevuto"
+msgstr "Επάνω αποστολέα Domains σε όγκο"
 
 #: templates/reports/index.html:51
 msgid "Spamassassin Score Distribution"
-msgstr "Distribuzione del punteggio Spam"
+msgstr "Κατανομή βαθμολογίας spamassassin"
 
 #: templates/reports/index.html:52
 msgid "Top Mail hosts"
-msgstr "Primi host di posta"
+msgstr "Επάνω αλληλογραφίας κεντρικών υπολογιστών"
 
 #: templates/reports/index.html:57
 msgid "Top Recipients by Quantity"
-msgstr "Primi per numero di messaggi ricevuti"
+msgstr "Επάνω στους παραλήπτες από ποσότητα"
 
 #: templates/reports/index.html:58
 msgid "Top Recipients by Volume"
-msgstr "Primi per volume ricevuto"
+msgstr "Επάνω στους παραλήπτες του όγκου"
 
 #: templates/reports/index.html:59
 msgid "Top Recipient Domains By Quantity"
-msgstr "Primi domini per quantità di messaggi ricevuti"
+msgstr "Επάνω τους τομείς αποδέκτη την ποσότητα"
 
 #: templates/reports/index.html:60
 msgid "Top Recipient Domains By Volume"
-msgstr "Primi domini per volume ricevuto"
+msgstr "Επάνω παραλήπτης Domains σε όγκο"
 
 #: templates/reports/index.html:62
 msgid "Message Listings"
-msgstr "Elenco messaggi"
+msgstr "Μήνυμα καταχωρήσεις"
 
 #: templates/reports/index.html:68
 msgid "Active Filter(s)"
-msgstr "Filtri attivi"
+msgstr "Ενεργά φίλτρα"
 
 #: templates/reports/index.html:81
 msgid "Save"
-msgstr "Salva"
+msgstr "Αποθήκευση"
 
 #: templates/reports/index.html:90
 msgid "No active filters at the moment"
-msgstr "Nessun filtro attivo al momento"
+msgstr "Χωρίς ενεργά φίλτρα αυτή τη στιγμή"
 
 #: templates/reports/index.html:95
 msgid "Saved Filter(s)"
-msgstr "Filtri salvati"
+msgstr "Αποθηκευμένα φίλτρα"
 
 #: templates/reports/index.html:118
 msgid "No saved filters at the moment"
-msgstr "Nessun filtro salvato al momento"
+msgstr "Δεν αποθηκευμένα φίλτρα αυτή τη στιγμή"
 
 #: templates/reports/listing.html:30
 msgid "Enable Javascript to view graphs"
-msgstr "Abilita Javascript per visualizzare i grafici"
+msgstr "Ενεργοποιήστε τη Javascript για να δείτε τα γραφήματα"
 
 #: templates/reports/listing.html:41
 msgid "Mail"
-msgstr "Mail"
+msgstr "Αλληλογραφίας"
 
 #: templates/reports/listing.html:44 templates/status/index.html:69
 msgid "Viruses"
-msgstr "Virus"
+msgstr "Ιοί"
 
 #: templates/reports/listing.html:47
 msgid "Viruses %"
-msgstr "Virus %"
+msgstr "Ιοί %"
 
 #: templates/reports/listing.html:53
 msgid "Spam %"
@@ -2520,253 +2619,254 @@ msgstr "Spam %"
 
 #: templates/reports/listing.html:86
 msgid "No records returned."
-msgstr "Nessun record trovato"
+msgstr "Δεν επιστρέφει εγγραφές."
 
 #: templates/reports/listing.html:92
 msgid "Totals"
-msgstr "Totali"
+msgstr "Σύνολα"
 
 #: templates/reports/piereport.html:52 templates/reports/relays.html:52
 msgid "Javascript required to view graphs"
-msgstr "Javascript ha richiesto di vedere i grafici"
+msgstr "JavaScript που απαιτείται για να δείτε τα γραφήματα"
 
 #: templates/reports/relays.html:27 templates/tags/relayed_via.html:5
 msgid "IP address"
-msgstr "Indirizzo IP"
+msgstr "Διεύθυνση IP"
 
 #: templates/reports/relays.html:28 templates/tags/relayed_via.html:6
 msgid "Hostname"
-msgstr "Nome host"
+msgstr "Όνομα κεντρικού υπολογιστή"
 
 #: templates/reports/relays.html:29 templates/tags/relayed_via.html:7
 msgid "Country"
-msgstr "Nasione"
+msgstr "Χώρα"
 
 #: templates/reports/relays.html:30
 msgid "Total/S/V"
-msgstr "Totale S/V"
+msgstr "Συνολικά/S/V"
 
 #: templates/status/bayes.html:7 templates/status/index.html:5
 #: templates/status/index.html.py:73 templates/status/lint.html:7
 msgid "Mail Queues"
-msgstr "Code di posta"
+msgstr "Ουρές αλληλογραφίας"
 
 #: templates/status/bayes.html:9 templates/status/bayes.html.py:15
 #: templates/status/bayes.html:18 templates/status/index.html:7
 #: templates/status/lint.html:9
 msgid "Bayes information"
-msgstr "Informazioni Bayesiane"
+msgstr "Πληροφορίες Μπέυζ"
 
 #: templates/status/bayes.html:10 templates/status/index.html:8
 #: templates/status/lint.html:10
 msgid "Spamassassin lint"
-msgstr "SpamAssassin lint"
+msgstr "Spamassassin lint"
 
 #: templates/status/bayes.html:22
 msgid "Bayes Database Information"
-msgstr "Informazioni su db Bayes"
+msgstr "Πληροφορίες βάσης δεδομένων Μπέυζ"
 
 #: templates/status/bayes.html:26
 msgid "Bayes Version"
-msgstr "Versione Bayes"
+msgstr "Έκδοση Μπέυζ"
 
 #: templates/status/bayes.html:30
 msgid "Number of Spam messages"
-msgstr "Numero di messaggi spam"
+msgstr "Αριθμός των μηνυμάτων Spam"
 
 #: templates/status/bayes.html:34
 msgid "Number of Ham messages"
-msgstr "Numero di messaggi Ham"
+msgstr "Αριθμός μηνυμάτων ζαμπόν"
 
 #: templates/status/bayes.html:38
 msgid "Number of Tokens"
-msgstr "Numero di Tokens"
+msgstr "Αριθμό των μαρκών"
 
 #: templates/status/bayes.html:42
 msgid "Newest Token"
-msgstr "Token più recente"
+msgstr "Νέος διακριτικό"
 
 #: templates/status/bayes.html:46
 msgid "Oldest Token"
-msgstr "Tocken più vecchio"
+msgstr "Παλαιότερο διακριτικό"
 
 #: templates/status/bayes.html:50
 msgid "Last Journal Sync"
-msgstr "Ultima sincronizzazione Journal"
+msgstr "Τελευταία Εφημερίδα συγχρονισμού"
 
 #: templates/status/bayes.html:54
 msgid "Last Expiry"
-msgstr "Ultimo Expiry"
+msgstr "Τελευταία λήξη"
 
 #: templates/status/bayes.html:58
 msgid "Last Expiry Reduction Count"
-msgstr "Ultima scadenza riduzione del conteggio"
+msgstr "Μέτρηση τελευταίας μείωση λήξη"
 
 #: templates/status/bayes.html:64
 msgid "Bayes information could not be collected."
-msgstr "Le informazioni Bayesiano non hanno potuto essere raccolte."
+msgstr "Δεν θα μπορούσαν να συλλεχθούν πληροφορίες Μπέις."
 
 #: templates/status/detail.html:5 templates/status/detail.html.py:6
 #, python-format
 msgid "Baruwa :: Showing queue item - %(id)s"
-msgstr "Baruwa:: Elemento in coda mostrando-%(id)s"
+msgstr "Baruwa:: Εμφάνιση ουρά στοιχείο-%(id)s"
 
 #: templates/status/detail.html:10 templates/status/mailq.html:11
 msgid "Inbound Queue"
-msgstr "Coda in entrata"
+msgstr "Εισερχόμενη ουρά"
 
 #: templates/status/detail.html:11 templates/status/mailq.html:12
 msgid "Outbound Queue"
-msgstr "Coda in uscita"
+msgstr "Εξερχόμενη ουρά"
 
 #: templates/status/detail.html:50
 msgid "Number of delivery attempts:"
-msgstr "Numero di tentativi di recapito:"
+msgstr "Αριθμός προσπαθειών παράδοσης:"
 
 #: templates/status/detail.html:54
 msgid "Last delivery attempt on:"
-msgstr "Ultimo tentativo di consegna su:"
+msgstr "Τελευταία προσπάθεια παράδοσης σχετικά με:"
 
 #: templates/status/detail.html:62
 msgid "Reasons for queuing:"
-msgstr "Motivi per Accodamento messaggi:"
+msgstr "Λόγοι για την υπηρεσία ουράς:"
 
 #: templates/status/detail.html:67
 msgid "The message details for the requested queue id could not be retrieved"
-msgstr "I dettagli del messaggio per l'id di coda richiesto non potevano essere Estratto"
+msgstr ""
+"Δεν ήταν δυνατή η ανάκτηση λεπτομερειών μηνύματος για το αιτούμενη ουρά id"
 
 #: templates/status/index.html:12 templates/status/index.html.py:13
 msgid "System Status"
-msgstr "Stato del sistema"
+msgstr "Κατάστασης του συστήματος"
 
 #: templates/status/index.html:16
 msgid "Service Status"
-msgstr "Stato del servizio"
+msgstr "Κατάσταση υπηρεσίας"
 
 #: templates/status/index.html:27 templates/status/index.html.py:40
 #: templates/status/index.html:61
 msgid "processes"
-msgstr "processi"
+msgstr "διεργασίες"
 
 #: templates/status/index.html:29
 msgid "Processed"
-msgstr "Processati"
+msgstr "Επεξεργασία"
 
 #: templates/status/index.html:46
 msgid "Load"
-msgstr "Carico"
+msgstr "Φορτίο"
 
 #: templates/status/index.html:50
 msgid "High scoring spam"
-msgstr "Punteggio spam altro"
+msgstr "Υψηλή Βαθμολογία spam"
 
 #: templates/status/index.html:54
 msgid "AV"
-msgstr "Antivirus"
+msgstr "ΑΠΌ"
 
 #: templates/status/index.html:63
 msgid "Low scoring spam"
-msgstr "Punteggio spam basso"
+msgstr "Χαμηλής βαθμολογίας spam"
 
 #: templates/status/index.html:67
 msgid "Uptime"
-msgstr "Uptime"
+msgstr "Χρόνου συνεχούς λειτουργίας"
 
 #: templates/status/index.html:75
 msgid "Blocked files"
-msgstr "File Bloccati"
+msgstr "Αποκλεισμένων αρχείων"
 
 #: templates/status/lint.html:15 templates/status/lint.html.py:18
 #: templates/status/lint.html:22
 msgid "Spamassassin Lint"
-msgstr "SpamAssassin Lint"
+msgstr "Spamassassin Lint"
 
 #: templates/status/lint.html:31
 msgid "Lint failed please verify if spamassassin is installed"
-msgstr "Lint ha fallito, per favore verifica se spamassassin è installato"
+msgstr "Lint απέτυχε επαληθεύστε εάν είναι εγκατεστημένη η spamassassin"
 
 #: templates/status/mailq.html:16 templates/status/mailq.html.py:19
 msgid "Mail Queue"
-msgstr "Coda di posta"
+msgstr "Ουρά αλληλογραφίας"
 
 #: templates/status/mailq.html:16 templates/status/mailq.html.py:19
 msgid "Outbound"
-msgstr "In uscita"
+msgstr "Εξερχόμενο"
 
 #: templates/status/mailq.html:16 templates/status/mailq.html.py:19
 msgid "Inbound"
-msgstr "Inbound"
+msgstr "Εισερχόμενος"
 
 #: templates/status/mailq.html:28
 msgid "Delete from queue"
-msgstr "Eliminare dalla coda"
+msgstr "Διαγραφή από την ουρά"
 
 #: templates/status/mailq.html:55
 msgid "No queue items found"
-msgstr "Elementi della coda non trovati"
+msgstr "Καμία ουρά των στοιχείων που βρέθηκαν"
 
 #: templates/tags/generic_paginator.html:2
 #: templates/tags/pagination_heading.html:2 templates/tags/paginator.html:2
 #, python-format
 msgid "Showing page %(page)s of %(pages)s pages."
-msgstr "Pagina %(page)s di %(pages)s."
+msgstr "Εμφάνιση σελίδας %(page)s των %(pages)s σελίδες."
 
 #: templates/tags/relayed_via.html:23
 msgid "direct connection"
-msgstr "connessione diretta"
+msgstr "απευθείας σύνδεση"
 
 #: templates/tags/spamreport.html:5
 msgid "Rule"
-msgstr "Regola"
+msgstr "Κανόνας"
 
 #: templates/tags/spamreport.html:6
 msgid "Description"
-msgstr "Descrizione"
+msgstr "Περιγραφή"
 
 #: utils/mail/message.py:247 utils/mail/message.py:336
 msgid "Message not found in the quarantine"
-msgstr "Messaggio non trovato in quarantena"
+msgstr "Το μήνυμα δεν βρέθηκε την απομόνωση, αν τα"
 
 #: utils/mail/message.py:276 utils/mail/message.py:290
 msgid "The quarantined message not found"
-msgstr "Il messaggio in quarantena non trovato"
+msgstr "Σε καραντίνα το μήνυμα δεν βρέθηκε"
 
 #: utils/mail/message.py:287
 msgid "Unsupported learn option supplied"
-msgstr "Non supportato imparare opzione fornita"
+msgstr "Μη υποστηριζόμενη μάθετε επιλογή που παρέχονται"
 
 #: utils/mail/message.py:399
 #, python-format
 msgid "Expected response code 2xx got %(code)s"
-msgstr "Previsto ottenuto risposta codice 2xx %(code)s"
+msgstr "Αναμένεται απάντηση κώδικα 2xx έχεις %(code)s"
 
 #: utils/mail/message.py:403
 msgid "Connection timed out"
-msgstr "Connection timed out"
+msgstr "Λήξη χρονικού ορίου σύνδεσης"
 
 #: utils/mail/message.py:405
 msgid "The server disconnected abruptly"
-msgstr "Il server scollegato bruscamente"
+msgstr "Ο διακομιστής αποσυνδεθεί απότομα"
 
 #: utils/mail/message.py:407
 #, python-format
 msgid "The sender %(sender)s was rejected"
-msgstr "Il mittente %(sender)s è stata respinta"
+msgstr "Ο αποστολέας %(sender)s απορρίφθηκε"
 
 #: utils/mail/message.py:410
 #, python-format
 msgid "Some recipients: %(recpts)s were rejected with errors: %(errors)s"
-msgstr "Alcuni destinatari: %(recpts)s sono stati respinti con errori: %(errors)s"
+msgstr "Ορισμένοι παραλήπτες: %(recpts)s απορρίφθηκαν με σφάλματα: %(errors)s"
 
 #: utils/mail/message.py:414
 msgid "Error occured while establishing connection to the server"
-msgstr "Si è verificato un errore durante la connessione al server"
+msgstr "Παρουσιάστηκε σφάλμα κατά τη δημιουργία σύνδεσης με το διακομιστή"
 
 #: utils/mail/message.py:417
 msgid "Server rejected our HELO message"
-msgstr "Server ha rifiutato il nostro messaggio HELO"
+msgstr "Διακομιστής απέρριψε το μήνυμα μας HELO"
 
 #: utils/mail/message.py:419
 #, python-format
 msgid "Error occured, CODE: %(code)s MESSAGE: %(msg)s"
-msgstr "Errore, codice: %(code)s MESSAGGIO: %(msg)s"
+msgstr "Παρουσιάστηκε σφάλμα, ΚΩΔΙΚΌΣ: %(code)s ΜΉΝΥΜΑ: %(msg)s"

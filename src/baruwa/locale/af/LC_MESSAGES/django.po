@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: baruwa\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-11 10:21+0200\n"
-"PO-Revision-Date: 2012-11-12 07:14+0000\n"
+"PO-Revision-Date: 2012-11-13 10:31+0000\n"
 "Last-Translator: Stephen Cox <stephencoxmail@gmail.com>\n"
 "Language-Team: Afrikaans (http://www.transifex.com/projects/p/baruwa/language/af/)\n"
 "MIME-Version: 1.0\n"
@@ -28,19 +28,19 @@ msgstr "Afrikaans"
 
 #: settings.py:55
 msgid "Italian"
-msgstr ""
+msgstr "Italiaanse"
 
 #: settings.py:56
 msgid "Czech"
-msgstr ""
+msgstr "Czech"
 
 #: settings.py:57
 msgid "French"
-msgstr ""
+msgstr "Franse"
 
 #: settings.py:58
 msgid "Polish"
-msgstr ""
+msgstr "Pools"
 
 #: accounts/forms.py:39
 #, python-format
@@ -74,7 +74,7 @@ msgstr "Daardie e-pos adres behoort aan 'n ekstern gemagtigde rekening. Verander
 msgid ""
 "That e-mail address belongs to an admin account Please use the manage.py "
 "command to reset"
-msgstr ""
+msgstr "Daardie e-pos adres behoort aan 'n adminstrateursrekening. Gebruik gerus die manage.py opdrag om dit terug te stel."
 
 #: accounts/forms.py:105 templates/accounts/login.html:63
 msgid "Password"

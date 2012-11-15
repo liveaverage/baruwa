@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: baruwa\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-11 10:21+0200\n"
-"PO-Revision-Date: 2012-11-11 08:30+0000\n"
+"PO-Revision-Date: 2012-11-15 07:40+0000\n"
 "Last-Translator: datopdog <andrew@topdog.za.net>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/baruwa/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,34 +19,34 @@ msgstr ""
 
 #: settings.py:53
 msgid "English"
-msgstr ""
+msgstr "Angielski"
 
 #: settings.py:54
 msgid "Afrikaans"
-msgstr ""
+msgstr "Afrikaans"
 
 #: settings.py:55
 msgid "Italian"
-msgstr ""
+msgstr "Włoski"
 
 #: settings.py:56
 msgid "Czech"
-msgstr ""
+msgstr "Czeski"
 
 #: settings.py:57
 msgid "French"
-msgstr ""
+msgstr "Francuski"
 
 #: settings.py:58
 msgid "Polish"
-msgstr ""
+msgstr "Polski"
 
 #: accounts/forms.py:39
 #, python-format
 msgid ""
 "Required, %(chars)s characters or fewer. Only letters, numbers, and "
 "characters such as @.+_- are allowed."
-msgstr ""
+msgstr "Wymagane, %(chars)s znaków lub mniej. Tylko litery, liczby i znaki takie jak @. + _ - są dozwolone."
 
 #: accounts/forms.py:48 templates/accounts/index.html:31
 #: templates/accounts/login.html:61
@@ -73,7 +73,7 @@ msgstr "Ten adres e-mail należy do zewnętrznie uwierzytelnionego konta. Prosz�
 msgid ""
 "That e-mail address belongs to an admin account Please use the manage.py "
 "command to reset"
-msgstr ""
+msgstr "Ten adres e-mail należy do administrator uwa¿aæ Użyj polecenia manage.py zresetować"
 
 #: accounts/forms.py:105 templates/accounts/login.html:63
 msgid "Password"
@@ -169,47 +169,47 @@ msgstr "Profil użytkownika %(account)s nie został zaktualizowany"
 
 #: accounts/views.py:420 config/views.py:496
 msgid "The signature has been saved"
-msgstr ""
+msgstr "Podpis został zapisany"
 
 #: accounts/views.py:423
 #, python-format
 msgid "A signature of this type already exists for account: %(account)s"
-msgstr ""
+msgstr "Podpis tego typu już istnieje dla konta: %(account)s"
 
 #: accounts/views.py:427 config/views.py:502
 msgid "An error occured during processing try again later"
-msgstr ""
+msgstr "Wystąpił błąd podczas przetwarzania spróbować ponownie później"
 
 #: accounts/views.py:454 config/views.py:526
 msgid "The signature has been updated"
-msgstr ""
+msgstr "Podpis został zaktualizowany"
 
 #: accounts/views.py:457 config/views.py:529
 msgid "An error occured during processing, try again later"
-msgstr ""
+msgstr "Wystąpił błąd podczas przetwarzania, spróbuj ponownie później"
 
 #: accounts/views.py:481
 msgid "The signature, is being deleted."
-msgstr ""
+msgstr "Podpis, jest usuwany."
 
 #: config/forms.py:38
 #, python-format
 msgid "%s is not a valid hostname or IPv4/IPv6 address"
-msgstr ""
+msgstr "%s nie jest właściwą nazwę lub adres IPv4/IPv6"
 
 #: config/forms.py:44
 msgid "Enter a valid IPv4/IPv6 address or hostname."
-msgstr ""
+msgstr "Wprowadź prawidłowy adres IPv4/IPv6 lub nazwy hosta."
 
 #: config/tasks.py:64
 #, python-format
 msgid "Notified %(h)s of config update"
-msgstr ""
+msgstr "Zgłoszone %(h)s config aktualizacji"
 
 #: config/tasks.py:67
 #, python-format
 msgid "Failed to notify %(h)s of config update"
-msgstr ""
+msgstr "Nie Informuj %(h)s config aktualizacji"
 
 #: config/tasks.py:81
 #, python-format
@@ -219,85 +219,85 @@ msgstr "Rozpoczęcie testów połączenia do: %(host)s"
 #: config/tasks.py:105
 #, python-format
 msgid "Wrote text signature: %(sig)s"
-msgstr ""
+msgstr "Napisał tekst podpisu: %(sig)s"
 
 #: config/tasks.py:128
 #, python-format
 msgid "Wrote img: %(img)s"
-msgstr ""
+msgstr "Napisał img: %(img)s"
 
 #: config/tasks.py:137
 #, python-format
 msgid "Wrote html signature: %(sig)s"
-msgstr ""
+msgstr "Napisał html podpis: %(sig)s"
 
 #: config/tasks.py:155
 #, python-format
 msgid "Processing signatures for: %(user)s"
-msgstr ""
+msgstr "Przetwarzanie podpisów dla: %(user)s"
 
 #: config/tasks.py:168 config/tasks.py:204
 #, python-format
 msgid "Error occured: %(err)s"
-msgstr ""
+msgstr "Wystąpił błąd: %(err)s"
 
 #: config/tasks.py:172
 #, python-format
 msgid "Finished processing signatures for: %(u)s"
-msgstr ""
+msgstr "Zakończeniu przetwarzania podpisów dla: %(u)s"
 
 #: config/tasks.py:175
 #, python-format
 msgid "User with userid: %s not found"
-msgstr ""
+msgstr "Użytkownik z nazwa użytkownika: %s nie znaleziono"
 
 #: config/tasks.py:191
 #, python-format
 msgid "Processing signatures for: %(d)s"
-msgstr ""
+msgstr "Przetwarzanie podpisów dla: %(d)s"
 
 #: config/tasks.py:208
 #, python-format
 msgid "Finished processing signatures for: %(d)s"
-msgstr ""
+msgstr "Zakończeniu przetwarzania podpisów dla: %(d)s"
 
 #: config/tasks.py:211
 #, python-format
 msgid "Domain with domainid: %s not found"
-msgstr ""
+msgstr "Domeny z domainid: %s nie znaleziono"
 
 #: config/tasks.py:227
 #, python-format
 msgid "Deleting signatures for: %(d)s"
-msgstr ""
+msgstr "Usuwanie podpisów dla: %(d)s"
 
 #: config/tasks.py:238 config/tasks.py:271
 #, python-format
 msgid "Error deleting %(f)s: %(e)s"
-msgstr ""
+msgstr "Usuwanie błędów %(f)s: %(e)s"
 
 #: config/tasks.py:241
 #, python-format
 msgid "Finished deletion of signatures for: %(d)s"
-msgstr ""
+msgstr "Zakończeniu usuwania podpisów dla: %(d)s"
 
 #: config/tasks.py:244
 msgid "Domain signatures not found"
-msgstr ""
+msgstr "Domeny podpisów nie znaleziono"
 
 #: config/tasks.py:261
 #, python-format
 msgid "Deleting signatures for: %(a)s"
-msgstr ""
+msgstr "Usuwanie podpisów dla: %(a)s"
 
 #: config/tasks.py:274
 #, python-format
 msgid "Finished deletion of signatures for: %(u)s"
-msgstr ""
+msgstr "Zakończeniu usuwania podpisów dla: %(u)s"
 
 #: config/tasks.py:277
 msgid "Account signatures not found"
-msgstr ""
+msgstr "Konto podpisów nie znaleziono"
 
 #: config/views.py:133
 #, python-format
@@ -397,80 +397,80 @@ msgstr "Węzeł %(node)s został zainicjowany"
 #: config/views.py:499
 #, python-format
 msgid "A signature of this type already exists for domain: %(domain)s"
-msgstr ""
+msgstr "Podpis tego typu już istnieje dla domeny: %(domain)s"
 
 #: config/views.py:553
 msgid "The signature, is being deleted"
-msgstr ""
+msgstr "Skreśla się podpis,"
 
 #: config/views.py:586
 msgid "Not authorized."
-msgstr ""
+msgstr "Brak autoryzacji."
 
 #: config/views.py:648
 msgid "File has been uploaded"
-msgstr ""
+msgstr "Plik został przesłany"
 
 #: config/views.py:650
 msgid "An error occured, try again later"
-msgstr ""
+msgstr "Wystąpił błąd, spróbuj ponownie później"
 
 #: config/views.py:652
 msgid "The uploaded file is not acceptable"
-msgstr ""
+msgstr "Przesłany plik jest nie do przyjęcia"
 
 #: config/views.py:656
 msgid ""
 "You already have a signature image, delete the current image before "
 "uploading a new one"
-msgstr ""
+msgstr "Już masz obrazek w swojej sygnaturze, usunąć bieżący obraz przed przesłanie nowego"
 
 #: config/views.py:664
 msgid "The file has been deleted"
-msgstr ""
+msgstr "Plik został usunięty"
 
 #: config/views.py:667
 msgid "The file could not be deleted"
-msgstr ""
+msgstr "Nie można usunąć pliku"
 
 #: config/views.py:671
 msgid "Action not supported"
-msgstr ""
+msgstr "Akcja nieobsługiwana"
 
 #: config/views.py:685
 msgid "You are not authorized to access this resource"
-msgstr ""
+msgstr "Użytkownik nie jest upoważniony do dostępu do tego zasobu"
 
 #: config/management/commands/initconfig.py:38
 #, python-format
 msgid "Please enter the hostname [%s]: "
-msgstr ""
+msgstr "Proszę wpisać nazwę hosta [% s]: "
 
 #: config/management/commands/initconfig.py:46
 #, python-format
 msgid "The hostname %(h)s is not assigned to this system, try again"
-msgstr ""
+msgstr "Nazwa hosta %(h)s nie jest przypisany do tego systemu, spróbuj ponownie"
 
 #: config/management/commands/initconfig.py:54
 #, python-format
 msgid "The host: %(h)s has been initialized"
-msgstr ""
+msgstr "Host: %(h)s została zainicjowana"
 
 #: config/management/commands/initconfig.py:57
 msgid "The settings could not be saved check your DB settings"
-msgstr ""
+msgstr "Nie można zapisać ustawień Sprawdź ustawienia DB"
 
 #: config/management/commands/initconfig.py:61
 #, python-format
 msgid "The host: %(h)s is already initialized"
-msgstr ""
+msgstr "Host: %(h)s jest już zainicjowany"
 
 #: fixups/models.py:37
 #, python-format
 msgid ""
 "Required, %s characters or fewer. Only letters, numbers, and @, ., +, -, or "
 "_ characters."
-msgstr ""
+msgstr "Wymagane, %s znaków lub mniej. Tylko litery, cyfry, i @,., +, -, _ znaków lub."
 
 #: lists/forms.py:58
 #, python-format
@@ -486,7 +486,7 @@ msgstr "Adres: %(email)s nie należy do Ciebie."
 msgid ""
 "Provide either a valid IPv4/IPv6, email, Domain address, or IPv4/IPv6 "
 "network or range"
-msgstr ""
+msgstr "Świadczenia, albo zdrowy IPv4/IPv6, e-mail, adres domeny lub IPv4/IPv6 sieci lub zakres"
 
 #: lists/forms.py:88 lists/views.py:185
 msgid "The list item already exists"
@@ -507,7 +507,7 @@ msgstr "podać prawidłową część adresu e-mail użytkownika"
 
 #: lists/views.py:195
 msgid "The address has been added to the list"
-msgstr ""
+msgstr "Adres został dodany do listy"
 
 #: lists/views.py:220
 msgid "You do not have authorization"
@@ -515,11 +515,11 @@ msgstr "Nie masz upoważnienia"
 
 #: lists/views.py:227
 msgid "List item deleted"
-msgstr ""
+msgstr "Usunięty element listy"
 
 #: lists/views.py:236
 msgid "List item could not be deleted"
-msgstr ""
+msgstr "Nie można usunąć elementu listy"
 
 #: messages/forms.py:29 messages/templatetags/messages_extras.py:72
 #: templates/base.html:51 templates/messages/quarantine.html:24
@@ -670,7 +670,7 @@ msgstr "Katalog %(path)s jest łączem symbolicznym pomijam"
 msgid ""
 "Deletes records older than QUARANTINE_DAYS_TO_KEEP days from the messages "
 "table"
-msgstr ""
+msgstr "Usuwa starsze niż QUARANTINE_DAYS_TO_KEEP dni rekordy z tabeli wiadomości"
 
 #: messages/management/commands/sendquarantinereports.py:75
 msgid ""
@@ -1015,7 +1015,7 @@ msgstr "Polecenie nie przyjmuje żadnych argumentów"
 
 #: reports/management/commands/sendpdfreports.py:109
 msgid "The startdate, enddate specified is invalid"
-msgstr ""
+msgstr "Data_rozpoczęcia, data_zakończenia określony jest nieprawidłowy"
 
 #: reports/management/commands/sendpdfreports.py:118
 msgid "The period you specified is invalid"
@@ -1263,22 +1263,22 @@ msgstr "Usuń"
 
 #: templates/accounts/add_account_sig.html:6
 msgid "Account page"
-msgstr ""
+msgstr "Konto"
 
 #: templates/accounts/add_account_sig.html:9
 msgid "Accounts :: Add Email signature"
-msgstr ""
+msgstr "Konta:: Dodać adres e-podpisu"
 
 #: templates/accounts/add_account_sig.html:10
 #, python-format
 msgid ""
 "\n"
 "Accounts :: %(address)s - add email signature\n"
-msgstr ""
+msgstr "\nKonta:: %(address)s -dodać adres e-podpisu\n"
 
 #: templates/accounts/add_account_sig.html:18
 msgid "Add email signature"
-msgstr ""
+msgstr "Dodaj adres e-podpisu"
 
 #: templates/accounts/add_account_sig.html:39
 #: templates/config/add_auth_host.html:33
@@ -1383,17 +1383,17 @@ msgstr "Usuń"
 #: templates/config/delete_domain_sig.html:9
 #: templates/config/delete_domain_sig.html:10
 msgid "Delete email signature"
-msgstr ""
+msgstr "Usuń adres e-podpisu"
 
 #: templates/accounts/delete_account_sig.html:12
 #: templates/config/delete_domain_sig.html:13
 msgid "Delete Email signature"
-msgstr ""
+msgstr "Usuń adres e-podpisu"
 
 #: templates/accounts/delete_account_sig.html:20
 #: templates/config/delete_domain_sig.html:21
 msgid "Delete the email signature"
-msgstr ""
+msgstr "Usuń podpis e-mail"
 
 #: templates/accounts/delete_address.html:12
 #: templates/accounts/delete_address.html:13
@@ -1407,18 +1407,18 @@ msgstr "Usuń Adres:"
 
 #: templates/accounts/edit_account_sig.html:8
 msgid "Accounts :: Edit Email signature"
-msgstr ""
+msgstr "Kont:: Edycja e-podpisu"
 
 #: templates/accounts/edit_account_sig.html:9
 #, python-format
 msgid ""
 "\n"
 "Accounts :: %(address)s - edit email signature\n"
-msgstr ""
+msgstr "\nKonta:: %(address)s -Edycja e-podpisu\n"
 
 #: templates/accounts/edit_account_sig.html:17
 msgid "Edit Account signature"
-msgstr ""
+msgstr "Edytuj sygnaturę konta"
 
 #: templates/accounts/edit_account_sig.html:38
 #: templates/accounts/edit_address.html:35
@@ -1670,19 +1670,19 @@ msgstr "Brak adresów zapisanych w tej chwili."
 
 #: templates/accounts/user_profile.html:201 templates/config/domain.html:131
 msgid "Email signatures"
-msgstr ""
+msgstr "E-podpisu"
 
 #: templates/accounts/user_profile.html:209 templates/config/domain.html:139
 msgid "Text signature"
-msgstr ""
+msgstr "Tekst podpisu"
 
 #: templates/accounts/user_profile.html:211 templates/config/domain.html:141
 msgid "HTML signature"
-msgstr ""
+msgstr "HTML podpis"
 
 #: templates/accounts/user_profile.html:228 templates/config/domain.html:158
 msgid "No email signatures configured"
-msgstr ""
+msgstr "Nie e-podpisu skonfigurowany"
 
 #: templates/config/add_auth_host.html:8
 msgid "Settings :: Add authentication server"
@@ -1697,22 +1697,22 @@ msgstr "\nDomeny :: %(address)s - Dodaj serwer uwierzytelniania\n"
 
 #: templates/config/add_auth_host.html:17
 msgid "Add Authentication server"
-msgstr ""
+msgstr "Dodać serwer uwierzytelniania"
 
 #: templates/config/add_domain_sig.html:8
 msgid "Settings :: Add Email signature"
-msgstr ""
+msgstr "Ustawienia:: Dodaj adres e-podpisu"
 
 #: templates/config/add_domain_sig.html:9
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(address)s - add email signature\n"
-msgstr ""
+msgstr "\nDomeny:: %(address)s -dodać adres e-podpisu\n"
 
 #: templates/config/add_domain_sig.html:17
 msgid "Add Domain signature"
-msgstr ""
+msgstr "Dodać sygnaturę domeny"
 
 #: templates/config/add_host.html:8
 msgid "Settings :: Add destination mail server"
@@ -1835,18 +1835,18 @@ msgstr "\n\t\t\tEdytuj uwierzytelniania serwera %(forms_errors)s\n\t\t"
 
 #: templates/config/edit_domain_sig.html:9
 msgid "Settings :: Edit Email signature"
-msgstr ""
+msgstr "Ustawienia:: Edytuj e-podpisu"
 
 #: templates/config/edit_domain_sig.html:10
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(address)s - edit email signature\n"
-msgstr ""
+msgstr "\nDomeny:: %(address)s -Edycja e-podpisu\n"
 
 #: templates/config/edit_domain_sig.html:18
 msgid "Edit Domain signature"
-msgstr ""
+msgstr "Edytuj sygnaturę domeny"
 
 #: templates/config/edit_host.html:8 templates/config/edit_host.html.py:9
 msgid "Settings :: Edit destination mail server"
@@ -2099,23 +2099,23 @@ msgstr "Inne zakażenie:"
 
 #: templates/messages/detail.html:116
 msgid "Delivery information"
-msgstr ""
+msgstr "Informacje o dostawie"
 
 #: templates/messages/detail.html:119
 msgid "Processed at:"
-msgstr ""
+msgstr "Przetwarzane na:"
 
 #: templates/messages/detail.html:120
 msgid "Processed by:"
-msgstr ""
+msgstr "Przetwarzane przez:"
 
 #: templates/messages/detail.html:121
 msgid "Delivered to:"
-msgstr ""
+msgstr "Dostarczone do:"
 
 #: templates/messages/detail.html:122
 msgid "Delivery status"
-msgstr ""
+msgstr "Stan dostawy"
 
 #: templates/messages/detail.html:134
 msgid "Spamassassin information"
@@ -2197,7 +2197,7 @@ msgstr "Pełna wiadomość"
 #: templates/messages/index.html:38
 #, python-format
 msgid "Showing the %(baruwa_num_recent_messages)s most recent messages"
-msgstr ""
+msgstr "Wyświetlono %(baruwa_num_recent_messages)s Ostatnie wiadomości"
 
 #: templates/messages/index.html:45 templates/messages/quarantine.html:39
 msgid "Filters"
@@ -2210,7 +2210,7 @@ msgstr "zostały zastosowane"
 #: templates/messages/index.html:48
 #, python-format
 msgid "Showing the %(baruwa_num_recent_messages)s most recent messages "
-msgstr ""
+msgstr "Wyświetlono %(baruwa_num_recent_messages)s Ostatnie wiadomości "
 
 #: templates/messages/index.html:50 templates/messages/quarantine.html:44
 msgid "Enable javascript for updates"
@@ -2507,11 +2507,11 @@ msgstr "Mail"
 
 #: templates/reports/listing.html:44 templates/status/index.html:69
 msgid "Viruses"
-msgstr ""
+msgstr "Wirusy"
 
 #: templates/reports/listing.html:47
 msgid "Viruses %"
-msgstr ""
+msgstr "Wirusy %"
 
 #: templates/reports/listing.html:53
 msgid "Spam %"

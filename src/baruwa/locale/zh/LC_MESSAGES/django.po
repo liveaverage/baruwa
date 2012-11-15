@@ -3,712 +3,712 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Sandro <sandro@e-den.it>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: baruwa\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: baruwa@lists.baruwa.org\n"
 "POT-Creation-Date: 2012-11-11 10:21+0200\n"
-"PO-Revision-Date: 2012-11-15 07:23+0000\n"
-"Last-Translator: datopdog <andrew@topdog.za.net>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2012-11-15 10:27+0200\n"
+"Last-Translator: Andrew Colin Kissa <andrew@topdog.za.net>\n"
+"Language-Team: (http://www.transifex.com/projects/p/baruwa/language/zh-CHS/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: it\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Generated-By: auto-translate.py\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: settings.py:53
 msgid "English"
-msgstr "Inglese"
+msgstr "英语"
 
 #: settings.py:54
 msgid "Afrikaans"
-msgstr "Afrikaans"
+msgstr "南非荷兰语"
 
 #: settings.py:55
 msgid "Italian"
-msgstr "Italiano"
+msgstr "意大利语"
 
 #: settings.py:56
 msgid "Czech"
-msgstr "Ceco"
+msgstr "捷克语"
 
 #: settings.py:57
 msgid "French"
-msgstr "Francese"
+msgstr "法语"
 
 #: settings.py:58
 msgid "Polish"
-msgstr "Polacco"
+msgstr "波兰语"
 
 #: accounts/forms.py:39
 #, python-format
 msgid ""
 "Required, %(chars)s characters or fewer. Only letters, numbers, and "
 "characters such as @.+_- are allowed."
-msgstr "Necessaria, %(chars)s caratteri o meno. Solo lettere, numeri e caratteri come @. + _ - sono ammessi."
+msgstr "所需，%(chars)s个字符或更少。只有字母、 数字、 以及诸如 @.+ _-允许。"
 
 #: accounts/forms.py:48 templates/accounts/index.html:31
 #: templates/accounts/login.html:61
 msgid "Username"
-msgstr "Username"
+msgstr "用户名"
 
 #: accounts/forms.py:52
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
-msgstr "Questo valore può contenere solo lettere, numeri ed i caratteri @/./+/-/_ "
+msgstr "此值只可包含字母、 数字和 @/./ + /-/ _ 字符。"
 
 #: accounts/forms.py:70
 msgid ""
 "That e-mail address doesn't have an associated user account. Are you sure "
 "you've registered?"
-msgstr "Tale indirizzo di posta elettronica non dispone di un account utente associato. Sei sicuro che sei registrato?"
+msgstr "该电子邮件地址不会拥有一个相关联的用户帐户。确实你已经注册吗？"
 
 #: accounts/forms.py:74
 msgid ""
 "That e-mail address belongs to an externally authenticated account. Please "
 "change the password on that external system."
-msgstr "Tale indirizzo di posta elettronica appartiene a un account autenticato esternamente. Si prega di cambiare la password su quel sistema esterno."
+msgstr "该电子邮件地址属于外部身份验证的帐户。请更改该外部系统上的密码。"
 
 #: accounts/forms.py:79
 msgid ""
 "That e-mail address belongs to an admin account Please use the manage.py "
 "command to reset"
-msgstr "Tale indirizzo di posta elettronica appartiene a un account di amministratore per favore usa il comando manage.py per ripristinare"
+msgstr "该电子邮件地址属于 admin 帐户请用要重置的配置命令"
 
 #: accounts/forms.py:105 templates/accounts/login.html:63
 msgid "Password"
-msgstr "Password"
+msgstr "密码"
 
 #: accounts/forms.py:114
 msgid "A user with that username already exists."
-msgstr "Un utente con questa 'username' essite già"
+msgstr "与该用户名的用户已存在。"
 
 #: accounts/forms.py:145 accounts/forms.py:180
 msgid "Super users do not use addresses"
-msgstr "I Superuser non usano gli indirizzi"
+msgstr "超级用户不使用地址"
 
 #: accounts/forms.py:151 accounts/forms.py:186
 msgid "provide a valid domain address"
-msgstr "scrivi un indirizzo di dominio valido"
+msgstr "提供一个有效的域地址"
 
 #: accounts/forms.py:156 accounts/forms.py:191
 msgid "provide a valid email address"
-msgstr "scrivi un indirizzo email valido"
+msgstr "提供一个有效的电子邮件地址"
 
 #: accounts/views.py:147
 #, python-format
 msgid "The user account %(account)s was created successfully"
-msgstr "L'accoutn utente %(account)s è stato creato correttamente"
+msgstr "用户帐户 %(account)s已成功创建"
 
 #: accounts/views.py:153
 msgid "The user account could not be created"
-msgstr "L'account utente non può essere creato"
+msgstr "无法创建用户帐户"
 
 #: accounts/views.py:177
 #, python-format
 msgid "The user account %(account)s has been updated"
-msgstr "L'account utente %(account)s è stato aggiornato"
+msgstr "用户帐户 %(account)s已更新"
 
 #: accounts/views.py:180
 #, python-format
 msgid "The user account %(account)s could not be updated"
-msgstr "L'account utente %(account)s potrebbe non essere aggiornato"
+msgstr "用户帐户 %(account)s不能更新"
 
 #: accounts/views.py:211
 #, python-format
 msgid "The user account %(account)s has been deleted"
-msgstr "L'account utente %(account)s è stato eliminato"
+msgstr "用户帐户 %(account)s已被删除"
 
 #: accounts/views.py:220
 #, python-format
 msgid "The deletion of user account %(account)s failed"
-msgstr "La eliminazione dell'account utente %(account)s è fallita"
+msgstr "删除用户帐户 %(account)s失败"
 
 #: accounts/views.py:246
 #, python-format
 msgid "The address %(addr)s has been added to %(account)s account"
-msgstr "L'indirizzo %(addr)s è stato aggiunto all'account %(account)s"
+msgstr "地址 %(addr)s已添加到 %(account)s帐户"
 
 #: accounts/views.py:249
 msgid "The address already exists"
-msgstr "L'indirizzo esiste già"
+msgstr "地址已存在"
 
 #: accounts/views.py:276
 #, python-format
 msgid "The address %(addr)s has been updated"
-msgstr "L'indirizzo %(addr)s è stato aggiornato"
+msgstr "地址 %(addr)s已更新"
 
 #: accounts/views.py:279
 #, python-format
 msgid "The address %(addr)s could not be updated"
-msgstr "L'indirizzo %(addr)s potrebbe non essere aggiornato"
+msgstr "地址 %(addr)s不能更新"
 
 #: accounts/views.py:301
 #, python-format
 msgid "The address %(addr)s has been deleted"
-msgstr "L'indirizzo %(addr)s è stato eliminato"
+msgstr "地址 %(addr)s已被删除"
 
 #: accounts/views.py:327
 #, python-format
 msgid "The password for user %(account)s has been updated"
-msgstr "La password per l'utente %(account)s è stata aggiornata"
+msgstr "用户的密码 %(account)s已更新"
 
 #: accounts/views.py:330
 msgid "The password could not be updated"
-msgstr "La password potrebbe non essere aggiornata"
+msgstr "无法更新密码"
 
 #: accounts/views.py:386
 #, python-format
 msgid "The user profile for %(account)s has been updated"
-msgstr "il profilo per l'utente %(account)s è stato aggiornato"
+msgstr "用户配置文件 %(account)s已更新"
 
 #: accounts/views.py:389
 #, python-format
 msgid "The user profile for %(account)s could not be updated"
-msgstr "Il profilo di utente %(account)s potrebbe non essere aggiornato"
+msgstr "用户配置文件 %(account)s不能更新"
 
 #: accounts/views.py:420 config/views.py:496
 msgid "The signature has been saved"
-msgstr "La firma è stata salvata"
+msgstr "已保存签名"
 
 #: accounts/views.py:423
 #, python-format
 msgid "A signature of this type already exists for account: %(account)s"
-msgstr "Una firma di questo tipo esiste già per conto: %(account)s"
+msgstr "帐户已存在此类型的签名： %(account)s"
 
 #: accounts/views.py:427 config/views.py:502
 msgid "An error occured during processing try again later"
-msgstr "Si è verificato un errore durante l'elaborazione di riprovare più tardi"
+msgstr "在处理期间发生错误，请稍后再试"
 
 #: accounts/views.py:454 config/views.py:526
 msgid "The signature has been updated"
-msgstr "La firma è stata aggiornata"
+msgstr "已更新签名"
 
 #: accounts/views.py:457 config/views.py:529
 msgid "An error occured during processing, try again later"
-msgstr "Si è verificato un errore durante l'elaborazione, riprovare più tardi"
+msgstr "在处理期间发生错误，请稍后再试"
 
 #: accounts/views.py:481
 msgid "The signature, is being deleted."
-msgstr "La firma, è da eliminare."
+msgstr "正在删除签名。"
 
 #: config/forms.py:38
 #, python-format
 msgid "%s is not a valid hostname or IPv4/IPv6 address"
-msgstr "%s non è un nome di host valido o un indirizzo IPv4/IPv6"
+msgstr "%s 不是一个有效的主机名或 IPv4/IPv6 地址"
 
 #: config/forms.py:44
 msgid "Enter a valid IPv4/IPv6 address or hostname."
-msgstr "Immettere un indirizzo IPv4/IPv6 valido o un nome host."
+msgstr "输入一个有效的 IPv4/IPv6 地址或主机名。"
 
 #: config/tasks.py:64
 #, python-format
 msgid "Notified %(h)s of config update"
-msgstr "Notificato %(h)s di configurazione aggiornamento"
+msgstr "通知 %(h)s配置更新的"
 
 #: config/tasks.py:67
 #, python-format
 msgid "Failed to notify %(h)s of config update"
-msgstr "Non è riuscito a notificare %(h)s di configurazione aggiornamento"
+msgstr "未能通知 %(h)s配置更新的"
 
 #: config/tasks.py:81
 #, python-format
 msgid "Starting connection tests to: %(host)s"
-msgstr "Iniziare il test di connessione a: %(host)s"
+msgstr "从开始到连接测试： %(host)s"
 
 #: config/tasks.py:105
 #, python-format
 msgid "Wrote text signature: %(sig)s"
-msgstr "Ha scritto firma testo: %(sig)s"
+msgstr "写文本签名： %(sig)s"
 
 #: config/tasks.py:128
 #, python-format
 msgid "Wrote img: %(img)s"
-msgstr "Ha scritto img: %(img)s"
+msgstr "Img 写道: %(img)s"
 
 #: config/tasks.py:137
 #, python-format
 msgid "Wrote html signature: %(sig)s"
-msgstr "Ha scritto firma html: %(sig)s"
+msgstr "写 html 签名： %(sig)s"
 
 #: config/tasks.py:155
 #, python-format
 msgid "Processing signatures for: %(user)s"
-msgstr "Elaborazione firme per: %(user)s"
+msgstr "加工为签名： %(user)s"
 
 #: config/tasks.py:168 config/tasks.py:204
 #, python-format
 msgid "Error occured: %(err)s"
-msgstr "Si è verificato un errore: %(err)s"
+msgstr "时出现错误: %(err)s"
 
 #: config/tasks.py:172
 #, python-format
 msgid "Finished processing signatures for: %(u)s"
-msgstr "Finito il trattamento le firme per: %(u)s"
+msgstr "完成处理的签名： %(u)s"
 
 #: config/tasks.py:175
 #, python-format
 msgid "User with userid: %s not found"
-msgstr "Utente con userid: %s non trovato"
+msgstr "用户与用户 id： 找不到 %s"
 
 #: config/tasks.py:191
 #, python-format
 msgid "Processing signatures for: %(d)s"
-msgstr "Elaborazione firme per: %(d)s"
+msgstr "加工为签名： %(d)s"
 
 #: config/tasks.py:208
 #, python-format
 msgid "Finished processing signatures for: %(d)s"
-msgstr "Finito il trattamento le firme per: %(d)s"
+msgstr "完成处理的签名： %(d)s"
 
 #: config/tasks.py:211
 #, python-format
 msgid "Domain with domainid: %s not found"
-msgstr "Dominio con IDDominio: %s non trovato"
+msgstr "与 domainid 域： 找不到 %s"
 
 #: config/tasks.py:227
 #, python-format
 msgid "Deleting signatures for: %(d)s"
-msgstr "L'eliminazione di firme per: %(d)s"
+msgstr "删除为签名： %(d)s"
 
 #: config/tasks.py:238 config/tasks.py:271
 #, python-format
 msgid "Error deleting %(f)s: %(e)s"
-msgstr "L'eliminazione di errore %(f)s: %(e)s"
+msgstr "删除时出现错误 %(f)s: %(e)s"
 
 #: config/tasks.py:241
 #, python-format
 msgid "Finished deletion of signatures for: %(d)s"
-msgstr "Finito di eliminazione delle firme per: %(d)s"
+msgstr "完成删除签名： %(d)s"
 
 #: config/tasks.py:244
 msgid "Domain signatures not found"
-msgstr "Firme di dominio non trovate"
+msgstr "找不到域签名"
 
 #: config/tasks.py:261
 #, python-format
 msgid "Deleting signatures for: %(a)s"
-msgstr "L'eliminazione di firme per: %(a)s"
+msgstr "删除为签名： %(a)s"
 
 #: config/tasks.py:274
 #, python-format
 msgid "Finished deletion of signatures for: %(u)s"
-msgstr "Finito di eliminazione delle firme per: %(u)s"
+msgstr "完成删除签名： %(u)s"
 
 #: config/tasks.py:277
 msgid "Account signatures not found"
-msgstr "Firme di conto non trovate"
+msgstr "找不到帐户签名"
 
 #: config/views.py:133
 #, python-format
 msgid "Delivery SMTP server: %(server)s was added successfully"
-msgstr "Server di consegna SMTP: %(server)s aggiunto con successo"
+msgstr "传递 SMTP 服务器： %(server)s已成功添加"
 
 #: config/views.py:143
 msgid "Adding of Delivery SMTP server failed"
-msgstr "L'aggiunta del server SMPT è fallita"
+msgstr "添加的传递 SMTP 服务器失败"
 
 #: config/views.py:167
 #, python-format
 msgid "Delivery SMTP server: %(server)s has been updated successfully"
-msgstr "Server di consegna SMTP: %(server)s aggiornato con successo"
+msgstr "传递 SMTP 服务器： %(server)s已成功更新"
 
 #: config/views.py:177
 #, python-format
 msgid "Delivery SMTP server: %(server)s update failed"
-msgstr "Server SMPT: %(server)s aggiornamento fallito"
+msgstr "传递 SMTP 服务器： %(server)s更新失败"
 
 #: config/views.py:202
 #, python-format
 msgid "Delivery SMTP server: %(server)s has been deleted"
-msgstr "Server SMPT: %(server)s eliminato"
+msgstr "传递 SMTP 服务器： %(server)s已被删除"
 
 #: config/views.py:213
 #, python-format
 msgid "Delivery SMTP server: %(server)s could not be deleted"
-msgstr "Server SMPT: %(server)s non ha potuto essere eliminato"
+msgstr "传递 SMTP 服务器： %(server)s无法删除"
 
 #: config/views.py:250
 msgid "The server is contactable and accepting messages"
-msgstr "Il server è contattabili e ad accettare i messaggi"
+msgstr "服务器是联络和接受消息"
 
 #: config/views.py:253
 #, python-format
 msgid ""
 "The server is contactable via ICMP but is not accepting messages from me, "
 "Errors: %s"
-msgstr "Il server è contattabile tramite ICMP ma non accetta messaggi da me, errori: %s"
+msgstr "服务器是通过 ICMP 便利联络，但不是接受邮件从我，错误: %s"
 
 #: config/views.py:257
 #, python-format
 msgid "The server is not accepting messages, Errors: %s"
-msgstr "Il server non accetta messaggi di errori: %s"
+msgstr "服务器不接受消息，错误: %s"
 
 #: config/views.py:260
 msgid "The tests failed to run try again later"
-msgstr "Il test non è riuscito a eseguire riprovare più tardi"
+msgstr "测试运行失败，请稍后再试"
 
 #: config/views.py:287
 #, python-format
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s was "
 "added successfully"
-msgstr "AUtenticazione esterna %(auth)s: su host %(host)s per dominio %(dom)s è stata aggiunta correttamente"
+msgstr "外部身份验证 %(auth)s: 主机上 %(host)s为域 %(dom)s已成功添加"
 
 #: config/views.py:299
 msgid "Addition of external authentication failed"
-msgstr "L'aggiunta di autenticazione esterna è fallita"
+msgstr "增加的外部身份验证失败"
 
 #: config/views.py:323
 #, python-format
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s has "
 "been updated successfully"
-msgstr "L'autenticazione esterna %(auth)s su host %(host)s per il dominio %(dom)s è stata aggiornata. "
+msgstr "外部身份验证 %(auth)s: 主机上 %(host)s为域 %(dom)s已成功更新"
 
 #: config/views.py:336
 msgid "Update of external authentication failed"
-msgstr "L'aggiornamento dell'autenticazione esterna è fallito"
+msgstr "更新的外部身份验证失败"
 
 #: config/views.py:360
 #, python-format
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s has "
 "been deleted"
-msgstr "L'autenticazione esterna %(auth)s su host %(host)s per dominio %(dom)s è stata cancellata"
+msgstr "外部身份验证 %(auth)s: 主机上 %(host)s为域 %(dom)s已被删除"
 
 #: config/views.py:374
 #, python-format
 msgid ""
 "External authentication %(auth)s: on host %(host)s for domain %(dom)s could "
 "not be deleted"
-msgstr "L'autenticazione esterna %(auth)s su host %(host)s per il dominio %(dom)s non ha potuto essere cancellata"
+msgstr "外部身份验证 %(auth)s: 主机上 %(host)s为域 %(dom)s无法删除"
 
 #: config/views.py:431
 #, python-format
 msgid "The node %(node)s is not been initialized, Please initialize"
-msgstr "Il nodo %(node)s non è inizializzato. Prego inizializzare"
+msgstr "该节点 %(node)s未被初始化，请初始化"
 
 #: config/views.py:462
 #, python-format
 msgid "The node %(node)s has been initialized"
-msgstr "il %(node)s è stato inizializzato"
+msgstr "该节点 %(node)s已初始化"
 
 #: config/views.py:499
 #, python-format
 msgid "A signature of this type already exists for domain: %(domain)s"
-msgstr "Una firma di questo tipo esiste già per dominio: %(domain)s"
+msgstr "这种类型的签名的域已经存在： %(domain)s"
 
 #: config/views.py:553
 msgid "The signature, is being deleted"
-msgstr "La firma, è essere cancellato"
+msgstr "正在删除签名，"
 
 #: config/views.py:586
 msgid "Not authorized."
-msgstr "Non autorizzato."
+msgstr "未获授权。"
 
 #: config/views.py:648
 msgid "File has been uploaded"
-msgstr "File è stato caricato"
+msgstr "文件已上载"
 
 #: config/views.py:650
 msgid "An error occured, try again later"
-msgstr "È verificato un errore, provare più tardi"
+msgstr "出现错误，请稍后再尝试"
 
 #: config/views.py:652
 msgid "The uploaded file is not acceptable"
-msgstr "Il file caricato non è accettabile"
+msgstr "上载的文件是不能接受"
 
 #: config/views.py:656
 msgid ""
 "You already have a signature image, delete the current image before "
 "uploading a new one"
-msgstr "Hai già un'immagine della firma, eliminare l'immagine corrente prima di caricare una nuova"
+msgstr "您已经有签名图像上, 传一个新之前，先删除当前图像"
 
 #: config/views.py:664
 msgid "The file has been deleted"
-msgstr "Il file è stato eliminato"
+msgstr "该文件已被删除"
 
 #: config/views.py:667
 msgid "The file could not be deleted"
-msgstr "Impossibile eliminare il file."
+msgstr "无法删除文件"
 
 #: config/views.py:671
 msgid "Action not supported"
-msgstr "Azione non supportata"
+msgstr "不支持此操作"
 
 #: config/views.py:685
 msgid "You are not authorized to access this resource"
-msgstr "Non sei autorizzato ad accedere a questa risorsa"
+msgstr "您无权访问此资源"
 
 #: config/management/commands/initconfig.py:38
 #, python-format
 msgid "Please enter the hostname [%s]: "
-msgstr "Si prega di inserire l'hostname [% s]: "
+msgstr "请输入主机名 [%s]："
 
 #: config/management/commands/initconfig.py:46
 #, python-format
 msgid "The hostname %(h)s is not assigned to this system, try again"
-msgstr "L'hostname %(h)s non è stata assegnata a questo sistema, riprovare"
+msgstr "主机名 %(h)s不被分配给此系统中，再试一次"
 
 #: config/management/commands/initconfig.py:54
 #, python-format
 msgid "The host: %(h)s has been initialized"
-msgstr "Host: %(h)s è stato inizializzato"
+msgstr "主机： %(h)s已初始化"
 
 #: config/management/commands/initconfig.py:57
 msgid "The settings could not be saved check your DB settings"
-msgstr "Non potevano essere salvate le impostazioni di controllare le impostazioni del DB"
+msgstr "无法保存设置检查 DB 设置"
 
 #: config/management/commands/initconfig.py:61
 #, python-format
 msgid "The host: %(h)s is already initialized"
-msgstr "Host: %(h)s è già inizializzato"
+msgstr "主机： %(h)s已初始化"
 
 #: fixups/models.py:37
 #, python-format
 msgid ""
 "Required, %s characters or fewer. Only letters, numbers, and @, ., +, -, or "
 "_ characters."
-msgstr "Necessaria, %s caratteri o meno. Solo lettere, numeri, e @,., +, -, o caratteri _."
+msgstr "所需，%s 个字符或更少。只有字母、 数字和和 @，.，+、-、 或 _ 字符。"
 
 #: lists/forms.py:58
 #, python-format
 msgid "%(email)s provide a valid e-mail address"
-msgstr "%(email)s fornisce un indirizzo email valido"
+msgstr "%(email)s提供一个有效的电子邮件地址"
 
 #: lists/forms.py:63
 #, python-format
 msgid "The address: %(email)s does not belong to you."
-msgstr "L'indirizzo: %(email)s non appartiene a te."
+msgstr "地址： %(email)s不属于你。"
 
 #: lists/forms.py:75
 msgid ""
 "Provide either a valid IPv4/IPv6, email, Domain address, or IPv4/IPv6 "
 "network or range"
-msgstr "Fornire un valido IPv4/IPv6, email, indirizzo di dominio o IPv4/IPv6 network o gamma"
+msgstr "提供有效 IPv4/IPv6、 电子邮件、 地址、 域或 IPv4/IPv6 网络或范围"
 
 #: lists/forms.py:88 lists/views.py:185
 msgid "The list item already exists"
-msgstr "L'elemento della lista esiste già"
+msgstr "已经存在的列表项"
 
 #: lists/forms.py:119
 #, python-format
 msgid "The address: %(addr)s does not belong to you."
-msgstr "L'indirizzo: %(addr)s non appartiene a te."
+msgstr "地址： %(addr)s不属于你。"
 
 #: lists/forms.py:124
 msgid "Provide either a valid domain"
-msgstr "Fornisci o un dominio valido"
+msgstr "提供任一有效的域"
 
 #: lists/forms.py:140
 msgid "provide a valid user part of the email address"
-msgstr "scrivi la parte utente di un indirizzo e-mail"
+msgstr "提供有效的用户的电子邮件地址的一部分"
 
 #: lists/views.py:195
 msgid "The address has been added to the list"
-msgstr "L'indirizzo è stato aggiunto alla lista"
+msgstr "地址已添加到列表中"
 
 #: lists/views.py:220
 msgid "You do not have authorization"
-msgstr "Non hai autorizzazione"
+msgstr "您没有授权"
 
 #: lists/views.py:227
 msgid "List item deleted"
-msgstr "Elenco elemento eliminato"
+msgstr "删除列表项"
 
 #: lists/views.py:236
 msgid "List item could not be deleted"
-msgstr "Voce di elenco potrebbe non essere eliminato"
+msgstr "无法删除列表项"
 
 #: messages/forms.py:29 messages/templatetags/messages_extras.py:72
 #: templates/base.html:51 templates/messages/quarantine.html:24
 #: templates/messages/task_status.html:24 templates/reports/listing.html:50
 msgid "Spam"
-msgstr "Spam"
+msgstr "垃圾邮件"
 
 #: messages/forms.py:30
 msgid "Ham"
-msgstr "Lui"
+msgstr "他"
 
 #: messages/forms.py:31
 msgid "Forget"
-msgstr "Dimenticare"
+msgstr "忘记了"
 
 #: messages/forms.py:62
 msgid "Select atleast one action to perform"
-msgstr "Scegli almento una azione da eseguire"
+msgstr "选择至少一个要执行的操作"
 
 #: messages/forms.py:66
 msgid "Provide atleast one alternative recipient"
-msgstr "Scivi almento un destinatario alternativo"
+msgstr "提供至少一个备用收件人"
 
 #: messages/forms.py:73 reports/forms.py:147
 #, python-format
 msgid "%(email)s is not a valid e-mail address."
-msgstr "%(email)s NON è un indirizzo email valido"
+msgstr "%(email)s不是一个有效的电子邮件地址。"
 
 #: messages/tasks.py:44
 #, python-format
 msgid "Message: %(id)s released to: %(addrs)s"
-msgstr "Messaggio: %(id)s pubblicato da: %(addrs)s"
+msgstr "消息: %(id)s发表于： %(addrs)s"
 
 #: messages/tasks.py:48
 #, python-format
 msgid "Message: %(id)s release failed"
-msgstr "Messaggio: %(id)s rilascio non riuscita"
+msgstr "消息: %(id)s释放失败"
 
 #: messages/tasks.py:62
 #, python-format
 msgid "Processing quarantined message: %(id)s"
-msgstr "Elaborazione del messaggio in quarantena: %(id)s"
+msgstr "隔离的邮件的处理： %(id)s"
 
 #: messages/tasks.py:77 messages/tasks.py:166
 #, python-format
 msgid "Message: %(msgid)s %(task)s failed with error: %(error)s"
-msgstr "Messaggio: %(msgid)s %(task)s non riuscita con errore: %(error)s"
+msgstr "消息: %(msgid)s %(task)s失败，错误为: %(error)s"
 
 #: messages/tasks.py:94 messages/tasks.py:184
 #, python-format
 msgid "Message: %(msgid)s released to: %(to)s"
-msgstr "Messaggio: %(msgid)s pubblicato da: %(to)s"
+msgstr "消息: %(msgid)s发表于： %(to)s"
 
 #: messages/tasks.py:98 messages/tasks.py:188
 msgid "The sender address is empty"
-msgstr "L'indirizzo del mittente è vuoto"
+msgstr "发件人地址为空"
 
 #: messages/tasks.py:100 messages/tasks.py:190
 #, python-format
 msgid "Message: %(msgid)s release failed with error: %(error)s"
-msgstr "Messaggio: %(msgid)s rilascio non riuscita con errore: %(error)s"
+msgstr "消息: %(msgid)s发布失败，出现错误: %(error)s"
 
 #: messages/tasks.py:109 messages/tasks.py:198
 #, python-format
 msgid "Message: %(msgid)s learning failed with error: %(error)s"
-msgstr "Messaggio: %(msgid)s apprendimento non riuscita con errore: %(error)s"
+msgstr "消息: %(msgid)s学习失败，错误为: %(error)s"
 
 #: messages/tasks.py:113 messages/tasks.py:201
 #, python-format
 msgid "Message: %(msgid)s learnt as %(learn)s"
-msgstr "Messaggio: %(msgid)s imparato come %(learn)s"
+msgstr "消息: %(msgid)s作为学 %(learn)s"
 
 #: messages/tasks.py:121 messages/tasks.py:209
 #, python-format
 msgid "Message: %(msgid)s deleting failed with error: %(error)s"
-msgstr "Messaggio: %(msgid)s l'eliminazione non riuscita con errore: %(error)s"
+msgstr "消息: %(msgid)s删除失败，错误为: %(error)s"
 
 #: messages/tasks.py:125 messages/tasks.py:212
 #, python-format
 msgid "Message: %(msgid)s deleted from quarantine"
-msgstr "Messaggio: %(msgid)s cancellato dalla quarantena"
+msgstr "消息: %(msgid)s从隔离区删除"
 
 #: messages/tasks.py:141
 #, python-format
 msgid "Bulk Processing %(len)d quarantined messages"
-msgstr "Elaborazione di massa %(len)d messaggi in quarantena"
+msgstr "批量处理 %(len)d被隔离的邮件"
 
 #: messages/tasks.py:232
 #, python-format
 msgid "Accessing message: %(id)s, Failed: %(error)s"
-msgstr "Messaggio di accesso: %(id)s, fallito: %(error)s"
+msgstr "访问消息: %(id)s、 失败： %(error)s"
 
 #: messages/tasks.py:236
 #, python-format
 msgid "Download attachment: %(attachid)s of message: %(id)s by user: %(user)s"
-msgstr "Scarica allegato: %(attachid)s messaggio: %(id)s utente: %(user)s"
+msgstr "下载附件: %(attachid)s消息： %(id)s由用户： %(user)s"
 
 #: messages/tasks.py:239
 #, python-format
 msgid "Preview of message: %(id)s requested by user: %(user)s"
-msgstr "Anteprima del messaggio: %(id)s richiesto dall'utente: %(user)s"
+msgstr "邮件预览： %(id)s用户请求： %(user)s"
 
 #: messages/views.py:176 messages/views.py:265
 msgid "You are not authorized to access this page"
-msgstr "Non hai l'autorizzazione per accede a questa pagina"
+msgstr "您无权访问此页"
 
 #: messages/views.py:235
 msgid "Processing the request failed"
-msgstr "Elaborazione della richiesta non riuscita"
+msgstr "处理失败的请求"
 
 #: messages/views.py:278
 msgid "The requested attachment could not be downloaded"
-msgstr "L'allegato richiesto non poteva essere scaricato"
+msgstr "无法下载所需的附件"
 
 #: messages/views.py:288
 msgid "The requested message could not be previewed"
-msgstr "Il messaggio richiesto non poteva essere previsto"
+msgstr "请求的消息未能预览"
 
 #: messages/views.py:302
 msgid "No messages found with that message id"
-msgstr "Nessun messaggio trovato con quell'id messaggio"
+msgstr "没有找到具有该消息 id 消息"
 
 #: messages/views.py:352
 msgid "System was unable to process your request"
-msgstr "Sistema è stato in grado di elaborare la richiesta"
+msgstr "系统无法处理您的请求"
 
 #: messages/management/commands/cleanquarantine.py:90
 #, python-format
 msgid "== Processing directory %(path)s =="
-msgstr "Sto processand la cartella %(path)s"
+msgstr "= = 处理目录 %(path)s=="
 
 #: messages/management/commands/cleanquarantine.py:109
 #, python-format
 msgid "== Removing directory  %(path)s =="
-msgstr "Sto rimuovendo la cartella %(path)s"
+msgstr "= = 删除目录 %(path)s=="
 
 #: messages/management/commands/cleanquarantine.py:113
 #, python-format
 msgid "Failed to remove %(path)s"
-msgstr "Fallita rimozione di %(path)s"
+msgstr "未能删除 %(path)s"
 
 #: messages/management/commands/cleanquarantine.py:115
 #, python-format
 msgid "The directory %(path)s is a sym link skipping"
-msgstr "La cartella %(path)s è un symlink, salto"
+msgstr "目录 %(path)s正在跳过 sym 的链接吗"
 
 #: messages/management/commands/dbclean.py:30
 msgid ""
 "Deletes records older than QUARANTINE_DAYS_TO_KEEP days from the messages "
 "table"
-msgstr "Elimina i record più vecchi di giorni QUARANTINE_DAYS_TO_KEEP dalla tabella dei messaggi"
+msgstr "从邮件表中删除记录超过 QUARANTINE_DAYS_TO_KEEP 天"
 
 #: messages/management/commands/sendquarantinereports.py:75
 msgid ""
 "Generates an email report of the quarantined messages for the past 24 hours"
-msgstr "Genera un report di email i messaggi messi in quarantena per gli ultimi 24 ore"
+msgstr "将隔离邮件的电子邮件报告生成在过去 24 小时"
 
 #: messages/management/commands/sendquarantinereports.py:88
 msgid "=== Processing quarantine notifications ==="
-msgstr "Processo le notifiche di quarantena"
+msgstr "= = = 处理隔离通知 = = ="
 
 #: messages/management/commands/sendquarantinereports.py:100
 #, python-format
 msgid "Baruwa quarantine report for %(user)s"
-msgstr "Report di quarantena di Baruwa per %(user)s"
+msgstr "Baruwa 检疫报告 %(user)s"
 
 #: messages/management/commands/sendquarantinereports.py:130
 #, python-format
 msgid "sent quarantine report to %(addr)s"
-msgstr "inviato report di quarantena a %(addr)s"
+msgstr "发送到检疫报告 %(addr)s"
 
 #: messages/management/commands/sendquarantinereports.py:132
 #, python-format
 msgid "failed to send to: %(addr)s"
-msgstr "fallita spedizione a: %(addr)s"
+msgstr "无法将发送到: %(addr)s"
 
 #: messages/management/commands/sendquarantinereports.py:134
 #, python-format
 msgid "skipping report to %(addr)s no messages"
-msgstr "non produco report per %(addr)s, nessun messaggio"
+msgstr "跳过对报告 %(addr)s没有消息"
 
 #: messages/management/commands/sendquarantinereports.py:135
 msgid "=== completed quarantine notifications ==="
-msgstr "Comepletate le notifiche di quarantena"
+msgstr "= = = 完成隔离通知 = = ="
 
 #: messages/management/commands/updatesarules.py:36
 msgid "Updates the database with the spam descriptions"
-msgstr "Aggiorna il database con le descrizioni di spam"
+msgstr "与垃圾邮件的说明更新数据库"
 
 #: messages/templatetags/messages_extras.py:74
 msgid "BL"
@@ -716,15 +716,15 @@ msgstr "BL"
 
 #: messages/templatetags/messages_extras.py:78
 msgid "Infected"
-msgstr "Infetti"
+msgstr "感染"
 
 #: messages/templatetags/messages_extras.py:83 templates/status/index.html:42
 msgid "Clean"
-msgstr "Puliti"
+msgstr "清洁"
 
 #: messages/templatetags/messages_extras.py:85
 msgid "WL"
-msgstr "WL"
+msgstr "公屋轮候册"
 
 #: messages/templatetags/messages_extras.py:87
 msgid "NS"
@@ -732,47 +732,47 @@ msgstr "NS"
 
 #: messages/templatetags/messages_extras.py:128
 msgid "Any address"
-msgstr "Qualunque indirizzo"
+msgstr "任何地址"
 
 #: messages/templatetags/messages_extras.py:161
 msgid "unknown"
-msgstr "sconosciuto"
+msgstr "未知"
 
 #: messages/templatetags/messages_extras.py:346
 msgid "I do not know how to read it"
-msgstr "non so come leggerlo"
+msgstr "我不知道如何读懂它"
 
 #: messages/templatetags/relayed_via.py:66
 msgid "RFC1918 Private address"
-msgstr "RFC1918 Indirizzo privato"
+msgstr "RFC1918 专用地址"
 
 #: messages/templatetags/relayed_via.py:68
 msgid "Reverse lookup failed"
-msgstr "Reverse lookup fallito"
+msgstr "反向查找失败"
 
 #: reports/forms.py:36 templates/messages/task_status.html:37
 msgid "Message ID"
-msgstr "ID Messaggio"
+msgstr "消息 ID"
 
 #: reports/forms.py:37 templates/messages/index.html:69
 msgid "Size"
-msgstr "Dimensione"
+msgstr "大小"
 
 #: reports/forms.py:38
 msgid "From Address"
-msgstr "Dall'indirizzo"
+msgstr "从地址"
 
 #: reports/forms.py:39
 msgid "From Domain"
-msgstr "Dal dominio"
+msgstr "从域"
 
 #: reports/forms.py:40
 msgid "To Address"
-msgstr "All'indirizzo"
+msgstr "到地址"
 
 #: reports/forms.py:41
 msgid "To Domain"
-msgstr "Al Dominio"
+msgstr "到域"
 
 #: reports/forms.py:42 templates/messages/detail.html:69
 #: templates/messages/index.html:68 templates/messages/quarantine.html:100
@@ -781,441 +781,441 @@ msgstr "Al Dominio"
 #: templates/messages/quarantine_report_text.html:10
 #: templates/messages/quarantine_report_text.html:20
 msgid "Subject"
-msgstr "Oggetto"
+msgstr "主题"
 
 #: reports/forms.py:43
 msgid "Received from"
-msgstr "Ricevuto da"
+msgstr "从收到"
 
 #: reports/forms.py:45
 msgid "Was scanned"
-msgstr "È stato digitalizzato"
+msgstr "被扫描"
 
 #: reports/forms.py:46
 msgid "Is spam"
-msgstr "È spam"
+msgstr "是垃圾邮件"
 
 #: reports/forms.py:47
 msgid "Is high spam"
-msgstr "È spam alto"
+msgstr "是高的垃圾邮件"
 
 #: reports/forms.py:48
 msgid "Is SA spam"
-msgstr "È spam SA"
+msgstr "是 SA 垃圾邮件"
 
 #: reports/forms.py:49
 msgid "Is RBL listed"
-msgstr "è listato in RBL"
+msgstr "RBL 列出，是吗"
 
 #: reports/forms.py:50
 msgid "Is whitelisted"
-msgstr "è nella lista bianca"
+msgstr "是白名单"
 
 #: reports/forms.py:51
 msgid "Is blacklisted"
-msgstr "è nella lista nera"
+msgstr "已列入黑名单"
 
 #: reports/forms.py:52
 msgid "SA score"
-msgstr "Punteggio SA"
+msgstr "他的分数"
 
 #: reports/forms.py:53
 msgid "Spam report"
-msgstr "Report spam"
+msgstr "垃圾邮件报告"
 
 #: reports/forms.py:54
 msgid "Is virus infected"
-msgstr "È infetto da virus"
+msgstr "病毒感染，是吗"
 
 #: reports/forms.py:55
 msgid "Is name infected"
-msgstr "Nome è infetto"
+msgstr "名称感染，是吗"
 
 #: reports/forms.py:56
 msgid "Is other infected"
-msgstr "è infetto da in altro modo"
+msgstr "其他感染，是吗"
 
 #: reports/forms.py:57 templates/reports/listing.html:38
 msgid "Date"
-msgstr "Data"
+msgstr "日期"
 
 #: reports/forms.py:58
 msgid "Time"
-msgstr "Ora"
+msgstr "时间"
 
 #: reports/forms.py:59
 msgid "Headers"
-msgstr "Headers"
+msgstr "标题"
 
 #: reports/forms.py:60
 msgid "Is quarantined"
-msgstr "È in quarantena"
+msgstr "被隔离"
 
 #: reports/forms.py:61
 msgid "Processed by host"
-msgstr "processato da host"
+msgstr "由主机处理"
 
 #: reports/forms.py:65
 msgid "is equal to"
-msgstr "uguale a"
+msgstr "等于"
 
 #: reports/forms.py:66
 msgid "is not equal to"
-msgstr "non uguale a "
+msgstr "不等于"
 
 #: reports/forms.py:67
 msgid "is greater than"
-msgstr "più grande di"
+msgstr "大于"
 
 #: reports/forms.py:68
 msgid "is less than"
-msgstr "minore di"
+msgstr "是少于"
 
 #: reports/forms.py:69
 msgid "contains"
-msgstr "contiene"
+msgstr "包含"
 
 #: reports/forms.py:70
 msgid "does not contain"
-msgstr "non contiene"
+msgstr "不包含"
 
 #: reports/forms.py:71
 msgid "matches regex"
-msgstr "Corrispondenza su espressione regolare"
+msgstr "匹配正则表达式"
 
 #: reports/forms.py:72
 msgid "does not match regex"
-msgstr "non corrsiponde alla espressione regolare"
+msgstr "与正则表达式不匹配"
 
 #: reports/forms.py:73
 msgid "is null"
-msgstr "è nullo"
+msgstr "为空"
 
 #: reports/forms.py:74
 msgid "is not null"
-msgstr "non è nullo"
+msgstr "不为空"
 
 #: reports/forms.py:75
 msgid "is true"
-msgstr "è vero"
+msgstr "是真的"
 
 #: reports/forms.py:76
 msgid "is false"
-msgstr "è falso"
+msgstr "是虚假"
 
 #: reports/forms.py:121 reports/forms.py:127 reports/forms.py:137
 #: reports/forms.py:184
 #, python-format
 msgid "%(field)s does not support the %(filt)s filter"
-msgstr "%(field)s non supporta il filtro %(filt)s"
+msgstr "%(field)s不支持 %(filt)s筛选器"
 
 #: reports/forms.py:131 reports/forms.py:141 reports/forms.py:188
 msgid "Please supply a value to query"
-msgstr "Prego fornire un valore alla query"
+msgstr "请提供一个到查询的值"
 
 #: reports/forms.py:133
 msgid "The value has to be numeric"
-msgstr "il valore deve essere numerico"
+msgstr "值已为数字"
 
 #: reports/forms.py:155 reports/forms.py:169
 msgid "Please provide a valid regex"
-msgstr "prego fornisci una espresione regolare valida"
+msgstr "请提供有效的正则表达式"
 
 #: reports/forms.py:162
 msgid "Please provide a valid domain name"
-msgstr "Prego fornisci un nome di dominio valido"
+msgstr "请提供一个有效的域的名称"
 
 #: reports/forms.py:174
 msgid "Please provide a valid ipv4 address"
-msgstr "prego fornisci un valido indirizzo IPv4"
+msgstr "请提供一个有效的 ipv4 地址"
 
 #: reports/forms.py:179
 msgid "Please provide a valid hostname or ipv4 address"
-msgstr "prego fornisci un valido hostname o un indirizzo IPv4 valido"
+msgstr "请提供一个有效的主机名或 ipv4 地址"
 
 #: reports/forms.py:195
 msgid "Please provide a valid date in YYYY-MM-DD format"
-msgstr "Prego fornisci una valida data in YYYY-MM-DD"
+msgstr "请提供一个有效的日期格式 YYYY-MM-DD"
 
 #: reports/forms.py:201
 msgid "Please provide valid time in HH:MM format"
-msgstr "Prego fornisci un orario valido in HH:MM"
+msgstr "请提供有效的时间，在 hh: mm 格式"
 
 #: reports/views.py:71
 msgid "The requested filter is already being used"
-msgstr "Il filtro richiesto è già in uso"
+msgstr "请求的筛选器已被使用"
 
 #: reports/views.py:160
 msgid "This filter already exists"
-msgstr "Questo filtro esiste già"
+msgstr "此筛选器已存在"
 
 #: reports/views.py:194
 msgid "This filter you attempted to load does not exist"
-msgstr "Il filtro che hai cercato di caricare non esiste"
+msgstr "您试图加载此筛选器不存在"
 
 #: reports/views.py:211
 msgid "This filter you attempted to delete does not exist"
-msgstr "Il filtro che hai tentato di eliminare non esiste"
+msgstr "您试图删除此筛选器不存在"
 
 #: reports/views.py:224
 msgid "Deletion of the filter failed, Try again"
-msgstr "La cancellazione del filtro è fallita"
+msgstr "删除筛选器失败，再试一次"
 
 #: reports/views.py:247
 msgid "Top senders by quantity"
-msgstr "Primi per quantità di invii"
+msgstr "顶发件人的数量"
 
 #: reports/views.py:252
 msgid "Top senders by volume"
-msgstr "Primi per volume di invii"
+msgstr "由卷顶发件人"
 
 #: reports/views.py:257
 msgid "Top sender domains by quantity"
-msgstr "Primi dominio per quantità"
+msgstr "顶部的发件人域的数量"
 
 #: reports/views.py:262
 msgid "Top sender domains by volume"
-msgstr "Primi per volume di innvii"
+msgstr "顶部的发件人域的卷"
 
 #: reports/views.py:267
 msgid "Top recipients by quantity"
-msgstr "Primi per numero di messaggi ricevuti"
+msgstr "按数量最多的收件人"
 
 #: reports/views.py:272
 msgid "Top recipients by volume"
-msgstr "Primi per volume ricevuto"
+msgstr "按体积最多收件人"
 
 #: reports/views.py:278
 msgid "Top recipient domains by quantity"
-msgstr "Primi domini per quantità di messaggi ricevuti"
+msgstr "顶级收件人域的数量"
 
 #: reports/views.py:284
 msgid "Top recipient domains by volume"
-msgstr "Primi domini per volume ricevuto"
+msgstr "顶级收件人域的卷"
 
 #: reports/views.py:314
 msgid "Spam Score distribution"
-msgstr "Distribuzione del punteggio Spam"
+msgstr "垃圾邮件分数分布"
 
 #: reports/views.py:324
 msgid "Top mail hosts by quantity"
-msgstr "Primi host di posta per quantità"
+msgstr "顶级邮件主机的数量"
 
 #: reports/views.py:385
 msgid "Total messages [ After SMTP ]"
-msgstr "Totale messaggi [ dopo SMTP ]"
+msgstr "[后 SMTP] 的邮件总数"
 
 #: reports/management/commands/sendpdfreports.py:74
 msgid "Generates and sends PDF summary reports via email"
-msgstr "Genera e Invia report Riepilogo in formato PDF via e-mail"
+msgstr "生成并发送 PDF 摘要报告通过电子邮件"
 
 #: reports/management/commands/sendpdfreports.py:96
 #: status/management/commands/queuestats.py:43
 msgid "Command doesn't accept any arguments"
-msgstr "Comando non accetta argomenti"
+msgstr "命令不接受任何参数"
 
 #: reports/management/commands/sendpdfreports.py:109
 msgid "The startdate, enddate specified is invalid"
-msgstr "Startdate, enddate specificato non è valido"
+msgstr "开始日期，指定的结束日期无效"
 
 #: reports/management/commands/sendpdfreports.py:118
 msgid "The period you specified is invalid"
-msgstr "Il periodo specificato non è valido"
+msgstr "您指定的期间是无效的"
 
 #: reports/management/commands/sendpdfreports.py:183
 #: templates/accounts/edit_address.html:10
 #: templates/accounts/edit_address.html:11
 #: templates/accounts/edit_address.html:14 templates/reports/piereport.html:27
 msgid "Address"
-msgstr "Indirizzi"
+msgstr "地址"
 
 #: reports/management/commands/sendpdfreports.py:183
 #: templates/reports/barreport.html:34 templates/reports/piereport.html:28
 msgid "Count"
-msgstr "Numero"
+msgstr "计数"
 
 #: reports/management/commands/sendpdfreports.py:183
 #: templates/reports/listing.html:56 templates/reports/piereport.html:29
 #: templates/reports/relays.html:31
 msgid "Volume"
-msgstr "Volumne"
+msgstr "卷"
 
 #: reports/management/commands/sendpdfreports.py:256
 #: templates/reports/index.html:61 templates/status/index.html:17
 msgid "Message Totals"
-msgstr "Numero totale messaggi"
+msgstr "消息汇总"
 
 #: reports/management/commands/sendpdfreports.py:340
 msgid "Baruwa mail report"
-msgstr "Report mail Baruwa"
+msgstr "Baruwa 邮件报告"
 
 #: reports/management/commands/sendpdfreports.py:362
 #, python-format
 msgid "Baruwa usage report for: %(user)s"
-msgstr "Report Baruwa per: %(user)s"
+msgstr "Baruwa 使用情况报告： %(user)s"
 
 #: reports/management/commands/sendpdfreports.py:374
 #, python-format
 msgid "* Queue %(user)s's report to: %(addr)s"
-msgstr "* Accoda il report dell'utente %(user)s a: %(addr)s "
+msgstr "＊ 排队 %(user)s's 报告： %(addr)s"
 
 #: reports/management/commands/sendpdfreports.py:379
 msgid "=================== Processing reports ======================"
-msgstr "=================== Sto processando i Report ======================"
+msgstr "= = = 处理报告 = = ="
 
 #: reports/management/commands/sendpdfreports.py:387
 #, python-format
 msgid "========== domain name %(dom)s does not exist =========="
-msgstr "========== il nome di dominio %(dom)s non esiste =========="
+msgstr "= = = 域名 %(dom)s不存在 = = ="
 
 #: reports/management/commands/sendpdfreports.py:416
 #, python-format
 msgid "====== sending %(num)s messages ======="
-msgstr "====== spedisco %(num)s messaggi ======="
+msgstr "= = = 发送 %(num)s消息 = = ="
 
 #: reports/management/commands/sendpdfreports.py:419
 #, python-format
 msgid "Sending failed ERROR: %(error)s"
-msgstr "Spedisco gli errori dovuti a fallimento: %(error)s"
+msgstr "发送失败错误: %(error)s"
 
 #: status/views.py:223
 #, python-format
 msgid "The queue items (%(num)d) have been flagged for deletion"
-msgstr "Gli elementi della coda (%(num)d) sono state contrassegnate per l'eliminazione"
+msgstr "队列项 （%(num)d） 包含已标记为删除"
 
 #: status/views.py:228
 msgid "The queue items could not be processed"
-msgstr "Gli elementi della coda non potrebbero essere trasformati"
+msgstr "无法处理的队列项"
 
 #: status/management/commands/queuestats.py:48
 #, python-format
 msgid "Only the following %(mta)s MTA's are supported"
-msgstr "Solo i seguenti %(mta)s MTA è supportato"
+msgstr "只有以下 %(mta)sMTA 的支持"
 
 #: status/management/commands/queuestats.py:84
 msgid "== Delete flaged queue items from the inbound queue =="
-msgstr "= = Elimina gli elementi della coda flaged dalla coda in ingresso = ="
+msgstr "= = 从入站队列中删除 flaged 队列项目 = ="
 
 #: status/management/commands/queuestats.py:91
 #, python-format
 msgid "== Deleted %(num)d items from the inbound queue =="
-msgstr "= = Cancellato %(num)d elementi dalla coda in ingresso = ="
+msgstr "= = 删除 %(num)d从入站队列项目 = ="
 
 #: status/management/commands/queuestats.py:96
 msgid "== Delete flaged queue items from the outbound queue =="
-msgstr "= = Elimina gli elementi della coda flaged dalla coda in uscita = ="
+msgstr "= = 从出站队列中删除 flaged 队列项目 = ="
 
 #: status/management/commands/queuestats.py:104
 #, python-format
 msgid "== Deleted %(num)d items from the outbound queue =="
-msgstr "= = Cancellato %(num)d elementi dalla coda in uscita = ="
+msgstr "= = 删除 %(num)d从出站队列项目 = ="
 
 #: status/management/commands/queuestats.py:125
 #, python-format
 msgid "== Deleting %(items)d queue items from DB =="
-msgstr "= = Eliminazione %(items)d coda di oggetti dal DB = ="
+msgstr "= = 删除 %(items)d队列项从 DB = ="
 
 #: status/management/commands/queuestats.py:130
 #, python-format
 msgid "== Processing the inbound queue: %(queue)s with %(items)d items =="
-msgstr "= = La coda in entrata di elaborazione: %(queue)s con %(items)d elementi = ="
+msgstr "= = 处理入站的队列： %(queue)s与 %(items)d项目 = ="
 
 #: status/management/commands/queuestats.py:134
 msgid "== Skipping the inbound queue 0 items found =="
-msgstr "= = Saltando gli elementi della coda in ingresso 0 trovati = ="
+msgstr "= = 跳过找到的入站的队列 0 项 = ="
 
 #: status/management/commands/queuestats.py:136
 #, python-format
 msgid "== Processing the outbound queue: %(queue)s with %(items)d items =="
-msgstr "= = La coda in uscita di elaborazione: %(queue)s con %(items)d elementi = ="
+msgstr "= = 处理出站队列： %(queue)s与 %(items)d项目 = ="
 
 #: status/management/commands/queuestats.py:140
 msgid "== Skipping the outbound queue 0 items found =="
-msgstr "= = Saltando gli elementi della coda in uscita 0 trovati = ="
+msgstr "= = 跳过找到的出站队列 0 项 = ="
 
 #: templates/404.html:25
 msgid "404 Page Not Found"
-msgstr "404 Pagina non trovata"
+msgstr "404 页面未找到"
 
 #: templates/404.html:28
 msgid "Page Not Found"
-msgstr "Pagina Non Trovata"
+msgstr "找不到页面"
 
 #: templates/404.html:29
 msgid "Sorry the requested page could not be found please check the url."
-msgstr "Spiacente, la pagina richiesta non è stata trovata, per favore controlla l'URL"
+msgstr "抱歉，所请求的页面无法找到请检查 url。"
 
 #: templates/500.html:25 templates/500.html.py:28
 msgid "Page unavailable"
-msgstr "Pagina non disponibile"
+msgstr "页面不可用"
 
 #: templates/500.html:29
 msgid "Sorry the requested page is unavailable due to a server malfunction."
-msgstr "Spiacente la pagina richiesta non e disponibile per un malfunzionamento del server"
+msgstr "对不起，由于服务器故障请求的页面不可用。"
 
 #: templates/base.html:41
 msgid "Status "
-msgstr "Status "
+msgstr "状态"
 
 #: templates/base.html:50
 msgid "Msgs: "
-msgstr "Msg:"
+msgstr "消息："
 
 #: templates/base.html:51
 msgid "Total"
-msgstr "Totale"
+msgstr "共"
 
 #: templates/base.html:51
 msgid "Virus"
-msgstr "Virus"
+msgstr "病毒"
 
 #: templates/base.html:55
 msgid "In: "
-msgstr "In: "
+msgstr "中："
 
 #: templates/base.html:55
 msgid "Out: "
-msgstr "Fuori: "
+msgstr "出："
 
 #: templates/base.html:58
 msgid "Signed in as "
-msgstr "Loggato come"
+msgstr "作为在签署"
 
 #: templates/base.html:59
 msgid "Logout"
-msgstr "Logout"
+msgstr "注销"
 
 #: templates/base.html:61
 msgid "Not logged in :: "
-msgstr "Non loggato in ::"
+msgstr "未登录::"
 
 #: templates/base.html:61 templates/accounts/login.html:71
 msgid "Login"
-msgstr "Login"
+msgstr "登录"
 
 #: templates/base.html:81
 msgid "Messages"
-msgstr "Messaggi"
+msgstr "消息"
 
 #: templates/base.html:82
 msgid "Lists"
-msgstr "Liste"
+msgstr "列表"
 
 #: templates/base.html:83 templates/reports/index.html:17
 #: templates/reports/index.html.py:18 templates/reports/index.html:42
 msgid "Reports"
-msgstr "Report"
+msgstr "报告"
 
 #: templates/base.html:85 templates/config/index.html:36
 #: templates/config/list_scanners.html:21 templates/messages/index.html:72
 #: templates/messages/quarantine.html:103
 #: templates/messages/task_status.html:36
 msgid "Status"
-msgstr "Stato"
+msgstr "状态"
 
 #: templates/base.html:87 templates/config/index.html:23
 msgid "Settings"
-msgstr "Impostazioni"
+msgstr "设置"
 
 #: templates/base.html:89 templates/accounts/add_account_sig.html:5
 #: templates/accounts/add_address.html:8
@@ -1232,60 +1232,60 @@ msgstr "Impostazioni"
 #: templates/accounts/user_profile.html:6 templates/config/domain.html:18
 #: templates/config/index.html:19 templates/config/list_scanners.html:6
 msgid "Accounts"
-msgstr "Account"
+msgstr "帐户"
 
 #: templates/base.html:92
 msgid "Account"
-msgstr "Account"
+msgstr "帐户"
 
 #: templates/base.html:115
 msgid "Filtered by"
-msgstr "Filtrato per"
+msgstr "按筛选"
 
 #: templates/base.html:117
 msgid "To address"
-msgstr "All'indirizzo"
+msgstr "到地址"
 
 #: templates/base.html:119
 msgid "From address"
-msgstr "Dall'indirizzo"
+msgstr "从地址"
 
 #: templates/base.html:122 templates/lists/index.html:75
 msgid "containing"
-msgstr "contiene"
+msgstr "包含"
 
 #: templates/base.html:124
 msgid "NOT containing"
-msgstr "Non contiene"
+msgstr "不包含"
 
 #: templates/base.html:127 templates/reports/index.html:78
 msgid "Remove"
-msgstr "Rimuovi"
+msgstr "删除"
 
 #: templates/accounts/add_account_sig.html:6
 msgid "Account page"
-msgstr "Nella pagina account"
+msgstr "帐户页"
 
 #: templates/accounts/add_account_sig.html:9
 msgid "Accounts :: Add Email signature"
-msgstr "Conti:: Aggiungi firma Email"
+msgstr "帐户:: 添加电子邮件签名"
 
 #: templates/accounts/add_account_sig.html:10
 #, python-format
 msgid ""
 "\n"
 "Accounts :: %(address)s - add email signature\n"
-msgstr "\nConti:: %(address)s -Aggiungi firma email\n"
+msgstr "帐户:: %(address)s-添加电子邮件签名"
 
 #: templates/accounts/add_account_sig.html:18
 msgid "Add email signature"
-msgstr "Aggiungi firma email"
+msgstr "添加电子邮件签名"
 
 #: templates/accounts/add_account_sig.html:39
 #: templates/config/add_auth_host.html:33
 #: templates/config/add_domain_sig.html:38 templates/config/add_host.html:33
 msgid "Clear"
-msgstr "Pulisci"
+msgstr "明确"
 
 #: templates/accounts/add_account_sig.html:40
 #: templates/accounts/add_address.html:41
@@ -1297,7 +1297,7 @@ msgstr "Pulisci"
 #: templates/config/domain.html:132 templates/lists/add.form.html:32
 #: templates/reports/filter.form.html:11
 msgid "Add"
-msgstr "Aggiungi"
+msgstr "添加"
 
 #: templates/accounts/add_address.html:6
 #: templates/accounts/delete_address.html:6
@@ -1308,30 +1308,30 @@ msgstr "Aggiungi"
 #: templates/config/edit_domain_sig.html:5
 #: templates/config/list_scanners.html:7 templates/config/task_status.html:8
 msgid "Domains"
-msgstr "Domini"
+msgstr "域"
 
 #: templates/accounts/add_address.html:12
 #: templates/accounts/add_address.html:13
 msgid "Domains :: Add Domain"
-msgstr "Domini :: Aggiunti dominio"
+msgstr "域:: 添加域"
 
 #: templates/accounts/add_address.html:12
 #: templates/accounts/add_address.html:13
 msgid "Accounts :: Add Address"
-msgstr "Accoutn :: Aggiungi account"
+msgstr "帐号:: 添加地址"
 
 #: templates/accounts/add_address.html:16
 msgid "Add Domain"
-msgstr "Aggiungi Dominio"
+msgstr "添加域"
 
 #: templates/accounts/add_address.html:16
 msgid "Add Address"
-msgstr "Aggiungi indirizzo"
+msgstr "添加地址"
 
 #: templates/accounts/add_address.html:40
 #: templates/accounts/create_account.html:26 templates/lists/add.form.html:31
 msgid "Reset"
-msgstr "Reset"
+msgstr "重置"
 
 #: templates/accounts/admin_change_pw.html:10
 #: templates/accounts/admin_change_pw.html:11
@@ -1339,35 +1339,35 @@ msgstr "Reset"
 #: templates/accounts/change_pw.html:10 templates/accounts/change_pw.html:11
 #: templates/accounts/change_pw.html:14
 msgid "Change Password"
-msgstr "Cambia password"
+msgstr "更改密码"
 
 #: templates/accounts/admin_change_pw.html:31
 #: templates/accounts/change_pw.html:31
 msgid "Change"
-msgstr "Cambia"
+msgstr "变化"
 
 #: templates/accounts/create_account.html:8
 #: templates/accounts/create_account.html:9 templates/accounts/index.html:20
 msgid "Create account"
-msgstr "Crea account"
+msgstr "创建帐户"
 
 #: templates/accounts/create_account.html:12
 msgid "User account creation"
-msgstr "Creazione accoutnutente"
+msgstr "创建用户帐户"
 
 #: templates/accounts/create_account.html:27
 msgid "Create"
-msgstr "Crea"
+msgstr "创建"
 
 #: templates/accounts/delete_account.html:8
 #: templates/accounts/delete_account.html:9
 #: templates/accounts/delete_account.html:12
 msgid "Delete Account"
-msgstr "Elimina account"
+msgstr "删除帐户"
 
 #: templates/accounts/delete_account.html:20
 msgid "Delete the user account: ?"
-msgstr "Cancella l'account utente: ?"
+msgstr "删除的用户帐户： 吗？"
 
 #: templates/accounts/delete_account.html:22
 #: templates/accounts/delete_account_sig.html:22
@@ -1377,49 +1377,49 @@ msgstr "Cancella l'account utente: ?"
 #: templates/config/delete_host.html:24 templates/lists/delete.html:24
 #: templates/messages/detail.html:234 templates/messages/quarantine.html:57
 msgid "Delete"
-msgstr "Elimina"
+msgstr "删除"
 
 #: templates/accounts/delete_account_sig.html:8
 #: templates/accounts/delete_account_sig.html:9
 #: templates/config/delete_domain_sig.html:9
 #: templates/config/delete_domain_sig.html:10
 msgid "Delete email signature"
-msgstr "Eliminare firma email"
+msgstr "删除电子邮件签名"
 
 #: templates/accounts/delete_account_sig.html:12
 #: templates/config/delete_domain_sig.html:13
 msgid "Delete Email signature"
-msgstr "Eliminare Email firma"
+msgstr "删除电子邮件签名"
 
 #: templates/accounts/delete_account_sig.html:20
 #: templates/config/delete_domain_sig.html:21
 msgid "Delete the email signature"
-msgstr "Eliminare la firma di posta elettronica"
+msgstr "删除的电子邮件签名"
 
 #: templates/accounts/delete_address.html:12
 #: templates/accounts/delete_address.html:13
 #: templates/accounts/delete_address.html:16
 msgid "Delete Address"
-msgstr "Elimina indirizzo"
+msgstr "删除地址"
 
 #: templates/accounts/delete_address.html:24
 msgid "Delete the address:"
-msgstr "Elimina l'indirizzo:"
+msgstr "删除地址："
 
 #: templates/accounts/edit_account_sig.html:8
 msgid "Accounts :: Edit Email signature"
-msgstr "Conti:: Modifica firma Email"
+msgstr "帐户:: 编辑电子邮件签名"
 
 #: templates/accounts/edit_account_sig.html:9
 #, python-format
 msgid ""
 "\n"
 "Accounts :: %(address)s - edit email signature\n"
-msgstr "\nConti:: %(address)s -Modifica firma email\n"
+msgstr "帐户:: %(address)s-编辑电子邮件签名"
 
 #: templates/accounts/edit_account_sig.html:17
 msgid "Edit Account signature"
-msgstr "Modifica firma del conto"
+msgstr "编辑帐户签名"
 
 #: templates/accounts/edit_account_sig.html:38
 #: templates/accounts/edit_address.html:35
@@ -1428,13 +1428,13 @@ msgstr "Modifica firma del conto"
 #: templates/config/edit_auth_host.html:33
 #: templates/config/edit_domain_sig.html:39 templates/config/edit_host.html:31
 msgid "Update"
-msgstr "Aggiorna"
+msgstr "更新"
 
 #: templates/accounts/edit_address.html:7 templates/accounts/index.html:22
 #: templates/config/domain.html:19 templates/config/index.html:20
 #: templates/status/index.html:20
 msgid "Scanners"
-msgstr "Scanner"
+msgstr "扫描仪"
 
 #: templates/accounts/edit_address.html:10
 #: templates/accounts/edit_address.html:11
@@ -1442,151 +1442,151 @@ msgstr "Scanner"
 #: templates/accounts/user_profile.html:26
 #: templates/accounts/user_profile.html:80
 msgid "Edit"
-msgstr "Modifica"
+msgstr "编辑"
 
 #: templates/accounts/edit_address.html:10
 #: templates/accounts/edit_address.html:11
 #: templates/accounts/edit_address.html:14
 msgid "Domain"
-msgstr "Dominio"
+msgstr "域"
 
 #: templates/accounts/index.html:27
 msgid "Accounts :: "
-msgstr "Account ::"
+msgstr "帐户::"
 
 #: templates/accounts/index.html:32
 msgid "Full names"
-msgstr "Nome intero"
+msgstr "完整名称"
 
 #: templates/accounts/index.html:33 templates/accounts/login.html:80
 msgid "Email address"
-msgstr "Indirizzo email"
+msgstr "电子邮件地址"
 
 #: templates/accounts/index.html:41 templates/accounts/index.html.py:43
 msgid "View account"
-msgstr "Vedi account"
+msgstr "查看帐户"
 
 #: templates/accounts/login.html:26
 msgid "Baruwa :: Login"
-msgstr "Baruwa: Login"
+msgstr "Baruwa: 登录"
 
 #: templates/accounts/login.html:51
 msgid "Your username and password didn't match. Please try again."
-msgstr "Utente e password non validano. Prova di nuovo."
+msgstr "您的用户名和密码不符。请再试一次。"
 
 #: templates/accounts/login.html:65
 msgid "Language"
-msgstr "Lingua"
+msgstr "语言"
 
 #: templates/accounts/login.html:76
 msgid ""
 "Forgotten your password? Enter your e-mail address below, and we'll e-mail "
 "instructions for setting a new one."
-msgstr "Dimenticato la password? Inserisci il tuo indirizzo e-mail qui sotto e noi ti e-mail le istruzioni per l'impostazione di una nuova."
+msgstr "忘记了您的密码吗？请输入您的电子邮件地址，和我们将电子邮件设置一个新的说明。"
 
 #: templates/accounts/login.html:84
 msgid "Reset my password"
-msgstr "Reimpostare la mia password"
+msgstr "我的密码重置"
 
 #: templates/accounts/reset_done.html:28
 msgid "Baruwa :: Password reset successful"
-msgstr "Baruwa:: Password reset successo"
+msgstr "Baruwa:: 密码重置成功"
 
 #: templates/accounts/reset_done.html:30
 msgid "Baruwa :: Password reset complete"
-msgstr "Baruwa:: Password reset completo"
+msgstr "Baruwa:: 密码重置完成"
 
 #: templates/accounts/reset_done.html:49
 msgid ""
 "We've e-mailed you instructions for setting your password to the e-mail "
 "address you submitted. You should be receiving it shortly."
-msgstr "Noi abbiamo e-mail voi istruzioni per impostare la password all'indirizzo di posta elettronica inviati. Si dovrebbe ricevere poco."
+msgstr "我们已经以您说明设置您的密码的电子邮件地址向您提交电子邮件。您应该不久接收它。"
 
 #: templates/accounts/reset_done.html:51
 msgid "Your Password was successfully reset "
-msgstr "La Password è stata reimpostata con successo "
+msgstr "您的密码已成功重置"
 
 #: templates/accounts/reset_pw.html:6
 msgid "Baruwa :: Password reset"
-msgstr "Baruwa:: Reimpostare la Password"
+msgstr "Baruwa:: 密码重置"
 
 #: templates/accounts/reset_pw.html:22
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
-msgstr "Si prega di inserire la nuova password due volte così possiamo verificare che digitato correttamente."
+msgstr "请两次这样我们可以确认您输入不正确，输入您的新密码。"
 
 #: templates/accounts/reset_pw.html:27
 msgid "New password:"
-msgstr "Nuova password:"
+msgstr "新密码："
 
 #: templates/accounts/reset_pw.html:30
 msgid "Confirm password:"
-msgstr "Conferma password:"
+msgstr "确认密码："
 
 #: templates/accounts/reset_pw.html:33
 msgid "Change my password"
-msgstr "Cambiare la mia password"
+msgstr "更改我的密码"
 
 #: templates/accounts/reset_pw.html:37
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
-msgstr "Il link di reimpostazione della password non era valido, forse perché è già stato usato.  Si prega di richiedere un nuova password reset."
+msgstr "密码重置链接无效，可能是因为它已经被使用。请请求新密码重置。"
 
 #: templates/accounts/update_account.html:10
 #: templates/accounts/update_account.html:11
 msgid "Update account"
-msgstr "Aaggiorna account"
+msgstr "更新帐户"
 
 #: templates/accounts/update_account.html:14
 msgid "Update user account"
-msgstr "Aggiorna accoutn utente"
+msgstr "更新用户帐户"
 
 #: templates/accounts/update_profile.html:10
 #: templates/accounts/update_profile.html:11
 #: templates/accounts/update_profile.html:14
 msgid "Update Profile"
-msgstr "Aggiorna profilo"
+msgstr "更新配置文件"
 
 #: templates/accounts/user_profile.html:9
 #: templates/accounts/user_profile.html:16
 msgid "Change your password"
-msgstr "Cambia password"
+msgstr "更改您的密码"
 
 #: templates/accounts/user_profile.html:13
 msgid "Change users password"
-msgstr "Cambia password utente"
+msgstr "更改用户密码"
 
 #: templates/accounts/user_profile.html:20
 #: templates/accounts/user_profile.html:21
 msgid "Account Profile"
-msgstr "Profilo Account"
+msgstr "帐户配置文件"
 
 #: templates/accounts/user_profile.html:25
 #, python-format
 msgid "Viewing %(account)s's Profile"
-msgstr "Dettagli profilo %(account)s"
+msgstr "查看 %(account)s's 配置文件"
 
 #: templates/accounts/user_profile.html:31
 msgid "Username:"
-msgstr "Username:"
+msgstr "用户名："
 
 #: templates/accounts/user_profile.html:39
 msgid "Full names:"
-msgstr "Nome intero:"
+msgstr "全名："
 
 #: templates/accounts/user_profile.html:47
 msgid "Email Address:"
-msgstr "Indirizzo email:"
+msgstr "电子邮件地址："
 
 #: templates/accounts/user_profile.html:55
 msgid "Account status:"
-msgstr "Stato dell'account:"
+msgstr "帐户状态："
 
 #: templates/accounts/user_profile.html:58
 msgid "Active"
-msgstr "Attivo"
+msgstr "活动"
 
 #: templates/accounts/user_profile.html:58
 #: templates/accounts/user_profile.html:174
@@ -1594,157 +1594,157 @@ msgstr "Attivo"
 #: templates/config/domain.html.py:87 templates/config/domain.html:116
 #: templates/config/domain.html.py:148
 msgid "Disabled"
-msgstr "Disabilitato"
+msgstr "已禁用"
 
 #: templates/accounts/user_profile.html:63
 msgid "Last login:"
-msgstr "Ultimo Login:"
+msgstr "上次登录日期："
 
 #: templates/accounts/user_profile.html:71
 msgid "Account created on:"
-msgstr "Account creato il:"
+msgstr "关于创建的帐户："
 
 #: templates/accounts/user_profile.html:79
 msgid "Profile Settings"
-msgstr "Impostazioni di profilo"
+msgstr "配置文件设置"
 
 #: templates/accounts/user_profile.html:85
 msgid "Account type:"
-msgstr "Tipo di account"
+msgstr "帐户类型："
 
 #: templates/accounts/user_profile.html:89
 msgid "Administrator"
-msgstr "Amministratore"
+msgstr "管理员"
 
 #: templates/accounts/user_profile.html:92
 msgid "Domain Administrator"
-msgstr "Amministratore di dominio"
+msgstr "域管理员"
 
 #: templates/accounts/user_profile.html:95
 msgid "User account"
-msgstr "Accout utente"
+msgstr "用户帐户"
 
 #: templates/accounts/user_profile.html:102
 msgid "Scan email:"
-msgstr "Scansione e-mail:"
+msgstr "扫描电子邮件："
 
 #: templates/accounts/user_profile.html:106
 #: templates/accounts/user_profile.html:118
 msgid "Yes"
-msgstr "Si"
+msgstr "是"
 
 #: templates/accounts/user_profile.html:108
 #: templates/accounts/user_profile.html:120
 msgid "No"
-msgstr "No"
+msgstr "不"
 
 #: templates/accounts/user_profile.html:114
 msgid "Send quarantine report:"
-msgstr "Invia report di quarantena"
+msgstr "发送检疫报告："
 
 #: templates/accounts/user_profile.html:126
 msgid "Spam High Score:"
-msgstr "Punteggio spam alto"
+msgstr "垃圾邮件高分数："
 
 #: templates/accounts/user_profile.html:134
 msgid "Spam Low Score:"
-msgstr "Punteggio spam basso"
+msgstr "垃圾邮件低分数："
 
 #: templates/accounts/user_profile.html:144
 msgid "Domains managed"
-msgstr "Domini gestiti"
+msgstr "管理域"
 
 #: templates/accounts/user_profile.html:146
 msgid "Associated Addresses"
-msgstr "Indirizzi associati"
+msgstr "相关联的地址"
 
 #: templates/accounts/user_profile.html:172
 #: templates/accounts/user_profile.html:216 templates/config/domain.html:46
 #: templates/config/domain.html.py:66 templates/config/domain.html:85
 #: templates/config/domain.html.py:114 templates/config/domain.html:146
 msgid "Enabled"
-msgstr "Abilitato"
+msgstr "已启用"
 
 #: templates/accounts/user_profile.html:189
 msgid "No addresses stored at the moment."
-msgstr "Nessun indirizzo memorizzato al momento."
+msgstr "没有目前存储的地址。"
 
 #: templates/accounts/user_profile.html:201 templates/config/domain.html:131
 msgid "Email signatures"
-msgstr "Firme email"
+msgstr "电子邮件签名"
 
 #: templates/accounts/user_profile.html:209 templates/config/domain.html:139
 msgid "Text signature"
-msgstr "Firma testo"
+msgstr "文本签名"
 
 #: templates/accounts/user_profile.html:211 templates/config/domain.html:141
 msgid "HTML signature"
-msgstr "Firma HTML"
+msgstr "HTML 签名"
 
 #: templates/accounts/user_profile.html:228 templates/config/domain.html:158
 msgid "No email signatures configured"
-msgstr "No firme di posta elettronica configurate"
+msgstr "没有配置的电子邮件签名"
 
 #: templates/config/add_auth_host.html:8
 msgid "Settings :: Add authentication server"
-msgstr "Impostazioni :: Aggiungi server di autenticazione"
+msgstr "设置:: 添加身份验证服务器"
 
 #: templates/config/add_auth_host.html:9
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(address)s - add authentication server\n"
-msgstr "\nDomini :: %(address)s - aggiungi server di autenticazione\n"
+msgstr "域:: %(address)s-添加身份验证服务器"
 
 #: templates/config/add_auth_host.html:17
 msgid "Add Authentication server"
-msgstr "Aggiungere il server di autenticazione"
+msgstr "添加身份验证服务器"
 
 #: templates/config/add_domain_sig.html:8
 msgid "Settings :: Add Email signature"
-msgstr "Impostazioni:: Aggiungi firma Email"
+msgstr "设置:: 添加电子邮件签名"
 
 #: templates/config/add_domain_sig.html:9
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(address)s - add email signature\n"
-msgstr "\nDomini:: %(address)s -Aggiungi firma email\n"
+msgstr "域:: %(address)s-添加电子邮件签名"
 
 #: templates/config/add_domain_sig.html:17
 msgid "Add Domain signature"
-msgstr "Aggiungi dominio firma"
+msgstr "添加域签名"
 
 #: templates/config/add_host.html:8
 msgid "Settings :: Add destination mail server"
-msgstr "Impostazioni :: Aggiungi mail server "
+msgstr "设置:: 添加目标邮件服务器"
 
 #: templates/config/add_host.html:9
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(domain_address)s - add destination mail server\n"
-msgstr "\nDomini :: %(domain_address)s - aggiungi mail server di destinazione\n"
+msgstr "域:: %(domain_address)s-添加目标邮件服务器"
 
 #: templates/config/add_host.html:17
 msgid "Add Mail Server"
-msgstr "Aggiungi mail server"
+msgstr "添加邮件服务器"
 
 #: templates/config/delete_auth_host.html:5
 #: templates/config/delete_domain_sig.html:6
 #: templates/config/delete_host.html:5 templates/config/edit_auth_host.html:5
 #: templates/config/edit_domain_sig.html:6 templates/config/edit_host.html:5
 msgid "Domain page"
-msgstr "Pagina di Dominio"
+msgstr "域页"
 
 #: templates/config/delete_auth_host.html:8
 #: templates/config/delete_auth_host.html:9
 msgid "Delete authentication host"
-msgstr "Elimina host di autenticazione"
+msgstr "删除身份验证主机"
 
 #: templates/config/delete_auth_host.html:12
 msgid "Delete Authentication Host"
-msgstr "Elimina host di autenticazione"
+msgstr "删除身份验证主机"
 
 #: templates/config/delete_auth_host.html:20
 #, python-format
@@ -1752,15 +1752,15 @@ msgid ""
 "\n"
 "        Delete the Authentication host %(host_address)s: ?\n"
 "        "
-msgstr "\n         Elimina l'host di autenticazione %(host_address)s: ?\n        "
+msgstr "删除该身份验证主机 %(host_address)s: 吗？"
 
 #: templates/config/delete_host.html:8 templates/config/delete_host.html:9
 msgid "Delete Mail host"
-msgstr "Elimina Mail host"
+msgstr "删除邮件主机"
 
 #: templates/config/delete_host.html:12
 msgid "Delete Mail Host"
-msgstr "Elimina Mail host"
+msgstr "删除邮件主机"
 
 #: templates/config/delete_host.html:20
 #, python-format
@@ -1768,63 +1768,63 @@ msgid ""
 "\n"
 "        Delete the mail host %(host_address)s: ?\n"
 "        "
-msgstr "\n         Elimina mail host %(host_address)s: ?\n        "
+msgstr "删除该邮件主机 %(host_address)s: 吗？"
 
 #: templates/config/domain.html:22
 msgid "Settings :: Domain"
-msgstr "Impostazioni :: Dominio"
+msgstr "设置:: 域"
 
 #: templates/config/domain.html:23
 #, python-format
 msgid ""
 "\n"
 "\tDomains :: Showing - %(domain_address)s\n"
-msgstr "\n        Domains :: Mostra - %(domain_address)s\n"
+msgstr "域:: 显示-%(domain_address)s"
 
 #: templates/config/domain.html:29
 msgid "Domain information"
-msgstr "Informazioni sul dominio"
+msgstr "域信息"
 
 #: templates/config/domain.html:34
 msgid "Domain name:"
-msgstr "Nome dominio:"
+msgstr "域名："
 
 #: templates/config/domain.html:42
 msgid "Status:"
-msgstr "Stato:"
+msgstr "状态："
 
 #: templates/config/domain.html:48
 msgid "Inactive"
-msgstr "Inattivo"
+msgstr "处于非活动状态"
 
 #: templates/config/domain.html:54
 msgid "Owner:"
-msgstr "Proprietario"
+msgstr "所有者："
 
 #: templates/config/domain.html:62
 msgid "Load Balance servers:"
-msgstr "Server di bilanciamento del carico:"
+msgstr "负载平衡服务器："
 
 #: templates/config/domain.html:74
 msgid "Delivery SMTP Servers"
-msgstr "Server SMTP"
+msgstr "传递 SMTP 服务器"
 
 #: templates/config/domain.html:98
 msgid "No smtp delivery servers configured"
-msgstr "Nessun server SMTP configurato"
+msgstr "没有配置 smtp 传递服务器"
 
 #: templates/config/domain.html:103
 msgid "Authentication Servers"
-msgstr "Server di autenticazione"
+msgstr "身份验证服务器"
 
 #: templates/config/domain.html:126
 msgid "No auth servers configured"
-msgstr "Nessun server di autenticazione configurato"
+msgstr "没有配置的身份验证服务器"
 
 #: templates/config/edit_auth_host.html:8
 #: templates/config/edit_auth_host.html:9
 msgid "Settings :: Edit authentication mail server"
-msgstr "Impostazioni :: Modifica autenticazione mail server"
+msgstr "设置:: 编辑身份验证的邮件服务器"
 
 #: templates/config/edit_auth_host.html:15
 #, python-format
@@ -1832,339 +1832,339 @@ msgid ""
 "\n"
 "\t\t\tEdit authentication Server %(forms_errors)s\n"
 "\t\t"
-msgstr "\n\t\t\tModifica server autenticazione %(forms_errors)s\n\t\t"
+msgstr "编辑身份验证服务器 %(forms_errors)s"
 
 #: templates/config/edit_domain_sig.html:9
 msgid "Settings :: Edit Email signature"
-msgstr "Impostazioni:: Modifica firma Email"
+msgstr "设置:: 编辑电子邮件签名"
 
 #: templates/config/edit_domain_sig.html:10
 #, python-format
 msgid ""
 "\n"
 "Domains :: %(address)s - edit email signature\n"
-msgstr "\nDomini:: %(address)s -Modifica firma email\n"
+msgstr "域:: %(address)s-编辑电子邮件签名"
 
 #: templates/config/edit_domain_sig.html:18
 msgid "Edit Domain signature"
-msgstr "Modifica firma del dominio"
+msgstr "编辑域签名"
 
 #: templates/config/edit_host.html:8 templates/config/edit_host.html.py:9
 msgid "Settings :: Edit destination mail server"
-msgstr "Impostazioni :: Modifica mail server (destinazione)"
+msgstr "设置:: 编辑目标邮件服务器"
 
 #: templates/config/edit_host.html:15
 msgid "Edit Mail Server"
-msgstr "Modificare il Server di posta"
+msgstr "编辑邮件服务器"
 
 #: templates/config/index.html:24
 msgid "Domains :: "
-msgstr "Domini :: "
+msgstr "域::"
 
 #: templates/config/index.html:30
 msgid "Domain Name"
-msgstr "Nome dominio:"
+msgstr "域的名称"
 
 #: templates/config/index.html:33
 msgid "Owner"
-msgstr "Proprietario"
+msgstr "所有者"
 
 #: templates/config/index.html:39 templates/config/list_scanners.html:24
 msgid "Actions"
-msgstr "Azioni"
+msgstr "行动"
 
 #: templates/config/index.html:75
 msgid "No domains found"
-msgstr "Nessun dominio trovato"
+msgstr "未找到域"
 
 #: templates/config/init_scanner.html:19
 #: templates/config/list_scanners.html:43
 msgid "Initialize"
-msgstr "inizializza"
+msgstr "初始化"
 
 #: templates/config/list_scanners.html:11
 msgid "Scanning Nodes"
-msgstr "Nodi di scansione"
+msgstr "扫描节点"
 
 #: templates/config/list_scanners.html:12
 msgid "Scanning Nodes ::"
-msgstr "Scansione nodi::"
+msgstr "扫描节点::"
 
 #: templates/config/list_scanners.html:18
 msgid "Node Name"
-msgstr "Nome Nodo"
+msgstr "节点名称"
 
 #: templates/config/list_scanners.html:56
 msgid "No scanning nodes found"
-msgstr "Nessuna scansione nodi trovati"
+msgstr "发现没有扫描节点"
 
 #: templates/config/task_status.html:24 templates/messages/task_status.html:72
 msgid "The request is being processed. Current status: "
-msgstr "La richiesta è in fase di elaborazione. Stato attuale: "
+msgstr "正在处理该请求。当前状态："
 
 #: templates/config/view_scanner.html:5 templates/config/view_scanner.html:8
 #, python-format
 msgid ""
 "\n"
 "Viewing Scanning Node %(scanner_address)s\n"
-msgstr "\nVisualizzazione scansione nodo %(scanner_address)s\n"
+msgstr "查看扫描节点 %(scanner_address)s"
 
 #: templates/config/view_scanner.html:13
 msgid "Configuration Settings"
-msgstr "Configurazione Impostazioni"
+msgstr "配置设置"
 
 #: templates/config/view_settings.html:5
 msgid "Scanning Node Settings"
-msgstr "Nodo Impostazioni di scansione"
+msgstr "扫描节点的设置"
 
 #: templates/config/view_settings.html:6
 msgid "Scanning Node Settings :: "
-msgstr "Nodo Impostazioni di scansione:: "
+msgstr "扫描节点设置::"
 
 #: templates/config/view_settings.html:8
 msgid "Not yet Implemented"
-msgstr "Non ancora implementata"
+msgstr "尚未实施"
 
 #: templates/lists/add.form.html:5
 msgid "From address:"
-msgstr "Dall'indirizzo:"
+msgstr "从地址："
 
 #: templates/lists/add.form.html:12
 msgid "To address:"
-msgstr "All'indirizzo:"
+msgstr "地址："
 
 #: templates/lists/add.form.html:22
 msgid "List type:"
-msgstr "Tipo di lista:"
+msgstr "列表类型："
 
 #: templates/lists/add.html:12 templates/lists/delete.html:5
 #: templates/lists/delete.html.py:13 templates/lists/delete.html:23
 #: templates/lists/index.html:22 templates/lists/index.html.py:29
 #: templates/messages/detail.html:47 templates/messages/detail.html.py:49
 msgid "Whitelist"
-msgstr "Lista bianca"
+msgstr "白名单"
 
 #: templates/lists/add.html:13 templates/lists/delete.html:6
 #: templates/lists/delete.html.py:13 templates/lists/delete.html:23
 #: templates/lists/index.html:20 templates/lists/index.html.py:29
 #: templates/messages/detail.html:54 templates/messages/detail.html.py:56
 msgid "Blacklist"
-msgstr "Lista nera"
+msgstr "黑名单"
 
 #: templates/lists/add.html:16 templates/lists/add.html.py:17
 msgid "Adding to list"
-msgstr "Aggiungi alla lista"
+msgstr "添加到列表中"
 
 #: templates/lists/add.html:20
 msgid "Add List Item"
-msgstr "Aggiungi elemento alla lista"
+msgstr "添加列表项"
 
 #: templates/lists/delete.html:9 templates/lists/delete.html.py:10
 msgid "Delete from List"
-msgstr "Elimina dalla lista"
+msgstr "从列表中删除"
 
 #: templates/lists/delete.html:13
 msgid "Delete Item from"
-msgstr "Eliminat elemento da"
+msgstr "删除项目从"
 
 #: templates/lists/delete.html:22
 #, python-format
 msgid ""
 "\n"
 "\t\t\t\tThis will delete %(address)s from the "
-msgstr "\n                                Questo cancella %(address)s da"
+msgstr "此操作将删除 %(address)s从"
 
 #: templates/lists/index.html:24
 msgid "Add to List"
-msgstr "Aggiungi alla lista"
+msgstr "添加到列表中"
 
 #: templates/lists/index.html:27
 msgid "List management"
-msgstr "Gestiona lista"
+msgstr "列表管理"
 
 #: templates/lists/index.html:43
 msgid "Action"
-msgstr "Azione"
+msgstr "行动"
 
 #: templates/lists/index.html:54
 msgid "=builtin="
-msgstr "= builtin ="
+msgstr "内置 = ="
 
 #: templates/lists/index.html:63 templates/messages/index.html:101
 #: templates/messages/quarantine.html:130
 msgid "No records returned"
-msgstr "Nessun record ritornato"
+msgstr "没有记录返回"
 
 #: templates/lists/index.html:72
 msgid "Filter "
-msgstr "Filtro"
+msgstr "筛选器"
 
 #: templates/lists/index.html:73 templates/messages/detail.html:41
 #: templates/messages/preview.html:20 templates/status/detail.html:26
 msgid "From:"
-msgstr "Da:"
+msgstr "从："
 
 #: templates/lists/index.html:76
 msgid "excluding"
-msgstr "escludendo"
+msgstr "不包括"
 
 #: templates/lists/index.html:79
 msgid "GO"
-msgstr "VAI"
+msgstr "转到"
 
 #: templates/messages/delete.html:3
 #, python-format
 msgid "The message id: %(id)s has been deleted"
-msgstr "Il messaggio cn ID: %(id)s è stato eliminato"
+msgstr "消息的消息 id： %(id)s已被删除"
 
 #: templates/messages/delete.html:5
 #, python-format
 msgid "The message id: %(id)s could not be deleted: %(error_msg)s"
-msgstr "Id messaggio: %(id)s non poteva essere eliminato: %(error_msg)s"
+msgstr "消息的消息 id： %(id)s无法删除： %(error_msg)s"
 
 #: templates/messages/detail.html:14 templates/messages/detail.html.py:15
 #, python-format
 msgid "Baruwa :: Showing message - %(id)s"
-msgstr "Baruwa :: dettaglio messaggio - %(id)s "
+msgstr "Baruwa:: 显示消息-%(id)s"
 
 #: templates/messages/detail.html:20
 msgid "Preview message"
-msgstr "Anteprima messaggio"
+msgstr "预览消息"
 
 #: templates/messages/detail.html:21 templates/messages/preview.html:8
 #: templates/messages/release.html:6 templates/messages/release.html.py:7
 msgid "Release message"
-msgstr "Rilascia messaggio"
+msgstr "释放消息"
 
 #: templates/messages/detail.html:23
 msgid "Full message list"
-msgstr "Lista completa di messaggi"
+msgstr "完整消息列表"
 
 #: templates/messages/detail.html:24 templates/messages/detail.html.py:220
 #: templates/messages/index.html:30
 msgid "Quarantine"
-msgstr "Quarantena"
+msgstr "检疫"
 
 #: templates/messages/detail.html:25 templates/messages/index.html:31
 msgid "Archive"
-msgstr "Archivio"
+msgstr "存档"
 
 #: templates/messages/detail.html:34 templates/status/detail.html:19
 msgid "Message Details"
-msgstr "Dettaglio mesaggio"
+msgstr "消息详细信息"
 
 #: templates/messages/detail.html:37 templates/status/detail.html:22
 msgid "Message ID:"
-msgstr "ID Messaggio:"
+msgstr "消息 ID："
 
 #: templates/messages/detail.html:63 templates/messages/preview.html:24
 #: templates/status/detail.html:32
 msgid "To:"
-msgstr "A:"
+msgstr "自："
 
 #: templates/messages/detail.html:73 templates/status/detail.html:46
 msgid "Received on:"
-msgstr "Ricevuto il:"
+msgstr "收到的关于："
 
 #: templates/messages/detail.html:77 templates/status/detail.html:42
 msgid "Received by:"
-msgstr "Ricevuto da:"
+msgstr "收到的："
 
 #: templates/messages/detail.html:81
 msgid "Received from:"
-msgstr "Ricevuto da:"
+msgstr "从收到："
 
 #: templates/messages/detail.html:85
 msgid "Recieved via:"
-msgstr "Ricevuto via:"
+msgstr "通过收到："
 
 #: templates/messages/detail.html:89
 msgid "Message Headers:"
-msgstr "Intestazioni messaggio:"
+msgstr "邮件标题："
 
 #: templates/messages/detail.html:93 templates/status/detail.html:58
 msgid "Size:"
-msgstr "Dimensione:"
+msgstr "大小："
 
 #: templates/messages/detail.html:97
 msgid "Virus infected:"
-msgstr "è infetto da virus:"
+msgstr "病毒感染："
 
 #: templates/messages/detail.html:103
 msgid "Blocked File:"
-msgstr "File bloccato:"
+msgstr "被阻止的文件："
 
 #: templates/messages/detail.html:109
 msgid "Other infection:"
-msgstr "Altre infezioni:"
+msgstr "其他感染："
 
 #: templates/messages/detail.html:116
 msgid "Delivery information"
-msgstr "Informazioni sulla consegna"
+msgstr "传递信息"
 
 #: templates/messages/detail.html:119
 msgid "Processed at:"
-msgstr "Elaborato a:"
+msgstr "在处理："
 
 #: templates/messages/detail.html:120
 msgid "Processed by:"
-msgstr "Elaborato da:"
+msgstr "由处理："
 
 #: templates/messages/detail.html:121
 msgid "Delivered to:"
-msgstr "Consegnato a:"
+msgstr "发送给:"
 
 #: templates/messages/detail.html:122
 msgid "Delivery status"
-msgstr "Stato di consegna"
+msgstr "交货状态"
 
 #: templates/messages/detail.html:134
 msgid "Spamassassin information"
-msgstr "Informazioni da Spamassassin"
+msgstr "Spamassassin 信息"
 
 #: templates/messages/detail.html:137
 msgid "Spam:"
-msgstr "Spam:"
+msgstr "垃圾邮件："
 
 #: templates/messages/detail.html:141 templates/messages/detail.html.py:151
 msgid "Action(s):"
-msgstr "Azioni:"
+msgstr "操作："
 
 #: templates/messages/detail.html:148
 msgid "High Scoring Spam:"
-msgstr "Punteggio spam altro"
+msgstr "高评分的垃圾邮件："
 
 #: templates/messages/detail.html:158
 msgid "Spamassassin Spam:"
-msgstr "Punteggio Spam"
+msgstr "Spamassassin 垃圾邮件："
 
 #: templates/messages/detail.html:168
 msgid "Listed in RBL:"
-msgstr "Elencato in RBL:"
+msgstr "RBL 中列出："
 
 #: templates/messages/detail.html:171
 msgid "Listed in :"
-msgstr "Elencato in:"
+msgstr "中列出："
 
 #: templates/messages/detail.html:178
 msgid "Spam Whitelisted:"
-msgstr "Nella lista bianca di spam:"
+msgstr "垃圾邮件白名单："
 
 #: templates/messages/detail.html:188
 msgid "Spam Blacklisted:"
-msgstr "Nella lista nera di spam:"
+msgstr "被列入黑名单的垃圾邮件："
 
 #: templates/messages/detail.html:198
 msgid "Spamassassin Auto learned:"
-msgstr "Autoapprendimento spamassassin:"
+msgstr "Spamassassin 自动学到："
 
 #: templates/messages/detail.html:204
 msgid "Spamassassin Score:"
-msgstr "Punteggio spamassassin:"
+msgstr "Spamassassin 评分："
 
 #: templates/messages/detail.html:211
 msgid "Spamassassin Report:"
-msgstr "Report spamassassin:"
+msgstr "Spamassassin 报告："
 
 #: templates/messages/detail.html:233 templates/messages/quarantine.html:54
 #: templates/messages/quarantine_report.html:39
@@ -2172,50 +2172,50 @@ msgstr "Report spamassassin:"
 #: templates/messages/quarantine_report.html:80
 #: templates/messages/quarantine_report.html:98
 msgid "Release"
-msgstr "Rilascia"
+msgstr "释放"
 
 #: templates/messages/detail.html:235
 msgid "SA Learn"
-msgstr "Apprendimeno SA"
+msgstr "SA 学习"
 
 #: templates/messages/detail.html:236 templates/messages/quarantine.html:63
 msgid "Alt recipients"
-msgstr "Destinatari alternativi"
+msgstr "Alt 收件人"
 
 #: templates/messages/detail.html:272
 msgid "Submit"
-msgstr "Invia"
+msgstr "提交"
 
 #: templates/messages/detail.html:280
 msgid ""
 "The message details for the requested message id could not be retrieved"
-msgstr "I dettagli relativi al messaggio di questo ID non ha potuto essere recuperati"
+msgstr "无法检索请求的消息 id 的消息详细信息"
 
 #: templates/messages/index.html:29
 msgid "Full message"
-msgstr "Lista completa di messaggi"
+msgstr "完整的消息"
 
 #: templates/messages/index.html:38
 #, python-format
 msgid "Showing the %(baruwa_num_recent_messages)s most recent messages"
-msgstr "Mostrando il %(baruwa_num_recent_messages)s messaggi più recenti"
+msgstr "显示 %(baruwa_num_recent_messages)s最新消息"
 
 #: templates/messages/index.html:45 templates/messages/quarantine.html:39
 msgid "Filters"
-msgstr "Filtri"
+msgstr "筛选器"
 
 #: templates/messages/index.html:45 templates/messages/quarantine.html:39
 msgid "have been applied"
-msgstr "non sono stati applicati"
+msgstr "已应用"
 
 #: templates/messages/index.html:48
 #, python-format
 msgid "Showing the %(baruwa_num_recent_messages)s most recent messages "
-msgstr "Mostrando il %(baruwa_num_recent_messages)s messaggi più recenti "
+msgstr "显示 %(baruwa_num_recent_messages)s最新消息"
 
 #: templates/messages/index.html:50 templates/messages/quarantine.html:44
 msgid "Enable javascript for updates"
-msgstr "Abilita javascript per aggiornamenti"
+msgstr "启用 javascript 的更新"
 
 #: templates/messages/index.html:65 templates/messages/quarantine.html:97
 #: templates/messages/quarantine_report.html:27
@@ -2223,7 +2223,7 @@ msgstr "Abilita javascript per aggiornamenti"
 #: templates/messages/quarantine_report_text.html:10
 #: templates/messages/quarantine_report_text.html:20
 msgid "Date/Time"
-msgstr "Data/Ora"
+msgstr "日期/时间"
 
 #: templates/messages/index.html:66 templates/messages/quarantine.html:98
 #: templates/messages/quarantine_report.html:30
@@ -2231,7 +2231,7 @@ msgstr "Data/Ora"
 #: templates/messages/quarantine_report_text.html:10
 #: templates/messages/quarantine_report_text.html:20
 msgid "From"
-msgstr "Da:"
+msgstr "从"
 
 #: templates/messages/index.html:67 templates/messages/quarantine.html:99
 #: templates/messages/quarantine_report.html:33
@@ -2239,69 +2239,69 @@ msgstr "Da:"
 #: templates/messages/quarantine_report_text.html:10
 #: templates/messages/quarantine_report_text.html:20
 msgid "To"
-msgstr "A"
+msgstr "自"
 
 #: templates/messages/index.html:70 templates/messages/quarantine.html:101
 #: templates/reports/barreport.html:31 templates/tags/spamreport.html:4
 msgid "Score"
-msgstr "Punteggio"
+msgstr "得分"
 
 #: templates/messages/index.html:110 templates/messages/quarantine.html:140
 #: templates/reports/barreport.html:55 templates/reports/listing.html:115
 #: templates/reports/piereport.html:58 templates/reports/relays.html:58
 msgid "Filters have been applied :"
-msgstr "I filtri non sono stati applicati:"
+msgstr "已应用筛选器："
 
 #: templates/messages/preview.html:3
 #, python-format
 msgid "Baruwa :: Previewing message - %(message_id)s"
-msgstr "Baruwa :: Anteprima messaggi - %(message_id)s"
+msgstr "Baruwa:: 预览消息-%(message_id)s"
 
 #: templates/messages/preview.html:4
 #, python-format
 msgid "Previewing message - %(message_id)s "
-msgstr "Anteprima messaggi - %(message_id)s"
+msgstr "预览消息-%(message_id)s"
 
 #: templates/messages/preview.html:9 templates/messages/preview.html.py:11
 msgid "Return to message"
-msgstr "Torna al messaggio"
+msgstr "返回到邮件"
 
 #: templates/messages/preview.html:28 templates/status/detail.html:38
 msgid "Subject:"
-msgstr "Oggetto:"
+msgstr "主题："
 
 #: templates/messages/preview.html:32
 msgid "Date:"
-msgstr "Data:"
+msgstr "日期："
 
 #: templates/messages/preview.html:37
 msgid "Attachments:"
-msgstr "Allegati:"
+msgstr "附件："
 
 #: templates/messages/preview.html:46
 msgid "Message content"
-msgstr "Contenuto messaggio"
+msgstr "消息内容"
 
 #: templates/messages/preview.html:60
 msgid "Message is multipart"
-msgstr "Il messaggio è multiparte"
+msgstr "消息是多部分"
 
 #: templates/messages/preview.html:60
 msgid "view"
-msgstr "vista"
+msgstr "视图"
 
 #: templates/messages/preview.html:60
 msgid "the other part"
-msgstr "l'altra parte"
+msgstr "其他部件"
 
 #: templates/messages/preview.html:66
 msgid "Message could not be previewed"
-msgstr "Non è stato possibile vedere lanteprima del messaggio"
+msgstr "未能预览消息"
 
 #: templates/messages/quarantine.html:23
 #: templates/messages/task_status.html:23
 msgid "Full Quarantine"
-msgstr "Quarantena piena"
+msgstr "完全隔离"
 
 #: templates/messages/quarantine.html:25
 #: templates/messages/task_status.html:25
@@ -2310,33 +2310,33 @@ msgstr ""
 
 #: templates/messages/quarantine.html:32 templates/messages/quarantine.html:42
 msgid "Showing the 50 most recent messages"
-msgstr "Mostra i 50 messaggi più recenti"
+msgstr "显示 50 的最新消息"
 
 #: templates/messages/quarantine.html:60
 msgid "Train"
-msgstr "Treno"
+msgstr "火车"
 
 #: templates/messages/quarantine.html:83
 msgid "Process"
-msgstr "Processo"
+msgstr "进程"
 
 #: templates/messages/quarantine_report.html:23
 #: templates/messages/quarantine_report_text.html:7
 msgid "Spam Report"
-msgstr "Report di spam"
+msgstr "垃圾邮件报告"
 
 #: templates/messages/quarantine_report.html:64
 #: templates/messages/quarantine_report_text.html:17
 msgid "Policy Blocked Report"
-msgstr "Report della politica di blocco"
+msgstr "策略阻止报告"
 
 #: templates/messages/quarantine_report_text.html:28
 msgid "To view these quarantined messages please visit :"
-msgstr "Per vedere questi messaggi in quarantena, prego visita :"
+msgstr "要查看这些隔离邮件请访问："
 
 #: templates/messages/release.html:10
 msgid "Quarantined Message release"
-msgstr "Rilascio messaggi in quarantena"
+msgstr "被隔离的消息发布"
 
 #: templates/messages/release.html:15
 #, python-format
@@ -2344,7 +2344,7 @@ msgid ""
 "\n"
 "\t\t\tThe message: %(message_id)s has been released to %(release_address)s\n"
 "\t\t"
-msgstr "\n\t\t\tThe message: %(message_id)s è stato rilasciato a %(release_address)s\n\t\t"
+msgstr "消息: %(message_id)s已发放到 %(release_address)s"
 
 #: templates/messages/release.html:19
 #, python-format
@@ -2352,51 +2352,53 @@ msgid ""
 "\n"
 "\t    \tThe release of message: %(message_id)s to %(release_address)s failed with error: %(error_msg)s, contact your email admin for assistance.\n"
 "\t    "
-msgstr "\n\t    \tIl rilascio del messaggio: %(message_id)s a %(release_address)s non riuscita con errore: %(error_msg)s, contattare il vostro amministratore e-mail per assistenza.\n\t    "
+msgstr ""
+"释放的消息： %(message_id)s到 %(release_address)s失败，错误为: "
+"%(error_msg)s，您的电子邮件管理员联系获得帮助。"
 
 #: templates/messages/released.html:3
 #, python-format
 msgid ""
 "\n"
 "The message id: %(id)s has been released\n"
-msgstr "\nIl messaggio '%(id)s' è stato rilasciato\n"
+msgstr "消息的消息 id： %(id)s已释放"
 
 #: templates/messages/released.html:7
 #, python-format
 msgid ""
 "\n"
 "The message id: %(id)s could not be released: %(error_msg)s, contact your email admin for assistance.\n"
-msgstr "\nId messaggio: %(id)s non poteva essere rilasciato: %(error_msg)s, contattare il vostro amministratore e-mail per assistenza.\n"
+msgstr "消息的消息 id： %(id)s无法释放: %(error_msg)s，您的电子邮件管理员联系获得帮助。"
 
 #: templates/messages/salearn.html:3
 #, python-format
 msgid ""
 "\n"
 "The message id: %(id)s processed\n"
-msgstr "\nId messaggio: %(id)s elaborati\n"
+msgstr "消息的消息 id： %(id)s处理"
 
 #: templates/messages/salearn.html:7
 #, python-format
 msgid ""
 "\n"
 "The message id: %(id)s not learned: %(msg)s\n"
-msgstr "\nId messaggio: %(id)s non imparato: %(msg)s\n"
+msgstr "消息的消息 id： %(id)s不学： %(msg)s"
 
 #: templates/messages/task_status.html:38
 msgid "Response message"
-msgstr "Messaggio di risposta"
+msgstr "响应消息"
 
 #: templates/messages/task_status.html:58
 msgid "The task was completed successfully."
-msgstr "L'attività è stata completata con successo."
+msgstr "已成功完成该任务。"
 
 #: templates/messages/task_status.html:64
 msgid "No items processed"
-msgstr "No gli elementi elaborati"
+msgstr "没有处理的项目"
 
 #: templates/messages/task_status.html:81
 msgid "Update status"
-msgstr "Stato di aggiornamento"
+msgstr "更新状态"
 
 #: templates/reports/barreport.html:18 templates/reports/barreport.html:21
 #: templates/reports/listing.html:22 templates/reports/listing.html.py:25
@@ -2404,369 +2406,369 @@ msgstr "Stato di aggiornamento"
 #: templates/reports/relays.html:19 templates/reports/relays.html.py:22
 #, python-format
 msgid "Reports - %(report_title)s"
-msgstr "Report - %(report_title)s"
+msgstr "报告-%(report_title)s"
 
 #: templates/reports/barreport.html:26
 msgid "Enable javascript to view graphs"
-msgstr "Abilita javascript per vedere i grafici"
+msgstr "启用 javascript 来查看图表"
 
 #: templates/reports/barreport.html:49
 msgid "No items returned"
-msgstr "Nessun elemento ritornato"
+msgstr "没有返回的项目"
 
 #: templates/reports/filter.form.html:3
 msgid "Add Filter"
-msgstr "Aggiungi filtro"
+msgstr "添加筛选器"
 
 #: templates/reports/index.html:21
 msgid "Statistics"
-msgstr "Statistica"
+msgstr "统计数据"
 
 #: templates/reports/index.html:25
 msgid "Message count"
-msgstr "Numero di messaggi"
+msgstr "邮件计数"
 
 #: templates/reports/index.html:31
 msgid "Oldest message processed on"
-msgstr "Messaggio più vecchio processato su"
+msgstr "最早的邮件处理"
 
 #: templates/reports/index.html:37
 msgid "Newest message processed on"
-msgstr "Messaggio più nuovo processato su"
+msgstr "关于处理的最新消息"
 
 #: templates/reports/index.html:47
 msgid "Top Senders by Quantity"
-msgstr "Primi per quantità di invii"
+msgstr "顶发件人的数量"
 
 #: templates/reports/index.html:48
 msgid "Top Senders by Volume"
-msgstr "Primi per volume di invii"
+msgstr "由卷顶发件人"
 
 #: templates/reports/index.html:49
 msgid "Top Sender Domains by Quantity"
-msgstr "Primi domini per quantità"
+msgstr "顶发件人域的数量"
 
 #: templates/reports/index.html:50
 msgid "Top Sender Domains by Volume"
-msgstr "Primi domini per volume ricevuto"
+msgstr "顶发件人域的卷"
 
 #: templates/reports/index.html:51
 msgid "Spamassassin Score Distribution"
-msgstr "Distribuzione del punteggio Spam"
+msgstr "Spamassassin 分数分布"
 
 #: templates/reports/index.html:52
 msgid "Top Mail hosts"
-msgstr "Primi host di posta"
+msgstr "顶级邮件主机"
 
 #: templates/reports/index.html:57
 msgid "Top Recipients by Quantity"
-msgstr "Primi per numero di messaggi ricevuti"
+msgstr "按数量最多的收件人"
 
 #: templates/reports/index.html:58
 msgid "Top Recipients by Volume"
-msgstr "Primi per volume ricevuto"
+msgstr "按体积最多收件人"
 
 #: templates/reports/index.html:59
 msgid "Top Recipient Domains By Quantity"
-msgstr "Primi domini per quantità di messaggi ricevuti"
+msgstr "顶级收件人域的数量"
 
 #: templates/reports/index.html:60
 msgid "Top Recipient Domains By Volume"
-msgstr "Primi domini per volume ricevuto"
+msgstr "顶级收件人域的卷"
 
 #: templates/reports/index.html:62
 msgid "Message Listings"
-msgstr "Elenco messaggi"
+msgstr "消息列表"
 
 #: templates/reports/index.html:68
 msgid "Active Filter(s)"
-msgstr "Filtri attivi"
+msgstr "活动筛选器"
 
 #: templates/reports/index.html:81
 msgid "Save"
-msgstr "Salva"
+msgstr "保存"
 
 #: templates/reports/index.html:90
 msgid "No active filters at the moment"
-msgstr "Nessun filtro attivo al momento"
+msgstr "目前没有积极筛选器"
 
 #: templates/reports/index.html:95
 msgid "Saved Filter(s)"
-msgstr "Filtri salvati"
+msgstr "已保存的筛选器"
 
 #: templates/reports/index.html:118
 msgid "No saved filters at the moment"
-msgstr "Nessun filtro salvato al momento"
+msgstr "目前没有已保存的筛选"
 
 #: templates/reports/listing.html:30
 msgid "Enable Javascript to view graphs"
-msgstr "Abilita Javascript per visualizzare i grafici"
+msgstr "启用 Javascript 来查看图表"
 
 #: templates/reports/listing.html:41
 msgid "Mail"
-msgstr "Mail"
+msgstr "邮件"
 
 #: templates/reports/listing.html:44 templates/status/index.html:69
 msgid "Viruses"
-msgstr "Virus"
+msgstr "病毒"
 
 #: templates/reports/listing.html:47
 msgid "Viruses %"
-msgstr "Virus %"
+msgstr "病毒 %"
 
 #: templates/reports/listing.html:53
 msgid "Spam %"
-msgstr "Spam %"
+msgstr "垃圾邮件 %"
 
 #: templates/reports/listing.html:86
 msgid "No records returned."
-msgstr "Nessun record trovato"
+msgstr "没有记录返回。"
 
 #: templates/reports/listing.html:92
 msgid "Totals"
-msgstr "Totali"
+msgstr "总计"
 
 #: templates/reports/piereport.html:52 templates/reports/relays.html:52
 msgid "Javascript required to view graphs"
-msgstr "Javascript ha richiesto di vedere i grafici"
+msgstr "查看关系图所需的 Javascript"
 
 #: templates/reports/relays.html:27 templates/tags/relayed_via.html:5
 msgid "IP address"
-msgstr "Indirizzo IP"
+msgstr "IP 地址"
 
 #: templates/reports/relays.html:28 templates/tags/relayed_via.html:6
 msgid "Hostname"
-msgstr "Nome host"
+msgstr "主机名"
 
 #: templates/reports/relays.html:29 templates/tags/relayed_via.html:7
 msgid "Country"
-msgstr "Nasione"
+msgstr "国家"
 
 #: templates/reports/relays.html:30
 msgid "Total/S/V"
-msgstr "Totale S/V"
+msgstr "共有/S/V"
 
 #: templates/status/bayes.html:7 templates/status/index.html:5
 #: templates/status/index.html.py:73 templates/status/lint.html:7
 msgid "Mail Queues"
-msgstr "Code di posta"
+msgstr "邮件队列"
 
 #: templates/status/bayes.html:9 templates/status/bayes.html.py:15
 #: templates/status/bayes.html:18 templates/status/index.html:7
 #: templates/status/lint.html:9
 msgid "Bayes information"
-msgstr "Informazioni Bayesiane"
+msgstr "贝叶斯信息"
 
 #: templates/status/bayes.html:10 templates/status/index.html:8
 #: templates/status/lint.html:10
 msgid "Spamassassin lint"
-msgstr "SpamAssassin lint"
+msgstr "Spamassassin 林特"
 
 #: templates/status/bayes.html:22
 msgid "Bayes Database Information"
-msgstr "Informazioni su db Bayes"
+msgstr "贝叶斯数据库信息"
 
 #: templates/status/bayes.html:26
 msgid "Bayes Version"
-msgstr "Versione Bayes"
+msgstr "贝叶斯版本"
 
 #: templates/status/bayes.html:30
 msgid "Number of Spam messages"
-msgstr "Numero di messaggi spam"
+msgstr "垃圾邮件数量"
 
 #: templates/status/bayes.html:34
 msgid "Number of Ham messages"
-msgstr "Numero di messaggi Ham"
+msgstr "火腿消息数"
 
 #: templates/status/bayes.html:38
 msgid "Number of Tokens"
-msgstr "Numero di Tokens"
+msgstr "标记数"
 
 #: templates/status/bayes.html:42
 msgid "Newest Token"
-msgstr "Token più recente"
+msgstr "最新的令牌"
 
 #: templates/status/bayes.html:46
 msgid "Oldest Token"
-msgstr "Tocken più vecchio"
+msgstr "最古老的令牌"
 
 #: templates/status/bayes.html:50
 msgid "Last Journal Sync"
-msgstr "Ultima sincronizzazione Journal"
+msgstr "上次杂志同步"
 
 #: templates/status/bayes.html:54
 msgid "Last Expiry"
-msgstr "Ultimo Expiry"
+msgstr "最后期限届满"
 
 #: templates/status/bayes.html:58
 msgid "Last Expiry Reduction Count"
-msgstr "Ultima scadenza riduzione del conteggio"
+msgstr "最后期限届满减少计数"
 
 #: templates/status/bayes.html:64
 msgid "Bayes information could not be collected."
-msgstr "Le informazioni Bayesiano non hanno potuto essere raccolte."
+msgstr "不会收集贝叶斯信息。"
 
 #: templates/status/detail.html:5 templates/status/detail.html.py:6
 #, python-format
 msgid "Baruwa :: Showing queue item - %(id)s"
-msgstr "Baruwa:: Elemento in coda mostrando-%(id)s"
+msgstr "Baruwa:: 显示队列项目-%(id)s"
 
 #: templates/status/detail.html:10 templates/status/mailq.html:11
 msgid "Inbound Queue"
-msgstr "Coda in entrata"
+msgstr "入站的队列"
 
 #: templates/status/detail.html:11 templates/status/mailq.html:12
 msgid "Outbound Queue"
-msgstr "Coda in uscita"
+msgstr "出站队列"
 
 #: templates/status/detail.html:50
 msgid "Number of delivery attempts:"
-msgstr "Numero di tentativi di recapito:"
+msgstr "传递尝试的数目："
 
 #: templates/status/detail.html:54
 msgid "Last delivery attempt on:"
-msgstr "Ultimo tentativo di consegna su:"
+msgstr "上的最后一次传递尝试："
 
 #: templates/status/detail.html:62
 msgid "Reasons for queuing:"
-msgstr "Motivi per Accodamento messaggi:"
+msgstr "队列的原因："
 
 #: templates/status/detail.html:67
 msgid "The message details for the requested queue id could not be retrieved"
-msgstr "I dettagli del messaggio per l'id di coda richiesto non potevano essere Estratto"
+msgstr "无法检索请求的队列 id 的消息详细信息"
 
 #: templates/status/index.html:12 templates/status/index.html.py:13
 msgid "System Status"
-msgstr "Stato del sistema"
+msgstr "系统状态"
 
 #: templates/status/index.html:16
 msgid "Service Status"
-msgstr "Stato del servizio"
+msgstr "服务状态"
 
 #: templates/status/index.html:27 templates/status/index.html.py:40
 #: templates/status/index.html:61
 msgid "processes"
-msgstr "processi"
+msgstr "进程"
 
 #: templates/status/index.html:29
 msgid "Processed"
-msgstr "Processati"
+msgstr "处理"
 
 #: templates/status/index.html:46
 msgid "Load"
-msgstr "Carico"
+msgstr "负载"
 
 #: templates/status/index.html:50
 msgid "High scoring spam"
-msgstr "Punteggio spam altro"
+msgstr "高评分垃圾邮件"
 
 #: templates/status/index.html:54
 msgid "AV"
-msgstr "Antivirus"
+msgstr "由"
 
 #: templates/status/index.html:63
 msgid "Low scoring spam"
-msgstr "Punteggio spam basso"
+msgstr "低得分垃圾邮件"
 
 #: templates/status/index.html:67
 msgid "Uptime"
-msgstr "Uptime"
+msgstr "正常运行时间"
 
 #: templates/status/index.html:75
 msgid "Blocked files"
-msgstr "File Bloccati"
+msgstr "被阻止的文件"
 
 #: templates/status/lint.html:15 templates/status/lint.html.py:18
 #: templates/status/lint.html:22
 msgid "Spamassassin Lint"
-msgstr "SpamAssassin Lint"
+msgstr "Spamassassin 林特"
 
 #: templates/status/lint.html:31
 msgid "Lint failed please verify if spamassassin is installed"
-msgstr "Lint ha fallito, per favore verifica se spamassassin è installato"
+msgstr "林特失败请确认是否安装 spamassassin"
 
 #: templates/status/mailq.html:16 templates/status/mailq.html.py:19
 msgid "Mail Queue"
-msgstr "Coda di posta"
+msgstr "邮件队列"
 
 #: templates/status/mailq.html:16 templates/status/mailq.html.py:19
 msgid "Outbound"
-msgstr "In uscita"
+msgstr "出站"
 
 #: templates/status/mailq.html:16 templates/status/mailq.html.py:19
 msgid "Inbound"
-msgstr "Inbound"
+msgstr "入站"
 
 #: templates/status/mailq.html:28
 msgid "Delete from queue"
-msgstr "Eliminare dalla coda"
+msgstr "从队列中删除"
 
 #: templates/status/mailq.html:55
 msgid "No queue items found"
-msgstr "Elementi della coda non trovati"
+msgstr "未找到任何队列项目"
 
 #: templates/tags/generic_paginator.html:2
 #: templates/tags/pagination_heading.html:2 templates/tags/paginator.html:2
 #, python-format
 msgid "Showing page %(page)s of %(pages)s pages."
-msgstr "Pagina %(page)s di %(pages)s."
+msgstr "显示页面 %(page)s%(pages)s页。"
 
 #: templates/tags/relayed_via.html:23
 msgid "direct connection"
-msgstr "connessione diretta"
+msgstr "直接连接"
 
 #: templates/tags/spamreport.html:5
 msgid "Rule"
-msgstr "Regola"
+msgstr "规则"
 
 #: templates/tags/spamreport.html:6
 msgid "Description"
-msgstr "Descrizione"
+msgstr "说明"
 
 #: utils/mail/message.py:247 utils/mail/message.py:336
 msgid "Message not found in the quarantine"
-msgstr "Messaggio non trovato in quarantena"
+msgstr "在检验检疫中未找到的消息"
 
 #: utils/mail/message.py:276 utils/mail/message.py:290
 msgid "The quarantined message not found"
-msgstr "Il messaggio in quarantena non trovato"
+msgstr "找不到隔离的邮件"
 
 #: utils/mail/message.py:287
 msgid "Unsupported learn option supplied"
-msgstr "Non supportato imparare opzione fornita"
+msgstr "不支持学会提供的选项"
 
 #: utils/mail/message.py:399
 #, python-format
 msgid "Expected response code 2xx got %(code)s"
-msgstr "Previsto ottenuto risposta codice 2xx %(code)s"
+msgstr "预期响应代码 2xx 了 %(code)s"
 
 #: utils/mail/message.py:403
 msgid "Connection timed out"
-msgstr "Connection timed out"
+msgstr "连接超时"
 
 #: utils/mail/message.py:405
 msgid "The server disconnected abruptly"
-msgstr "Il server scollegato bruscamente"
+msgstr "突然断开连接的服务器"
 
 #: utils/mail/message.py:407
 #, python-format
 msgid "The sender %(sender)s was rejected"
-msgstr "Il mittente %(sender)s è stata respinta"
+msgstr "发件人 %(sender)s被拒绝"
 
 #: utils/mail/message.py:410
 #, python-format
 msgid "Some recipients: %(recpts)s were rejected with errors: %(errors)s"
-msgstr "Alcuni destinatari: %(recpts)s sono stati respinti con errori: %(errors)s"
+msgstr "某些收件人： %(recpts)s被拒绝，并错误: %(errors)s"
 
 #: utils/mail/message.py:414
 msgid "Error occured while establishing connection to the server"
-msgstr "Si è verificato un errore durante la connessione al server"
+msgstr "建立到服务器的连接时出错"
 
 #: utils/mail/message.py:417
 msgid "Server rejected our HELO message"
-msgstr "Server ha rifiutato il nostro messaggio HELO"
+msgstr "服务器拒绝了我们的 HELO 消息"
 
 #: utils/mail/message.py:419
 #, python-format
 msgid "Error occured, CODE: %(code)s MESSAGE: %(msg)s"
-msgstr "Errore, codice: %(code)s MESSAGGIO: %(msg)s"
+msgstr "出现了错误，代码： %(code)s消息: %(msg)s"
