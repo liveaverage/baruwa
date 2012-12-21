@@ -48,7 +48,7 @@ class ADUser(object):
 
     def get_ldap_url(self):
         """return ldap url"""
-    return '%s%s:%s' % (self.ad_ldap_scheme,
+	return '%s%s:%s' % (self.ad_ldap_scheme,
                             self.ad_host,
                             self.ad_port)
 
@@ -148,24 +148,16 @@ class ADUser(object):
             result = res2[0][1]
             if result.has_key('primaryGroupID'):
 		pri_grp_rid = result['primaryGroupID'][0]
-                logger.debug("check_group primaryGroupID:%s\n" % pri_grp_rid)
 		domain_sid = self.ldap_connection.search_s(self.ad_search_dn, ldap.SCOPE_BASE)[0][1]['objectSid'][0]
-		logger.debug("check_group domain_sid:%s\nn" % (str(domain_sid)))
 		domain_sid_s = self.sid2str(domain_sid)
-		logger.debug("check_group domain_sid_s:%s\n" % domain_sid_s)
 		obj_sid = domain_sid_s + '-' + pri_grp_rid
 		pri_grp_cn = self.ldap_connection.search_s(self.ad_search_dn, ldap.SCOPE_SUBTREE, "objectSid=%s" % obj_sid, ['cn'])
-		logger.debug("check_group objectSid:%s" % obj_sid)
-		logger.debug("check_group pri_grp_cn:%s" % pri_grp_cn)
-		logger.debug("check_group pri_grp_cn MEM:%s" % pri_grp_cn[0][0])
 		if self.check_group (pri_grp_cn[0][0], group):
 		    return True
             if result.has_key('sAMAccountName'):
-		logger.debug("check_group sAMAccountName:%s\n" % (str(result['sAMAccountName'])))
                 if result['sAMAccountName'][0] == group:
                     return True
 	    if result.has_key('memberOf'):
-		logger.debug("check_group memberOf:%s\n" % (str(result['memberOf'])))
 	        for group2 in result['memberOf']:
                     if self.check_group (group2, group):
                         return True
@@ -173,8 +165,6 @@ class ADUser(object):
         except Exception, exp:
             logger.debug("AD auth backend error by fetching"
                         " ldap data: %s (%s)\n" % (str(exp),  get_exc_str()))
-	    logger.debug("Result2 is: %s\n" % (str(res2[0][1])))
-	    logger.debug("Full Result is: %s\n" % (str(res2)))
 
         return found
 
@@ -219,10 +209,6 @@ class ADUser(object):
                         logger.error("Adding Address: %s\n", mail1)
 
             basedn = res[0][0]
-
-	    logger.debug("User basedn: %s\n" % basedn)
-	    logger.debug("Get_data self.admin_group: %s\n" % self.ad_admin_group)
-            logger.debug("Get_data self.user_group: %s\n" % self.ad_user_group)
 
             if self.check_group(basedn, self.ad_admin_group):
                 self.is_superuser = True
