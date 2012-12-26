@@ -78,7 +78,7 @@ class MailADAuthHost(models.Model):
     ad_log_file = models.CharField(max_length=255)
 
     class Meta:
-    db_table = 'auth_domain'
+        db_table = 'auth_domain'
 
     def __unicode__(self):
 	return self.ad_search_dn
