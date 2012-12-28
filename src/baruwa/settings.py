@@ -253,7 +253,7 @@ AD_ADMIN_GROUP = 'AdminFoo'
 # User group
 AD_USER_GROUP = 'UsersFoo'
 # LDAP search fields
-AD_SEARCH_FIELDS = ['mail', 'givenName', 'sn', 'SAMAccountName', 'memberOf', 'dn']
+AD_SEARCH_FIELDS = ['mail', 'givenName', 'sn', 'SAMAccountName', 'memberOf', 'dn', 'primaryGroupID']
 # connection scheme
 AD_LDAP_SCHEME = 'ldap://'
 # module log file
