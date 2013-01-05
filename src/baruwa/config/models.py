@@ -65,6 +65,23 @@ class MailAuthHost(models.Model):
     class Meta:
         db_table = 'auth_hosts'
 
+class MailADAuthHost(models.Model):
+    "Holds AD authentication hosts"
+
+    ad_host = models.ForeignKey(MailAuthHost)
+    ad_search_dn = models.CharField(max_length=255)
+    ad_admin_group = models.CharField(max_length=255)
+    ad_user_group = models.CharField(max_length=255)
+    ad_search_fields = models.CharField(max_length=255)
+    ad_ldap_scheme = models.CharField(max_length=255)
+    ad_auth_domain = models.CharField(max_length=255)
+    ad_log_file = models.CharField(max_length=255)
+
+    class Meta:
+        db_table = 'auth_domain'
+
+    def __unicode__(self):
+	return self.ad_search_dn
 
 class ScannerHost(models.Model):
     "Holds scanning nodes"
