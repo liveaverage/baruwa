@@ -139,7 +139,7 @@ class QueueParser(object):
                     attribs['from_address'] = '<>'
                 attribs['reason'] = '\n'.join(reasons)
                 return attribs
-            except (os.error, IOError, KeyError):
+            except (os.error, IOError, KeyError, IndexError):
                 return None
 
         queuefiles = []
