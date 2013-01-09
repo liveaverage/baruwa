@@ -75,8 +75,8 @@ class UserProfile(models.Model):
     id = models.AutoField(primary_key=True)
     send_report = models.BooleanField(default=True)
     scan_mail = models.BooleanField(default=True)
-    sa_high_score = models.IntegerField(default=0)
-    sa_low_score = models.IntegerField(default=0)
+    sa_high_score = models.FloatField(default=0.0)
+    sa_low_score = models.FloatField(default=0.0)
     account_type = models.IntegerField(choices=ACCOUNT_TYPES, default=3)
     user = models.ForeignKey(User, unique=True)
 
