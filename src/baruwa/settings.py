@@ -244,6 +244,8 @@ EMAIL_SIGNATURES_DIR = '/etc/MailScanner/signatures'
 
 # LDAP/AD SERVER PORT
 AD_HOST_NAME = '127.0.0.1'
+# LDAP/AD DOMAIN
+AD_AUTH_DOMAIN = 'foo.local'
 # LDAP SERVER PORT
 AD_LDAP_PORT = 389
 # Search base
