@@ -269,8 +269,13 @@ class ActiveDirectoryBackend(ModelBackend):
         for host in hosts:
             # process all hosts
 	
-	    # Query each host for configured AD settings:
-	    adset = MailADAuthHost.objects.get(ad_host=host)
+            # Query each host for configured AD settings:
+            try:
+                adset = MailADAuthHost.objects.get(ad_host=host)
+                aduser = ADUser(username, host.address, host.port, adset.ad_search_dn, adset.ad_admin_group, adset.ad_user_group, adset.ad_auth_domain)
+            except MailADAuthHost.DoesNotExist:
+                logger.warning("No MySQL MailADAuthHost; using setting.py AD config\n")
+                aduser = ADUser(username, host.address, host.port, None, None, None, None)
 
 	    aduser = ADUser(username, host.address, host.port, adset.ad_search_dn, adset.ad_admin_group, adset.ad_user_group, adset.ad_auth_domain)
 
