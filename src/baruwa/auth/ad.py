@@ -277,8 +277,6 @@ class ActiveDirectoryBackend(ModelBackend):
                 logger.warning("No MySQL MailADAuthHost; using setting.py AD config\n")
                 aduser = ADUser(username, host.address, host.port, None, None, None, None)
 
-	    aduser = ADUser(username, host.address, host.port, adset.ad_search_dn, adset.ad_admin_group, adset.ad_user_group, adset.ad_auth_domain)
-
             if not aduser.connect(password):
                 logger.warning("AD bind failed for %s\n" % username)
                 continue
