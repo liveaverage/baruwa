@@ -294,7 +294,7 @@ class ActiveDirectoryBackend(ModelBackend):
 
             if not aduser.get_data():
                 logger.warning("AD auth backend failed when reading data for"
-                " %s. No Group information available.\nAD_Auth_Domain:%s\tAD_Admin_Group:%s\tAD_User_Group:%s" % (username,adset.ad_auth_domain,adset.ad_admin_group,adset.ad_user_group))
+                " %s. No Group information available." % username)
                 user = None
                 continue
             else:
